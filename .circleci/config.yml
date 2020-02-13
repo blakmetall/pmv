@@ -49,6 +49,7 @@ jobs:
           name: Setup Laravel stuffs
           command: |
             php artisan migrate --env=staging --force
+            php artisan db:seed
 
       - run: ./vendor/bin/phpunit
 
