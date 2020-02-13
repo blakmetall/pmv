@@ -11,6 +11,12 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Install PHP exts
+          command: |
+            sudo docker-php-ext-install zip
+            sudo docker-php-ext-install pdo_mysql
+
       - run: sudo composer self-update
 
       # Download and cache dependencies
