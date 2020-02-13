@@ -16,6 +16,7 @@ jobs:
           command: |
             sudo docker-php-ext-install zip
             sudo docker-php-ext-install pdo_mysql
+            sudo apt install -y php-mysql
 
       - run: sudo composer self-update
 
