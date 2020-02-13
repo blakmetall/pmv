@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "user_role_id": 1,
+    "email": "blakmetall@gmail.com",
+    "email_verified_at": "2020-01-01 00:00:00",
+    "password": "123123",
+    "is_enabled": 1,
+    "profile": {
+      "firstname": "José",
+      "lastname": "Faro",
+      "country": "México",
+      "state": "Jalisco",
+      "city": "Puerto Vallarta",
+      "street": "Francisco Medina Ascencion 54",
+      "zip": 48290,
+      "phone": "0000000",
+      "mobile": "3220000000",
+      "config_language": "en"
+    },
+    "cities_staff_groups": [
+      {
+        "city_id": 1,
+        "location": "Puerto Vallarta"
+      },
+      {
+        "city_id": 2,
+        "location": "Mazatlán"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "user_role_id": 2,
+    "email": "dev.jorgehernandez@gmail.com",
+    "email_verified_at": "2020-01-01 00:00:00",
+    "password": "123123",
+    "is_enabled": 1,
+    "profile": {
+      "firstname": "Jorge",
+      "lastname": "Hernández",
+      "country": "México",
+      "state": "Jalisco",
+      "city": "Puerto Vallarta",
+      "street": "Francisco Medina Ascencion 54",
+      "zip": 48290,
+      "phone": "0000000",
+      "mobile": "3220000000",
+      "config_language": "en"
+    },
+    "cities_staff_groups": [
+      {
+        "city_id": 1,
+        "location": "Puerto Vallarta"
+      },
+      {
+        "city_id": 2,
+        "location": "Mazatlán"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "user_role_id": 2,
+    "email": "gustavoflores123@gmail.com",
+    "email_verified_at": "2020-01-01 00:00:00",
+    "password": "123123",
+    "is_enabled": 1,
+    "profile": {
+      "firstname": "Gustavo",
+      "lastname": "Flores",
+      "country": "México",
+      "state": "Jalisco",
+      "city": "Puerto Vallarta",
+      "street": "Francisco Medina Ascencion 54",
+      "zip": 48290,
+      "phone": "0000000",
+      "mobile": "3220000000",
+      "config_language": "en"
+    },
+    "cities_staff_groups": [
+      {
+        "city_id": 1,
+        "location": "Puerto Vallarta"
+      },
+      {
+        "city_id": 2,
+        "location": "Mazatlán"
+      }
+    ]
+  }
+]

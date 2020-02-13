@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "price": 45,
+    "is_refundable": 0,
+    "translations": [
+      {
+        "language_id": 1,
+        "description": "$45.00 USD per property plan (Covers up to: $1,500.00 USD)"
+      },
+      {
+        "language_id": 2,
+        "description": "$45.00 USD por plan de propiedad (Cubre hasta: $1,500.00 USD)"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "price": 69,
+    "is_refundable": 0,
+    "translations": [
+      {
+        "language_id": 1,
+        "description": "$69.00 USD per property plan (Covers up to: $3,000.00 USD)"
+      },
+      {
+        "language_id": 2,
+        "description": "$69.00 USD por plan de propiedad (Cubre hasta: $3,000.00 USD)"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "price": 500,
+    "is_refundable": 1,
+    "translations": [
+      {
+        "language_id": 1,
+        "description": "$500.00 USD Damage deposit (refundable)"
+      },
+      {
+        "language_id": 2,
+        "description": "$500.00 USD de depósito por daños (reembolsable)"
+      }
+    ]
+  }
+]
