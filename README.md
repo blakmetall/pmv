@@ -1,2 +1,2 @@
 # pm
-Property Management Laravel Application
+PM App
