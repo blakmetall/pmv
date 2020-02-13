@@ -57,3 +57,7 @@ workflows:
   notify_deploy:
     jobs:
       - build
+        filters: 
+          branches:
+            only: master
+            
