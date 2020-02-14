@@ -15,11 +15,11 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Create Zone'),
+                            'title' => __('Create Transaction Types'),
                             'breadcrumbs' => [
                                 [
-                                    'url' => route('zones'),
-                                    'label' => __('Zones'),
+                                    'url' => route('transaction-types'),
+                                    'label' => __('Transaction Types'),
                                 ],
                             ]
                         ])
@@ -44,14 +44,14 @@
             <div class="card-body">
 
                 <!-- form -->
-                <form action="{{ route('zones.store') }}" method="post">
+                <form action="{{ route('transaction-types.store') }}" method="post">
 
                     <!-- token -->
-                @csrf
+                    @csrf
 
-                <!-- form fields -->
-                    @include('zones.form-fields', [
-                        'row' => $zone
+                    <!-- form fields -->
+                    @include('transaction-types.form-fields', [
+                        'row' => $transaction_types,
                     ])
 
                 </form>

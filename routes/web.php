@@ -40,14 +40,15 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
-// Rutas de Zonas
+// zones routes
     Route::group(['prefix' => 'zones'], function () {
-        Route::get('all', 'ZonesController@index')->name('zones-all');
-        Route::post('store', 'ZonesController@store')->name('zones-store');
-        Route::get('create', 'ZonesController@create')->name('zones-create');
-        Route::get('show/{id}', 'ZonesController@show')->name('zones-show');
-        Route::get('update/{id}', 'ZonesController@edit')->name('zones-edit');
-        Route::get('destroy/{id}', 'ZonesController@destroy')->name('zones-destroy');
+        Route::get('', 'ZonesController@index')->name('zones');
+        Route::get('create', 'ZonesController@create')->name('zones.create');
+        Route::post('store', 'ZonesController@store')->name('zones.store');
+        Route::get('show/{zone}', 'ZonesController@show')->name('zones.show');
+        Route::get('edit/{zone}', 'ZonesController@edit')->name('zones.edit');
+        Route::post('update/{id}', 'ZonesController@update')->name('zones.update');
+        Route::get('destroy/{id}', 'ZonesController@destroy')->name('zones.destroy');
     });
 
     // amenities routes
@@ -59,6 +60,18 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('edit/{amenity}', 'AmenitiesController@edit')->name('amenities.edit');
         Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
         Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
+    });
+
+
+    // types transactions
+    Route::group(['prefix' => 'transaction-types'], function () {
+        Route::get('', 'TransactionTypesController@index')->name('transaction-types');
+        Route::get('create', 'TransactionTypesController@create')->name('transaction-types.create');
+        Route::post('store', 'TransactionTypesController@store')->name('transaction-types.store');
+        Route::get('show/{transaction_type}', 'TransactionTypesController@show')->name('transaction-types.show');
+        Route::get('edit/{transaction_type}', 'TransactionTypesController@edit')->name('transaction-types.edit');
+        Route::post('update/{id}', 'TransactionTypesController@update')->name('transaction-types.update');
+        Route::get('destroy/{id}', 'TransactionTypesController@destroy')->name('transaction-types.destroy');
     });
 
     Route::get('lang/{lang}', function ($lang) {

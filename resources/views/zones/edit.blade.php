@@ -15,7 +15,7 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Create Zone'),
+                            'title' => __('Edit Zone'),
                             'breadcrumbs' => [
                                 [
                                     'url' => route('zones'),
@@ -27,7 +27,12 @@
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
+
                         <!-- action buttons goes here -->
+                        <a href="{{ route('zones.create') }}" class="btn btn-dark ripple m-1" role="button" >
+                            {{ __('New') }}
+                        </a>
+
                     </div>
                 </div>
 
@@ -44,7 +49,7 @@
             <div class="card-body">
 
                 <!-- form -->
-                <form action="{{ route('zones.store') }}" method="post">
+                <form action="{{ route('zones.update', [$zone->id]) }}" method="post">
 
                     <!-- token -->
                 @csrf

@@ -15,11 +15,11 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Create Zone'),
+                            'title' => __('Edit Transaction Types'),
                             'breadcrumbs' => [
                                 [
-                                    'url' => route('zones'),
-                                    'label' => __('Zones'),
+                                    'url' => route('transaction-types'),
+                                    'label' => __('Transaction Types'),
                                 ],
                             ]
                         ])
@@ -27,7 +27,12 @@
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
+
                         <!-- action buttons goes here -->
+                        <a href="{{ route('transaction-types.create') }}" class="btn btn-dark ripple m-1" role="button" >
+                            {{ __('New') }}
+                        </a>
+
                     </div>
                 </div>
 
@@ -42,16 +47,15 @@
     <div class="container app-container">
         <div class="card">
             <div class="card-body">
-
+                {{ $transaction_type }}
                 <!-- form -->
-                <form action="{{ route('zones.store') }}" method="post">
-
-                    <!-- token -->
+                <form action="" method="post">
+                <!-- token -->
                 @csrf
 
                 <!-- form fields -->
-                    @include('zones.form-fields', [
-                        'row' => $zone
+                    @include('transaction-types.form-fields', [
+                        'row' => $transaction_type,
                     ])
 
                 </form>

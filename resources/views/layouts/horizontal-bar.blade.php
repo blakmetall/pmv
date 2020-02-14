@@ -271,8 +271,8 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="" href="{{ route('zones-all') }}">
-                                            <span class="item-name">Zones</span>
+                                        <a class="" href="{{ route('zones') }}">
+                                            <span class="item-name">{{__('Zones')}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -281,8 +281,8 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="" href="#">
-                                            <span class="item-name">Transaction Types</span>
+                                        <a class="" href="{{ route('transaction-types') }}">
+                                            <span class="item-name">{{ __('Transaction Types') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">

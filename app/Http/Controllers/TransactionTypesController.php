@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransactionTypeTranslation;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use App\Models\TransactionType;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionTypesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +23,18 @@ class TransactionTypesController extends Controller
      */
     public function index()
     {
-        //
+        $language_id = 1; // for now is a simulated language
+
+        $transaction_types = (new TransactionTypeTranslation)
+        ->where('language_id', $language_id)
+        ->with('transactionType')
+        ->orderBy('id', 'asc')
+        ->paginate(30);
+
+        return view('transaction-types.index', [
+            'transaction_types' => $transaction_types
+        ]);
+
     }
 
     /**
@@ -23,7 +44,10 @@ class TransactionTypesController extends Controller
      */
     public function create()
     {
-        //
+        $transactionType = new TransactionType();
+        return view('transaction-types.create', [
+            'transaction_types' => $transactionType
+        ]);
     }
 
     /**
@@ -34,7 +58,7 @@ class TransactionTypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->saveData(false, $request);
     }
 
     /**
@@ -45,7 +69,7 @@ class TransactionTypesController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('transaction-types.show');
     }
 
     /**
@@ -54,9 +78,12 @@ class TransactionTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TransactionType $transactionType)
     {
-        //
+
+        return view('transaction-types.edit', [
+            'transaction_type' => $transactionType
+        ]);
     }
 
     /**
@@ -79,6 +106,48 @@ class TransactionTypesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $transactionType = TransactionType::find($id);
+        $transactionType->translations()->delete();
+        $transactionType->delete();
+
+        return redirect()->route('transaction-types')->with('message', 'messages.property-types-delete-success-message');
+    }
+
+    private function saveData($transactionType, $request){
+
+        if(!$transactionType){
+                $transactionType = new TransactionType;
+        }
+
+        $this->validateData($transactionType, $request);
+        //Create new transactionType
+        $transactionType->save();
+        //Create new Translation ES of Transaction Tpe
+        $transactionType->translations()->create([
+            'language_id' => 1,
+            'name' => $request->inputNameEs,
+        ]);
+        //Create new Translation EN of Transaction Tpe
+        $transactionType->translations()->create([
+            'language_id' => 2,
+            'name' => $request->inputNameEn,
+        ]);
+
+
+        return redirect()->route('transaction-types')->with('message', __('Success' ));
+    }
+
+    private function validateData($transactionType, $request){
+        $rules = [
+            'inputNameEs' => 'required|min:6|max:30',
+            'inputNameEn' => 'required|min:6|max:30',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()) {
+            redirect()->back()->withErrors($validator->messages())->withInput();
+        }
+
     }
 }

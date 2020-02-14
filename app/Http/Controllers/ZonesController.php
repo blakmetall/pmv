@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ZoneTranslation;
 use Illuminate\Http\Request;
+use App\Models\Zone;
 
 class ZonesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,17 @@ class ZonesController extends Controller
      */
     public function index()
     {
-        return view('/zones.index');
+        $language_id = 1; // for now is a simulated language
+
+        $zones = (new ZoneTranslation)
+            ->where('language_id', $language_id)
+            ->with('zone')
+            ->orderBy('name', 'asc')
+            ->paginate(30);
+
+        return view('zones.index', [
+            'zones' => $zones
+        ]);
     }
 
     /**
@@ -23,7 +41,10 @@ class ZonesController extends Controller
      */
     public function create()
     {
-        return view('/zones.form');
+        $zone = new Zone;
+        return view('zones.create', [
+            'zone' => $zone
+        ]);
     }
 
     /**
@@ -45,7 +66,7 @@ class ZonesController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('zones.show');
     }
 
     /**
@@ -54,9 +75,11 @@ class ZonesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Zone $zone)
     {
-        //
+        return view('zones.edit', [
+            'zone' => $zone
+        ]);
     }
 
     /**
@@ -79,6 +102,6 @@ class ZonesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect(route('zones.create') );
     }
 }
