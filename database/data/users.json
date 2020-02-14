@@ -88,5 +88,35 @@
         "location": "Mazatlán"
       }
     ]
+  },
+  {
+    "id": 4,
+    "user_role_id": 2,
+    "email": "cloudzeroxyz@gmail.com",
+    "email_verified_at": "2020-01-01 00:00:00",
+    "password": "123123",
+    "is_enabled": 1,
+    "profile": {
+      "firstname": "Alan",
+      "lastname": "Cordova",
+      "country": "México",
+      "state": "Jalisco",
+      "city": "Puerto Vallarta",
+      "street": "Francisco Medina Ascencion 54",
+      "zip": 48290,
+      "phone": "0000000",
+      "mobile": "3220000000",
+      "config_language": "en"
+    },
+    "cities_staff_groups": [
+      {
+        "city_id": 1,
+        "location": "Puerto Vallarta"
+      },
+      {
+        "city_id": 2,
+        "location": "Mazatlán"
+      }
+    ]
   }
 ]
