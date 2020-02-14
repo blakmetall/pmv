@@ -6,7 +6,7 @@
 @section('main-content')
 
     <!-- heading -->
-    <div class="container app-container">
+    <div class="container app-container-sm">
         <div class="card">
             <div class="card-body">
 
@@ -38,27 +38,23 @@
 
 
 
-    <!-- form  -->
-    <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
 
-                <!-- form -->
-                <form action="{{ route('amenities.store') }}" method="post">
+    <!-- form -->
+    <form action="{{ route('amenities.store') }}" method="post">
 
-                    <!-- token -->
-                    @csrf
+        <!-- token -->
+        @csrf
 
-                    <!-- form fields -->
-                    @include('amenities.form-fields', [
-                        'row' => $amenity
-                    ])
+        <div class="container app-container-sm">
 
-                </form>
+            <!-- form fields -->
+            @include('amenities.partials.form', [
+                'row' => $amenity
+            ])        
 
-            </div>
         </div>
-    </div>
+
+    </form>
 
 @endsection
 

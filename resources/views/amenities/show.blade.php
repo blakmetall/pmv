@@ -6,7 +6,7 @@
 @section('main-content')
 
     <!-- here individual fields are loaded -->
-    @include('show-fields')
+    @include('partials.show-fields')
 
 @endsection
 

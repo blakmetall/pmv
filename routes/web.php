@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-    // Rutas de propiedades
+    // properties
     Route::group(['prefix' => 'properties'], function () {
         Route::get('all', 'PropertiesController@index')->name('properties-all');
         Route::post('store', 'PropertiesController@store')->name('properties-store');
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
-// zones routes
+    // zones
     Route::group(['prefix' => 'zones'], function () {
         Route::get('', 'ZonesController@index')->name('zones');
         Route::get('create', 'ZonesController@create')->name('zones.create');
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('destroy/{id}', 'ZonesController@destroy')->name('zones.destroy');
     });
 
-    // amenities routes
+    // amenities
     Route::group(['prefix' => 'amenities'], function () {
         Route::get('', 'AmenitiesController@index')->name('amenities');
         Route::get('create', 'AmenitiesController@create')->name('amenities.create');
@@ -63,7 +63,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
 
-    // types transactions
+    // transaction types
     Route::group(['prefix' => 'transaction-types'], function () {
         Route::get('', 'TransactionTypesController@index')->name('transaction-types');
         Route::get('create', 'TransactionTypesController@create')->name('transaction-types.create');

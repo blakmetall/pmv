@@ -41,10 +41,10 @@
     <div class="mb-4"></div>
 
     <!-- here the search bar is loaded -->
-    @include('amenities.search')
+    @include('amenities.partials.search')
 
     <!-- here the data is loaded -->
-    @include('amenities.table', [
+    @include('amenities.partials.table', [
         'label' => __('Amenities'),
         'rows' => $amenities
     ])

@@ -56,6 +56,7 @@ npm install <br><br>
 ** tal vez se necesite permisos de instalación de acuerdo al equipo <br>
 ** podría ser necesario que eliminen el archivo package-lock.json para la instalación de librerías <br>
 ** las librerías de node están ignoradas con .gitignore
+** al correr este comando, instala los packetes que se encuentran configurados en package.json
 
 -------
 
