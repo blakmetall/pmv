@@ -14,7 +14,7 @@ let mix = require("laravel-mix");
 mix
     /* CSS */
     .js("resources/js/app.js", "public/js")
-    .sass("resources/sass/app.scss", "public/css")
+    .sass("resources/sass/app. scss", "public/css")
     .sass(
         "resources/gull/assets/styles/sass/themes/lite-purple.scss",
         "public/assets/styles/css/themes/lite-purple.min.css"
