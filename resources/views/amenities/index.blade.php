@@ -15,7 +15,7 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Amenities'),
+                            'title' => __('Amenitiess'),
                             'breadcrumbs' => []
                         ])
 
