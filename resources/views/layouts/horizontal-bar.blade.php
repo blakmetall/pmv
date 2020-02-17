@@ -206,7 +206,7 @@
                                 <input type="checkbox" id="dropdownMenuBooking">
                                 <ul>
                                     <li class="nav-item">
-                                        <a class="" href="#">
+                                        <a class="" href="{{ route('users') }}">
                                             <span class="item-name">All</span>
                                         </a>
                                     </li>
