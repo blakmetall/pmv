@@ -216,7 +216,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="" href="#">
+                                        <a class="" href="{{ route('roles') }}">
                                             <span class="item-name">Roles</span>
                                         </a>
                                     </li>

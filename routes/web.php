@@ -31,6 +31,17 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
     });
 
+    // roles
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('', 'RolesController@index')->name('roles');
+        Route::get('create', 'RolesController@create')->name('roles.create');
+        Route::post('store', 'RolesController@store')->name('roles.store');
+        Route::get('show/{role}', 'RolesController@show')->name('roles.show');
+        Route::get('edit/{role}', 'RolesController@edit')->name('roles.edit');
+        Route::post('update/{id}', 'RolesController@update')->name('roles.update');
+        Route::get('destroy/{id}', 'RolesController@destroy')->name('roles.destroy');
+    });
+
     // profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('create', 'ProfileController@create')->name('profiles.create');
