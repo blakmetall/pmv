@@ -31,6 +31,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
     });
 
+    // profile
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('create', 'ProfileController@create')->name('profiles.create');
+        Route::post('store', 'ProfileController@store')->name('profiles.store');
+        Route::get('edit/{id}', 'ProfileController@edit')->name('profiles.edit');
+        Route::post('update/{id}', 'ProfileController@update')->name('profiles.update');
+    });
+
     // properties
     Route::group(['prefix' => 'properties'], function () {
         Route::get('all', 'PropertiesController@index')->name('properties-all');

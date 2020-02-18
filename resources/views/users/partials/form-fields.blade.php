@@ -2,6 +2,7 @@
 <div class="card">
     <div class="card-body">
 
+        <!-- email -->
         <div class="form-group row">
             <label for="field_email" class="col-sm-2 col-form-label">
                 {{ __('Email') }}
@@ -17,6 +18,7 @@
             </div>
         </div>
 
+        <!-- password -->
         <div class="form-group row">
             <label for="field_password" class="col-sm-2 col-form-label">
                 {{ __('Password') }}
@@ -32,6 +34,7 @@
             </div>
         </div>
 
+        <!-- confirm password -->
         <div class="form-group row">
             <label for="field_password_confirmation" class="col-sm-2 col-form-label">
                 {{ __('Confirm Password') }}
@@ -47,6 +50,7 @@
             </div>
         </div>
 
+        <!-- enabled -->
         <div class="form-group row">
             <label for="is_enabled" class="col-sm-2 col-form-label">
                 {{ __('Is Enabled?') }}

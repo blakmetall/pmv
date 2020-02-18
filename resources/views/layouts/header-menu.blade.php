@@ -95,8 +95,17 @@
                         <i class="i-Lock-User mr-1"></i> JOHN DOE
                     </div>
 
-                    <a class="dropdown-item" href="#">Account</a>
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="{{ route('users.edit', auth()->user()) }}">Account</a>
+
+                    @php
+                        if(! auth()->user()->profile ){
+                            $urlProfile = route('profiles.create');
+                        }else{
+                            $urlProfile = route('profiles.edit', auth()->user()->profile->id);
+                        }
+                    @endphp
+
+                    <a class="dropdown-item" href="{{ $urlProfile }}">Profile</a>
 
                     <!-- logout -->
                     <a class="dropdown-item" href="{{ route('logout') }}"
