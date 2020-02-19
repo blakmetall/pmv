@@ -52,13 +52,13 @@ Route::group(['middleware' => ['web']], function () {
 
     // properties
     Route::group(['prefix' => 'properties'], function () {
-        Route::get('all', 'PropertiesController@index')->name('properties-all');
-        Route::post('store', 'PropertiesController@store')->name('properties-store');
-        Route::post('create', 'PropertiesController@create')->name('properties-create');
-        Route::get('show/{id}', 'PropertiesController@show')->name('properties-show');
-        Route::get('update/{id}', 'PropertiesController@edit')->name('properties-edit');
-        Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties-destroy');
-
+        Route::get('', 'PropertiesController@index')->name('properties');
+        Route::post('store', 'PropertiesController@store')->name('properties.store');
+        Route::get('create', 'PropertiesController@create')->name('properties.create');
+        Route::get('show/{id}', 'PropertiesController@show')->name('properties.show');
+        Route::get('update/{id}', 'PropertiesController@edit')->name('properties.edit');
+        Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
+        /*
         Route::group(['prefix' => 'types'], function () {
             Route::get('all', 'PropertyTypesController@index')->name('types-all');
             Route::post('store', 'PropertyTypesController@store')->name('types-store');
@@ -68,6 +68,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('destroy/{id}', 'PropertyTypesController@destroy')->name('types-destroy');
 
         });
+        */
     });
 
     // zones

@@ -76,12 +76,12 @@
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
                                         <li class="nav-item">
-                                            <a class="" href="{{ route('properties-all') }}">
+                                            <a class="" href="{{ route('properties') }}">
                                                 <span class="item-name">{{ trans('messages.menu-option-properties-all') }}</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="" href="{{ route('types-all') }} ">
+                                            <a class="" href="#">
                                                 <span class="item-name">{{ trans('messages.menu-option-properties-types') }}</span>
                                             </a>
                                         </li>

@@ -6,7 +6,7 @@
 @section('main-content')
 
     <!-- heading -->
-    <div class="container app-container">
+    <div class="container app-container-sm">
         <div class="card">
             <div class="card-body">
 
@@ -15,8 +15,13 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Properties'),
-                            'breadcrumbs' => []
+                            'title' => __('Edit property'),
+                            'breadcrumbs' => [
+                                [
+                                    'url' => route('properties'),
+                                    'label' => __('properties'),
+                                ],
+                            ]
                         ])
 
                     </div>
@@ -27,28 +32,32 @@
                         <a href="{{ route('properties.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>
-                        <a href="#" class="btn btn-dark ripple m-1" role="button" >
-                            {{ __('Demo Button') }}
-                        </a>
+
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-    <!-- separator -->
     <div class="mb-4"></div>
 
-    <!-- here the search bar is loaded -->
-    @include('properties.partials.search')
 
-    <!-- here the data is loaded -->
-    @include('properties.partials.table', [
-        'label' => __('properties'),
-        'rows' => $properties
-    ])
+    <!-- form -->
+    <form action="{{ route('properties.update', [$property->id]) }}" method="post">
 
+        <!-- token -->
+        @csrf
+
+        <div class="container app-container-sm">
+
+            <!-- form fields -->
+            @include('properties.partials.form', [
+                'row' => $property
+            ])        
+
+        </div>
+
+    </form>
 
 @endsection
 

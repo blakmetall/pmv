@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use App\Models\PropertyTranslation;
+
+use App\Models\Property;
+use App\Models\City;
+use App\Models\ZoneTranslation;
+use App\Models\PropertyTypeTranslation;
+use App\Models\CleaningOptionTranslation;
+
+use Illuminate\Support\Facades\Auth;
 
 
 class PropertiesController extends Controller
@@ -21,9 +30,17 @@ class PropertiesController extends Controller
 
     public function index()
     {
-        //\App::setLocale(session('lang'));
-        $session_lang = session('lang')." - ".\App::getLocale();
-        return view('/properties.index',['session_data' => $session_lang]);
+        $language_id = 1; // for now is a simulated language
+
+        $properties = (new PropertyTranslation)
+        ->where('language_id', $language_id)
+        ->with('property')
+        ->orderBy('id', 'asc')
+        ->paginate(30);
+
+        return view('properties.index', [
+            'properties' => $properties
+        ]);
     }
 
     /**
@@ -33,7 +50,23 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        //
+        $property = new Property;
+
+        $language_id = 1; // for now is a simulated language
+
+
+        $cities = (new City)->get();        
+        $zones = (new ZoneTranslation)->where('language_id', $language_id)->get();
+        $properties_types = (new PropertyTypeTranslation)->where('language_id', $language_id)->get();
+        $cleaning_option = (new CleaningOptionTranslation)->where('language_id', $language_id)->get();
+        
+        return view('properties.create', [
+            'property' => $property,
+            'cities' => $cities,
+            'zones' => $zones,
+            'properties_types' => $properties_types,
+            'cleaning_option' => $cleaning_option
+        ]);
     }
 
     /**
@@ -44,7 +77,71 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+
+         /* Property EN*/
+        $is_featured = 0;
+        $isabled = 0;
+        $is_online = 0;
+        $has_parking = 0;
+
+        if($request->is_featured){
+            $is_enabled = 1;
+        }
+        if($request->isabled){
+            $is_ensabled = 1;
+        }
+        if($request->is_online){
+            $is_online = 1;
+        }
+        if($request->has_parking){
+            $has_parking = 1;
+        }
+       
+        $property = new Property;
+
+        $property->user_id = $user->id;
+        $property->city_id = $request->city_id;
+        $property->zone_id = $request->zone_id;
+        $property->property_type_id = $request->property_type_id;
+        $property->cleaning_option_id = $request->cleaning_option_id;
+        $property->is_featured = $is_featured;
+        $property->is_enabled = $is_enabled;
+        $property->is_online = $is_online;
+        $property->has_parking = $has_parking;
+        $property->building = $request->building;
+        $property->rental_comission = $request->rental_comission;        
+        $property->bedrooms = $request->bedrooms;
+        $property->bedding_JSON = $request->bedding_JSON;
+        $property->sleeps = $request->sleeps;
+        $property->baths = $request->baths;        
+        $property->lot_size_sqft = $request->lot_size_sqft;
+        $property->construction_size_sqft = $request->construction_size_sqft;
+        $property->phone = $request->phone;
+        $property->address = $request->address;
+        $property->gmaps_lat = $request->gmaps_lat;
+        $property->gmaps_lon = $request->gmaps_lon;
+
+        $property->save();
+
+        $en = new PropertyTranslation;
+        $en->language_id = 1;
+        $en->property_id = $property->id;
+        $en->name = $request->name['en'];
+        $en->description = $request->description['en'];
+        $en->cancellation_policies = $request->cancellation_policies['en'];
+        $en->save();
+
+        $es = new PropertyTranslation;
+        $es->language_id = 2;
+        $es->property_id = $property->id;
+        $es->name = $request->name['es'];
+        $es->description = $request->description['es'];
+        $en->cancellation_policies = $request->cancellation_policies['es'];
+        $es->save();
+
+        return redirect( route('properties') );
+
     }
 
     /**
@@ -89,6 +186,16 @@ class PropertiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // find
+        $property = Property::findOrFail($id);
+
+        // delete translations
+        $property->translations()->where('language_id', 1)->delete();
+        $property->translations()->where('language_id', 2)->delete();
+
+        // delete 
+        $property->delete();
+
+        return redirect( route('properties') );
     }
 }
