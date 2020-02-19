@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
+
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UsersController extends Controller
 {
@@ -13,7 +16,13 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::
+            orderBy('email', 'asc')
+            ->paginate(30);
+
+        return view('users.index', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -23,7 +32,10 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $user = new User;
+        return view('users.create', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -34,7 +46,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->is_enabled = ($request->is_enabled == 'on')?1:0;
+        $user->save();
+
+        // if everything succeeds return to list
+        return redirect( route('users') );
     }
 
     /**
@@ -45,7 +64,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('users.show');
     }
 
     /**
@@ -54,9 +73,11 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -68,7 +89,15 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->email = $request->email;
+        if ( !empty($request->password) ) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->is_enabled = ($request->is_enabled == 'on')?1:0;
+        $user->save();
+        // if everything succeeds return to list
+        return redirect( route('users') );
     }
 
     /**
@@ -79,6 +108,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /// find
+        $user = User::findOrFail($id);
+
+        // delete 
+        $user->delete();
+
+        return redirect( route('users') );
     }
 }

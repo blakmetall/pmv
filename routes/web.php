@@ -20,6 +20,36 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+    // users
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('', 'UsersController@index')->name('users');
+        Route::get('create', 'UsersController@create')->name('users.create');
+        Route::post('store', 'UsersController@store')->name('users.store');
+        Route::get('show/{user}', 'UsersController@show')->name('users.show');
+        Route::get('edit/{user}', 'UsersController@edit')->name('users.edit');
+        Route::post('update/{id}', 'UsersController@update')->name('users.update');
+        Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
+    });
+
+    // roles
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('', 'RolesController@index')->name('roles');
+        Route::get('create', 'RolesController@create')->name('roles.create');
+        Route::post('store', 'RolesController@store')->name('roles.store');
+        Route::get('show/{role}', 'RolesController@show')->name('roles.show');
+        Route::get('edit/{role}', 'RolesController@edit')->name('roles.edit');
+        Route::post('update/{id}', 'RolesController@update')->name('roles.update');
+        Route::get('destroy/{id}', 'RolesController@destroy')->name('roles.destroy');
+    });
+
+    // profile
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('create', 'ProfileController@create')->name('profiles.create');
+        Route::post('store', 'ProfileController@store')->name('profiles.store');
+        Route::get('edit/{id}', 'ProfileController@edit')->name('profiles.edit');
+        Route::post('update/{id}', 'ProfileController@update')->name('profiles.update');
+    });
+
     // properties
     Route::group(['prefix' => 'properties'], function () {
         Route::get('all', 'PropertiesController@index')->name('properties-all');
