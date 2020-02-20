@@ -6,12 +6,12 @@
     <div class="card-body">       
 
         <div class="row">
-            @if(count($cities))                
+            @if(count($cities ?? ''))                
                 <div class="col-md-6 form-group mb-3">
                     <label for="picker1">{{ __('City') }}</label>
                     <select class="form-control" 
                     name="city_id">
-                        @foreach($cities as $city)
+                        @foreach($cities ?? '' as $city)
                             <option value="{{ $city->id }}">{{ $city->name }}</option>
                         @endforeach
                     </select>

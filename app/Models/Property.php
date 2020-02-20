@@ -31,7 +31,7 @@ class Property extends Model {
     }
 
     public function type() {
-        return $this->hasOne('App\Models\PropertyType');
+        return $this->hasOne('App\Models\PropertyType', 'id');
     }
 
     public function city() {
@@ -47,7 +47,7 @@ class Property extends Model {
     }
 
     public function cleaningOption() {
-        return $this->hasOne('App\Models\CleaningOption');
+        return $this->hasOne('App\Models\CleaningOption' , 'id');
     }
 
     public function contacts() {

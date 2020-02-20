@@ -12,6 +12,7 @@ use App\Models\ZoneTranslation;
 use App\Models\PropertyTypeTranslation;
 use App\Models\CleaningOptionTranslation;
 
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -114,6 +115,8 @@ class PropertiesController extends Controller
         $property->bedrooms = $request->bedrooms;
         $property->bedding_JSON = $request->bedding_JSON;
         $property->sleeps = $request->sleeps;
+        $property->floors = $request->floors;
+        $property->maid_fee = $request->maid_fee;
         $property->baths = $request->baths;        
         $property->lot_size_sqft = $request->lot_size_sqft;
         $property->construction_size_sqft = $request->construction_size_sqft;
@@ -152,7 +155,31 @@ class PropertiesController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $language_id = 1; // for now is a simulated language
+
+        $property = Property::with('city')
+                    ->with(["zone.translations" => function($q) use ($language_id){
+                        $q->where('language_id', $language_id);
+                    }])  
+                    ->with(["type.translations" => function($q) use ($language_id){
+                        $q->where('language_id', $language_id);
+                    }])  
+                    ->with(["translations" => function($q) use ($language_id){
+                        $q->where('language_id', $language_id);
+                    }])  
+                    ->with(["cleaningOption.translations" => function($q) use ($language_id){
+                        $q->where('language_id', $language_id);
+                    }])                 
+                    ->find($id);
+        
+        //echo $property->type->translations->where('language_id', $language_id);
+        //echo $property;
+        //exit();
+        
+        return view('properties.show', [
+            'property' => $property
+        ]);
     }
 
     /**
