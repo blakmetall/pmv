@@ -1,3 +1,8 @@
+@php
+    $_current_role = \App\Helpers\Role::current();
+    $_roles = \App\Helpers\Role::available();
+@endphp
+
 <div class="main-header">
     <div class="logo">
         <img src="{{asset('assets/images/logo.png')}}" alt="">
@@ -74,11 +79,16 @@
                 <div class="dropdown-header">
                     <i class="i-Eye-Visible mr-1"></i> VIEW AS
                 </div>
-
-                <a class="dropdown-item" href="#">Administrator</a>
-                <a class="dropdown-item" href="#">Rentals</a>
-                <a class="dropdown-item" href="#">Operations Manager</a>
-                <a class="dropdown-item" href="#">Owner</a>
+                
+                @foreach ($_roles as $role)
+                    <a class="dropdown-item" href="{{ route('roles.update-active', [$role->role_id])}}">
+                        @if ($_current_role->id == $role->role_id)
+                            <b>{{ $role->name }}</b>
+                        @else
+                            {{ $role->name }}
+                        @endif
+                    </a>
+                @endforeach
             </div>
         </div>
 
