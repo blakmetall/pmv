@@ -9,13 +9,14 @@
             @if($row)
                 <div class="col-md-12">
                     <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-primary">
-                            {{ __('Print') }}
-                        </button>                        
+                        <a class="col-1" href="{{ route('properties') }}">
+                            <span class="btn btn-primary">{{ __('List') }}</span>
+                        </a>
+                        <a class="col-1" href="#">
+                            <span class="btn btn-primary">{{ __('Print') }}</span>
+                        </a>
                     </div>
                 </div>
-                
-                
 
                 <div class="row">                    
 
