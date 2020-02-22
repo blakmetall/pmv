@@ -22,9 +22,8 @@
                     <i class="i-Globe mr-1"></i> LANGUAGE
                 </div>
 
-                <a class="dropdown-item" href="{{ url('lang', ['es']) }}">Español</a>
-                <a class="dropdown-item" href="{{ url('lang', ['en']) }}">English</a>
-
+                <a class="dropdown-item" href="{{ route('language.update', ['es']) }}">Español</a>
+                <a class="dropdown-item" href="{{ route('language.update', ['en']) }}">English</a>
             </div>
         </div>
 
