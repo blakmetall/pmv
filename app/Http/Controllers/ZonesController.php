@@ -113,11 +113,13 @@ class ZonesController extends Controller
     {
 
 
-        $zone1['en'] = $zone->translations()->where('language_id', 1)->first();
-        $zone1['es'] = $zone->translations()->where('language_id', 2)->first();
-        $cities = (new City)->get();   
+        $zone['en'] = $zone->translations()->where('language_id', 1)->first();
+        $zone['es'] = $zone->translations()->where('language_id', 2)->first();
+        
+        $cities = (new City)->get();        
+
         return view('zones.edit', [
-            'zone' => $zone1,
+            'zone' => $zone, 
             'cities' => $cities,
         ]);
 
