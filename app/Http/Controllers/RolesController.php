@@ -143,4 +143,20 @@ class RolesController extends Controller
 
         return redirect( route('roles') );
     }
+
+    /**
+     * Sets the active role for the user in the database
+     */
+    public function updateActive($id) 
+    {
+        $profile = (auth()->user())->profile;
+        if ($profile) {
+            if(\App\Helpers\Role::hasValidRoleId($id)) {
+                $profile->config_role_id = $id;
+                $profile->save();
+            }
+        }
+
+        return redirect(route('dashboard'));
+    }
 }

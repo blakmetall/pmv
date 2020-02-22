@@ -11,6 +11,9 @@ class LanguageController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Sets the active language for the user in the database
+     */
     public function update($language_code) 
     {
         $profile = (auth()->user())->profile;

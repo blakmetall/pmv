@@ -34,12 +34,17 @@ Route::group(['middleware' => ['web']], function () {
     // roles
     Route::group(['prefix' => 'roles'], function () {
         Route::get('', 'RolesController@index')->name('roles');
+
+        // we wont be creating or updating roles, we can delete unnecesary functions and methods
         Route::get('create', 'RolesController@create')->name('roles.create');
         Route::post('store', 'RolesController@store')->name('roles.store');
         Route::get('show/{role}', 'RolesController@show')->name('roles.show');
         Route::get('edit/{role}', 'RolesController@edit')->name('roles.edit');
         Route::post('update/{id}', 'RolesController@update')->name('roles.update');
         Route::get('destroy/{id}', 'RolesController@destroy')->name('roles.destroy');
+
+        // update new active role for user
+        Route::get('update-active/{id}', 'RolesController@updateActive')->name('roles.update-active');
     });
 
     // profile

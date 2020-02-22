@@ -22,6 +22,41 @@ class Role
     }
 
     /**
+     * Get the user roles available
+     * 
+     * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
+     */
+    public static function available()
+    {
+        $roles = [];
+
+        $lang = \App\Helpers\Language::current();
+        
+        $user = auth()->user();
+        if ($user && $user->roles()->count()) {
+            foreach ($user->roles as $role) {                
+                $roles[] = $role->translations()->where('language_id', $lang->id)->first();
+            }
+        }
+
+        return $roles;
+    }
+
+    public static function hasValidRoleId($id) {
+        $allowed_roles = self::available();
+        
+        if (count($allowed_roles)) {
+            foreach ($allowed_roles as $role) {
+                if($role->role_id == $id) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Checks if role is allowed for a speficic section, subsection and section listing
      * 
      * @return bool
