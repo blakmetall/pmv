@@ -21,7 +21,7 @@ class AmenitiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $lang = Language::current();
 
         $language_id = $lang->id;

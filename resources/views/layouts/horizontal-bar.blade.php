@@ -9,7 +9,7 @@
                             <div>
                                 <a href="#">
                                     <i class="nav-icon mr-2 i-Calendar-2"></i>
-                                    {{ trans('messages.menu-option-calendar') }}
+                                    {{ __('Calendar') }}
                                 </a>
                             </div>
                         </div>
@@ -20,11 +20,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    {{ trans('messages.menu-option-booking') }}
+                                    {{ __('Bookings') }}
                                 </label>
                                 <a href="">
                                     <i class="nav-icon mr-2 i-Calendar-4"></i>
-                                    {{ trans('messages.menu-option-booking') }}
+                                    {{ __('Bookings') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -32,27 +32,27 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-booking-all') }}</span>
+                                            <span class="item-name">{{ __('All') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-booking-request') }}</span>
+                                            <span class="item-name">{{ __('Requests') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-booking-agents') }}</span>
+                                            <span class="item-name">{{ __('Agents') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-booking-commisions') }}</span>
+                                            <span class="item-name">{{ __('Commisions') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-booking-general') }}</span>
+                                            <span class="item-name">{{ __('General Availability') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -65,11 +65,11 @@
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuProperties">
-                                        Properties
+                                        {{  __('Properties') }}
                                     </label>
                                     <a href="">
                                         <i class="nav-icon mr-2 i-Home1"></i>
-                                        Properties
+                                        {{  __('Properties') }}
                                     </a>
 
                                     <!-- dropdown menu -->
@@ -77,12 +77,12 @@
                                     <ul>
                                         <li class="nav-item">
                                             <a class="" href="{{ route('properties-all') }}">
-                                                <span class="item-name">{{ trans('messages.menu-option-properties-all') }}</span>
+                                                <span class="item-name">{{ __('All') }}</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="" href="{{ route('types-all') }} ">
-                                                <span class="item-name">{{ trans('messages.menu-option-properties-types') }}</span>
+                                                <span class="item-name">{{ __('Property Types') }}</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -95,11 +95,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    {{ trans('messages.menu-option-property-management') }}
+                                    {{ __('Property Management') }}
                                 </label>
                                 <a href="">
                                     <i class="nav-icon mr-2 i-Home-2"></i>
-                                    {{ trans('messages.menu-option-property-management') }}
+                                    {{ __('Property Management') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -107,22 +107,22 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-property-management-all') }}</span>
+                                            <span class="item-name">{{ __('All') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-property-management-balances') }}</span>
+                                            <span class="item-name">{{ __('Balances') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-property-management-transactions') }}</span>
+                                            <span class="item-name">{{ __('Transactions') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-property-management-pending') }}</span>
+                                            <span class="item-name">{{ __('Pending Audits') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -135,11 +135,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    {{ trans('messages.menu-option-cleaning-services') }}
+                                    {{ __('Cleaning Services') }}
                                 </label>
                                 <a href="">
                                     <i class="nav-icon mr-2 i-Green-House"></i>
-                                    {{ trans('messages.menu-option-cleaning-services') }}
+                                    {{ __('Cleaning Services') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -147,12 +147,12 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-cleaning-services-all') }}</span>
+                                            <span class="item-name">{{ __('All') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-property-services-staff') }}</span>
+                                            <span class="item-name">{{ __('Staff') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -165,11 +165,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    {{ trans('messages.menu-option-contractor') }}
+                                    {{ __('Contractors') }}
                                 </label>
                                 <a href="">
                                     <i class="nav-icon mr-2 i-Engineering"></i>
-                                    {{ trans('messages.menu-option-contractor') }}
+                                    {{ __('Contractors') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -177,12 +177,12 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-contractor-all') }}</span>
+                                            <span class="item-name">{{ __('All') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">{{ trans('messages.menu-option-contractor-services') }}</span>
+                                            <span class="item-name">{{ __('Services') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -195,11 +195,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    Users
+                                    {{ __('Users') }}
                                 </label>
                                 <a href="#">
                                     <i class="nav-icon mr-2 i-Mens"></i>
-                                    Users
+                                    {{ __('Users') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -207,17 +207,17 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="{{ route('users') }}">
-                                            <span class="item-name">All</span>
+                                            <span class="item-name">{{ __('All') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">Staff Groups</span>
+                                            <span class="item-name">{{ __('Staff Groups') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="{{ route('roles') }}">
-                                            <span class="item-name">Roles</span>
+                                            <span class="item-name">{{ __('Roles') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -230,11 +230,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    Reporting
+                                    {{ __('Reporting') }}
                                 </label>
                                 <a href="#">
                                     <i class="nav-icon mr-2 i-Newspaper"></i>
-                                    Reporting
+                                    {{ __('Reporting') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -242,7 +242,7 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">All</span>
+                                            <span class="item-name">{{ __('All') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -255,11 +255,11 @@
                             <div>
                                 <!-- label for menu and sidebar menu for responsive -->
                                 <label class="toggle" for="dropdownMenuBooking">
-                                    Settings
+                                    {{ __('Settings') }}
                                 </label>
                                 <a href="#">
                                     <i class="nav-icon mr-2 i-Gear-2"></i>
-                                    Settings
+                                    {{ __('Settings') }}
                                 </a>
 
                                 <!-- dropdown menu -->
@@ -267,12 +267,12 @@
                                 <ul>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">Cities</span>
+                                            <span class="item-name">{{ __('Cities') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="{{ route('zones') }}">
-                                            <span class="item-name">{{__('Zones')}}</span>
+                                            <span class="item-name">{{ __('Zones') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -287,12 +287,12 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">Rental Cleaning Options</span>
+                                            <span class="item-name">{{ __('Rental Cleaning Options') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="" href="#">
-                                            <span class="item-name">Damage Deposits</span>
+                                            <span class="item-name">{{ __('Damage Deposits') }}</span>
                                         </a>
                                     </li>
                                 </ul>

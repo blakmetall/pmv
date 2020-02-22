@@ -226,6 +226,7 @@ return [
 
         // custom helpers
         'Language' => App\Helpers\Language::class,
+        'Role' => App\Helpers\Role::class,
     ],
 
 ];

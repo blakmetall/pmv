@@ -82,15 +82,18 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // amenities
-    Route::group(['prefix' => 'amenities'], function () {
-        Route::get('', 'AmenitiesController@index')->name('amenities');
-        Route::get('create', 'AmenitiesController@create')->name('amenities.create');
-        Route::post('store', 'AmenitiesController@store')->name('amenities.store');
-        Route::get('show/{amenity}', 'AmenitiesController@show')->name('amenities.show');
-        Route::get('edit/{amenity}', 'AmenitiesController@edit')->name('amenities.edit');
-        Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
-        Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
-    });
+    Route::group(
+        ['prefix' => 'amenities', 'middleware' => 'role-permission:settings,amenities'], 
+        function () {
+            Route::get('', 'AmenitiesController@index')->name('amenities');
+            Route::get('create', 'AmenitiesController@create')->name('amenities.create');
+            Route::post('store', 'AmenitiesController@store')->name('amenities.store');
+            Route::get('show/{amenity}', 'AmenitiesController@show')->name('amenities.show');
+            Route::get('edit/{amenity}', 'AmenitiesController@edit')->name('amenities.edit');
+            Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
+            Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
+        }
+    );
 
 
     // transaction types
@@ -109,5 +112,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('update/{language_code}', 'LanguageController@update')->name('language.update');
     });
 
+    // error pages
+    Route::group(['prefix' => 'error'], function() {
+        Route::get('forbidden', 'ErrorController@forbidden')->name('error.forbidden');
+        Route::get('not-found', 'ErrorController@notFound')->name('error.not-found');
+    });
 });
 

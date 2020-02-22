@@ -18,6 +18,8 @@ class LanguageController extends Controller
             if(Language::hasValidLang($language_code)) {
                 $profile->config_language = $language_code;
                 $profile->save();
+
+                session(['lang' => $language_code]);
             }
         }
 
