@@ -55,7 +55,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('', 'PropertiesController@index')->name('properties');
         Route::post('store', 'PropertiesController@store')->name('properties.store');
         Route::get('create', 'PropertiesController@create')->name('properties.create');
-        Route::get('show/{id}', 'PropertiesController@show')->name('properties.show');
+        Route::get('show/{property}', 'PropertiesController@show')->name('properties.show');
         Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
         Route::get('update/{id}', 'PropertiesController@edit')->name('properties.update');
         Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');

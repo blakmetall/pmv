@@ -145,21 +145,50 @@ class PropertiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Property $property)
     {
         
+        $property['en'] = $property
+                ->with('city')
+                ->with(["type.translations" => function($q) {
+                    $q->where('language_id', 1);
+                }]) 
+                ->with(["translations" => function($q){
+                    $q->where('language_id', 1);
+                }])  
+                ->with(["zone.translations" => function($q){
+                    $q->where('language_id', 1);
+                }])
+                ->with(["cleaningOption.translations" => function($q){
+                    $q->where('language_id', 1);
+                }])->first();
+        $property['es'] =  $property
+                ->with('city')
+                ->with(["type.translations" => function($q) {
+                    $q->where('language_id', 2);
+                }]) 
+                ->with(["translations" => function($q){
+                    $q->where('language_id', 2);
+                }])  
+                ->with(["zone.translations" => function($q){
+                    $q->where('language_id', 2);
+                }])
+                ->with(["cleaningOption.translations" => function($q){
+                    $q->where('language_id', 2);
+                }])->first();
+        /*
         $language_id = 1; // for now is a simulated language
 
         $property = Property::with('city')
-                    ->with(["zone.translations" => function($q) use ($language_id){
+                     ->with(["type.translations" => function($q) use ($language_id){
                         $q->where('language_id', $language_id);
-                    }])  
-                    ->with(["type.translations" => function($q) use ($language_id){
-                        $q->where('language_id', $language_id);
-                    }])  
+                    }]) 
                     ->with(["translations" => function($q) use ($language_id){
                         $q->where('language_id', $language_id);
                     }])  
+                    ->with(["zone.translations" => function($q) use ($language_id){
+                        $q->where('language_id', $language_id);
+                    }])
                     ->with(["cleaningOption.translations" => function($q) use ($language_id){
                         $q->where('language_id', $language_id);
                     }])                 
@@ -167,7 +196,7 @@ class PropertiesController extends Controller
         
         //echo $property->type->translations->where('language_id', $language_id);
         //echo $property;
-        //exit();
+        //exit();*/
         
         return view('properties.show', [
             'property' => $property
