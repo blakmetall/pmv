@@ -46,82 +46,260 @@ class Role
     public static function getAllowedSections() {
         $sections = [
             'calendar' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
                 ]),
             ],
             'booking' => [
-                'index' => self::transformSluggedRolesToIds([
+                '*' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
                 ]),
                 'requests' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'agents' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'commissions' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'rentals',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'general-availability' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
                 ]),
             ],
             'properties' => [
-                'index' => self::transformSluggedRolesToIds([
+                '*' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'property-types' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
                 ]),
             ],
             'property-management' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'balances' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'transactions' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'pending-audits' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
             ],
             'cleaning-services' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
                 ]),
                 'staff' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'operations-assistant',
+                    'concierge',
                 ]),
             ],
             'contractors' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
                 'services' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
             ],
             'users' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
@@ -136,12 +314,34 @@ class Role
                 ]),
             ],
             'reporting' => [
-                'index' => self::transformSluggedRolesToIds([
+                '*' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
                 ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
             ],
             'settings' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
                 'cities' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
@@ -160,11 +360,13 @@ class Role
                 ]),
                 'rental-cleaning-options' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'damage-deposits' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
                 ]),
             ]
         ];
@@ -184,7 +386,7 @@ class Role
         $base_roles = [
             'super' => 1,
             'admin' => 2,
-            'pm' => 3,
+            'property-management' => 3,
             'rentals' => 4,
             'rentals-agent' => 5,
             'operations-manager' => 6,
