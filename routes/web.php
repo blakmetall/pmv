@@ -104,12 +104,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('destroy/{id}', 'TransactionTypesController@destroy')->name('transaction-types.destroy');
     });
 
-    Route::get('lang/{lang}', function ($lang) {
-        session(['lang' => $lang]);
-        return \Redirect::back();
-    })->where([
-        'lang' => 'en|es'
-    ]);
+    // language 
+    Route::group(['prefix' => 'language'], function () {
+        Route::get('update/{language_code}', 'LanguageController@update')->name('language.update');
+    });
 
 });
 

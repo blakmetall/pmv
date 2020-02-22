@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AmenityTranslation;
 use Illuminate\Http\Request;
 use App\Models\Amenity;
+use App\Helpers\Language;
 
 class AmenitiesController extends Controller
 {
@@ -21,7 +22,9 @@ class AmenitiesController extends Controller
      */
     public function index()
     {
-        $language_id = 1; // for now is a simulated language
+        $lang = Language::current();
+
+        $language_id = $lang->id;
 
         $amenities = (new AmenityTranslation)
             ->where('language_id', $language_id)
@@ -64,13 +67,13 @@ class AmenitiesController extends Controller
         $amenity->save();
 
         $en = new AmenityTranslation;
-        $en->language_id = 1;
+        $en->language_id = Language::getId('en');
         $en->amenity_id = $amenity->id;
         $en->name = $request->amenity['en'];
         $en->save();
 
         $es = new AmenityTranslation;
-        $es->language_id = 2;
+        $es->language_id = Language::getId('es');
         $es->amenity_id = $amenity->id;
         $es->name = $request->amenity['es'];
         $es->save();
@@ -98,8 +101,13 @@ class AmenitiesController extends Controller
      */
     public function edit(Amenity $amenity)
     {
-        $amenity['en'] = $amenity->translations()->where('language_id', 1)->first();
-        $amenity['es'] = $amenity->translations()->where('language_id', 2)->first();
+        $amenity['en'] = $amenity->translations()
+            ->where('language_id', Language::getId('en'))
+            ->first();
+
+        $amenity['es'] = $amenity->translations()
+            ->where('language_id', Language::getId('es'))
+            ->first();
 
         return view('amenities.edit', [
             'amenity' => $amenity
@@ -122,11 +130,11 @@ class AmenitiesController extends Controller
 
         $amenity = Amenity::findOrFail($id);
 
-        $en = $amenity->translations()->where('language_id', 1)->first();
+        $en = $amenity->translations()->where('language_id', Language::getId('en'))->first();
         $en->name = $request->amenity['en'];
         $en->save();
 
-        $es = $amenity->translations()->where('language_id', 2)->first();
+        $es = $amenity->translations()->where('language_id', Language::getId('es'))->first();
         $es->name = $request->amenity['es'];
         $es->save();
 
@@ -146,8 +154,8 @@ class AmenitiesController extends Controller
         $amenity = Amenity::findOrFail($id);
 
         // delete translations
-        $amenity->translations()->where('language_id', 1)->delete();
-        $amenity->translations()->where('language_id', 2)->delete();
+        $amenity->translations()->where('language_id', Language::getId('en'))->delete();
+        $amenity->translations()->where('language_id', Language::getId('es'))->delete();
 
         // delete 
         $amenity->delete();

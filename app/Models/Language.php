@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model {
 
-    protected $table = '';
+    protected $table = 'languages';
     public $timestamps = false;
 
     public function roles() {
