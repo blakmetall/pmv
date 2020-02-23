@@ -18,6 +18,8 @@ class Language
             }
         }
 
+        self::setLocale($lang_code);
+
         return \App\Models\Language::where('code', $lang_code)->first();
     }
 
@@ -38,4 +40,13 @@ class Language
         }
         return false;
     }
+
+    public static function setLocale($lang_code) {
+        $isSettingLocaleApplied = $lang_code === \App::getLocale();
+
+        if( ! $isSettingLocaleApplied ) {
+            \App::setLocale( $lang_code );
+        }
+    }
+
 }
