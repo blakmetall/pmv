@@ -2,7 +2,10 @@
 
 namespace App\Helpers;
 
-class Role
+use App\Models\Role;
+use App\Helpers\LanguageHelper;
+
+class RoleHelper
 {
     /**
      * Get the current user role configured in profile
@@ -18,7 +21,7 @@ class Role
             $config_role_id = $user->profile->config_role_id;
         }
 
-        return \App\Models\Role::where('id', $user->profile->config_role_id)->first();
+        return Role::where('id', $user->profile->config_role_id)->first();
     }
 
     /**
@@ -30,7 +33,7 @@ class Role
     {
         $roles = [];
 
-        $lang = \App\Helpers\Language::current();
+        $lang = LanguageHelper::current();
         
         $user = auth()->user();
         if ($user && $user->roles()->count()) {
@@ -415,8 +418,6 @@ class Role
      * @return Array List of roles ids
      */
     public static function transformSluggedRolesToIds($roles_slug_list) {
-
-        //echo '<pre>', print_r($roles_slug_list), '<pre>'; exit; 
 
         $base_roles = [
             'super' => 1,

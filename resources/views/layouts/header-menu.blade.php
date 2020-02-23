@@ -1,7 +1,7 @@
 @php
-    $_current_lang = \App\Helpers\Language::current();
-    $_current_role = \App\Helpers\Role::current();
-    $_roles = \App\Helpers\Role::available();
+    $_current_lang = LanguageHelper::current();
+    $_current_role = RoleHelper::current();
+    $_available_roles = RoleHelper::available();
 @endphp
 
 <div class="main-header">
@@ -92,7 +92,7 @@
                     {{ __('VIEW AS') }}
                 </div>
                 
-                @foreach ($_roles as $role)
+                @foreach ($_available_roles as $role)
                     <a class="dropdown-item" href="{{ route('roles.update-active', [$role->role_id])}}">
                         @if ($_current_role->id == $role->role_id)
                             <b>{{ $role->name }}</b>

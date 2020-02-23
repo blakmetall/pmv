@@ -2,7 +2,10 @@
 
 namespace App\Helpers;
 
-class Language
+use App;
+use App\Models\Language;
+
+class LanguageHelper
 {
     public static function current()
     {
@@ -10,7 +13,7 @@ class Language
 
         $user = auth()->user();
         if ($user && $user->profile) {
-            if (!Language::hasValidLang($user->profile->config_language)) {
+            if (!self::hasValidLang($user->profile->config_language)) {
                 $user->profile->config_language = $lang_code;
                 $user->profile->save();
             }else{
@@ -20,7 +23,7 @@ class Language
 
         self::setLocale($lang_code);
 
-        return \App\Models\Language::where('code', $lang_code)->first();
+        return Language::where('code', $lang_code)->first();
     }
 
     public static function getId($code) {
@@ -42,10 +45,10 @@ class Language
     }
 
     public static function setLocale($lang_code) {
-        $isSettingLocaleApplied = $lang_code === \App::getLocale();
+        $isSettingLocaleApplied = $lang_code === App::getLocale();
 
         if( ! $isSettingLocaleApplied ) {
-            \App::setLocale( $lang_code );
+            App::setLocale( $lang_code );
         }
     }
 
