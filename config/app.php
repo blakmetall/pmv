@@ -224,6 +224,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // custom helpers
+        'Language' => App\Helpers\Language::class,
+        'Role' => App\Helpers\Role::class,
     ],
 
 ];

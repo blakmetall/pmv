@@ -31,47 +31,14 @@
     </head>
 
 
-    <body class="text-left">
+    <body>
 
-        <!-- Pre Loader Strat  -->
-        <div class='loadscreen' id="preloader">
-            <div class="loader spinner-bubble spinner-bubble-primary"></div>
-        </div>
-        <!-- Pre Loader end  -->
-
-
-        <!-- ============ Horizontal Layout start ============= -->
-        <div class="app-admin-wrap layout-horizontal-bar clearfix">
-
-            <!-- header menu -->
-            @include('layouts.header-menu')
-
-
-            <!-- bar menu -->
-            @include('layouts.horizontal-bar')
-
-
-            <!-- ============ Body content start ============= -->
-            <div class="main-content-wrap  d-flex flex-column">
-                <div class="main-content">
-
-                    <!-- MAIN CONTENT -->
-                    @yield('main-content')
-                    <!-- END MAIN CONTENT -->
-
-                </div>
-
-                <!-- footer -->
-                @include('layouts.footer')
-            </div>
-            <!-- ============ Body content End ============= -->
-
-        </div>
-        <!-- ============ Horizontal Layout End ============= -->
-
+        <!-- MAIN CONTENT -->
+        @yield('main-content')
+        <!-- END MAIN CONTENT -->
 
         {{-- common js --}}
-        <script src="{{asset('assets/js/common-bundle-script.js')}}"></script>
+        <script src="{{mix('assets/js/common-bundle-script.js')}}"></script>
 
         {{-- page specific javascript --}}
         @yield('page-js')

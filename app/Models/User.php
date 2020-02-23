@@ -23,7 +23,7 @@ class User extends Authenticatable {
     ];
 
     public function roles() {
-        return $this->belongsToMany('App\Models\User', 'user_has_roles');
+        return $this->belongsToMany('App\Models\Role', 'user_has_roles');
     }
 
     public function profile() {
