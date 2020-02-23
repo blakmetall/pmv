@@ -15,7 +15,7 @@ class Role
         
         $user = auth()->user();
         if ($user && $user->profile) {
-            $config_role_id = $user->profile->config_role_id;
+            $config_role_id = $user->profile->config_role_id;          
         }
 
         return \App\Models\Role::where('id', $user->profile->config_role_id)->first();

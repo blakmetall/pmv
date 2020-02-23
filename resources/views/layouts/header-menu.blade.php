@@ -1,7 +1,6 @@
 @php
-    $_current_role = \App\Helpers\Role::current();
+    $_current_role = \App\Helpers\Role::current();    
     $_roles = \App\Helpers\Role::available();
-   
 @endphp
 
 <div class="main-header">
@@ -84,11 +83,7 @@
                 @foreach ($_roles as $role)
                     <a class="dropdown-item" href="{{ route('roles.update-active', [$role->role_id])}}">
 
-                        @if ($_current_role->id == $role->role_id)
-                            <b>{{ $role->name }}</b>
-                        @else
-                            {{ $role->name }}
-                        @endif
+                        
                         
                     </a>
                 @endforeach
