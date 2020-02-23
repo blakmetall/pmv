@@ -4,19 +4,36 @@
 @endsection
 @section('main-content')
 
-    <!-- Breadcrumbs -->
-    <div class="breadcrumb">
-        <h1>{{ trans('messages.welcome') }}</h1>
+    <!-- heading -->
+    <div class="container app-container">
+        <div class="card">
+            <div class="card-body">
 
-        <ul>
-            <li><a href="">Starter</a></li>
-            <li>Blank Page</li>
-        </ul>
+                <div class="row">
+                    <div class="col-md col-8">
+
+                        <!-- title layout heading goes here -->
+                        @include('partials.page-heading', [
+                            'title' => __('Dashboard'),
+                            'breadcrumbs' => []
+                        ])
+
+                    </div>
+
+                    <div class="col-md col-4 text-lg-right">
+                        <!-- action buttons goes here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <div class="separator-breadcrumb border-top"></div>
 
+    <!-- separator -->
+    <div class="mb-4"></div>
 
     <!-- Content Goes Here-->
+    <div id="react-example">react component here</div>
 
 @endsection
 

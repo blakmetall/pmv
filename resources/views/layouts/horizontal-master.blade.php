@@ -82,9 +82,11 @@
         {{-- scripts for horizontal sidebar --}}
         <script src="{{asset('assets/js/sidebar-horizontal.script.js')}}"></script>
 
-
         {{-- app js --}}
         <script src="{{asset('js/app.js')}}"></script>
+
+        {{-- scripts js --}}
+        <script src="{{asset('js/scripts.js')}}"></script>
 
         <!-- yield js bottom -->
         @yield('bottom-js')
