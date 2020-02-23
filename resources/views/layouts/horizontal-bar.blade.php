@@ -366,10 +366,10 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('settings', 'rental-cleaning-options'))
+                                        @if ($_role->isAllowed('settings', 'cleaning-options'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
-                                                    <span class="item-name">{{ __('Rental Cleaning Options') }}</span>
+                                                    <span class="item-name">{{ __('Cleaning Options') }}</span>
                                                 </a>
                                             </li>
                                         @endif
