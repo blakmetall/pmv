@@ -71,7 +71,7 @@
 
 
         {{-- common js --}}
-        <script src="{{mix('assets/js/common-bundle-script.js')}}"></script>
+        <script src="{{asset('assets/js/common-bundle-script.js')}}"></script>
 
         {{-- page specific javascript --}}
         @yield('page-js')
