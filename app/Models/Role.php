@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\RoleHelper;
 
 class Role extends Model {
 
@@ -31,11 +32,11 @@ class Role extends Model {
             $this->setAllowedSections();
         }
 
-        return \App\Helpers\Role::isAllowed($this->id, $section, $sub, $this->allowedSections );
+        return RoleHelper::isAllowed($this->id, $section, $sub, $this->allowedSections );
     }
 
     private function setAllowedSections() {
-        $this->allowedSections = \App\Helpers\Role::getAllowedSections();
+        $this->allowedSections = RoleHelper::getAllowedSections();
     }
 
 }

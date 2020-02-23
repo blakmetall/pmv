@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RoleTranslation;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Helpers\RoleHelper;
 
 class RolesController extends Controller
 {
@@ -151,7 +152,7 @@ class RolesController extends Controller
     {
         $profile = (auth()->user())->profile;
         if ($profile) {
-            if(\App\Helpers\Role::hasValidRoleId($id)) {
+            if(RoleHelper::hasValidRoleId($id)) {
                 $profile->config_role_id = $id;
                 $profile->save();
             }

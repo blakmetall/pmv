@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Language;
+use App;
+use App\Helpers\LanguageHelper;
 
 class LanguageController extends Controller
 {
@@ -18,12 +19,12 @@ class LanguageController extends Controller
     {
         $profile = (auth()->user())->profile;
         if ($profile) {
-            if(Language::hasValidLang($language_code)) {
+            if(LanguageHelper::hasValidLang($language_code)) {
                 $profile->config_language = $language_code;
                 $profile->save();
 
                 session(['lang' => $language_code]);
-                \App::setLocale($language_code);
+                App::setLocale($language_code);
             }
         }
 

@@ -13,7 +13,7 @@ class ErrorController extends Controller
     }
 
     /**
-     * Show forbidden page for permission denied
+     * Show not found page
      */
     public function notFound() 
     {
