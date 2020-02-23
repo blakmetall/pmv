@@ -7,18 +7,4 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
-.app-container {
-  max-width: 1250px;
-}
-.app-container-sm {
-  max-width: 991px;
-}
-
-
-
-.app-breadcrumb {
-  position: relative;
-  margin-bottom: 0;
-  top: 9px;
-  padding-bottom: 17px;
-}
+@import 'styles';

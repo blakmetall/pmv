@@ -45,8 +45,11 @@ mix.combine(
 
 mix.js(["resources/gull/assets/js/script.js"], "public/assets/js/script.js");
 
+// react app
+// mix.react("resources/js/app.js", "public/js");
 
-////// *** Mix files after install Laravel Auth
-// mix.js('resources/js/app.js', 'public/js')
-//   .sass('resources/sass/app.scss', 'public/css');
-// Test
+// scripts
+// mix.js("resources/js/scripts.js", "public/js");
+
+// sass app
+// mix.sass("resources/sass/app.scss", "public/css");

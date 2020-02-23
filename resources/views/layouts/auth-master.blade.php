@@ -47,6 +47,9 @@
         {{-- app js --}}
         <script src="{{asset('js/app.js')}}"></script>
 
+        {{-- scripts js --}}
+        <script src="{{asset('js/scripts.js')}}"></script>
+
         <!-- yield js bottom -->
         @yield('bottom-js')
     </body>
