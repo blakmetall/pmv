@@ -23,6 +23,7 @@ class LanguageController extends Controller
                 $profile->save();
 
                 session(['lang' => $language_code]);
+                \App::setLocale($language_code);
             }
         }
 

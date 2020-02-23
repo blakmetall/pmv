@@ -393,7 +393,7 @@ class Role
                     'super',
                     'admin'
                 ]),
-                'rental-cleaning-options' => self::transformSluggedRolesToIds([
+                'cleaning-options' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
                 ]),

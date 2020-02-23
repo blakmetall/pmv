@@ -1,4 +1,5 @@
 @php
+    $_current_lang = \App\Helpers\Language::current();
     $_current_role = \App\Helpers\Role::current();
     $_roles = \App\Helpers\Role::available();
 @endphp
@@ -17,24 +18,6 @@
     <div style="margin: auto"></div>
 
     <div class="header-part-right">
-
-        <!-- Language switch -->
-        <div class="dropdown">
-            <i class="i-Globe text-muted header-icon" role="button" id="languageSwitcherBtn" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false"></i>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageSwitcherBtn">
-                <div class="dropdown-header">
-                    <i class="i-Globe mr-1"></i> LANGUAGE
-                </div>
-
-                <a class="dropdown-item" href="{{ route('language.update', ['es']) }}">Español</a>
-                <a class="dropdown-item" href="{{ route('language.update', ['en']) }}">English</a>
-            </div>
-        </div>
-
-        <!-- Full screen toggle -->
-        <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
-
 
         <!-- Notification -->
         <div class="dropdown">
@@ -71,13 +54,42 @@
         </div>
 
 
+        <!-- Language switch -->
+        <div class="dropdown">
+            <i class="i-Globe text-muted header-icon" role="button" id="languageSwitcherBtn" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false"></i>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageSwitcherBtn">
+                <div class="dropdown-header">
+                    <i class="i-Globe mr-1"></i> 
+                    {{ __('LANGUAGE') }}
+                </div>
+
+                <a class="dropdown-item" href="{{ route('language.update', ['es']) }}">
+                    @if ($_current_lang->id === 2)
+                        <b>{{ __('Spanish') }}</b>
+                    @else
+                        {{ __('Spanish') }}
+                    @endif
+                </a>
+                <a class="dropdown-item" href="{{ route('language.update', ['en']) }}">
+                    @if($_current_lang->id === 1)
+                        <b>{{ __('English') }}</b>
+                    @else
+                        {{ __('English') }}
+                    @endif
+                </a>
+            </div>
+        </div>
+
+
         <!-- Role switch -->
         <div class="dropdown">
             <i class="i-Two-Windows text-muted header-icon" role="button" id="roleSwitcherButton" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="roleSwitcherButton">
                 <div class="dropdown-header">
-                    <i class="i-Eye-Visible mr-1"></i> VIEW AS
+                    <i class="i-Eye-Visible mr-1"></i> 
+                    {{ __('VIEW AS') }}
                 </div>
                 
                 @foreach ($_roles as $role)
@@ -93,6 +105,10 @@
         </div>
 
 
+        <!-- Full screen toggle -->
+        <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
+
+
         <!-- User avatar dropdown -->
         <div class="dropdown">
             <div class="user col align-self-end">
@@ -104,7 +120,9 @@
                         <i class="i-Lock-User mr-1"></i> JOHN DOE
                     </div>
 
-                    <a class="dropdown-item" href="{{ route('users.edit', auth()->user()) }}">Account</a>
+                    <a class="dropdown-item" href="{{ route('users.edit', auth()->user()) }}">
+                        {{ __('Account') }}
+                    </a>
 
                     @php
                         if(! auth()->user()->profile ){
@@ -114,12 +132,14 @@
                         }
                     @endphp
 
-                    <a class="dropdown-item" href="{{ $urlProfile }}">Profile</a>
+                    <a class="dropdown-item" href="{{ $urlProfile }}">
+                        {{  __('Profile') }}
+                    </a>
 
                     <!-- logout -->
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        {{ __('Sign out') }}
+                        {{ __('Sign Out') }}
                     </a> <!-- test -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
