@@ -6,9 +6,7 @@
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif 
 
-        {{ $zone}}
-
-        
+            
         <div class="form-group row">
             <label for="field_zone_{{ $lang }}" class="col-sm-2 col-form-label">
                 {{ __('Zone') }}

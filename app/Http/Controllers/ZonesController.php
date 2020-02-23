@@ -123,10 +123,6 @@ class ZonesController extends Controller
             'cities' => $cities,
         ]);
 
-
-
-
-
         /**$cities = (new City)->get();
         return view('zones.edit', [
             'zone' => $zone,
