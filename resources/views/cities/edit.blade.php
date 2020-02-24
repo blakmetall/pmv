@@ -42,20 +42,19 @@
     <div class="mb-4"></div>
 
 
-
     <!-- form  -->
     <div class="container app-container">
         <div class="card">
             <div class="card-body">
 
                 <!-- form -->
-                <form action="{{ route('cities.update', [$city->id]) }}" method="post">
+                <form action="{{ route('cities.update', $id) ?? '' }}" method="post">
 
                     <!-- token -->
                 @csrf
 
                 <!-- form fields -->
-                    @include('cities.form-fields', [
+                    @include('cities.partials.form', [
                         'row' => $city
                     ])
 

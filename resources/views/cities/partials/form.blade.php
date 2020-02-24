@@ -1,8 +1,12 @@
-<!-- load english fields -->
+<!-- load city fields -->
 @include('cities.partials.form-fields', [
     'row' => $row
 ])
 
+<!-- load states fields -->
+@include('cities.partials.form-fields-states', [
+    'row' => $row
+])
 
 <!-- form actions -->
 <div class="card">
@@ -13,7 +17,7 @@
 
                     <!-- create button -->
                     <button type="submit" class="btn  btn-primary m-1">
-                        @if( ! $row->id )
+                        @if( ! $row )
                             {{ __('Create') }}
                         @else
                             {{ __('Update') }}
@@ -25,7 +29,7 @@
                     </a>
 
                     <!-- if editing might be a chance to delete -->
-                    @if( $row->id )
+                    @if( $row )
                         <button type="button" class="btn  btn-danger m-1 footer-delete-right">
                             {{ __('Delete') }}
                         </button>
