@@ -13,7 +13,7 @@ class LanguageHelper
 
         $user = auth()->user();
         if ($user && $user->profile) {
-            if (!self::hasValidLang($user->profile->config_language)) {
+            if (!self::hasValidLocale($user->profile->config_language)) {
                 $user->profile->config_language = $lang_code;
                 $user->profile->save();
             }else{
@@ -21,35 +21,24 @@ class LanguageHelper
             }
         }
 
-        self::setLocale($lang_code);
-
         return Language::where('code', $lang_code)->first();
     }
 
-    public static function getId($code) {
-        switch($code) {
-            case 'es': $id = 2; break;
-            case 'en':
-            default:
-                $id = 1;
-        }
-        return $id;
+    public static function setLocale($locale) {
+        $locale = self::hasValidLocale($locale) ? $locale : 'en';
+        App::setLocale($locale);
     }
 
-    public static function hasValidLang($lang) {
-        $allowed_languages = ['en', 'es'];
-        if (in_array($lang, $allowed_languages)) {
-            return true;
-        }
-        return false;
+    public static function getLocale() {
+        return App::getLocale();
     }
 
-    public static function setLocale($lang_code) {
-        $isSettingLocaleApplied = $lang_code === App::getLocale();
-
-        if( ! $isSettingLocaleApplied ) {
-            App::setLocale( $lang_code );
-        }
+    public static function hasValidLocale($locale) {
+        return in_array($locale, ['en', 'es']);
     }
-
+    
+    public static function getId($locale) {
+        $locales = ['en' => 2, 'es' => 1];
+        return (isset($locales[$locale])) ? $locales[$locale] : 2;
+    }
 }
