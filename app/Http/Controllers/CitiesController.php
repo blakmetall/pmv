@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\City;
 
 class CitiesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,11 @@ class CitiesController extends Controller
      */
     public function index()
     {
-        //
+        $cities = City::paginate(5)->onEachSide(5);
+
+        return view('cities.index', [
+            'cities' => $cities
+        ]);
     }
 
     /**
@@ -23,7 +32,12 @@ class CitiesController extends Controller
      */
     public function create()
     {
-        //
+        $city = new City;
+        echo $city;
+        exit();
+        return view('cities.create', [
+            'city' => $city
+        ]);
     }
 
     /**
@@ -34,7 +48,11 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $city = new City;
+        $city->save();
+
+        // if everything succeeds return to list
+        return redirect( route('cities') );
     }
 
     /**
@@ -45,7 +63,7 @@ class CitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('cities.show');
     }
 
     /**
@@ -56,7 +74,9 @@ class CitiesController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('cities.edit', [
+            'city' => $city
+        ]);
     }
 
     /**
@@ -79,6 +99,6 @@ class CitiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect(route('cities.create') );
     }
 }
