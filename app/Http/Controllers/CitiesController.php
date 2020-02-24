@@ -33,8 +33,6 @@ class CitiesController extends Controller
     public function create()
     {
         $city = new City;
-        echo $city;
-        exit();
         return view('cities.create', [
             'city' => $city
         ]);
