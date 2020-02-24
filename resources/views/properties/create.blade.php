@@ -15,7 +15,7 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Create Amenity'),
+                            'title' => __('Create Property'),
                             'breadcrumbs' => [
                                 [
                                     'url' => route('properties'),

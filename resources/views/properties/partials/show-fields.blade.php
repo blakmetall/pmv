@@ -1,10 +1,11 @@
-<div class="row">                    
+<div class="row"> 
+    <?php /*                   
     <div class="col-md-12 form-group mb-3">
         @if ($label)
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif 
     </div>
-
+    */ ?>
     <div class="col-md-12 form-group mb-3">
         <label for="name">{{ __('Property Name') }}</label>
         <span class="form-control">  {{  $row[$lang]->translations->first()->name }} </span>

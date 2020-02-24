@@ -12,17 +12,25 @@
     <div class="card col-7 align-self-center">
         
         <div class="card-body">
-            <div class="card-title">
-                {{ __('Property Details') }}
+            <div class="col-md col-8">
+
+                <!-- title layout heading goes here -->
+                @include('partials.page-heading', [
+                    'title' => __('Properties Details'),
+                    'breadcrumbs' => []
+                ])
+
             </div>
 
+            
             <div class="col-md-12">
                 <div class="row justify-content-md-end">
-                    <a class="col-1" href="{{ route('properties') }}">
-                        <span class="btn btn-primary">{{ __('List') }}</span>
+                    <!-- action buttons goes here -->
+                    <a href="{{ route('properties') }}" class="btn btn-dark ripple m-1" role="button" >
+                        {{ __('Back') }}
                     </a>
-                    <a class="col-1" href="#">
-                        <span class="btn btn-primary">{{ __('Print') }}</span>
+                    <a href="#" class="btn btn-dark ripple m-1" role="button" >
+                        {{ __('Print') }}
                     </a>
                 </div>
             </div>
