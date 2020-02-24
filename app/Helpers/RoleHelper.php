@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
 use App\Models\Role;
 use App\Helpers\LanguageHelper;
 
@@ -445,5 +446,26 @@ class RoleHelper
         }
 
         return $roles_ids;
+    }
+
+    /**
+     * Get the user roles from user_id
+     * 
+     * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
+     */
+    public static function roles($user_id)
+    {
+        $roles = [];
+
+        $lang = LanguageHelper::current();
+        
+        $user = User::find($user_id);
+        if ($user && $user->roles()->count()) {
+            foreach ($user->roles as $role) {                
+                $roles[] = $role->translations()->where('language_id', $lang->id)->first();
+            }
+        }
+
+        return $roles;
     }
 }
