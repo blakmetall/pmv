@@ -4,9 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+        
             <div class="card">
                 <div class="card-header">
-                    {{ __('Login') }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ __('Login') }}
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @include('partials.language-switcher')
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card-body">

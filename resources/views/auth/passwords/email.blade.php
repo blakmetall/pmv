@@ -6,7 +6,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Reset Password') }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ __('Reset Password') }}
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @include('partials.language-switcher')
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card-body">

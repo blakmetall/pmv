@@ -13,4 +13,7 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/react-example/react-example');
+require('./components/react-example/index');
+
+// app components
+require('./components/language-switcher/index');

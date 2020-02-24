@@ -5,7 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ __('Verify Your Email Address') }}
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @include('partials.language-switcher')
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card-body">
                     @if (session('resent'))
