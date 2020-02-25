@@ -41,14 +41,13 @@
     </div>
     <div class="mb-4"></div>
 
-
+    
     <!-- form  -->
     <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
+        
 
                 <!-- form -->
-                <form action="{{ route('cities.update', $id) ?? '' }}" method="post">
+                <form action="{{ route('cities.update', $city->id) ?? '' }}" method="post">
 
                     <!-- token -->
                 @csrf
@@ -61,8 +60,7 @@
                 </form>
 
             </div>
-        </div>
-    </div>
+
 
 @endsection
 

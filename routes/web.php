@@ -106,7 +106,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('create', 'CitiesController@create')->name('cities.create');
             Route::post('store', 'CitiesController@store')->name('cities.store');
             Route::get('show/{id}', 'CitiesController@show')->name('cities.show');
-            Route::get('edit/{id}', 'CitiesController@edit')->name('cities.edit');
+            Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
             Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
             Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
         });
