@@ -10,9 +10,8 @@
 
     <div class="row justify-content-md-center">
     <div class="card col-7 align-self-center">
-        
-        <div class="card-body">
-            <div class="col-md col-8">
+
+         <div class="col-md col-8">
 
                 <!-- title layout heading goes here -->
                 @include('partials.page-heading', [
@@ -21,6 +20,9 @@
                 ])
 
             </div>
+        
+        <div class="card-body">
+           
 
             
             <div class="col-md-12">

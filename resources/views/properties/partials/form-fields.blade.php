@@ -15,7 +15,9 @@
 
             <div class="col-md-12 form-group mb-3">
                 <label for="firstName1">{{ __('Description') }}</label>
-                <textarea class="form-control" placeholder="Property Description" name="description[{{ $lang }}]">{{ old(('property.' . $lang), (isset($property[$lang]) ? $property[$lang]->description : '')) }}</textarea>           
+                <textarea class="form-control" placeholder="Property Description" name="description[{{ $lang }}]">
+                    {{ old(('property.' . $lang), (isset($property[$lang]) ? $property[$lang]->description : '')) }}
+                </textarea>           
             </div>
             <div class="col-md-12 form-group mb-3">
                 <label for="firstName1">{{ __('Cancellation Policies') }}</label>

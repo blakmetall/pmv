@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // properties
-    Route::group(['prefix' => 'properties'], function () {
+    Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:settings,amenities'], function () {
         Route::get('', 'PropertiesController@index')->name('properties');
         Route::post('store', 'PropertiesController@store')->name('properties.store');
         Route::get('create', 'PropertiesController@create')->name('properties.create');
@@ -64,17 +64,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
         Route::get('update/{id}', 'PropertiesController@edit')->name('properties.update');
         Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
-        /*
-        Route::group(['prefix' => 'types'], function () {
-            Route::get('all', 'PropertyTypesController@index')->name('types-all');
-            Route::post('store', 'PropertyTypesController@store')->name('types-store');
-            Route::post('create', 'PropertyTypesController@create')->name('types-create');
-            Route::get('show/{id}', 'PropertyTypesController@show')->name('types-show');
-            Route::get('update/{id}', 'PropertyTypesController@edit')->name('types-edit');
-            Route::get('destroy/{id}', 'PropertyTypesController@destroy')->name('types-destroy');
-
-        });
-        */
     });
 
     // zones

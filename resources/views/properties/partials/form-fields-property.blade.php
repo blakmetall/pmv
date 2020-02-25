@@ -1,7 +1,5 @@
 <!-- english -->
 
-
-
 <div class="card">
     <div class="card-body">       
 
@@ -11,20 +9,20 @@
                     <label for="picker1">{{ __('City') }}</label>
                     <select class="form-control" 
                     name="city_id">
-                        @foreach($cities  as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                        @foreach($cities  as $city)                            
+                            <option value="{{ $city->id }}" {{ ( ($property->city_id == $city->id) ? 'selected' : '' ) }}>{{ $city->name }}</option>
                         @endforeach
                     </select>
                 </div>             
             @endif
-          
+
             @if(count($zones))                
                 <div class="col-md-6 form-group mb-3">
                     <label for="picker1">{{ __('Zone') }}</label>
                     <select class="form-control"
                      name="zone_id">
-                        @foreach($zones as $zone)
-                            <option value="{{ $zone->id }}">{{ $zone->name }}</option>
+                        @foreach($zones as $zone)                            
+                            <option value="{{ $zone->id }}" {{ ( ($property->zone_id == $zone->id) ? 'selected' : '' ) }}>{{ $zone->translations->first()->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -35,8 +33,8 @@
                     <label for="picker1">{{ __('Property Type') }}</label>
                     <select class="form-control" 
                     name="property_type_id">
-                        @foreach($properties_types as $property_type)
-                            <option value="{{ $property_type->id }}">{{ $property_type->name }}</option>
+                        @foreach($properties_types as $property_type)                            
+                            <option value="{{ $property_type->id }}" {{ ( ($property->property_type_id == $property_type->id) ? 'selected' : '' ) }}>{{ $property_type->translations->first()->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -47,7 +45,7 @@
                     <label for="picker1">{{ __('Cleaning Option') }}</label>
                     <select class="form-control" name="cleaning_option_id">
                         @foreach($cleaning_option as $clean_option)
-                            <option value="{{ $clean_option->id }}">{{ $clean_option->name }}</option>
+                            <option value="{{ $clean_option->id }}" {{ ( ($property->cleaning_option_id == $clean_option->id) ? 'selected' : '' ) }}>{{ $clean_option->translations->first()->name }}</option>
                         @endforeach
                     </select>
                 </div>
