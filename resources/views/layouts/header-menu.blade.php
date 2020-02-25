@@ -94,11 +94,9 @@
                 
                 @foreach ($_available_roles as $role)
                     <a class="dropdown-item" href="{{ route('roles.update-active', [$role->role_id])}}">
-                        @if ($_current_role->id == $role->role_id)
-                            <b>{{ $role->name }}</b>
-                        @else
-                            {{ $role->name }}
-                        @endif
+
+                        
+                        
                     </a>
                 @endforeach
             </div>

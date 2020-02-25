@@ -24,20 +24,26 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    {{ $row->transaction_type_id}}
+                                    {{ $row->property->id }}
                                 </th>
 
                                 <!-- name -->
-                                <td>{{ $row->name  }}</td>
+                                <td>{{ $row->name }}</td>
+
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('transaction-types.edit', [$row->transaction_type_id]) }}" class="text-success mr-2">
+                                    <a href="{{ route('properties.show', [$row->property->id]) }}" class="text-primary mr-2">
+                                        <i class="nav-icon i-Eye font-weight-bold"></i>
+                                    </a>
+                                    <a href="{{ route('properties.edit', [$row->property->id]) }}" class="text-success mr-2">
                                         <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                     </a>
-                                    <a href="{{ route('transaction-types.destroy', [$row->transaction_type_id]) }}" class="text-danger mr-2">
+                                    <a href="{{ route('properties.destroy', [$row->property->id]) }}" class="text-danger mr-2">
                                         <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                     </a>
+                                    
                                 </td>
+
                             </tr>
                         @endforeach
                     @endif

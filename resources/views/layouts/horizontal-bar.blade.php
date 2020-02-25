@@ -100,7 +100,7 @@
                                         <ul>
                                             @if ($_current_role->isAllowed('properties', 'index'))
                                                 <li class="nav-item">
-                                                    <a class="" href="{{ route('properties-all') }}">
+                                                    <a class="" href="{{ route('properties') }}">
                                                         <span class="item-name">{{ __('All') }}</span>
                                                     </a>
                                                 </li>
@@ -108,7 +108,7 @@
 
                                             @if ($_current_role->isAllowed('properties', 'property-types'))
                                                 <li class="nav-item">
-                                                    <a class="" href="{{ route('types-all') }} ">
+                                                    <a class="" href="#">
                                                         <span class="item-name">{{ __('Property Types') }}</span>
                                                     </a>
                                                 </li>
