@@ -15,7 +15,8 @@ const mix = require('laravel-mix');
 ////// *** Mix files after before Laravel Auth
 mix
 /* CSS */
-    .js("resources/js/app.js", "public/js")
+    .react("resources/js/app.js", "public/js")
+    .js("resources/js/scripts.js", "public/js/scripts.js")
     .sass("resources/sass/app.scss", "public/css")
     .sass(
         "resources/gull/assets/styles/sass/themes/lite-purple.scss",
@@ -44,9 +45,3 @@ mix.combine(
 );
 
 mix.js(["resources/gull/assets/js/script.js"], "public/assets/js/script.js");
-
-
-////// *** Mix files after install Laravel Auth
-// mix.js('resources/js/app.js', 'public/js')
-//   .sass('resources/sass/app.scss', 'public/css');
-// Test

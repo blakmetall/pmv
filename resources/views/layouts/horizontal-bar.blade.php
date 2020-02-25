@@ -1,5 +1,5 @@
 @php
-    $_role = \App\Helpers\Role::current();
+    $_current_role = RoleHelper::current();
 @endphp
 
 <div class="horizontal-bar-wrap">
@@ -8,7 +8,7 @@
             <div class=" topnav rtl-ps-none" id="" data-perfect-scrollbar data-suppress-scroll-x="true">
                 <ul class="menu float-left">
 
-                    @if ($_role->isAllowed('calendar', 'heading-menu'))
+                    @if ($_current_role->isAllowed('calendar', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -21,7 +21,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('booking', 'heading-menu'))
+                    @if ($_current_role->isAllowed('booking', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -37,7 +37,7 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_role->isAllowed('booking', 'index'))
+                                        @if ($_current_role->isAllowed('booking', 'index'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('All') }}</span>
@@ -45,7 +45,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('booking', 'requests'))
+                                        @if ($_current_role->isAllowed('booking', 'requests'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Requests') }}</span>
@@ -53,7 +53,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('booking', 'agents'))
+                                        @if ($_current_role->isAllowed('booking', 'agents'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Agents') }}</span>
@@ -61,7 +61,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('booking', 'commisions'))
+                                        @if ($_current_role->isAllowed('booking', 'commisions'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Commisions') }}</span>
@@ -69,7 +69,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('booking', 'general-availability'))
+                                        @if ($_current_role->isAllowed('booking', 'general-availability'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('General Availability') }}</span>
@@ -82,7 +82,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('properties', 'heading-menu'))
+                    @if ($_current_role->isAllowed('properties', 'heading-menu'))
                         <li>
                             <div>
                                     <div>
@@ -98,7 +98,7 @@
                                         <!-- dropdown menu -->
                                         <input type="checkbox" id="dropdownMenuBooking">
                                         <ul>
-                                            @if ($_role->isAllowed('properties', 'index'))
+                                            @if ($_current_role->isAllowed('properties', 'index'))
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('properties') }}">
                                                         <span class="item-name">{{ __('All') }}</span>
@@ -106,7 +106,7 @@
                                                 </li>
                                             @endif
 
-                                            @if ($_role->isAllowed('properties', 'property-types'))
+                                            @if ($_current_role->isAllowed('properties', 'property-types'))
                                                 <li class="nav-item">
                                                     <a class="" href="#">
                                                         <span class="item-name">{{ __('Property Types') }}</span>
@@ -119,7 +119,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('property-management', 'heading-menu'))
+                    @if ($_current_role->isAllowed('property-management', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -135,7 +135,7 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_role->isAllowed('property-management', 'index'))
+                                        @if ($_current_role->isAllowed('property-management', 'index'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('All') }}</span>
@@ -143,7 +143,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('property-management', 'balances'))
+                                        @if ($_current_role->isAllowed('property-management', 'balances'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Balances') }}</span>
@@ -151,7 +151,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('property-management', 'transactions'))
+                                        @if ($_current_role->isAllowed('property-management', 'transactions'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Transactions') }}</span>
@@ -159,7 +159,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('property-management', 'pending-audits'))
+                                        @if ($_current_role->isAllowed('property-management', 'pending-audits'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Pending Audits') }}</span>
@@ -172,7 +172,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('cleaning-services', 'heading-menu'))
+                    @if ($_current_role->isAllowed('cleaning-services', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -188,7 +188,7 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_role->isAllowed('cleaning-services', 'index'))
+                                        @if ($_current_role->isAllowed('cleaning-services', 'index'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('All') }}</span>
@@ -196,7 +196,7 @@
                                             </li>
                                         @endif;
 
-                                        @if ($_role->isAllowed('cleaning-services', 'staff'))
+                                        @if ($_current_role->isAllowed('cleaning-services', 'staff'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Staff') }}</span>
@@ -209,7 +209,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('contractors', 'heading-menu'))
+                    @if ($_current_role->isAllowed('contractors', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -225,7 +225,7 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_role->isAllowed('contractors', 'index'))
+                                        @if ($_current_role->isAllowed('contractors', 'index'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('All') }}</span>
@@ -233,7 +233,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('contractors', 'services'))
+                                        @if ($_current_role->isAllowed('contractors', 'services'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Services') }}</span>
@@ -246,7 +246,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('users', 'heading-menu'))
+                    @if ($_current_role->isAllowed('users', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -262,7 +262,7 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_role->isAllowed('users', 'index'))
+                                        @if ($_current_role->isAllowed('users', 'index'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('users') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
@@ -270,7 +270,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('users', 'staff-groups'))
+                                        @if ($_current_role->isAllowed('users', 'staff-groups'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Staff Groups') }}</span>
@@ -278,7 +278,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('users', 'roles'))
+                                        @if ($_current_role->isAllowed('users', 'roles'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('roles') }}">
                                                     <span class="item-name">{{ __('Roles') }}</span>
@@ -291,7 +291,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('reporting', 'heading-menu'))
+                    @if ($_current_role->isAllowed('reporting', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -318,7 +318,7 @@
                         </li>
                     @endif
 
-                    @if ($_role->isAllowed('settings', 'heading-menu'))
+                    @if ($_current_role->isAllowed('settings', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -334,7 +334,7 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_role->isAllowed('settings', 'cities'))
+                                        @if ($_current_role->isAllowed('settings', 'cities'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Cities') }}</span>
@@ -342,7 +342,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('settings', 'zones'))
+                                        @if ($_current_role->isAllowed('settings', 'zones'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('zones') }}">
                                                     <span class="item-name">{{ __('Zones') }}</span>
@@ -350,7 +350,7 @@
                                             </li>
                                         @endif
                                         
-                                        @if ($_role->isAllowed('settings', 'amenities'))
+                                        @if ($_current_role->isAllowed('settings', 'amenities'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('amenities') }}">
                                                     <span class="item-name">{{ __('Amenities') }}</span>
@@ -358,7 +358,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('settings', 'transaction-types'))
+                                        @if ($_current_role->isAllowed('settings', 'transaction-types'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('transaction-types') }}">
                                                     <span class="item-name">{{ __('Transaction Types') }}</span>
@@ -366,15 +366,15 @@
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('settings', 'rental-cleaning-options'))
+                                        @if ($_current_role->isAllowed('settings', 'cleaning-options'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
-                                                    <span class="item-name">{{ __('Rental Cleaning Options') }}</span>
+                                                    <span class="item-name">{{ __('Cleaning Options') }}</span>
                                                 </a>
                                             </li>
                                         @endif
 
-                                        @if ($_role->isAllowed('settings', 'damage-deposits'))
+                                        @if ($_current_role->isAllowed('settings', 'damage-deposits'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Damage Deposits') }}</span>

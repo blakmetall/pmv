@@ -79,4 +79,5 @@ return [
     'from-label-address' => 'Direción',
     'from-label-email' => 'Correo',
     'from-btn-label' => 'Enviar',
+    
 ];

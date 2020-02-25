@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App;
 use Closure;
+use Auth;
+use App\Helpers\LanguageHelper;
 
 class LangMiddleware
 {
@@ -15,12 +18,17 @@ class LangMiddleware
      */
     public function handle($request, Closure $next)
     {
+        $saved_locale = $request->session()->get('locale');
+        $has_saved_locale = !! $saved_locale;
+        if ($has_saved_locale) {
+            LanguageHelper::setLocale($saved_locale);
+        }
 
-        if (!empty(session('lang'))) {
-            \App::setLocale(session('lang'));
+        $user = Auth::user();
+        if ($user && $user->profile) {
+            LanguageHelper::setLocale($user->profile->config_language);
         }
 
         return $next($request);
-
     }
 }

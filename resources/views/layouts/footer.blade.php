@@ -4,7 +4,10 @@
     <div class="footer-bottom d-flex flex-column flex-sm-row align-items-center">
         <div class="d-flex align-items-center">
             <div>
-                <p class="m-0">&copy; {{ date('Y', strtotime('now')) }} Palmera Vacations. All rights reserved.</p>
+                <p class="m-0">
+                    &copy; {{ date('Y', strtotime('now')) }} {{ env('APP_NAME') }}. 
+                    {{ __('All rights reserved.') }}
+                </p>
             </div>
         </div>
     </div>

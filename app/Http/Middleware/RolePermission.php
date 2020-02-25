@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Helpers\Role;
+use App\Helpers\RoleHelper;
 
 class RolePermission
 {
@@ -16,8 +16,8 @@ class RolePermission
      */
     public function handle($request, Closure $next, $section, $sub)
     {
-        $role = Role::current();
-        if($role->isAllowed($section, $sub)) {
+        $current_role = RoleHelper::current();
+        if($current_role->isAllowed($section, $sub)) {
             return $next($request);
         }
 
