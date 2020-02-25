@@ -8,21 +8,21 @@
     */ ?>
     <div class="col-md-12 form-group mb-3">
         <label for="name">{{ __('Property Name') }}</label>
-        <span class="form-control">  {{  $row[$lang]->translations->first()->name }} </span>
+        <div class="form-control">  {{  $row[$lang]->translations->first()->name }} </div>
     </div>
 
     <div class="col-md-12 form-group mb-3">
         <label for="description">{{ __('Description') }}</label>
-        <span class="form-control">  {{  $row[$lang]->translations->first()->description }}</span>    
+        <div class="form-control h-auto">  {{  $row[$lang]->translations->first()->description }}</div>    
     </div>
     <div class="col-md-12 form-group mb-3">
         <label for="cancellation">{{ __('Cancellation Policies') }}</label>
-        <span class="form-control">  {{  $row[$lang]->translations->first()->cancellation_policies }} </span>         
+        <div class="form-control h-auto ">  {{  $row[$lang]->translations->first()->cancellation_policies }} </div>         
     </div>
 
     <div class="col-md-4 form-group mb-3">
         <label for="cancellation">{{ __('Property Type') }}</label>
-        <span class="form-control"> {{ $row->type->translations->first()->name }} </span>         
+        <span class="form-control "> {{ $row->type->translations->first()->name }} </span>         
     </div>
     <div class="col-md-4 form-group mb-3">
         <label for="cancellation">{{ __('City') }}</label>

@@ -22,7 +22,9 @@
                     <select class="form-control"
                      name="zone_id">
                         @foreach($zones as $zone)                            
-                            <option value="{{ $zone->id }}" {{ ( ($property->zone_id == $zone->id) ? 'selected' : '' ) }}>{{ $zone->translations->first()->name }}</option>
+                            <option value="{{ $zone->id }}" {{ ( ($property->zone_id == $zone->id) ? 'selected' : '' ) }}>
+                                {{ $zone->translations->first()->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -34,7 +36,9 @@
                     <select class="form-control" 
                     name="property_type_id">
                         @foreach($properties_types as $property_type)                            
-                            <option value="{{ $property_type->id }}" {{ ( ($property->property_type_id == $property_type->id) ? 'selected' : '' ) }}>{{ $property_type->translations->first()->name }}</option>
+                            <option value="{{ $property_type->id }}" {{ ( ($property->property_type_id == $property_type->id) ? 'selected' : '' ) }}>
+                                {{ $property_type->translations->first()->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -45,7 +49,9 @@
                     <label for="picker1">{{ __('Cleaning Option') }}</label>
                     <select class="form-control" name="cleaning_option_id">
                         @foreach($cleaning_option as $clean_option)
-                            <option value="{{ $clean_option->id }}" {{ ( ($property->cleaning_option_id == $clean_option->id) ? 'selected' : '' ) }}>{{ $clean_option->translations->first()->name }}</option>
+                            <option value="{{ $clean_option->id }}" {{ ( ($property->cleaning_option_id == $clean_option->id) ? 'selected' : '' ) }}>
+                                {{ $clean_option->translations->first()->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -72,13 +78,11 @@
                 <input class="form-control"  type="text" placeholder="Building"  name="building" 
                  value="{{ old(('property.' . $lang), (isset($property) ? $property->building : '')) }}"/>
             </div>
+
             <div class="col-md-6 form-group mb-3">
                 <label for="picker1">{{ __('Rental Comission') }}</label>
-                <select class="form-control" name="rental_comission">
-                    <option>100.00</option>
-                    <option>400.00</option>
-                    <option>700.00</option>
-                </select>
+                 <input class="form-control"  type="text" placeholder="Rental Comission"  name="rental_comission" 
+                 value="{{ old(('property.' . $lang), (isset($property) ? $property->rental_comission : '')) }}"/>
             </div>  
                 
             <div class="col-md-6 form-group mb-3">
