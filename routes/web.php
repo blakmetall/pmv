@@ -23,6 +23,7 @@ Route::group(['middleware' => ['web']], function () {
     // users
     Route::group(['prefix' => 'users'], function () {
         Route::get('', 'UsersController@index')->name('users');
+        Route::get('search', 'UsersController@search')->name('users.search');
         Route::get('create', 'UsersController@create')->name('users.create');
         Route::post('store', 'UsersController@store')->name('users.store');
         Route::get('show/{user}', 'UsersController@show')->name('users.show');
