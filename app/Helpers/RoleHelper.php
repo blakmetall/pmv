@@ -30,13 +30,18 @@ class RoleHelper
      * 
      * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
      */
-    public static function available()
+    public static function available($user_id = false)
     {
         $roles = [];
 
         $lang = LanguageHelper::current();
         
-        $user = auth()->user();
+        if($user_id){
+            $user = User::find($user_id);
+        }else{
+            $user = auth()->user();
+        }
+        
         if ($user && $user->roles()->count()) {
             foreach ($user->roles as $role) {                
                 $roles[] = $role->translations()->where('language_id', $lang->id)->first();
@@ -446,26 +451,5 @@ class RoleHelper
         }
 
         return $roles_ids;
-    }
-
-    /**
-     * Get the user roles from user_id
-     * 
-     * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
-     */
-    public static function roles($user_id)
-    {
-        $roles = [];
-
-        $lang = LanguageHelper::current();
-        
-        $user = User::find($user_id);
-        if ($user && $user->roles()->count()) {
-            foreach ($user->roles as $role) {                
-                $roles[] = $role->translations()->where('language_id', $lang->id)->first();
-            }
-        }
-
-        return $roles;
     }
 }

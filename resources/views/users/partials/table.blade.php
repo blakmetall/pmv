@@ -38,14 +38,19 @@
 
                                 <!-- roles -->
                                 <td>
-                                    @foreach (RoleHelper::roles($row->id) as $role)
-                                        <a href="{{ route('roles.edit', $role['id']) }}"> <i class="nav-icon i-Pen-2 font-weight-bold text-success mr-2"></i> <span class="badge badge-secondary">{{ $role['name'] }}</span></a>
+                                    @foreach (RoleHelper::available($row->id) as $role)
+                                        <a href="{{ route('roles.edit', $role['id']) }}">
+                                            <i class="nav-icon i-Pen-2 font-weight-bold text-success mr-2"></i>
+                                            <span class="badge badge-secondary">{{ $role['name'] }}</span>
+                                        </a>
                                     @endforeach
                                 </td>
 
                                 <!-- is_enabled -->
                                 <th scope="row">
-                                    <span class="badge badge-{{ ($row->is_enabled) ?'success' : 'danger' }}">{{ ($row->is_enabled) ? 'Enabled' : 'Disabled' }}</span>
+                                    <span class="badge badge-{{ ($row->is_enabled) ?'success' : 'danger' }}">
+                                        {{ ($row->is_enabled) ? 'Enabled' : 'Disabled' }}
+                                    </span>
                                 </th>
 
                                 <!-- actions -->
