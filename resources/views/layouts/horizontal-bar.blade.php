@@ -336,7 +336,7 @@
                                     <ul>
                                         @if ($_current_role->isAllowed('settings', 'cities'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('cities') }}">
                                                     <span class="item-name">{{ __('Cities') }}</span>
                                                 </a>
                                             </li>
