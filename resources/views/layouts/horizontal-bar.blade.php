@@ -29,7 +29,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Bookings') }}
                                     </label>
-                                    <a href="">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Calendar-4"></i>
                                         {{ __('Bookings') }}
                                     </a>
@@ -90,7 +90,7 @@
                                         <label class="toggle" for="dropdownMenuProperties">
                                             {{  __('Properties') }}
                                         </label>
-                                        <a href="">
+                                        <a href="#">
                                             <i class="nav-icon mr-2 i-Home1"></i>
                                             {{  __('Properties') }}
                                         </a>
@@ -127,7 +127,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Property Management') }}
                                     </label>
-                                    <a href="">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Home-2"></i>
                                         {{ __('Property Management') }}
                                     </a>
@@ -180,7 +180,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Cleaning Services') }}
                                     </label>
-                                    <a href="">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Green-House"></i>
                                         {{ __('Cleaning Services') }}
                                     </a>
@@ -217,7 +217,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Contractors') }}
                                     </label>
-                                    <a href="">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Engineering"></i>
                                         {{ __('Contractors') }}
                                     </a>
