@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
 use App\Models\Role;
 use App\Helpers\LanguageHelper;
 
@@ -29,13 +30,18 @@ class RoleHelper
      * 
      * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
      */
-    public static function available()
+    public static function available($user_id = false)
     {
         $roles = [];
 
         $lang = LanguageHelper::current();
         
-        $user = auth()->user();
+        if($user_id){
+            $user = User::find($user_id);
+        }else{
+            $user = auth()->user();
+        }
+        
         if ($user && $user->roles()->count()) {
             foreach ($user->roles as $role) {                
                 $roles[] = $role->translations()->where('language_id', $lang->id)->first();

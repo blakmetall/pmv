@@ -52,15 +52,16 @@
 
         <!-- enabled -->
         <div class="form-group row">
-            <label for="is_enabled" class="col-sm-2 col-form-label">
-                {{ __('Is Enabled?') }}
-            </label>
-            <div class="col-sm-10">
-                <input type="checkbox"
-                    name="is_enabled"
-                    id="is_enabled" 
-                    {{ ($user->is_enabled) ? 'checked' : '' }}
-                />
+            <div class="col-sm-12">
+                <label class="switch switch-success mr-3">
+                    <span>{{ __('Is Enabled?') }}</span>
+                    <input input type="checkbox"
+                            name="is_enabled"
+                            id="is_enabled"
+                            {{ ($user->is_enabled) ? 'checked' : '' }}
+                        />
+                    <span class="slider"></span>
+                </label>
             </div>
         </div>
 

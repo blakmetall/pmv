@@ -26,6 +26,35 @@ class UsersController extends Controller
     }
 
     /**
+     * Display a listing of the resource searched.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $search = $request->s_data;
+        
+        $users = User::where('email', 'like', "%".$search."%")
+        ->orWhereHas('profile', function($query) use ($search){
+            $query->where('profiles.firstname', 'like', $search)
+                ->orWhere('profiles.lastname', 'like', $search)
+                ->orWhere('profiles.country', 'like', $search)
+                ->orWhere('profiles.state', 'like', $search)
+                ->orWhere('profiles.city', 'like', $search)
+                ->orWhere('profiles.street', 'like', $search)
+                ->orWhere('profiles.zip', 'like', $search)
+                ->orWhere('profiles.phone', 'like', $search)
+                ->orWhere('profiles.mobile', 'like', $search);
+        })->orderBy('email', 'asc')->paginate( 30 );
+
+        return view('users.index', [
+            'users' => $users,
+            'search' => $search
+        ]);
+    }
+    
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
