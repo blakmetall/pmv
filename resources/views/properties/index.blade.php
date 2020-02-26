@@ -8,18 +8,18 @@
     <!-- heading -->
     <div class="container app-container">
         <div class="card">
-            <div class="col-md col-8">
-                <!-- title layout heading goes here -->
-                @include('partials.page-heading', [
-                    'title' => __('Properties'),
-                    'breadcrumbs' => []
-                ])
-            </div>
-
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md col-4 text-lg-right">
 
+                <div class="row">
+                    <div class="col-md col-8">
+                        <!-- title layout heading goes here -->
+                        @include('partials.page-heading', [
+                            'title' => __('Properties'),
+                            'breadcrumbs' => []
+                        ])
+                    </div>
+
+                    <div class="col-md col-4 text-lg-right">
                         <!-- action buttons goes here -->
                         <a href="{{ route('properties.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
