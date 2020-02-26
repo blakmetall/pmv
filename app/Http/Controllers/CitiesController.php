@@ -54,7 +54,6 @@ class CitiesController extends Controller
         $city->name = $request->city;
         $city->save();
 
-        // if everything succeeds return to list
         return redirect( route('cities') );
     }
 
@@ -112,7 +111,7 @@ class CitiesController extends Controller
     public function destroy($id)
     {
         $city = City::findOrFail($id);
-        $city ->delete();
+        $city->delete();
         return redirect(route('cities') );
     }
 }

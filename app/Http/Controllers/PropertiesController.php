@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use App\Models\PropertyTranslation;
 use App\Helpers\Language;
-
-use App\Models\Property;
-use App\Models\PropertyType;
-use App\Models\City;
-use App\Models\Zone;
-use App\Models\ZoneTranslation;
-use App\Models\PropertyTypeTranslation;
-use App\Models\CleaningOptionTranslation;
-use App\Models\CleaningOption;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
-
-use Illuminate\Support\Facades\Auth;
+use App\Models\{
+    PropertyTranslation,
+    Property,
+    PropertyType,
+    City,
+    Zone,
+    ZoneTranslation,
+    PropertyTypeTranslation,
+    CleaningOptionTranslation,
+    CleaningOption,
+};
 
 
 class PropertiesController extends Controller
@@ -41,10 +39,10 @@ class PropertiesController extends Controller
         $language_id = 1; // for now is a simulated language
 
         $properties = (new PropertyTranslation)
-        ->where('language_id', $language_id)
-        ->with('property')
-        ->orderBy('id', 'asc')
-        ->paginate(30);
+            ->where('language_id', $language_id)
+            ->with('property')
+            ->orderBy('id', 'asc')
+            ->paginate(30);
 
         return view('properties.index', [
             'properties' => $properties

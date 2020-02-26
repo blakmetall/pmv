@@ -51,7 +51,8 @@ class RoleHelper
         return $roles;
     }
 
-    public static function hasValidRoleId($id) {
+    public static function hasValidRoleId($id) 
+    {
         $allowed_roles = self::available();
         
         if (count($allowed_roles)) {
@@ -87,7 +88,8 @@ class RoleHelper
      * @return Array List of url sections with their subsections 
      *               and their allowed roles ids per section
      */
-    public static function getAllowedSections() {
+    public static function getAllowedSections() 
+    {
         $sections = [
             'calendar' => [
                 '*' => self::transformSluggedRolesToIds([
@@ -423,7 +425,8 @@ class RoleHelper
      * 
      * @return Array List of roles ids
      */
-    public static function transformSluggedRolesToIds($roles_slug_list) {
+    public static function transformSluggedRolesToIds($roles_slug_list) 
+    {
 
         $base_roles = [
             'super' => 1,

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RoleTranslation;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\{ RoleTranslation, Role};
 use App\Helpers\RoleHelper;
 
 class RolesController extends Controller
