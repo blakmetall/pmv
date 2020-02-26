@@ -24,9 +24,6 @@
                         <a href="{{ route('properties.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>
-                        <a href="#" class="btn btn-dark ripple m-1" role="button" >
-                            {{ __('Demo Button') }}
-                        </a>
                     </div>
                 </div>
 
