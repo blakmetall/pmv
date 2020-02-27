@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RoleTranslation;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\{ RoleTranslation, Role};
+use App\Helpers\RoleHelper;
 
 class RolesController extends Controller
 {
@@ -142,5 +142,21 @@ class RolesController extends Controller
         $role->delete();
 
         return redirect( route('roles') );
+    }
+
+    /**
+     * Sets the active role for the user in the database
+     */
+    public function updateActive($id) 
+    {
+        $profile = (auth()->user())->profile;
+        if ($profile) {
+            if(RoleHelper::hasValidRoleId($id)) {
+                $profile->config_role_id = $id;
+                $profile->save();
+            }
+        }
+
+        return redirect(route('dashboard'));
     }
 }

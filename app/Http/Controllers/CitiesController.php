@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\City;
+use App\Models\State;
 
 class CitiesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,11 @@ class CitiesController extends Controller
      */
     public function index()
     {
-        //
+        $cities = City::paginate(5)->onEachSide(5);
+
+        return view('cities.index', [
+            'cities' => $cities
+        ]);
     }
 
     /**
@@ -23,7 +33,12 @@ class CitiesController extends Controller
      */
     public function create()
     {
-        //
+        $city = new City;
+        $states = (new State)->get();
+        return view('cities.create', [
+            'city' => $city,
+            'states' => $states,
+        ]);
     }
 
     /**
@@ -34,7 +49,12 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $city = new City;
+        $city->state_id = $request->state_id;
+        $city->name = $request->city;
+        $city->save();
+
+        return redirect( route('cities') );
     }
 
     /**
@@ -43,9 +63,11 @@ class CitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(City $city)
     {
-        //
+        return view('cities.show', [
+            'city' => $city
+        ]);
     }
 
     /**
@@ -54,9 +76,13 @@ class CitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(City $city)
     {
-        //
+        $states = (new State)->get();
+        return view('cities.edit', [
+            'city' => $city,
+            'states' => $states
+        ]);
     }
 
     /**
@@ -68,7 +94,12 @@ class CitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $city = City::findOrFail($id);
+        $city->name = $request->city;
+        $city->state_id = $request->state_id;
+        $city->save();
+
+        return \redirect( route('cities'));
     }
 
     /**
@@ -79,6 +110,8 @@ class CitiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $city = City::findOrFail($id);
+        $city->delete();
+        return redirect(route('cities') );
     }
 }

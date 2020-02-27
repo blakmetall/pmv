@@ -1,13 +1,54 @@
 @extends('layouts.horizontal-master')
-@section('page-css')
 
+@section('before-css')
 @endsection
+
 @section('main-content')
-    <div class="row"><h1>{{ trans('messages.welcome-properties') }}</h1></div>
 
-    {{ $session_data }}
+    <!-- heading -->
+    <div class="container app-container">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md col-8">
+                        <!-- title layout heading goes here -->
+                        @include('partials.page-heading', [
+                            'title' => __('Properties'),
+                            'breadcrumbs' => []
+                        ])
+                    </div>
+
+                    <div class="col-md col-4 text-lg-right">
+                        <!-- action buttons goes here -->
+                        <a href="{{ route('properties.create') }}" class="btn btn-dark ripple m-1" role="button" >
+                            {{ __('New') }}
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
+    <!-- here the search bar is loaded -->
+    @include('properties.partials.search')
+
+    <!-- here the data is loaded -->
+    @include('properties.partials.table', [
+        'label' => __('properties'),
+        'rows' => $properties
+    ])
+
+
 @endsection
+
 @section('page-js')
 @endsection
 
-
+@section('bottom-js')
+@endsection

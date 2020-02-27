@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CleaningOptionsTableSeeder::class);
         $this->call(DamageDepositsTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);
+        $this->call(ProfilesConfigRoleIdSeeder::class);
         $this->call(PropertyTypesTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(StatesTableSeeder::class);

@@ -225,7 +225,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // custom helpers
-        'Language' => App\Helpers\Language::class,
+        'LanguageHelper' => App\Helpers\LanguageHelper::class,
+        'RoleHelper' => App\Helpers\RoleHelper::class,
     ],
 
 ];

@@ -24,7 +24,7 @@
                         <tr>
                             <!-- id -->
                             <th scope="row">
-                                {{ $row->zone->id }}
+                                {{ $row->id }}
                             </th>
 
                             <!-- name -->
@@ -32,10 +32,10 @@
 
                             <!-- actions -->
                             <td>
-                                <a href="{{ route('zones.edit', [$row->zone->id]) }}" class="text-success mr-2">
+                                <a href="{{ route('cities.edit', [$row->id]) }}" class="text-success mr-2">
                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                 </a>
-                                <a href="{{ route('zones.destroy', [$row->zone->id]) }}" class="text-danger mr-2">
+                                <a href="{{ route('cities.destroy', [$row->id]) }}" class="text-danger mr-2">
                                     <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                 </a>
                             </td>

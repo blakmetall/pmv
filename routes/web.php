@@ -23,6 +23,7 @@ Route::group(['middleware' => ['web']], function () {
     // users
     Route::group(['prefix' => 'users'], function () {
         Route::get('', 'UsersController@index')->name('users');
+        Route::get('search', 'UsersController@search')->name('users.search');
         Route::get('create', 'UsersController@create')->name('users.create');
         Route::post('store', 'UsersController@store')->name('users.store');
         Route::get('show/{user}', 'UsersController@show')->name('users.show');
@@ -34,12 +35,17 @@ Route::group(['middleware' => ['web']], function () {
     // roles
     Route::group(['prefix' => 'roles'], function () {
         Route::get('', 'RolesController@index')->name('roles');
+
+        // we wont be creating or updating roles, we can delete unnecesary functions and methods
         Route::get('create', 'RolesController@create')->name('roles.create');
         Route::post('store', 'RolesController@store')->name('roles.store');
         Route::get('show/{role}', 'RolesController@show')->name('roles.show');
         Route::get('edit/{role}', 'RolesController@edit')->name('roles.edit');
         Route::post('update/{id}', 'RolesController@update')->name('roles.update');
         Route::get('destroy/{id}', 'RolesController@destroy')->name('roles.destroy');
+
+        // update new active role for user
+        Route::get('update-active/{id}', 'RolesController@updateActive')->name('roles.update-active');
     });
 
     // profile
@@ -51,23 +57,14 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // properties
-    Route::group(['prefix' => 'properties'], function () {
-        Route::get('all', 'PropertiesController@index')->name('properties-all');
-        Route::post('store', 'PropertiesController@store')->name('properties-store');
-        Route::post('create', 'PropertiesController@create')->name('properties-create');
-        Route::get('show/{id}', 'PropertiesController@show')->name('properties-show');
-        Route::get('update/{id}', 'PropertiesController@edit')->name('properties-edit');
-        Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties-destroy');
-
-        Route::group(['prefix' => 'types'], function () {
-            Route::get('all', 'PropertyTypesController@index')->name('types-all');
-            Route::post('store', 'PropertyTypesController@store')->name('types-store');
-            Route::post('create', 'PropertyTypesController@create')->name('types-create');
-            Route::get('show/{id}', 'PropertyTypesController@show')->name('types-show');
-            Route::get('update/{id}', 'PropertyTypesController@edit')->name('types-edit');
-            Route::get('destroy/{id}', 'PropertyTypesController@destroy')->name('types-destroy');
-
-        });
+    Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:settings,amenities'], function () {
+        Route::get('', 'PropertiesController@index')->name('properties');
+        Route::post('store', 'PropertiesController@store')->name('properties.store');
+        Route::get('create', 'PropertiesController@create')->name('properties.create');
+        Route::get('show/{property}', 'PropertiesController@show')->name('properties.show');
+        Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
+        Route::post('update/{id}', 'PropertiesController@update')->name('properties.update');
+        Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
     });
 
     // zones
@@ -82,16 +79,29 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // amenities
-    Route::group(['prefix' => 'amenities'], function () {
-        Route::get('', 'AmenitiesController@index')->name('amenities');
-        Route::get('create', 'AmenitiesController@create')->name('amenities.create');
-        Route::post('store', 'AmenitiesController@store')->name('amenities.store');
-        Route::get('show/{amenity}', 'AmenitiesController@show')->name('amenities.show');
-        Route::get('edit/{amenity}', 'AmenitiesController@edit')->name('amenities.edit');
-        Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
-        Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
-    });
+    Route::group(
+        ['prefix' => 'amenities', 'middleware' => 'role-permission:settings,amenities'], 
+        function () {
+            Route::get('', 'AmenitiesController@index')->name('amenities');
+            Route::get('create', 'AmenitiesController@create')->name('amenities.create');
+            Route::post('store', 'AmenitiesController@store')->name('amenities.store');
+            Route::get('show/{amenity}', 'AmenitiesController@show')->name('amenities.show');
+            Route::get('edit/{amenity}', 'AmenitiesController@edit')->name('amenities.edit');
+            Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
+            Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
+        }
+    );
 
+        // cities
+        Route::group(['prefix' => 'cities'], function () {
+            Route::get('', 'CitiesController@index')->name('cities');
+            Route::get('create', 'CitiesController@create')->name('cities.create');
+            Route::post('store', 'CitiesController@store')->name('cities.store');
+            Route::get('show/{id}', 'CitiesController@show')->name('cities.show');
+            Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
+            Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
+            Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
+        });
 
     // transaction types
     Route::group(['prefix' => 'transaction-types'], function () {
@@ -106,8 +116,13 @@ Route::group(['middleware' => ['web']], function () {
 
     // language 
     Route::group(['prefix' => 'language'], function () {
-        Route::get('update/{language_code}', 'LanguageController@update')->name('language.update');
+        Route::get('update/{locale}', 'LanguageController@update')->name('language.update');
     });
 
+    // error pages
+    Route::group(['prefix' => 'error'], function() {
+        Route::get('forbidden', 'ErrorController@forbidden')->name('error.forbidden');
+        Route::get('not-found', 'ErrorController@notFound')->name('error.not-found');
+    });
 });
 

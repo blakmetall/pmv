@@ -6,7 +6,7 @@
 @section('main-content')
 
     <!-- heading -->
-    <div class="container app-container">
+    <div class="container app-container-sm">
         <div class="card">
             <div class="card-body">
 
@@ -15,11 +15,11 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Edit Transaction Types'),
+                            'title' => __('Edit property'),
                             'breadcrumbs' => [
                                 [
-                                    'url' => route('transaction-types'),
-                                    'label' => __('Transaction Types'),
+                                    'url' => route('properties'),
+                                    'label' => __('properties'),
                                 ],
                             ]
                         ])
@@ -29,7 +29,7 @@
                     <div class="col-md col-4 text-lg-right">
 
                         <!-- action buttons goes here -->
-                        <a href="{{ route('transaction-types.create') }}" class="btn btn-dark ripple m-1" role="button" >
+                        <a href="{{ route('properties.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>
 
@@ -42,27 +42,22 @@
     <div class="mb-4"></div>
 
 
+    <!-- form -->
+    <form action="{{ route('properties.update', [$property->id]) }}" method="post">
 
-    <!-- form  -->
-    <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
-                {{ $transaction_type }}
-                <!-- form -->
-                <form action="" method="post">
-                <!-- token -->
-                @csrf
+        <!-- token -->
+        @csrf
 
-                <!-- form fields -->
-                    @include('transaction-types.form-fields', [
-                        'row' => $transaction_type,
-                    ])
+        <div class="container app-container-sm">
 
-                </form>
+            <!-- form fields -->
+            @include('properties.partials.form', [
+                'row' => $property
+            ])        
 
-            </div>
         </div>
-    </div>
+
+    </form>
 
 @endsection
 

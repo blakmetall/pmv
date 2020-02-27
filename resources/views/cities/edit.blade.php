@@ -15,11 +15,11 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Create Transaction Types'),
+                            'title' => __('Edit City'),
                             'breadcrumbs' => [
                                 [
-                                    'url' => route('transaction-types'),
-                                    'label' => __('Transaction Types'),
+                                    'url' => route('cities'),
+                                    'label' => __('City'),
                                 ],
                             ]
                         ])
@@ -27,7 +27,12 @@
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
+
                         <!-- action buttons goes here -->
+                        <a href="{{ route('cities.create') }}" class="btn btn-dark ripple m-1" role="button" >
+                            {{ __('New') }}
+                        </a>
+
                     </div>
                 </div>
 
@@ -36,29 +41,26 @@
     </div>
     <div class="mb-4"></div>
 
-
-
+    
     <!-- form  -->
     <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
+        
 
                 <!-- form -->
-                <form action="{{ route('transaction-types.store') }}" method="post">
+                <form action="{{ route('cities.update', $city->id) ?? '' }}" method="post">
 
                     <!-- token -->
-                    @csrf
+                @csrf
 
-                    <!-- form fields -->
-                    @include('transaction-types.form-fields', [
-                        'row' => $transaction_types,
+                <!-- form fields -->
+                    @include('cities.partials.form', [
+                        'row' => $city
                     ])
 
                 </form>
 
             </div>
-        </div>
-    </div>
+
 
 @endsection
 

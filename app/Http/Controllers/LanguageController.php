@@ -2,24 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Language;
+use App;
+use App\Helpers\LanguageHelper;
+use Illuminate\Http\Request;
 
 class LanguageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // public access to switch language enabled
     }
 
-    public function update($language_code) 
+    /**
+     * Sets the active language for the user in the database
+     */
+    public function update(Request $request, $locale = 'en') 
     {
-        $profile = (auth()->user())->profile;
-        if ($profile) {
-            if(Language::hasValidLang($language_code)) {
-                $profile->config_language = $language_code;
-                $profile->save();
+        $user = auth()->user();
+        if ($user) {
+            $profile = $user->profile;
+            if ($profile) {
+                if(LanguageHelper::hasValidLocale($locale)) {
+                    $profile->config_language = $locale;
+                    $profile->save();
+                }
             }
         }
+
+        LanguageHelper::setLocale($locale);
+        $request->session()->put('locale', $locale);
 
         return back();
     }

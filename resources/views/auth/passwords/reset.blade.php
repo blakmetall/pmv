@@ -6,7 +6,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Reset Password') }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ __('Reset Password') }}
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @include('partials.language-switcher')
+                        </div>
+                    </div>
                 </div>
 
                 <!-- reset password form -->
@@ -21,7 +28,7 @@
                         <!-- email -->
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">
-                                {{ __('E-Mail Address') }}
+                                {{ __('Email') }}
                             </label>
 
                             <div class="col-md-6">
@@ -65,11 +72,16 @@
                             </div>
                         </div>
 
+                        <!-- submit -->
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Reset Password') }}
                                 </button>
+
+                                <a class="btn btn-link" href="{{ route('login') }}">
+                                    {{ __('Login') }}
+                                </a>
                             </div>
                         </div>
                     </form>
