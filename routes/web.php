@@ -57,7 +57,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // properties
-    Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:settings,amenities'], function () {
+    Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:settings,properties'], function () {
         Route::get('', 'PropertiesController@index')->name('properties');
         Route::post('store', 'PropertiesController@store')->name('properties.store');
         Route::get('create', 'PropertiesController@create')->name('properties.create');
@@ -92,19 +92,19 @@ Route::group(['middleware' => ['web']], function () {
         }
     );
 
-        // cities
-        Route::group(['prefix' => 'cities'], function () {
-            Route::get('', 'CitiesController@index')->name('cities');
-            Route::get('create', 'CitiesController@create')->name('cities.create');
-            Route::post('store', 'CitiesController@store')->name('cities.store');
-            Route::get('show/{id}', 'CitiesController@show')->name('cities.show');
-            Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
-            Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
-            Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
-        });
+    // cities
+    Route::group(['prefix' => 'cities'], function () {
+        Route::get('', 'CitiesController@index')->name('cities');
+        Route::get('create', 'CitiesController@create')->name('cities.create');
+        Route::post('store', 'CitiesController@store')->name('cities.store');
+        Route::get('show/{id}', 'CitiesController@show')->name('cities.show');
+        Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
+        Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
+        Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
+    });
 
     // transaction types
-    Route::group(['prefix' => 'transaction-types'], function () {
+    Route::group(['prefix' => 'transaction-types', 'middleware' => 'role-permission:settings,transaction-types'], function () {
         Route::get('', 'TransactionTypesController@index')->name('transaction-types');
         Route::get('create', 'TransactionTypesController@create')->name('transaction-types.create');
         Route::post('store', 'TransactionTypesController@store')->name('transaction-types.store');

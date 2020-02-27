@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\TransactionType;
 use Illuminate\Support\Facades\Validator;
 
+use App\Helpers\languageHelper;
+
 class TransactionTypesController extends Controller
 {
 
@@ -22,19 +24,21 @@ class TransactionTypesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $language_id = 1; // for now is a simulated language
+    {       
+
+        $lang = LanguageHelper::current();
+
+        $language_id = $lang->id;
 
         $transaction_types = (new TransactionTypeTranslation)
-        ->where('language_id', $language_id)
-        ->with('transactionType')
-        ->orderBy('id', 'asc')
-        ->paginate(30);
+            ->where('language_id', $language_id)
+            ->with('transactionType')
+            ->orderBy('name', 'asc')
+            ->paginate(30);            
 
         return view('transaction-types.index', [
             'transaction_types' => $transaction_types
         ]);
-
     }
 
     /**
@@ -44,9 +48,9 @@ class TransactionTypesController extends Controller
      */
     public function create()
     {
-        $transactionType = new TransactionType();
+        $transaction_type = new TransactionType();
         return view('transaction-types.create', [
-            'transaction_types' => $transactionType
+            'transaction_type' => $transaction_type
         ]);
     }
 
@@ -58,7 +62,25 @@ class TransactionTypesController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->saveData(false, $request);
+        $transaction_type = new TransactionType;
+        $transaction_type->save();
+
+        $en = new TransactionTypeTranslation;
+        $en->language_id = LanguageHelper::getId('en');
+        $en->transaction_type_id = $transaction_type->id;
+        $en->name = $request->name['en'];
+        $en->save();
+
+        $es = new TransactionTypeTranslation;
+        $es->language_id = LanguageHelper::getId('es');
+        $es->transaction_type_id = $transaction_type->id;
+        $es->name = $request->name['es'];
+        $es->save();
+
+        // if everything succeeds return to list
+        return redirect( route('transaction-types') );
+
+
     }
 
     /**
@@ -81,6 +103,14 @@ class TransactionTypesController extends Controller
     public function edit(TransactionType $transactionType)
     {
 
+        $transactionType['en'] = $transactionType->translations()
+            ->where('language_id', LanguageHelper::getId('en'))
+            ->first();
+
+        $transactionType['es'] = $transactionType->translations()
+            ->where('language_id', LanguageHelper::getId('es'))
+            ->first();
+      
         return view('transaction-types.edit', [
             'transaction_type' => $transactionType
         ]);
@@ -95,7 +125,23 @@ class TransactionTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // run validations
+        // if fails
+        // return to edit and restore values from input
+        // code: return redirect( route('amenities.edit', $id) )->withInput();
+
+        $transactionType = TransactionType::findOrFail($id);
+
+        $en = $transactionType->translations()->where('language_id', LanguageHelper::getId('en'))->first();
+        $en->name = $request->name['en'];
+        $en->save();
+
+        $es = $transactionType->translations()->where('language_id', LanguageHelper::getId('es'))->first();
+        $es->name = $request->name['es'];
+        $es->save();
+
+        // if everything succeeds return to list
+        return redirect( route('transaction-types') );
     }
 
     /**
@@ -106,13 +152,21 @@ class TransactionTypesController extends Controller
      */
     public function destroy($id)
     {
-        $transactionType = TransactionType::find($id);
-        $transactionType->translations()->delete();
-        $transactionType->delete();
+        //http://127.0.0.1:8000/transaction-types/destroy/65
+        //http://127.0.0.1:8000/transaction-types/destroy/65
+        // find
+        $transaction_type = TransactionType::findOrFail($id);
+       
+        // delete translations
+        $transaction_type->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
+        $transaction_type->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
-        return redirect()->route('transaction-types')->with('message', 'messages.property-types-delete-success-message');
+        // delete 
+        $transaction_type->delete();
+
+        return redirect( route('transaction-types') );
     }
-
+/*
     private function saveData($transactionType, $request){
 
         if(!$transactionType){
@@ -150,4 +204,5 @@ class TransactionTypesController extends Controller
         }
 
     }
+    */
 }
