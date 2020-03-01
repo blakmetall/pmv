@@ -91,10 +91,12 @@ class ZonesController extends Controller
 
         $zone['es'] = $zone
             ->translations()
-            ->where('language_id', LanguageHelper::getId('es'))
+            ->where('language_id', 2)
             ->first();
 
-        return view('zones.show')->with('zone', $zone);
+        return view('zones.show')
+            ->with('zone', $zone)
+            ->with('cities', City::all());
     }
 
     /**
@@ -105,8 +107,6 @@ class ZonesController extends Controller
      */
     public function edit(Zone $zone)
     {
-
-
         $zone['en'] = $zone
             ->translations()
             ->where('language_id', LanguageHelper::getId('en'))

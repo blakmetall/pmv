@@ -32,6 +32,10 @@
 
                                 <!-- actions -->
                                 <td>
+                                    <a href="{{ route('amenities.show', [$row->amenity->id]) }}" class="text-primary mr-2">
+                                        <i class="nav-icon i-Eye font-weight-bold"></i>
+                                    </a>
+
                                     <a href="{{ route('amenities.edit', [$row->amenity->id]) }}" class="text-success mr-2">
                                         <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                     </a>

@@ -1,5 +1,14 @@
-<!-- load fields -->
-@include('users.partials.form-fields', ['row' => $row])
+@php
+    $disabled = (isset($disabled) && $disabled === true) ? "disabled='disabled'" : '';
+@endphp
+
+
+<fieldset {{ $disabled }}>
+
+    <!-- load fields -->
+    @include('users.partials.form-fields', ['row' => $row])
+
+</fieldset>
 
 
 <!-- form actions -->
@@ -9,18 +18,29 @@
             <div class="row">
                 <div class="col-lg-12">
 
-                    <!-- create button -->
-                    <button type="submit" class="btn  btn-primary m-1">
-                        @if( ! $row->id )
-                            {{ __('Create') }}
-                        @else
-                            {{ __('Update') }}
-                        @endif
-                    </button>
+                    @if ($disabled) 
+                        <a 
+                            href="{{ route('users.edit', [$row->id]) }}" 
+                            class="btn btn-outline-secondary m-1" 
+                            role="button">
+                                {{  __('Edit') }}
+                        </a>
+                    @endif
 
-                    <a href="{{ route('users') }}" class="btn btn-outline-secondary m-1" role="button">
-                        {{  __('Cancel') }}
-                    </a>
+                    @if (!$disabled) 
+                        <!-- create button -->
+                        <button type="submit" class="btn  btn-primary m-1">
+                            @if( ! $row->id )
+                                {{ __('Create') }}
+                            @else
+                                {{ __('Update') }}
+                            @endif
+                        </button>
+
+                        <a href="{{ route('users') }}" class="btn btn-outline-secondary m-1" role="button">
+                            {{  __('Cancel') }}
+                        </a>
+                    @endif
                     
                     @if( $row->id )
                         <button type="button" class="btn  btn-danger m-1 footer-delete-right">

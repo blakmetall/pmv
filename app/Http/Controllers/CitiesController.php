@@ -65,7 +65,9 @@ class CitiesController extends Controller
      */
     public function show(City $city)
     {
-        return view('cities.show')->with('city', $city);
+        return view('cities.show')
+            ->with('city', $city)
+            ->with('states', State::all());
     }
 
     /**

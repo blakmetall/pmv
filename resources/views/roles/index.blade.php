@@ -33,9 +33,6 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    <!-- here the search bar is loaded -->
-    @include('roles.partials.search')
-
     <!-- here the data is loaded -->
     @include('roles.partials.table', [
         'label' => __('Roles'),

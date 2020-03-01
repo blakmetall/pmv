@@ -56,11 +56,14 @@
 
                                 <!-- actions -->
                                 <td>
-                                    <!-- edit -->
+                                    <a href="{{ route('users.show', [$row->id]) }}" class="text-primary mr-2">
+                                        <i class="nav-icon i-Eye font-weight-bold"></i>
+                                    </a>
+
                                     <a href="{{ route('users.edit', [$row->id]) }}" class="text-success mr-2">
                                         <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                     </a>
-                                    <!-- delete -->
+
                                     <a href="{{ route('users.destroy', [$row->id]) }}" class="text-danger mr-2">
                                         <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                     </a>

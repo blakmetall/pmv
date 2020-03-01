@@ -5,8 +5,57 @@
 
 @section('main-content')
 
-    <!-- here individual fields are loaded -->
-    @include('partials.show-fields')
+    <!-- heading -->
+    <div class="container app-container-sm">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md col-8">
+
+                        <!-- title layout heading goes here -->
+                        @include('partials.page-heading', [
+                            'title' => __('View Amenity'),
+                            'breadcrumbs' => [
+                                [
+                                    'url' => route('amenities'),
+                                    'label' => __('Amenities'),
+                                ],
+                            ]
+                        ])
+
+                    </div>
+
+                    <div class="col-md col-4 text-lg-right">
+
+                        <!-- action buttons goes here -->
+                        <a href="{{ route('amenities.create') }}" class="btn btn-dark ripple m-1" role="button" >
+                            {{ __('New') }}
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="mb-4"></div>
+
+
+    <!-- form -->
+    <form action="" onsubmit="return false;" method="post">
+
+        <div class="container app-container-sm">
+
+            <!-- form fields -->
+            @include('amenities.partials.form', [
+                'row' => $amenity,
+                'disabled' => true
+            ])        
+
+        </div>
+
+    </form>
 
 @endsection
 

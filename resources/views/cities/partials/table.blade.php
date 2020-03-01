@@ -32,6 +32,10 @@
 
                             <!-- actions -->
                             <td>
+                                <a href="{{ route('cities.show', [$row->id]) }}" class="text-primary mr-2">
+                                    <i class="nav-icon i-Eye font-weight-bold"></i>
+                                </a>
+
                                 <a href="{{ route('cities.edit', [$row->id]) }}" class="text-success mr-2">
                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                 </a>

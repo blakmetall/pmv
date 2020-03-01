@@ -54,15 +54,16 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('', 'UsersController@index')->name('users');
             Route::get('create', 'UsersController@create')->name('users.create');
             Route::post('store', 'UsersController@store')->name('users.store');
+            Route::get('show/{user}', 'UsersController@show')->name('users.show');
             Route::get('edit/{user}', 'UsersController@edit')->name('users.edit');
             Route::post('update/{id}', 'UsersController@update')->name('users.update');
             Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
-        });
 
-        // roles
-        Route::group(['prefix' => 'roles', 'middleware' => 'role-permission:users,roles'], function () {
-            Route::get('', 'RolesController@index')->name('roles');
-            Route::get('update-active/{id}', 'RolesController@updateActive')->name('roles.update-active');
+            // roles
+            Route::group(['prefix' => 'roles', 'middleware' => 'role-permission:users,roles'], function () {
+                Route::get('', 'RolesController@index')->name('roles');
+                Route::get('update-active/{id}', 'RolesController@updateActive')->name('roles.update-active');
+            });
         });
 
         // properties
@@ -107,7 +108,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('', 'CitiesController@index')->name('cities');
                 Route::get('create', 'CitiesController@create')->name('cities.create');
                 Route::post('store', 'CitiesController@store')->name('cities.store');
-                Route::get('show/{id}', 'CitiesController@show')->name('cities.show');
+                Route::get('show/{city}', 'CitiesController@show')->name('cities.show');
                 Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
                 Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
                 Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');

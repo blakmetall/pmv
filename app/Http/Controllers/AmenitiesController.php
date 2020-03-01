@@ -77,9 +77,19 @@ class AmenitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Amenity $amenity)
     {
-        return view('amenities.show');
+        $amenity['en'] = 
+            $amenity->translations()
+                ->where('language_id', LanguageHelper::getId('en'))
+                ->first();
+
+        $amenity['es'] =
+             $amenity->translations()
+                ->where('language_id', LanguageHelper::getId('es'))
+                ->first();
+
+        return view('amenities.show')->with('amenity', $amenity);
     }
 
     /**
