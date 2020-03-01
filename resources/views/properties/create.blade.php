@@ -15,7 +15,7 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Create Property'),
+                            'title' => __('New Property'),
                             'breadcrumbs' => [
                                 [
                                     'url' => route('properties'),
@@ -25,18 +25,12 @@
                         ])
 
                     </div>
-
-                    <div class="col-md col-4 text-lg-right">
-                        <!-- action buttons goes here -->
-                    </div>
                 </div>
 
             </div>
         </div>
     </div>
     <div class="mb-4"></div>
-
-
 
 
     <!-- form -->
@@ -48,9 +42,7 @@
         <div class="container app-container-sm">
 
             <!-- form fields -->
-            @include('properties.partials.form', [
-                'row' => $property
-            ])        
+            @include('properties.partials.form', ['row' => $property])        
 
         </div>
 

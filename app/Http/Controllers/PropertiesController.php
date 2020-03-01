@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use App\Helpers\Language;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Helpers\LanguageHelper;
 use App\Models\{
     PropertyTranslation,
     Property,
@@ -23,30 +22,40 @@ use App\Models\{
 
 class PropertiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __construct(Request $request)
+    public function index(Request $request)
     {
-        $this->middleware('auth');
-    }
+        $lang = LanguageHelper::current();
+        
+        $search = trim($request->s);
+        
+        if ($search) {
+            $properties_query = 
+                PropertyTranslation::
+                    where(function($query) use ($search) {
+                        $query
+                            ->where('name', 'like', "%".$search."%")
+                            ->orWhere('description', 'like', "%".$search."%")
+                            ->orWhere('cancellation_policies', 'like', "%".$search."%")
+                            ->orWhereHas('property', function($query) use ($search) {
+                                $table = (new Property)->_getTable();
+                                $query->where($table . '.address', 'like', "%".$search."%");
+                            }
+                        );
+                    });
+        } else {
+            $properties_query = new PropertyTranslation;
+        }
 
+        $properties = 
+            $properties_query
+                ->where('language_id', $lang->id)
+                ->with('property')
+                ->orderBy('name', 'asc')
+                ->paginate(30);
 
-    public function index()
-    {
-        $language_id = 1; // for now is a simulated language
-
-        $properties = (new PropertyTranslation)
-            ->where('language_id', $language_id)
-            ->with('property')
-            ->orderBy('id', 'asc')
-            ->paginate(30);
-
-        return view('properties.index', [
-            'properties' => $properties
-        ]);
+        return view('properties.index')
+            ->with('properties', $properties)
+            ->with('search', $search);
     }
 
     /**
@@ -56,29 +65,32 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        $property = new Property;
+        $lang = LanguageHelper::current();
 
-        $language_id = 1; // for now is a simulated language
+        $zones = Zone::with(
+            ["translations" => function($q) use ($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get(); 
 
-        $cities = (new City)->get();        
-        $zones =  (new Zone)->with(["translations" => function($q) use ($language_id){
-                    $q->where('language_id', $language_id);
-                }])->get() ; 
-        //$zones = Zone->translation()->where('language_id', $language_id);//(new ZoneTranslation)->where('language_id', $language_id)->get();
-        $properties_types = (new PropertyType)->with(["translations" => function($q) use($language_id){
-                    $q->where('language_id', $language_id);
-                }])->get() ;        
-        $cleaning_option =  (new CleaningOption )->with(["translations" => function($q) use($language_id){
-            $q->where('language_id', $language_id);
-        }])->get() ;
+        $property_types = PropertyType::with(
+            ["translations" => function($q) use($lang){
+                $q->where('language_id', $lang->id);
+            }])
+        ->get();        
+
+        $cleaning_option = CleaningOption::with(
+            ["translations" => function($q) use($lang){
+                $q->where('language_id', $lang->id);
+            }])
+        ->get();
         
-        return view('properties.create', [
-            'property' => $property,
-            'cities' => $cities,
-            'zones' => $zones,
-            'properties_types' => $properties_types,
-            'cleaning_option' => $cleaning_option
-        ]);
+        return view('properties.create')
+            ->with('property', (new Property))
+            ->with('cities', City::all())
+            ->with('zones', $zones)
+            ->with('property_types', $property_types)
+            ->with('cleaning_option', $cleaning_option);
     }
 
     /**
@@ -89,31 +101,15 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        /* Property EN*/
         $property = new Property;
-
-        $property->user_id = $user->id;
+        $property->user_id = 1; // temporal; next user owner id
         $property->city_id = $request->city_id;
         $property->zone_id = $request->zone_id;
         $property->property_type_id = $request->property_type_id;
-        $property->cleaning_option_id = $request->cleaning_option_id;
-        if($request->is_featured){
-            $property->is_featured = 1;
-        }
-        if($request->is_enabled){
-            $property->is_enabled = 1;
-        }
-        if($request->is_online){
-            $property->is_online = 1;
-        }
-        if($request->has_parking){
-            $property->has_parking = 1;
-        }        
+        $property->cleaning_option_id = $request->cleaning_option_id;   
         $property->building = $request->building;
         $property->rental_comission = $request->rental_comission;        
         $property->bedrooms = $request->bedrooms;
-        $property->bedding_JSON = $request->bedding_JSON;
         $property->sleeps = $request->sleeps;
         $property->floors = $request->floors;
         $property->maid_fee = $request->maid_fee;
@@ -124,11 +120,14 @@ class PropertiesController extends Controller
         $property->address = $request->address;
         $property->gmaps_lat = $request->gmaps_lat;
         $property->gmaps_lon = $request->gmaps_lon;
-
+        $property->is_featured = ($request->is_featured) ? 1 : 0;
+        $property->is_enabled = ($request->is_enabled) ? 1 : 0;
+        $property->is_online = ($request->is_online) ? 1 : 0;
+        $property->has_parking = ($request->has_parking) ? 1 : 0;
         $property->save();
 
         $en = new PropertyTranslation;
-        $en->language_id = 1;
+        $en->language_id = LanguageHelper::getId('en');
         $en->property_id = $property->id;
         $en->name = $request->name['en'];
         $en->description = $request->description['en'];
@@ -136,7 +135,7 @@ class PropertiesController extends Controller
         $en->save();
 
         $es = new PropertyTranslation;
-        $es->language_id = 2;
+        $es->language_id = LanguageHelper::getId('es');
         $es->property_id = $property->id;
         $es->name = $request->name['es'];
         $es->description = $request->description['es'];
@@ -155,39 +154,44 @@ class PropertiesController extends Controller
      */
     public function show(Property $property)
     {
-        
-        $property['en'] = $property
-                ->with('city')
-                ->with(["type.translations" => function($q) {
-                    $q->where('language_id', 1);
-                }]) 
-                ->with(["translations" => function($q){
-                    $q->where('language_id', 1);
-                }])  
-                ->with(["zone.translations" => function($q){
-                    $q->where('language_id', 1);
-                }])
-                ->with(["cleaningOption.translations" => function($q){
-                    $q->where('language_id', 1);
-                }])->first();
-        $property['es'] =  $property
-                ->with('city')
-                ->with(["type.translations" => function($q) {
-                    $q->where('language_id', 2);
-                }]) 
-                ->with(["translations" => function($q){
-                    $q->where('language_id', 2);
-                }])  
-                ->with(["zone.translations" => function($q){
-                    $q->where('language_id', 2);
-                }])
-                ->with(["cleaningOption.translations" => function($q){
-                    $q->where('language_id', 2);
-                }])->first();
-        
-        return view('properties.show', [
-            'property' => $property
-        ]);
+        $lang = LanguageHelper::current();
+
+        $property['en'] = 
+            $property
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('en'))
+                ->first();
+
+        $property['es'] = 
+            $property
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('es'))
+                ->first();
+              
+        $zones = Zone::with(
+            ["translations" => function($q) use ($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get(); 
+
+        $property_types = PropertyType::with(
+            ["translations" => function($q) use($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get();
+
+        $cleaning_option = CleaningOption::with(
+            ["translations" => function($q) use($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get() ;
+                    
+        return view('properties.show')
+            ->with('property', $property)
+            ->with('cities', City::all())
+            ->with('zones', $zones)
+            ->with('property_types', $property_types)
+            ->with('cleaning_option', $cleaning_option);
     }
 
     /**
@@ -198,32 +202,44 @@ class PropertiesController extends Controller
      */
     public function edit(Property $property)
     {
-       
-        $language_id = 1; // for now is a simulated language
+        $lang = LanguageHelper::current();
 
+        $property['en'] = 
+            $property
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('en'))
+                ->first();
 
-        $property['en'] = $property->translations()->where('language_id', 1)->first();
-        $property['es'] = $property->translations()->where('language_id', 2)->first();
-        
-        $cities = (new City)->get();        
-        $zones =  (new Zone)->with(["translations" => function($q) use ($language_id){
-                    $q->where('language_id', $language_id);
-                }])->get() ; 
-        //$zones = Zone->translation()->where('language_id', $language_id);//(new ZoneTranslation)->where('language_id', $language_id)->get();
-        $properties_types = (new PropertyType)->with(["translations" => function($q) use($language_id){
-                    $q->where('language_id', $language_id);
-                }])->get() ;        
-        $cleaning_option =  (new CleaningOption )->with(["translations" => function($q) use($language_id){
-            $q->where('language_id', $language_id);
-        }])->get() ;
+        $property['es'] = 
+            $property
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('es'))
+                ->first();
+              
+        $zones = Zone::with(
+            ["translations" => function($q) use ($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get(); 
+
+        $property_types = PropertyType::with(
+            ["translations" => function($q) use($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get();
+
+        $cleaning_option = CleaningOption::with(
+            ["translations" => function($q) use($lang){
+                $q->where('language_id', $lang->id);
+            }]
+        )->get() ;
                     
-        return view('properties.edit', [
-            'property' => $property,
-            'cities' => $cities,
-            'zones' => $zones,
-            'properties_types' => $properties_types,
-            'cleaning_option' => $cleaning_option
-        ]);
+        return view('properties.edit')
+            ->with('property', $property)
+            ->with('cities', City::all())
+            ->with('zones', $zones)
+            ->with('property_types', $property_types)
+            ->with('cleaning_option', $cleaning_option);
     }
 
     /**
@@ -238,13 +254,13 @@ class PropertiesController extends Controller
         
         $property = Property::findOrFail($id);
 
-        $en = $property->translations()->where('language_id', Language::getId('en'))->first(); 
+        $en = $property->translations()->where('language_id', LanguageHelper::getId('en'))->first(); 
         $en->name = $request->name['en'];
         $en->description = $request->description['en'];
         $en->cancellation_policies = $request->cancellation_policies['en'];
         $en->save();
 
-        $es = $property->translations()->where('language_id', Language::getId('es'))->first();
+        $es = $property->translations()->where('language_id', LanguageHelper::getId('es'))->first();
         $es->name = $request->name['es'];
         $es->description = $request->description['es'];
         $es->cancellation_policies = $request->cancellation_policies['es'];
@@ -254,22 +270,9 @@ class PropertiesController extends Controller
         $property->zone_id = $request->zone_id;
         $property->property_type_id = $request->property_type_id;
         $property->cleaning_option_id = $request->cleaning_option_id;
-        if($request->is_featured){
-            $property->is_featured = 1;
-        }
-        if($request->is_enabled){
-            $property->is_enabled = 1;
-        }
-        if($request->is_online){
-            $property->is_online = 1;
-        }
-        if($request->has_parking){
-            $property->has_parking = 1;
-        }        
         $property->building = $request->building;
         $property->rental_comission = $request->rental_comission;        
         $property->bedrooms = $request->bedrooms;
-        $property->bedding_JSON = $request->bedding_JSON;
         $property->sleeps = $request->sleeps;
         $property->floors = $request->floors;
         $property->maid_fee = $request->maid_fee;
@@ -280,7 +283,10 @@ class PropertiesController extends Controller
         $property->address = $request->address;
         $property->gmaps_lat = $request->gmaps_lat;
         $property->gmaps_lon = $request->gmaps_lon;
-
+        $property->is_featured = ($request->is_featured) ? 1 : 0;
+        $property->is_enabled = ($request->is_enabled) ? 1 : 0;
+        $property->is_online = ($request->is_online) ? 1 : 0;
+        $property->has_parking = ($request->has_parking) ? 1 : 0;
         $property->save();
 
         return redirect( route('properties') );
@@ -295,14 +301,11 @@ class PropertiesController extends Controller
      */
     public function destroy($id)
     {
-        // find
         $property = Property::findOrFail($id);
 
-        // delete translations
-        $property->translations()->where('language_id', 1)->delete();
-        $property->translations()->where('language_id', 2)->delete();
-
-        // delete 
+        $property->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
+        $property->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
+        
         $property->delete();
 
         return redirect( route('properties') );

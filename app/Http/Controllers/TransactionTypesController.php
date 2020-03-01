@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransactionTypeTranslation;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use App\Models\TransactionType;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\LanguageHelper;
+use App\Models\{ TransactionType, TransactionTypeTranslation };
 
 class TransactionTypesController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,18 +17,16 @@ class TransactionTypesController extends Controller
      */
     public function index()
     {
-        $language_id = 1; // for now is a simulated language
+        $lang = LanguageHelper::current();
 
-        $transaction_types = (new TransactionTypeTranslation)
-        ->where('language_id', $language_id)
-        ->with('transactionType')
-        ->orderBy('id', 'asc')
-        ->paginate(30);
+        $transaction_types = 
+            TransactionTypeTranslation::
+                where('language_id', $lang->id)
+                ->with('transactionType')
+                ->orderBy('id', 'asc')
+                ->paginate(30);
 
-        return view('transaction-types.index', [
-            'transaction_types' => $transaction_types
-        ]);
-
+        return view('transaction-types.index')->with('transaction_types', $transaction_types);
     }
 
     /**
@@ -44,10 +36,8 @@ class TransactionTypesController extends Controller
      */
     public function create()
     {
-        $transactionType = new TransactionType();
-        return view('transaction-types.create', [
-            'transaction_types' => $transactionType
-        ]);
+        return view('transaction-types.create')
+            ->with('transaction_type', (new TransactionType) );
     }
 
     /**
@@ -58,7 +48,7 @@ class TransactionTypesController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->saveData(false, $request);
+        //
     }
 
     /**
@@ -80,10 +70,7 @@ class TransactionTypesController extends Controller
      */
     public function edit(TransactionType $transactionType)
     {
-
-        return view('transaction-types.edit', [
-            'transaction_type' => $transactionType
-        ]);
+        return view('transaction-types.edit')->with('transaction_type', $transactionType);
     }
 
     /**
@@ -106,48 +93,11 @@ class TransactionTypesController extends Controller
      */
     public function destroy($id)
     {
-        $transactionType = TransactionType::find($id);
+        $transactionType = TransactionType::findOrFail($id);
+
         $transactionType->translations()->delete();
         $transactionType->delete();
 
-        return redirect()->route('transaction-types')->with('message', 'messages.property-types-delete-success-message');
-    }
-
-    private function saveData($transactionType, $request){
-
-        if(!$transactionType){
-                $transactionType = new TransactionType;
-        }
-
-        $this->validateData($transactionType, $request);
-        //Create new transactionType
-        $transactionType->save();
-        //Create new Translation ES of Transaction Tpe
-        $transactionType->translations()->create([
-            'language_id' => 1,
-            'name' => $request->inputNameEs,
-        ]);
-        //Create new Translation EN of Transaction Tpe
-        $transactionType->translations()->create([
-            'language_id' => 2,
-            'name' => $request->inputNameEn,
-        ]);
-
-
-        return redirect()->route('transaction-types')->with('message', __('Success' ));
-    }
-
-    private function validateData($transactionType, $request){
-        $rules = [
-            'inputNameEs' => 'required|min:6|max:30',
-            'inputNameEn' => 'required|min:6|max:30',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if($validator->fails()) {
-            redirect()->back()->withErrors($validator->messages())->withInput();
-        }
-
+        return redirect(route('transaction-types'));
     }
 }

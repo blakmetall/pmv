@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class BookingCommission extends Model {
 
+    use AppModel;
+    
     protected $table = 'booking_commissions';
     public $timestamps = true;
 
@@ -20,4 +23,5 @@ class BookingCommission extends Model {
     public function auditedBy() {
         return $this->belongsTo('App\Models\User', 'audit_user_id');
     }
+    
 }

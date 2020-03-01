@@ -10,10 +10,10 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    id="field_email"
-                    value="{{ old(('user.email'), (isset($user) ? $user->email : '')) }}"
+                    value="{{ old(('user.email'), $user->email) }}"
                     name="email"
                     class="form-control" 
+                    id="field_email"
                 />
             </div>
         </div>
@@ -25,12 +25,11 @@
             </label>
 
             <div class="col-sm-10">
-                <input 
-                    id="field_password"
-                    type="password" 
+                <input type="password" 
                     value=""
                     name="password"
                     class="form-control" 
+                    id="field_password"
                 />
             </div>
         </div>
@@ -42,25 +41,13 @@
             </label>
 
             <div class="col-sm-10">
-                <input 
-                    id="field_password_confirmation"
-                    type="password" 
+                <input type="password" 
                     value=""
                     name="password_confirmation"
                     class="form-control" 
+                    id="field_password_confirmation"
                 />
             </div>
-        </div>
-
-        <!-- enabled -->
-        <div class="card-body">
-            <label class="switch pr-5 switch-primary mr-3">
-                <span>{{ __('Enabled') }}</span>
-
-                @php $checked = $user->is_enabled ? 'checked="checked"' : ''; @endphp
-                <input  type="checkbox" {{ $checked }}  name="is_enabled" />
-                <span class="slider"></span>
-            </label>
         </div>
 
     </div>

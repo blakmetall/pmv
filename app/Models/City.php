@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class City extends Model {
 
+    use AppModel;
+    
     protected $table = 'cities';
     public $timestamps = false;
 
@@ -24,4 +27,5 @@ class City extends Model {
     public function contractors() {
         return $this->hasMany('App\Models\Contractor');
     }
+
 }

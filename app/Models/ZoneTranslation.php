@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class ZoneTranslation extends Model {
+
+    use AppModel;
 
     protected $table = 'zones_translations';
     public $timestamps = false;

@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class Amenity extends Model {
+
+    use AppModel;
 
     protected $table = 'amenities';
     public $timestamps = false;

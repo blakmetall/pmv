@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Helpers\RoleHelper;
+use App\Traits\AppModel;
 
 class Role extends Model {
+
+    use AppModel;
 
     protected $table = 'roles';
     public $timestamps = false;

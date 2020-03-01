@@ -4,73 +4,18 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use App\Models\{ User, Profile };
+use App\Helpers\LanguageHelper;
 
 class ProfileController extends Controller
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function edit()
     {
-        $profile = new Profile;
-        return view('profiles.create', [
-            'profile' => $profile
-        ]);
+        return view('profile.edit')->with('profile', Auth::user()->profile);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        $profile                          = new Profile;
-        $profile->user_id                 = Auth::user();
-        $profile->firstname               = $request->firstname;
-        $profile->lastname                = $request->lastname;
-        $profile->country                 = $request->country;
-        $profile->state                   = $request->state;
-        $profile->city                    = $request->city;
-        $profile->street                  = $request->street;
-        $profile->zip                     = $request->zip;
-        $profile->phone                   = $request->phone;
-        $profile->mobile                  = $request->mobile;
-        $profile->config_language         = $request->config_language;
-        $profile->config_agent_commission = $request->config_agent_commission;
-        $profile->save();
-
-        // if everything succeeds return to list
-        return redirect( route('profiles.edit', $profile->id) );
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Profile $id)
-    {
-        return view('profiles.edit', [
-            'profile' => $id
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $profile = Profile::findOrFail($id);
+        $profile = Auth::user()->profile;
 
         $profile->firstname               = $request->firstname;
         $profile->lastname                = $request->lastname;
@@ -85,18 +30,6 @@ class ProfileController extends Controller
         $profile->config_agent_commission = $request->config_agent_commission;
         $profile->save();
 
-        // if everything succeeds return to list
-        return redirect( route('profiles.edit', $id) );
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect(route('profile'));
     }
 }

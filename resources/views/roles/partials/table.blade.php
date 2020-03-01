@@ -13,7 +13,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">{{ __('Users') }}</th>
                     </tr>
 
                 </thead>
@@ -32,11 +32,8 @@
 
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('roles.edit', [$row->role->id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-                                    <a href="{{ route('roles.destroy', [$row->role->id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                    <a href="#task:route-to-users-with-role-filter">
+                                        {{ $row->role->users()->count() }}
                                     </a>
                                 </td>
 

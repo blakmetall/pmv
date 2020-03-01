@@ -48,9 +48,7 @@
         <div class="container app-container-sm">
 
             <!-- form fields -->
-            @include('users.partials.form', [
-                'row' => $user
-            ])        
+            @include('users.partials.form', ['row' => $user])        
 
         </div>
 

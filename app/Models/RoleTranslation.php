@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class RoleTranslation extends Model {
+
+    use AppModel;
 
     protected $table = 'roles_translations';
     public $timestamps = false;

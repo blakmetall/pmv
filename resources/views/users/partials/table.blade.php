@@ -39,31 +39,31 @@
                                 <!-- roles -->
                                 <td>
                                     @foreach (RoleHelper::available($row->id) as $role)
-                                        <a href="{{ route('roles.edit', $role['id']) }}">
-                                            <i class="nav-icon i-Pen-2 font-weight-bold text-success mr-2"></i>
-                                            <span class="badge badge-secondary">{{ $role['name'] }}</span>
-                                        </a>
+                                        <div>
+                                            <span class="badge badge-secondary p-1">
+                                                {{ $role['name'] }}
+                                            </span>
+                                        </div>
                                     @endforeach
                                 </td>
 
                                 <!-- is_enabled -->
                                 <th scope="row">
-                                    <span class="badge badge-{{ ($row->is_enabled) ?'success' : 'danger' }}">
-                                        {{ ($row->is_enabled) ? 'Enabled' : 'Disabled' }}
+                                    <span class="badge badge-{{ ($row->is_enabled) ?'success' : 'danger' }} p-1">
+                                        {{ ($row->is_enabled) ? __('Enabled') : __('Disabled') }}
                                     </span>
                                 </th>
 
                                 <!-- actions -->
                                 <td>
-                                    <!-- profile -->
-                                    <a href="{{ route('profiles.edit', [$row->profile->id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-File-Edit font-weight-bold"></i>
+                                    <a href="{{ route('users.show', [$row->id]) }}" class="text-primary mr-2">
+                                        <i class="nav-icon i-Eye font-weight-bold"></i>
                                     </a>
-                                    <!-- edit -->
+
                                     <a href="{{ route('users.edit', [$row->id]) }}" class="text-success mr-2">
                                         <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                     </a>
-                                    <!-- delete -->
+
                                     <a href="{{ route('users.destroy', [$row->id]) }}" class="text-danger mr-2">
                                         <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                     </a>

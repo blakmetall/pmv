@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class Property extends Model {
+
+    use AppModel;
 
     protected $table = 'properties';
     public $timestamps = true;

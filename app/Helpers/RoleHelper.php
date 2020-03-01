@@ -22,7 +22,7 @@ class RoleHelper
             $config_role_id = $user->profile->config_role_id;          
         }
 
-        return Role::where('id', $user->profile->config_role_id)->first();
+        return Role::where('id', $config_role_id)->first();
     }
 
     /**

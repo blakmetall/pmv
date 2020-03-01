@@ -10,7 +10,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.firstname'), (isset($profile) ? $profile->firstname : '')) }}"
+                    value="{{ old(('profile.firstname'), $profile->firstname) }}"
                     name="firstname"
                     class="form-control" 
                     id="field_firstname"
@@ -26,7 +26,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.lastname'), (isset($profile) ? $profile->lastname : '')) }}"
+                    value="{{ old(('profile.lastname'), $profile->lastname) }}"
                     name="lastname"
                     class="form-control" 
                     id="field_lastname"
@@ -42,7 +42,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.country'), (isset($profile) ? $profile->country : '')) }}"
+                    value="{{ old(('profile.country'), $profile->country) }}"
                     name="country"
                     class="form-control" 
                     id="field_country"
@@ -58,7 +58,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.state'), (isset($profile) ? $profile->state : '')) }}"
+                    value="{{ old(('profile.state'), $profile->state) }}"
                     name="state"
                     class="form-control" 
                     id="field_state"
@@ -74,7 +74,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.city'), (isset($profile) ? $profile->city : '')) }}"
+                    value="{{ old(('profile.city'), $profile->city) }}"
                     name="city"
                     class="form-control" 
                     id="field_city"
@@ -90,7 +90,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.street'), (isset($profile) ? $profile->street : '')) }}"
+                    value="{{ old(('profile.street'), $profile->street) }}"
                     name="street"
                     class="form-control" 
                     id="field_street"
@@ -106,7 +106,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.zip'), (isset($profile) ? $profile->zip : '')) }}"
+                    value="{{ old(('profile.zip'), $profile->zip) }}"
                     name="zip"
                     class="form-control" 
                     id="field_zip"
@@ -122,7 +122,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.phone'), (isset($profile) ? $profile->phone : '')) }}"
+                    value="{{ old(('profile.phone'), $profile->phone) }}"
                     name="phone"
                     class="form-control" 
                     id="field_phone"
@@ -138,7 +138,7 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.mobile'), (isset($profile) ? $profile->mobile : '')) }}"
+                    value="{{ old(('profile.mobile'), $profile->mobile) }}"
                     name="mobile"
                     class="form-control" 
                     id="field_mobile"
@@ -149,12 +149,12 @@
         <!-- config lang -->
         <div class="form-group row">
             <label for="field_config_language" class="col-sm-2 col-form-label">
-                {{ __('Config Lang') }}
+                {{ __('Language') }}
             </label>
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.config_language'), (isset($profile) ? $profile->config_language : '')) }}"
+                    value="{{ old(('profile.config_language'), $profile->config_language) }}"
                     name="config_language"
                     class="form-control" 
                     id="field_config_language"
@@ -165,12 +165,12 @@
         <!-- config agent commission -->
         <div class="form-group row">
             <label for="field_config_agent_commission" class="col-sm-2 col-form-label">
-                {{ __('Config Agent Commission') }}
+                {{ __('Agent Commission') }}
             </label>
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('profile.config_agent_commission'), (isset($profile) ? $profile->config_agent_commission : '')) }}"
+                    value="{{ old(('profile.config_agent_commission'), $profile->config_agent_commission) }}"
                     name="config_agent_commission"
                     class="form-control" 
                     id="field_config_agent_commission"

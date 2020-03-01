@@ -12,18 +12,7 @@
 
                 <div class="row">
                     <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
-                        @include('partials.page-heading', [
-                            'title' => __('Edit Profile'),
-                            'breadcrumbs' => [
-                                [
-                                    'url' => route('users'),
-                                    'label' => __('Users'),
-                                ],
-                            ]
-                        ])
-
+                        @include('partials.page-heading', ['title' => __('Account')])
                     </div>
                 </div>
 
@@ -34,7 +23,7 @@
 
 
     <!-- form -->
-    <form action="{{ route('profiles.update', [$profile->id]) }}" method="post">
+    <form action="{{ route('account.update') }}" method="post">
 
         <!-- token -->
         @csrf
@@ -42,9 +31,7 @@
         <div class="container app-container-sm">
 
             <!-- form fields -->
-            @include('profiles.partials.form', [
-                'row' => $profile
-            ])        
+            @include('account.partials.form', ['row' => $user])        
 
         </div>
 
