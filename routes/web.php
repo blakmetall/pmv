@@ -30,12 +30,9 @@ Route::group(['middleware' => ['web']], function () {
     // auth middleware
     Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
         
-        Route::get('', 'DashboardController@index');
-
         // dashboard
-        Route::group(['prefix' => 'dashboard'], function () {
-            Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-        });
+        Route::get('', 'DashboardController@index');
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
         // account 
         Route::group(['prefix' => 'account'], function () {
@@ -50,21 +47,28 @@ Route::group(['middleware' => ['web']], function () {
         });
 
         // users
-        Route::group(['prefix' => 'users', 'middleware' => 'role-permission:users,index'], function () {
-            Route::get('', 'UsersController@index')->name('users');
-            Route::get('create', 'UsersController@create')->name('users.create');
-            Route::post('store', 'UsersController@store')->name('users.store');
-            Route::get('show/{user}', 'UsersController@show')->name('users.show');
-            Route::get('edit/{user}', 'UsersController@edit')->name('users.edit');
-            Route::post('update/{id}', 'UsersController@update')->name('users.update');
-            Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
+        Route::group(['prefix' => 'users'], function () {
 
+            Route::group(['middleware' => 'role-permission:users,index'], function() {
+                Route::get('', 'UsersController@index')->name('users');
+                Route::get('create', 'UsersController@create')->name('users.create');
+                Route::post('store', 'UsersController@store')->name('users.store');
+                Route::get('show/{user}', 'UsersController@show')->name('users.show');
+                Route::get('edit/{user}', 'UsersController@edit')->name('users.edit');
+                Route::post('update/{id}', 'UsersController@update')->name('users.update');
+                Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
+            });
+            
             // roles
-            Route::group(['prefix' => 'roles', 'middleware' => 'role-permission:users,roles'], function () {
-                Route::get('', 'RolesController@index')->name('roles');
+            Route::group(['prefix' => 'roles'], function () {
+                Route::group(['middleware' => 'role-permission:users,roles'], function() {
+                    Route::get('', 'RolesController@index')->name('roles');
+                });
+                
                 Route::get('update-active/{id}', 'RolesController@updateActive')->name('roles.update-active');
             });
         });
+
 
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {

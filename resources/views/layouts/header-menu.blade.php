@@ -2,6 +2,7 @@
     $_current_lang = LanguageHelper::current();
     $_current_role = RoleHelper::current();
     $_available_roles = RoleHelper::available();
+    $_profile = auth()->user()->profile;
 @endphp
 
 <div class="main-header">
@@ -94,9 +95,11 @@
                 
                 @foreach ($_available_roles as $role)
                     <a class="dropdown-item" href="{{ route('roles.update-active', [$role->role_id])}}">
-
-                        
-                        
+                        @if ($_current_role->id == $role->role_id)
+                            <b>{{  $role->name }}</b>
+                        @else
+                            {{ $role->name }}
+                        @endif
                     </a>
                 @endforeach
             </div>
@@ -114,8 +117,10 @@
                     aria-haspopup="true" aria-expanded="false">
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <div class="dropdown-header">
-                        <i class="i-Lock-User mr-1"></i> JOHN DOE
+                    <div class="dropdown-header text-uppercase">
+                        <i class="i-Lock-User mr-1"></i>
+                        {{ $_profile->firstname }}
+                        {{ $_profile->lastname }}
                     </div>
 
                     <a class="dropdown-item" href="{{ route('account') }}">

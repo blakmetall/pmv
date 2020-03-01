@@ -19,7 +19,7 @@
                             'breadcrumbs' => [
                                 [
                                     'url' => route('properties'),
-                                    'label' => __('properties'),
+                                    'label' => __('Properties'),
                                 ],
                             ]
                         ])

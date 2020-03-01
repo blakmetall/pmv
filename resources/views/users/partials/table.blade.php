@@ -50,7 +50,7 @@
                                 <!-- is_enabled -->
                                 <th scope="row">
                                     <span class="badge badge-{{ ($row->is_enabled) ?'success' : 'danger' }} p-1">
-                                        {{ ($row->is_enabled) ? 'Enabled' : 'Disabled' }}
+                                        {{ ($row->is_enabled) ? __('Enabled') : __('Disabled') }}
                                     </span>
                                 </th>
 

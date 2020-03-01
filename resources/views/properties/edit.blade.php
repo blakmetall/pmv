@@ -15,11 +15,11 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('Edit property'),
+                            'title' => __('Edit Property'),
                             'breadcrumbs' => [
                                 [
                                     'url' => route('properties'),
-                                    'label' => __('properties'),
+                                    'label' => __('Properties'),
                                 ],
                             ]
                         ])

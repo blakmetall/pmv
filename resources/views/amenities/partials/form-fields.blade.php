@@ -7,8 +7,8 @@
         @endif 
         
         <div class="form-group row">
-            <label for="field_amenity_{{ $lang }}" class="col-sm-2 col-form-label">
-                {{ __('Amenity') }}
+            <label for="field_amenity_name_{{ $lang }}" class="col-sm-2 col-form-label">
+                {{ __('Name') }}
             </label>
 
             <div class="col-sm-10">
@@ -16,7 +16,7 @@
                     value="{{ old(('amenity.' . $lang), (isset($amenity[$lang]) ? $amenity[$lang]->name : '')) }}"
                     name="amenity[{{ $lang }}]"
                     class="form-control" 
-                    id="field_amenity_{{ $lang }}"
+                    id="field_amenity_name_{{ $lang }}"
                 />
             </div>
         </div>

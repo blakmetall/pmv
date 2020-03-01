@@ -100,7 +100,7 @@
                 </label>
 
                 <label class="switch pr-5 switch-primary mr-3">
-                    <span>{{ __('Has Parking') }}</span>
+                    <span>{{ __('Parking') }}</span>
                     
                     @php $checked = isset($property->has_parking) ? 'checked="checked"' : ''; @endphp
                     <input type="checkbox" name="has_parking" {{ $checked }}/>

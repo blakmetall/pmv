@@ -35,7 +35,7 @@
 
     <!-- here the data is loaded -->
     @include('properties.partials.table', [
-        'label' => __('properties'),
+        'label' => __('Properties'),
         'rows' => $properties
     ])
 

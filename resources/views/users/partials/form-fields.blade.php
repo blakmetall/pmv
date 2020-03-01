@@ -53,18 +53,14 @@
         </div>
 
         <!-- enabled -->
-        <div class="form-group row">
-            <div class="col-sm-12">
-                <label class="switch switch-success mr-3">
-                    <span>{{ __('Is Enabled?') }}</span>
+        <div class="card-body">
+            <label class="switch pr-5 switch-primary mr-3">
+                <span>{{ __('Enabled') }}</span>
 
-                    <input 
-                        type="checkbox"
-                        name="is_enabled"
-                        {{ ($user->is_enabled) ? 'checked' : '' }}/>
-                    <span class="slider"></span>
-                </label>
-            </div>
+                @php $checked = $user->is_enabled ? 'checked="checked"' : ''; @endphp
+                <input  type="checkbox" {{ $checked }}  name="is_enabled" />
+                <span class="slider"></span>
+            </label>
         </div>
 
     </div>

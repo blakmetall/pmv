@@ -32,7 +32,7 @@ class RolesController extends Controller
      * Sets the active role for the user in the database
      */
     public function updateActive($id) 
-    {
+    {   
         if(RoleHelper::hasValidRoleId($id)) {
             $profile = auth()->user()->profile;
             $profile->config_role_id = $id;
