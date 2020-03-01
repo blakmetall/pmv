@@ -14,21 +14,13 @@
                     <div class="col-md col-8">
 
                         <!-- title layout heading goes here -->
-                        @include('partials.page-heading', [
-                            'title' => __('Users'),
-                            'breadcrumbs' => []
-                        ])
+                        @include('partials.page-heading', ['title' => __('Users')])
 
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
-
-                        <!-- action buttons goes here -->
                         <a href="{{ route('users.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
-                        </a>
-                        <a href="#" class="btn btn-dark ripple m-1" role="button" >
-                            {{ __('Demo Button') }}
                         </a>
                     </div>
                 </div>

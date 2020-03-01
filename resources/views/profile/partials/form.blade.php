@@ -1,7 +1,5 @@
 <!-- load fields -->
-@include('profiles.partials.form-fields', [
-    'row' => $row
-])
+@include('profile.partials.form-fields', ['row' => $row])
 
 
 <!-- form actions -->

@@ -2,39 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AmenityTranslation;
 use Illuminate\Http\Request;
-use App\Models\Amenity;
 use App\Helpers\LanguageHelper;
+use App\Models\{ Amenity, AmenityTranslation };
 
 class AmenitiesController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
         $lang = LanguageHelper::current();
+        
+        $search = trim($request->s);
 
-        $language_id = $lang->id;
+        if ($search) {
+            $amenities_query = AmenityTranslation::where('name', 'like', "%".$search."%");
+        } else {
+            $amenities_query = new AmenityTranslation;
+        }
 
-        $amenities = (new AmenityTranslation)
-            ->where('language_id', $language_id)
+        $amenities = $amenities_query
+            ->where('language_id', $lang->id)
             ->with('amenity')
             ->orderBy('name', 'asc')
             ->paginate(30);
 
-        return view('amenities.index', [
-            'amenities' => $amenities
-        ]);
+        return view('amenities.index')
+            ->with('amenities', $amenities)
+            ->with('search', $search);
     }
 
     /**
@@ -44,10 +43,7 @@ class AmenitiesController extends Controller
      */
     public function create()
     {
-        $amenity = new Amenity;
-        return view('amenities.create', [
-            'amenity' => $amenity
-        ]);
+        return view('amenities.create')->with('amenity', (new Amenity));
     }
 
     /**
@@ -58,13 +54,7 @@ class AmenitiesController extends Controller
      */
     public function store(Request $request)
     {
-        // run validations
-        // if fails
-        // return to create and restore values from input
-        // code: return redirect( route('amenities.create') )->withInput();
-
-        $amenity = new Amenity;
-        $amenity->save();
+        $amenity = Amenity::create();
 
         $en = new AmenityTranslation;
         $en->language_id = LanguageHelper::getId('en');
@@ -78,8 +68,7 @@ class AmenitiesController extends Controller
         $es->name = $request->amenity['es'];
         $es->save();
 
-        // if everything succeeds return to list
-        return redirect( route('amenities') );
+        return redirect(route('amenities'));
     }
 
     /**
@@ -101,17 +90,17 @@ class AmenitiesController extends Controller
      */
     public function edit(Amenity $amenity)
     {
-        $amenity['en'] = $amenity->translations()
-            ->where('language_id', LanguageHelper::getId('en'))
-            ->first();
+        $amenity['en'] = 
+            $amenity->translations()
+                ->where('language_id', LanguageHelper::getId('en'))
+                ->first();
 
-        $amenity['es'] = $amenity->translations()
-            ->where('language_id', LanguageHelper::getId('es'))
-            ->first();
+        $amenity['es'] =
+             $amenity->translations()
+                ->where('language_id', LanguageHelper::getId('es'))
+                ->first();
 
-        return view('amenities.edit', [
-            'amenity' => $amenity
-        ]);
+        return view('amenities.edit')->with('amenity', $amenity);
     }
 
     /**
@@ -123,11 +112,6 @@ class AmenitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // run validations
-        // if fails
-        // return to edit and restore values from input
-        // code: return redirect( route('amenities.edit', $id) )->withInput();
-
         $amenity = Amenity::findOrFail($id);
 
         $en = $amenity->translations()->where('language_id', LanguageHelper::getId('en'))->first();
@@ -138,8 +122,7 @@ class AmenitiesController extends Controller
         $es->name = $request->amenity['es'];
         $es->save();
 
-        // if everything succeeds return to list
-        return redirect( route('amenities') );
+        return redirect(route('amenities'));
     }
 
     /**
@@ -150,16 +133,13 @@ class AmenitiesController extends Controller
      */
     public function destroy($id)
     {
-        // find
         $amenity = Amenity::findOrFail($id);
 
-        // delete translations
         $amenity->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
         $amenity->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
-        // delete 
         $amenity->delete();
 
-        return redirect( route('amenities') );
+        return redirect(route('amenities'));
     }
 }

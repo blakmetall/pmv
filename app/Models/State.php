@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class State extends Model {
+
+    use AppModel;
 
     protected $table = 'states';
     public $timestamps = false;

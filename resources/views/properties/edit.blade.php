@@ -27,12 +27,9 @@
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
-
-                        <!-- action buttons goes here -->
                         <a href="{{ route('properties.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>
-
                     </div>
                 </div>
 
@@ -51,9 +48,7 @@
         <div class="container app-container-sm">
 
             <!-- form fields -->
-            @include('properties.partials.form', [
-                'row' => $property
-            ])        
+            @include('properties.partials.form', ['row' => $property])        
 
         </div>
 

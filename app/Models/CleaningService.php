@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class CleaningService extends Model {
+
+    use AppModel;
 
     protected $table = 'cleaning_services';
     public $timestamps = true;

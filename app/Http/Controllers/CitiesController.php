@@ -3,27 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\City;
-use App\Models\State;
+use App\Models\{ City, State };
 
 class CitiesController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+{   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cities = City::paginate(5)->onEachSide(5);
+        $search = trim($request->s);
 
-        return view('cities.index', [
-            'cities' => $cities
-        ]);
+        if ($search) {
+            $cities_query = City::where('name', 'like', "%".$search."%");
+        } else {
+            $cities_query = new City;
+        }
+        
+        $cities = $cities_query->paginate(5)->onEachSide(5);
+
+        return view('cities.index')
+            ->with('cities', $cities)
+            ->with('search', $search);
     }
 
     /**
@@ -33,12 +36,9 @@ class CitiesController extends Controller
      */
     public function create()
     {
-        $city = new City;
-        $states = (new State)->get();
-        return view('cities.create', [
-            'city' => $city,
-            'states' => $states,
-        ]);
+        return view('cities.create')
+            ->with('city', (new City))
+            ->with('states', State::all());
     }
 
     /**
@@ -65,9 +65,7 @@ class CitiesController extends Controller
      */
     public function show(City $city)
     {
-        return view('cities.show', [
-            'city' => $city
-        ]);
+        return view('cities.show')->with('city', $city);
     }
 
     /**
@@ -78,11 +76,9 @@ class CitiesController extends Controller
      */
     public function edit(City $city)
     {
-        $states = (new State)->get();
-        return view('cities.edit', [
-            'city' => $city,
-            'states' => $states
-        ]);
+        return view('cities.edit')
+            ->with('city', $city)
+            ->with('states', State::all());
     }
 
     /**
@@ -99,7 +95,7 @@ class CitiesController extends Controller
         $city->state_id = $request->state_id;
         $city->save();
 
-        return \redirect( route('cities'));
+        return redirect(route('cities'));
     }
 
     /**
@@ -112,6 +108,6 @@ class CitiesController extends Controller
     {
         $city = City::findOrFail($id);
         $city->delete();
-        return redirect(route('cities') );
+        return redirect(route('cities'));
     }
 }

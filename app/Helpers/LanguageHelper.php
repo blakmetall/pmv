@@ -3,29 +3,30 @@
 namespace App\Helpers;
 
 use App;
+use Config;
 use App\Models\Language;
 
 class LanguageHelper
 {
     public static function current()
     {
-        $lang_code = 'en';
+        $locale = self::getDefaultLocale();
 
         $user = auth()->user();
         if ($user && $user->profile) {
             if (!self::hasValidLocale($user->profile->config_language)) {
-                $user->profile->config_language = $lang_code;
+                $user->profile->config_language = $locale;
                 $user->profile->save();
             }else{
-                $lang_code = $user->profile->config_language;
+                $locale = $user->profile->config_language;
             }
         }
 
-        return Language::where('code', $lang_code)->first();
+        return Language::where('code', $locale)->first();
     }
 
     public static function setLocale($locale) {
-        $locale = self::hasValidLocale($locale) ? $locale : 'en';
+        $locale = self::hasValidLocale($locale) ? $locale : self::getDefaultLocale();
         App::setLocale($locale);
     }
 
@@ -40,5 +41,9 @@ class LanguageHelper
     public static function getId($locale) {
         $locales = ['en' => 2, 'es' => 1];
         return (isset($locales[$locale])) ? $locales[$locale] : 2;
+    }
+
+    public static function getDefaultLocale() {
+        return Config::get('app.locale');
     }
 }

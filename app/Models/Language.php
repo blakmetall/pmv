@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class Language extends Model {
 
+    use AppModel;
+    
     protected $table = 'languages';
     public $timestamps = false;
 

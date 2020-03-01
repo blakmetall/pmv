@@ -1,7 +1,5 @@
 <!-- load fields -->
-@include('users.partials.form-fields', [
-    'row' => $row
-])
+@include('users.partials.form-fields', ['row' => $row])
 
 
 <!-- form actions -->
@@ -23,8 +21,7 @@
                     <a href="{{ route('users') }}" class="btn btn-outline-secondary m-1" role="button">
                         {{  __('Cancel') }}
                     </a>
-
-                    <!-- if editing might be a chance to delete -->
+                    
                     @if( $row->id )
                         <button type="button" class="btn  btn-danger m-1 footer-delete-right">
                             {{ __('Delete') }}

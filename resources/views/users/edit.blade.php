@@ -27,8 +27,7 @@
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
-
-                        <!-- action buttons goes here -->
+                    
                         <a href="{{ route('users.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>

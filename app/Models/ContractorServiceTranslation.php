@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class ContractorServiceTranslation extends Model {
 
+    use AppModel;
+    
     protected $table = 'contractors_services_translations';
     public $timestamps = true;
 

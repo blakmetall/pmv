@@ -118,19 +118,11 @@
                         <i class="i-Lock-User mr-1"></i> JOHN DOE
                     </div>
 
-                    <a class="dropdown-item" href="{{ route('users.edit', auth()->user()) }}">
+                    <a class="dropdown-item" href="{{ route('account') }}">
                         {{ __('Account') }}
                     </a>
 
-                    @php
-                        if(! auth()->user()->profile ){
-                            $urlProfile = route('profiles.create');
-                        }else{
-                            $urlProfile = route('profiles.edit', auth()->user()->profile->id);
-                        }
-                    @endphp
-
-                    <a class="dropdown-item" href="{{ $urlProfile }}">
+                    <a class="dropdown-item" href="{{ route('profile') }}">
                         {{  __('Profile') }}
                     </a>
 

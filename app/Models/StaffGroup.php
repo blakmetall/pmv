@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class StaffGroup extends Model {
+
+    use AppModel;
 
     protected $table = 'staff_groups';
     public $timestamps = false;

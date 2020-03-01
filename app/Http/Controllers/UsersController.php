@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Hash;
-
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -14,45 +13,33 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::
-            orderBy('email', 'asc')
-            ->paginate(30);
+        $search = trim($request->s);
 
-        return view('users.index', [
-            'users' => $users
-        ]);
+        if ($search) {
+            $users_query = 
+                User::
+                    where('email', 'like', "%".$search."%")
+                    ->orWhereHas('profile', function($query) use ($search) {
+                        $query
+                            ->where('profiles.firstname', 'like', $search)
+                            ->orWhere('profiles.lastname', 'like', $search)
+                            ->orWhere('profiles.country', 'like', $search)
+                            ->orWhere('profiles.state', 'like', $search)
+                            ->orWhere('profiles.city', 'like', $search)
+                            ->orWhere('profiles.street', 'like', $search);
+                    });
+        } else {
+            $users_query = new User;
+        }
+
+        $users = $users_query->orderBy('email', 'asc')->paginate( 30 );
+
+        return view('users.index')
+            ->with('users', $users)
+            ->with('search', $search);
     }
-
-    /**
-     * Display a listing of the resource searched.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search(Request $request)
-    {
-        $search = $request->s_data;
-        
-        $users = User::where('email', 'like', "%".$search."%")
-        ->orWhereHas('profile', function($query) use ($search){
-            $query->where('profiles.firstname', 'like', $search)
-                ->orWhere('profiles.lastname', 'like', $search)
-                ->orWhere('profiles.country', 'like', $search)
-                ->orWhere('profiles.state', 'like', $search)
-                ->orWhere('profiles.city', 'like', $search)
-                ->orWhere('profiles.street', 'like', $search)
-                ->orWhere('profiles.zip', 'like', $search)
-                ->orWhere('profiles.phone', 'like', $search)
-                ->orWhere('profiles.mobile', 'like', $search);
-        })->orderBy('email', 'asc')->paginate( 30 );
-
-        return view('users.index', [
-            'users' => $users,
-            'search' => $search
-        ]);
-    }
-    
 
     /**
      * Show the form for creating a new resource.
@@ -61,10 +48,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $user = new User;
-        return view('users.create', [
-            'user' => $user
-        ]);
+        return view('users.create')->with('user', (new User));
     }
 
     /**
@@ -78,10 +62,9 @@ class UsersController extends Controller
         $user = new User;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->is_enabled = ($request->is_enabled == 'on')?1:0;
+        $user->is_enabled = ($request->is_enabled) ? 1 : 0;
         $user->save();
 
-        // if everything succeeds return to list
         return redirect( route('users') );
     }
 
@@ -104,9 +87,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', [
-            'user' => $user
-        ]);
+        return view('users.edit')->with('user', $user);
     }
 
     /**
@@ -120,12 +101,14 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $user->email = $request->email;
+        $user->is_enabled = ($request->is_enabled) ? 1 : 0;
+        
         if ( !empty($request->password) ) {
             $user->password = Hash::make($request->password);
         }
-        $user->is_enabled = ($request->is_enabled == 'on')?1:0;
+
         $user->save();
-        // if everything succeeds return to list
+
         return redirect( route('users') );
     }
 
@@ -137,12 +120,8 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        /// find
         $user = User::findOrFail($id);
-
-        // delete 
         $user->delete();
-
-        return redirect( route('users') );
+        return redirect(route('users'));
     }
 }

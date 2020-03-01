@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class CleaningOption extends Model {
+
+    use AppModel;
 
     protected $table = 'cleaning_options';
     public $timestamps = false;
@@ -21,4 +24,5 @@ class CleaningOption extends Model {
     public function translations() {
         return $this->hasMany('App\Models\CleaningOptionTranslation');
     }
+
 }

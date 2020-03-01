@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class AmenityTranslation extends Model {
+
+    use AppModel;
 
     protected $table = 'amenities_translations';
     public $timestamps = false;
@@ -16,4 +19,5 @@ class AmenityTranslation extends Model {
     public function amenity() {
         return $this->belongsTo('App\Models\Amenity');
     }
+
 }

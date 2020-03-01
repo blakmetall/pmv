@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\AppModel;
 
 class TransactionType extends Model {
+
+    use AppModel;
 
     protected $table = 'transaction_types';
     public $timestamps = false;
