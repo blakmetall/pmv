@@ -13,8 +13,8 @@
 
             <div class="col-sm-10">
                 <input type="text" 
-                    value="{{ old(('amenity.' . $lang), (isset($amenity[$lang]) ? $amenity[$lang]->name : '')) }}"
-                    name="amenity[{{ $lang }}]"
+                    value="{{ old(($lang . 'name'), $amenity->{$lang}->name) }}"
+                    name="{{ $lang }}[name]"
                     class="form-control" 
                     id="field_amenity_name_{{ $lang }}"
                 />

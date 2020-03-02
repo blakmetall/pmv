@@ -39,8 +39,8 @@ class LanguageHelper
     }
     
     public static function getId($locale) {
-        $locales = ['en' => 2, 'es' => 1];
-        return (isset($locales[$locale])) ? $locales[$locale] : 2;
+        $locales = ['en' => 1, 'es' => 2];
+        return (isset($locales[$locale])) ? $locales[$locale] : $locales[self::getDefaultLocale()];
     }
 
     public static function getDefaultLocale() {

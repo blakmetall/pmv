@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
+use App\Repositories\AmenitiesRepositoryInterface;
 use App\Models\{ Amenity, AmenityTranslation };
 
 class AmenitiesController extends Controller
 {
+    private $repository;
+
+    public function __construct(AmenitiesRepositoryInterface $repository) 
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,22 +23,9 @@ class AmenitiesController extends Controller
      */
     public function index(Request $request)
     {   
-        $lang = LanguageHelper::current();
-        
         $search = trim($request->s);
-
-        if ($search) {
-            $amenities_query = AmenityTranslation::where('name', 'like', "%".$search."%");
-        } else {
-            $amenities_query = new AmenityTranslation;
-        }
-
-        $amenities = $amenities_query
-            ->where('language_id', $lang->id)
-            ->with('amenity')
-            ->orderBy('name', 'asc')
-            ->paginate(30);
-
+        $amenities = $this->repository->all($search);
+        
         return view('amenities.index')
             ->with('amenities', $amenities)
             ->with('search', $search);
@@ -43,7 +38,8 @@ class AmenitiesController extends Controller
      */
     public function create()
     {
-        return view('amenities.create')->with('amenity', (new Amenity));
+        $amenity = $this->repository->blueprint();
+        return view('amenities.create')->with('amenity', $amenity);
     }
 
     /**
@@ -54,21 +50,8 @@ class AmenitiesController extends Controller
      */
     public function store(Request $request)
     {
-        $amenity = Amenity::create();
-
-        $en = new AmenityTranslation;
-        $en->language_id = LanguageHelper::getId('en');
-        $en->amenity_id = $amenity->id;
-        $en->name = $request->amenity['en'];
-        $en->save();
-
-        $es = new AmenityTranslation;
-        $es->language_id = LanguageHelper::getId('es');
-        $es->amenity_id = $amenity->id;
-        $es->name = $request->amenity['es'];
-        $es->save();
-
-        return redirect(route('amenities'));
+        $amenity = $this->repository->create($request);
+        return redirect(route('amenities.edit', [$amenity->id]));
     }
 
     /**
@@ -78,17 +61,8 @@ class AmenitiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Amenity $amenity)
-    {
-        $amenity['en'] = 
-            $amenity->translations()
-                ->where('language_id', LanguageHelper::getId('en'))
-                ->first();
-
-        $amenity['es'] =
-             $amenity->translations()
-                ->where('language_id', LanguageHelper::getId('es'))
-                ->first();
-
+    {   
+        $amenity = $this->repository->find($amenity);        
         return view('amenities.show')->with('amenity', $amenity);
     }
 
@@ -100,16 +74,7 @@ class AmenitiesController extends Controller
      */
     public function edit(Amenity $amenity)
     {
-        $amenity['en'] = 
-            $amenity->translations()
-                ->where('language_id', LanguageHelper::getId('en'))
-                ->first();
-
-        $amenity['es'] =
-             $amenity->translations()
-                ->where('language_id', LanguageHelper::getId('es'))
-                ->first();
-
+        $amenity = $this->repository->find($amenity);
         return view('amenities.edit')->with('amenity', $amenity);
     }
 
@@ -122,17 +87,8 @@ class AmenitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $amenity = Amenity::findOrFail($id);
-
-        $en = $amenity->translations()->where('language_id', LanguageHelper::getId('en'))->first();
-        $en->name = $request->amenity['en'];
-        $en->save();
-
-        $es = $amenity->translations()->where('language_id', LanguageHelper::getId('es'))->first();
-        $es->name = $request->amenity['es'];
-        $es->save();
-
-        return redirect(route('amenities'));
+        $this->repository->update($request, $id);
+        return redirect(route('amenities.edit', [$id]));
     }
 
     /**
@@ -143,13 +99,7 @@ class AmenitiesController extends Controller
      */
     public function destroy($id)
     {
-        $amenity = Amenity::findOrFail($id);
-
-        $amenity->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
-        $amenity->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
-
-        $amenity->delete();
-
+        $this->repository->delete($id);
         return redirect(route('amenities'));
     }
 }

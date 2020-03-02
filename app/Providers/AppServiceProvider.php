@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Config;
+use URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -17,11 +19,9 @@ class AppServiceProvider extends ServiceProvider
         // database mysql schema for strings
         Schema::defaultStringLength(191);
 
-        // https configuration
-        $https_environments = ['production', 'staging'];
-        if( in_array(config('app.env'), $https_environments) ) {
-            \URL::forceScheme('https');
-        }
+        // https force
+        $apply_https = in_array(Config::get('app.env'), ['production', 'staging']);
+        if ( $apply_https ) { URL::forceScheme('https'); }
     }
 
     /**
@@ -30,7 +30,10 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-        //
+    {   
+        $this->app->bind(
+            \App\Repositories\AmenitiesRepositoryInterface::class,
+            \App\Repositories\AmenitiesRepository::class
+        );
     }
 }
