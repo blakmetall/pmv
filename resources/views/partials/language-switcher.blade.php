@@ -5,6 +5,5 @@
     spanishUrl = "{{ route('language.update', ['es']) }}"
     englishLabel = "{{ __('English') }}"
     englishUrl = "{{ route('language.update', ['en']) }}"
-    
     >
 </div>
