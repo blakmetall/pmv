@@ -54,9 +54,12 @@
 
                     <!-- if editing might be a chance to delete -->
                     @if( $row->id )
-                        <button type="button" class="btn  btn-danger m-1 footer-delete-right">
-                            {{ __('Delete') }}
-                        </button>
+                        <a 
+                            href="{{ route('amenities.destroy', [$row->id]) }}" 
+                            class="btn btn-danger m-1 footer-delete-right" 
+                            role="button">
+                                {{ __('Delete') }}
+                        </a>
                     @endif
                 </div>
             </div>

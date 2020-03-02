@@ -11,6 +11,10 @@ class AmenityTranslation extends Model {
 
     protected $table = 'amenities_translations';
     public $timestamps = false;
+    protected $guarded = [
+        'language_id',
+        'amenity_id'
+    ];
 
     public function language() {
         return $this->belongsTo('App\Models\Language');
