@@ -6,7 +6,7 @@
     <div class="header-topnav">
         <div class="container-fluid">
             <div class=" topnav rtl-ps-none" id="" data-perfect-scrollbar data-suppress-scroll-x="true">
-                <ul class="menu float-left">
+                <ul class="menu float-left" id="app-menu">
 
                     @if ($_current_role->isAllowed('calendar', 'heading-menu'))
                         <li>
@@ -388,6 +388,26 @@
                         </li>
                     @endif
 
+                    <li id="app-menu-fit-li">
+                        <div>
+                            <div>
+                                <!-- label for menu and sidebar menu for responsive -->
+                                <label class="toggle" for="dropdownMenuBooking">
+                                    ...
+                                </label>
+                                <a href="#">
+                                    <i class="nav-icon mr-2 i-Align-Justify-All"></i>
+                                    <div id="app-menu-fit-label">...</div>
+                                </a>
+
+                                <!-- dropdown menu -->
+                                <input type="checkbox" id="dropdownMenuBooking">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    
                 </ul>
 
 
