@@ -10,24 +10,20 @@ $(function() {
     /////////////////////////////
     /////////////////////////////
 
-    function resizeInit() {
+    function init() {
         $(window).resize(resize);
+        handleMenuFit();
     }
 
     function resize() {
         viewport = getViewport();
-        logViewport();
         handleMenuFit();
     }
 
-    function logViewport() {
-        console.log(viewport);
-    }
-
     /////////////////////////////
     /////////////////////////////
 
-    resizeInit();
+    init();
 
     /////////////////////////////
     /////////////////////////////
