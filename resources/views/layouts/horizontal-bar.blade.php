@@ -90,7 +90,7 @@
                                         <label class="toggle" for="dropdownMenuProperties">
                                             {{  __('Properties') }}
                                         </label>
-                                        <a href="#">
+                                        <a href="{{ route('properties') }}">
                                             <i class="nav-icon mr-2 i-Home1"></i>
                                             {{  __('Properties') }}
                                         </a>
@@ -254,7 +254,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Users') }}
                                     </label>
-                                    <a href="#">
+                                    <a href="{{ route('users') }}">
                                         <i class="nav-icon mr-2 i-Mens"></i>
                                         {{ __('Users') }}
                                     </a>
@@ -326,7 +326,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Settings') }}
                                     </label>
-                                    <a href="#">
+                                    <a href="{{ route('settings') }}">
                                         <i class="nav-icon mr-2 i-Gear-2"></i>
                                         {{ __('Settings') }}
                                     </a>

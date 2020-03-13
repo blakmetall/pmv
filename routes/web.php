@@ -84,6 +84,8 @@ Route::group(['middleware' => ['web']], function () {
         // settings
         Route::group(['prefix' => 'settings'], function() {
 
+            Route::get('', 'SettingsController@index')->name('settings');
+
             // zones
             Route::group(['prefix' => 'zones', 'middleware' => 'role-permission:settings,zones'], function () {
                 Route::get('', 'ZonesController@index')->name('zones');
