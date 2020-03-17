@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Hash;
 use Illuminate\Http\Request;
+use App\Repositories\UsersRepositoryInterface;
 use App\Models\User;
 
 class UsersController extends Controller
 {
+    private $repository;
+
+    public function __construct(UsersRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,25 +24,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-
-        if ($search) {
-            $users_query = 
-                User::
-                    where('email', 'like', "%".$search."%")
-                    ->orWhereHas('profile', function($query) use ($search) {
-                        $query
-                            ->where('profiles.firstname', 'like', $search)
-                            ->orWhere('profiles.lastname', 'like', $search)
-                            ->orWhere('profiles.country', 'like', $search)
-                            ->orWhere('profiles.state', 'like', $search)
-                            ->orWhere('profiles.city', 'like', $search)
-                            ->orWhere('profiles.street', 'like', $search);
-                    });
-        } else {
-            $users_query = new User;
-        }
-
-        $users = $users_query->orderBy('email', 'asc')->paginate( 30 );
+        $users = $this->repository->all($search);
 
         return view('users.index')
             ->with('users', $users)
@@ -59,13 +49,8 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->is_enabled = ($request->is_enabled) ? 1 : 0;
-        $user->save();
-
-        return redirect( route('users') );
+        $user = $this->repository->create($request);
+        return redirect(route('users.edit', [$user->id]));
     }
 
     /**
@@ -76,6 +61,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        $user = $this->repository->find($user);
         return view('users.show')->with('user', $user);
     }
 
@@ -87,6 +73,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $user = $this->repository->find($user);
         return view('users.edit')->with('user', $user);
     }
 
@@ -99,17 +86,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->email = $request->email;
-        $user->is_enabled = ($request->is_enabled) ? 1 : 0;
-        
-        if ( !empty($request->password) ) {
-            $user->password = Hash::make($request->password);
-        }
-
-        $user->save();
-
-        return redirect( route('users') );
+        $this->repository->update($request, $id);
+        return redirect( route('users.edit', [$id]) );
     }
 
     /**
@@ -120,8 +98,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $this->repository->delete($id);
         return redirect(route('users'));
     }
 }

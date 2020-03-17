@@ -29,11 +29,23 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {   
+
+    public function register()  {
+        $this->registerAmenitiesRepo();
+        $this->registerUsersRepo();
+    }
+
+    public function registerAmenitiesRepo() {
         $this->app->bind(
             \App\Repositories\AmenitiesRepositoryInterface::class,
             \App\Repositories\AmenitiesRepository::class
+        );
+    }
+
+    public function registerUsersRepo() {
+        $this->app->bind(
+            \App\Repositories\UsersRepositoryInterface::class,
+            \App\Repositories\UsersRepository::class
         );
     }
 }

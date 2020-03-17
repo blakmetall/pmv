@@ -31,8 +31,13 @@
                                 </th>
 
                                 <!-- name -->
-                                <td>{{ $row->profile->firstname }}</td>
-
+                                <td>
+                                    @if($row->profile)
+                                        {{ $row->profile->firstname }}
+                                    @else
+                                        ...
+                                    @endif
+                                </td>
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
