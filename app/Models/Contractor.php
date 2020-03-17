@@ -11,9 +11,20 @@ class Contractor extends Model {
     
     protected $table = 'contractors';
     public $timestamps = true;
+    protected $fillable = [
+        'company',
+        'contact_name',
+        'phone',
+        'mobile',
+        'email',
+        'address'
+    ];
+    protected $guarded = [
+        'city_id'
+    ];
 
     public function city() {
-        return $this->belongsToMany('App\Models\City');
+        return $this->belongsTo('App\Models\City');
     }
 
     public function services() {

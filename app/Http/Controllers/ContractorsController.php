@@ -2,18 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
+use App\Repositories\ContractorsRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Models\Contractor;
 
 class ContractorsController extends Controller
 {
+    private $repository;
+
+    public function __construct(ContractorsRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = trim($request->s);
+
+        $contractors = $this->repository->all($search);
+
+        return view('contractors.index')
+            ->with('contractors', $contractors)
+            ->with('search', $search);
     }
 
     /**
@@ -23,7 +39,10 @@ class ContractorsController extends Controller
      */
     public function create()
     {
-        //
+        $cities = City::all();
+        return view('contractors.create')
+            ->with('cities', $cities)
+            ->with('contractor', (new Contractor));
     }
 
     /**
@@ -34,7 +53,8 @@ class ContractorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contractor = $this->repository->create($request);
+        return redirect(route('contractors.edit', [$contractor->id]));
     }
 
     /**
@@ -43,9 +63,13 @@ class ContractorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Contractor $contractor)
     {
-        //
+        $contractor = $this->repository->find($contractor);
+        $cities = City::all();
+        return view('contractors.show')
+            ->with('cities', $cities)
+            ->with('contractor', $contractor);
     }
 
     /**
@@ -54,9 +78,13 @@ class ContractorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Contractor $contractor)
     {
-        //
+        $contractor = $this->repository->find($contractor);
+        $cities = City::all();
+        return view('contractors.edit')
+            ->with('cities', $cities)
+            ->with('contractor', $contractor);
     }
 
     /**
@@ -68,7 +96,8 @@ class ContractorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->repository->update($request, $id);
+        return redirect( route('contractors.edit', [$id]) );
     }
 
     /**
@@ -79,6 +108,7 @@ class ContractorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->delete($id);
+        return redirect(route('contractors'));
     }
 }

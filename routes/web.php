@@ -69,6 +69,20 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
+        // contractors
+        Route::group(['prefix' => 'contractors'], function () {
+
+            Route::group(['middleware' => 'role-permission:users,index'], function() {
+                Route::get('', 'ContractorsController@index')->name('contractors');
+                Route::get('create', 'ContractorsController@create')->name('contractors.create');
+                Route::post('store', 'ContractorsController@store')->name('contractors.store');
+                Route::get('show/{contractor}', 'ContractorsController@show')->name('contractors.show');
+                Route::get('edit/{contractor}', 'ContractorsController@edit')->name('contractors.edit');
+                Route::post('update/{id}', 'ContractorsController@update')->name('contractors.update');
+                Route::get('destroy/{id}', 'ContractorsController@destroy')->name('contractors.destroy');
+            });
+        });
+
 
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {
