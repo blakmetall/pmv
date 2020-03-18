@@ -6,7 +6,7 @@ use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
-use App\Models\{ User };
+use App\Models\{ Profile, User };
 use App\Helpers\LanguageHelper;
 
 class UsersRepository implements UsersRepositoryInterface
@@ -53,8 +53,28 @@ class UsersRepository implements UsersRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $user = $this->blueprint($request, $id);
+        $is_new = ! $id;
+        
+        // en esta zona obtenemos los datos o preparamos las variables para asignarle lo que se envió en los formularios
+        if($is_new){
+            $user = $this->blueprint();
+        }else{
+            $user = $this->find($id);
+        }
+        
+        // despues el guardado de los datos
+        $user->fill($request->all());
+        $user->is_enabled = $request->is_enabled ? 1 : 0;
+        if ( !empty($request->password) ) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Aqui para el profile, debes nombrar los campos del formulario de profile similar a esto: name="profile[firstname]"
+        // De esta manera pasas todos los campos que sean fillables o que no esten protegidos (guarded) de profile
+        // 
+        // $user->profile->fill($request->profile);
+        // $user->profile->save();
         
         return $user;
     }
@@ -63,10 +83,6 @@ class UsersRepository implements UsersRepositoryInterface
     {
         $is_obj = is_object($id_or_obj);
         $user = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
-        
-        if ($user) {
-            $user->first();
-        }
 
         if (!$user) {
             throw new ModelNotFoundException("User not found");
@@ -94,20 +110,10 @@ class UsersRepository implements UsersRepositoryInterface
     /**
      * Return the blueprint of the model including translation elements
      */
-    public function blueprint($request, $id)
+    public function blueprint()
     {
-        $is_new = ! $id;
-        if($is_new){
-            $user = new User;
-        }else{
-            $user = $this->find($id);
-        }
-        $user->email = $request->email;
-        $user->is_enabled = ($request->is_enabled) ? 1 : 0;
-        if ( !empty($request->password) ) {
-            $user->password = Hash::make($request->password);
-        }
-
+        $user = new User;
+        $user->profile = new Profile;
         return $user;
     }
 }

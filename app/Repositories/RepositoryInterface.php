@@ -18,5 +18,5 @@ interface RepositoryInterface
     
     public function delete($id);
 
-    public function blueprint($request, $id);
+    public function blueprint();
 }
