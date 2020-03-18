@@ -10,7 +10,7 @@ class ForceHttps
     public function handle($request, Closure $next)
     {
         if (
-            !$request->isSecure() && 
+            !$request->secure() && 
             (App::environment() === 'production' || App::environment() === 'staging')
         ) {
             return redirect()->secure($request->getRequestUri());
