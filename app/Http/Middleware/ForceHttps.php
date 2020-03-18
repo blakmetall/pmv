@@ -9,6 +9,8 @@ class ForceHttps
 {
     public function handle($request, Closure $next)
     {
+        $request->setTrustedProxies( [ $request->getClientIp() ] );
+        
         if (
             !$request->secure() && 
             (App::environment() === 'production' || App::environment() === 'staging')
