@@ -43,9 +43,9 @@
                     @endif
                     
                     @if( $row->id )
-                        <button type="button" class="btn  btn-danger m-1 footer-delete-right">
+                        <a href="{{ route('users.destroy', [$row->id]) }}" type="button" class="btn  btn-danger m-1 footer-delete-right">
                             {{ __('Delete') }}
-                        </button>
+                        </a>
                     @endif
                 </div>
             </div>
