@@ -49,7 +49,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
         $is_new = ! $id;
 
         if ($is_new) {
-            $amenity = $this->blueprint(false, false);
+            $amenity = $this->blueprint();
             $amenity->save();
             
             $amenity->en->language_id = LanguageHelper::getId('en');
@@ -120,7 +120,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
     /**
      * Return the blueprint of the model including translation elements
      */
-    public function blueprint($request, $id)
+    public function blueprint()
     {
         $amenity = new Amenity;
         $amenity->en = new AmenityTranslation;

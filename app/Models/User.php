@@ -14,15 +14,15 @@ class User extends Authenticatable {
 
     protected $table = 'users';
     public $timestamps = true;
-    protected $guarded = [];
     protected $fillable = [
-        'name',
         'email',
-        'password'
     ];
     protected $hidden = [
         'password',
         'remember_token'
+    ];
+    protected $casts = [
+        'is_enabled' => 'boolean' 
     ];
 
     public function roles() {
