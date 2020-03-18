@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Config;
 use URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Helpers\AppHelper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,8 +20,9 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // https force
-        $apply_https = in_array(Config::get('app.env'), ['production', 'staging']);
-        if ( $apply_https ) { URL::forceScheme('https'); }
+        if ( AppHelper::shouldApplyHttps() ) { 
+            URL::forceScheme('https'); 
+        }
     }
 
     /**
