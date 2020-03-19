@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()  {
         $this->registerAmenitiesRepo();
         $this->registerUsersRepo();
+        $this->registerCleaningOptionsRepo();
     }
 
     public function registerAmenitiesRepo() {
@@ -47,6 +48,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\UsersRepositoryInterface::class,
             \App\Repositories\UsersRepository::class
+        );
+    }
+    public function registerCleaningOptionsRepo() {
+        $this->app->bind(
+            \App\Repositories\CleaningOptionsRepositoryInterface::class,
+            \App\Repositories\CleaningOptionsRepository::class
         );
     }
 }

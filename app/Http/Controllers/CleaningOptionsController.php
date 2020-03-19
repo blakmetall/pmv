@@ -3,17 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\LanguageHelper;
+use App\Repositories\CleaningOptionsRepositoryInterface;
+use App\Models\{ CleaningOption, CleaningOptionTranslation };
 
 class CleaningOptionsController extends Controller
 {
+    private $repository;
+
+    public function __construct(CleaningOptionsRepositoryInterface $repository) 
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = trim($request->s);
+        $cleaning_options = $this->repository->all($search);
+        
+        return view('cleaning-options.index')
+            ->with('cleaning_options', $cleaning_options)
+            ->with('search', $search);
     }
 
     /**
@@ -23,7 +37,8 @@ class CleaningOptionsController extends Controller
      */
     public function create()
     {
-        //
+        $cleaning_option = $this->repository->blueprint();
+        return view('cleaning-options.create')->with('cleaning_option', $cleaning_option);
     }
 
     /**
@@ -34,7 +49,8 @@ class CleaningOptionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cleaning_option = $this->repository->create($request);
+        return redirect(route('cleaning-options.edit', [$cleaning_option->id]));
     }
 
     /**
@@ -43,9 +59,10 @@ class CleaningOptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CleaningOption $cleaning_option)
     {
-        //
+        $cleaning_option = $this->repository->find($cleaning_option);        
+        return view('cleaning-options.show')->with('cleaning_option', $cleaning_option);
     }
 
     /**
@@ -54,9 +71,10 @@ class CleaningOptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CleaningOption $cleaning_option)
     {
-        //
+        $cleaning_option = $this->repository->find($cleaning_option);
+        return view('cleaning-options.edit')->with('cleaning_option', $cleaning_option);
     }
 
     /**
@@ -68,7 +86,8 @@ class CleaningOptionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->repository->update($request, $id);
+        return redirect(route('cleaning-options.edit', [$id]));
     }
 
     /**
@@ -79,6 +98,7 @@ class CleaningOptionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->delete($id);
+        return redirect(route('cleaning-options'));
     }
 }

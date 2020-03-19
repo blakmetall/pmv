@@ -108,6 +108,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
                 Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
             });
+            
+            // Cleaning Options
+            Route::group(['prefix' => 'cleaning-options', 'middleware' => 'role-permission:settings,cleaning-options'], function () {
+                Route::get('', 'CleaningOptionsController@index')->name('cleaning-options');
+                Route::get('create', 'CleaningOptionsController@create')->name('cleaning-options.create');
+                Route::post('store', 'CleaningOptionsController@store')->name('cleaning-options.store');
+                Route::get('show/{cleaning_option}', 'CleaningOptionsController@show')->name('cleaning-options.show');
+                Route::get('edit/{cleaning_option}', 'CleaningOptionsController@edit')->name('cleaning-options.edit');
+                Route::post('update/{id}', 'CleaningOptionsController@update')->name('cleaning-options.update');
+                Route::get('destroy/{id}', 'CleaningOptionsController@destroy')->name('cleaning-options.destroy');
+            });
     
             // cities
             Route::group(['prefix' => 'cities', 'middleware' => 'role-permission:settings,cities'], function () {
