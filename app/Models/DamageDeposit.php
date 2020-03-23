@@ -11,6 +11,10 @@ class DamageDeposit extends Model {
     
     protected $table = 'damage_deposits';
     public $timestamps = false;
+    protected $guarded = [];
+    
+    public $en;
+    public $es;
 
     public function languages() {
         return $this->belongsToMany('App\Models\Language', 'damage_deposits_translations')

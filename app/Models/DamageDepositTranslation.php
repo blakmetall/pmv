@@ -11,6 +11,10 @@ class DamageDepositTranslation extends Model {
     
     protected $table = 'damage_deposits_translations';
     public $timestamps = false;
+    protected $fillable = [
+        'description',
+    ];
+    
 
     public function damageDeposits() {
         return $this->belongsTo('App\Models\DamageDeposit');

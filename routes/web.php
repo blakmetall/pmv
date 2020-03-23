@@ -108,6 +108,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'AmenitiesController@update')->name('amenities.update');
                 Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
             });
+
+            // damage deposit
+            Route::group(['prefix' => 'damage-deposits', 'middleware' => 'role-permission:settings,damage-deposits'], function () {
+                Route::get('', 'DamageDepositsController@index')->name('damage-deposits');
+                Route::get('create', 'DamageDepositsController@create')->name('damage-deposits.create');
+                Route::post('store', 'DamageDepositsController@store')->name('damage-deposits.store');
+                Route::get('show/{damage_deposit}', 'DamageDepositsController@show')->name('damage-deposits.show');
+                Route::get('edit/{damage_deposit}', 'DamageDepositsController@edit')->name('damage-deposits.edit');
+                Route::post('update/{id}', 'DamageDepositsController@update')->name('damage-deposits.update');
+                Route::get('destroy/{id}', 'DamageDepositsController@destroy')->name('damage-deposits.destroy');
+            });
     
             // cities
             Route::group(['prefix' => 'cities', 'middleware' => 'role-permission:settings,cities'], function () {

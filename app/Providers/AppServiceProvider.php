@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()  {
         $this->registerAmenitiesRepo();
         $this->registerUsersRepo();
+        $this->registerDamageDepositsRepo();
     }
 
     public function registerAmenitiesRepo() {
@@ -47,6 +48,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\UsersRepositoryInterface::class,
             \App\Repositories\UsersRepository::class
+        );
+    }
+
+    public function registerDamageDepositsRepo() {
+        $this->app->bind(
+            \App\Repositories\DemageDepositsRepositoryInterface::class,
+            \App\Repositories\DamageDepositsRepository::class
         );
     }
 }
