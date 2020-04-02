@@ -58,8 +58,10 @@ class UsersRepository implements UsersRepositoryInterface
         // en esta zona obtenemos los datos o preparamos las variables para asignarle lo que se envió en los formularios
         if($is_new){
             $user = $this->blueprint();
+            $request->validate(User::$saveValidation);
         }else{
             $user = $this->find($id);
+            $request->validate(User::$updateValidation);
         }
         
         // despues el guardado de los datos
@@ -68,14 +70,13 @@ class UsersRepository implements UsersRepositoryInterface
         if ( !empty($request->password) ) {
             $user->password = Hash::make($request->password);
         }
-        $user->save();
 
-        // Aqui para el profile, debes nombrar los campos del formulario de profile similar a esto: name="profile[firstname]"
-        // De esta manera pasas todos los campos que sean fillables o que no esten protegidos (guarded) de profile
-        // 
-        // $user->profile->fill($request->profile);
-        // $user->profile->save();
-        
+        if($user->save()){
+            //se obtiene el formulario del perfil y se guardan los datos
+            $user->profile->fill($request->profile);
+            $user->profile->save();
+        }
+
         return $user;
     }
 

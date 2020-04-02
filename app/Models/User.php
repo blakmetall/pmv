@@ -89,4 +89,13 @@ class User extends Authenticatable {
         return $this->hasMany('App\Models\BookingExtraPayment', 'audit_user_id');
     }
 
+    public static $saveValidation = [
+        'email'    => 'required',
+        'password' => 'required|confirmed|min:6',
+    ];
+
+    public static $updateValidation = [
+        'email' => 'required',
+    ];
+
 }
