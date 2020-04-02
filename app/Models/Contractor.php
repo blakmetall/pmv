@@ -30,7 +30,7 @@ class Contractor extends Model {
     }
 
     public static $saveValidation = [
-        'city_id'            => 'required',
+        'city_id'      => 'required',
         'company'      => 'required',
         'contact_name' => 'required',
         'phone'        => 'required',
@@ -38,7 +38,7 @@ class Contractor extends Model {
     ];
 
     public static $updateValidation = [
-        'city_id'            => 'required',
+        'city_id'      => 'required',
         'company'      => 'required',
         'contact_name' => 'required',
         'phone'        => 'required',
