@@ -31,18 +31,18 @@ class Contractor extends Model {
 
     public static $saveValidation = [
         'city_id'            => 'required',
-        'field_company'      => 'required',
-        'field_contact_name' => 'required',
-        'field_phone'        => 'required',
-        'field_email'        => 'required',
+        'company'      => 'required',
+        'contact_name' => 'required',
+        'phone'        => 'required',
+        'email'        => 'required',
     ];
 
     public static $updateValidation = [
         'city_id'            => 'required',
-        'field_company'      => 'required',
-        'field_contact_name' => 'required',
-        'field_phone'        => 'required',
-        'field_email'        => 'required',
+        'company'      => 'required',
+        'contact_name' => 'required',
+        'phone'        => 'required',
+        'email'        => 'required',
     ];
 
 }
