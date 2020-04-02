@@ -217,7 +217,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Contractors') }}
                                     </label>
-                                    <a href="#">
+                                    <a href="{{ route('contractors') }}">
                                         <i class="nav-icon mr-2 i-Engineering"></i>
                                         {{ __('Contractors') }}
                                     </a>
@@ -227,7 +227,7 @@
                                     <ul>
                                         @if ($_current_role->isAllowed('contractors', 'index'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('contractors') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>

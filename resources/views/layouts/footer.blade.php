@@ -12,4 +12,16 @@
         </div>
     </div>
 </div>
+@if ($errors->any())
+    <div class="alert alert-danger error-msg" role="alert" style="position: absolute; right: 0;">
+        <ul style="display: inline-block; margin-bottom: 0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+@endif
 <!-- footer end -->
