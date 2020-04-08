@@ -21,15 +21,14 @@ class ContractorsRepository implements ContractorsRepositoryInterface
     {
         if ($search) {
             $query = Contractor::
-            where('company', 'like', "%".$search."%")
+                where('company', 'like', "%".$search."%")
                 ->orWhere('contact_name', 'like', "%".$search."%")
                 ->orWhere('phone', 'like', "%".$search."%")
                 ->orWhere('mobile', 'like', "%".$search."%")
                 ->orWhere('email', 'like', "%".$search."%")
                 ->orWhere('address', 'like', "%".$search."%")
                 ->orWhereHas('city', function($query) use ($search) {
-                    $query
-                        ->where('cities.name', 'like', $search);
+                    $query->where('cities.name', 'like', $search);
                 });
         } else {
             $query = new Contractor;
@@ -52,7 +51,18 @@ class ContractorsRepository implements ContractorsRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $contractor = $this->blueprint($request, $id);
+        $is_new = ! $id;
+
+        // en esta zona obtenemos los datos o preparamos las variables para asignarle lo que se envió en los formularios
+        if($is_new){
+            $contractor = $this->blueprint();
+            $request->validate(Contractor::$saveValidation);
+        }else{
+            $contractor = $this->find($id);
+            $request->validate(Contractor::$updateValidation);
+        }
+        // despues el guardado de los datos
+        $contractor->fill($request->all());
         $contractor->save();
 
         return $contractor;
@@ -93,23 +103,9 @@ class ContractorsRepository implements ContractorsRepositoryInterface
     /**
      * Return the blueprint of the model including translation elements
      */
-    public function blueprint($request, $id)
+    public function blueprint()
     {
-        $is_new = ! $id;
-        if($is_new){
-            $contractor = new Contractor;
-        }else{
-            $contractor = $this->find($id);
-        }
-
-        $contractor->city_id      = $request->city;
-        $contractor->company      = $request->company;
-        $contractor->contact_name = $request->contact_name;
-        $contractor->phone        = $request->phone;
-        $contractor->mobile       = $request->mobile;
-        $contractor->email        = $request->email;
-        $contractor->address      = $request->address;
-
+        $contractor = new Contractor;
         return $contractor;
     }
 }

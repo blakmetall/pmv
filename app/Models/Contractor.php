@@ -12,6 +12,7 @@ class Contractor extends Model {
     protected $table = 'contractors';
     public $timestamps = true;
     protected $fillable = [
+        'city_id',
         'company',
         'contact_name',
         'phone',
@@ -30,5 +31,21 @@ class Contractor extends Model {
     public function services() {
         return $this->hasMany('App\Models\ContractorService');
     }
+
+    public static $saveValidation = [
+        'city_id'      => 'required',
+        'company'      => 'required',
+        'contact_name' => 'required',
+        'phone'        => 'required',
+        'email'        => 'required',
+    ];
+
+    public static $updateValidation = [
+        'city_id'      => 'required',
+        'company'      => 'required',
+        'contact_name' => 'required',
+        'phone'        => 'required',
+        'email'        => 'required',
+    ];
 
 }

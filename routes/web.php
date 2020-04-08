@@ -83,7 +83,6 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
-
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {
             Route::get('', 'PropertiesController@index')->name('properties');

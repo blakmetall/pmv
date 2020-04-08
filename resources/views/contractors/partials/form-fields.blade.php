@@ -9,17 +9,12 @@
             </label>
 
             <div class="col-sm-10">
-                <select
-                        id="field_city"
-                        name="city"
-                        class="form-control"
-                >
+                <select id="field_city" name="city_id" class="form-control">
                     <option value="">{{ __('Select City') }}</option>
                     @foreach($cities as $city)
-                        <option value="{{ $city->id }}"
-                            @if(old('contractor.city_id', $contractor->city_id) == $city->id)
-                                selected
-                            @endif
+                    <option value="{{ $city->id }}" @if(old('contractor.city_id', $contractor->city_id) == $city->id)
+                        selected
+                        @endif
                         >{{ $city->name }}</option>
                     @endforeach
                 </select>
@@ -33,12 +28,7 @@
             </label>
 
             <div class="col-sm-10">
-                <input type="text"
-                       id="field_company"
-                       value="{{ old('contractor.company', $contractor->company) }}"
-                       name="company"
-                       class="form-control"
-                />
+                <input type="text" id="field_company" value="{{ old('contractor.company', $contractor->company) }}" name="company" class="form-control" />
             </div>
         </div>
 
@@ -49,12 +39,7 @@
             </label>
 
             <div class="col-sm-10">
-                <input type="text"
-                       id="field_contact_name"
-                       value="{{ old('contractor.contact_name', $contractor->contact_name) }}"
-                       name="contact_name"
-                       class="form-control"
-                />
+                <input type="text" id="field_contact_name" value="{{ old('contractor.contact_name', $contractor->contact_name) }}" name="contact_name" class="form-control" />
             </div>
         </div>
 
@@ -65,12 +50,7 @@
             </label>
 
             <div class="col-sm-10">
-                <input type="text"
-                       id="field_phone"
-                       value="{{ old('contractor.phone', $contractor->phone) }}"
-                       name="phone"
-                       class="form-control"
-                />
+                <input type="text" id="field_phone" value="{{ old('contractor.phone', $contractor->phone) }}" name="phone" class="form-control" />
             </div>
         </div>
 
@@ -81,12 +61,7 @@
             </label>
 
             <div class="col-sm-10">
-                <input type="text"
-                       id="field_mobile"
-                       value="{{ old('contractor.mobile', $contractor->mobile) }}"
-                       name="mobile"
-                       class="form-control"
-                />
+                <input type="text" id="field_mobile" value="{{ old('contractor.mobile', $contractor->mobile) }}" name="mobile" class="form-control" />
             </div>
         </div>
 
@@ -97,12 +72,7 @@
             </label>
 
             <div class="col-sm-10">
-                <input type="text"
-                       id="field_email"
-                       value="{{ old('contractor.email', $contractor->email) }}"
-                       name="email"
-                       class="form-control"
-                />
+                <input type="text" id="field_email" value="{{ old('contractor.email', $contractor->email) }}" name="email" class="form-control" />
             </div>
         </div>
 
@@ -113,13 +83,8 @@
             </label>
 
             <div class="col-sm-10">
-                <textarea
-                        id="field_address"
-                        cols="30"
-                        rows="10"
-                        name="address"
-                        class="form-control">
-                    {{ old('contractor.address', $contractor->address) }}
+                <textarea id="field_address" cols="30" rows="10" name="address" class="form-control">
+                {{ old('contractor.address', $contractor->address) }}
                 </textarea>
             </div>
         </div>

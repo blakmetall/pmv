@@ -56,4 +56,12 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\UsersRepository::class
         );
     }
+
+
+    public function registerContractorsRepo() {
+        $this->app->bind(
+            \App\Repositories\ContractorsRepositoryInterface::class,
+            \App\Repositories\ContractorsRepository::class
+        );
+    }
 }
