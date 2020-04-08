@@ -369,7 +369,7 @@
 
                                         @if ($_current_role->isAllowed('settings', 'cleaning-options'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('cleaning-options') }}">
                                                     <span class="item-name">{{ __('Cleaning Options') }}</span>
                                                 </a>
                                             </li>

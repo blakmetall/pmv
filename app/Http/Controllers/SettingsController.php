@@ -28,7 +28,7 @@ class SettingsController extends Controller
             ],
             [
                 'label' => __('Cleaning Options'),
-                'url' => '#'
+                'url' => route('cleaning-options')
             ],
             [
                 'label' => __('Damage Deposits'),

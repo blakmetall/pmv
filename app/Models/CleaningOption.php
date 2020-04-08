@@ -11,6 +11,10 @@ class CleaningOption extends Model {
 
     protected $table = 'cleaning_options';
     public $timestamps = false;
+    protected $guarded = [];
+    
+    public $en;
+    public $es;
 
     public function languages() {
         return $this->belongsToMany('App\Models\Language', 'cleaning_options_translations')

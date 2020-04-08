@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerAmenitiesRepo();
         $this->registerContractorsRepo();
         $this->registerUsersRepo();
+        $this->registerCleaningOptionsRepo();
     }
 
     public function registerAmenitiesRepo() {
@@ -57,11 +58,10 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-
-    public function registerContractorsRepo() {
+    public function registerCleaningOptionsRepo() {
         $this->app->bind(
-            \App\Repositories\ContractorsRepositoryInterface::class,
-            \App\Repositories\ContractorsRepository::class
+            \App\Repositories\CleaningOptionsRepositoryInterface::class,
+            \App\Repositories\CleaningOptionsRepository::class
         );
-    }
+    }   
 }
