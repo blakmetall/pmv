@@ -361,7 +361,7 @@
                                         @if ($_current_role->isAllowed('settings', 'transaction-types'))
                                             <li class="nav-item">
                                                 <!-- <a class="" href="{{ route('transaction-types') }}"> -->
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('transaction-types') }}">
                                                     <span class="item-name">{{ __('Transaction Types') }}</span>
                                                 </a>
                                             </li>

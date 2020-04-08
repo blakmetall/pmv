@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('update', 'AccountController@update')->name('account.update');
         });
 
+
         // profile 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('', 'ProfileController@edit')->name('profile');
