@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::group(['middleware' => ['web']], function () {
 
     // auth laravel routes
@@ -110,7 +99,6 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'ZonesController@destroy')->name('zones.destroy');
             });
     
-    
             // amenities
             Route::group(['prefix' => 'amenities', 'middleware' => 'role-permission:settings,amenities'], function () {
                 Route::get('', 'AmenitiesController@index')->name('amenities');
@@ -122,7 +110,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
             });
             
-            // Cleaning Options
+            // cleaning options
             Route::group(['prefix' => 'cleaning-options', 'middleware' => 'role-permission:settings,cleaning-options'], function () {
                 Route::get('', 'CleaningOptionsController@index')->name('cleaning-options');
                 Route::get('create', 'CleaningOptionsController@create')->name('cleaning-options.create');
@@ -131,6 +119,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{cleaning_option}', 'CleaningOptionsController@edit')->name('cleaning-options.edit');
                 Route::post('update/{id}', 'CleaningOptionsController@update')->name('cleaning-options.update');
                 Route::get('destroy/{id}', 'CleaningOptionsController@destroy')->name('cleaning-options.destroy');
+            });
+
+            // damage deposit
+            Route::group(['prefix' => 'damage-deposits', 'middleware' => 'role-permission:settings,damage-deposits'], function () {
+                Route::get('', 'DamageDepositsController@index')->name('damage-deposits');
+                Route::get('create', 'DamageDepositsController@create')->name('damage-deposits.create');
+                Route::post('store', 'DamageDepositsController@store')->name('damage-deposits.store');
+                Route::get('show/{damage_deposit}', 'DamageDepositsController@show')->name('damage-deposits.show');
+                Route::get('edit/{damage_deposit}', 'DamageDepositsController@edit')->name('damage-deposits.edit');
+                Route::post('update/{id}', 'DamageDepositsController@update')->name('damage-deposits.update');
+                Route::get('destroy/{id}', 'DamageDepositsController@destroy')->name('damage-deposits.destroy');
             });
     
             // cities

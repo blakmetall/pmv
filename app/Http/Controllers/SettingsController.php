@@ -32,7 +32,7 @@ class SettingsController extends Controller
             ],
             [
                 'label' => __('Damage Deposits'),
-                'url' => '#'
+                'url' => 'damage-deposits'
             ],
         ];
         
