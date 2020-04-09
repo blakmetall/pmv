@@ -31,45 +31,21 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()  {
-        $this->registerAmenitiesRepo();
-        $this->registerDamageDepositsRepo();
-        $this->registerCleaningOptionsRepo();
-        $this->registerContractorsRepo();
-        $this->registerUsersRepo();
+        $this->registerRepositories();
     }
 
-    public function registerAmenitiesRepo() {
+    public function registerRepositories() {
         $this->app->bind(
             \App\Repositories\AmenitiesRepositoryInterface::class,
-            \App\Repositories\AmenitiesRepository::class
-        );
-    }
-
-    public function registerContractorsRepo() {
-        $this->app->bind(
+            \App\Repositories\AmenitiesRepository::class,
+            \App\Repositories\CleaningOptionsRepositoryInterface::class,
+            \App\Repositories\CleaningOptionsRepository::class,
             \App\Repositories\ContractorsRepositoryInterface::class,
-            \App\Repositories\ContractorsRepository::class
-        );
-    }
-
-    public function registerUsersRepo() {
-        $this->app->bind(
+            \App\Repositories\ContractorsRepository::class,
+            \App\Repositories\DemageDepositsRepositoryInterface::class,
+            \App\Repositories\DamageDepositsRepository::class,
             \App\Repositories\UsersRepositoryInterface::class,
             \App\Repositories\UsersRepository::class
-        );
-    }
-
-    public function registerCleaningOptionsRepo() {
-        $this->app->bind(
-            \App\Repositories\CleaningOptionsRepositoryInterface::class,
-            \App\Repositories\CleaningOptionsRepository::class
-        );
-    }   
-
-    public function registerDamageDepositsRepo() {
-        $this->app->bind(
-            \App\Repositories\DemageDepositsRepositoryInterface::class,
-            \App\Repositories\DamageDepositsRepository::class
         );
     }
 }

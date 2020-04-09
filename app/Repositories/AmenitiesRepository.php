@@ -4,9 +4,10 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\AmenitiesRepositoryInterface;
-use App\Models\{ Amenity, AmenityTranslation };
 use App\Helpers\LanguageHelper;
+use App\Models\{ Amenity, AmenityTranslation };
+use App\Repositories\AmenitiesRepositoryInterface;
+use App\Validations\AmenitiesValidations;
 
 class AmenitiesRepository implements AmenitiesRepositoryInterface
 {
@@ -36,11 +37,13 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
 
     public function create(Request $request)
     {
+        AmenitiesValidations::validateOnCreate($request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
+        AmenitiesValidations::validateOnEdit($request, $id);
         return $this->save($request, $id);
     }
 

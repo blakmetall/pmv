@@ -11,7 +11,6 @@ class Amenity extends Model {
 
     protected $table = 'amenities';
     public $timestamps = false;
-    protected $guarded = [];
     
     public $en;
     public $es;
