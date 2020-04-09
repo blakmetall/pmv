@@ -199,7 +199,7 @@ function handleMenuFit() {
 
   var getLimitWidth = function getLimitWidth() {
     var menuPaddingRight = parseInt(menu.css("padding-right"), 10);
-    var negativeOffset = 100;
+    var negativeOffset = 120;
     return menu.outerWidth() - menuPaddingRight - negativeOffset;
   };
 
