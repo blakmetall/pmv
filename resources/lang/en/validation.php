@@ -128,9 +128,16 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        /* 'en' => [
+            'name' => [
+                'required' => __('The name is required'),
+            ]
         ],
+        'es' => [
+            'name' =>  [
+                'required' => __('The name is required'),
+            ]
+        ], */
     ],
 
     /*
@@ -144,6 +151,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'es.name' => __('Name'),
+        'en.name' => __('Name'),
+    ],
 
 ];

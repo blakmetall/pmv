@@ -117,17 +117,11 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
         return $amenity; 
     }
 
-    /**
-     * On delete validation
-     */
     public function canDelete($id)
     {
         return ($id > 91); // to not delete seed items
     }
 
-    /**
-     * Return the blueprint of the model including translation elements
-     */
     public function blueprint()
     {
         $amenity = new Amenity;

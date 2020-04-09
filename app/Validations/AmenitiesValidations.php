@@ -21,8 +21,8 @@ class AmenitiesValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            'en.name' => 'required|max:190',
-            'es.name' => 'required|max:190',
+            'en.name' => 'required',
+            'es.name' => 'required',
         ];
 
         return $defaultValidations;
