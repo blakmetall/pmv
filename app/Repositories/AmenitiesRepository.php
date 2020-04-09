@@ -23,7 +23,9 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
         $lang = LanguageHelper::current();
 
         if ($search) {
-            $query = AmenityTranslation::where('name', 'like', "%".$search."%");
+            $query = 
+                AmenityTranslation::where('name', 'like', "%".$search."%")
+                    ->orWhere('amenity_id', $search);
         } else {
             $query = new AmenityTranslation;
         }
