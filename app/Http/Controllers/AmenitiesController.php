@@ -103,7 +103,7 @@ class AmenitiesController extends Controller
     {
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);
-            $request->session()->flash('success', __('Record deleted'));
+            $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('amenities'));
         }
 

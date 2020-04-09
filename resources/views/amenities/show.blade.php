@@ -12,7 +12,7 @@
 
                         <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
-                            'title' => __('View Amenity'),
+                            'title' => __('View'),
                             'breadcrumbs' => [
                                 [
                                     'url' => route('amenities'),
