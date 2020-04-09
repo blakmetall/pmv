@@ -57,3 +57,13 @@
   color: #c73a2e;
 }
 
+@media (max-width: 767px) {
+  .app-heading-buttons {
+    padding-top: 10px;
+  }
+
+  .app-search-buttons {
+    padding-top: 10px;
+  }
+}
+
