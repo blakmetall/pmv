@@ -1,3 +1,17 @@
+/*************************/
+/** bootstrap overrides **/
+
+.form-group {
+    label {
+        span {
+            color: $red;
+        }
+    }
+}
+
+/*************************/
+/********* app ***********/
+
 .app-container {
     max-width: 1250px;
 }
@@ -19,4 +33,17 @@
 #app-menu-fit-label {
     position: relative;
     top: -3px;
+}
+
+.app-alert-danger {
+    border-radius: 3px;
+    border: 1px solid #e3342f;
+    background: #fdf7f7;
+}
+
+.app-form-input-error {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 12px;
+    color: $red;
 }
