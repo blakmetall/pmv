@@ -1,9 +1,6 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
-@endsection
-
-@section('main-content')
+@section('heading-content')
 
     <!-- heading -->
     <div class="container app-container-sm">
@@ -41,10 +38,11 @@
     </div>
     <div class="mb-4"></div>
 
+@endsection
 
-    <!-- form -->
+@section('main-content')
+
     <form action="" onsubmit="return false;" method="post">
-
         <div class="container app-container-sm">
 
             <!-- form fields -->
@@ -54,13 +52,6 @@
             ])        
 
         </div>
-
     </form>
 
-@endsection
-
-@section('page-js')
-@endsection
-
-@section('bottom-js')
 @endsection

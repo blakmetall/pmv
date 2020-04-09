@@ -1,9 +1,6 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
-@endsection
-
-@section('main-content')
+@section('heading-content')
 
     <!-- heading -->
     <div class="container app-container-sm">
@@ -36,8 +33,9 @@
     </div>
     <div class="mb-4"></div>
 
+@endsection
 
-
+@section('main-content')
 
     <!-- form -->
     <form action="{{ route('amenities.store') }}" method="post">

@@ -51,6 +51,7 @@ class AmenitiesController extends Controller
     public function store(Request $request)
     {
         $amenity = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('amenities.edit', [$amenity->id]));
     }
 
@@ -88,6 +89,7 @@ class AmenitiesController extends Controller
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
+        $request->session()->flash('success', __('Record updated successfully'));
         return redirect(route('amenities.edit', [$id]));
     }
 
@@ -97,9 +99,15 @@ class AmenitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $this->repository->delete($id);
-        return redirect(route('amenities'));
+        if ( $this->repository->canDelete($id) ) {
+            $this->repository->delete($id);
+            $request->session()->flash('success', __('Record deleted'));
+            return redirect(route('amenities'));
+        }
+
+        $request->session()->flash('error', __("This record can't be deleted"));
+        return redirect()->back();
     }
 }

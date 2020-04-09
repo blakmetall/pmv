@@ -18,6 +18,9 @@
 .app-container-sm {
     max-width: 991px;
 }
+.app-centered {
+    margin: 0 auto;
+}
 
 .app-breadcrumb {
     position: relative;
@@ -35,6 +38,11 @@
     top: -3px;
 }
 
+.app-alert-success {
+    border-radius: 3px;
+    border: 1px solid #4caf50;
+    background: #f7fdfa;
+}
 .app-alert-danger {
     border-radius: 3px;
     border: 1px solid #e3342f;

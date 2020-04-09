@@ -55,9 +55,14 @@
             <div class="main-content-wrap  d-flex flex-column">
                 <div class="main-content">
 
+                    <!-- HEADING CONTENT -->
+                    @yield('heading-content')
+
+                    <!-- flash messages -->
+                    @include('partials.flash-messages')
+
                     <!-- MAIN CONTENT -->
                     @yield('main-content')
-                    <!-- END MAIN CONTENT -->
 
                 </div>
 

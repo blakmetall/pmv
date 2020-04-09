@@ -78,7 +78,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
         $is_obj = is_object($id_or_obj);
         $amenity = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
         
-        if ($amenity) { // prepare translations
+        if ($amenity) { 
 
             $amenity->en = 
                 $amenity
@@ -94,7 +94,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
                           
         }
 
-        if (!$amenity) { // not found exception
+        if (!$amenity) { 
             throw new ModelNotFoundException("Amenity not found");
         }
 
@@ -103,21 +103,24 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
     
     public function delete($id)
     {
-        $amenity = 
-            $this->model
-                ->where('id', '>', '91') // to avoid deleting seed items
-                ->find($id);
+        $amenity = $this->model->find($id);
         
-        if ($amenity) {
+        if ($amenity && $this->canDelete($id)) {
             $amenity->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $amenity->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
             $amenity->delete();
         }
 
-        // return recently deleted object to be used if needed after operation
-        // the object may or may not exists
         return $amenity; 
+    }
+
+    /**
+     * On delete validation
+     */
+    public function canDelete($id)
+    {
+        return ($id > 91); // to not delete seed items
     }
 
     /**

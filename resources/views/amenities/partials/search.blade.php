@@ -1,4 +1,4 @@
-<div class="container app-container">
+<div class="container app-container mb-5">
     <div class="card">
         <div class="card-body">
             <form action="{{ route('amenities') }}" action="get">

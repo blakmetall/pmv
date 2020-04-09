@@ -1,9 +1,6 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
-@endsection
-
-@section('main-content')
+@section('heading-content')
 
     <!-- heading -->
     <div class="container app-container">
@@ -12,17 +9,13 @@
 
                 <div class="row">
                     <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
                         @include('partials.page-heading', [
                             'title' => __('Amenities'),
                             'breadcrumbs' => []
                         ])
-
                     </div>
 
                     <div class="col-md col-4 text-lg-right">
-                        <!-- action buttons goes here -->
                         <a href="{{ route('amenities.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>
@@ -39,17 +32,14 @@
     <!-- here the search bar is loaded -->
     @include('amenities.partials.search')
 
+@endsection
+
+@section('main-content')
+
     <!-- here the data is loaded -->
     @include('amenities.partials.table', [
         'label' => __('Amenities'),
         'rows' => $amenities
     ])
 
-
-@endsection
-
-@section('page-js')
-@endsection
-
-@section('bottom-js')
 @endsection
