@@ -20,7 +20,9 @@ class CitiesRepository implements CitiesRepositoryInterface
     public function all($search = '')
     {
         if ($search) {
-            $query = City::where('name', 'like', "%".$search."%");
+            $query = 
+                City::where('name', 'like', "%".$search."%")
+                    ->orWhere('id', $search);
         } else {
             $query = new City;
         }
