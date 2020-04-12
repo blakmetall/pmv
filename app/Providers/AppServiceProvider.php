@@ -35,15 +35,33 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function registerRepositories() {
+
         $this->app->bind(
             \App\Repositories\AmenitiesRepositoryInterface::class,
-            \App\Repositories\AmenitiesRepository::class,
+            \App\Repositories\AmenitiesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\CitiesRepositoryInterface::class,
+            \App\Repositories\CitiesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\CleaningOptionsRepositoryInterface::class,
-            \App\Repositories\CleaningOptionsRepository::class,
+            \App\Repositories\CleaningOptionsRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\ContractorsRepositoryInterface::class,
-            \App\Repositories\ContractorsRepository::class,
+            \App\Repositories\ContractorsRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\DemageDepositsRepositoryInterface::class,
-            \App\Repositories\DamageDepositsRepository::class,
+            \App\Repositories\DamageDepositsRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\UsersRepositoryInterface::class,
             \App\Repositories\UsersRepository::class
         );

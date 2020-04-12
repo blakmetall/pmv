@@ -8,9 +8,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
+                    <div class="col-sm-12 col-md-8">
                         @include('partials.page-heading', [
                             'title' => __('View'),
                             'breadcrumbs' => [
@@ -20,16 +18,12 @@
                                 ],
                             ]
                         ])
-
                     </div>
 
-                    <div class="col-md col-4 text-lg-right">
-
-                        <!-- action buttons goes here -->
+                    <div class="col-sm-12 col-md-4 text-md-right app-heading-buttons">
                         <a href="{{ route('amenities.create') }}" class="btn btn-dark ripple m-1" role="button" >
                             {{ __('New') }}
                         </a>
-
                     </div>
                 </div>
 
@@ -42,8 +36,8 @@
 
 @section('main-content')
 
-    <form action="" onsubmit="return false;" method="post">
-        <div class="container app-container-sm">
+    <div class="container app-container-sm">
+        <form action="" onsubmit="return false;" method="post">
 
             <!-- form fields -->
             @include('amenities.partials.form', [
@@ -51,7 +45,7 @@
                 'disabled' => true
             ])        
 
-        </div>
-    </form>
+        </form>
+    </div>
 
 @endsection

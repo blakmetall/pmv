@@ -8,9 +8,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
+                    <div class="col-sm-12 col-md-8">
                         @include('partials.page-heading', [
                             'title' => __('Create'),
                             'breadcrumbs' => [
@@ -20,11 +18,6 @@
                                 ],
                             ]
                         ])
-
-                    </div>
-
-                    <div class="col-md col-4 text-lg-right">
-                        <!-- action buttons goes here -->
                     </div>
                 </div>
 
@@ -37,27 +30,14 @@
 
 @section('main-content')
 
-    <!-- form -->
-    <form action="{{ route('amenities.store') }}" method="post">
-
-        <!-- token -->
-        @csrf
-
-        <div class="container app-container-sm">
-
-            <!-- form fields -->
+    <div class="container app-container-sm">
+        <form action="{{ route('amenities.store') }}" method="post">
+            @csrf
+            
             @include('amenities.partials.form', [
                 'row' => $amenity
             ])        
+        </form>
+    </div>
 
-        </div>
-
-    </form>
-
-@endsection
-
-@section('page-js')
-@endsection
-
-@section('bottom-js')
 @endsection

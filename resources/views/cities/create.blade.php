@@ -1,9 +1,6 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
-@endsection
-
-@section('main-content')
+@section('heading-content')
 
     <!-- heading -->
     <div class="container app-container">
@@ -11,9 +8,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
+                    <div class="col-sm-12 col-md-8">
                         @include('partials.page-heading', [
                             'title' => __('Create City'),
                             'breadcrumbs' => [
@@ -23,11 +18,6 @@
                                 ],
                             ]
                         ])
-
-                    </div>
-
-                    <div class="col-md col-4 text-lg-right">
-                        <!-- action buttons goes here -->
                     </div>
                 </div>
 
@@ -36,34 +26,18 @@
     </div>
     <div class="mb-4"></div>
 
+@endsection
 
+@section('main-content')
 
-    <!-- form  -->
     <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
+        <form action="{{ route('cities.store') }}" method="post">
+            @csrf
 
-                <!-- form -->
-                <form action="{{ route('cities.store') }}" method="post">
-
-                    <!-- token -->
-                @csrf
-
-                <!-- form fields -->
-                    @include('cities.partials.form', [
-                        'row' => $city
-                    ])
-
-                </form>
-
-            </div>
-        </div>
+            @include('cities.partials.form', [
+                'row' => $city
+            ])
+        </form>
     </div>
 
-@endsection
-
-@section('page-js')
-@endsection
-
-@section('bottom-js')
 @endsection

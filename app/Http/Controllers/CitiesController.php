@@ -3,27 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\LanguageHelper;
+use App\Repositories\CitiesRepositoryInterface;
 use App\Models\{ City, State };
 
 class CitiesController extends Controller
-{   
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+{  
+    private $repository; 
+    
+    public function __construct(CitiesRepositoryInterface $repository) 
+    {
+        $this->repository = $repository;
+    }
+
     public function index(Request $request)
     {
         $search = trim($request->s);
-
-        if ($search) {
-            $cities_query = City::where('name', 'like', "%".$search."%");
-        } else {
-            $cities_query = new City;
-        }
+        $cities = $this->repository->all($search);
         
-        $cities = $cities_query->paginate(5)->onEachSide(5);
-
         return view('cities.index')
             ->with('cities', $cities)
             ->with('search', $search);
@@ -36,9 +33,12 @@ class CitiesController extends Controller
      */
     public function create()
     {
+        $city = $this->repository->blueprint();
+        $states = State::orderBy('name', 'asc')->get();
+
         return view('cities.create')
-            ->with('city', (new City))
-            ->with('states', State::all());
+            ->with('city', $city)
+            ->with('states', $states);
     }
 
     /**
@@ -49,12 +49,9 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
-        $city = new City;
-        $city->state_id = $request->state_id;
-        $city->name = $request->city;
-        $city->save();
-
-        return redirect( route('cities') );
+        $city = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
+        return redirect(route('cities.edit', [$city->id]));
     }
 
     /**
@@ -65,9 +62,12 @@ class CitiesController extends Controller
      */
     public function show(City $city)
     {
+        $city = $this->repository->find($city);        
+        $states = State::orderBy('name', 'asc')->get();
+
         return view('cities.show')
             ->with('city', $city)
-            ->with('states', State::all());
+            ->with('states', $states);
     }
 
     /**
@@ -78,9 +78,12 @@ class CitiesController extends Controller
      */
     public function edit(City $city)
     {
+        $city = $this->repository->find($city);
+        $states = State::orderBy('name', 'asc')->get();
+
         return view('cities.edit')
             ->with('city', $city)
-            ->with('states', State::all());
+            ->with('states', $states);
     }
 
     /**
@@ -92,12 +95,9 @@ class CitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $city = City::findOrFail($id);
-        $city->name = $request->city;
-        $city->state_id = $request->state_id;
-        $city->save();
-
-        return redirect(route('cities'));
+        $this->repository->update($request, $id);
+        $request->session()->flash('success', __('Record updated successfully'));
+        return redirect(route('cities.edit', [$id]));
     }
 
     /**
@@ -106,10 +106,15 @@ class CitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $city = City::findOrFail($id);
-        $city->delete();
-        return redirect(route('cities'));
+        if ( $this->repository->canDelete($id) ) {
+            $this->repository->delete($id);
+            $request->session()->flash('success', __('Record deleted successfully'));
+            return redirect(route('cities'));
+        }
+
+        $request->session()->flash('error', __("This record can't be deleted"));
+        return redirect()->back();
     }
 }

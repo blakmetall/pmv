@@ -10,8 +10,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-8">
                         @include('partials.page-heading', [
-                            'title' => __('Amenities'),
-                            'breadcrumbs' => []
+                            'title' => __('Amenities')
                         ])
                     </div>
 

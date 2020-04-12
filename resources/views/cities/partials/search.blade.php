@@ -1,4 +1,4 @@
-<div class="container app-container">
+<div class="container app-container mb-5">
     <div class="card">
         <div class="card-body">
             <form action="{{ route('cities') }}" action="get">
@@ -12,7 +12,7 @@
                             name="s" 
                             value="{{ (isset($_GET['s'])) ? $_GET['s'] : '' }}"/>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 text-md-right app-search-buttons">
                         <button class="btn btn-dark btn-icon mr-2" type="submit">
                             <span class="ul-btn__icon">
                                 <i class="i-Magnifi-Glass1"></i>
