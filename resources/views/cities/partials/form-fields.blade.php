@@ -28,27 +28,15 @@
             </div>
         </div>
 
-         <!-- name --> 
-        <div class="form-group row">
-            <label for="field_name" class="col-sm-2 col-form-label">
-                {{ __('City') }}
-            </label>
+        <!-- name -->
+        @include('components.form.input', [
+            'group' => 'city',
+            'label' => __('City'),
+            'name' => 'name',
+            'required' => true,
+            'value' => $city->name
+        ])
 
-            <div class="col-sm-10">
-                <input type="text" 
-                    value="{{ old('name', $city->name) }}"
-                    name="name"
-                    class="form-control" 
-                    id="field_name"
-                />
-
-                @if ($errors->has('name'))
-                    <div class="app-form-input-error">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-            </div>
-        </div>
     </div>
 </div>
 
