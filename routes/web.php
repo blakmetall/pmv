@@ -145,7 +145,7 @@ Route::group(['middleware' => ['web']], function () {
             });
     
             // transaction types
-            Route::group(['prefix' => 'transaction-types', 'middleware' => 'role-permission:settings,transation-types'], function () {
+            Route::group(['prefix' => 'transaction-types', 'middleware' => 'role-permission:settings,transaction-types'], function () {
                 Route::get('', 'TransactionTypesController@index')->name('transaction-types');
                 Route::get('create', 'TransactionTypesController@create')->name('transaction-types.create');
                 Route::post('store', 'TransactionTypesController@store')->name('transaction-types.store');

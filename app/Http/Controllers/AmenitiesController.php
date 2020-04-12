@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Repositories\AmenitiesRepositoryInterface;
-use App\Models\{ Amenity, AmenityTranslation };
+use App\Models\Amenity;
 
 class AmenitiesController extends Controller
 {

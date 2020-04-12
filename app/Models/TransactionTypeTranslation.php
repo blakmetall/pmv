@@ -11,6 +11,9 @@ class TransactionTypeTranslation extends Model {
 
     protected $table = 'transaction_types_translations';
     public $timestamps = false;
+    protected $fillable = [
+        'name'
+    ];
 
     public function language() {
         return $this->belongsTo('App\Models\Language');

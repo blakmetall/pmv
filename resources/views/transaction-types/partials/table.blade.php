@@ -3,53 +3,52 @@
     <div class="card-header">{{ $label }}</div>
     <div class="card-body pt-5">
 
-        <!-- pagination is loaded here -->
+        <!-- pagination is loeaded here -->
         @include('partials.pagination', ['rows' => $rows])
 
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
 
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">{{ __('Name') }}</th>
-                    <th scope="col">{{ __('Actions') }}</th>
-                </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col">{{ __('Actions') }}</th>
+                    </tr>
 
                 </thead>
                 <tbody>
 
-                @if(count($rows))
-              
-                    @foreach($rows as $row)
-                        <tr>
-                            <!-- id -->
-                            <th scope="row">
-                                {{ $row->id }}
-                            </th>
+                    @if(count($rows))
+                        @foreach($rows as $row)
+                            <tr>
+                                <!-- id -->
+                                <th scope="row">
+                                    {{ $row->transactionType->id }}
+                                </th>
 
-                            <!-- name -->
-                            <td>{{ $row->name }}</td>
+                                <!-- name -->
+                                <td>{{ $row->name }}</td>
 
-                            <!-- actions -->
-                            <td>
-                                <a href="{{ route('transaction-types.edit', [$row->TransactionType->id]) }}" class="text-success mr-2">
-                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                </a>
-                                <a href="{{ route('transaction-types.destroy', [$row->TransactionType->id]) }}" class="text-danger mr-2">
-                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                </a>
-                            </td>
+                                <!-- actions -->
+                                <td>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->transactionType->id],
+                                        'showRoute' => 'transaction-types.show',
+                                        'editRoute' => 'transaction-types.edit',
+                                        'deleteRoute' => 'transaction-types.destroy',
+                                    ])
+                                </td>
 
-                        </tr>
-                    @endforeach
-                @endif
+                            </tr>
+                        @endforeach
+                    @endif
 
                 </tbody>
             </table>
         </div>
 
-        <!-- pagination is loaded here -->
+        <!-- pagination is loeaded here -->
         @include('partials.pagination', ['rows' => $rows])
 
     </div>

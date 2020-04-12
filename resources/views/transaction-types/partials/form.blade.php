@@ -1,45 +1,32 @@
-<!-- load english fields -->
-@include('transaction-types.partials.form-fields', [
-    'label' => __('ENGLISH'),
-    'lang' => 'en',
-    'row' => $row
-])
+@php
+    $disabled = (isset($disabled) && $disabled === true) ? "disabled='disabled'" : '';
+@endphp
 
-<!-- load spanish fields -->
-@include('transaction-types.partials.form-fields', [
-    'label' => __('SPANISH'),
-    'lang' => 'es',
-    'row' => $row
-])
+@include('partials.form-error-alert')
+
+<fieldset {{ $disabled }}>
+
+    <!-- load english fields -->
+    @include('transaction-types.partials.form-translatable-fields', [
+        'label' => __('ENGLISH'),
+        'lang' => 'en',
+        'row' => $row
+    ])
+
+    <!-- load spanish fields -->
+    @include('transaction-types.partials.form-translatable-fields', [
+        'label' => __('SPANISH'),
+        'lang' => 'es',
+        'row' => $row
+    ])
+
+</fieldset>
 
 <!-- form actions -->
-<div class="card">
-    <div class="card-footer bg-transparent">
-        <div class="mc-footer">
-            <div class="row">
-                <div class="col-lg-12">
-
-                    <!-- create button -->
-                    <button type="submit" class="btn  btn-primary m-1">
-                        @if( ! $row->id )
-                            {{ __('Create') }}
-                        @else
-                            {{ __('Update') }}
-                        @endif
-                    </button>
-
-                    <a href="{{ route('transaction-types') }}" class="btn btn-outline-secondary m-1" role="button">
-                        {{  __('Cancel') }}
-                    </a>
-
-                    <!-- if editing might be a chance to delete -->
-                    @if( $row )
-                        <button type="button" class="btn  btn-danger m-1 footer-delete-right">
-                            {{ __('Delete') }}
-                        </button>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('components.form.actions', [
+    'id' => $row->id,
+    'disabled' => $disabled,
+    'edit_route' => 'transaction-types.edit',
+    'cancel_route' => 'transaction-types',
+    'delete_route' => 'transaction-types.destroy',
+])

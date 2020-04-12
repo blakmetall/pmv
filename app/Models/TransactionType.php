@@ -12,6 +12,9 @@ class TransactionType extends Model {
     protected $table = 'transaction_types';
     public $timestamps = false;
 
+    public $en;
+    public $es;
+
     public function languages() {
         return $this->belongsToMany('App\Models\Language', 'transaction_types_translations')
             ->withPivot('name');

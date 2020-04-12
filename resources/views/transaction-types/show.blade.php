@@ -1,17 +1,40 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
+@section('heading-content')
+
+    @include('components.heading', [
+        'label' => __('View'),
+        'breadcrumbs' => [
+            [
+                'url' => route('transaction-types'),
+                'label' => __('Transaction Types'),
+            ],
+        ],
+        'actions' => [
+            [
+                'label' => __('New'),
+                'url' => route('transaction-types.create'),
+            ]
+        ]
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
 @endsection
 
 @section('main-content')
 
-    <!-- here individual fields are loaded -->
-    @include('show-fields')
+    <div class="container app-container-sm">
+        <form action="" onsubmit="return false;" method="post">
 
-@endsection
+            <!-- form fields -->
+            @include('transaction-types.partials.form', [
+                'row' => $transaction_type,
+                'disabled' => true
+            ])        
 
-@section('page-js')
-@endsection
+        </form>
+    </div>
 
-@section('bottom-js')
 @endsection
