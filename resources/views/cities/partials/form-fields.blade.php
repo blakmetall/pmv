@@ -1,5 +1,9 @@
+@php
+    $label = isset($label) ? $label : '';
+@endphp
+
 <div class="card">
-    <div class="card-body">       
+    <div class="card-body app-form-fields-container">       
 
         <!-- state_id -->
         @include('components.form.select', [

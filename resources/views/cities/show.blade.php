@@ -31,7 +31,8 @@
             <!-- form fields -->
             @include('cities.partials.form', [
                 'row' => $city,
-                'disabled' => true
+                'states' => $states,
+                'disabled' => true,
             ])
 
         </form>

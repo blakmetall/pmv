@@ -7,7 +7,8 @@
 <fieldset {{ $disabled }}>
 
     @include('cities.partials.form-fields', [
-        'row' => $row
+        'row' => $row,
+        'states' => $states,
     ])
 
 </fieldset>
