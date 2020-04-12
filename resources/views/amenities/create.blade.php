@@ -2,28 +2,17 @@
 
 @section('heading-content')
 
-    <!-- heading -->
-    <div class="container app-container-sm">
-        <div class="card">
-            <div class="card-body">
+   @include('components.heading', [
+        'label' => __('New'),
+        'breadcrumbs' => [
+            [
+                'url' => route('amenities'),
+                'label' => __('Amenities'),
+            ],
+        ]
+    ])
 
-                <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        @include('partials.page-heading', [
-                            'title' => __('Create'),
-                            'breadcrumbs' => [
-                                [
-                                    'url' => route('amenities'),
-                                    'label' => __('Amenities'),
-                                ],
-                            ]
-                        ])
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <!-- separator -->
     <div class="mb-4"></div>
 
 @endsection

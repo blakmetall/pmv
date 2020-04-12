@@ -2,34 +2,22 @@
 
 @section('heading-content')
 
-    <!-- heading -->
-    <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
-
-                <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        @include('partials.page-heading', [
-                            'title' => __('Amenities')
-                        ])
-                    </div>
-
-                    <div class="col-sm-12 col-md-4 text-md-right app-heading-buttons">
-                        <a href="{{ route('amenities.create') }}" class="btn btn-dark ripple m-1" role="button" >
-                            {{ __('New') }}
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    @include('components.heading', [
+        'label' => __('Amenities'),
+        'actions' => [
+            [
+                'label' => __('New'),
+                'url' => route('amenities.create')
+            ]
+        ]
+    ])
 
     <!-- separator -->
     <div class="mb-4"></div>
 
-    <!-- here the search bar is loaded -->
-    @include('amenities.partials.search')
+    @include('components.search', [
+        'url' => route('amenities')
+    ])
 
 @endsection
 

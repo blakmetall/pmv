@@ -1,7 +1,11 @@
+@php
+    $url = isset($url) ? $url : '';
+@endphp
+
 <div class="container app-container mb-5">
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('amenities') }}" action="get">
+            <form action="{{ $url }}" action="get">
 
                 <div class="row row-xs">
                     <div class="col-md-10">
@@ -20,7 +24,7 @@
                         </button>
 
                         @if(isset($_GET['s']))
-                            <a href="{{ route('amenities') }}" class="btn btn-outline-dark btn-icon" role="button">
+                            <a href="{{ $url }}" class="btn btn-outline-dark btn-icon" role="button">
                                 <span class="ul-btn__icon">
                                     <i class="i-Restore-Window"></i>
                                 </span>
