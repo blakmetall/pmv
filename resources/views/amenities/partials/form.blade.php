@@ -7,14 +7,14 @@
 <fieldset {{ $disabled }}>
 
     <!-- load english fields -->
-    @include('amenities.partials.form-fields', [
+    @include('amenities.partials.form-translatable-fields', [
         'label' => __('ENGLISH'),
         'lang' => 'en',
         'row' => $row
     ])
 
     <!-- load spanish fields -->
-    @include('amenities.partials.form-fields', [
+    @include('amenities.partials.form-translatable-fields', [
         'label' => __('SPANISH'),
         'lang' => 'es',
         'row' => $row

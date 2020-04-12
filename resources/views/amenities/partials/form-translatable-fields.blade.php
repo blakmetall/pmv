@@ -1,4 +1,7 @@
-<!-- english -->
+@php
+    $label = isset($label) ? $label : '';
+@endphp
+
 <div class="card">
     <div class="card-body">
 
@@ -13,7 +16,7 @@
             'name' => 'name',
             'lang' => $lang,
             'required' => true,
-            'value' => $amenity->{$lang}->name
+            'value' => $row->{$lang}->name
         ])
 
     </div>
