@@ -13,7 +13,7 @@
 </fieldset>
 
 <!-- form actions -->
-@include('partials.form-actions', [
+@include('components.form.actions', [
     'id' => $row->id,
     'disabled' => $disabled,
     'edit_route' => 'cities.edit',
