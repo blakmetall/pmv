@@ -11,6 +11,10 @@ class ZoneTranslation extends Model {
 
     protected $table = 'zones_translations';
     public $timestamps = false;
+    protected $fillable = [
+        'zone_id',
+        'name'
+    ];
 
     public function language() {
         return $this->belongsTo('App\Models\Language');

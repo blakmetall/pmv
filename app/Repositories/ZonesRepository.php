@@ -1,0 +1,134 @@
+<?php
+
+namespace App\Repositories;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use App\Helpers\LanguageHelper;
+use App\Models\{ Zone, ZoneTranslation };
+use App\Repositories\ZonesRepositoryInterface;
+use App\Validations\ZonesValidations;
+
+class ZonesRepository implements ZonesRepositoryInterface
+{
+    protected $model;
+
+    public function __construct(Zone $zone)
+    {
+        $this->model = $zone;
+    }
+
+    public function all($search = '')
+    {
+        $lang = LanguageHelper::current();
+
+        if ($search) {
+            $query = ZoneTranslation::where('name', 'like', "%".$search."%");
+        } else {
+            $query = new ZoneTranslation;
+        }
+
+        return $query
+                ->where('language_id', $lang->id)
+                ->with('zone')
+                ->orderBy('name', 'asc')
+                ->paginate(30);
+    }
+
+    public function create(Request $request)
+    {
+        ZonesValidations::validateOnCreate($request);
+        return $this->save($request);
+    }
+
+    public function update(Request $request, $id)
+    {
+        ZonesValidations::validateOnEdit($request, $id);
+        return $this->save($request, $id);
+    }
+
+    public function save(Request $request, $id = '')
+    {
+        $is_new = ! $id;
+
+        if ($is_new) {
+            $zone = $this->blueprint();
+            $zone->fill($request->all());
+            $zone->save();
+            
+            $zone->en->language_id = LanguageHelper::getId('en');
+            $zone->en->zone_id = $zone->id;
+            
+            $zone->es->language_id = LanguageHelper::getId('es');
+            $zone->es->zone_id = $zone->id;
+        }else{
+            $zone = $this->find($id);
+            $zone->fill($request->all());
+            $zone->save();
+        }  
+
+        $zone->en->fill($request->en);
+        $zone->en->save();
+        
+        $zone->es->fill($request->es);
+        $zone->es->save();
+        
+        return $zone;
+    }
+
+    public function find($id_or_obj)
+    {
+        $is_obj = is_object($id_or_obj);
+        $zone = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
+        
+        if ($zone) { 
+
+            $zone->en = 
+                $zone
+                    ->translations()
+                    ->where('language_id', LanguageHelper::getId('en'))
+                    ->first();
+    
+            $zone->es =
+                 $zone
+                    ->translations()
+                    ->where('language_id', LanguageHelper::getId('es'))
+                    ->first();
+                          
+        }
+
+        if (!$zone) { 
+            throw new ModelNotFoundException("Zone not found");
+        }
+
+        return $zone;
+    }
+    
+    public function delete($id)
+    {
+        $zone = $this->model->find($id);
+        
+        if ($zone && $this->canDelete($id)) {
+            $zone->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
+            $zone->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
+
+            $zone->delete();
+        }
+
+        return $zone; 
+    }
+
+    public function canDelete($id)
+    {
+        return ($id > 36); // to not delete seed items
+    }
+
+    public function blueprint()
+    {
+        $zone = new Zone;
+        $zone->en = new ZoneTranslation;
+        $zone->es = new ZoneTranslation;
+
+        return $zone;
+    }
+}

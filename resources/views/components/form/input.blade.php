@@ -12,7 +12,7 @@
     if ($lang) {
         $oldName = $lang . '.' . $name;
     }
-
+    
 @endphp
 
 <!-- name -->
@@ -30,7 +30,7 @@
         @if ($lang)
             <input type="text" 
                 value="{{ old($oldName, $value) }}"
-                name="{{ $lang }}[ {{ $name }} ]"
+                name="{{ $lang }}[{{ $name }}]"
                 class="form-control" 
                 id="{{ $id }}"
             />

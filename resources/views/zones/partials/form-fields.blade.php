@@ -1,28 +1,26 @@
-<!-- english -->
+@php
+    $label = isset($label) ? $label : '';
+@endphp
+
 <div class="card">
-    <div class="card-body">
+    <div class="card-body app-form-fields-container">
 
         @if ($label)
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif 
 
-            
-        <div class="form-group row">
-            <label for="field_zone_{{ $lang }}" class="col-sm-2 col-form-label">
-                {{ __('Zone') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text" 
-                    value="{{ old(('zone.' . $lang), (isset($zone[$lang]) ? $zone[$lang]->name : '')) }}"
-                    name="zone[{{ $lang }}]"
-                    class="form-control" 
-                    id="field_zone_{{ $lang }}"
-                />
-            </div>
-                 
-        </div>
-
+        <!-- zone_id -->
+        @include('components.form.select', [
+            'group' => 'zone',
+            'label' => __('City'),
+            'name' => 'city_id',
+            'required' => true,
+            'value' => $row->city_id,
+            'options' => $cities,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
+        ])
+        
     </div>
 </div>
 

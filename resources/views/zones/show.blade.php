@@ -1,66 +1,39 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
+
+@section('heading-content')
+
+    @include('components.heading', [
+        'label' => __('View'),
+        'breadcrumbs' => [
+            [
+                'url' => route('zones'),
+                'label' => __('Zones'),
+            ],
+        ],
+        'actions' => [
+            [
+                'label' => __('New'),
+                'url' => route('zones.create'),
+            ]
+        ]
+    ])
+
+    <!--- separator -->
+    <div class="mb-4"></div>
+
 @endsection
 
 @section('main-content')
 
-    <!-- heading -->
     <div class="container app-container-sm">
-        <div class="card">
-            <div class="card-body">
-
-                <div class="row">
-                    <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
-                        @include('partials.page-heading', [
-                            'title' => __('View Zone'),
-                            'breadcrumbs' => [
-                                [
-                                    'url' => route('zones'),
-                                    'label' => __('Zones'),
-                                ],
-                            ]
-                        ])
-
-                    </div>
-
-                    <div class="col-md col-4 text-lg-right">
-
-                        <!-- action buttons goes here -->
-                        <a href="{{ route('zones.create') }}" class="btn btn-dark ripple m-1" role="button" >
-                            {{ __('New') }}
-                        </a>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="mb-4"></div>
-
-
-    <!-- form -->
-    <form action="" onsubmit="return false;" method="post">
-
-        <div class="container app-container-sm">
-
-            <!-- form fields -->
+        <form action="" onsubmit="return false;" method="post">
             @include('zones.partials.form', [
                 'row' => $zone,
-                'disabled' => true
+                'disabled' => true,
+                'cities' => $cities,
             ])        
+        </form>
+    </div>
 
-        </div>
-
-    </form>
-
-@endsection
-
-@section('page-js')
-@endsection
-
-@section('bottom-js')
 @endsection

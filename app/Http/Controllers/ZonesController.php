@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
-use App\Models\{ City, Zone, ZoneTranslation };
+use App\Repositories\ZonesRepositoryInterface;
+use App\Models\{ City, Zone };
 
 class ZonesController extends Controller
 {
+    private $repository;
+
+    public function __construct(ZonesRepositoryInterface $repository) 
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,22 +23,8 @@ class ZonesController extends Controller
      */
     public function index(Request $request)
     {
-        $lang = LanguageHelper::current();
-
         $search = trim($request->s);
-
-        if ($search) {
-            $zones_query = ZoneTranslation::where('name', 'like', "%".$search."%");
-        } else {
-            $zones_query = new ZoneTranslation;
-        }
-
-        $zones = 
-            $zones_query
-                ->where('language_id', $lang->id)
-                ->with('zone')
-                ->orderBy('name', 'asc')
-                ->paginate(30);
+        $zones = $this->repository->all($search);
 
         return view('zones.index')
             ->with('zones', $zones)
@@ -44,9 +38,12 @@ class ZonesController extends Controller
      */
     public function create()
     {
+        $zone = $this->repository->blueprint();
+        $cities = City::orderBy('name', 'asc')->get();
+
         return view('zones.create')
-            ->with('zone', (new Zone))
-            ->with('cities', City::all());
+            ->with('zone', $zone)
+            ->with('cities', $cities);
     }
 
     /**
@@ -57,24 +54,9 @@ class ZonesController extends Controller
      */
     public function store(Request $request)
     { 
-        $zone = new Zone;
-        $zone->city_id = $request->city_id;
-        $zone->save();
-
-        $en = new ZoneTranslation;
-        $en->language_id = LanguageHelper::getId('en');
-        $en->zone_id = $zone->id;
-        $en->name = $request->zone['en'];
-        $en->save();
-
-        $es = new ZoneTranslation;
-        $es->language_id = LanguageHelper::getId('es');
-        $es->zone_id = $zone->id;
-        $es->name = $request->zone['es'];
-        $es->save();
-
-        // if everything succeeds return to list
-        return redirect(route('zones'));
+        $zone = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
+        return redirect(route('zones.edit', [$zone->id]));
 }
     /**
      * Display the specified resource.
@@ -84,19 +66,12 @@ class ZonesController extends Controller
      */
     public function show(Zone $zone)
     {
-        $zone['en'] = $zone
-            ->translations()
-            ->where('language_id', LanguageHelper::getId('en'))
-            ->first();
-
-        $zone['es'] = $zone
-            ->translations()
-            ->where('language_id', 2)
-            ->first();
+        $zone = $this->repository->find($zone);
+        $cities = City::orderBy('name', 'asc')->get();
 
         return view('zones.show')
             ->with('zone', $zone)
-            ->with('cities', City::all());
+            ->with('cities', $cities);
     }
 
     /**
@@ -107,19 +82,12 @@ class ZonesController extends Controller
      */
     public function edit(Zone $zone)
     {
-        $zone['en'] = $zone
-            ->translations()
-            ->where('language_id', LanguageHelper::getId('en'))
-            ->first();
-
-        $zone['es'] = $zone
-            ->translations()
-            ->where('language_id', 2)
-            ->first();
+        $zone = $this->repository->find($zone);
+        $cities = City::orderBy('name', 'asc')->get();
 
         return view('zones.edit')
             ->with('zone', $zone)
-            ->with('cities', City::all());
+            ->with('cities', $cities);
     }
 
     /**
@@ -131,23 +99,9 @@ class ZonesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $zone = Zone::findOrFail($id);
-
-        $en = $zone
-            ->translations()
-            ->where('language_id', LanguageHelper::getId('en'))
-            ->first();
-        $en->name = $request->zone['en'];
-        $en->save();
-
-        $es = $zone
-            ->translations()
-            ->where('language_id', LanguageHelper::getId('es'))
-            ->first();
-        $es->name = $request->zone['es'];
-        $es->save();
-
-        return redirect( route('zones') );
+        $this->repository->update($request, $id);
+        $request->session()->flash('success', __('Record updated successfully'));
+        return redirect(route('zones.edit', [$id]));
     }
 
     /**
@@ -156,15 +110,15 @@ class ZonesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $zone = Zone::findOrFail($id);
+        if ( $this->repository->canDelete($id) ) {
+            $this->repository->delete($id);
+            $request->session()->flash('success', __('Record deleted successfully'));
+            return redirect(route('zones'));
+        }
 
-        $zone->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
-        $zone->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
-        
-        $zone->delete();
-
-        return redirect(route('zones') );
+        $request->session()->flash('error', __("This record can't be deleted"));
+        return redirect()->back();
     }
 }

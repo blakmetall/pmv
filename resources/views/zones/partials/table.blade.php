@@ -13,6 +13,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -30,18 +31,21 @@
                                 <!-- name -->
                                 <td>{{ $row->name }}</td>
 
+                                <!-- city -->
+                                <td>
+                                    @if (isset($row->zone->city))
+                                        {{ $row->zone->city->name }}
+                                    @endif
+                                </td>
+
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('zones.show', [$row->id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-Eye font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('zones.edit', [$row->zone->id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-                                    <a href="{{ route('zones.destroy', [$row->zone->id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                    </a>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->zone->id],
+                                        'showRoute' => 'zones.show',
+                                        'editRoute' => 'zones.edit',
+                                        'deleteRoute' => 'zones.destroy',
+                                    ])
                                 </td>
 
                             </tr>

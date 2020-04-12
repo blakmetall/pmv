@@ -152,8 +152,9 @@ return [
     */
 
     'attributes' => [
-        'es.name' => __('Name'),
+        'city_id' => __('City'),
         'en.name' => __('Name'),
+        'es.name' => __('Name'),
         'name' => __('Name'),
         'state_id' => __('State'),
     ],
