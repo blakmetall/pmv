@@ -2,18 +2,19 @@
     $disabled = (isset($disabled) && $disabled === true) ? "disabled='disabled'" : '';
 @endphp
 
+@include('partials.form-error-alert')
 
 <fieldset {{ $disabled }}>
 
     <!-- load english fields -->
-    @include('cleaning-options.partials.form-fields', [
+    @include('cleaning-options.partials.form-translatable-fields', [
         'label' => __('ENGLISH'),
         'lang' => 'en',
         'row' => $row
     ])
 
     <!-- load spanish fields -->
-    @include('cleaning-options.partials.form-fields', [
+    @include('cleaning-options.partials.form-translatable-fields', [
         'label' => __('SPANISH'),
         'lang' => 'es',
         'row' => $row

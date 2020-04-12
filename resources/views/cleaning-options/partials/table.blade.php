@@ -32,16 +32,12 @@
 
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('cleaning-options.show', [$row->cleaning_option->id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-Eye font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('cleaning-options.edit', [$row->cleaning_option->id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-                                    <a href="{{ route('cleaning-options.destroy', [$row->cleaning_option->id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                    </a>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->cleaning_option->id],
+                                        'showRoute' => 'cleaning-options.show',
+                                        'editRoute' => 'cleaning-options.edit',
+                                        'deleteRoute' => 'cleaning-options.destroy',
+                                    ])
                                 </td>
 
                             </tr>

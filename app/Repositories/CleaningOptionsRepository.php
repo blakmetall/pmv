@@ -4,9 +4,10 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use App\Helpers\LanguageHelper;
 use App\Repositories\CleaningOptionsRepositoryInterface;
 use App\Models\{ CleaningOption, CleaningOptionTranslation };
-use App\Helpers\LanguageHelper;
+use App\Validations\CleaningOptionsValidations;
 
 class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 {
@@ -36,11 +37,13 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 
     public function create(Request $request)
     {
+        CleaningOptionsValidations::validateOnCreate($request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
+        CleaningOptionsValidations::validateOnEdit($request);
         return $this->save($request, $id);
     }
 
@@ -75,7 +78,7 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
         $is_obj = is_object($id_or_obj);
         $cleaning_option = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
         
-        if ($cleaning_option) { // prepare translations
+        if ($cleaning_option) {
 
             $cleaning_option->en = 
                 $cleaning_option
@@ -91,8 +94,8 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
                           
         }
 
-        if (!$cleaning_option) { // not found exception
-            throw new ModelNotFoundException("Cleaning Option not found");
+        if (!$cleaning_option) {
+            throw new ModelNotFoundException("CleaningOption not found");
         }
 
         return $cleaning_option;
@@ -100,32 +103,28 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
     
     public function delete($id)
     {
-        $cleaning_option = 
-            $this->model
-                ->where('id', '>', '6') // to avoid deleting seed items
-                ->find($id);
+        $cleaning_option = $this->model->find($id);
         
-        if ($cleaning_option) {
+        if ($cleaning_option && $this->canDelete($id)) {
             $cleaning_option->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $cleaning_option->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
             $cleaning_option->delete();
         }
 
-        // return recently deleted object to be used if needed after operation
-        // the object may or may not exists
         return $cleaning_option; 
     }
 
-    /**
-     * Return the blueprint of the model including translation elements
-     */
+    public function canDelete($id)
+    {
+        return ($id > 6);
+    }
+
     public function blueprint()
     {
         $cleaning_option = new CleaningOption;
         $cleaning_option->en = new CleaningOptionTranslation;
         $cleaning_option->es = new CleaningOptionTranslation;
-        
 
         return $cleaning_option;
     }

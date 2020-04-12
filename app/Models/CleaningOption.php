@@ -11,7 +11,6 @@ class CleaningOption extends Model {
 
     protected $table = 'cleaning_options';
     public $timestamps = false;
-    protected $guarded = [];
     
     public $en;
     public $es;
@@ -21,12 +20,12 @@ class CleaningOption extends Model {
             ->withPivot('name');
     }
 
-    public function properties() {
-        return $this->belongsTo('App\Models\Property');
-    }
-
     public function translations() {
         return $this->hasMany('App\Models\CleaningOptionTranslation');
+    }
+    
+    public function properties() {
+        return $this->belongsTo('App\Models\Property');
     }
 
 }
