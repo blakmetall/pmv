@@ -146,6 +146,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'es.name' => __('Name'),
+        'en.name' => __('Name'),
+        'name' => __('Name'),
+        'state_id' => __('State'),
+    ],
 
 ];
