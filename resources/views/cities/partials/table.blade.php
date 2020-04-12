@@ -32,16 +32,12 @@
 
                             <!-- actions -->
                             <td>
-                                <a href="{{ route('cities.show', [$row->id]) }}" class="text-primary mr-2">
-                                    <i class="nav-icon i-Eye font-weight-bold"></i>
-                                </a>
-
-                                <a href="{{ route('cities.edit', [$row->id]) }}" class="text-success mr-2">
-                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                </a>
-                                <a href="{{ route('cities.destroy', [$row->id]) }}" class="text-danger mr-2">
-                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                </a>
+                                @include('components.table.actions', [
+                                    'params' => [$row->id],
+                                    'showRoute' => 'cities.show',
+                                    'editRoute' => 'cities.edit',
+                                    'deleteRoute' => 'cities.destroy',
+                                ])
                             </td>
 
                         </tr>
