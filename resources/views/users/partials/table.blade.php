@@ -34,10 +34,12 @@
                                 <td>
                                     @if($row->profile)
                                         {{ $row->profile->firstname }}
+                                        {{ $row->profile->lastname}}
                                     @else
                                         ...
                                     @endif
                                 </td>
+                                
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
@@ -54,24 +56,24 @@
 
                                 <!-- is_enabled -->
                                 <th scope="row">
-                                    <span class="badge badge-{{ ($row->is_enabled) ?'success' : 'danger' }} p-1">
-                                        {{ ($row->is_enabled) ? __('Enabled') : __('Disabled') }}
+                                    @php 
+                                        $enabledClass = ($row->is_enabled) ? 'success' : 'danger';
+                                        $enabledLabel = ($row->is_enabled) ? __('Enabled') : __('Disabled');
+                                    @endphp
+
+                                    <span class="badge badge-{{ $enabledClass }} p-1">
+                                        {{ $enabledLabel }}
                                     </span>
                                 </th>
 
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('users.show', [$row->id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-Eye font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('users.edit', [$row->id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('users.destroy', [$row->id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                    </a>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->id],
+                                        'showRoute' => 'users.show',
+                                        'editRoute' => 'users.edit',
+                                        'deleteRoute' => 'users.destroy',
+                                    ])
                                 </td>
 
                             </tr>

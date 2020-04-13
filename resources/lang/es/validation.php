@@ -148,11 +148,22 @@ return [
 
     'attributes' => [
         'city_id' => __('City'),
+        'email' => __('Email'),
         'en.description' => __('Description'),
         'en.name' => __('Name'),
         'es.description' => __('Description'),
         'es.name' => __('Name'),
         'name' => __('Name'),
+        'profile.city' => __('City'),
+        'profile.config_agent_commission' => __('Agent Commission'),
+        'profile.country' => __('Country'),
+        'profile.firstname' => __('Firstname'),
+        'profile.mobile' => __('Mobile'),
+        'profile.lastname' => __('Lastname'),
+        'profile.phone' => __('Phone'),
+        'profile.state' => __('State'),
+        'profile.street' => __('Street'),
+        'profile.zip' => __('Zip'),
         'state_id' => __('State'),
     ],
 

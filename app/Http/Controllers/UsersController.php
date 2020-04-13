@@ -38,7 +38,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create')->with('user', (new User));
+        $user = $this->repository->blueprint();
+        return view('users.create')->with('user', $user);
     }
 
     /**
@@ -50,6 +51,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $user = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('users.edit', [$user->id]));
     }
 
@@ -87,6 +89,7 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
+        $request->session()->flash('success', __('Record updated successfully'));
         return redirect( route('users.edit', [$id]) );
     }
 
@@ -98,7 +101,13 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
-        return redirect(route('users'));
+        if ( $this->repository->canDelete($id) ) {
+            $this->repository->delete($id);
+            $request->session()->flash('success', __('Record deleted successfully'));
+            return redirect(route('users'));
+        }
+
+        $request->session()->flash('error', __("This record can't be deleted"));
+        return redirect()->back();
     }
 }

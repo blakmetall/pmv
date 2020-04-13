@@ -1,67 +1,49 @@
-<!-- fields form -->
+@php
+    $label = isset($label) ? $label : '';
+@endphp
+
 <div class="card">
     <div class="card-body">
 
-        <!-- email -->
-        <div class="form-group row">
-            <label for="field_email" class="col-sm-2 col-form-label">
-                {{ __('Email') }}
-            </label>
+        @if ($label)
+            <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
+        @endif 
 
-            <div class="col-sm-10">
-                <input type="text" 
-                    id="field_email"
-                    value="{{ old(('user.email'), (isset($user) ? $user->email : '')) }}"
-                    name="email"
-                    class="form-control" 
-                />
-            </div>
-        </div>
+        <!-- email -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'type' => 'email',
+            'label' => __('Email'),
+            'name' => 'email',
+            'required' => true,
+            'value' => $row->email,
+        ])
 
         <!-- password -->
-        <div class="form-group row">
-            <label for="field_password" class="col-sm-2 col-form-label">
-                {{ __('Password') }}
-            </label>
+        @include('components.form.input', [
+            'group' => 'user',
+            'type' => 'password',
+            'label' => __('Password'),
+            'name' => 'password',
+        ])
 
-            <div class="col-sm-10">
-                <input 
-                    id="field_password"
-                    type="password" 
-                    value=""
-                    name="password"
-                    class="form-control" 
-                />
-            </div>
-        </div>
+         <!-- confirm password -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'type' => 'password',
+            'label' => __('Confirm Password'),
+            'name' => 'password_confirmation',
+        ])
 
-        <!-- confirm password -->
-        <div class="form-group row">
-            <label for="field_password_confirmation" class="col-sm-2 col-form-label">
-                {{ __('Confirm Password') }}
-            </label>
+        <!-- is_enabled -->
+        @include('components.form.checkbox', [
+            'group' => 'user',
+            'label' => __('Enabled'),
+            'name' => 'is_enabled',
+            'value' => 1,
+            'default' => $row->is_enabled,
+        ])
 
-            <div class="col-sm-10">
-                <input 
-                    id="field_password_confirmation"
-                    type="password" 
-                    value=""
-                    name="password_confirmation"
-                    class="form-control" 
-                />
-            </div>
-        </div>
-
-        <!-- enabled -->
-        <div class="card-body">
-            <label class="switch pr-5 switch-primary mr-3">
-                <span>{{ __('Enabled') }}</span>
-
-                @php $checked = $user->is_enabled ? 'checked="checked"' : ''; @endphp
-                <input  type="checkbox" {{ $checked }}  name="is_enabled" />
-                <span class="slider"></span>
-            </label>
-        </div>
     </div>
 </div>
 
@@ -71,181 +53,105 @@
 <!-- fields form -->
 <div class="card">
     <div class="card-body">
-        <!-- first name -->
-        <div class="form-group row">
-            <label for="field_firstname" class="col-sm-2 col-form-label">
-                {{ __('First Name') }}
-            </label>
 
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.firstname'), $user->profile['firstname']) }}"
-                       name="profile[firstname]"
-                       class="form-control"
-                       id="field_firstname"
-                />
-            </div>
-        </div>
+        <!-- firstname -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Firstname'),
+            'name' => 'firstname',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->firstname
+        ])
 
-        <!-- last name -->
-        <div class="form-group row">
-            <label for="field_lastname" class="col-sm-2 col-form-label">
-                {{ __('Last Name') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.lastname'), $user->profile['lastname']) }}"
-                       name="profile[lastname]"
-                       class="form-control"
-                       id="field_lastname"
-                />
-            </div>
-        </div>
+        <!-- lastname -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Lastname'),
+            'name' => 'lastname',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->lastname
+        ])
 
         <!-- country -->
-        <div class="form-group row">
-            <label for="field_country" class="col-sm-2 col-form-label">
-                {{ __('Country') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.country'), $user->profile['country']) }}"
-                       name="profile[country]"
-                       class="form-control"
-                       id="field_country"
-                />
-            </div>
-        </div>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Country'),
+            'name' => 'country',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->country
+        ])
 
         <!-- state -->
-        <div class="form-group row">
-            <label for="field_state" class="col-sm-2 col-form-label">
-                {{ __('State') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.state'), $user->profile['state']) }}"
-                       name="profile[state]"
-                       class="form-control"
-                       id="field_state"
-                />
-            </div>
-        </div>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('State'),
+            'name' => 'state',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->state
+        ])
 
         <!-- city -->
-        <div class="form-group row">
-            <label for="field_city" class="col-sm-2 col-form-label">
-                {{ __('City') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.city'), $user->profile['city']) }}"
-                       name="profile[city]"
-                       class="form-control"
-                       id="field_city"
-                />
-            </div>
-        </div>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('City'),
+            'name' => 'city',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->city
+        ])
 
         <!-- street -->
-        <div class="form-group row">
-            <label for="field_street" class="col-sm-2 col-form-label">
-                {{ __('Street') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.street'), $user->profile['street']) }}"
-                       name="profile[street]"
-                       class="form-control"
-                       id="field_street"
-                />
-            </div>
-        </div>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Street'),
+            'name' => 'street',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->street
+        ])
 
         <!-- zip -->
-        <div class="form-group row">
-            <label for="field_zip" class="col-sm-2 col-form-label">
-                {{ __('ZIP') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.zip'), $user->profile['zip']) }}"
-                       name="profile[zip]"
-                       class="form-control"
-                       id="field_zip"
-                />
-            </div>
-        </div>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Zip'),
+            'name' => 'zip',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->zip
+        ])
 
         <!-- phone -->
-        <div class="form-group row">
-            <label for="field_phone" class="col-sm-2 col-form-label">
-                {{ __('Phone') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.phone'), $user->profile['phone']) }}"
-                       name="profile[phone]"
-                       class="form-control"
-                       id="field_phone"
-                />
-            </div>
-        </div>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Phone'),
+            'name' => 'phone',
+            'parentName' => 'profile',
+            'value' => $row->profile->phone
+        ])
 
         <!-- mobile -->
-        <div class="form-group row">
-            <label for="field_mobile" class="col-sm-2 col-form-label">
-                {{ __('Mobile') }}
-            </label>
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Mobile'),
+            'name' => 'mobile',
+            'parentName' => 'profile',
+            'value' => $row->profile->mobile
+        ])
 
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.mobile'), $user->profile['mobile']) }}"
-                       name="profile[mobile]"
-                       class="form-control"
-                       id="field_mobile"
-                />
-            </div>
-        </div>
-
-        <!-- config lang -->
-        <div class="form-group row">
-            <label for="field_config_language" class="col-sm-2 col-form-label">
-                {{ __('Language') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value=""
-                       name="profile[config_language]"
-                       class="form-control"
-                       id="field_config_language"
-                />
-            </div>
-        </div>
-
-        <!-- config agent commission -->
-        <div class="form-group row">
-            <label for="field_config_agent_commission" class="col-sm-2 col-form-label">
-                {{ __('Agent Commission') }}
-            </label>
-
-            <div class="col-sm-10">
-                <input type="text"
-                       value="{{ old(('profile.config_agent_commission'), $user->profile['config_agent_commission']) }}"
-                       name="profile[config_agent_commission]"
-                       class="form-control"
-                       id="field_config_agent_commission"
-                />
-            </div>
-        </div>
+        @if ( RoleHelper::hasValidRoleId( config('constants.roles.rentals-agent') ) )
+            <!-- state -->
+            @include('components.form.input', [
+                'group' => 'user',
+                'label' => __('Agent Commission') . ' %',
+                'name' => 'config_agent_commission',
+                'parentName' => 'profile',
+                'value' => $row->profile->config_agent_commission
+            ])
+        @endif
 
     </div>
 </div>

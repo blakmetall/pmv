@@ -2,20 +2,28 @@
     $group = isset($group) ? $group : strtotime('now');
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
+    $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
     $value = isset($value) ? $value : '';
+
+    $validTypes = ['text', 'email', 'password'];
+    $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
     $inputName = $name;
     if ($lang) {
         $inputName = "{$lang}[{$name}]";
+    } else if ($parentName) {
+        $inputName = "{$parentName}[{$name}]";
     }
 
     $requestName = $name;
     if ($lang) {
         $requestName = $lang . '.' . $name;
+    } else if ($parentName) {
+        $requestName = $parentName . '.' . $name;
     }
     
 @endphp
@@ -32,7 +40,7 @@
 
     <div class="col-sm-10">
 
-        <input type="text" 
+        <input type="{{ $type }}" 
             value="{{ old($requestName, $value) }}"
             name="{{ $inputName }}"
             class="form-control" 

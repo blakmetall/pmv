@@ -2,6 +2,7 @@
     $group = isset($group) ? $group : strtotime('now');
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
+    $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
     $value = isset($value) ? $value : '';
@@ -12,14 +13,18 @@
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-    $inputName = $name;
+     $inputName = $name;
     if ($lang) {
         $inputName = "{$lang}[{$name}]";
+    } elseif ($parentName) {
+        $inputName = "{$parentName}[{$name}]";
     }
 
     $requestName = $name;
     if ($lang) {
         $requestName = $lang . '.' . $name;
+    } elseif ($parentName) {
+        $requestName = $parentName . '.' . $name;
     }
 
 @endphp

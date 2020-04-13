@@ -2,53 +2,23 @@
     $disabled = (isset($disabled) && $disabled === true) ? "disabled='disabled'" : '';
 @endphp
 
+@include('partials.form-error-alert')
 
 <fieldset {{ $disabled }}>
 
     <!-- load fields -->
-    @include('users.partials.form-fields', ['row' => $row])
+    @include('users.partials.form-fields', [
+        'label' => __('Account'),
+        'row' => $row
+    ])
 
 </fieldset>
 
-
 <!-- form actions -->
-<div class="card">
-    <div class="card-footer bg-transparent">
-        <div class="mc-footer">
-            <div class="row">
-                <div class="col-lg-12">
-
-                    @if ($disabled) 
-                        <a 
-                            href="{{ route('users.edit', [$row->id]) }}" 
-                            class="btn btn-outline-secondary m-1" 
-                            role="button">
-                                {{  __('Edit') }}
-                        </a>
-                    @endif
-
-                    @if (!$disabled) 
-                        <!-- create button -->
-                        <button type="submit" class="btn  btn-primary m-1">
-                            @if( ! $row->id )
-                                {{ __('Create') }}
-                            @else
-                                {{ __('Update') }}
-                            @endif
-                        </button>
-
-                        <a href="{{ route('users') }}" class="btn btn-outline-secondary m-1" role="button">
-                            {{  __('Cancel') }}
-                        </a>
-                    @endif
-                    
-                    @if( $row->id )
-                        <a href="{{ route('users.destroy', [$row->id]) }}" type="button" class="btn  btn-danger m-1 footer-delete-right">
-                            {{ __('Delete') }}
-                        </a>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('components.form.actions', [
+    'id' => $row->id,
+    'disabled' => $disabled,
+    'edit_route' => 'users.edit',
+    'cancel_route' => 'users',
+    'delete_route' => 'users.destroy',
+])

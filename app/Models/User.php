@@ -16,13 +16,11 @@ class User extends Authenticatable {
     public $timestamps = true;
     protected $fillable = [
         'email',
+        'is_enabled'
     ];
     protected $hidden = [
         'password',
         'remember_token'
-    ];
-    protected $casts = [
-        'is_enabled' => 'boolean' 
     ];
 
     public function roles() {
@@ -88,14 +86,5 @@ class User extends Authenticatable {
     public function auditedBookingExtraPayments() {
         return $this->hasMany('App\Models\BookingExtraPayment', 'audit_user_id');
     }
-
-    public static $saveValidation = [
-        'email'    => 'required',
-        'password' => 'required|confirmed|min:6',
-    ];
-
-    public static $updateValidation = [
-        'email' => 'required',
-    ];
 
 }

@@ -2,6 +2,7 @@
     $group = isset($group) ? $group : strtotime('now');
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
+    $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $value = isset($value) ? $value : '';
     $default = isset($default) ? $default : '';
@@ -11,12 +12,17 @@
     $inputName = $name;
     if ($lang) {
         $inputName = "{$lang}[{$name}]";
+    } else if ($parentName) {
+        $inputName = "{$parentName}[{$name}]";
     }
 
     $requestName = $name;
     if ($lang) {
         $requestName = $lang . '.' . $name;
+    } else if ($parentName) {
+        $requestName = $parentName . '.' . $name;
     }
+
 
     $checked = old($requestName, $default);
     if ($checked) {
