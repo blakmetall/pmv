@@ -12,7 +12,9 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col">{{ __('Price') }}</th>
+                        <th scope="col">{{ __('Refundable') }}</th>
+                        <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -24,24 +26,36 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    {{ $row->id }}
+                                    {{ $row->damageDeposit->id }}
                                 </th>
 
-                                <!-- name -->
-                                <td>{{ $row->description }}</td>
+                                <!-- price -->
+                                <td>
+                                    ${{ number_format($row->damageDeposit->price, 2) }}
+                                </td>
+
+                                <!-- is_refundable -->
+                                <td>
+                                    @if($row->damageDeposit->is_refundable)
+                                        <i class="nav-icon i-Yes font-weight-bold text-success"></i>
+                                    @else 
+                                        <i class="nav-icon i-Close font-weight-bold text-danger"></i>
+                                    @endif
+                                </td>
+
+                                <!-- description -->
+                                <td>
+                                    {{ $row->description }}
+                                </td>
 
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('damage-deposits.show', [$row->damage_deposit_id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-Eye font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('damage-deposits.edit', [$row->damage_deposit_id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-                                    <a href="{{ route('damage-deposits.destroy', [$row->damage_deposit_id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                    </a>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->damageDeposit->id],
+                                        'showRoute' => 'damage-deposits.show',
+                                        'editRoute' => 'damage-deposits.edit',
+                                        'deleteRoute' => 'damage-deposits.destroy',
+                                    ])
                                 </td>
 
                             </tr>

@@ -32,7 +32,7 @@ class SettingsController extends Controller
             ],
             [
                 'label' => __('Damage Deposits'),
-                'url' => 'damage-deposits'
+                'url' => route('damage-deposits')
             ],
         ];
         

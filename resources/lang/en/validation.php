@@ -153,7 +153,9 @@ return [
 
     'attributes' => [
         'city_id' => __('City'),
+        'en.description' => __('Description'),
         'en.name' => __('Name'),
+        'es.description' => __('Description'),
         'es.name' => __('Name'),
         'name' => __('Name'),
         'state_id' => __('State'),

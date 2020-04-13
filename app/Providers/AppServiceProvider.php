@@ -57,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \App\Repositories\DemageDepositsRepositoryInterface::class,
+            \App\Repositories\DamageDepositsRepositoryInterface::class,
             \App\Repositories\DamageDepositsRepository::class
         );
 

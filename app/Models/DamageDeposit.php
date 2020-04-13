@@ -11,7 +11,10 @@ class DamageDeposit extends Model {
     
     protected $table = 'damage_deposits';
     public $timestamps = false;
-    protected $guarded = [];
+    protected $fillable = [
+        'price',
+        'is_refundable'
+    ];
     
     public $en;
     public $es;

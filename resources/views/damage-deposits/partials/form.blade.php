@@ -2,26 +2,26 @@
     $disabled = (isset($disabled) && $disabled === true) ? "disabled='disabled'" : '';
 @endphp
 
+@include('partials.form-error-alert')
 
 <fieldset {{ $disabled }}>
 
-    <!-- load english fields -->
+    <!-- load regular fields -->
     @include('damage-deposits.partials.form-fields', [
+        'row' => $row
+    ])
+
+    <!-- load english fields -->
+    @include('damage-deposits.partials.form-translatable-fields', [
         'label' => __('ENGLISH'),
         'lang' => 'en',
         'row' => $row
     ])
 
     <!-- load spanish fields -->
-    @include('damage-deposits.partials.form-fields', [
+    @include('damage-deposits.partials.form-translatable-fields', [
         'label' => __('SPANISH'),
         'lang' => 'es',
-        'row' => $row
-    ])
-
-    <!-- load spanish fields -->
-    @include('damage-deposits.partials.form-fields-prices', [
-        'label' => __('PRICES'),
         'row' => $row
     ])
 

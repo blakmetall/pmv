@@ -61,6 +61,11 @@
   padding-top: 30px;
 }
 
+.checkbox .checkmark.app-checkmark,
+.radio .checkmark.app-checkmark {
+  top: 6px;
+}
+
 @media (max-width: 767px) {
   .app-heading-buttons {
     padding-top: 10px;

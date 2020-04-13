@@ -4,11 +4,12 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\DemageDepositsRepositoryInterface;
-use App\Models\{ DamageDeposit, DamageDepositTranslation };
 use App\Helpers\LanguageHelper;
+use App\Models\{ DamageDeposit, DamageDepositTranslation };
+use App\Repositories\DamageDepositsRepositoryInterface;
+use App\Validations\DamageDepositsValidations;
 
-class DamageDepositsRepository implements DemageDepositsRepositoryInterface
+class DamageDepositsRepository implements DamageDepositsRepositoryInterface
 {
     protected $model;
 
@@ -20,7 +21,7 @@ class DamageDepositsRepository implements DemageDepositsRepositoryInterface
     public function all($search = '')
     {
         $lang = LanguageHelper::current();
-
+        
         if ($search) {
             $query = DamageDepositTranslation::where('description', 'like', "%".$search."%");
         } else {
@@ -28,19 +29,21 @@ class DamageDepositsRepository implements DemageDepositsRepositoryInterface
         }
 
         return $query
-            ->where('language_id', $lang->id)
-            ->with('damageDeposits')
-            ->orderBy('description', 'asc')
-            ->paginate(30);
+                ->where('language_id', $lang->id)
+                ->with('damageDeposit')
+                ->orderBy('id', 'asc')
+                ->paginate(30);
     }
 
     public function create(Request $request)
     {
+        DamageDepositsValidations::validateOnCreate($request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
+        DamageDepositsValidations::validateOnEdit($request, $id);
         return $this->save($request, $id);
     }
 
@@ -48,41 +51,24 @@ class DamageDepositsRepository implements DemageDepositsRepositoryInterface
     {
         $is_new = ! $id;
 
-        //echo $request->price;
-        //exit();
-
-        $is_refundable = 0;
-        if($request->is_refundable){
-            $is_refundable = 1;
-        }
+        $checkboxesConfig = ['is_refundable' => 0];
+        $requestData = array_merge($checkboxesConfig, $request->all());
 
         if ($is_new) {
             $damage_deposit = $this->blueprint();
-
-           
-
+            $damage_deposit->fill($requestData);
             $damage_deposit->save();
-
-            
             
             $damage_deposit->en->language_id = LanguageHelper::getId('en');
             $damage_deposit->en->damage_deposit_id = $damage_deposit->id;
             
             $damage_deposit->es->language_id = LanguageHelper::getId('es');
             $damage_deposit->es->damage_deposit_id = $damage_deposit->id;
-
-            
-
-            
-
         }else{
             $damage_deposit = $this->find($id);
-
-            $damage_deposit->price = $request->price;
-            $damage_deposit->is_refundable = $is_refundable;
-            
+            $damage_deposit->fill($requestData);
             $damage_deposit->save();
-        }
+        }  
 
         $damage_deposit->en->fill($request->en);
         $damage_deposit->en->save();
@@ -98,7 +84,7 @@ class DamageDepositsRepository implements DemageDepositsRepositoryInterface
         $is_obj = is_object($id_or_obj);
         $damage_deposit = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
         
-        if ($damage_deposit) { // prepare translations
+        if ($damage_deposit) { 
 
             $damage_deposit->en = 
                 $damage_deposit
@@ -114,7 +100,7 @@ class DamageDepositsRepository implements DemageDepositsRepositoryInterface
                           
         }
 
-        if (!$damage_deposit) { // not found exception
+        if (!$damage_deposit) { 
             throw new ModelNotFoundException("DamageDeposit not found");
         }
 
@@ -123,26 +109,23 @@ class DamageDepositsRepository implements DemageDepositsRepositoryInterface
     
     public function delete($id)
     {
-        $damage_deposit = 
-            $this->model
-                ->where('id', '>', '91') // to avoid deleting seed items
-                ->find($id);
+        $damage_deposit = $this->model->find($id);
         
-        if ($damage_deposit) {
+        if ($damage_deposit && $this->canDelete($id)) {
             $damage_deposit->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $damage_deposit->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
             $damage_deposit->delete();
         }
 
-        // return recently deleted object to be used if needed after operation
-        // the object may or may not exists
         return $damage_deposit; 
     }
 
-    /**
-     * Return the blueprint of the model including translation elements
-     */
+    public function canDelete($id)
+    {
+        return ($id > 3); // to not delete seed items
+    }
+
     public function blueprint()
     {
         $damage_deposit = new DamageDeposit;

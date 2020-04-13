@@ -15,8 +15,7 @@ class DamageDepositTranslation extends Model {
         'description',
     ];
     
-
-    public function damageDeposits() {
+    public function damageDeposit() {
         return $this->belongsTo('App\Models\DamageDeposit');
     }
 }
