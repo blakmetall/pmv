@@ -3,8 +3,8 @@
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
     $lang = isset($lang) ? $lang : '';
-    $required = isset($required) ? $required : false;
     $value = isset($value) ? $value : '';
+    $default = isset($default) ? $default : '';
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -17,6 +17,13 @@
     if ($lang) {
         $requestName = $lang . '.' . $name;
     }
+
+    $checked = old($requestName, $default);
+    if ($checked) {
+        $checkedProp = 'checked';
+    }else{
+        $checkedProp = '';
+    }
     
 @endphp
 
@@ -24,21 +31,19 @@
 <div class="form-group row">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
-
-        @if ($required)
-            <span>*</span>
-        @endif
     </label>
 
     <div class="col-sm-10">
 
-        <input type="text" 
-            value="{{ old($requestName, $value) }}"
-            name="{{ $inputName }}"
-            class="form-control" 
-            id="{{ $id }}"
-        />
-
+        <label class="checkbox checkbox-primary">
+            <input type="checkbox" 
+                value="{{ $value }}"
+                name="{{ $inputName }}"
+                id="{{ $id }}"
+                {{ $checkedProp }}
+            />
+            <span class="checkmark app-checkmark"></span>
+        </label>
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">

@@ -5,10 +5,8 @@
     $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
     $value = isset($value) ? $value : '';
-
-    $options = isset($options) && count($options) ? $options : [];
-    $optionLabelRef = isset($optionLabelRef) ? $optionLabelRef : '';
-    $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
+    $rows = isset($rows) && is_numeric($rows) ? (int) $rows : 3;
+    $resize = isset($resize) ? $resize : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -22,9 +20,12 @@
         $requestName = $lang . '.' . $name;
     }
 
+    $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
+    
 @endphp
 
-<div class="form-group row">   
+
+<div class="form-group row">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
 
@@ -34,22 +35,13 @@
     </label>
 
     <div class="col-sm-10">
-
-        <select name="{{ $inputName }}" class="form-control" id="{{ $id }}">
-
-            <option value="">{{ __('Select') }}</option>
-
-            @foreach($options as $option)
-                @php 
-                    $selected = old($requestName, $value) == $option->{$optionValueRef} ? 'selected' : '';
-                @endphp
-
-                <option value="{{ $option->{$optionValueRef} }}" {{ $selected }}>
-                    {{ $option->{$optionLabelRef} }}
-                </option>
-            @endforeach
-
-        </select>
+        <textarea 
+            name="{{ $inputName }}"
+            class="form-control" 
+            rows="{{ $rows }}"
+            id="{{ $id }}"
+            style="{{ $resizeStyle }}"
+            >{{ old($requestName, $value) }}</textarea>
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">
