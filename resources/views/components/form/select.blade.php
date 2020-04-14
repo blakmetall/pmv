@@ -13,19 +13,8 @@
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-     $inputName = $name;
-    if ($lang) {
-        $inputName = "{$lang}[{$name}]";
-    } elseif ($parentName) {
-        $inputName = "{$parentName}[{$name}]";
-    }
-
-    $requestName = $name;
-    if ($lang) {
-        $requestName = $lang . '.' . $name;
-    } elseif ($parentName) {
-        $requestName = $parentName . '.' . $name;
-    }
+    $requestName = prepareFormRequestName($name, $parentName, $lang);    
+    $inputName = prepareFormInputName($name, $parentName, $lang);
 
 @endphp
 
