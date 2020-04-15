@@ -38,5 +38,24 @@ if (!function_exists('prepareFormRequestName')) {
     }
 }
  
+if (!function_exists('prepareCheckboxValuesFromRows')) {
+    function prepareCheckboxValuesFromRows($items, $config = [])
+    {
+        $values = [];
 
+        $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+        $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+
+        if ($items->count()) {
+            foreach($items as $item) {
+                $values[] = [
+                    'label' => $item->{$labelRef},
+                    'value' => $item->{$valueRef},
+                ];
+            }
+        }
+        
+        return $values;
+    }
+}
 
