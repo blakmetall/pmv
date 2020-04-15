@@ -31,7 +31,8 @@
 
             <!-- form fields -->
             @include('users.partials.form', [
-                'row' => $user
+                'row' => $user,
+                'roles' => $roles,
             ])        
         </form>
     </div>

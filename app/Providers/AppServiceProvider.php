@@ -62,6 +62,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\RolesRepositoryInterface::class,
+            \App\Repositories\RolesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\TransactionTypesRepositoryInterface::class,
             \App\Repositories\TransactionTypesRepository::class
         );

@@ -9,7 +9,8 @@
     <!-- load fields -->
     @include('users.partials.form-fields', [
         'label' => __('Account'),
-        'row' => $row
+        'row' => $row,
+        'roles' => $roles,
     ])
 
 </fieldset>

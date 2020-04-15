@@ -44,6 +44,17 @@
             'default' => $row->is_enabled,
         ])
 
+        <!-- roles -->
+        @include('components.form.checkbox-multiple', [
+            'group' => 'user',
+            'label' => __('Roles'),
+            'name' => 'roles_ids',
+            'values' => prepareCheckboxValuesFromRows($roles, [
+                'valueRef' => 'role_id'
+            ]),
+            'default' => [] // $row->roles,
+        ])
+
     </div>
 </div>
 

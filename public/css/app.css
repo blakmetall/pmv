@@ -61,6 +61,12 @@
   padding-top: 30px;
 }
 
+.app-form-checkbox-label {
+  position: relative;
+  display: inline-block;
+  top: 7px;
+}
+
 .checkbox .checkmark.app-checkmark,
 .radio .checkmark.app-checkmark {
   top: 6px;

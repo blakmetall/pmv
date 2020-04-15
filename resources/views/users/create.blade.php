@@ -23,7 +23,10 @@
             @csrf
 
             <!-- form fields -->
-            @include('users.partials.form', ['row' => $user])        
+            @include('users.partials.form', [
+                'row' => $user,
+                'roles' => $roles,
+            ])        
         </form>
     </div>
 @endsection

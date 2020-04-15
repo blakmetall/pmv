@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use Hash;
 use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
+use App\Repositories\RolesRepositoryInterface;
 use App\Models\User;
 
 class UsersController extends Controller
 {
     private $repository;
+    private $rolesRepository;
 
-    public function __construct(UsersRepositoryInterface $repository)
+    public function __construct(UsersRepositoryInterface $repository, RolesRepositoryInterface $rolesRepository)
     {
         $this->repository = $repository;
+        $this->rolesRepository = $rolesRepository;
     }
 
     /**
@@ -39,7 +42,13 @@ class UsersController extends Controller
     public function create()
     {
         $user = $this->repository->blueprint();
-        return view('users.create')->with('user', $user);
+
+        $rolesConfig = ['skipSuperAdmin' => true];
+        $roles = $this->rolesRepository->all('', $rolesConfig);
+
+        return view('users.create')
+            ->with('user', $user)
+            ->with('roles', $roles);
     }
 
     /**
