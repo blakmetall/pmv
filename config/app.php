@@ -227,6 +227,7 @@ return [
         // custom helpers
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
         'RoleHelper' => App\Helpers\RoleHelper::class,
+        'UserHelper' => App\Helpers\UserHelper::class,
     ],
 
 ];

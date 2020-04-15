@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
 use App\Repositories\RolesRepositoryInterface;
 use App\Models\{Profile, User};
+use App\Helpers\UserHelper;
 
 class UsersController extends Controller
 {
@@ -89,8 +90,13 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Request $request, User $user)
     {
+        if (!UserHelper::isSuper()) {
+            $request->session()->flash('error', __("We're sorry, you don't have permissions to this section."));
+            return redirect()->back();
+        }
+
         $user = $this->repository->find($user);
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
@@ -120,7 +126,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);
