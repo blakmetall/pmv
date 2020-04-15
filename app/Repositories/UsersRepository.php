@@ -93,7 +93,8 @@ class UsersRepository implements UsersRepositoryInterface
             if (!$user->profile) {
                 $user->profile = new Profile;
                 $user->profile->user_id = $user->id;
-                $user->profile->config_role_id = $roles_to_assign[0]; // assign active rol on create
+                $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
+                $user->profile->config_language = 'es'; // default language on create
             }
 
             $user->profile->fill($request->profile);
