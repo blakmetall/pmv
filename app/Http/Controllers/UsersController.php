@@ -92,7 +92,7 @@ class UsersController extends Controller
      */
     public function edit(Request $request, User $user)
     {
-        if (!UserHelper::isSuper()) {
+        if ($user->id == 1 && !UserHelper::isSuper()) {
             $request->session()->flash('error', __("We're sorry, you don't have permissions to this section."));
             return redirect()->back();
         }
