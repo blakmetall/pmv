@@ -52,7 +52,9 @@
             'values' => prepareCheckboxValuesFromRows($roles, [
                 'valueRef' => 'role_id'
             ]),
-            'default' => [] // $row->roles,
+            'default' => prepareCheckboxDefaultValues($row->roles, [
+                'valueRef' => 'id',
+            ]),
         ])
 
     </div>

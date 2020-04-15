@@ -59,3 +59,20 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
     }
 }
 
+if (!function_exists('prepareCheckboxDefaultValues')) {
+    function prepareCheckboxDefaultValues($items, $config = [])
+    {
+        $defaultValues = [];
+
+        $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+
+        if ($items->count()) {
+            foreach($items as $item) {
+                $defaultValues[] = $item->{$valueRef};
+            }
+        }
+        
+        return $defaultValues;
+    }
+}
+

@@ -5,14 +5,13 @@
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $values = isset($values) ? $values : '';
-    $default = isset($default) ? $default : '';
+    $default = isset($default) && is_array($default) ? $default : [];
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);    
     $inputName = prepareFormInputName($name, $parentName, $lang);
     
-    // echo '<pre>', print_r($default), '</pre>';
 @endphp
 
 <!-- name -->
@@ -27,8 +26,10 @@
             <label class="checkbox checkbox-primary mb-2">
                 
                 @php
-                    // $checked = old($requestName, $default) ? 'checked' : '';
                     $checked = '';
+                    if(in_array($item['value'], old($requestName, $default))) {
+                        $checked = 'checked';
+                    }
                 @endphp
 
                 <input type="checkbox" 

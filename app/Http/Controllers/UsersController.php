@@ -6,7 +6,7 @@ use Hash;
 use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
 use App\Repositories\RolesRepositoryInterface;
-use App\Models\User;
+use App\Models\{Profile, User};
 
 class UsersController extends Controller
 {
@@ -42,6 +42,7 @@ class UsersController extends Controller
     public function create()
     {
         $user = $this->repository->blueprint();
+        $user->profile = new Profile;
 
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
@@ -73,7 +74,13 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $user = $this->repository->find($user);
-        return view('users.show')->with('user', $user);
+
+        $rolesConfig = ['skipSuperAdmin' => true];
+        $roles = $this->rolesRepository->all('', $rolesConfig);
+
+        return view('users.show')
+            ->with('user', $user)
+            ->with('roles', $roles);
     }
 
     /**
@@ -85,7 +92,12 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $user = $this->repository->find($user);
-        return view('users.edit')->with('user', $user);
+        $rolesConfig = ['skipSuperAdmin' => true];
+        $roles = $this->rolesRepository->all('', $rolesConfig);
+
+        return view('users.edit')
+            ->with('user', $user)
+            ->with('roles', $roles);
     }
 
     /**
