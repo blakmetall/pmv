@@ -25,7 +25,7 @@ class ZonesRepository implements ZonesRepositoryInterface
         if ($search) {
             $query = ZoneTranslation::where('name', 'like', "%".$search."%");
         } else {
-            $query = new ZoneTranslation;
+            $query = ZoneTranslation::query();;
         }
 
         return $query

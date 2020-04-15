@@ -31,7 +31,7 @@ class ContractorsRepository implements ContractorsRepositoryInterface
                     $query->where('cities.name', 'like', $search);
                 });
         } else {
-            $query = new Contractor;
+            $query = Contractor::query();;
         }
 
         return $query

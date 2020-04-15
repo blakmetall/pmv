@@ -24,7 +24,7 @@ class CitiesRepository implements CitiesRepositoryInterface
                 City::where('name', 'like', "%".$search."%")
                     ->orWhere('id', $search);
         } else {
-            $query = new City;
+            $query = City::query();;
         }
         
         return $query->orderBy('name', 'asc')->paginate(30);
