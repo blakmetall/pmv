@@ -147,13 +147,20 @@ return [
     */
 
     'attributes' => [
+        'city' => __('City'),
         'city_id' => __('City'),
+        'config_agent_commission' => __('Agent Commission'),
+        'country' => __('Country'),
         'email' => __('Email'),
         'en.description' => __('Description'),
         'en.name' => __('Name'),
         'es.description' => __('Description'),
         'es.name' => __('Name'),
+        'firstname' => __('Firstname'),
+        'lastname' => __('Lastname'),
+        'mobile' => __('Mobile'),
         'name' => __('Name'),
+        'phone' => __('Phone'),
         'profile.city' => __('City'),
         'profile.config_agent_commission' => __('Agent Commission'),
         'profile.country' => __('Country'),
@@ -164,7 +171,10 @@ return [
         'profile.state' => __('State'),
         'profile.street' => __('Street'),
         'profile.zip' => __('Zip'),
+        'state' => __('State'),
         'state_id' => __('State'),
+        'street' => __('Street'),
+        'zip' => __('Zip'),    
     ],
 
 ];

@@ -22,7 +22,6 @@
                     @endif
 
                     @if (!$disabled)
-                        <!-- create button -->
                         <button type="submit" class="btn  btn-primary m-1">
                             @if( !$id )
                                 {{ __('Create') }}
@@ -31,13 +30,15 @@
                             @endif
                         </button>
 
-                        <a href="{{ route($cancel_route) }}" class="btn btn-outline-secondary m-1" role="button">
-                            {{  __('Cancel') }}
-                        </a>
+                        @if ($cancel_route)
+                            <a href="{{ route($cancel_route) }}" class="btn btn-outline-secondary m-1" role="button">
+                                {{  __('Cancel') }}
+                            </a>
+                        @endif
                     @endif
 
                     <!-- if editing might be a chance to delete -->
-                    @if( $id )
+                    @if( $id && $delete_route)
                         <a 
                             href="{{ route($delete_route, [$id]) }}" 
                             class="btn btn-danger m-1 footer-delete-right" 
