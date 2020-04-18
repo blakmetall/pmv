@@ -26,6 +26,18 @@ class RoleHelper
     }
 
     /**
+     * Sets the active role base on role_id
+     */
+    public static function setActive($id)
+    {
+        if(self::hasValidRoleId($id)) {
+            $profile = auth()->user()->profile;
+            $profile->config_role_id = $id;
+            $profile->save();
+        }
+    }
+
+    /**
      * Get the user roles available
      * 
      * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation

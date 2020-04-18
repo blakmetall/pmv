@@ -32,7 +32,7 @@
 
                                 <!-- actions -->
                                 <td>
-                                    <a href="#task:route-to-users-with-role-filter">
+                                    <a href="javascript:;">
                                         {{ $row->role->users()->count() }}
                                     </a>
                                 </td>
