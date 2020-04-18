@@ -6,6 +6,7 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Validations\AccountValidations;
 
 class AccountController extends Controller
 {
@@ -17,13 +18,18 @@ class AccountController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        $user->email = $request->email;
         
-        if ( !empty($request->password) ) {
+        AccountValidations::validateOnEdit($request, $user->id);
+
+        $user->email = $request->email;
+
+        if ($request->password) {
             $user->password = Hash::make($request->password);
         }
 
         $user->save();
+
+        $request->session()->flash('success', __('Account updated successfully'));
 
         return redirect(route('account'));
     }

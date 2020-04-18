@@ -1,3 +1,6 @@
+@include('partials.form-error-alert')
+
+
 <!-- load fields -->
 @include('account.partials.form-fields', ['row' => $row])
 
