@@ -55,7 +55,7 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('', 'RolesController@index')->name('roles');
                 });
                 
-                Route::get('update-active/{id}', 'RolesController@updateActive')->name('roles.update-active');
+                Route::get('set-active/{id}', 'RolesController@setActive')->name('roles.set-active');
             });
         });
 

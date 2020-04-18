@@ -20,7 +20,7 @@ class RolesController extends Controller
         return view('roles.index')->with('roles', $roles);
     }
 
-    public function updateActive($id) 
+    public function setActive($id) 
     { 
         RoleHelper::setActive($id);
         return redirect(route('dashboard'));
