@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Repositories\{ ContractorsRepositoryInterface, CitiesRepositoryInterface };
 use Illuminate\Http\Request;
+use App\Models\Contractor;
 
 class ContractorsController extends Controller
 {
     private $repository;
+    private $citiesRepository;
 
-    public function __construct(ContractorsRepositoryInterface $repository)
+    public function __construct(ContractorsRepositoryInterface $repository, CitiesRepositoryInterface $citiesRepository)
     {
         $this->repository = $repository;
+        $this->citiesRepository = $citiesRepository;
     }
 
     /**
@@ -40,7 +43,7 @@ class ContractorsController extends Controller
         $contractor = $this->repository->blueprint();
 
         $citiesConfig = ['paginate' => false];
-        $cities = CitiesRepositoryInterface::all('', $citiesConfig);
+        $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('contractors.create')
             ->with('cities', $cities)
@@ -71,7 +74,7 @@ class ContractorsController extends Controller
         $contractor = $this->repository->find($contractor);
 
         $citiesConfig = ['paginate' => false];
-        $cities = CitiesRepositoryInterface::all('', $citiesConfig);
+        $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('contractors.show')
             ->with('cities', $cities)
@@ -89,7 +92,7 @@ class ContractorsController extends Controller
         $contractor = $this->repository->find($contractor);
         
         $citiesConfig = ['paginate' => false];
-        $cities = CitiesRepositoryInterface::all('', $citiesConfig);
+        $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('contractors.edit')
             ->with('cities', $cities)
@@ -116,7 +119,7 @@ class ContractorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);

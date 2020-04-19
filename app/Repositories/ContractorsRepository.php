@@ -6,7 +6,8 @@ use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\ContractorsRepositoryInterface;
-use App\Models\Contractor;
+use App\Models\{ City, Contractor };
+use App\Validations\ContractorsValidations;
 
 class ContractorsRepository implements ContractorsRepositoryInterface
 {
@@ -25,12 +26,11 @@ class ContractorsRepository implements ContractorsRepositoryInterface
             $query = Contractor::
                 where('company', 'like', "%".$search."%")
                 ->orWhere('contact_name', 'like', "%".$search."%")
-                ->orWhere('phone', 'like', "%".$search."%")
-                ->orWhere('mobile', 'like', "%".$search."%")
                 ->orWhere('email', 'like', "%".$search."%")
                 ->orWhere('address', 'like', "%".$search."%")
-                ->orWhereHas('city', function($query) use ($search) {
-                    $query->where('cities.name', 'like', $search);
+                ->orWhereHas('city', function($q) use ($search) {
+                    $table = (new City)->_getTable();
+                    $q->where($table . '.name', 'like', "%".$search."%");
                 });
         } else {
             $query = Contractor::query();

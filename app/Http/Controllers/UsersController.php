@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
 use Illuminate\Http\Request;
-use App\Repositories\UsersRepositoryInterface;
-use App\Repositories\RolesRepositoryInterface;
+use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
 use App\Models\{Profile, User};
 use App\Helpers\UserHelper;
 

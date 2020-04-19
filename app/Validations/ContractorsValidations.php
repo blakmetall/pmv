@@ -14,7 +14,7 @@ class ContractorsValidations
         return self::validate('create', $request);
     }
     
-    public static function validateOnEdit(Request $request, $id)
+    public static function validateOnEdit(Request $request, $id = '')
     {
         return self::validate('edit', $request, $id);
     }
@@ -25,12 +25,13 @@ class ContractorsValidations
             'city_id'      => 'required',
             'company'      => 'required',
             'contact_name' => 'required',
+            'email'        => 'nullable|email'
         ];
 
         return $defaultValidations;
     }
 
-    public static function validate($validateEvent, Request $request, $id)
+    public static function validate($validateEvent, Request $request, $id = '')
     {
         $redirectRoute = '';
         $validations = [];
