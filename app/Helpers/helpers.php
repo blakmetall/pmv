@@ -76,3 +76,9 @@ if (!function_exists('prepareCheckboxDefaultValues')) {
     }
 }
 
+if (!function_exists('priceFormat')) {
+    function priceFormat($price, $decimals = 2)
+    {
+        return '$' . number_format($price, $decimals);
+    }
+}
