@@ -5,6 +5,7 @@
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
+    $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
 
     $validTypes = ['text', 'email', 'password'];
@@ -14,6 +15,8 @@
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);    
     $inputName = prepareFormInputName($name, $parentName, $lang);
+    
+    $disabledProp = ($disabled) ? 'disabled' : '';
     
 @endphp
 
@@ -34,6 +37,7 @@
             name="{{ $inputName }}"
             class="form-control" 
             id="{{ $id }}"
+            {{ $disabledProp }}
         />
 
 

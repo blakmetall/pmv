@@ -5,6 +5,7 @@
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
+    $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
 
     $options = isset($options) && count($options) ? $options : [];
@@ -15,6 +16,8 @@
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);    
     $inputName = prepareFormInputName($name, $parentName, $lang);
+
+    $disabledProp = ($disabled) ? 'disabled' : '';
 
 @endphp
 
@@ -29,7 +32,11 @@
 
     <div class="col-sm-10">
 
-        <select name="{{ $inputName }}" class="form-control" id="{{ $id }}">
+        <select 
+            name="{{ $inputName }}" 
+            class="form-control" 
+            id="{{ $id }}"
+            {{ $disabledProp }} >
 
             <option value="">{{ __('Select') }}</option>
 

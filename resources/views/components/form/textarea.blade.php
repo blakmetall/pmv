@@ -5,6 +5,7 @@
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
+    $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
     $rows = isset($rows) && is_numeric($rows) ? (int) $rows : 3;
     $resize = isset($resize) ? $resize : false;
@@ -15,6 +16,8 @@
     $inputName = prepareFormInputName($name, $parentName, $lang);
 
     $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
+
+    $disabledProp = ($disabled) ? 'disabled' : '';
     
 @endphp
 
@@ -35,6 +38,7 @@
             rows="{{ $rows }}"
             id="{{ $id }}"
             style="{{ $resizeStyle }}"
+            {{ $disabledProp }}
             >{{ old($requestName, $value) }}</textarea>
 
         @if ($errors->has($requestName))

@@ -4,6 +4,7 @@
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
+    $disabled = isset($disabled) ? $disabled : false;
     $values = isset($values) ? $values : '';
     $default = isset($default) && is_array($default) ? $default : [];
 
@@ -11,6 +12,8 @@
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);    
     $inputName = prepareFormInputName($name, $parentName, $lang);
+    
+    $disabledProp = ($disabled) ? 'disabled' : '';
     
 @endphp
 
@@ -26,9 +29,9 @@
             <label class="checkbox checkbox-primary mb-2">
                 
                 @php
-                    $checked = '';
+                    $checkedProp = '';
                     if(in_array($item['value'], old($requestName, $default))) {
-                        $checked = 'checked';
+                        $checkedProp = 'checked';
                     }
                 @endphp
 
@@ -36,7 +39,8 @@
                     value="{{ $item['value'] }}"
                     name="{{ $inputName }}[]"
                     id="{{ $id . '_' . $key }}"
-                    {{ $checked }}
+                    {{ $checkedProp }}
+                    {{ $disabledProp }}
                 />
 
                 <span class="checkmark app-checkmark"></span>

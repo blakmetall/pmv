@@ -4,6 +4,7 @@
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
+    $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
     $default = isset($default) ? $default : '';
 
@@ -12,7 +13,9 @@
     $requestName = prepareFormRequestName($name, $parentName, $lang);    
     $inputName = prepareFormInputName($name, $parentName, $lang);
     
-    $checked = old($requestName, $default) ? 'checked' : '';
+    $checkedProp = old($requestName, $default) ? 'checked' : '';
+    
+    $disabledProp = ($disabled) ? 'disabled' : '';
     
 @endphp
 
@@ -29,7 +32,8 @@
                 value="{{ $value }}"
                 name="{{ $inputName }}"
                 id="{{ $id }}"
-                {{ $checked }}
+                {{ $checkedProp }}
+                {{ $disabledProp }}
             />
             <span class="checkmark app-checkmark"></span>
         </label>
