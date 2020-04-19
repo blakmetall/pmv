@@ -13,13 +13,15 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 {
     protected $model;
 
-    public function __construct(CleaningOption $cleaning_option)
+    public function __construct(CleaningOption $cleaning_option, $config = [])
     {
         $this->model = $cleaning_option;
     }
 
-    public function all($search = '')
+    public function all($search = '', $config = [])
     {
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        
         $lang = LanguageHelper::current();
 
         if ($search) {
@@ -27,12 +29,19 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
         } else {
             $query = CleaningOptionTranslation::query();
         }
-
-        return $query
+        
+        $query
             ->where('language_id', $lang->id)
             ->with('cleaning_option')
-            ->orderBy('name', 'asc')
-            ->paginate(30);
+            ->orderBy('name', 'asc');
+
+        if($shouldPaginate) {
+            $result = $query->paginate( config('constants.pagination.per-page') );
+        }else{
+            $result = $query->get();
+        }
+        
+        return $result;
     }
 
     public function create(Request $request)

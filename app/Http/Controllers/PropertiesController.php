@@ -51,7 +51,7 @@ class PropertiesController extends Controller
                 ->where('language_id', $lang->id)
                 ->with('property')
                 ->orderBy('name', 'asc')
-                ->paginate(30);
+                ->paginate( config('constants.pagination.per-page') );
 
         return view('properties.index')
             ->with('properties', $properties)

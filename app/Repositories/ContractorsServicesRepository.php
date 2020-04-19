@@ -37,7 +37,7 @@ class ContractorsServicesRepository implements ContractorsServicesRepositoryInte
             ->orderBy('name', 'asc');
         
         if($shouldPaginate) {
-            $result = $query->paginate(30);
+            $result = $query->paginate( config('constants.pagination.per-page') );
         }else{
             $result = $query->get();
         }

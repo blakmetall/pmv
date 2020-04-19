@@ -13,6 +13,10 @@ return [
         'accounting' => 8,
         'administrative-assistant' => 9,
         'concierge' => 10
-    ]    
+    ],
+
+    'pagination' => [
+        'per-page' => 50
+    ]
 
 ];

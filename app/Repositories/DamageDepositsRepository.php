@@ -18,8 +18,10 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
         $this->model = $damage_deposit;
     }
 
-    public function all($search = '')
+    public function all($search = '', $config = [])
     {
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+
         $lang = LanguageHelper::current();
         
         if ($search) {
@@ -28,11 +30,18 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
             $query = DamageDepositTranslation::query();
         }
 
-        return $query
-                ->where('language_id', $lang->id)
-                ->with('damageDeposit')
-                ->orderBy('id', 'asc')
-                ->paginate(30);
+        $query
+            ->where('language_id', $lang->id)
+            ->with('damageDeposit')
+            ->orderBy('id', 'asc');
+
+        if($shouldPaginate) {
+            $result = $query->paginate( config('constants.pagination.per-page') );
+        }else{
+            $result = $query->get();
+        }
+        
+        return $result;
     }
 
     public function create(Request $request)

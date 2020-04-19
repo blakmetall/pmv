@@ -18,8 +18,10 @@ class UsersRepository implements UsersRepositoryInterface
         $this->model = $user;
     }
 
-    public function all($search = '')
+    public function all($search = '', $config = [])
     {
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        
         if ($search) {
             $query = User::
                 where('email', 'like', "%".$search."%")
@@ -36,10 +38,17 @@ class UsersRepository implements UsersRepositoryInterface
             $query = User::query();
         }
 
-        return $query
+        $query
             ->with('profile')  
-            ->orderBy('email', 'asc')
-            ->paginate(30);
+            ->orderBy('email', 'asc');
+
+        if($shouldPaginate) {
+            $result = $query->paginate( config('constants.pagination.per-page') );
+        }else{
+            $result = $query->get();
+        }
+        
+        return $result;
     }
 
     public function create(Request $request)

@@ -20,6 +20,8 @@ class RolesRepository implements RolesRepositoryInterface
 
     public function all($search = '', $config = [])
     {
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        
         $lang = LanguageHelper::current();
 
         $skipSuperAdmin = isset($config['skipSuperAdmin']) && $config['skipSuperAdmin'] === true;
@@ -36,11 +38,18 @@ class RolesRepository implements RolesRepositoryInterface
             $query->where('role_id', '!=', 1);
         }
 
-        return $query
+        $query
             ->where('language_id', $lang->id)
             ->with('role')  
-            ->orderBy('name', 'asc')
-            ->paginate(30);
+            ->orderBy('name', 'asc');
+
+        if($shouldPaginate) {
+            $result = $query->paginate( config('constants.pagination.per-page') );
+        }else{
+            $result = $query->get();
+        }
+        
+        return $result;
     }
 
     public function find($id_or_obj)

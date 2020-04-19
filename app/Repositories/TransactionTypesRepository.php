@@ -18,8 +18,10 @@ class TransactionTypesRepository implements TransactionTypesRepositoryInterface
         $this->model = $transaction_type;
     }
 
-    public function all($search = '')
+    public function all($search = '', $config = [])
     {
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        
         $lang = LanguageHelper::current();
 
         if ($search) {
@@ -29,11 +31,18 @@ class TransactionTypesRepository implements TransactionTypesRepositoryInterface
             $query = TransactionTypeTranslation::query();
         }
 
-        return $query
+        $query
             ->where('language_id', $lang->id)
             ->with('transactionType')
-            ->orderBy('name', 'asc')
-            ->paginate(30);
+            ->orderBy('name', 'asc');
+
+        if($shouldPaginate) {
+            $result = $query->paginate( config('constants.pagination.per-page') );
+        }else{
+            $result = $query->get();
+        }
+        
+        return $result;
     }
 
     public function create(Request $request)
