@@ -154,7 +154,9 @@ return [
     'attributes' => [
         'city' => __('City'),
         'city_id' => __('City'),
+        'company' => __('Company'),
         'config_agent_commission' => __('Agent Commission'),
+        'contact_name' => __('Contact'),
         'country' => __('Country'),
         'email' => __('Email'),
         'en.description' => __('Description'),

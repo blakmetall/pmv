@@ -14,11 +14,10 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Company') }}</th>
-                        <th scope="col">{{ __('Contact Name') }}</th>
+                        <th scope="col">{{ __('Contact') }}</th>
                         <th scope="col">{{ __('Phone') }}</th>
                         <th scope="col">{{ __('Mobile') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
-                        <th scope="col">{{ __('Address') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -53,22 +52,14 @@
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
-                                <!-- address -->
-                                <td>{{ $row->address }}</td>
-
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('contractors.show', [$row->id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-Eye font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('contractors.edit', [$row->id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-
-                                    <a href="{{ route('contractors.destroy', [$row->id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                    </a>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->id],
+                                        'showRoute' => 'contractors.show',
+                                        'editRoute' => 'contractors.edit',
+                                        'deleteRoute' => 'contractors.destroy',
+                                    ])
                                 </td>
 
                             </tr>

@@ -1,63 +1,30 @@
 @extends('layouts.horizontal-master')
 
-@section('before-css')
+@section('heading-content')
+
+   @include('components.heading', [
+        'label' => __('New'),
+        'breadcrumbs' => [
+            [
+                'url' => route('contractors'),
+                'label' => __('Contractors'),
+            ],
+        ]
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
 @endsection
 
 @section('main-content')
 
-    <!-- heading -->
+
     <div class="container app-container-sm">
-        <div class="card">
-            <div class="card-body">
-
-                <div class="row">
-                    <div class="col-md col-8">
-
-                        <!-- title layout heading goes here -->
-                        @include('partials.page-heading', [
-                            'title' => __('Create Contractor'),
-                            'breadcrumbs' => [
-                                [
-                                    'url' => route('contractors'),
-                                    'label' => __('Contractors'),
-                                ],
-                            ]
-                        ])
-
-                    </div>
-
-                    <div class="col-md col-4 text-lg-right">
-                        <!-- action buttons goes here -->
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="mb-4"></div>
-
-
-
-
-    <!-- form -->
-    <form action="{{ route('contractors.store') }}" method="post">
-
-        <!-- token -->
-        @csrf
-
-        <div class="container app-container-sm">
-
-            <!-- form fields -->
+        <form action="{{ route('contractors.store') }}" method="post">
+            @csrf
             @include('contractors.partials.form', ['row' => $contractor])
+        </form>
+    </div>
 
-        </div>
-
-    </form>
-
-@endsection
-
-@section('page-js')
-@endsection
-
-@section('bottom-js')
 @endsection
