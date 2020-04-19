@@ -12,9 +12,10 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Price') }}</th>
-                        <th scope="col">{{ __('Refundable') }}</th>
-                        <th scope="col">{{ __('Description') }}</th>
+                        <th scope="col">{{ __('Previous Price') }}</th>
+                        <th scope="col">{{ __('Contractor') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -26,35 +27,43 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    {{ $row->damageDeposit->id }}
+                                    {{ $row->contractorService->id }}
                                 </th>
+
+                                <!-- name -->
+                                <td>{{ $row->name }}</td>
 
                                 <!-- price -->
                                 <td>
-                                    {{ priceFormat($row->damageDeposit->price) }}
+                                    {{ priceFormat($row->contractorService->base_price) }}
                                 </td>
 
-                                <!-- is_refundable -->
+                                <!-- previous price -->
                                 <td>
-                                    @if($row->damageDeposit->is_refundable)
-                                        <i class="nav-icon i-Yes font-weight-bold text-success"></i>
-                                    @else 
-                                        <i class="nav-icon i-Close font-weight-bold text-danger"></i>
+                                    @if ($row->contractorService->previous_base_price)
+                                        {{ priceFormat($row->contractorService->previous_base_price) }}
                                     @endif
                                 </td>
 
-                                <!-- description -->
+                                <!-- previous price -->
                                 <td>
-                                    {{ $row->description }}
+                                    @php 
+                                        $contractorID= $row->contractorService->contractor->id;
+                                        $contractorName = $row->contractorService->contractor->company;
+                                    @endphp
+
+                                    <a href="{{ route('contractors.show', [$contractorID]) }}">
+                                        {{ ($contractorName) }}
+                                    </a>
                                 </td>
 
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
-                                        'params' => [$row->damageDeposit->id],
-                                        'showRoute' => 'damage-deposits.show',
-                                        'editRoute' => 'damage-deposits.edit',
-                                        'deleteRoute' => 'damage-deposits.destroy',
+                                        'params' => [$row->contractorService->id],
+                                        'showRoute' => 'contractors-services.show',
+                                        'editRoute' => 'contractors-services.edit',
+                                        'deleteRoute' => 'contractors-services.destroy',
                                     ])
                                 </td>
 

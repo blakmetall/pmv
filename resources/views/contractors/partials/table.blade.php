@@ -12,12 +12,12 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Company') }}</th>
                         <th scope="col">{{ __('Contact') }}</th>
                         <th scope="col">{{ __('Phone') }}</th>
                         <th scope="col">{{ __('Mobile') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
+                        <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -31,11 +31,6 @@
                                 <th scope="row">
                                     {{ $row->id }}
                                 </th>
-
-                                <!-- city -->
-                                <td>
-                                    {{ $row->city->name }}
-                                </td>
 
                                 <!-- company -->
                                 <td>{{ $row->company }}</td>
@@ -51,6 +46,11 @@
 
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
+
+                                <!-- city -->
+                                <td>
+                                    <b class="text-primary">{{ $row->city->name }}</b>
+                                </td>
 
                                 <!-- actions -->
                                 <td>

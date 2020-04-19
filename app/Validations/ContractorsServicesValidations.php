@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 
-class DamageDepositsValidations
+class ContractorsServicesValidations
 {  
     public static function validateOnCreate(Request $request)
     {
@@ -21,10 +21,10 @@ class DamageDepositsValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            'price' => 'required|numeric',
-            'is_refundable' => 'nullable|boolean',
-            'en.description' => 'required',
-            'es.description' => 'required',
+            'contractor_id' => 'required',
+            'base_price' => 'required|numeric',
+            'en.name' => 'required',
+            'es.name' => 'required',
         ];
 
         return $defaultValidations;
@@ -37,11 +37,11 @@ class DamageDepositsValidations
 
         switch($validateEvent)   {
             case 'create':
-                $redirectRoute = 'damage_deposits.create';
+                $redirectRoute = 'contractors-services.create';
                 $validations = [];
             break;
             case 'edit':
-                $redirectRoute = 'damage_deposits.edit';
+                $redirectRoute = 'contractors-services.edit';
                 $validations = [];
             break;
         }

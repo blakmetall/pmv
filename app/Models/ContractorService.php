@@ -11,6 +11,13 @@ class ContractorService extends Model {
     
     protected $table = 'contractors_services';
     public $timestamps = true;
+    protected $fillable = [
+        'contractor_id',
+        'base_price',
+    ];
+
+    public $en;
+    public $es;
 
     public function languages() {
         return $this->belongsToMany('App\Models\Language', 'contractors_services_translations')
@@ -22,7 +29,7 @@ class ContractorService extends Model {
     }
 
     public function contractor() {
-        return $this->belongsToMany('App\Models\Contractor');
+        return $this->belongsTo('App\Models\Contractor');
     }
 
     public function propertyManagementTransactions() {

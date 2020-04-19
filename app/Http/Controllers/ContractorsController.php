@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
 use App\Repositories\{ ContractorsRepositoryInterface, CitiesRepositoryInterface };
 use Illuminate\Http\Request;
 use App\Models\Contractor;

@@ -57,6 +57,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\ContractorsServicesRepositoryInterface::class,
+            \App\Repositories\ContractorsServicesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\DamageDepositsRepositoryInterface::class,
             \App\Repositories\DamageDepositsRepository::class
         );

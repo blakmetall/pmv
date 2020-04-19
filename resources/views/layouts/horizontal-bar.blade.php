@@ -235,7 +235,7 @@
 
                                         @if ($_current_role->isAllowed('contractors', 'services'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('contractors-services') }}">
                                                     <span class="item-name">{{ __('Services') }}</span>
                                                 </a>
                                             </li>
