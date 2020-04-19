@@ -7,7 +7,9 @@
 
 <div class="main-header">
     <div class="logo">
-        <img src="{{asset('assets/images/logo.png')}}" alt="">
+        <a href="{{ route('dashboard') }}">
+            <img src="{{ asset('assets/app/logo-full.png') }}" alt="">
+        </a>
     </div>
 
     <div class="menu-toggle">

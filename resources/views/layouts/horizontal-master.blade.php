@@ -19,14 +19,17 @@
         @yield('before-css')
 
         {{-- theme css --}}
-        <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/lite-purple.min.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/styles/vendor/perfect-scrollbar.css')}}">
+        <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/styles/vendor/perfect-scrollbar.css') }}">
 
         {{-- app css --}}
-        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         {{-- page specific css --}}
         @yield('page-css')
+
+        {{-- favicon --}}
+        @include('partials.favicon')
 
     </head>
 

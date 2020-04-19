@@ -19,6 +19,10 @@ mix
     .js("resources/js/scripts.js", "public/js/scripts.js")
     .sass("resources/sass/app.scss", "public/css")
     .sass(
+        "resources/gull/assets/styles/sass/themes/palmera-vacations.scss",
+        "public/assets/styles/css/themes/palmera-vacations.min.css"
+    )
+    .sass(
         "resources/gull/assets/styles/sass/themes/lite-purple.scss",
         "public/assets/styles/css/themes/lite-purple.min.css"
     )

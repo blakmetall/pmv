@@ -16,7 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
 
         {{-- theme css --}}
-        <link rel="stylesheet" href="{{asset('assets/styles/css/themes/lite-purple.min.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/styles/css/themes/palmera-vacations.min.css')}}">
 
         {{-- page specific css --}}
         @yield('page-css')

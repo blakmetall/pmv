@@ -119,6 +119,17 @@
 
 /***/ }),
 
+/***/ "./resources/gull/assets/styles/sass/themes/palmera-vacations.scss":
+/*!*************************************************************************!*\
+  !*** ./resources/gull/assets/styles/sass/themes/palmera-vacations.scss ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/js/scripts.js":
 /*!*********************************!*\
   !*** ./resources/js/scripts.js ***!
@@ -318,14 +329,15 @@ function isViewport(size) {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/scripts.js ./resources/sass/app.scss ./resources/gull/assets/styles/sass/themes/lite-purple.scss ./resources/gull/assets/styles/sass/themes/lite-blue.scss ./resources/gull/assets/styles/sass/themes/dark-purple.scss ***!
-  \***************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/scripts.js ./resources/sass/app.scss ./resources/gull/assets/styles/sass/themes/palmera-vacations.scss ./resources/gull/assets/styles/sass/themes/lite-purple.scss ./resources/gull/assets/styles/sass/themes/lite-blue.scss ./resources/gull/assets/styles/sass/themes/dark-purple.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/js/scripts.js */"./resources/js/scripts.js");
 __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/gull/assets/styles/sass/themes/palmera-vacations.scss */"./resources/gull/assets/styles/sass/themes/palmera-vacations.scss");
 __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/gull/assets/styles/sass/themes/lite-purple.scss */"./resources/gull/assets/styles/sass/themes/lite-purple.scss");
 __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/gull/assets/styles/sass/themes/lite-blue.scss */"./resources/gull/assets/styles/sass/themes/lite-blue.scss");
 module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/gull/assets/styles/sass/themes/dark-purple.scss */"./resources/gull/assets/styles/sass/themes/dark-purple.scss");
