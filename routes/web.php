@@ -70,6 +70,17 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('destroy/{id}', 'ContractorsController@destroy')->name('contractors.destroy');
         });
 
+        // contractors-services
+        Route::group(['prefix' => 'contractors-services', 'middleware' => 'role-permission:contractors,services'], function () {
+            Route::get('', 'ContractorsServicesController@index')->name('contractors-services');
+            Route::get('create', 'ContractorsServicesController@create')->name('contractors-services.create');
+            Route::post('store', 'ContractorsServicesController@store')->name('contractors-services.store');
+            Route::get('show/{service}', 'ContractorsServicesController@show')->name('contractors-services.show');
+            Route::get('edit/{service}', 'ContractorsServicesController@edit')->name('contractors-services.edit');
+            Route::post('update/{id}', 'ContractorsServicesController@update')->name('contractors-services.update');
+            Route::get('destroy/{id}', 'ContractorsServicesController@destroy')->name('contractors-services.destroy');
+        });
+
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {
             Route::get('', 'PropertiesController@index')->name('properties');
@@ -108,7 +119,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'AmenitiesController@destroy')->name('amenities.destroy');
             });
             
-            // cleaning options
+            // cleaning-options
             Route::group(['prefix' => 'cleaning-options', 'middleware' => 'role-permission:settings,cleaning-options'], function () {
                 Route::get('', 'CleaningOptionsController@index')->name('cleaning-options');
                 Route::get('create', 'CleaningOptionsController@create')->name('cleaning-options.create');
@@ -119,7 +130,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'CleaningOptionsController@destroy')->name('cleaning-options.destroy');
             });
 
-            // damage deposit
+            // damage-deposit
             Route::group(['prefix' => 'damage-deposits', 'middleware' => 'role-permission:settings,damage-deposits'], function () {
                 Route::get('', 'DamageDepositsController@index')->name('damage-deposits');
                 Route::get('create', 'DamageDepositsController@create')->name('damage-deposits.create');
@@ -141,7 +152,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
             });
     
-            // transaction types
+            // transaction-types
             Route::group(['prefix' => 'transaction-types', 'middleware' => 'role-permission:settings,transaction-types'], function () {
                 Route::get('', 'TransactionTypesController@index')->name('transaction-types');
                 Route::get('create', 'TransactionTypesController@create')->name('transaction-types.create');
