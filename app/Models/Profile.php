@@ -28,28 +28,4 @@ class Profile extends Model {
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
-
-    public static $saveValidation = [
-        'firstname' => 'required',
-        'lastname'  => 'required',
-        'country'   => 'required',
-        'state'     => 'required',
-        'city'      => 'required',
-        'street'    => 'required',
-        'zip'       => 'required',
-        'phone'     => 'required',
-        'mobile'    => 'required',
-    ];
-
-    public static $updateValidation = [
-        'firstname' => 'required',
-        'lastname'  => 'required',
-        'country'   => 'required',
-        'state'     => 'required',
-        'city'      => 'required',
-        'street'    => 'required',
-        'zip'       => 'required',
-        'phone'     => 'required',
-        'mobile'    => 'required',
-    ];
 }

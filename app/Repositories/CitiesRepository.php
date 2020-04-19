@@ -17,17 +17,27 @@ class CitiesRepository implements CitiesRepositoryInterface
         $this->model = $city;
     }
 
-    public function all($search = '')
+    public function all($search = '', $config = [])
     {
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+
         if ($search) {
             $query = 
                 City::where('name', 'like', "%".$search."%")
                     ->orWhere('id', $search);
         } else {
-            $query = City::query();;
+            $query = City::query();
         }
         
-        return $query->orderBy('name', 'asc')->paginate(30);
+        $query->orderBy('name', 'asc');
+        
+        if($shouldPaginate) {
+            $result = $query->paginate(30);
+        }else{
+            $result = $query->get();
+        }
+        
+        return $result;
     }
 
     public function create(Request $request)

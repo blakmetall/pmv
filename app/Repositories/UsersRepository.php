@@ -33,7 +33,7 @@ class UsersRepository implements UsersRepositoryInterface
                             ->orWhere('profiles.street', 'like', $search);
                 });
         } else {
-            $query = User::query();;
+            $query = User::query();
         }
 
         return $query

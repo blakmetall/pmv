@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
-use App\Repositories\ContractorsRepositoryInterface;
+use App\Repositories\{ ContractorsRepositoryInterface, CitiesRepositoryInterface };
 use Illuminate\Http\Request;
-use App\Models\Contractor;
 
 class ContractorsController extends Controller
 {
@@ -24,7 +23,6 @@ class ContractorsController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-
         $contractors = $this->repository->all($search);
 
         return view('contractors.index')
@@ -39,10 +37,14 @@ class ContractorsController extends Controller
      */
     public function create()
     {
-        $cities = City::all();
+        $contractor = $this->repository->blueprint();
+
+        $citiesConfig = ['paginate' => false];
+        $cities = CitiesRepositoryInterface::all('', $citiesConfig);
+
         return view('contractors.create')
             ->with('cities', $cities)
-            ->with('contractor', (new Contractor));
+            ->with('contractor', $contractor);
     }
 
     /**
@@ -54,6 +56,7 @@ class ContractorsController extends Controller
     public function store(Request $request)
     {
         $contractor = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('contractors.edit', [$contractor->id]));
     }
 
@@ -66,7 +69,10 @@ class ContractorsController extends Controller
     public function show(Contractor $contractor)
     {
         $contractor = $this->repository->find($contractor);
-        $cities = City::all();
+
+        $citiesConfig = ['paginate' => false];
+        $cities = CitiesRepositoryInterface::all('', $citiesConfig);
+
         return view('contractors.show')
             ->with('cities', $cities)
             ->with('contractor', $contractor);
@@ -81,7 +87,10 @@ class ContractorsController extends Controller
     public function edit(Contractor $contractor)
     {
         $contractor = $this->repository->find($contractor);
-        $cities = City::all();
+        
+        $citiesConfig = ['paginate' => false];
+        $cities = CitiesRepositoryInterface::all('', $citiesConfig);
+
         return view('contractors.edit')
             ->with('cities', $cities)
             ->with('contractor', $contractor);
@@ -97,6 +106,7 @@ class ContractorsController extends Controller
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
+        $request->session()->flash('success', __('Record updated successfully'));
         return redirect( route('contractors.edit', [$id]) );
     }
 
@@ -108,7 +118,13 @@ class ContractorsController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
-        return redirect(route('contractors'));
+        if ( $this->repository->canDelete($id) ) {
+            $this->repository->delete($id);
+            $request->session()->flash('success', __('Record deleted successfully'));
+            return redirect(route('contractors'));
+        }
+
+        $request->session()->flash('error', __("This record can't be deleted"));
+        return redirect()->back();
     }
 }

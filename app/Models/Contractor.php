@@ -20,9 +20,6 @@ class Contractor extends Model {
         'email',
         'address'
     ];
-    protected $guarded = [
-        'city_id'
-    ];
 
     public function city() {
         return $this->belongsTo('App\Models\City');
@@ -31,21 +28,5 @@ class Contractor extends Model {
     public function services() {
         return $this->hasMany('App\Models\ContractorService');
     }
-
-    public static $saveValidation = [
-        'city_id'      => 'required',
-        'company'      => 'required',
-        'contact_name' => 'required',
-        'phone'        => 'required',
-        'email'        => 'required',
-    ];
-
-    public static $updateValidation = [
-        'city_id'      => 'required',
-        'company'      => 'required',
-        'contact_name' => 'required',
-        'phone'        => 'required',
-        'email'        => 'required',
-    ];
-
+    
 }

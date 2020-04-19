@@ -25,7 +25,7 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
         if ($search) {
             $query = CleaningOptionTranslation::where('name', 'like', "%".$search."%");
         } else {
-            $query = CleaningOptionTranslation::query();;
+            $query = CleaningOptionTranslation::query();
         }
 
         return $query

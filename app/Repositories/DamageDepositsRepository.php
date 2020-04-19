@@ -25,7 +25,7 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
         if ($search) {
             $query = DamageDepositTranslation::where('description', 'like', "%".$search."%");
         } else {
-            $query = DamageDepositTranslation::query();;
+            $query = DamageDepositTranslation::query();
         }
 
         return $query

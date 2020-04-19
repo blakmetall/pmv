@@ -26,7 +26,7 @@ class TransactionTypesRepository implements TransactionTypesRepositoryInterface
             $query = 
                 TransactionTypeTranslation::where('name', 'like', "%".$search."%");
         } else {
-            $query = TransactionTypeTranslation::query();;
+            $query = TransactionTypeTranslation::query();
         }
 
         return $query

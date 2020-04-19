@@ -27,7 +27,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
                 AmenityTranslation::where('name', 'like', "%".$search."%")
                     ->orWhere('amenity_id', $search);
         } else {
-            $query = AmenityTranslation::query();;
+            $query = AmenityTranslation::query();
         }
 
         return $query
