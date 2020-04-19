@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
+use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
 use App\Models\{Profile, User};
 use App\Helpers\UserHelper;
 

@@ -47,7 +47,7 @@
                                 <td>
                                     @foreach (RoleHelper::available($row->id) as $role)
                                         <div>
-                                            <span class="badge badge-secondary p-1">
+                                            <span class="badge badge-secondary p-1 mb-1">
                                                 {{ $role['name'] }}
                                             </span>
                                         </div>
