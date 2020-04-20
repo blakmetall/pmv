@@ -9,7 +9,35 @@
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif 
 
+        <!-- name -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Property'),
+            'name' => 'name',
+            'lang' => $lang,
+            'required' => true,
+            'value' => $row->{$lang}->name
+        ])
 
+        <!-- description -->
+        @include('components.form.textarea', [
+            'group' => 'property',
+            'label' => __('Description'),
+            'name' => 'description',
+            'lang' => $lang,
+            'required' => true,
+            'value' => $row->{$lang}->description,
+        ])
+
+        <!-- cancellation_policies -->
+        @include('components.form.textarea', [
+            'group' => 'property',
+            'label' => __('Cancellation Policies'),
+            'name' => 'cancellation_policies',
+            'lang' => $lang,
+            'required' => true,
+            'value' => $row->{$lang}->cancellation_policies,
+        ])
     </div>
 </div>
 

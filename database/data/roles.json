@@ -128,5 +128,31 @@
         "name": "Concierge"
       }
     ]
+  },
+  {
+    "id": 11,
+    "translations": [
+      {
+        "language_id": 1,
+        "name": "Owner"
+      },
+      {
+        "language_id": 2,
+        "name": "Propietario"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "translations": [
+      {
+        "language_id": 1,
+        "name": "Regular"
+      },
+      {
+        "language_id": 2,
+        "name": "Regular"
+      }
+    ]
   }
 ]

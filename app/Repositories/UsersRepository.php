@@ -6,7 +6,7 @@ use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
-use App\Models\{ Profile, User };
+use App\Models\{ Profile, Role, User };
 use App\Validations\UsersValidations;
 
 class UsersRepository implements UsersRepositoryInterface
@@ -21,6 +21,7 @@ class UsersRepository implements UsersRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $ownersOnly = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
         
         if ($search) {
             $query = User::
@@ -36,6 +37,13 @@ class UsersRepository implements UsersRepositoryInterface
                 });
         } else {
             $query = User::query();
+        }
+
+        if ($ownersOnly) {
+            $query->whereHas('roles', function($q) {
+                $table = (new Role)->_getTable();
+                $q->whereIn($table.'.id', [config('constants.roles.owner')]);
+            });
         }
 
         $query

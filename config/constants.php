@@ -12,7 +12,9 @@ return [
         'operations-assistant' => 7,
         'accounting' => 8,
         'administrative-assistant' => 9,
-        'concierge' => 10
+        'concierge' => 10,
+        'owner' => 11,
+        'regular' => 12,
     ],
 
     'pagination' => [
