@@ -3,12 +3,13 @@
 @endphp
 
 <div class="card">
-    <div class="card-body app-form-fields-container">
+    <div class="card-body">
 
         @if ($label)
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif 
-        
+
+
     </div>
 </div>
 

@@ -11,6 +11,9 @@ class PropertyTranslation extends Model {
 
     protected $table = 'properties_translations';
     public $timestamps = false;
+    protected $fillable = [
+
+    ];
 
     public function language() {
         return $this->belongsTo('App\Models\Language');

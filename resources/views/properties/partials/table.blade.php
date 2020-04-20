@@ -12,7 +12,13 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Name') }}</th>
+                        <th scope="col">{{ __('Property') }}</th>
+                        <th scope="col">{{ __('Owner') }}</th>
+                        <th scope="col">{{ __('Enabled') }}</th>
+                        <th scope="col">{{ __('Online') }}</th>
+                        <th scope="col">{{ __('Featured') }}</th>
+                        <th scope="col">{{ __('Featured') }}</th>
+                        <th scope="col">{{ __('Property Management') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -24,24 +30,45 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    {{ $row->property->id }}
+                                    ....
                                 </th>
 
-                                <!-- name -->
-                                <td>{{ $row->name }}</td>
+                                <td>
+                                    ...
+                                </td>
+
+                                <td>
+                                    ...
+                                </td>
+
+                                <td>
+                                    ...
+                                </td>
+
+                                <td>
+                                    ...
+                                </td>
+
+                                <td>
+                                    ...
+                                </td>
+
+                                <td>
+                                    ...
+                                </td>
+
+                                <td>
+                                    ...
+                                </td>
 
                                 <!-- actions -->
                                 <td>
-                                    <a href="{{ route('properties.show', [$row->property->id]) }}" class="text-primary mr-2">
-                                        <i class="nav-icon i-Eye font-weight-bold"></i>
-                                    </a>
-                                    <a href="{{ route('properties.edit', [$row->property->id]) }}" class="text-success mr-2">
-                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </a>
-                                    <a href="{{ route('properties.destroy', [$row->property->id]) }}" class="text-danger mr-2">
-                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                    </a>
-                                    
+                                    @include('components.table.actions', [
+                                        'params' => [$row->property->id],
+                                        'showRoute' => 'properties.show',
+                                        'editRoute' => 'properties.edit',
+                                        'deleteRoute' => 'properties.destroy',
+                                    ])
                                 </td>
 
                             </tr>

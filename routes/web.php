@@ -84,8 +84,8 @@ Route::group(['middleware' => ['web']], function () {
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {
             Route::get('', 'PropertiesController@index')->name('properties');
-            Route::post('store', 'PropertiesController@store')->name('properties.store');
             Route::get('create', 'PropertiesController@create')->name('properties.create');
+            Route::post('store', 'PropertiesController@store')->name('properties.store');
             Route::get('show/{property}', 'PropertiesController@show')->name('properties.show');
             Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
             Route::post('update/{id}', 'PropertiesController@update')->name('properties.update');

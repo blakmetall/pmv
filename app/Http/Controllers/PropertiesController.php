@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Helpers\LanguageHelper;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Models\Property;
 
-class DamageDepositsController extends Controller
+class PropertiesController extends Controller
 {
     private $repository;
 
