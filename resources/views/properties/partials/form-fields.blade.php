@@ -41,8 +41,8 @@
             'required' => true,
             'value' => $row->zone_id,
             'options' => $zones,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'id',
+            'optionValueRef' => 'zone_id',
+            'optionLabelRef' => 'name',
         ])
 
         <!-- cleaning_option_id -->
@@ -53,8 +53,8 @@
             'required' => true,
             'value' => $row->cleaning_option_id,
             'options' => $cleaningOptions,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'id',
+            'optionValueRef' => 'cleaning_option_id',
+            'optionLabelRef' => 'name',
         ])
 
         <!-- property_type_id -->
@@ -65,8 +65,8 @@
             'required' => true,
             'value' => $row->property_type_id,
             'options' => $propertyTypes,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'id',
+            'optionValueRef' => 'property_type_id',
+            'optionLabelRef' => 'name',
         ])
 
         <!-- bedrooms -->
