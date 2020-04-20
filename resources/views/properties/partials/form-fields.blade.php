@@ -18,7 +18,7 @@
             'value' => $row->user_id,
             'options' => $users,
             'optionValueRef' => 'id',
-            'optionLabelRef' => 'email',
+            'optionLabelRef' => 'profile,full_name',
         ])
 
         <!-- city_id -->

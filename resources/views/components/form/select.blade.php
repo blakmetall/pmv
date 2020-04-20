@@ -9,8 +9,11 @@
     $value = isset($value) ? $value : '';
 
     $options = isset($options) && count($options) ? $options : [];
-    $optionLabelRef = isset($optionLabelRef) ? $optionLabelRef : '';
     $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
+
+    $optionLabelRef = isset($optionLabelRef) ? $optionLabelRef : '';
+    $optionLabelDepth = explode(',', $optionLabelRef);
+    $hasLabelDepth = count($optionLabelDepth) == 2;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -42,11 +45,17 @@
 
             @foreach($options as $option)
                 @php 
+                    if( $hasLabelDepth ) {
+                        $optionLabel = $option->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                    } else {
+                        $optionLabel = $option->{$optionLabelRef};
+                    }
+
                     $selected = old($requestName, $value) == $option->{$optionValueRef} ? 'selected' : '';
                 @endphp
 
                 <option value="{{ $option->{$optionValueRef} }}" {{ $selected }}>
-                    {{ $option->{$optionLabelRef} }}
+                    {{ $optionLabel }}
                 </option>
             @endforeach
 

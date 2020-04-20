@@ -28,4 +28,10 @@ class Profile extends Model {
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
+
+    // mutator: full_name 
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 }
