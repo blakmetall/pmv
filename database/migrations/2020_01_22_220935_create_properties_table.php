@@ -42,6 +42,7 @@ class CreatePropertiesTable extends Migration
             $table->text('address')->nullable();
             $table->string('gmaps_lat', 30)->nullable();
             $table->string('gmaps_lon', 30)->nullable();
+            $table->tinyInteger('register_completed')->nullable();
             $table->timestamps();
         });
     }
