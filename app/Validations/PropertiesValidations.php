@@ -21,7 +21,26 @@ class PropertiesValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            
+            'en.name' => 'required',
+            'en.description' => 'required',
+            'en.cancellation_policies' => 'required',
+            'es.name' => 'required',
+            'es.description' => 'required',
+            'es.cancellation_policies' => 'required',
+
+            'user_id' => 'required',
+            'city_id' => 'required',
+            'zone_id' => 'required',
+            'property_type_id' => 'required',
+            'cleaning_option_id' => 'required',
+            'rental_commission' => 'nullable|numeric|between:0,100',
+            'maid_fee' => 'nullable|numeric',
+            'bedrooms' => 'required|numeric',
+            'baths' => 'required|numeric',
+            'sleeps' => 'nullable|integer',
+            'floors' => 'nullable|integer',
+            'lot_size_sqft' => 'nullable|numeric',
+            'construction_size_sqft' => 'nullable|numeric',
         ];
 
         return $defaultValidations;

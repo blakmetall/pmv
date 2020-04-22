@@ -24,7 +24,7 @@ class ProfileValidations
             'city' => 'required',
             'street' => 'required',
             'zip' => 'required|numeric',
-            'config_agent_commission' => 'nullable|integer|between:0,100',
+            'config_agent_commission' => 'nullable|numeric|between:0,100',
         ];
 
         return $defaultValidations;

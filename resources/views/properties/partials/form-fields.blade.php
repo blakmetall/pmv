@@ -7,7 +7,7 @@
 
         @if ($label)
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
-        @endif 
+        @endif
 
         <!-- user_id -->
         @include('components.form.select', [
@@ -45,22 +45,10 @@
             'optionLabelRef' => 'name',
         ])
 
-        <!-- cleaning_option_id -->
-        @include('components.form.select', [
-            'group' => 'property',
-            'label' => __('Cleaning Option'),
-            'name' => 'cleaning_option_id',
-            'required' => true,
-            'value' => $row->cleaning_option_id,
-            'options' => $cleaningOptions,
-            'optionValueRef' => 'cleaning_option_id',
-            'optionLabelRef' => 'name',
-        ])
-
         <!-- property_type_id -->
         @include('components.form.select', [
             'group' => 'property',
-            'label' => __('Type'),
+            'label' => __('Property Type'),
             'name' => 'property_type_id',
             'required' => true,
             'value' => $row->property_type_id,
@@ -102,31 +90,13 @@
             'name' => 'floors',
             'value' => $row->floors
         ])
-        
+
         <!-- building -->
         @include('components.form.input', [
             'group' => 'property',
             'label' => __('Building'),
             'name' => 'building',
             'value' => $row->building
-        ])
-
-        <!-- rental_commission -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Rental Commission'),
-            'name' => 'rental_commission',
-            'required' => true,
-            'value' => $row->rental_commission
-        ])
-
-        <!-- maid_fee -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Maid Fee'),
-            'name' => 'maid_fee',
-            'required' => true,
-            'value' => $row->maid_fee
         ])
 
         <!-- lot_size_sqft -->
@@ -160,6 +130,14 @@
             'name' => 'address',
             'required' => true,
             'value' => $row->address,
+        ])
+
+        <!-- rental_commission -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Rental Commision'),
+            'name' => 'rental_commission',
+            'value' => $row->rental_commission
         ])
 
         <!-- has_parking -->
@@ -196,6 +174,27 @@
             'name' => 'is_online',
             'value' => 1,
             'default' => $row->is_online,
+        ])
+
+        <!-- cleaning_option_id -->
+        @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('Cleaning Option'),
+            'name' => 'cleaning_option_id',
+            'required' => true,
+            'value' => $row->cleaning_option_id,
+            'options' => $cleaningOptions,
+            'optionValueRef' => 'cleaning_option_id',
+            'optionLabelRef' => 'name',
+        ])
+
+        <!-- maid_fee -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Maid Fee'),
+            'name' => 'maid_fee',
+            'required' => true,
+            'value' => $row->maid_fee
         ])
 
     </div>
