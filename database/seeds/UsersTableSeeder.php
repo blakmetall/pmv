@@ -43,6 +43,7 @@ class UsersTableSeeder extends Seeder
                     'zip' => $obj->profile->zip,
                     'phone' => $obj->profile->phone,
                     'mobile' => $obj->profile->mobile,
+                    'config_role_id' => $obj->profile->config_role_id,
                     'config_language' => $obj->profile->config_language,
                     'created_at' => '2020-01-01 00:00:00',
                     'updated_at' => '2020-01-01 00:00:00'
