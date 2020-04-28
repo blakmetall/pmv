@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
 use App\Models\{Profile, User};
-use App\Helpers\UserHelper;
 
 class UsersController extends Controller
 {
@@ -90,7 +89,7 @@ class UsersController extends Controller
      */
     public function edit(Request $request, User $user)
     {
-        if ($user->id == 1 && !UserHelper::isSuper()) {
+        if ($user->id == 1 && !auth()->user()->isSuper()) {
             $request->session()->flash('error', __("We're sorry, you don't have permissions to this section."));
             return redirect()->back();
         }

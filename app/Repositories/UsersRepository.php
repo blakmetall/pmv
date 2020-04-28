@@ -103,6 +103,12 @@ class UsersRepository implements UsersRepositoryInterface
                     $roles_to_assign[] = $role_id;
                 }
             }
+
+            // attach super admin role when super admin edits himself
+            if ($user->id == 1) {   
+                $roles_to_assign[] = 1;
+            }
+
             $user->roles()->sync($roles_to_assign);
         }
 
