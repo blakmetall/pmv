@@ -13,11 +13,11 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Owner') }}</th>
+                        <th scope="col">{{ __('Bedrooms') }}</th>
+                        <th scope="col">{{ __('Baths') }}</th>
                         <th scope="col">{{ __('Enabled') }}</th>
                         <th scope="col">{{ __('Online') }}</th>
-                        <th scope="col">{{ __('Featured') }}</th>
-                        <th scope="col">{{ __('Featured') }}</th>
+                        <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">{{ __('Property Management') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
@@ -30,35 +30,39 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    ....
+                                    {{ $row->id }}
                                 </th>
 
                                 <td>
-                                    ...
+                                    {{ $row->name }}
                                 </td>
 
                                 <td>
-                                    ...
+                                    {{ $row->property->bedrooms }}
                                 </td>
 
                                 <td>
-                                    ...
+                                    {{ $row->property->baths }}
                                 </td>
 
                                 <td>
-                                    ...
+                                    {!! getStatusIcon($row->property->is_enabled) !!}
                                 </td>
 
                                 <td>
-                                    ...
+                                    {!! getStatusIcon($row->property->is_online) !!}
                                 </td>
 
                                 <td>
-                                    ...
+                                    @if ($row->property->user)
+                                        {{ $row->property->user->profile->full_name }}
+                                    @endif
                                 </td>
 
                                 <td>
-                                    ...
+                                    <a href="#to-property-management-with-id" class="text-primary">
+                                        <b>{{ __('PM') }}</b>
+                                    </a>
                                 </td>
 
                                 <!-- actions -->

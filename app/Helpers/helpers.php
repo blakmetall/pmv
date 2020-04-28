@@ -82,3 +82,14 @@ if (!function_exists('priceFormat')) {
         return '$' . number_format($price, $decimals);
     }
 }
+
+if (!function_exists('getStatusIcon')) {
+    function getStatusIcon($isEnabled = false)
+    {
+        if($isEnabled) {
+            return '<i class="nav-icon i-Yes font-weight-bold text-success"></i>';
+        }
+
+        return '<i class="nav-icon i-Close font-weight-bold text-danger"></i>';
+    }
+}

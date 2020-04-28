@@ -36,11 +36,7 @@
 
                                 <!-- is_refundable -->
                                 <td>
-                                    @if($row->damageDeposit->is_refundable)
-                                        <i class="nav-icon i-Yes font-weight-bold text-success"></i>
-                                    @else 
-                                        <i class="nav-icon i-Close font-weight-bold text-danger"></i>
-                                    @endif
+                                    {!! getStatusIcon($row->damageDeposit->is_refundable) !!}
                                 </td>
 
                                 <!-- description -->
