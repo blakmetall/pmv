@@ -18,9 +18,6 @@
         <!-- css before theme -->
         @yield('before-css')
 
-        {{-- smart wizard --}}
-        <link rel="stylesheet" href="{{asset('assets/styles/vendor/smart.wizard/smart_wizard.min.css')}}">
-
         {{-- theme css --}}
         <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/styles/vendor/perfect-scrollbar.css') }}">
@@ -86,9 +83,6 @@
 
         {{-- page specific javascript --}}
         @yield('page-js')
-
-        {{-- smart wizard --}}
-        <script src="{{asset('assets/js/vendor/jquery.smartWizard.min.js')}}"></script>
 
         {{-- theme javascript --}}
         <script src="{{asset('assets/js/script.js')}}"></script>
