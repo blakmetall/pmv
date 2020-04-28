@@ -128,6 +128,8 @@ class PropertiesController extends Controller
      */
     public function edit(Property $property)
     {
+        $property = $this->repository->find($property);
+        
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
         

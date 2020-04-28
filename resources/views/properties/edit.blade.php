@@ -26,7 +26,7 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="{{ route('properties.update', [$property->id]) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('properties.update', [$property->id]) }}" method="post">
             @csrf
 
             @include('properties.partials.form', [
