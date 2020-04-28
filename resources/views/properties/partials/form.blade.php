@@ -2,7 +2,13 @@
     $disabled = (isset($disabled) && $disabled === true) ? "disabled='disabled'" : '';
 @endphp
 
+@include('partials.properties-stepper', [
+    'renderStepper' => !$row->register_completed,
+    'activeStep' => 1
+])
+
 @include('partials.form-error-alert')
+
 
 <fieldset {{ $disabled }}>
 
