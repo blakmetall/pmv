@@ -85,6 +85,13 @@
   top: 6px;
 }
 
+.form-actions .btn-outline-secondary:hover,
+.form-actions .btn-outline-secondary:focus,
+.form-actions .btn-outline-secondary:active {
+  background: inherit;
+  color: inherit;
+}
+
 @media (max-width: 767px) {
   .app-heading-buttons {
     padding-top: 10px;

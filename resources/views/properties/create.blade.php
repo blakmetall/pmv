@@ -15,6 +15,11 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
+    @include('partials.properties-stepper', [
+        'renderStepper' => true,
+        'activeStep' => 1
+    ])
+
 @endsection
 
 @section('main-content')

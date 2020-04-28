@@ -6,7 +6,7 @@
     $delete_route = isset($delete_route) ? $delete_route : '';
 @endphp
 
-<div class="card">
+<div class="card form-actions">
     <div class="card-footer bg-transparent">
         <div class="mc-footer">
             <div class="row">
