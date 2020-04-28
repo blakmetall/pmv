@@ -12,7 +12,27 @@ class Property extends Model {
     protected $table = 'properties';
     public $timestamps = true;
     protected $fillable = [
-        
+        'user_id',
+        'city_id',
+        'zone_id',
+        'property_type_id',
+        'cleaning_option_id',
+        'is_featured',
+        'is_enabled',
+        'is_online',
+        'building',
+        'rental_commission',
+        'maid_fee',
+        'bedrooms',
+        'bedding_JSON',
+        'baths',
+        'sleeps',
+        'floors',
+        'has_parking',
+        'lot_size_sqft',
+        'construction_size_sqft',
+        'phone',
+        'address'
     ];
 
     public $en;

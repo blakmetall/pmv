@@ -12,7 +12,9 @@ class PropertyTranslation extends Model {
     protected $table = 'properties_translations';
     public $timestamps = false;
     protected $fillable = [
-
+        'name',
+        'description',
+        'cancellation_policies'
     ];
 
     public function language() {

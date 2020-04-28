@@ -60,15 +60,20 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $is_new = ! $id;
 
-        // $checkboxesConfig = ['is_refundable' => 0];
-        $checkboxesConfig = [];
+        $checkboxesConfig = [
+            'is_featured' => 0,
+            'is_enabled' => 0,
+            'is_online' => 0,
+            'has_parking' => 0,
+        ];
         $requestData = array_merge($checkboxesConfig, $request->all());
 
+        
         if ($is_new) {
             $property = $this->blueprint();
             $property->fill($requestData);
             $property->save();
-            
+
             $property->en->language_id = LanguageHelper::getId('en');
             $property->en->property_id = $property->id;
             
