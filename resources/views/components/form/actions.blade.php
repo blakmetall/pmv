@@ -4,6 +4,16 @@
     $edit_route = isset($edit_route) ? $edit_route : '';
     $cancel_route = isset($cancel_route) ? $cancel_route : '';
     $delete_route = isset($delete_route) ? $delete_route : '';
+    $routeParams = isset($routeParams) && is_array($routeParams) ? $routeParams : [];
+
+    if($disabled && $id) {
+        $routeParams[] = $id;
+    }
+
+    if($id && $delete_route) {
+        $routeParams[] = $id;
+    }
+
 @endphp
 
 <div class="card form-actions">
@@ -14,7 +24,7 @@
 
                     @if ($disabled && $id) 
                         <a 
-                            href="{{ route($edit_route, [$id]) }}" 
+                            href="{{ route($edit_route, $routeParams) }}" 
                             class="btn btn-outline-secondary m-1" 
                             role="button">
                                 {{  __('Edit') }}
@@ -31,7 +41,7 @@
                         </button>
 
                         @if ($cancel_route)
-                            <a href="{{ route($cancel_route) }}" class="btn btn-outline-secondary m-1" role="button">
+                            <a href="{{ route($cancel_route, $routeParams) }}" class="btn btn-outline-secondary m-1" role="button">
                                 {{  __('Cancel') }}
                             </a>
                         @endif
@@ -40,7 +50,7 @@
                     <!-- if editing might be a chance to delete -->
                     @if( $id && $delete_route)
                         <a 
-                            href="{{ route($delete_route, [$id]) }}" 
+                            href="{{ route($delete_route, $routeParams) }}" 
                             class="btn btn-danger m-1 footer-delete-right" 
                             role="button">
                                 {{ __('Delete') }}
