@@ -7,6 +7,8 @@
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
+    $isTranslatable = isset($translatable) ? (bool) $translatable : false;
+    $disableDefaultOption = isset($disableDefaultOption) ? (bool) $disableDefaultOption : false;
 
     $options = isset($options) && count($options) ? $options : [];
     $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
@@ -14,6 +16,7 @@
     $optionLabelRef = isset($optionLabelRef) ? $optionLabelRef : '';
     $optionLabelDepth = explode(',', $optionLabelRef);
     $hasLabelDepth = count($optionLabelDepth) == 2;
+
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -41,14 +44,34 @@
             id="{{ $id }}"
             {{ $disabledProp }} >
 
-            <option value="">{{ __('Select') }}</option>
+            @if (!$disableDefaultOption)
+                <option value="">{{ __('Select') }}</option>
+            @endif
 
             @foreach($options as $option)
                 @php 
+                    $optionLabel = '';
+
                     if( $hasLabelDepth ) {
-                        $optionLabel = $option->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                        if ($isTranslatable) {
+                            if ($option->{$optionLabelDepth[0]}->hasTranslation()) {
+                                $optionLabel = 
+                                    $option
+                                        ->{$optionLabelDepth[0]}
+                                        ->translate()
+                                        ->{$optionLabelDepth[1]};
+                            }
+                        } else {
+                            $optionLabel = $option->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                        }
                     } else {
-                        $optionLabel = $option->{$optionLabelRef};
+                        if ($isTranslatable) {
+                            if ($option->hasTranslation()) {
+                                $optionLabel = $option->translate()->{$optionLabelRef};
+                            }
+                        } else {
+                            $optionLabel = $option->{$optionLabelRef};
+                        }
                     }
 
                     $selected = old($requestName, $value) == $option->{$optionValueRef} ? 'selected' : '';
