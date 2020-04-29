@@ -8,7 +8,8 @@
             'label' => __('Email'),
             'name' => 'email',
             'required' => true,
-            'value' => $row->email
+            'value' => $row->email,
+            'type' => 'email',
         ])
 
         <!-- password -->

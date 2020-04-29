@@ -55,7 +55,9 @@
 
                                 <td>
                                     @if ($row->property->user)
-                                        {{ $row->property->user->profile->full_name }}
+                                        <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                            {{ $row->property->user->profile->full_name }}
+                                        </a>
                                     @endif
                                 </td>
 

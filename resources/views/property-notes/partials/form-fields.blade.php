@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
 
-        <!-- city_id -->
+        <!-- property_id -->
         @include('components.form.select', [
             'group' => 'property-note',
             'label' => __('Property'),

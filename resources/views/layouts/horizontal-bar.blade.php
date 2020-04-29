@@ -377,7 +377,7 @@
 
                                         @if ($_current_role->isAllowed('settings', 'damage-deposits'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('damage-deposits') }}">
                                                     <span class="item-name">{{ __('Damage Deposits') }}</span>
                                                 </a>
                                             </li>

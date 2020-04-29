@@ -12,8 +12,8 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Description') }}</th>
+                        <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -28,15 +28,17 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- company -->
-                                <td>
-                                    @if ($row->property->hasTranslation())
-                                        {{ $row->property->translate()->name }}
-                                    @endif
-                                </td>
-
                                 <!-- description -->
                                 <td>{{ $row->description }}</td>
+
+                                <!-- property -->
+                                <td>
+                                    @if ($row->property->hasTranslation())
+                                        <a href="{{ route('properties.show', [$row->property->id]) }}">
+                                            {{ $row->property->translate()->name }}
+                                        </a>
+                                    @endif
+                                </td>
 
                                 <!-- actions -->
                                 <td>
