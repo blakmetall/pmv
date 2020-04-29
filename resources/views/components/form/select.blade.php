@@ -9,6 +9,7 @@
     $value = isset($value) ? $value : '';
     $isTranslatable = isset($translatable) ? (bool) $translatable : false;
     $disableDefaultOption = isset($disableDefaultOption) ? (bool) $disableDefaultOption : false;
+    $hidden = isset($hidden) ? (bool) $hidden : false;
 
     $options = isset($options) && count($options) ? $options : [];
     $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
@@ -24,6 +25,7 @@
     $inputName = prepareFormInputName($name, $parentName, $lang);
 
     $disabledProp = ($disabled) ? 'disabled' : '';
+    $hiddenStyle = ($hidden) ? 'display: none;' : '';
 
 @endphp
 
@@ -42,6 +44,7 @@
             name="{{ $inputName }}" 
             class="form-control" 
             id="{{ $id }}"
+            style="{{ $hiddenStyle }}"
             {{ $disabledProp }} >
 
             @if (!$disableDefaultOption)

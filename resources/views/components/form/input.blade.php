@@ -7,6 +7,7 @@
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
+    $hidden = isset($hidden) ? (bool) $hidden : false;
 
     $validTypes = ['text', 'email', 'password'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
@@ -17,6 +18,7 @@
     $inputName = prepareFormInputName($name, $parentName, $lang);
     
     $disabledProp = ($disabled) ? 'disabled' : '';
+    $hiddenStyle = ($hidden) ? 'display: none;' : '';
     
 @endphp
 
@@ -37,6 +39,7 @@
             name="{{ $inputName }}"
             class="form-control" 
             id="{{ $id }}"
+            style="{{ $hiddenStyle }}"
             {{ $disabledProp }}
         />
 

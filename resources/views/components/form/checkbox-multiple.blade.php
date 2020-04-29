@@ -7,6 +7,7 @@
     $disabled = isset($disabled) ? $disabled : false;
     $values = isset($values) ? $values : '';
     $default = isset($default) && is_array($default) ? $default : [];
+    $hidden = isset($hidden) ? (bool) $hidden : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -14,7 +15,8 @@
     $inputName = prepareFormInputName($name, $parentName, $lang);
     
     $disabledProp = ($disabled) ? 'disabled' : '';
-    
+    $hiddenStyle = ($hidden) ? 'display: none;' : '';
+
 @endphp
 
 <!-- name -->
@@ -39,6 +41,7 @@
                     value="{{ $item['value'] }}"
                     name="{{ $inputName }}[]"
                     id="{{ $id . '_' . $key }}"
+                    style="{{ $hiddenStyle }}"
                     {{ $checkedProp }}
                     {{ $disabledProp }}
                 />

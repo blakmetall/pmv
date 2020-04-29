@@ -7,6 +7,7 @@
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
     $default = isset($default) ? $default : '';
+    $hidden = isset($hidden) ? (bool) $hidden : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -14,8 +15,8 @@
     $inputName = prepareFormInputName($name, $parentName, $lang);
     
     $checkedProp = old($requestName, $default) ? 'checked' : '';
-    
     $disabledProp = ($disabled) ? 'disabled' : '';
+    $hiddenStyle = ($hidden) ? 'display: none;' : '';
     
 @endphp
 
@@ -32,6 +33,7 @@
                 value="{{ $value }}"
                 name="{{ $inputName }}"
                 id="{{ $id }}"
+                style="{{ $hiddenStyle }}"
                 {{ $checkedProp }}
                 {{ $disabledProp }}
             />

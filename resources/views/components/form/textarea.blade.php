@@ -9,15 +9,16 @@
     $value = isset($value) ? $value : '';
     $rows = isset($rows) && is_numeric($rows) ? (int) $rows : 3;
     $resize = isset($resize) ? $resize : false;
+    $hidden = isset($hidden) ? (bool) $hidden : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);    
     $inputName = prepareFormInputName($name, $parentName, $lang);
 
-    $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
-
     $disabledProp = ($disabled) ? 'disabled' : '';
+    $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
+    $hiddenStyle = ($hidden) ? 'display: none;' : '';
     
 @endphp
 
@@ -37,7 +38,7 @@
             class="form-control" 
             rows="{{ $rows }}"
             id="{{ $id }}"
-            style="{{ $resizeStyle }}"
+            style="{{ $resizeStyle }} {{ $hiddenStyle }}"
             {{ $disabledProp }}
             >{{ old($requestName, $value) }}</textarea>
 
