@@ -153,6 +153,21 @@ Route::group(['middleware' => ['web']], function () {
 
         });
 
+        // property management transactions
+        Route::group(['prefix' => 'property-management'], function () {
+            Route::group(['prefix' => '{pm}'], function () {
+                Route::group(['prefix' => 'transactions'], function () {
+                    Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
+                    Route::get('create', 'PropertyManagementTransactionsController@create')->name('property-management-transactions.create');
+                    Route::post('store', 'PropertyManagementTransactionsController@store')->name('property-management-transactions.store');
+                    Route::get('show/{transaction}', 'PropertyManagementTransactionsController@show')->name('property-management-transactions.show');
+                    Route::get('edit/{transaction}', 'PropertyManagementTransactionsController@edit')->name('property-management-transactions.edit');
+                    Route::post('update/{id}', 'PropertyManagementTransactionsController@update')->name('property-management-transactions.update');
+                    Route::get('destroy/{id}', 'PropertyManagementTransactionsController@destroy')->name('property-management-transactions.destroy');
+                });
+            });
+        });
+
         // settings
         Route::group(['prefix' => 'settings'], function() {
 
