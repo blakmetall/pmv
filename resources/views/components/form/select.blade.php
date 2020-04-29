@@ -29,7 +29,7 @@
 
 @endphp
 
-<div class="form-group row">   
+<div class="form-group row" style="{{ $hiddenStyle }}">   
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
 
@@ -44,7 +44,6 @@
             name="{{ $inputName }}" 
             class="form-control" 
             id="{{ $id }}"
-            style="{{ $hiddenStyle }}"
             {{ $disabledProp }} >
 
             @if (!$disableDefaultOption)

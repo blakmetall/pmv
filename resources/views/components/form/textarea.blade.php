@@ -23,7 +23,7 @@
 @endphp
 
 
-<div class="form-group row">
+<div class="form-group row" style="{{ $hiddenStyle }}">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
 
@@ -38,7 +38,7 @@
             class="form-control" 
             rows="{{ $rows }}"
             id="{{ $id }}"
-            style="{{ $resizeStyle }} {{ $hiddenStyle }}"
+            style="{{ $resizeStyle }}"
             {{ $disabledProp }}
             >{{ old($requestName, $value) }}</textarea>
 

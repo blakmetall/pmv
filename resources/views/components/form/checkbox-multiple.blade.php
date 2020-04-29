@@ -20,7 +20,7 @@
 @endphp
 
 <!-- name -->
-<div class="form-group row">
+<div class="form-group row" style="{{ $hiddenStyle }}">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
     </label>
@@ -41,7 +41,6 @@
                     value="{{ $item['value'] }}"
                     name="{{ $inputName }}[]"
                     id="{{ $id . '_' . $key }}"
-                    style="{{ $hiddenStyle }}"
                     {{ $checkedProp }}
                     {{ $disabledProp }}
                 />
