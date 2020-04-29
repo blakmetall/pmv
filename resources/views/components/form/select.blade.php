@@ -64,7 +64,20 @@
                                         ->{$optionLabelDepth[1]};
                             }
                         } else {
-                            $optionLabel = $option->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                            $parts = explode(':', $optionLabelDepth[0]);
+                            $isRelatedTranslatable = isset($parts[1]) && $parts[1] == 'translate' ? true : false;
+
+                            if ($isRelatedTranslatable) {
+                                if ($option->{$parts[0]}->hasTranslation()) {
+                                    $optionLabel = 
+                                        $option
+                                            ->{$parts[0]}
+                                            ->translate()
+                                            ->{$optionLabelDepth[1]};
+                                }
+                            } else {
+                                $optionLabel = $option->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                            }
                         }
                     } else {
                         if ($isTranslatable) {

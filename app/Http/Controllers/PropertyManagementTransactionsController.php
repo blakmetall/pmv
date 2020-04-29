@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{ PropertyManagement, PropertyManagementTransaction };
-use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Repositories\{
+    PropertyManagementTransactionsRepositoryInterface,
+    TransactionTypesRepositoryInterface
+};
 
 class PropertyManagementTransactionsController extends Controller
 {
     private $repository;
+    private $transactionTypesRepository;
 
-    public function __construct(PropertyManagementTransactionsRepositoryInterface $repository)
-    {
+    public function __construct(
+        PropertyManagementTransactionsRepositoryInterface $repository,
+        TransactionTypesRepositoryInterface $transactionTypesRepository
+    ) {
         $this->repository = $repository;
+        $this->transactionTypesRepository = $transactionTypesRepository;
     }
 
     /**
@@ -39,9 +46,11 @@ class PropertyManagementTransactionsController extends Controller
     public function create(PropertyManagement $pm)
     {
         $transaction = $this->repository->blueprint();
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
 
         return view('property-management-transactions.create')
             ->with('transaction', $transaction)
+            ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
     }
 
@@ -67,9 +76,11 @@ class PropertyManagementTransactionsController extends Controller
     public function show(PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
         $transaction = $this->repository->find($transaction);
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
 
         return view('property-management-transactions.show')
             ->with('transaction', $transaction)
+            ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
     }
 
@@ -81,10 +92,12 @@ class PropertyManagementTransactionsController extends Controller
      */
     public function edit(PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
-        $pm = $this->repository->find($pm);
+        $transaction = $this->repository->find($transaction);
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
 
         return view('property-management-transactions.edit')
             ->with('transaction', $transaction)
+            ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
     }
 
