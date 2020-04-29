@@ -6,11 +6,7 @@
     $delete_route = isset($delete_route) ? $delete_route : '';
     $routeParams = isset($routeParams) && is_array($routeParams) ? $routeParams : [];
 
-    if($disabled && $id) {
-        $routeParams[] = $id;
-    }
-
-    if($id && $delete_route) {
+    if ($id && ($disabled || $delete_route)) {
         $routeParams[] = $id;
     }
 

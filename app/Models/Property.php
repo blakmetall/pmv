@@ -94,5 +94,4 @@ class Property extends Model {
     public function cleaningServices() {
         return $this->hasMany('App\Models\CleaningService');
     }
-
 }

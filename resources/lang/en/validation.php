@@ -163,6 +163,7 @@ return [
         'contact_name' => __('Contact'),
         'contractor_id' => __('Contractor'),
         'country' => __('Country'),
+        'description' => __('Description'),
         'email' => __('Email'),
         'en.cancellation_policies' => __('Cancellation Policies'),
         'en.description' => __('Description'),

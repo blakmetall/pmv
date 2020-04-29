@@ -72,6 +72,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\PropertyNotesRepositoryInterface::class,
+            \App\Repositories\PropertyNotesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\PropertyTypesRepositoryInterface::class,
             \App\Repositories\PropertyTypesRepository::class
         );
