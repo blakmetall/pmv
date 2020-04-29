@@ -90,6 +90,67 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
             Route::post('update/{id}', 'PropertiesController@update')->name('properties.update');
             Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
+
+            // property routes
+            Route::group(['prefix' => '{property}'], function () {
+
+                // property notes
+                Route::group(['prefix' => 'notes'], function () {
+                    Route::get('', 'PropertyNotesController@index')->name('property-notes');
+                    Route::get('create', 'PropertyNotesController@create')->name('property-notes.create');
+                    Route::post('store', 'PropertyNotesController@store')->name('property-notes.store');
+                    Route::get('show/{note}', 'PropertyNotesController@show')->name('property-notes.show');
+                    Route::get('edit/{note}', 'PropertyNotesController@edit')->name('property-notes.edit');
+                    Route::post('update/{id}', 'PropertyNotesController@update')->name('property-notes.update');
+                    Route::get('destroy/{id}', 'PropertyNotesController@destroy')->name('property-notes.destroy');
+                });
+
+                // property contacts
+                Route::group(['prefix' => 'contacts'], function () {
+                    Route::get('', 'PropertyContactsController@index')->name('property-contacts');
+                    Route::get('create', 'PropertyContactsController@create')->name('property-contacts.create');
+                    Route::post('store', 'PropertyContactsController@store')->name('property-contacts.store');
+                    Route::get('show/{contact}', 'PropertyContactsController@show')->name('property-contacts.show');
+                    Route::get('edit/{contact}', 'PropertyContactsController@edit')->name('property-contacts.edit');
+                    Route::post('update/{id}', 'PropertyContactsController@update')->name('property-contacts.update');
+                    Route::get('destroy/{id}', 'PropertyContactsController@destroy')->name('property-contacts.destroy');
+                });
+
+                // property images
+                Route::group(['prefix' => 'images'], function () {
+                    Route::get('', 'PropertyImagesController@index')->name('property-images');
+                    Route::get('create', 'PropertyImagesController@create')->name('property-images.create');
+                    Route::post('store', 'PropertyImagesController@store')->name('property-images.store');
+                    Route::get('show/{image}', 'PropertyImagesController@show')->name('property-images.show');
+                    Route::get('edit/{image}', 'PropertyImagesController@edit')->name('property-images.edit');
+                    Route::post('update/{id}', 'PropertyImagesController@update')->name('property-images.update');
+                    Route::get('destroy/{id}', 'PropertyImagesController@destroy')->name('property-images.destroy');
+                });
+
+                // property management
+                Route::group(['prefix' => 'management'], function () {
+                    Route::get('', 'PropertyManagementController@index')->name('property-management');
+                    Route::get('create', 'PropertyManagementController@create')->name('property-management.create');
+                    Route::post('store', 'PropertyManagementController@store')->name('property-management.store');
+                    Route::get('show/{img}', 'PropertyManagementController@show')->name('property-management.show');
+                    Route::get('edit/{img}', 'PropertyManagementController@edit')->name('property-management.edit');
+                    Route::post('update/{id}', 'PropertyManagementController@update')->name('property-management.update');
+                    Route::get('destroy/{id}', 'PropertyManagementController@destroy')->name('property-management.destroy');
+                });
+
+                // property rates
+                Route::group(['prefix' => 'rates'], function () {
+                    Route::get('', 'PropertyRatesController@index')->name('property-rates');
+                    Route::get('create', 'PropertyRatesController@create')->name('property-rates.create');
+                    Route::post('store', 'PropertyRatesController@store')->name('property-rates.store');
+                    Route::get('show/{rate}', 'PropertyRatesController@show')->name('property-rates.show');
+                    Route::get('edit/{rate}', 'PropertyRatesController@edit')->name('property-rates.edit');
+                    Route::post('update/{id}', 'PropertyRatesController@update')->name('property-rates.update');
+                    Route::get('destroy/{id}', 'PropertyRatesController@destroy')->name('property-rates.destroy');
+                });
+
+            });
+
         });
 
         // settings

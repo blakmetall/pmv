@@ -25,7 +25,14 @@
             }
         }
     }
+}
 
+.table {
+    td {
+        i {
+            font-size: 16px;  
+        }
+    }
 }
 
 /*************************/
@@ -83,6 +90,10 @@
     position: relative;
     display: inline-block;
     top: 7px;
+}
+
+.app-icon-link {
+    margin-right: 7px;
 }
 
 .checkbox .checkmark.app-checkmark, 
