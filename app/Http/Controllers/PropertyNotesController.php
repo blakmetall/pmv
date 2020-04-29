@@ -98,7 +98,7 @@ class PropertyNotesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-notes.edit', [$property, $id]) );
+        return redirect( route('property-notes.edit', [$property->id, $id]) );
     }
 
     /**

@@ -98,7 +98,7 @@ class PropertyContactsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-contacts.edit', [$property, $id]) );
+        return redirect( route('property-contacts.edit', [$property->id, $id]) );
     }
 
     /**

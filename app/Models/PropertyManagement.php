@@ -11,6 +11,12 @@ class PropertyManagement extends Model {
     
     protected $table = 'property_management';
     public $timestamps = true;
+    protected $fillable = [
+        'property_id',
+        'management_fee',
+        'start_date',
+        'end_date',
+    ];
 
     public function transactions() {
         return $this->hasMany('App\Models\PropertyManagementTransaction');
@@ -22,5 +28,10 @@ class PropertyManagement extends Model {
 
     public function property() {
         return $this->belongsTo('App\Models\Property');
+    }
+
+    public static function setFinishedStatusHandler() {
+        self::where('end_date', '<', getCurrentDate())->update(['is_finished' => 1]);
+        self::where('end_date', '>=', getCurrentDate())->update(['is_finished' => 0]);
     }
 }

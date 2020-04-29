@@ -128,12 +128,12 @@ Route::group(['middleware' => ['web']], function () {
                 });
 
                 // property management
-                Route::group(['prefix' => 'management'], function () {
+                Route::group(['prefix' => 'property-management'], function () {
                     Route::get('', 'PropertyManagementController@index')->name('property-management');
                     Route::get('create', 'PropertyManagementController@create')->name('property-management.create');
                     Route::post('store', 'PropertyManagementController@store')->name('property-management.store');
-                    Route::get('show/{img}', 'PropertyManagementController@show')->name('property-management.show');
-                    Route::get('edit/{img}', 'PropertyManagementController@edit')->name('property-management.edit');
+                    Route::get('show/{pm}', 'PropertyManagementController@show')->name('property-management.show');
+                    Route::get('edit/{pm}', 'PropertyManagementController@edit')->name('property-management.edit');
                     Route::post('update/{id}', 'PropertyManagementController@update')->name('property-management.update');
                     Route::get('destroy/{id}', 'PropertyManagementController@destroy')->name('property-management.destroy');
                 });

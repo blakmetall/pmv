@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ PropertyRatesRepositoryInterface };
+use App\Repositories\{ PropertyManagementRepositoryInterface };
 use Illuminate\Http\Request;
-use App\Models\{ Property, PropertyRate };
+use App\Models\{ Property, PropertyManagement };
 
-class PropertyRatesController extends Controller
+class PropertyManagementController extends Controller
 {
     private $repository;
 
-    public function __construct(PropertyRatesRepositoryInterface $repository)
+    public function __construct(PropertyManagementRepositoryInterface $repository)
     {
         $this->repository = $repository;
+        
+        PropertyManagement::setFinishedStatusHandler();
     }
 
     /**
@@ -23,10 +25,10 @@ class PropertyRatesController extends Controller
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-        $rates = $this->repository->all($search);
+        $pm_items = $this->repository->all($search);
 
-        return view('property-rates.index')
-            ->with('rates', $rates)
+        return view('property-management.index')
+            ->with('pm_items', $pm_items)
             ->with('property', $property)
             ->with('search', $search);
     }
@@ -38,9 +40,9 @@ class PropertyRatesController extends Controller
      */
     public function create(Property $property)
     {
-        $rate = $this->repository->blueprint();
-        return view('property-rates.create')
-            ->with('rate', $rate)
+        $pm = $this->repository->blueprint();
+        return view('property-management.create')
+            ->with('pm', $pm)
             ->with('property', $property);
     }
 
@@ -52,9 +54,9 @@ class PropertyRatesController extends Controller
      */
     public function store(Request $request, Property $property)
     {
-        $rate = $this->repository->create($request);
+        $pm = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-rates.edit', [$property->id, $rate->id]));
+        return redirect(route('property-management.edit', [$property->id, $pm->id]));
     }
 
     /**
@@ -63,12 +65,12 @@ class PropertyRatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property, PropertyRate $rate)
+    public function show(Property $property, PropertyManagement $pm)
     {
-        $rate = $this->repository->find($rate);
+        $pm = $this->repository->find($pm);
 
-        return view('property-rates.show')
-            ->with('rate', $rate)
+        return view('property-management.show')
+            ->with('pm', $pm)
             ->with('property', $property);
     }
 
@@ -78,12 +80,12 @@ class PropertyRatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property, PropertyRate $rate)
+    public function edit(Property $property, PropertyManagement $pm)
     {
-        $rate = $this->repository->find($rate);
+        $pm = $this->repository->find($pm);
 
-        return view('property-rates.edit')
-            ->with('rate', $rate)
+        return view('property-management.edit')
+            ->with('pm', $pm)
             ->with('property', $property);
     }
 
@@ -98,7 +100,7 @@ class PropertyRatesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-rates.edit', [$property->id, $id]) );
+        return redirect( route('property-management.edit', [$property->id, $id]) );
     }
 
     /**
@@ -112,7 +114,7 @@ class PropertyRatesController extends Controller
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
-            return redirect(route('property-rates', [$property->id]));
+            return redirect(route('property-management', [$property->id]));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));

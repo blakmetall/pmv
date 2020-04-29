@@ -170,6 +170,7 @@ return [
         'firstname' => __('Firstname'),
         'lastname' => __('Lastname'),
         'maid_fee' => __('Maid Fee'),
+        'management_fee' => __('Fee'),
         'min_stay' => __('Min Stay'),
         'mobile' => __('Mobile'),
         'monthly' => __('Monthly'),
