@@ -194,7 +194,7 @@
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
-                                        @endif;
+                                        @endif
 
                                         @if ($_current_role->isAllowed('cleaning-services', 'staff'))
                                             <li class="nav-item">

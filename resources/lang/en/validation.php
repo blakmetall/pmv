@@ -152,6 +152,7 @@ return [
     */
 
     'attributes' => [
+        'amount' => __('Amount'),
         'base_price' => __('Price'),
         'baths' => __('Baths'),
         'bedrooms' => __('Bedrooms'),
@@ -182,6 +183,9 @@ return [
         'name' => __('Name'),
         'nightly' => __('Nightly'),
         'phone' => __('Phone'),
+        'period_start_date' => __('Period Start Date'),
+        'period_end_date' => __('Period End Date'),
+        'post_date' => __('Post Date'),
         'profile.city' => __('City'),
         'profile.config_agent_commission' => __('Agent Commission'),
         'profile.country' => __('Country'),

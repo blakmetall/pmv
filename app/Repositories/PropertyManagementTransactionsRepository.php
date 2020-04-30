@@ -51,13 +51,13 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function create(Request $request)
     {
-        PropertyManagementTransactionValidations::validateOnCreate($request);
+        PropertyManagementTransactionsValidations::validateOnCreate($request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertyManagementTransactionValidations::validateOnEdit($request, $id);
+        PropertyManagementTransactionsValidations::validateOnEdit($request, $id);
         return $this->save($request, $id);
     }
 

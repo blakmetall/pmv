@@ -27,7 +27,7 @@ class PropertyManagementTransaction extends Model {
     }
 
     public function type() {
-        return $this->hasOne('App\Models\TransactionType');
+        return $this->belongsTo('App\Models\TransactionType', 'transaction_type_id');
     }
 
     public function auditedBy() {

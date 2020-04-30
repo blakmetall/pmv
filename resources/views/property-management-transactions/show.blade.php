@@ -28,7 +28,7 @@
     <div class="container app-container-sm">
         <form action="" onsubmit="return false;" method="post">
             @include('property-management-transactions.partials.form', [
-                'row' => $pm,
+                'row' => $transaction,
                 'disabled' => true
             ])        
         </div>

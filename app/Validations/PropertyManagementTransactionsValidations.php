@@ -22,8 +22,6 @@ class PropertyManagementTransactionsValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            'property_management_id' => 'required',
-            'transaction_type_id' => 'required',
             'period_start_date' => 'nullable|date',
             'period_end_date' => 'nullable|date',
             'post_date' => 'nullable|date',

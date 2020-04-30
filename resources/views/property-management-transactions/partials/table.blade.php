@@ -12,13 +12,14 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">{{ __('Transaction') }}</th>
                         <th scope="col">{{ __('Period Start Date') }}</th>
                         <th scope="col">{{ __('Period End Date') }}</th>
                         <th scope="col">{{ __('Post Date') }}</th>
                         <th scope="col">{{ __('Amount') }}</th>
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Audited by') }}</th>
+                        <th scope="col">{{ __('Audited By') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -32,6 +33,13 @@
                                 <th scope="row">
                                     {{ $row->id }}
                                 </th>
+
+                                <!-- transaction_type_id -->
+                                <td>
+                                    @if ($row->transaction_type_id)
+                                        {{ $row->type->translate()->name }}
+                                    @endif
+                                </td>
 
                                 <!-- period_start_date -->
                                 <td>{{ $row->period_start_date }}</td>
@@ -48,19 +56,19 @@
                                 <!-- description -->
                                 <td>{{ $row->description }}</td>
 
-                                <!-- audit_user_id -->
-                                <td>
-                                    @if ($row->auditedBy)
-                                        {{ $row->auditedBy->profile->full_name }}
-                                    @endif
-                                </td>
-
                                 <!-- property -->
                                 <td>
                                     @if ($row->propertyManagement->property->hasTranslation())
                                         <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
                                             {{ $row->propertyManagement->property->translate()->name }}
                                         </a>
+                                    @endif
+                                </td>
+
+                                <!-- audit_user_id -->
+                                <td>
+                                    @if ($row->auditedBy)
+                                        {{ $row->auditedBy->profile->full_name }}
                                     @endif
                                 </td>
 
