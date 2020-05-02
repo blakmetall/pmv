@@ -6,11 +6,6 @@
 
 <fieldset {{ $disabled }}>
 
-    <!-- load regular fields -->
-    @include('damage-deposits.partials.form-fields', [
-        'row' => $row
-    ])
-
     <!-- load english fields -->
     @include('damage-deposits.partials.form-translatable-fields', [
         'label' => __('ENGLISH'),
@@ -22,6 +17,12 @@
     @include('damage-deposits.partials.form-translatable-fields', [
         'label' => __('SPANISH'),
         'lang' => 'es',
+        'row' => $row
+    ])
+
+    <!-- load regular fields -->
+    @include('damage-deposits.partials.form-fields', [
+        'label' => __('SHARED'),
         'row' => $row
     ])
 

@@ -147,6 +147,7 @@ return [
     */
 
     'attributes' => [
+        'amount' => __('Amount'),
         'base_price' => __('Price'),
         'baths' => __('Baths'),
         'bedrooms' => __('Bedrooms'),
@@ -158,7 +159,9 @@ return [
         'contact_name' => __('Contact'),
         'contractor_id' => __('Contractor'),
         'country' => __('Country'),
+        'description' => __('Description'),
         'email' => __('Email'),
+        'end_date' => __('End Date'),
         'en.cancellation_policies' => __('Cancellation Policies'),
         'en.description' => __('Description'),
         'en.name' => __('Name'),
@@ -168,9 +171,16 @@ return [
         'firstname' => __('Firstname'),
         'lastname' => __('Lastname'),
         'maid_fee' => __('Maid Fee'),
+        'management_fee' => __('Fee'),
+        'min_stay' => __('Min Stay'),
         'mobile' => __('Mobile'),
+        'monthly' => __('Monthly'),
         'name' => __('Name'),
+        'nightly' => __('Nightly'),
         'phone' => __('Phone'),
+        'period_start_date' => __('Period Start Date'),
+        'period_end_date' => __('Period End Date'),
+        'post_date' => __('Post Date'),
         'profile.city' => __('City'),
         'profile.config_agent_commission' => __('Agent Commission'),
         'profile.country' => __('Country'),
@@ -183,12 +193,14 @@ return [
         'profile.zip' => __('Zip'),
         'property_type_id' => __('Property Type'),
         'rental_commission' => __('Rental Commission'),
+        'start_date' => __('Start Date'),
         'state' => __('State'),
         'state_id' => __('State'),
         'street' => __('Street'),
         'user_id' => __('User'),
         'zip' => __('Zip'),    
         'zone_id' => __('Zone'),
+        'weekly' => __('Weekly')
     ],
 
 ];

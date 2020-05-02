@@ -17,6 +17,7 @@
             'name' => 'email',
             'required' => true,
             'value' => $row->email,
+            'type' => 'email',
         ])
 
         <!-- password -->

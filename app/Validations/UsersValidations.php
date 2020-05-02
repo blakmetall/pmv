@@ -46,6 +46,7 @@ class UsersValidations
                 $validations = [
                     'email' => [
                         'required',
+                        'email',
                         Rule::unique('users')
                     ],
                     'password' => 'required|confirmed|min:6',
@@ -56,6 +57,7 @@ class UsersValidations
                 $validations = [
                     'email' => [
                         'required',
+                        'email',
                         Rule::unique('users')->ignore($id)
                     ],
                     'password' => 'nullable|confirmed|min:6'

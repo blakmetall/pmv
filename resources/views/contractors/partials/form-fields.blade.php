@@ -53,7 +53,8 @@
             'group' => 'contractor',
             'label' => __('Email'),
             'name' => 'email',
-            'value' => $row->email
+            'value' => $row->email,
+            'type' => 'email',
         ])
 
         <!-- address -->

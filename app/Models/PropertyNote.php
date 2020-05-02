@@ -11,6 +11,10 @@ class PropertyNote extends Model {
     
     protected $table = 'property_notes';
     public $timestamps = true;
+    protected $fillable = [
+        'property_id',
+        'description'
+    ];
 
     public function property() {
         return $this->belongsTo('App\Models\Property');

@@ -194,7 +194,7 @@
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
-                                        @endif;
+                                        @endif
 
                                         @if ($_current_role->isAllowed('cleaning-services', 'staff'))
                                             <li class="nav-item">
@@ -377,7 +377,7 @@
 
                                         @if ($_current_role->isAllowed('settings', 'damage-deposits'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('damage-deposits') }}">
                                                     <span class="item-name">{{ __('Damage Deposits') }}</span>
                                                 </a>
                                             </li>

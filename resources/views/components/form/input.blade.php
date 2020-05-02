@@ -7,6 +7,7 @@
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
+    $hidden = isset($hidden) ? (bool) $hidden : false;
 
     $validTypes = ['text', 'email', 'password', 'date', 'time', 'datetime-local'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
@@ -20,11 +21,12 @@
     $requestValue = ($type == 'datetime-local' && $edit_route )?\Carbon\Carbon::parse(old($requestName, $value))->format('Y-m-d\TH:i'):old($requestName, $value);
 
     $disabledProp = ($disabled) ? 'disabled' : '';
+    $hiddenStyle = ($hidden) ? 'display: none;' : '';
     
 @endphp
 
 <!-- name -->
-<div class="form-group row">
+<div class="form-group row" style="{{ $hiddenStyle }}">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
 

@@ -11,6 +11,13 @@ class PropertyContact extends Model {
         
     protected $table = 'property_contacts';
     public $timestamps = false;
+    protected $fillable = [
+        'property_id',
+        'name',
+        'email',
+        'phone',
+        'mobile'
+    ];
 
     public function property() {
         return $this->belongsTo('App\Models\Property');

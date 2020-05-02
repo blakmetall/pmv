@@ -70,6 +70,31 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\PropertiesRepositoryInterface::class,
             \App\Repositories\PropertiesRepository::class
         );
+        
+        $this->app->bind(
+            \App\Repositories\PropertyContactsRepositoryInterface::class,
+            \App\Repositories\PropertyContactsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyManagementRepositoryInterface::class,
+            \App\Repositories\PropertyManagementRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyManagementTransactionsRepositoryInterface::class,
+            \App\Repositories\PropertyManagementTransactionsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyNotesRepositoryInterface::class,
+            \App\Repositories\PropertyNotesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyRatesRepositoryInterface::class,
+            \App\Repositories\PropertyRatesRepository::class
+        );
 
         $this->app->bind(
             \App\Repositories\PropertyTypesRepositoryInterface::class,

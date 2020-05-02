@@ -93,3 +93,10 @@ if (!function_exists('getStatusIcon')) {
         return '<i class="nav-icon i-Close font-weight-bold text-danger"></i>';
     }
 }
+
+if (!function_exists('getCurrentDate')) {
+    function getCurrentDate()
+    {
+        return date('Y-m-d', strtotime('now'));
+    }
+}

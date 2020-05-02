@@ -11,13 +11,23 @@ class PropertyManagementTransaction extends Model {
     
     protected $table = 'property_management_transactions';
     public $timestamps = true;
+    protected $fillable = [
+        'property_management_id',
+        'transaction_type_id',
+        'contractor_service_id',
+        'period_start_date',
+        'period_end_date',
+        'post_date',
+        'amount',
+        'description',
+    ];
 
-    public function management() {
+    public function propertyManagement() {
         return $this->belongsTo('App\Models\PropertyManagement');
     }
 
     public function type() {
-        return $this->hasOne('App\Models\TransactionType');
+        return $this->belongsTo('App\Models\TransactionType', 'transaction_type_id');
     }
 
     public function auditedBy() {

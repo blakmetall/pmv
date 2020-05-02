@@ -128,12 +128,12 @@ Route::group(['middleware' => ['web']], function () {
                 });
 
                 // property management
-                Route::group(['prefix' => 'management'], function () {
+                Route::group(['prefix' => 'property-management'], function () {
                     Route::get('', 'PropertyManagementController@index')->name('property-management');
                     Route::get('create', 'PropertyManagementController@create')->name('property-management.create');
                     Route::post('store', 'PropertyManagementController@store')->name('property-management.store');
-                    Route::get('show/{img}', 'PropertyManagementController@show')->name('property-management.show');
-                    Route::get('edit/{img}', 'PropertyManagementController@edit')->name('property-management.edit');
+                    Route::get('show/{pm}', 'PropertyManagementController@show')->name('property-management.show');
+                    Route::get('edit/{pm}', 'PropertyManagementController@edit')->name('property-management.edit');
                     Route::post('update/{id}', 'PropertyManagementController@update')->name('property-management.update');
                     Route::get('destroy/{id}', 'PropertyManagementController@destroy')->name('property-management.destroy');
                 });
@@ -172,6 +172,21 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('edit/{cleaning_staff}', 'CleaningStaffController@edit')->name('cleaning-staff.edit');
             Route::post('update/{id}', 'CleaningStaffController@update')->name('cleaning-staff.update');
             Route::get('destroy/{id}', 'CleaningStaffController@destroy')->name('cleaning-staff.destroy');
+        });
+
+        // property management transactions
+        Route::group(['prefix' => 'property-management'], function () {
+            Route::group(['prefix' => '{pm}'], function () {
+                Route::group(['prefix' => 'transactions'], function () {
+                    Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
+                    Route::get('create', 'PropertyManagementTransactionsController@create')->name('property-management-transactions.create');
+                    Route::post('store', 'PropertyManagementTransactionsController@store')->name('property-management-transactions.store');
+                    Route::get('show/{transaction}', 'PropertyManagementTransactionsController@show')->name('property-management-transactions.show');
+                    Route::get('edit/{transaction}', 'PropertyManagementTransactionsController@edit')->name('property-management-transactions.edit');
+                    Route::post('update/{id}', 'PropertyManagementTransactionsController@update')->name('property-management-transactions.update');
+                    Route::get('destroy/{id}', 'PropertyManagementTransactionsController@destroy')->name('property-management-transactions.destroy');
+                });
+            });
         });
 
         // settings

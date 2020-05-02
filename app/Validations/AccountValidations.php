@@ -31,6 +31,7 @@ class AccountValidations
                 $validations = [
                     'email' => [
                         'required',
+                        'email',
                         Rule::unique('users')->ignore($id)
                     ],
                     'password' => 'nullable|confirmed|min:6'

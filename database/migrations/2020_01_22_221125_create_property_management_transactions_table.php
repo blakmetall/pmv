@@ -20,7 +20,7 @@ class CreatePropertyManagementTransactionsTable extends Migration
         Schema::create('property_management_transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('property_management_id');
-            $table->integer('transaction_type_id');
+            $table->integer('transaction_type_id')->nullable();
             $table->integer('property_management_payment_id')->nullable();
             $table->integer('contractor_service_id')->nullable();
             $table->date('period_start_date')->nullable();

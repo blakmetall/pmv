@@ -18,7 +18,7 @@
                         <th scope="col">{{ __('Enabled') }}</th>
                         <th scope="col">{{ __('Online') }}</th>
                         <th scope="col">{{ __('Owner') }}</th>
-                        <th scope="col">{{ __('Property Management') }}</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -55,13 +55,56 @@
 
                                 <td>
                                     @if ($row->property->user)
-                                        {{ $row->property->user->profile->full_name }}
+                                        <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                            {{ $row->property->user->profile->full_name }}
+                                        </a>
                                     @endif
                                 </td>
 
                                 <td>
-                                    <a href="#to-property-management-with-id" class="text-primary">
-                                        <b>{{ __('PM') }}</b>
+                                    <!-- property notes -->
+                                    <a 
+                                        href="{{ route('property-notes', $row->property->id) }}" 
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Notes') }}"
+                                        alt="{{ __('Notes') }}">
+                                        <i class="nav-icon i-Notepad font-weight-bold"></i>
+                                    </a>
+
+                                    <!-- property contacts -->
+                                    <a 
+                                        href="{{ route('property-contacts', $row->property->id) }}" 
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Contacts') }}"
+                                        alt="{{ __('Contacts') }}">
+                                        <i class="nav-icon i-Administrator font-weight-bold"></i>
+                                    </a>
+
+                                    <!-- property rates -->
+                                    <a 
+                                        href="{{ route('property-rates', $row->property->id) }}" 
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Rates') }}"
+                                        alt="{{ __('Rates') }}">
+                                        <i class="nav-icon i-Money-2 font-weight-bold"></i>
+                                    </a>
+
+                                    <!-- property images -->
+                                    <a 
+                                        href="{{ route('property-images', $row->property->id) }}" 
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Images') }}"
+                                        alt="{{ __('Images') }}">
+                                        <i class="nav-icon i-Old-Camera font-weight-bold"></i>
+                                    </a>
+
+                                    <!-- property management -->
+                                    <a 
+                                        href="{{ route('property-management', $row->property->id) }}" 
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Property Management') }}"
+                                        alt="{{ __('Property Management') }}">
+                                        <i class="nav-icon i-Building font-weight-bold"></i>
                                     </a>
                                 </td>
 
