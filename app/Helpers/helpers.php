@@ -26,7 +26,7 @@ if (!function_exists('prepareFormRequestName')) {
         $requestName = $name;
         if ($lang) {
             if ($parentName) {
-                $requestName = "{$lang}.{$parentNane}.{$name}";
+                $requestName = "{$lang}.{$parentName}.{$name}";
             } else {
                 $requestName = "{$lang}.{$name}";
             }

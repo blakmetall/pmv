@@ -180,7 +180,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Cleaning Services') }}
                                     </label>
-                                    <a href="#">
+                                    <a href="">
                                         <i class="nav-icon mr-2 i-Green-House"></i>
                                         {{ __('Cleaning Services') }}
                                     </a>
@@ -190,7 +190,7 @@
                                     <ul>
                                         @if ($_current_role->isAllowed('cleaning-services', 'index'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('cleaning-services') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
@@ -198,7 +198,7 @@
 
                                         @if ($_current_role->isAllowed('cleaning-services', 'staff'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('cleaning-staff') }}">
                                                     <span class="item-name">{{ __('Staff') }}</span>
                                                 </a>
                                             </li>
