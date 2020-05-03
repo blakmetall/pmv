@@ -66,6 +66,11 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
         $cleaning_service->save();
 
+        // cleaning_staff assignation
+        if ($request->cleaning_staff_ids && is_array($request->cleaning_staff_ids) && count($request->cleaning_staff_ids)) {
+            $cleaning_service->cleaningStaff()->sync($request->cleaning_staff_ids);
+        }
+
         return $cleaning_service;
     }
 

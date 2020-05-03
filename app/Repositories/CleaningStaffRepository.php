@@ -4,17 +4,17 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\CleaningServicesRepositoryInterface;
-use App\Models\CleaningService;
-use App\Validations\CleaningServicesValidations;
+use App\Repositories\CleaningStaffRepositoryInterface;
+use App\Models\CleaningStaff;
+use App\Validations\CleaningStaffValidations;
 
-class CleaningServicesRepository implements CleaningServicesRepositoryInterface
+class CleaningStaffRepository implements CleaningStaffRepositoryInterface
 {
     protected $model;
 
-    public function __construct(CleaningService $cleaning_service)
+    public function __construct(CleaningStaff $cleaning_staff)
     {
-        $this->model = $cleaning_service;
+        $this->model = $cleaning_staff;
     }
 
     public function all($search = '', $config = [])
@@ -22,10 +22,10 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
 
         if ($search) {
-            $query = CleaningService::
+            $query = CleaningStaff::
                 where('description', 'like', "%".$search."%");
         } else {
-            $query = CleaningService::query();
+            $query = CleaningStaff::query();
         }
 
         if($shouldPaginate) {
@@ -39,13 +39,13 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
     public function create(Request $request)
     {
-        CleaningServicesValidations::validateOnCreate($request);
+        CleaningStaffValidations::validateOnCreate($request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        CleaningServicesValidations::validateOnEdit($request, $id);
+        CleaningStaffValidations::validateOnEdit($request, $id);
         return $this->save($request, $id);
     }
 
@@ -54,42 +54,42 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $is_new = ! $id;
 
         if($is_new){
-            $cleaning_service = $this->blueprint();
+            $cleaning_staff = $this->blueprint();
         }else{
-            $cleaning_service = $this->find($id);
+            $cleaning_staff = $this->find($id);
         }
 
         $checkboxesConfig = ['is_finished' => 0];
         $requestData = array_merge($checkboxesConfig, $request->all());
 
-        $cleaning_service->fill($requestData);
+        $cleaning_staff->fill($requestData);
 
-        $cleaning_service->save();
+        $cleaning_staff->save();
 
-        return $cleaning_service;
+        return $cleaning_staff;
     }
 
     public function find($id_or_obj)
     {
         $is_obj = is_object($id_or_obj);
-        $cleaning_service = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
+        $cleaning_staff = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
-        if (!$cleaning_service) {
-            throw new ModelNotFoundException("Cleaning Service not found");
+        if (!$cleaning_staff) {
+            throw new ModelNotFoundException("Cleaning Staff not found");
         }
 
-        return $cleaning_service;
+        return $cleaning_staff;
     }
 
     public function delete($id)
     {
-        $cleaning_service = $this->model->find($id);
+        $cleaning_staff = $this->model->find($id);
         
-        if ($cleaning_service && $this->canDelete($id)) {
-            $cleaning_service->delete();
+        if ($cleaning_staff && $this->canDelete($id)) {
+            $cleaning_staff->delete();
         }
 
-        return $cleaning_service;
+        return $cleaning_staff;
     }
 
     public function canDelete($id) 
@@ -99,7 +99,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
     public function blueprint()
     {
-        $cleaning_service = new CleaningService;
-        return $cleaning_service;
+        $cleaning_staff = new CleaningStaff;
+        return $cleaning_staff;
     }
 }

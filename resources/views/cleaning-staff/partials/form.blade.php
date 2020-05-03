@@ -7,7 +7,7 @@
 <fieldset {{ $disabled }}>
 
     <!-- load fields -->
-    @include('cleaning-services.partials.form-fields', ['row' => $row])
+    @include('cleaning-staff.partials.form-fields', ['row' => $row])
 
 </fieldset>
 
@@ -15,7 +15,7 @@
 @include('components.form.actions', [
     'id' => $row->id,
     'disabled' => $disabled,
-    'edit_route' => 'cleaning-services.edit',
-    'cancel_route' => 'cleaning-services',
-    'delete_route' => 'cleaning-services.destroy',
+    'edit_route' => 'cleaning-staff.edit',
+    'cancel_route' => 'cleaning-staff',
+    'delete_route' => 'cleaning-staff.destroy',
 ])

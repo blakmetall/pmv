@@ -2,4 +2,4 @@
 
 namespace App\Repositories;
 
-interface CleaningServicesRepositoryInterface extends RepositoryInterface{}
+interface CleaningStaffRepositoryInterface extends RepositoryInterface{}

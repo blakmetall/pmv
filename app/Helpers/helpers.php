@@ -43,13 +43,14 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
     {
         $values = [];
 
-        $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
-        $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+        $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+        $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+        $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
 
         if ($items->count()) {
             foreach($items as $item) {
                 $values[] = [
-                    'label' => $item->{$labelRef},
+                    'label' => $item->{$labelRef}.' '.$item->{$secondLabelRef},
                     'value' => $item->{$valueRef},
                 ];
             }

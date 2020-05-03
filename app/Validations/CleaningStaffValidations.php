@@ -7,7 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class CleaningServicesValidations
+class CleaningStaffValidations
 {  
     public static function validateOnCreate(Request $request)
     {
@@ -22,16 +22,9 @@ class CleaningServicesValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            'property_id'                        => 'required',
-            //'cleaning_staff_id'                  => 'required',
-            //'property_management_transaction_id' => 'required',
-            //'booking_id'                         => 'required',
-            'date'                               => 'required',
-            'hour'                               => 'required',
-            'description'                        => 'required',
-            'maid_fee'                           => 'required',
-            'audit_datetime'                     => 'required',
-            'audit_user_id'                      => 'required',
+            //'staff_group_id' => 'required',
+            'firstname'      => 'required',
+            'lastname'       => 'required',
         ];
 
         return $defaultValidations;
@@ -57,7 +50,6 @@ class CleaningServicesValidations
         $validator = Validator::make($request->all(), $validations);
 
         if( $validator->fails() ) {
-            dd($validator->errors());
             throw new ValidationException($validator->errors());
         }
     }

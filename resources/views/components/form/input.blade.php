@@ -17,7 +17,7 @@
     $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
 
-    $edit_route = (\Route::current()->getName() == 'cleaning-services.edit')?true:false;
+    $edit_route = (\Route::current()->getName() != 'cleaning-services.create')?true:false;
     $requestValue = ($type == 'datetime-local' && $edit_route )?\Carbon\Carbon::parse(old($requestName, $value))->format('Y-m-d\TH:i'):old($requestName, $value);
 
     $disabledProp = ($disabled) ? 'disabled' : '';

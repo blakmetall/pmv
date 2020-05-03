@@ -14,6 +14,20 @@
             'optionLabelRef' => 'name',
         ])
 
+        <!-- cleaning_staff_ids -->
+        @include('components.form.checkbox-multiple', [
+            'group' => 'cleaning-staff',
+            'label' => __('Cleaning Staff Users'),
+            'name' => 'cleaning_staff_ids',
+            'values' => prepareCheckboxValuesFromRows($cleaning_staff, [
+                'labelRef' => 'firstname',
+                'secondLabelRef' => 'lastname'
+            ]),
+            'default' => prepareCheckboxDefaultValues($row->cleaningStaff, [
+                'valueRef' => 'id',
+            ]),
+        ])
+
         <!-- date -->
         @include('components.form.input', [
             'group' => 'cleaning-service',
@@ -56,7 +70,7 @@
         <!-- is_finished -->
         @include('components.form.checkbox', [
             'group' => 'cleaning-service',
-            'label' => __('Status'),
+            'label' => __('Finished'),
             'name' => 'is_finished',
             'value' => 1,
             'default' => $row->is_finished,

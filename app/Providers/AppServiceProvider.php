@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // https force
-        if ( AppHelper::shouldApplyHttps() ) { 
-            URL::forceScheme('https'); 
+        if ( AppHelper::shouldApplyHttps() ) {
+            URL::forceScheme('https');
         }
     }
 
@@ -59,6 +59,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\ContractorsServicesRepositoryInterface::class,
             \App\Repositories\ContractorsServicesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\CleaningServicesRepositoryInterface::class,
+            \App\Repositories\CleaningServicesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\CleaningStaffRepositoryInterface::class,
+            \App\Repositories\CleaningStaffRepository::class
         );
 
         $this->app->bind(

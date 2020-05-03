@@ -6,14 +6,14 @@
         'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('cleaning-services'),
-                'label' => __('Cleaning Services'),
+                'url' => route('cleaning-staff'),
+                'label' => __('Cleaning Staff'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('cleaning-services.create'),
+                'url' => route('cleaning-staff.create'),
             ]
         ]
     ])
@@ -26,10 +26,10 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="{{ route('cleaning-services.update', [$cleaning_service->id]) }}" method="post">
+        <form action="{{ route('cleaning-staff.update', [$cleaning_staff->id]) }}" method="post">
             @csrf
-            @include('cleaning-services.partials.form', [
-                'row' => $cleaning_service
+            @include('cleaning-staff.partials.form', [
+                'row' => $cleaning_staff
             ])
         </form>
     </div>

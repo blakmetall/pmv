@@ -68,16 +68,9 @@
                                 <td>{{ $row->notes }}</td>
 
                                 <!-- is_finished -->
-                                <th scope="row">
-                                    @php
-                                        $enabledClass = ($row->is_finished) ? 'success' : 'danger';
-                                        $enabledLabel = ($row->is_finished) ? __('Finished') : __('Not Finished');
-                                    @endphp
-
-                                    <span class="badge badge-{{ $enabledClass }} p-1">
-                                        {{ $enabledLabel }}
-                                    </span>
-                                </th>
+                                <td>
+                                    {!! getStatusIcon($row->is_finished) !!}
+                                </td>
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [

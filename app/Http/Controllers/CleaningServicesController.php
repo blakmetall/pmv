@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Repositories\{
     CleaningServicesRepositoryInterface,
     UsersRepositoryInterface,
-    PropertiesRepositoryInterface
+    PropertiesRepositoryInterface,
+    CleaningStaffRepositoryInterface
 };
 use App\Models\CleaningService;
 
@@ -15,16 +16,19 @@ class CleaningServicesController extends Controller
     private $repository;
     private $usersRepository;
     private $propertiesRepository;
+    private $cleaningStaffRepository;
 
     public function __construct(
         CleaningServicesRepositoryInterface $repository,
         UsersRepositoryInterface $usersRepository,
-        PropertiesRepositoryInterface $propertiesRepository
+        PropertiesRepositoryInterface $propertiesRepository,
+        CleaningStaffRepositoryInterface $cleaningStaffRepository
     )
     {
         $this->repository           = $repository;
         $this->usersRepository      = $usersRepository;
         $this->propertiesRepository = $propertiesRepository;
+        $this->cleaningStaffRepository = $cleaningStaffRepository;
     }
 
     /**
@@ -57,9 +61,13 @@ class CleaningServicesController extends Controller
         $propertiesConfig = ['paginate' => false];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
+        $configCleaningStaff = ['paginate' => false];
+        $cleaning_staff = $this->cleaningStaffRepository->all('', $configCleaningStaff);
+
         return view('cleaning-services.create')
             ->with('users', $users)
             ->with('properties', $properties)
+            ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service);
     }
 
@@ -92,9 +100,13 @@ class CleaningServicesController extends Controller
         $propertiesConfig = ['paginate' => false];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
+        $configCleaningStaff = ['paginate' => false];
+        $cleaning_staff = $this->cleaningStaffRepository->all('', $configCleaningStaff);
+
         return view('cleaning-services.show')
             ->with('users', $users)
             ->with('properties', $properties)
+            ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service);
     }
 
@@ -114,9 +126,13 @@ class CleaningServicesController extends Controller
         $propertiesConfig = ['paginate' => false];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
+        $configCleaningStaff = ['paginate' => false];
+        $cleaning_staff = $this->cleaningStaffRepository->all('', $configCleaningStaff);
+
         return view('cleaning-services.edit')
             ->with('users', $users)
             ->with('properties', $properties)
+            ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service);
     }
 

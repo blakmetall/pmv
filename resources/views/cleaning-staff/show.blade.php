@@ -6,14 +6,14 @@
         'label' => __('View'),
         'breadcrumbs' => [
             [
-                'url' => route('cleaning-services'),
-                'label' => __('Cleaning Services'),
+                'url' => route('cleaning-staff'),
+                'label' => __('Cleaning Staff'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('cleaning-services.create'),
+                'url' => route('cleaning-staff.create'),
             ]
         ]
     ])
@@ -27,11 +27,11 @@
 
     <div class="container app-container-sm">
         <form action="" onsubmit="return false;" method="post">
-            @include('cleaning-services.partials.form', [
-                'row' => $cleaning_service,
+            @include('cleaning-staff.partials.form', [
+                'row' => $cleaning_staff,
                 'disabled' => true
             ])        
-        </div>
-    </form>
+        </form>
+    </div>
 
 @endsection
