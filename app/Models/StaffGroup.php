@@ -11,6 +11,11 @@ class StaffGroup extends Model {
 
     protected $table = 'staff_groups';
     public $timestamps = false;
+    protected $fillable = [
+        'user_id',
+        'city_id',
+        'location'
+    ];
 
     public function cleaningStaff() {
         return $this->hasMany('App\Models\CleaningStaff');

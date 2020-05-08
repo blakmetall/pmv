@@ -59,6 +59,17 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
+        // staff-groups
+        Route::group(['prefix' => 'staff-groups', 'middleware' => 'role-permission:users,index'], function () {
+            Route::get('', 'StaffGroupsController@index')->name('staff-groups');
+            Route::get('create', 'StaffGroupsController@create')->name('staff-groups.create');
+            Route::post('store', 'StaffGroupsController@store')->name('staff-groups.store');
+            Route::get('show/{staff_group}', 'StaffGroupsController@show')->name('staff-groups.show');
+            Route::get('edit/{staff_group}', 'StaffGroupsController@edit')->name('staff-groups.edit');
+            Route::post('update/{id}', 'StaffGroupsController@update')->name('staff-groups.update');
+            Route::get('destroy/{id}', 'StaffGroupsController@destroy')->name('staff-groups.destroy');
+        });
+
         // contractors
         Route::group(['prefix' => 'contractors', 'middleware' => 'role-permission:users,index'], function () {
             Route::get('', 'ContractorsController@index')->name('contractors');

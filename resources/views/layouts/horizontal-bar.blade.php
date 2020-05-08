@@ -272,7 +272,7 @@
 
                                         @if ($_current_role->isAllowed('users', 'staff-groups'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('staff-groups') }}">
                                                     <span class="item-name">{{ __('Staff Groups') }}</span>
                                                 </a>
                                             </li>
