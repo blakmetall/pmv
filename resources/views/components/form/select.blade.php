@@ -14,6 +14,7 @@
     $options = isset($options) && count($options) ? $options : [];
     $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
 
+
     $optionLabelRef = isset($optionLabelRef) ? $optionLabelRef : '';
     $optionLabelDepth = explode(',', $optionLabelRef);
     $hasLabelDepth = count($optionLabelDepth) == 2;
@@ -21,7 +22,7 @@
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-    $requestName = prepareFormRequestName($name, $parentName, $lang);    
+    $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
 
     $disabledProp = ($disabled) ? 'disabled' : '';
@@ -29,7 +30,7 @@
 
 @endphp
 
-<div class="form-group row" style="{{ $hiddenStyle }}">   
+<div class="form-group row" style="{{ $hiddenStyle }} ">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
 
@@ -40,9 +41,9 @@
 
     <div class="col-sm-10">
 
-        <select 
-            name="{{ $inputName }}" 
-            class="form-control" 
+        <select
+            name="{{ $inputName }}"
+            class="form-control"
             id="{{ $id }}"
             {{ $disabledProp }} >
 
@@ -51,7 +52,8 @@
             @endif
 
             @foreach($options as $option)
-                @php 
+
+                @php
                     $optionLabel = '';
 
                     if( $hasLabelDepth ) {

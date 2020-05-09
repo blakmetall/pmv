@@ -9,14 +9,17 @@
     $value = isset($value) ? $value : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
 
-    $validTypes = ['text', 'email', 'password'];
+    $validTypes = ['text', 'email', 'password', 'date', 'time', 'datetime-local'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-    $requestName = prepareFormRequestName($name, $parentName, $lang);    
+    $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
-    
+
+    $edit_route = (\Route::current()->getName() != 'cleaning-services.create')?true:false;
+    $requestValue = ($type == 'datetime-local' && $edit_route )?\Carbon\Carbon::parse(old($requestName, $value))->format('Y-m-d\TH:i'):old($requestName, $value);
+
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
     
@@ -35,7 +38,7 @@
     <div class="col-sm-10">
 
         <input type="{{ $type }}" 
-            value="{{ old($requestName, $value) }}"
+            value="{{ $requestValue }}"
             name="{{ $inputName }}"
             class="form-control" 
             id="{{ $id }}"

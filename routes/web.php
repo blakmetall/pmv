@@ -59,6 +59,17 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
+        // staff-groups
+        Route::group(['prefix' => 'staff-groups', 'middleware' => 'role-permission:users,index'], function () {
+            Route::get('', 'StaffGroupsController@index')->name('staff-groups');
+            Route::get('create', 'StaffGroupsController@create')->name('staff-groups.create');
+            Route::post('store', 'StaffGroupsController@store')->name('staff-groups.store');
+            Route::get('show/{staff_group}', 'StaffGroupsController@show')->name('staff-groups.show');
+            Route::get('edit/{staff_group}', 'StaffGroupsController@edit')->name('staff-groups.edit');
+            Route::post('update/{id}', 'StaffGroupsController@update')->name('staff-groups.update');
+            Route::get('destroy/{id}', 'StaffGroupsController@destroy')->name('staff-groups.destroy');
+        });
+
         // contractors
         Route::group(['prefix' => 'contractors', 'middleware' => 'role-permission:users,index'], function () {
             Route::get('', 'ContractorsController@index')->name('contractors');
@@ -150,7 +161,28 @@ Route::group(['middleware' => ['web']], function () {
                 });
 
             });
+        });
 
+        // cleaning-services
+        Route::group(['prefix' => 'cleaning-services', 'middleware' => 'role-permission:users,index'], function () {
+            Route::get('', 'CleaningServicesController@index')->name('cleaning-services');
+            Route::get('create', 'CleaningServicesController@create')->name('cleaning-services.create');
+            Route::post('store', 'CleaningServicesController@store')->name('cleaning-services.store');
+            Route::get('show/{cleaning_service}', 'CleaningServicesController@show')->name('cleaning-services.show');
+            Route::get('edit/{cleaning_service}', 'CleaningServicesController@edit')->name('cleaning-services.edit');
+            Route::post('update/{id}', 'CleaningServicesController@update')->name('cleaning-services.update');
+            Route::get('destroy/{id}', 'CleaningServicesController@destroy')->name('cleaning-services.destroy');
+        });
+
+        // cleaning-staff
+        Route::group(['prefix' => 'cleaning-staff', 'middleware' => 'role-permission:users,index'], function () {
+            Route::get('', 'CleaningStaffController@index')->name('cleaning-staff');
+            Route::get('create', 'CleaningStaffController@create')->name('cleaning-staff.create');
+            Route::post('store', 'CleaningStaffController@store')->name('cleaning-staff.store');
+            Route::get('show/{cleaning_staff}', 'CleaningStaffController@show')->name('cleaning-staff.show');
+            Route::get('edit/{cleaning_staff}', 'CleaningStaffController@edit')->name('cleaning-staff.edit');
+            Route::post('update/{id}', 'CleaningStaffController@update')->name('cleaning-staff.update');
+            Route::get('destroy/{id}', 'CleaningStaffController@destroy')->name('cleaning-staff.destroy');
         });
 
         // property management transactions
