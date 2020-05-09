@@ -135,5 +135,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\StaffGroupsRepositoryInterface::class,
             \App\Repositories\StaffGroupsRepository::class
         );
+
+        $this->app->bind(
+            \App\Repositories\HumanResourcesRepositoryInterface::class,
+            \App\Repositories\HumanResourcesRepository::class
+        );
     }
 }

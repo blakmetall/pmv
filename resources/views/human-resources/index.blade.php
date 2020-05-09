@@ -3,11 +3,11 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('Cleaning Staff Users'),
+        'label' => __('Human Resources'),
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('cleaning-staff.create')
+                'url' => route('human-resources.create')
             ]
         ]
     ])
@@ -16,7 +16,7 @@
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('cleaning-staff')
+        'url' => route('human-resources')
     ])
 
 @endsection
@@ -24,9 +24,9 @@
 @section('main-content')
 
     <!-- here the data is loaded -->
-    @include('cleaning-staff.partials.table', [
-        'label' => __('Cleaning Staff Users'),
-        'rows' => $cleaning_staff
+    @include('human-resources.partials.table', [
+        'label' => __('Human Resources'),
+        'rows' => $human_resources
     ])
 
 @endsection

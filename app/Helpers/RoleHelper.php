@@ -389,6 +389,24 @@ class RoleHelper
                     'administrative-assistant',
                 ]),
             ],
+            'human-resources' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+            ],
             'settings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',

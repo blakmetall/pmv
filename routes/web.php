@@ -185,6 +185,17 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('destroy/{id}', 'CleaningStaffController@destroy')->name('cleaning-staff.destroy');
         });
 
+        // human-resources
+        Route::group(['prefix' => 'human-resources', 'middleware' => 'role-permission:users,index'], function () {
+            Route::get('', 'HumanResourcesController@index')->name('human-resources');
+            Route::get('create', 'HumanResourcesController@create')->name('human-resources.create');
+            Route::post('store', 'HumanResourcesController@store')->name('human-resources.store');
+            Route::get('show/{human_resource}', 'HumanResourcesController@show')->name('human-resources.show');
+            Route::get('edit/{human_resource}', 'HumanResourcesController@edit')->name('human-resources.edit');
+            Route::post('update/{id}', 'HumanResourcesController@update')->name('human-resources.update');
+            Route::get('destroy/{id}', 'HumanResourcesController@destroy')->name('human-resources.destroy');
+        });
+
         // property management transactions
         Route::group(['prefix' => 'property-management'], function () {
             Route::group(['prefix' => '{pm}'], function () {

@@ -3,17 +3,17 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('View'),
+        'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('cleaning-staff'),
-                'label' => __('Cleaning Staff Users'),
+                'url' => route('human-resources'),
+                'label' => __('Human Resources'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('cleaning-staff.create'),
+                'url' => route('human-resources.create'),
             ]
         ]
     ])
@@ -26,11 +26,11 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="" onsubmit="return false;" method="post">
-            @include('cleaning-staff.partials.form', [
-                'row' => $cleaning_staff,
-                'disabled' => true
-            ])        
+        <form action="{{ route('human-resources.update', [$human_resource->id]) }}" method="post">
+            @csrf
+            @include('human-resources.partials.form', [
+                'row' => $human_resource
+            ])
         </form>
     </div>
 
