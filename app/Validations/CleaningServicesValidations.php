@@ -24,7 +24,7 @@ class CleaningServicesValidations
         $defaultValidations = [
             'property_id'                        => 'required',
             'date'                               => 'required|date_format:Y-m-d',
-            'hour'                               => 'nullable|date_format:H:i:s',
+            'hour'                               => 'nullable|date_format:H:i',
             'description'                        => 'required',
             'maid_fee'                           => 'required|numeric',
         ];
@@ -52,7 +52,7 @@ class CleaningServicesValidations
         $validator = Validator::make($request->all(), $validations);
 
         if( $validator->fails() ) {
-            throw new ValidationException($validator->errors());
+            throw new ValidationException($validator);
         }
     }
 }
