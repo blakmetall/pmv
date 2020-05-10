@@ -23,8 +23,8 @@ class PropertyRatesValidations
     {
         $defaultValidations = [
             'property_id' => 'required',
-            'start_date' => 'required|date:Y-m-d',
-            'end_date' => 'required|date:Y-m-d',
+            'start_date' => 'required|date_format:Y-m-d',
+            'end_date' => 'required|date_format:Y-m-d',
             'nightly' => 'nullable|numeric|min:0',
             'weekly' => 'nullable|numeric|min:0',
             'monthly' => 'nullable|numeric|min:0',

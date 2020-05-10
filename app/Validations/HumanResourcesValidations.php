@@ -22,9 +22,16 @@ class HumanResourcesValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            'address'   => 'required',
+            'city_id'   => 'required',
             'firstname' => 'required',
             'lastname'  => 'required',
+            'address'   => 'required',
+            'entry_at'  => 'nullable|date_format:Y-m-d',
+            'birthday'  => 'nullable|date_format:Y-m-d',
+            'vacations_start_at'  => 'nullable|date_format:Y-m-d',
+            'vacations_end_at'  => 'nullable|date_format:Y-m-d',
+            'days_vacations'  => 'nullable|integer',
+            'children'  => 'nullable|integer',
         ];
 
         return $defaultValidations;
@@ -50,7 +57,7 @@ class HumanResourcesValidations
         $validator = Validator::make($request->all(), $validations);
 
         if( $validator->fails() ) {
-            throw new ValidationException($validator->errors());
+            throw new ValidationException($validator);
         }
     }
 }

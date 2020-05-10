@@ -324,11 +324,11 @@
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Human Resources') }}
+                                        {{ __('H.R.') }}
                                     </label>
                                     <a href="{{ route('human-resources') }}">
                                         <i class="nav-icon mr-2 i-Professor"></i>
-                                        {{ __('Human Resources') }}
+                                        {{ __('H.R.') }}
                                     </a>
 
                                     <!-- dropdown menu -->

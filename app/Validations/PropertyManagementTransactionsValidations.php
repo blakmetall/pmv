@@ -23,8 +23,8 @@ class PropertyManagementTransactionsValidations
     {
         $defaultValidations = [
             'period_start_date' => 'nullable|date_format:Y-m-d',
-            'period_end_date' => 'nullable|date:Y-m-d',
-            'post_date' => 'nullable|date:Y-m-d',
+            'period_end_date' => 'nullable|date_format:Y-m-d',
+            'post_date' => 'nullable|date_format:Y-m-d',
             'amount' => 'required|numeric|min:0',
         ];
 

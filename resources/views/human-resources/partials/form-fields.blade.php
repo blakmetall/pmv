@@ -14,14 +14,6 @@
             'optionLabelRef' => 'name',
         ])
 
-        <!-- address -->
-        @include('components.form.textarea', [
-            'group' => 'human-resource',
-            'label' => __('Address'),
-            'name' => 'address',
-            'value' => $row->address
-        ])
-
         <!-- firstname -->
         @include('components.form.input', [
             'group' => 'human-resource',
@@ -40,21 +32,20 @@
             'value' => $row->lastname
         ])
 
+        <!-- address -->
+        @include('components.form.textarea', [
+            'group' => 'human-resource',
+            'label' => __('Address'),
+            'name' => 'address',
+            'value' => $row->address
+        ])
+
         <!-- department -->
         @include('components.form.input', [
             'group' => 'human-resource',
             'label' => __('Department'),
             'name' => 'department',
-            'required' => true,
             'value' => $row->department
-        ])
-
-        <!-- entry_at -->
-        @include('components.form.input', [
-            'group' => 'human-resource',
-            'label' => __('Entry At'),
-            'name' => 'entry_at',
-            'value' => $row->entry_at
         ])
 
         <!-- birthday -->
@@ -65,31 +56,6 @@
             'value' => $row->birthday
         ])
 
-        <!-- vacations_start_at -->
-        @include('components.form.input', [
-            'group' => 'human-resource',
-            'label' => __('Vacations Start At'),
-            'name' => 'vacations_start_at',
-            'value' => $row->vacations_start_at
-        ])
-
-        <!-- vacations_end_at -->
-        @include('components.form.input', [
-            'group' => 'human-resource',
-            'label' => __('Vacations End At'),
-            'name' => 'vacations_end_at',
-            'value' => $row->vacations_end_at
-        ])
-
-        <!-- days_vacations -->
-        @include('components.form.input', [
-            'group' => 'human-resource',
-            'type' => 'number',
-            'label' => __('Days Vacation'),
-            'name' => 'days_vacations',
-            'value' => $row->days_vacations
-        ])
-
         <!-- children -->
         @include('components.form.input', [
             'group' => 'human-resource',
@@ -98,6 +64,43 @@
             'name' => 'children',
             'value' => $row->children
         ])
+
+        <hr>
+
+        <!-- entry_at -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Entry Date'),
+            'name' => 'entry_at',
+            'value' => $row->entry_at
+        ])
+
+        <!-- days_vacations -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'type' => 'number',
+            'label' => __('Vacation Days'),
+            'name' => 'days_vacations',
+            'value' => $row->days_vacations
+        ])
+
+        <!-- vacations_start_at -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Start Date'),
+            'name' => 'vacations_start_at',
+            'value' => $row->vacations_start_at
+        ])
+
+        <!-- vacations_end_at -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('End Date'),
+            'name' => 'vacations_end_at',
+            'value' => $row->vacations_end_at
+        ])
+
+        <hr>
 
         <!-- is_active -->
         @include('components.form.checkbox', [

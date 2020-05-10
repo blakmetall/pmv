@@ -152,10 +152,13 @@ return [
     */
 
     'attributes' => [
+        'address' => __('Address'),
         'amount' => __('Amount'),
         'base_price' => __('Price'),
         'baths' => __('Baths'),
         'bedrooms' => __('Bedrooms'),
+        'birthday' => __('Birthday'),
+        'children' => __('Children'),
         'cleaning_option_id' => __('Cleaning Option'),
         'city' => __('City'),
         'city_id' => __('City'),
@@ -166,8 +169,10 @@ return [
         'country' => __('Country'),
         'date' => __('Date'),
         'description' => __('Description'),
+        'days_vacations' => __('Vacation Days'),
         'email' => __('Email'),
         'end_date' => __('End Date'),
+        'entry_at' => __('Entry Date'),
         'en.cancellation_policies' => __('Cancellation Policies'),
         'en.description' => __('Description'),
         'en.name' => __('Name'),
@@ -206,9 +211,11 @@ return [
         'state_id' => __('State'),
         'street' => __('Street'),
         'user_id' => __('User'),
+        'vacations_start_at' => __('Vacation Start Date'),
+        'vacations_end_at' => __('Vacation End Date'),
         'zip' => __('Zip'),    
         'zone_id' => __('Zone'),
-        'weekly' => __('Weekly')
+        'weekly' => __('Weekly'),
     ],
 
 ];

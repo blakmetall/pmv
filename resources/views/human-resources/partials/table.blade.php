@@ -12,17 +12,13 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Firstname') }}</th>
                         <th scope="col">{{ __('Lastname') }}</th>
+                        <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Department') }}</th>
-                        <th scope="col">{{ __('Address') }}</th>
                         <th scope="col">{{ __('Birthday') }}</th>
-                        <th scope="col">{{ __('Vacations Start At') }}</th>
-                        <th scope="col">{{ __('Vacations End At') }}</th>
-                        <th scope="col">{{ __('Days Vacation') }}</th>
-                        <th scope="col">{{ __('Children') }}</th>
-                        <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col">{{ __('Vacations') }}</th>
+                        <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -37,35 +33,30 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- city_id -->
-                                <td>{{ $row->city->name }}</td>
-
                                 <!-- firstname -->
                                 <td>{{ $row->firstname }}</td>
 
                                 <!-- lastname -->
                                 <td>{{ $row->lastname }}</td>
 
+                                <!-- city_id -->
+                                <td>{{ $row->city->name }}</td>
+
                                 <!-- department -->
                                 <td>{{ $row->department }}</td>
-
-                                <!-- entry_at -->
-                                <td>{{ $row->entry_at }}</td>
 
                                 <!-- birthday -->
                                 <td>{{ $row->birthday }}</td>
 
-                                <!-- vacations_start_at -->
-                                <td>{{ $row->vacations_start_at }}</td>
-
-                                <!-- vacations_end_at -->
-                                <td>{{ $row->vacations_end_at }}</td>
-
-                                <!-- days_vacations -->
-                                <td>{{ $row->days_vacations }}</td>
-
-                                <!-- children -->
-                                <td>{{ $row->children }}</td>
+                                <!-- vacations -->
+                                <td>
+                                    @if( $row->vacations_start_at && $row->vacations_end_at )
+                                        {{ $row->vacations_start_at }}
+                                        -
+                                        {{ $row->vacations_end_at }}
+                                        ({{ $row->days_vacations }})
+                                    @endif 
+                                </td>
 
                                 <!-- is_active -->
                                 <td>

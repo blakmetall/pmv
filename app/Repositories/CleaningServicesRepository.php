@@ -75,7 +75,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             $cleaning_service->audit_user_id = $user->id;
             $cleaning_service->audit_datetime = getCurrentDateTime();
         } else {
-            $cleaning_service->audit_user_id = nulldata;
+            $cleaning_service->audit_user_id = null;
             $cleaning_service->audit_datetime = null;
         }
 
