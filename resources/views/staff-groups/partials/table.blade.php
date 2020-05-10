@@ -42,9 +42,9 @@
                                 <td>
                                     @include('components.table.actions', [
                                         'params' => [$row->id],
-                                        'showRoute' => 'staff-groups.show',
-                                        'editRoute' => 'staff-groups.edit',
-                                        'deleteRoute' => 'staff-groups.destroy',
+                                        'showRoute' => 'workgroup.show',
+                                        'editRoute' => 'workgroup.edit',
+                                        'deleteRoute' => 'workgroup.destroy',
                                     ])
                                 </td>
 

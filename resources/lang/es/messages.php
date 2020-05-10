@@ -19,24 +19,6 @@ return [
     'welcome-properties' => 'Sección de propiedades',
 
     /*
-   |--------------------------------------------------------------------------
-   | Properties Types Lines
-   |--------------------------------------------------------------------------
-   */
-
-    'property-types-title' => 'Registro de tipo de Propiedad',
-    'property-types-list-title' => 'Listado de tipos de Propiedad',
-
-    'property-types-name-label-es' => 'Tipo de Propiedad en Español',
-    'property-types-name-label-en' => 'Tipo de Propiedad en Inglés',
-
-    'property-types-table-col-name' => 'Tipo',
-    'property-types-table-col-action' => 'Acciones',
-
-    'property-types-success-message' => 'Se agrego con éxito un tipo de propiedad',
-    'property-types-delete-success-message' => 'El tipo de propiedad fue eliminado',
-
-    /*
     |--------------------------------------------------------------------------
     | Menu Options Lines
     |--------------------------------------------------------------------------

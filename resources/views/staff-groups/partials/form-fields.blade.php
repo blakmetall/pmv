@@ -4,7 +4,7 @@
 
         <!-- user_id -->
         @include('components.form.select', [
-            'group' => 'staff-groups',
+            'group' => 'workgroup',
             'label' => __('User'),
             'name' => 'user_id',
             'required' => true,
@@ -16,7 +16,7 @@
 
         <!-- city_id -->
         @include('components.form.select', [
-            'group' => 'staff-groups',
+            'group' => 'workgroup',
             'label' => __('City'),
             'name' => 'city_id',
             'required' => true,
@@ -28,7 +28,7 @@
 
         <!-- location -->
         @include('components.form.input', [
-            'group' => 'staff-groups',
+            'group' => 'workgroup',
             'label' => __('Location'),
             'name' => 'location',
             'required' => true,

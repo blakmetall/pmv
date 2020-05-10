@@ -6,7 +6,7 @@
         'label' => __('New'),
         'breadcrumbs' => [
             [
-                'url' => route('staff-groups'),
+                'url' => route('workgroup'),
                 'label' => __('Staff Groups'),
             ],
         ]
@@ -21,9 +21,9 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('staff-groups.store') }}" method="post">
+        <form action="{{ route('workgroup.store') }}" method="post">
             @csrf
-            @include('staff-groups.partials.form', ['row' => $staff_group])
+            @include('workgroup.partials.form', ['row' => $staff_group])
         </form>
     </div>
 

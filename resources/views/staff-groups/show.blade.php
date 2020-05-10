@@ -6,14 +6,14 @@
         'label' => __('View'),
         'breadcrumbs' => [
             [
-                'url' => route('staff-groups'),
+                'url' => route('workgroup'),
                 'label' => __('Staff Groups'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('staff-groups.create'),
+                'url' => route('workgroup.create'),
             ]
         ]
     ])
@@ -27,7 +27,7 @@
 
     <div class="container app-container-sm">
         <form action="" onsubmit="return false;" method="post">
-            @include('staff-groups.partials.form', [
+            @include('workgroup.partials.form', [
                 'row' => $staff_group,
                 'disabled' => true
             ])        

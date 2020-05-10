@@ -37,7 +37,7 @@ class StaffGroupsController extends Controller
         $search = trim($request->s);
         $staff_groups = $this->repository->all($search);
 
-        return view('staff-groups.index')
+        return view('workgroup.index')
             ->with('staff_groups', $staff_groups)
             ->with('search', $search);
     }
@@ -57,7 +57,7 @@ class StaffGroupsController extends Controller
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
-        return view('staff-groups.create')
+        return view('workgroup.create')
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('staff_group', $staff_group);
@@ -73,7 +73,7 @@ class StaffGroupsController extends Controller
     {
         $staff_group = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('staff-groups.edit', [$staff_group->id]));
+        return redirect(route('workgroup.edit', [$staff_group->id]));
     }
 
     /**
@@ -92,7 +92,7 @@ class StaffGroupsController extends Controller
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
-        return view('staff-groups.show')
+        return view('workgroup.show')
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('staff_group', $staff_group);
@@ -114,7 +114,7 @@ class StaffGroupsController extends Controller
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
-        return view('staff-groups.edit')
+        return view('workgroup.edit')
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('staff_group', $staff_group);
@@ -131,7 +131,7 @@ class StaffGroupsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('staff-groups.edit', [$id]) );
+        return redirect( route('workgroup.edit', [$id]) );
     }
 
     /**
@@ -145,7 +145,7 @@ class StaffGroupsController extends Controller
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
-            return redirect(route('staff-groups'));
+            return redirect(route('workgroup'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
