@@ -12,7 +12,7 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Staff Group') }}</th>
+                        <th scope="col">{{ __('Staff Groups') }}</th>
                         <th scope="col">{{ __('First Name') }}</th>
                         <th scope="col">{{ __('Last Name') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>

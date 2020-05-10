@@ -6,8 +6,8 @@
         'label' => __('New'),
         'breadcrumbs' => [
             [
-                'url' => route('cleaning-staff'),
-                'label' => __('Cleaning Staff Users'),
+                'url' => route('human-resources'),
+                'label' => __('Human Resources'),
             ],
         ]
     ])
@@ -21,9 +21,9 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('cleaning-staff.store') }}" method="post">
+        <form action="{{ route('human-resources.store') }}" method="post">
             @csrf
-            @include('cleaning-staff.partials.form', ['row' => $cleaning_staff])
+            @include('human-resources.partials.form', ['row' => $human_resource])
         </form>
     </div>
 

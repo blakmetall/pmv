@@ -7,7 +7,7 @@
         'breadcrumbs' => [
             [
                 'url' => route('cleaning-staff'),
-                'label' => __('Cleaning Staff'),
+                'label' => __('Cleaning Staff Users'),
             ],
         ],
         'actions' => [

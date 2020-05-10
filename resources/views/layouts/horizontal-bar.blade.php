@@ -318,6 +318,33 @@
                         </li>
                     @endif
 
+                    @if ($_current_role->isAllowed('human-resources', 'heading-menu'))
+                        <li>
+                            <div>
+                                <div>
+                                    <!-- label for menu and sidebar menu for responsive -->
+                                    <label class="toggle" for="dropdownMenuBooking">
+                                        {{ __('Human Resources') }}
+                                    </label>
+                                    <a href="{{ route('human-resources') }}">
+                                        <i class="nav-icon mr-2 i-Professor"></i>
+                                        {{ __('Human Resources') }}
+                                    </a>
+
+                                    <!-- dropdown menu -->
+                                    <input type="checkbox" id="dropdownMenuBooking">
+                                    <ul>
+                                        <li class="nav-item">
+                                            <a class="" href="{{ route('human-resources') }}">
+                                                <span class="item-name">{{ __('All') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+
                     @if ($_current_role->isAllowed('settings', 'heading-menu'))
                         <li>
                             <div>
