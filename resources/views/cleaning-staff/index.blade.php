@@ -3,7 +3,7 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('Cleaning Staff Users'),
+        'label' => __('Cleaning Staff'),
         'actions' => [
             [
                 'label' => __('New'),
@@ -25,7 +25,7 @@
 
     <!-- here the data is loaded -->
     @include('cleaning-staff.partials.table', [
-        'label' => __('Cleaning Staff Users'),
+        'label' => __('Cleaning Staff'),
         'rows' => $cleaning_staff
     ])
 

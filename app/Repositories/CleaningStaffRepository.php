@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\CleaningStaffRepositoryInterface;
 use App\Models\CleaningStaff;
+use App\Repositories\CleaningStaffRepositoryInterface;
 use App\Validations\CleaningStaffValidations;
 
 class CleaningStaffRepository implements CleaningStaffRepositoryInterface
@@ -23,7 +23,8 @@ class CleaningStaffRepository implements CleaningStaffRepositoryInterface
 
         if ($search) {
             $query = CleaningStaff::
-                where('description', 'like', "%".$search."%");
+                where('firstname', 'like', "%".$search."%")
+                ->orWhere('lastname', 'like', "%".$search."%");
         } else {
             $query = CleaningStaff::query();
         }
@@ -63,7 +64,7 @@ class CleaningStaffRepository implements CleaningStaffRepositoryInterface
         $requestData = array_merge($checkboxesConfig, $request->all());
 
         $cleaning_staff->fill($requestData);
-
+        $cleaning_staff->staff_group_id = 1; // temporal staff group id assignation
         $cleaning_staff->save();
 
         return $cleaning_staff;
@@ -75,7 +76,7 @@ class CleaningStaffRepository implements CleaningStaffRepositoryInterface
         $cleaning_staff = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$cleaning_staff) {
-            throw new ModelNotFoundException("Cleaning Staff not found");
+            throw new ModelNotFoundException("CleaningStaff not found");
         }
 
         return $cleaning_staff;

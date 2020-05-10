@@ -17,11 +17,11 @@
         <!-- cleaning_staff_ids -->
         @include('components.form.checkbox-multiple', [
             'group' => 'cleaning-staff',
-            'label' => __('Cleaning Staff Users'),
+            'label' => __('Cleaning Staff'),
             'name' => 'cleaning_staff_ids',
             'values' => prepareCheckboxValuesFromRows($cleaning_staff, [
-                'labelRef' => 'firstname',
-                'secondLabelRef' => 'lastname'
+                'labelRef' => 'full_name',
+                // 'secondLabelRef' => 'lastname'
             ]),
             'default' => prepareCheckboxDefaultValues($row->cleaningStaff, [
                 'valueRef' => 'id',

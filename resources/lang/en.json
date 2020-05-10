@@ -29,7 +29,7 @@
     "Cleaning Option": "Cleaning Option",
     "Cleaning Options": "Cleaning Options",
     "Cleaning Services": "Cleaning Services",
-    "Cleaning Staff Users": "Cleaning Staff Users",
+    "Cleaning Staff": "Cleaning Staff",
     "Create": "Create",
     "Create Amenity": "Create Amenity",
     "Company": "Company",
@@ -150,6 +150,7 @@
     "VIEW AS": "VIEW AS",
     "Weekly": "Weekly",
     "We're sorry, you don't have permissions to this section.": "We're sorry, you don't have permissions to this section.",
+    "Workgroup": "Workgroup",
     "Zone": "Zone",
     "Zones": "Zones",
     "ZIP": "ZIP"

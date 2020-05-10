@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{
-    CleaningStaffRepositoryInterface
-};
 use App\Models\CleaningStaff;
+use App\Repositories\CleaningStaffRepositoryInterface;
 
 class CleaningStaffController extends Controller
 {
     private $repository;
 
-    public function __construct(
-        CleaningStaffRepositoryInterface $repository
-    )
-    {
+    public function __construct(CleaningStaffRepositoryInterface $repository)
+    { 
         $this->repository      = $repository;
     }
 
@@ -43,8 +39,7 @@ class CleaningStaffController extends Controller
     {
         $cleaning_staff = $this->repository->blueprint();
 
-        return view('cleaning-staff.create')
-            ->with('cleaning_staff', $cleaning_staff);
+        return view('cleaning-staff.create')->with('cleaning_staff', $cleaning_staff);
     }
 
     /**
@@ -70,8 +65,7 @@ class CleaningStaffController extends Controller
     {
         $cleaning_staff = $this->repository->find($cleaning_staff);
 
-        return view('cleaning-staff.show')
-            ->with('cleaning_staff', $cleaning_staff);
+        return view('cleaning-staff.show')->with('cleaning_staff', $cleaning_staff);
     }
 
     /**
@@ -84,8 +78,7 @@ class CleaningStaffController extends Controller
     {
         $cleaning_staff = $this->repository->find($cleaning_staff);
 
-        return view('cleaning-staff.edit')
-            ->with('cleaning_staff', $cleaning_staff);
+        return view('cleaning-staff.edit')->with('cleaning_staff', $cleaning_staff);
     }
 
     /**

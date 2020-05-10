@@ -22,7 +22,7 @@ class CleaningStaffValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            //'staff_group_id' => 'required',
+            // 'staff_group_id' => 'required',
             'firstname'      => 'required',
             'lastname'       => 'required',
         ];

@@ -12,9 +12,9 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Staff Groups') }}</th>
-                        <th scope="col">{{ __('First Name') }}</th>
-                        <th scope="col">{{ __('Last Name') }}</th>
+                        <th scope="col">{{ __('Firstname') }}</th>
+                        <th scope="col">{{ __('Lastname') }}</th>
+                        <th scope="col">{{ __('Workgroup') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -29,14 +29,14 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- staff_group_id -->
-                                <td>{{ $row->staff_group_id }}</td>
-
                                 <!-- firstname -->
                                 <td>{{ $row->firstname }}</td>
 
                                 <!-- lastname -->
                                 <td>{{ $row->lastname }}</td>
+
+                                <!-- staff_group_id -->
+                                <td>{{ $row->staff_group_id }}</td>
 
                                 <!-- actions -->
                                 <td>

@@ -180,7 +180,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Cleaning Services') }}
                                     </label>
-                                    <a href="">
+                                    <a href="{{ route('cleaning-services') }}">
                                         <i class="nav-icon mr-2 i-Green-House"></i>
                                         {{ __('Cleaning Services') }}
                                     </a>
