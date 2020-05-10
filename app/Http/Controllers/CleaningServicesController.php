@@ -5,28 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\{
     CleaningServicesRepositoryInterface,
-    UsersRepositoryInterface,
-    PropertiesRepositoryInterface,
-    CleaningStaffRepositoryInterface
+    CleaningStaffRepositoryInterface,
+    PropertiesRepositoryInterface
 };
 use App\Models\CleaningService;
 
 class CleaningServicesController extends Controller
 {
     private $repository;
-    private $usersRepository;
     private $propertiesRepository;
     private $cleaningStaffRepository;
 
     public function __construct(
         CleaningServicesRepositoryInterface $repository,
-        UsersRepositoryInterface $usersRepository,
-        PropertiesRepositoryInterface $propertiesRepository,
-        CleaningStaffRepositoryInterface $cleaningStaffRepository
+        CleaningStaffRepositoryInterface $cleaningStaffRepository,
+        PropertiesRepositoryInterface $propertiesRepository
     )
     {
         $this->repository           = $repository;
-        $this->usersRepository      = $usersRepository;
         $this->propertiesRepository = $propertiesRepository;
         $this->cleaningStaffRepository = $cleaningStaffRepository;
     }
@@ -55,9 +51,6 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->blueprint();
 
-        $configUsers = ['paginate' => false, 'ownersOnly' => false];
-        $users = $this->usersRepository->all('', $configUsers);
-
         $propertiesConfig = ['paginate' => false];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
@@ -65,7 +58,6 @@ class CleaningServicesController extends Controller
         $cleaning_staff = $this->cleaningStaffRepository->all('', $configCleaningStaff);
 
         return view('cleaning-services.create')
-            ->with('users', $users)
             ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service);
@@ -94,9 +86,6 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->find($cleaning_service);
 
-        $configUsers = ['paginate' => false, 'ownersOnly' => false];
-        $users = $this->usersRepository->all('', $configUsers);
-
         $propertiesConfig = ['paginate' => false];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
@@ -104,7 +93,6 @@ class CleaningServicesController extends Controller
         $cleaning_staff = $this->cleaningStaffRepository->all('', $configCleaningStaff);
 
         return view('cleaning-services.show')
-            ->with('users', $users)
             ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service);
@@ -120,9 +108,6 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->find($cleaning_service);
 
-        $configUsers = ['paginate' => false, 'ownersOnly' => false];
-        $users = $this->usersRepository->all('', $configUsers);
-
         $propertiesConfig = ['paginate' => false];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
@@ -130,7 +115,6 @@ class CleaningServicesController extends Controller
         $cleaning_staff = $this->cleaningStaffRepository->all('', $configCleaningStaff);
 
         return view('cleaning-services.edit')
-            ->with('users', $users)
             ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service);

@@ -13,15 +13,11 @@ class CleaningService extends Model {
     public $timestamps = true;
     protected $fillable = [
         'property_id',
-        //'property_management_transaction_id',
-        //'booking_id',
         'date',
         'hour',
         'description',
         'maid_fee',
         'is_finished',
-        'audit_datetime',
-        'audit_user_id',
         'notes',
     ];
 

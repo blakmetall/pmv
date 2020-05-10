@@ -28,6 +28,11 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             $query = CleaningService::query();
         }
 
+        $query
+            ->with('cleaningStaff')
+            ->orderBy('is_finished', 'asc')
+            ->orderBy('created_at', 'desc');
+
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );
         }else{
@@ -63,6 +68,16 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $requestData = array_merge($checkboxesConfig, $request->all());
 
         $cleaning_service->fill($requestData);
+        
+        // audit
+        if ($request->is_finished) {
+            $user = auth()->user();
+            $cleaning_service->audit_user_id = $user->id;
+            $cleaning_service->audit_datetime = getCurrentDateTime();
+        } else {
+            $cleaning_service->audit_user_id = nulldata;
+            $cleaning_service->audit_datetime = null;
+        }
 
         $cleaning_service->save();
 
@@ -70,6 +85,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         if ($request->cleaning_staff_ids && is_array($request->cleaning_staff_ids) && count($request->cleaning_staff_ids)) {
             $cleaning_service->cleaningStaff()->sync($request->cleaning_staff_ids);
         }
+
 
         return $cleaning_service;
     }

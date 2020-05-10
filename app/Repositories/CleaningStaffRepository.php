@@ -29,6 +29,8 @@ class CleaningStaffRepository implements CleaningStaffRepositoryInterface
             $query = CleaningStaff::query();
         }
 
+        $query->orderBy('firstname', 'asc')->orderBy('lastname', 'asc');
+
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );
         }else{

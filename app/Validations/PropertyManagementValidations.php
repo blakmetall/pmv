@@ -24,8 +24,8 @@ class PropertyManagementValidations
         $defaultValidations = [
             'property_id' => 'required',
             'management_fee' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
+            'start_date' => 'required|date:Y-m-d',
+            'end_date' => 'nullable|date:Y-m-d',
         ];
 
         return $defaultValidations;
