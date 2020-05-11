@@ -59,6 +59,21 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
+        // agents
+        Route::group(['prefix' => 'agents'], function () {
+
+            Route::group(['middleware' => 'role-permission:users,index'], function() {
+                Route::get('', 'AgentsController@index')->name('agents');
+                Route::get('create', 'AgentsController@create')->name('agents.create');
+                Route::post('store', 'AgentsController@store')->name('agents.store');
+                Route::get('show/{user}', 'AgentsController@show')->name('agents.show');
+                Route::get('edit/{user}', 'AgentsController@edit')->name('agents.edit');
+                Route::post('update/{id}', 'AgentsController@update')->name('agents.update');
+                Route::get('destroy/{id}', 'AgentsController@destroy')->name('agents.destroy');
+            });
+
+        });
+
         // staff-groups
         Route::group(['prefix' => 'staff-groups', 'middleware' => 'role-permission:users,index'], function () {
             Route::get('', 'StaffGroupsController@index')->name('staff-groups');

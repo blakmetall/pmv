@@ -55,7 +55,7 @@
 
                                         @if ($_current_role->isAllowed('booking', 'agents'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('agents') }}">
                                                     <span class="item-name">{{ __('Agents') }}</span>
                                                 </a>
                                             </li>

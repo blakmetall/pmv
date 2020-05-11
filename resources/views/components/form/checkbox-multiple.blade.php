@@ -17,6 +17,8 @@
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
 
+    
+
 @endphp
 
 <!-- name -->
@@ -31,10 +33,14 @@
             <label class="checkbox checkbox-primary mb-2">
                 
                 @php
+                   
                     $checkedProp = '';
                     if(in_array($item['value'], old($requestName, $default))) {
                         $checkedProp = 'checked';
                     }
+
+                    $checkedProp = isset($checked) ? 'checked' : '';
+
                 @endphp
 
                 <input type="checkbox" 
