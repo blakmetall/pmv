@@ -7,7 +7,7 @@
 <fieldset {{ $disabled }}>
 
     <!-- load fields -->
-    @include('property-contacts.partials.form-fields', ['row' => $row])
+    @include('contacts.partials.form-fields', ['row' => $row])
 
 </fieldset>
 
@@ -15,7 +15,7 @@
 @include('components.form.actions', [
     'id' => $row->id,
     'disabled' => $disabled,
-    'edit_route' => 'property-contacts.edit',
-    'cancel_route' => 'property-contacts',
-    'routeParams' => [$property->id]
+    'edit_route' => 'contacts.edit',
+    'cancel_route' => 'contacts',
+    'delete_route' => 'contacts.destroy',
 ])

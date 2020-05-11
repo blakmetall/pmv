@@ -19,6 +19,7 @@
                         <th scope="col">{{ __('Address') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
+                        <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
                 </thead>
@@ -33,7 +34,7 @@
                                 </th>
 
                                 <!-- full_name -->
-                                <td>{{ $row->full_name }}</td>
+                                <td>{{ $row->full_name }} </td>
 
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
@@ -54,6 +55,17 @@
 
                                 <!-- contact_type -->
                                 <td>{{ $row->contact_type }}</td>
+                                
+                                <!-- actions -->
+                                <td>
+                                    @include('components.table.actions', [
+                                        'params' => [$row->id],
+                                        'showRoute' => 'contacts.show',
+                                        'editRoute' => 'contacts.edit',
+                                        'deleteRoute' => 'contacts.destroy',
+                                    ])
+                                </td>
+
                             </tr>
                         @endforeach
                     @endif

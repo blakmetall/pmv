@@ -6,7 +6,7 @@
         'label' => __('New'),
         'breadcrumbs' => [
             [
-                'url' => route('property-contacts', [$property->id]),
+                'url' => route('contacts'),
                 'label' => __('Contacts'),
             ],
         ]
@@ -21,12 +21,9 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('property-contacts.store', [$property->id]) }}" method="post">
+        <form action="{{ route('contacts.store') }}" method="post">
             @csrf
-            @include('property-contacts.partials.form', [
-                'row' => $property,
-                'contacts' => $contacts,
-            ])
+            @include('contacts.partials.form', ['row' => $contact])
         </form>
     </div>
 

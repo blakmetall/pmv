@@ -424,6 +424,12 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                 ]),
+                'contacts' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
             ]
         ];
 

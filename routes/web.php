@@ -283,6 +283,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'TransactionTypesController@update')->name('transaction-types.update');
                 Route::get('destroy/{id}', 'TransactionTypesController@destroy')->name('transaction-types.destroy');
             });
+
+            // contacts
+            Route::group(['prefix' => 'contacts', 'middleware' => 'role-permission:settings,contacts'], function () {
+                Route::get('', 'ContactsController@index')->name('contacts');
+                Route::get('create', 'ContactsController@create')->name('contacts.create');
+                Route::post('store', 'ContactsController@store')->name('contacts.store');
+                Route::get('show/{contact}', 'ContactsController@show')->name('contacts.show');
+                Route::get('edit/{contact}', 'ContactsController@edit')->name('contacts.edit');
+                Route::post('update/{id}', 'ContactsController@update')->name('contacts.update');
+                Route::get('destroy/{id}', 'ContactsController@destroy')->name('contacts.destroy');
+            });
         });
     });
 });

@@ -6,14 +6,14 @@
         'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('property-contacts', [$property->id]),
+                'url' => route('contacts'),
                 'label' => __('Contacts'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-contacts.create', [$property->id]),
+                'url' => route('contacts.create'),
             ]
         ]
     ])
@@ -26,11 +26,11 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="{{ route('property-contacts.update', [$property->id, $contact->id]) }}" method="post">
+        <form action="{{ route('contacts.update', [$contact->id]) }}" method="post">
             @csrf
-            @include('property-contacts.partials.form', [
+            @include('contacts.partials.form', [
                 'row' => $contact
-            ])        
+            ])
         </form>
     </div>
 
