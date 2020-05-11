@@ -26,6 +26,9 @@ class RolesRepository implements RolesRepositoryInterface
 
         $skipSuperAdmin = isset($config['skipSuperAdmin']) && $config['skipSuperAdmin'] === true;
 
+        $agentsOnly = isset($config['agentsOnly']) && $config['agentsOnly'] === true;
+
+
         if ($search) {
             $query = 
                 RoleTranslation::
@@ -38,6 +41,9 @@ class RolesRepository implements RolesRepositoryInterface
             $query->where('role_id', '!=', 1);
         }
 
+        if ($agentsOnly) {
+            $query->where('role_id', '=', 5);
+        }
         $query
             ->where('language_id', $lang->id)
             ->with('role')  
