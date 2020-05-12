@@ -53,8 +53,8 @@
             'group' => 'user',
             'label' => __('Roles'),
             'name' => 'roles_ids',
-            'disabled' => true,
-            'hidden' => false,
+            'disabled' => false,
+            'hidden' => true,
             'checked' => true,            
             'values' => prepareCheckboxValuesFromRowsAgents($roles, [
                 'valueRef' => 'role_id',
