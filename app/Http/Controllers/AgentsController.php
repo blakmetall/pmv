@@ -40,12 +40,12 @@ class AgentsController extends Controller
      */
     public function create()
     {
+       
         $user = $this->repository->blueprint();
         $user->profile = new Profile;
-
         $rolesConfig = ['skipSuperAdmin' => true , 'agentsOnly' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
-
+        
         return view('agents.create')
             ->with('agent', $user)
             ->with('roles', $roles);
@@ -89,14 +89,11 @@ class AgentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, User $user)
-    {
-        
+    {        
         if ($user->id == 1 && !auth()->user()->isSuper()) {
             $request->session()->flash('error', __("We're sorry, you don't have permissions to this section."));
             return redirect()->back();
         }
-
-        
 
         $user = $this->repository->find($user);
         $rolesConfig = ['skipSuperAdmin' => true , 'agentsOnly' => true];
@@ -115,8 +112,7 @@ class AgentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        
+    {        
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
         return redirect( route('agents.edit', [$id]) );
