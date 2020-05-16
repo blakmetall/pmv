@@ -12,7 +12,7 @@
                         <li>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a href="{{ route('calendar') }}">
                                         <i class="nav-icon mr-2 i-Calendar-2 text-primary"></i>
                                         {{ __('Calendar') }}
                                     </a>

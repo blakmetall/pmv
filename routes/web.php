@@ -57,6 +57,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('destroy/{id}', 'ContractorsServicesController@destroy')->name('contractors-services.destroy');
         });
 
+        // calendar
+        Route::group(['prefix' => 'calendar', 'middleware' => 'role-permission:calendar,index'], function () {
+            Route::get('', 'CalendarController@index')->name('calendar');
+        });
+
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {
             Route::get('', 'PropertiesController@index')->name('properties');

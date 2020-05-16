@@ -1,30 +1,4 @@
 $(document).ready(function() {
-    /* initialize the external events
-            -----------------------------------------------------------------*/
-
-
-    function initEvent() {
-        $('#external-events .fc-event').each(function() {
-
-            // store data so the calendar knows to render an event upon drop
-            $(this).data('event', {
-                title: $.trim($(this).text()), // use the element's text as the event title
-                color: $(this).css('background-color'),
-                stick: true // maintain when user navigates (see docs on the renderEvent method)
-            });
-
-            // make the event draggable using jQuery UI
-            $(this).draggable({
-                zIndex: 999,
-                revert: true, // will cause the event to go back to its
-                revertDuration: 0 // original position after the drag
-            });
-
-        });
-    }
-    initEvent();
-
-
     /* initialize the calendar
     -----------------------------------------------------------------*/
     var newDate = new Date,
@@ -40,23 +14,18 @@ $(document).ready(function() {
             right: 'month,agendaWeek,agendaDay'
         },
         themeSystem: "bootstrap4",
-        droppable: true,
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        drop: function() {
-            // is the "remove after drop" checkbox checked?
-            if ($('#drop-remove').is(':checked')) {
-                // if so, remove the element from the "Draggable Events" list
-                $(this).remove();
-            }
+        disableDragging: true,
+
+        eventRender: function (event, element) {
+            var status = (event.status)?"<i class='nav-icon i-Yes font-weight-bold text-success'></i>":"<i class='nav-icon i-Close font-weight-bold text-danger'></i>";
+            element.find('.fc-title').html("<div class='status-event'>"+status+"</div>"+" " +event.title);
         },
 
-
         events: [{
-            title: "Break time",
+            title: "Chinga tu madre",
             start: new Date(year, month, 1),
-            allDay: !0,
-            color: "#ffc107"
+            color: "#ffc107",
+            status: true
         }, {
             title: "Office Hour",
             start: new Date(year, month, 3)
@@ -65,64 +34,56 @@ $(document).ready(function() {
             start: new Date(year, month, 9),
             end: new Date(year, month, 12),
             allDay: !0,
-            color: "#d22346"
+            color: "#d22346",
+            status: false
         }, {
             title: "Work on a Project",
             start: new Date(year, month, 17),
             end: new Date(year, month, 19),
             allDay: !0,
-            color: "#d22346"
+            color: "#d22346",
+            status: true
         }, {
             id: 999,
             title: "Go to Long Drive",
-            start: new Date(year, month, date - 1, 15, 0)
+            start: new Date(year, month, date - 1, 15, 0),
+            status: true
         }, {
             id: 999,
             title: "Go to Long Drive",
-            start: new Date(year, month, date + 3, 15, 0)
+            start: new Date(year, month, date + 3, 15, 0),
+            status: true
         }, {
             title: "Work on a New Project",
             start: new Date(year, month, date - 3),
             end: new Date(year, month, date - 3),
             allDay: !0,
-            color: "#ffc107"
+            color: "#ffc107",
+            status: false
         }, {
             title: "Food ",
             start: new Date(year, month, date + 7, 15, 0),
-            color: "#4caf50"
+            color: "#4caf50",
+            status: false
         }, {
             title: "Go to Library",
             start: new Date(year, month, date, 8, 0),
             end: new Date(year, month, date, 14, 0),
-            color: "#ffc107"
+            color: "#ffc107",
+            status: false
         }, {
             title: "Go for Walk",
             start: new Date(year, month, 25),
             end: new Date(year, month, 27),
             allDay: !0,
-            color: "#ffc107"
+            color: "#ffc107",
+            status: false
         }, {
             title: "Work on a Project",
             start: new Date(year, month, date + 8, 20, 0),
-            end: new Date(year, month, date + 8, 22, 0)
+            end: new Date(year, month, date + 8, 22, 0),
+            status: true
         }]
-    });
-
-
-
-
-
-
-
-
-    jQuery(".js-form-add-event").on("submit", function(e) {
-        e.preventDefault();
-
-        var data = $('#newEvent').val();
-        $('#newEvent').val('');
-        $('#external-events').prepend('<li class="list-group-item bg-success fc-event">' + data + '</li>');
-
-        initEvent();
     });
 
 });
