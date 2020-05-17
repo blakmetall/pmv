@@ -1,6 +1,4 @@
-$(document).ready(function() {
-    /* initialize the calendar
-    -----------------------------------------------------------------*/
+export function initCalendar() {
     var newDate = new Date,
         date = newDate.getDate(),
         month = newDate.getMonth(),
@@ -85,5 +83,4 @@ $(document).ready(function() {
             status: true
         }]
     });
-
-});
+}

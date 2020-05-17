@@ -92,9 +92,6 @@
         {{-- scripts for horizontal sidebar --}}
         <script src="{{asset('assets/js/sidebar-horizontal.script.js')}}"></script>
 
-        {{-- scripts for calendar --}}
-        <script src="{{asset('assets/js/calendar.script.js')}}"></script>
-
         {{-- app js --}}
         <script src="{{asset('js/app.js')}}"></script>
 
