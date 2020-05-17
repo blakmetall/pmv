@@ -32,7 +32,9 @@ class Property extends Model {
         'lot_size_sqft',
         'construction_size_sqft',
         'phone',
-        'address'
+        'address',
+        'gmaps_lat',
+        'gmaps_lon'
     ];
 
     public $en;

@@ -33,6 +33,8 @@ class PropertiesValidations
             'zone_id' => 'required',
             'property_type_id' => 'required',
             'cleaning_option_id' => 'required',
+            'gmaps_lat' => 'required',
+            'gmaps_lon' => 'required',
             'rental_commission' => 'nullable|numeric|between:0,100',
             'maid_fee' => 'nullable|numeric',
             'bedrooms' => 'required|numeric',
