@@ -6,14 +6,14 @@
         'label' => __('View'),
         'breadcrumbs' => [
             [
-                'url' => route('workgroup'),
-                'label' => __('Staff Groups'),
+                'url' => route('workgroups'),
+                'label' => __('Workgroups'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('workgroup.create'),
+                'url' => route('workgroups.create'),
             ]
         ]
     ])
@@ -22,15 +22,19 @@
     <div class="mb-4"></div>
 
 @endsection
-
+    
 @section('main-content')
 
-    <div class="container app-container-sm">
+    <div class="container app-container">
         <form action="" onsubmit="return false;" method="post">
-            @include('workgroup.partials.form', [
-                'row' => $staff_group,
-                'disabled' => true
-            ])        
+
+            <!-- form fields -->
+            @include('workgroups.partials.form', [
+                'row' => $workgroup,
+                'cities' => $cities,
+                'disabled' => true,
+            ])
+
         </form>
     </div>
 

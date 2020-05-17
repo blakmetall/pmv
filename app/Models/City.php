@@ -32,4 +32,8 @@ class City extends Model {
         return $this->hasMany('App\Models\Contractor');
     }
 
+    public function workgroup() {
+        return $this->hasOne('App\Models\Workgroup');
+    }
+
 }

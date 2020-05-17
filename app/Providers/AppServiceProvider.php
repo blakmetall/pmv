@@ -52,16 +52,6 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \App\Repositories\ContractorsRepositoryInterface::class,
-            \App\Repositories\ContractorsRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\ContractorsServicesRepositoryInterface::class,
-            \App\Repositories\ContractorsServicesRepository::class
-        );
-
-        $this->app->bind(
             \App\Repositories\CleaningServicesRepositoryInterface::class,
             \App\Repositories\CleaningServicesRepository::class
         );
@@ -72,8 +62,23 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\ContractorsRepositoryInterface::class,
+            \App\Repositories\ContractorsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\ContractorsServicesRepositoryInterface::class,
+            \App\Repositories\ContractorsServicesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\DamageDepositsRepositoryInterface::class,
             \App\Repositories\DamageDepositsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\HumanResourcesRepositoryInterface::class,
+            \App\Repositories\HumanResourcesRepository::class
         );
 
         $this->app->bind(
@@ -127,18 +132,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\WorkgroupsRepositoryInterface::class,
+            \App\Repositories\WorkgroupsRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\ZonesRepositoryInterface::class,
             \App\Repositories\ZonesRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\StaffGroupsRepositoryInterface::class,
-            \App\Repositories\StaffGroupsRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\HumanResourcesRepositoryInterface::class,
-            \App\Repositories\HumanResourcesRepository::class
         );
     }
 }

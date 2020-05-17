@@ -390,7 +390,7 @@ class RoleHelper
                     'super',
                     'admin'
                 ]),
-                'workgroup' => self::transformSluggedRolesToIds([
+                'workgroups' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
                 ]),

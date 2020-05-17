@@ -87,6 +87,10 @@ class User extends Authenticatable {
         return $this->hasMany('App\Models\BookingExtraPayment', 'audit_user_id');
     }
 
+    public function workgroups() {
+        return $this->belongsToMany('App\Models\Workgroup', 'workgroup_has_users');
+    }
+
     public function isSuper() {
         $hasRole = !! $this->roles()->where('role_id', config('constants.roles.super'))->count();
         return $hasRole;

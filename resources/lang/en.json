@@ -133,6 +133,7 @@
     "Status": "Status",
     "Street": "Calle",
     "SPANISH": "SPANISH",
+    "The city you've selected already belongs to another Workgroup": "The city you've selected already belongs to another Workgroup",
     "There was an error saving the form, please verify your data": "There was an error saving the form, please verify your data",
     "This record can't be deleted": "This record can't be deleted",
     "Transaction": "Transaction",
@@ -154,6 +155,7 @@
     "Weekly": "Weekly",
     "We're sorry, you don't have permissions to this section.": "We're sorry, you don't have permissions to this section.",
     "Workgroup": "Workgroup",
+    "Workgroups": "Workgroups",
     "Zone": "Zone",
     "Zones": "Zones",
     "ZIP": "ZIP"
