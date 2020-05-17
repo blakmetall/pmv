@@ -43,7 +43,8 @@ mix.combine(
     [
         "resources/gull/assets/js/vendor/jquery-3.3.1.min.js",
         "resources/gull/assets/js/vendor/bootstrap.bundle.min.js",
-        "resources/gull/assets/js/vendor/perfect-scrollbar.min.js"
+        "resources/gull/assets/js/vendor/perfect-scrollbar.min.js",
+        "public/assets/js/fastselect.standalone.js"
     ],
     "public/assets/js/common-bundle-script.js"
 );

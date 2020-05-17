@@ -197,6 +197,21 @@
             'value' => $row->maid_fee
         ])
 
+        <!-- amenities -->
+        @include('components.form.multi-select', [
+            'group' => 'property',
+            'label' => __('Amenities'),
+            'name' => 'amenities_ids[]',
+            'placeholder' => __('Select Options'),
+            'disableDefaultOption' => true,
+            'options' => prepareSelectValuesFromRows($amenities, [
+                'valueRef' => 'amenity_id'
+            ]),
+            'default' => prepareSelectDefaultValues($row->amenities, [
+                'valueRef' => 'id',
+            ]),
+        ])
+
     </div>
 </div>
 
