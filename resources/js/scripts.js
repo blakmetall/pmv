@@ -1,5 +1,6 @@
 import { getViewport } from "./scripts/getViewport.js";
 import { handleMenuFit } from "./scripts/handleMenuFit.js";
+import { initCalendar } from "./scripts/initCalendar.js";
 import { initMap } from "./scripts/initMap.js";
 
 $(function() {
@@ -14,6 +15,8 @@ $(function() {
     function init() {
         $(window).resize(resize);
         handleMenuFit();
+      
+        initCalendar();
         initMap();
     }
 
