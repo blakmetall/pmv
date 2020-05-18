@@ -307,10 +307,10 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('settings', 'workgroup'))
+                                        @if ($_current_role->isAllowed('settings', 'workgroups'))
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('workgroup') }}">
-                                                    <span class="item-name">{{ __('Staff Groups') }}</span>
+                                                <a class="" href="{{ route('workgroups') }}">
+                                                    <span class="item-name">{{ __('Workgroups') }}</span>
                                                 </a>
                                             </li>
                                         @endif
