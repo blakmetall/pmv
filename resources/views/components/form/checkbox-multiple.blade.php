@@ -21,8 +21,7 @@
 
 @endphp
 
-<!-- name -->
-<div class="form-group row" style="{{ $hiddenStyle }}">
+<div class="form-group row mb-3" style="{{ $hiddenStyle }}">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}
     </label>

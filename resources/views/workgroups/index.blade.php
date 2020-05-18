@@ -3,11 +3,11 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('Staff Groups'),
+        'label' => __('Workgroups'),
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('staff-groups.create')
+                'url' => route('workgroups.create')
             ]
         ]
     ])
@@ -16,17 +16,19 @@
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('staff-groups')
+        'url' => route('workgroups')
     ])
 
 @endsection
 
 @section('main-content')
 
-    <!-- here the data is loaded -->
-    @include('staff-groups.partials.table', [
-        'label' => __('Staff Groups'),
-        'rows' => $staff_groups
+    @include('workgroups.partials.table', [
+        'label' => __('Workgroups'),
+        'rows' => $workgroups
     ])
 
 @endsection
+
+
+

@@ -13,8 +13,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('User') }}</th>
-                        <th scope="col">{{ __('City') }}</th>
-                        <th scope="col">{{ __('Location') }}</th>
+                        <th scope="col">{{ __('Workgroup') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -30,21 +29,30 @@
                                 </th>
 
                                 <!-- user -->
-                                <td>{{ $row->user->profile->firstname }} {{ $row->user->profile->lastname }}</td>
+                                <td>
+                                    @if ($row->user)
+                                        <a href="{{ route('users.show', [$row->user->id]) }}">
+                                            {{ $row->user->profile->full_name }}
+                                        </a>
+                                    @endif
+                                </td>
 
-                                <!-- city -->
-                                <td>{{ $row->city->name }}</td>
-
-                                <!-- location -->
-                                <td>{{ $row->location }}</td>
+                                <!-- workgroup -->
+                                <td>
+                                    @if ($row->workgroup)
+                                        <a href="{{ route('workgroups.show', [$row->workgroup->id]) }}">
+                                            {{ $row->workgroup->city->name }}
+                                        </a>
+                                    @endif
+                                </td>
 
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
-                                        'params' => [$row->id],
-                                        'showRoute' => 'staff-groups.show',
-                                        'editRoute' => 'staff-groups.edit',
-                                        'deleteRoute' => 'staff-groups.destroy',
+                                        'params' => [$row->workgroup->id, $row->id],
+                                        'showRoute' => 'workgroup-users.show',
+                                        'editRoute' => 'workgroup-users.edit',
+                                        'deleteRoute' => 'workgroup-users.destroy',
                                     ])
                                 </td>
 

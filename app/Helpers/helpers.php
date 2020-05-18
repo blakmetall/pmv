@@ -131,3 +131,10 @@ if (!function_exists('getCurrentDate')) {
         return date('Y-m-d', strtotime('now'));
     }
 }
+
+if (!function_exists('getCurrentDateTime')) {
+    function getCurrentDateTime()
+    {
+        return date('Y-m-d H:i:s', strtotime('now'));
+    }
+}

@@ -14,15 +14,11 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Staff') }}</th>
-                        <th scope="col">{{ __('Booking') }}</th>
                         <th scope="col">{{ __('Date') }}</th>
                         <th scope="col">{{ __('Hour') }}</th>
-                        <th scope="col">{{ __('Description') }}</th>
-                        <th scope="col">{{ __('Maid Fee') }}</th>
-                        <th scope="col">{{ __('Audit Date') }}</th>
-                        <th scope="col">{{ __('Auditor') }}</th>
-                        <th scope="col">{{ __('Notes') }}</th>
-                        <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col">{{ __('Booking') }}</th>
+                        <th scope="col">{{ __('Audited by') }}</th>
+                        <th scope="col">{{ __('Finished') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -38,13 +34,25 @@
                                 </th>
 
                                 <!-- property_id -->
-                                <td>{{ $row->property_id }}</td>
+                                <td>
+                                    @if ($row->property->hasTranslation())
+                                        <a href="{{ route('properties.show', [$row->property->id]) }}">
+                                            {{ $row->property->translate()->name }}
+                                        </a>
+                                    @endif
+                                </td>
 
-                                <!-- cleaning_staff_id -->
-                                <td>{{ $row->cleaning_staff_id }}</td>
-
-                                <!-- booking_id -->
-                                <td>{{ $row->booking_id }}</td>
+                                <!-- staff -->
+                                <td>
+                                    @if ($row->cleaningStaff()->count())
+                                        @foreach ($row->cleaningStaff as $staff)
+                                            <a href="{{ route('cleaning-staff.show', $staff->id) }}">
+                                                {{ $staff->full_name }} 
+                                            </a>
+                                            <br>
+                                        @endforeach
+                                    @endif
+                                </td>
 
                                 <!-- date -->
                                 <td>{{ $row->date }}</td>
@@ -52,25 +60,24 @@
                                 <!-- hours -->
                                 <td>{{ $row->hour }}</td>
 
-                                <!-- description -->
-                                <td>{{ $row->description }}</td>
-
-                                <!-- maid_fee -->
-                                <td>{{ $row->maid_fee }}</td>
-
-                                <!-- audit_datetime -->
-                                <td>{{ $row->audit_datetime }}</td>
+                                <!-- booking_id -->
+                                <td>{{ $row->booking_id }}</td>
 
                                 <!-- audit_user_id -->
-                                <td><a href="{{ route('users.edit', $row->audit_user_id) }}">{{ $row->auditedBy->profile->firstname }}</a></td>
-
-                                <!-- notes -->
-                                <td>{{ $row->notes }}</td>
+                                <td>
+                                    
+                                    @if($row->audit_user_id)
+                                        <a href="{{ route('users.edit', $row->audit_user_id) }}">
+                                            {{ $row->auditedBy->profile->firstname }}
+                                        </a>
+                                    @endif
+                                </td>
 
                                 <!-- is_finished -->
                                 <td>
                                     {!! getStatusIcon($row->is_finished) !!}
                                 </td>
+                                
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [

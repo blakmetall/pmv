@@ -16,8 +16,9 @@
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('Phone') }}</th>
                         <th scope="col">{{ __('Mobile') }}</th>
-                        <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">{{ __('Address') }}</th>
+                        <th scope="col">{{ __('Active') }}</th>
+                        <th scope="col">{{ __('Contact Type') }}</th>
                     </tr>
 
                 </thead>
@@ -31,8 +32,8 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- name -->
-                                <td>{{ $row->name }}</td>
+                                <!-- full_name -->
+                                <td>{{ $row->full_name }}</td>
 
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
@@ -43,25 +44,16 @@
                                 <!-- mobile -->
                                 <td>{{ $row->mobile }}</td>
 
-                                <!-- property -->
+                                <!-- address -->
+                                <td>{{ $row->address }}</td>
+
+                                <!-- is_active -->
                                 <td>
-                                    @if ($row->property->hasTranslation())
-                                        <a href="{{ route('properties.show', [$row->property->id]) }}">
-                                            {{ $row->property->translate()->name }}
-                                        </a>
-                                    @endif
+                                    {!! getStatusIcon($row->is_active) !!}
                                 </td>
 
-                                <!-- actions -->
-                                <td>
-                                    @include('components.table.actions', [
-                                        'params' => [$row->property->id, $row->id],
-                                        'showRoute' => 'property-contacts.show',
-                                        'editRoute' => 'property-contacts.edit',
-                                        'deleteRoute' => 'property-contacts.destroy',
-                                    ])
-                                </td>
-
+                                <!-- contact_type -->
+                                <td>{{ $row->contact_type }}</td>
                             </tr>
                         @endforeach
                     @endif

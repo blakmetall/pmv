@@ -14,10 +14,6 @@ class CleaningStaff extends Model {
     protected $fillable = [
         'firstname',
         'lastname',
-        'file_original_name',
-        'file_name',
-        'file_path',
-        'file_url',
     ];
 
     public function cleaningServices() {
@@ -28,8 +24,9 @@ class CleaningStaff extends Model {
         return $this->belongsToMany('App\Models\Property', 'properties_has_amenities');
     }
 
-    public function services() {
-        return $this->hasMany('App\Models\CleaningService');
+    // mutator: full_name 
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
     }
-
 }

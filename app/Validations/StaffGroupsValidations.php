@@ -37,11 +37,11 @@ class StaffGroupsValidations
 
         switch($validateEvent)   {
             case 'create':
-                $redirectRoute = 'staff-groups.create';
+                $redirectRoute = 'workgroup.create';
                 $validations = [];
             break;
             case 'edit':
-                $redirectRoute = 'staff-groups.edit';
+                $redirectRoute = 'workgroup.edit';
                 $validations = [];
             break;
         }

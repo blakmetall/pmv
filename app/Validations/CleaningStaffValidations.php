@@ -22,7 +22,6 @@ class CleaningStaffValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            //'staff_group_id' => 'required',
             'firstname'      => 'required',
             'lastname'       => 'required',
         ];
@@ -50,7 +49,7 @@ class CleaningStaffValidations
         $validator = Validator::make($request->all(), $validations);
 
         if( $validator->fails() ) {
-            throw new ValidationException($validator->errors());
+            throw new ValidationException($validator);
         }
     }
 }

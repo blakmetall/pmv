@@ -7,7 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class PropertyContactsValidations
+class ContactsValidations
 {  
     public static function validateOnCreate(Request $request)
     {
@@ -22,9 +22,8 @@ class PropertyContactsValidations
     public static function getDefaultValidations()
     {
         $defaultValidations = [
-            'property_id' => 'required',
-            'name' => 'required',
-            'email' => 'nullable|email'
+            'firstname' => 'required',
+            'email'     => 'required|email',
         ];
 
         return $defaultValidations;
@@ -37,11 +36,11 @@ class PropertyContactsValidations
 
         switch($validateEvent)   {
             case 'create':
-                $redirectRoute = 'property-contacts.create';
+                $redirectRoute = 'contacts.create';
                 $validations = [];
             break;
             case 'edit':
-                $redirectRoute = 'property-contacts.edit';
+                $redirectRoute = 'contacts.edit';
                 $validations = [];
             break;
         }

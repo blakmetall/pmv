@@ -11,6 +11,18 @@ class SettingsController extends Controller
     {
         $menu = [
             [
+                'label' => __('Users'),
+                'url'=> route('users')
+            ],
+            [
+                'label' => __('Workgroups'),
+                'url'=> route('workgroups')
+            ],
+            [
+                'label' => __('Roles'),
+                'url'=> route('roles')
+            ],
+            [
                 'label' => __('Cities'),
                 'url'=> route('cities')
             ],

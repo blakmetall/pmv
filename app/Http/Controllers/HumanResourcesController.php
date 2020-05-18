@@ -4,26 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\{
-    StaffGroupsRepositoryInterface,
-    UsersRepositoryInterface,
+    HumanResourcesRepositoryInterface,
     CitiesRepositoryInterface
 };
-use App\Models\StaffGroup;
+use App\Models\HumanResource;
 
-class StaffGroupsController extends Controller
+class HumanResourcesController extends Controller
 {
     private $repository;
-    private $usersRepository;
     private $citiesRepository;
 
     public function __construct(
-        StaffGroupsRepositoryInterface $repository,
-        UsersRepositoryInterface $usersRepository,
+        HumanResourcesRepositoryInterface $repository,
         CitiesRepositoryInterface $citiesRepository
     )
     {
         $this->repository       = $repository;
-        $this->usersRepository  = $usersRepository;
         $this->citiesRepository = $citiesRepository;
     }
 
@@ -35,10 +31,10 @@ class StaffGroupsController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $staff_groups = $this->repository->all($search);
+        $human_resources = $this->repository->all($search);
 
-        return view('staff-groups.index')
-            ->with('staff_groups', $staff_groups)
+        return view('human-resources.index')
+            ->with('human_resources', $human_resources)
             ->with('search', $search);
     }
 
@@ -49,18 +45,14 @@ class StaffGroupsController extends Controller
      */
     public function create()
     {
-        $staff_group = $this->repository->blueprint();
-
-        $configUsers = ['paginate' => false, 'ownersOnly' => false];
-        $users = $this->usersRepository->all('', $configUsers);
+        $human_resource = $this->repository->blueprint();
 
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
-        return view('staff-groups.create')
-            ->with('users', $users)
+        return view('human-resources.create')
             ->with('cities', $cities)
-            ->with('staff_group', $staff_group);
+            ->with('human_resource', $human_resource);
     }
 
     /**
@@ -71,9 +63,9 @@ class StaffGroupsController extends Controller
      */
     public function store(Request $request)
     {
-        $staff_group = $this->repository->create($request);
+        $human_resource = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('staff-groups.edit', [$staff_group->id]));
+        return redirect(route('human-resources.edit', [$human_resource->id]));
     }
 
     /**
@@ -82,20 +74,16 @@ class StaffGroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(StaffGroup $staff_group)
+    public function show(HumanResource $human_resource)
     {
-        $staff_group = $this->repository->find($staff_group);
-
-        $configUsers = ['paginate' => false, 'ownersOnly' => false];
-        $users = $this->usersRepository->all('', $configUsers);
+        $human_resource = $this->repository->find($human_resource);
 
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
-        return view('staff-groups.show')
-            ->with('users', $users)
+        return view('human-resources.show')
             ->with('cities', $cities)
-            ->with('staff_group', $staff_group);
+            ->with('human_resource', $human_resource);
     }
 
     /**
@@ -104,20 +92,16 @@ class StaffGroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(StaffGroup $staff_group)
+    public function edit(HumanResource $human_resource)
     {
-        $staff_group = $this->repository->find($staff_group);
-
-        $configUsers = ['paginate' => false, 'ownersOnly' => false];
-        $users = $this->usersRepository->all('', $configUsers);
+        $human_resource = $this->repository->find($human_resource);
 
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
-        return view('staff-groups.edit')
-            ->with('users', $users)
+        return view('human-resources.edit')
             ->with('cities', $cities)
-            ->with('staff_group', $staff_group);
+            ->with('human_resource', $human_resource);
     }
 
     /**
@@ -131,7 +115,7 @@ class StaffGroupsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('staff-groups.edit', [$id]) );
+        return redirect( route('human-resources.edit', [$id]) );
     }
 
     /**
@@ -145,7 +129,7 @@ class StaffGroupsController extends Controller
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
-            return redirect(route('staff-groups'));
+            return redirect(route('human-resources'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));

@@ -15,7 +15,7 @@ class RolePermission
      * @return mixed
      */
     public function handle($request, Closure $next, $section, $sub)
-    {
+    {   
         $current_role = RoleHelper::current();
         if($current_role->isAllowed($section, $sub)) {
             return $next($request);

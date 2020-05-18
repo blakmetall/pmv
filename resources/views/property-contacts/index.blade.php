@@ -6,7 +6,7 @@
         'label' => __('Contacts'),
         'actions' => [
             [
-                'label' => __('New'),
+                'label' => __('Assign Contacts'),
                 'url' => route('property-contacts.create', [$property->id])
             ]
         ]

@@ -20,25 +20,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Properties Types Lines
-    |--------------------------------------------------------------------------
-    */
-
-    'property-types-title' => 'Property Type Registration',
-    'property-types-list-title' => 'List of property types',
-
-    'property-types-name-label-es' => 'Type of Property in Spanish',
-    'property-types-name-label-en' => 'Property Type in English',
-
-    'property-types-table-col-name' => 'Type',
-    'property-types-table-col-action' => 'Action',
-
-    'property-types-success-message' => 'One type of property is successfully agreed',
-    'property-types-delete-success-message' => 'The type of property was removed',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Menu Options Lines
     |--------------------------------------------------------------------------
     */

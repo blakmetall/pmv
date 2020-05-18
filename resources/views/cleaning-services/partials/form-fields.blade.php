@@ -10,18 +10,17 @@
             'required' => true,
             'value' => $row->property_id,
             'options' => $properties,
-            'optionValueRef' => 'id',
+            'optionValueRef' => 'property_id',
             'optionLabelRef' => 'name',
         ])
 
         <!-- cleaning_staff_ids -->
         @include('components.form.checkbox-multiple', [
             'group' => 'cleaning-staff',
-            'label' => __('Cleaning Staff Users'),
+            'label' => __('Cleaning Staff'),
             'name' => 'cleaning_staff_ids',
             'values' => prepareCheckboxValuesFromRows($cleaning_staff, [
-                'labelRef' => 'firstname',
-                'secondLabelRef' => 'lastname'
+                'labelRef' => 'full_name',
             ]),
             'default' => prepareCheckboxDefaultValues($row->cleaningStaff, [
                 'valueRef' => 'id',
@@ -31,7 +30,6 @@
         <!-- date -->
         @include('components.form.input', [
             'group' => 'cleaning-service',
-            'type' => 'date',
             'label' => __('Date'),
             'name' => 'date',
             'required' => true,
@@ -41,10 +39,8 @@
         <!-- hours -->
         @include('components.form.input', [
             'group' => 'cleaning-service',
-            'type' => 'time',
             'label' => __('Hour'),
             'name' => 'hour',
-            'required' => true,
             'value' => $row->hour
         ])
 
@@ -76,27 +72,16 @@
             'default' => $row->is_finished,
         ])
 
-        <!-- audit_datetime -->
-        @include('components.form.input', [
-            'group' => 'cleaning-service',
-            'type' => 'datetime-local',
-            'label' => __('Audit Datetime'),
-            'name' => 'audit_datetime',
-            'required' => true,
-            'value' => $row->audit_datetime,
-        ])
-
-        <!-- audit_user_id -->
-        @include('components.form.select', [
-            'group' => 'cleaning-service',
-            'label' => __('Auditor'),
-            'name' => 'audit_user_id',
-            'required' => true,
-            'value' => $row->audit_user_id,
-            'options' => $users,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'profile,full_name',
-        ])
+        <!-- audit -->
+        @if ($row->auditedBy)
+            @include('components.form.input', [
+                'group' => 'cleaning-service',
+                'label' => __('Audited by'),
+                'name' => 'audited_by',
+                'value' => $row->auditedBy->profile->full_name,
+                'disabled' => true,
+            ])
+        @endif
 
         <!-- notes -->
         @include('components.form.textarea', [
