@@ -1,32 +1,44 @@
 export function initMap() {
-    var getMap = document.getElementById('map');
-    var getLat = $('#map').data('lat');
-    var getLng = $('#map').data('lng');
-    var latitude = (getLat)?getLat:20.666155;
-    var longitude = (getLng)?getLng:-105.251954;
-    var position = {lat: latitude, lng: longitude};
-    var fieldLat = $("#field_property_gmaps_lat_");
-    var fieldLng = $("#field_property_gmaps_lon_");
+    var maps = $('.app-map-wrapper');
 
-    $(fieldLat).val(latitude);
-    $(fieldLng).val(longitude);
+    if(maps.length) {
+        maps.each(function() {
+            var container = $(this);
+            var mapWrapper = container.find('.app-google-map');
 
-    var map = new google.maps.Map(getMap, {
-        center: position,
-        zoom: 12,
-        disableDefaultUI: true
-    });
+            var mapId = mapWrapper.data('map-id');
+            var mapElem = document.getElementById(mapId);
 
-    var marker = new google.maps.Marker({
-        position: position,
-        map: map,
-        draggable:true,
-    });
+            var latitudeInput = container.find('.latitude-wrapper input');
+            var longitudeInput = container.find('.longitude-wrapper input');
 
-    google.maps.event.addListener(marker, 'dragend', function (evt) {
-        $(fieldLat).val(evt.latLng.lat().toFixed(6));
-        $(fieldLng).val(evt.latLng.lng().toFixed(6));
+            var position = {
+                lat: mapWrapper.data('lat') || 20.666155, 
+                lng: mapWrapper.data('lng') || -105.251954
+            };
+            
+            latitudeInput.val(position.lat);
+            longitudeInput.val(position.lng);
 
-        map.panTo(evt.latLng);
-    });
+            var map = new google.maps.Map(mapElem, {
+                center: position,
+                zoom: 12,
+                disableDefaultUI: true
+            });
+        
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                draggable:true,
+            });
+        
+            google.maps.event.addListener(marker, 'dragend', function (e) {
+                latitudeInput.val(e.latLng.lat());
+                longitudeInput.val(e.latLng.lng());
+                map.panTo(e.latLng);
+            });
+
+            // FALTARIA AGREGAR EL EVENTO CLICK PARA HACER LO MISMO
+        })
+    }
 }

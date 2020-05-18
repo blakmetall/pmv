@@ -21,7 +21,6 @@
         {{-- theme css --}}
         <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/styles/vendor/perfect-scrollbar.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/styles/css/map.css') }}">
 
         {{-- app css --}}
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">

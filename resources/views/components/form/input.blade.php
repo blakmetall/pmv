@@ -8,6 +8,7 @@
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
+    $readOnly = isset($readOnly) ? (bool) $readOnly : false;
 
     $validTypes = ['text', 'email', 'password', 'date', 'time', 'datetime-local'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
@@ -22,6 +23,7 @@
 
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
+    $readOnlyProp = ($readOnly) ? 'readonly' : '';
     
 @endphp
 
@@ -43,6 +45,7 @@
             class="form-control" 
             id="{{ $id }}"
             {{ $disabledProp }}
+            {{ $readOnlyProp }}
         />
 
 

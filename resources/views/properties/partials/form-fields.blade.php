@@ -199,31 +199,12 @@
             'value' => $row->address,
         ])
 
-        <!-- gmaps_lat -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Latitude'),
-            'name' => 'gmaps_lat',
-            'required' => true,
-            'hidden' => true,
-            'value' => $row->gmaps_lat
-        ])
-
-        <!-- gmaps_lon -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Longitude'),
-            'name' => 'gmaps_lon',
-            'required' => true,
-            'hidden' => true,
-            'value' => $row->gmaps_lon
-        ])
-
         <!-- google_map -->
         @include('components.form.map', [
             'group' => 'property',
-            'label' => __('Position'),
-            'name' => 'position',
+            'label' => __('Location'),
+            'latitudeName' => 'gmaps_lat',
+            'longitudeName' => 'gmaps_lon',
             'latitude' => $row->gmaps_lat,
             'longitude' => $row->gmaps_lon
         ])
