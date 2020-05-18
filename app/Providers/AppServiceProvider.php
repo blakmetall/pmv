@@ -145,5 +145,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ZonesRepositoryInterface::class,
             \App\Repositories\ZonesRepository::class
         );
+
+        $this->app->bind(
+            \App\Repositories\ContactsRepositoryInterface::class,
+            \App\Repositories\ContactsRepository::class
+        );
     }
 }

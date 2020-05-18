@@ -3,11 +3,11 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('Contacts'),
+        'label' => __('Contact'),
         'actions' => [
             [
-                'label' => __('Assign Contacts'),
-                'url' => route('property-contacts.create', [$property->id])
+                'label' => __('New'),
+                'url' => route('contacts.create')
             ]
         ]
     ])
@@ -16,7 +16,7 @@
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('property-contacts', [$property->id])
+        'url' => route('contacts')
     ])
 
 @endsection
@@ -24,8 +24,8 @@
 @section('main-content')
 
     <!-- here the data is loaded -->
-    @include('property-contacts.partials.table', [
-        'label' => __('Contacts'),
+    @include('contacts.partials.table', [
+        'label' => __('Contact'),
         'rows' => $contacts
     ])
 
