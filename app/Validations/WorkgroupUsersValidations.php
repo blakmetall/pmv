@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Models\WorkgroupUser;
 
-class WorkgroupsValidations
+class WorkgroupUsersValidations
 {  
     public static function validateOnCreate(Request $request)
     {
@@ -21,7 +22,9 @@ class WorkgroupsValidations
 
     public static function getDefaultValidations()
     {
-        $defaultValidations = [];
+        $defaultValidations = [
+            'workgroup_id' => 'required',
+        ];
 
         return $defaultValidations;
     }
@@ -29,7 +32,7 @@ class WorkgroupsValidations
     public static function getDefaultMessages()
     {
         $defaultMessages = [
-            'city_id.unique' => __('The city you\'ve selected already belongs to another Workgroup')
+            'user_id.unique_with' => __('This user already belongs to the current Workgroup.')
         ];
 
         return $defaultMessages;
@@ -40,23 +43,21 @@ class WorkgroupsValidations
         $redirectRoute = '';
         $validations = [];
 
+        $workgroupTemplate = new WorkgroupUser;
+        $table = $workgroupTemplate->_getTable();
+
         switch($validateEvent)   {
             case 'create':
-                $redirectRoute = 'workgroups.create';
+                $redirectRoute = 'workgroup-users.create';
                 $validations = [
-                    'city_id' => [
-                        'required',
-                        Rule::unique('workgroups')
-                    ],
+                    'user_id' => "required|unique_with:{$table},workgroup_id"
                 ];
             break;
             case 'edit':
-                $redirectRoute = 'workgroups.edit';
+                $skipID = $id;
+                $redirectRoute = 'workgroup-users.edit';
                 $validations = [
-                    'city_id' => [
-                        'required',
-                        Rule::unique('workgroups')->ignore($id)
-                    ],
+                    'user_id' => "required|unique_with:{$table},workgroup_id,{$skipID}"
                 ];
             break;
         }

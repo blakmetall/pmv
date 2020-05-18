@@ -209,6 +209,22 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('edit/{workgroup}', 'WorkgroupsController@edit')->name('workgroups.edit');
                     Route::post('update/{id}', 'WorkgroupsController@update')->name('workgroups.update');
                     Route::get('destroy/{id}', 'WorkgroupsController@destroy')->name('workgroups.destroy');
+
+                    // single workgroup
+                    Route::group(['prefix' => '{workgroup}'], function () {
+
+                        // workgroup users
+                        Route::group(['prefix' => 'users'], function() {
+                            Route::get('', 'WorkgroupUsersController@index')->name('workgroup-users');
+                            Route::get('create', 'WorkgroupUsersController@create')->name('workgroup-users.create');
+                            Route::post('store', 'WorkgroupUsersController@store')->name('workgroup-users.store');
+                            Route::get('show/{workgroupUser}', 'WorkgroupUsersController@show')->name('workgroup-users.show');
+                            Route::get('edit/{workgroupUser}', 'WorkgroupUsersController@edit')->name('workgroup-users.edit');
+                            Route::post('update/{id}', 'WorkgroupUsersController@update')->name('workgroup-users.update');
+                            Route::get('destroy/{id}', 'WorkgroupUsersController@destroy')->name('workgroup-users.destroy');
+                        });
+
+                    });
                 });
             });
 

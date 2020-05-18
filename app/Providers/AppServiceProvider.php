@@ -137,6 +137,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\WorkgroupUsersRepositoryInterface::class,
+            \App\Repositories\WorkgroupUsersRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\ZonesRepositoryInterface::class,
             \App\Repositories\ZonesRepository::class
         );
