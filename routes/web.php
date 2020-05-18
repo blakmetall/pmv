@@ -35,6 +35,23 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('update', 'ProfileController@update')->name('profile.update');
         });
 
+
+        // bookings
+        Route::group(['prefix' => 'booking'], function () {
+
+            // agents
+            Route::group(['prefix' => 'agents', 'middleware' => 'role-permission:booking,agents'], function () {
+                Route::get('', 'AgentsController@index')->name('agents');
+                Route::get('create', 'AgentsController@create')->name('agents.create');
+                Route::post('store', 'AgentsController@store')->name('agents.store');
+                Route::get('show/{agent}', 'AgentsController@show')->name('agents.show');
+                Route::get('edit/{agent}', 'AgentsController@edit')->name('agents.edit');
+                Route::post('update/{id}', 'AgentsController@update')->name('agents.update');
+                Route::get('destroy/{id}', 'AgentsController@destroy')->name('agents.destroy');
+            });
+        });
+
+  
         // contractors
         Route::group(['prefix' => 'contractors', 'middleware' => 'role-permission:contractors,index'], function () {
             Route::get('', 'ContractorsController@index')->name('contractors');
@@ -204,23 +221,41 @@ Route::group(['middleware' => ['web']], function () {
                 });
             });
 
+            // workgroups
+            Route::group(['prefix' => 'workgroups'], function () {
+                Route::group(['middleware' => 'role-permission:settings,workgroups'], function() {
+                    Route::get('', 'WorkgroupsController@index')->name('workgroups');
+                    Route::get('create', 'WorkgroupsController@create')->name('workgroups.create');
+                    Route::post('store', 'WorkgroupsController@store')->name('workgroups.store');
+                    Route::get('show/{workgroup}', 'WorkgroupsController@show')->name('workgroups.show');
+                    Route::get('edit/{workgroup}', 'WorkgroupsController@edit')->name('workgroups.edit');
+                    Route::post('update/{id}', 'WorkgroupsController@update')->name('workgroups.update');
+                    Route::get('destroy/{id}', 'WorkgroupsController@destroy')->name('workgroups.destroy');
+
+                    // single workgroup
+                    Route::group(['prefix' => '{workgroup}'], function () {
+
+                        // workgroup users
+                        Route::group(['prefix' => 'users'], function() {
+                            Route::get('', 'WorkgroupUsersController@index')->name('workgroup-users');
+                            Route::get('create', 'WorkgroupUsersController@create')->name('workgroup-users.create');
+                            Route::post('store', 'WorkgroupUsersController@store')->name('workgroup-users.store');
+                            Route::get('show/{workgroupUser}', 'WorkgroupUsersController@show')->name('workgroup-users.show');
+                            Route::get('edit/{workgroupUser}', 'WorkgroupUsersController@edit')->name('workgroup-users.edit');
+                            Route::post('update/{id}', 'WorkgroupUsersController@update')->name('workgroup-users.update');
+                            Route::get('destroy/{id}', 'WorkgroupUsersController@destroy')->name('workgroup-users.destroy');
+                        });
+
+                    });
+                });
+            });
+
             // roles
             Route::group(['prefix' => 'roles'], function () {
                 Route::group(['middleware' => 'role-permission:settings,roles'], function() {
                     Route::get('', 'RolesController@index')->name('roles');
                 });    
                 Route::get('set-active/{id}', 'RolesController@setActive')->name('roles.set-active');
-            });
-
-            // workgroup
-            Route::group(['prefix' => 'workgroup', 'middleware' => 'role-permission:settings,workgroup'], function () {
-                Route::get('', 'StaffGroupsController@index')->name('workgroup');
-                Route::get('create', 'StaffGroupsController@create')->name('workgroup.create');
-                Route::post('store', 'StaffGroupsController@store')->name('workgroup.store');
-                Route::get('show/{staff_group}', 'StaffGroupsController@show')->name('workgroup.show');
-                Route::get('edit/{staff_group}', 'StaffGroupsController@edit')->name('workgroup.edit');
-                Route::post('update/{id}', 'StaffGroupsController@update')->name('workgroup.update');
-                Route::get('destroy/{id}', 'StaffGroupsController@destroy')->name('workgroup.destroy');
             });
 
             // zones
@@ -287,6 +322,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{transaction_type}', 'TransactionTypesController@edit')->name('transaction-types.edit');
                 Route::post('update/{id}', 'TransactionTypesController@update')->name('transaction-types.update');
                 Route::get('destroy/{id}', 'TransactionTypesController@destroy')->name('transaction-types.destroy');
+            });
+
+            // contacts
+            Route::group(['prefix' => 'contacts', 'middleware' => 'role-permission:settings,contacts'], function () {
+                Route::get('', 'ContactsController@index')->name('contacts');
+                Route::get('create', 'ContactsController@create')->name('contacts.create');
+                Route::post('store', 'ContactsController@store')->name('contacts.store');
+                Route::get('show/{contact}', 'ContactsController@show')->name('contacts.show');
+                Route::get('edit/{contact}', 'ContactsController@edit')->name('contacts.edit');
+                Route::post('update/{id}', 'ContactsController@update')->name('contacts.update');
+                Route::get('destroy/{id}', 'ContactsController@destroy')->name('contacts.destroy');
             });
         });
     });

@@ -60,6 +60,36 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
     }
 }
 
+// Helper for agents
+if (!function_exists('prepareCheckboxValuesFromRowsAgents')) {
+    function prepareCheckboxValuesFromRowsAgents($items, $config = [])
+    {
+        $values = [];
+        $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+        $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+        $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
+
+        // Id agents
+        $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : ''; // default empty
+
+        if ($items->count()) {
+            foreach($items as $item) {
+                if($item->{$valueRef} == 5){
+
+                    $values[] = [
+                        'label' => $item->{$labelRef}.' '.$item->{$secondLabelRef},
+                        'value' => $item->{$valueRef},
+                    ];  
+
+                }
+            }
+        }
+        
+        return $values;
+    }
+}
+
+
 if (!function_exists('prepareCheckboxDefaultValues')) {
     function prepareCheckboxDefaultValues($items, $config = [])
     {
@@ -106,5 +136,12 @@ if (!function_exists('getCurrentDateTime')) {
     function getCurrentDateTime()
     {
         return date('Y-m-d H:i:s', strtotime('now'));
+    }
+}
+
+if (!function_exists('preparePhoneContacts')) {
+    function preparePhoneContacts($phones)
+    {
+        return implode(' <b>/</b> ', $phones);
     }
 }

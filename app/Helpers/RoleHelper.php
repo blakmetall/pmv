@@ -390,7 +390,7 @@ class RoleHelper
                     'super',
                     'admin'
                 ]),
-                'workgroup' => self::transformSluggedRolesToIds([
+                'workgroups' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
                 ]),
@@ -419,6 +419,12 @@ class RoleHelper
                     'admin',
                 ]),
                 'damage-deposits' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'contacts' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
                     'accounting',

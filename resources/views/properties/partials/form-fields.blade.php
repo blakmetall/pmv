@@ -123,15 +123,6 @@
             'value' => $row->phone
         ])
 
-        <!-- address -->
-        @include('components.form.textarea', [
-            'group' => 'property',
-            'label' => __('Address'),
-            'name' => 'address',
-            'required' => true,
-            'value' => $row->address,
-        ])
-
         <!-- rental_commission -->
         @include('components.form.input', [
             'group' => 'property',
@@ -195,6 +186,27 @@
             'name' => 'maid_fee',
             'required' => true,
             'value' => $row->maid_fee
+        ])
+
+        <hr>
+
+        <!-- address -->
+        @include('components.form.textarea', [
+            'group' => 'property',
+            'label' => __('Address'),
+            'name' => 'address',
+            'required' => true,
+            'value' => $row->address,
+        ])
+
+        <!-- google_map -->
+        @include('components.form.map', [
+            'group' => 'property',
+            'label' => __('Location'),
+            'latitudeName' => 'gmaps_lat',
+            'longitudeName' => 'gmaps_lon',
+            'latitude' => $row->gmaps_lat,
+            'longitude' => $row->gmaps_lon
         ])
 
     </div>

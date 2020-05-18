@@ -6,8 +6,10 @@
 
 <fieldset {{ $disabled }}>
 
-    <!-- load fields -->
-    @include('workgroup.partials.form-fields', ['row' => $row])
+    @include('workgroups.partials.form-fields', [
+        'row' => $row,
+        'cities' => $cities,
+    ])
 
 </fieldset>
 
@@ -15,7 +17,7 @@
 @include('components.form.actions', [
     'id' => $row->id,
     'disabled' => $disabled,
-    'edit_route' => 'workgroup.edit',
-    'cancel_route' => 'workgroup',
-    'delete_route' => 'workgroup.destroy',
+    'edit_route' => 'workgroups.edit',
+    'cancel_route' => 'workgroups',
+    'delete_route' => 'workgroups.destroy',
 ])

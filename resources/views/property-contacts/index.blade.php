@@ -6,7 +6,7 @@
         'label' => __('Contacts'),
         'actions' => [
             [
-                'label' => __('New'),
+                'label' => __('Assign Contacts'),
                 'url' => route('property-contacts.create', [$property->id])
             ]
         ]
@@ -15,9 +15,12 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
+
+    {{-- DESHABILITADO TEMPORALMENTE PARA RESOLVER SEARCH MAS ADELANTE --}}
+
+    {{-- @include('components.search', [
         'url' => route('property-contacts', [$property->id])
-    ])
+    ]) --}}
 
 @endsection
 

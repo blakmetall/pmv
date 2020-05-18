@@ -17,6 +17,5 @@
     'disabled' => $disabled,
     'edit_route' => 'property-contacts.edit',
     'cancel_route' => 'property-contacts',
-    'delete_route' => 'property-contacts.destroy',
     'routeParams' => [$property->id]
 ])
