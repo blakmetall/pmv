@@ -6,14 +6,14 @@
         'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('workgroup'),
-                'label' => __('Staff Groups'),
+                'url' => route('workgroups'),
+                'label' => __('Workgroups'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('workgroup.create'),
+                'url' => route('workgroups.create'),
             ]
         ]
     ])
@@ -24,12 +24,15 @@
 @endsection
 
 @section('main-content')
-
-    <div class="container app-container-sm">
-        <form action="{{ route('workgroup.update', [$staff_group->id]) }}" method="post">
+    
+    <div class="container app-container">
+        <form action="{{ route('workgroups.update', [$workgroup->id]) }}" method="post">
             @csrf
-            @include('workgroup.partials.form', [
-                'row' => $staff_group
+
+            <!-- form fields -->
+            @include('workgroups.partials.form', [
+                'row' => $workgroup,
+                'cities' => $cities,
             ])
         </form>
     </div>

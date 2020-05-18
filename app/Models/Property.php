@@ -81,10 +81,6 @@ class Property extends Model {
         return $this->hasOne('App\Models\CleaningOption' , 'id');
     }
 
-    public function contacts() {
-        return $this->hasMany('App\Models\PropertyContact');
-    }
-
     public function management() {
         return $this->hasMany('App\Models\PropertyManagement');
     }
@@ -95,5 +91,9 @@ class Property extends Model {
 
     public function cleaningServices() {
         return $this->hasMany('App\Models\CleaningService');
+    }
+
+    public function contacts() {
+        return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
     }
 }

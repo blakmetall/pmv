@@ -160,6 +160,7 @@ return [
         'company' => __('Company'),
         'config_agent_commission' => __('Agent Commission'),
         'contact_name' => __('Contact'),
+        'contact_type' => __('Contact Type'),
         'contractor_id' => __('Contractor'),
         'country' => __('Country'),
         'date' => __('Date'),

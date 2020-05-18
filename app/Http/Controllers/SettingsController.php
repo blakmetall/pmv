@@ -15,8 +15,8 @@ class SettingsController extends Controller
                 'url'=> route('users')
             ],
             [
-                'label' => __('Workgroup'),
-                'url'=> '#'
+                'label' => __('Workgroups'),
+                'url'=> route('workgroups')
             ],
             [
                 'label' => __('Roles'),
@@ -29,6 +29,10 @@ class SettingsController extends Controller
             [
                 'label' => __('Zones'),
                 'url' => route('zones')
+            ],
+            [
+                'label' => __('Contacts'),
+                'url'=> route('contacts')
             ],
             [
                 'label' => __('Amenities'),

@@ -3,17 +3,17 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('View'),
+        'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('property-contacts', [$property->id]),
+                'url' => route('contacts'),
                 'label' => __('Contacts'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-contacts.create', [$property->id]),
+                'url' => route('contacts.create'),
             ]
         ]
     ])
@@ -26,12 +26,12 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="" onsubmit="return false;" method="post">
-            @include('property-contacts.partials.form', [
-                'row' => $contact,
-                'disabled' => true
-            ])        
-        </div>
-    </form>
+        <form action="{{ route('contacts.update', [$contact->id]) }}" method="post">
+            @csrf
+            @include('contacts.partials.form', [
+                'row' => $contact
+            ])
+        </form>
+    </div>
 
 @endsection
