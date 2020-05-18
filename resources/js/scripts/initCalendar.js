@@ -20,7 +20,7 @@ export function initCalendar() {
         },
 
         events: [{
-            title: "Chinga tu madre",
+            title: "Project name here",
             start: new Date(year, month, 1),
             color: "#ffc107",
             status: true
