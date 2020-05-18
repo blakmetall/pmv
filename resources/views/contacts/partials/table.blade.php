@@ -14,11 +14,9 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
-                        <th scope="col">{{ __('Phone') }}</th>
-                        <th scope="col">{{ __('Mobile') }}</th>
-                        <th scope="col">{{ __('Address') }}</th>
-                        <th scope="col">{{ __('Active') }}</th>
+                        <th scope="col">{{ __('Phones') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
+                        <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -39,22 +37,18 @@
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
-                                <!-- phone -->
-                                <td>{{ $row->phone }}</td>
+                                <!-- contact -->
+                                <td>
+                                    {!! preparePhoneContacts([$row->phone, $row->mobile]) !!}
+                                </td>
 
-                                <!-- mobile -->
-                                <td>{{ $row->mobile }}</td>
-
-                                <!-- address -->
-                                <td>{{ $row->address }}</td>
+                                <!-- contact_type -->
+                                <td>{{ $row->contact_type }}</td>
 
                                 <!-- is_active -->
                                 <td>
                                     {!! getStatusIcon($row->is_active) !!}
                                 </td>
-
-                                <!-- contact_type -->
-                                <td>{{ $row->contact_type }}</td>
                                 
                                 <!-- actions -->
                                 <td>

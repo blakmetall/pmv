@@ -299,14 +299,6 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('settings', 'contacts'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('contacts') }}">
-                                                    <span class="item-name">{{ __('Contacts') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
                                         @if ($_current_role->isAllowed('settings', 'workgroups'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('workgroups') }}">
@@ -335,6 +327,14 @@
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('zones') }}">
                                                     <span class="item-name">{{ __('Zones') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if ($_current_role->isAllowed('settings', 'contacts'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('contacts') }}">
+                                                    <span class="item-name">{{ __('Contacts') }}</span>
                                                 </a>
                                             </li>
                                         @endif

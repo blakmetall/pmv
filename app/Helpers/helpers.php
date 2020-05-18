@@ -108,3 +108,10 @@ if (!function_exists('getCurrentDateTime')) {
         return date('Y-m-d H:i:s', strtotime('now'));
     }
 }
+
+if (!function_exists('preparePhoneContacts')) {
+    function preparePhoneContacts($phones)
+    {
+        return implode(' <b>/</b> ', $phones);
+    }
+}

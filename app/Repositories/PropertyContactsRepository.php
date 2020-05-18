@@ -23,14 +23,14 @@ class PropertyContactsRepository implements PropertyContactsRepositoryInterface
         if ($search) {
             $query =
                 Property::
-                    WhereHas('contacts', function($query) use ($search) {
+                    whereHas('contacts', function($query) use ($search) {
                         $query
-                            ->where('firstname', 'like', $search)
-                            ->orWhere('lastname', 'like', $search)
-                            ->orWhere('email', 'like', $search)
-                            ->orWhere('phone', 'like', $search)
-                            ->orWhere('mobile', 'like', $search)
-                            ->orWhere('address', 'like', $search);
+                            ->where('contacts.firstname', 'like', $search)
+                            ->orWhere('contacts.lastname', 'like', $search)
+                            ->orWhere('contacts.email', 'like', $search)
+                            ->orWhere('contacts.phone', 'like', $search)
+                            ->orWhere('contacts.mobile', 'like', $search)
+                            ->orWhere('contacts.address', 'like', $search);
                     });
         } else {
             $query = $property->contacts();

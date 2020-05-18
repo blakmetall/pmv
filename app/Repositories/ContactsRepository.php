@@ -36,7 +36,8 @@ class ContactsRepository implements ContactsRepositoryInterface
 
         $query
             ->orderBy('is_active', 'asc')
-            ->orderBy('created_at', 'desc');
+            ->orderBy('firstname', 'asc')
+            ->orderBy('lastname', 'asc');
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );

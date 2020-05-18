@@ -31,6 +31,10 @@ class SettingsController extends Controller
                 'url' => route('zones')
             ],
             [
+                'label' => __('Contacts'),
+                'url'=> route('contacts')
+            ],
+            [
                 'label' => __('Amenities'),
                 'url' => route('amenities')
             ],

@@ -16,7 +16,8 @@
             'group' => 'contact',
             'label' => __('Lastname'),
             'name' => 'lastname',
-            'value' => $row->lastname
+            'required' => true,
+            'value' => $row->lastname,
         ])
 
         <!-- email -->

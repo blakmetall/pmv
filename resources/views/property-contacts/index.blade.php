@@ -15,9 +15,12 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
+
+    {{-- DESHABILITADO TEMPORALMENTE PARA RESOLVER SEARCH MAS ADELANTE --}}
+
+    {{-- @include('components.search', [
         'url' => route('property-contacts', [$property->id])
-    ])
+    ]) --}}
 
 @endsection
 
