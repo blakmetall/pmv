@@ -14,8 +14,9 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
-                        <th scope="col">{{ __('Roles') }}</th>
-                        <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col">{{ __('Phones') }}</th>
+                        <th scope="col">{{ __('Active Agent') }}</th>
+                        <th scope="col">{{ __('Active User') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -33,8 +34,9 @@
                                 <!-- name -->
                                 <td>
                                     @if($row->profile)
-                                        {{ $row->profile->firstname }}
-                                        {{ $row->profile->lastname}}
+                                        <a href="{{ route('users.show', [$row->profile->user->id]) }}">
+                                            {{ $row->profile->full_name }}
+                                        </a>
                                     @else
                                         ...
                                     @endif
@@ -43,37 +45,31 @@
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
-                                <!-- roles -->
+                                <!-- phones -->
                                 <td>
-                                    @foreach (RoleHelper::available($row->id) as $role)
-                                        <div>
-                                            <span class="badge badge-secondary p-1 mb-1">
-                                                {{ $role['name'] }}
-                                            </span>
-                                        </div>
-                                    @endforeach
+                                    @if($row->profile)
+                                        {!! preparePhoneContacts([$row->profile->phone, $row->profile->mobile]) !!}
+                                    @endif
                                 </td>
 
                                 <!-- is_enabled -->
-                                <th scope="row">
-                                    @php 
-                                        $enabledClass = ($row->is_enabled) ? 'success' : 'danger';
-                                        $enabledLabel = ($row->is_enabled) ? __('Enabled') : __('Disabled');
-                                    @endphp
+                                <td>
+                                    {!! getStatusIcon($row->is_active) !!}
+                                </td>
 
-                                    <span class="badge badge-{{ $enabledClass }} p-1">
-                                        {{ $enabledLabel }}
-                                    </span>
-                                </th>
+                                <!-- user status -->
+                                <td>
+                                    {!! getStatusIcon($row->is_enabled) !!}
+                                </td>
 
                                 <!-- actions -->
                                 <td>
-                                    @include('components.table.actions', [
+                                    {{-- @include('components.table.actions', [
                                         'params' => [$row->id],
                                         'showRoute' => 'agents.show',
                                         'editRoute' => 'agents.edit',
                                         'deleteRoute' => 'agents.destroy',
-                                    ])
+                                    ]) --}}
                                 </td>
 
                             </tr>

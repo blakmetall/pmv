@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
-use App\Models\{Profile, User};
+use App\Repositories\UsersRepositoryInterface;
+use App\Validations\UsersValidations;
+use App\Models\User;
 
 class AgentsController extends Controller
 {
-    private $repository;
-    private $rolesRepository;
+    private $usersRepository;
 
-    public function __construct(UsersRepositoryInterface $repository, RolesRepositoryInterface $rolesRepository)
+    public function __construct(UsersRepositoryInterface $usersRepository)
     {
-        $this->repository = $repository;
-        $this->rolesRepository = $rolesRepository;
+        $this->usersRepository = $usersRepository;
     }
 
     /**
@@ -25,43 +24,11 @@ class AgentsController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $config = ['agentsOnly' => 5] ;
-        $agents = $this->repository->all($search, $config);
+        $agents = $this->usersRepository->all($search, ['agentsOnly' => true]);
 
         return view('agents.index')
             ->with('agents', $agents)
             ->with('search', $search);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-       
-        $user = $this->repository->blueprint();
-        $user->profile = new Profile;
-        $rolesConfig = ['skipSuperAdmin' => true , 'agentsOnly' => true];
-        $roles = $this->rolesRepository->all('', $rolesConfig);
-        
-        return view('agents.create')
-            ->with('agent', $user)
-            ->with('roles', $roles);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $user = $this->repository->create($request);
-        $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('agents.edit', [$user->id]));
     }
 
     /**
@@ -70,16 +37,10 @@ class AgentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $agent)
     {
-        $user = $this->repository->find($user);
-
-        $rolesConfig = ['skipSuperAdmin' => true];
-        $roles = $this->rolesRepository->all('', $rolesConfig);
-
-        return view('agents.show')
-            ->with('agent', $user)
-            ->with('roles', $roles);
+        $agent = $this->usersRepository->find($agent);
+        return view('agents.show')->with('agent', $agent);
     }
 
     /**
@@ -88,20 +49,10 @@ class AgentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, User $agent)
     {        
-        if ($user->id == 1 && !auth()->user()->isSuper()) {
-            $request->session()->flash('error', __("We're sorry, you don't have permissions to this section."));
-            return redirect()->back();
-        }
-
-        $user = $this->repository->find($user);
-        $rolesConfig = ['skipSuperAdmin' => true , 'agentsOnly' => true];
-        $roles = $this->rolesRepository->all('', $rolesConfig);
-
-        return view('agents.edit')
-            ->with('user', $user)
-            ->with('roles', $roles);
+        $agent = $this->usersRepository->find($agent);
+        return view('agents.edit')->with('agent', $agent);
     }
 
     /**
@@ -113,26 +64,21 @@ class AgentsController extends Controller
      */
     public function update(Request $request, $id)
     {        
-        $this->repository->update($request, $id);
+        UsersValidations::validateOnEditAgent($request, $agent->id);
+
+        $this->usersRepository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
         return redirect( route('agents.edit', [$id]) );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Change the status of current user agent
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function deactivate(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
-            $this->repository->delete($id);
-            $request->session()->flash('success', __('Record deleted successfully'));
-            return redirect(route('agents'));
-        }
-
-        $request->session()->flash('error', __("This record can't be deleted"));
-        return redirect()->back();
+        // change agent status
     }
 }

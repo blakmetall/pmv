@@ -4,12 +4,6 @@
 
     @include('components.heading', [
         'label' => __('Agents'),
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('agents.create')
-            ]
-        ]
     ])
 
     <!-- separator -->

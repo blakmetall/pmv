@@ -17,8 +17,6 @@
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
 
-    
-
 @endphp
 
 <div class="form-group row mb-3" style="{{ $hiddenStyle }}">
@@ -37,8 +35,6 @@
                     if(in_array($item['value'], old($requestName, $default))) {
                         $checkedProp = 'checked';
                     }
-
-                    $checkedProp = isset($checked) ? 'checked' : '';
 
                 @endphp
 

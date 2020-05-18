@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Repositories\RolesRepositoryInterface;
 use App\Models\{ Role, RoleTranslation };
-// use App\Validations\UsersValidations;
+
 
 class RolesRepository implements RolesRepositoryInterface
 {
@@ -20,14 +20,9 @@ class RolesRepository implements RolesRepositoryInterface
 
     public function all($search = '', $config = [])
     {
-        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        
         $lang = LanguageHelper::current();
-
+        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $skipSuperAdmin = isset($config['skipSuperAdmin']) && $config['skipSuperAdmin'] === true;
-
-        $agentsOnly = isset($config['agentsOnly']) && $config['agentsOnly'] === true;
-
 
         if ($search) {
             $query = 
@@ -38,12 +33,9 @@ class RolesRepository implements RolesRepositoryInterface
         }
 
         if ($skipSuperAdmin) {
-            $query->where('role_id', '!=', 1);
+            $query->where('role_id', '!=', config('constants.roles.super'));
         }
-
-        if ($agentsOnly) {
-            $query->where('role_id', '=', 5);
-        }
+        
         $query
             ->where('language_id', $lang->id)
             ->with('role')  

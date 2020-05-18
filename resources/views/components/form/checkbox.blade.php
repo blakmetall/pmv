@@ -15,7 +15,6 @@
     $inputName = prepareFormInputName($name, $parentName, $lang);
     
     $checkedProp = old($requestName, $default) ? 'checked' : '';
-    $checkedProp = isset($checked) ? 'checked' : '';
 
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';

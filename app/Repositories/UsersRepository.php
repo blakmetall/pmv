@@ -22,7 +22,6 @@ class UsersRepository implements UsersRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $ownersOnly = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
-
         $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
 
         if ($search) {
@@ -49,9 +48,9 @@ class UsersRepository implements UsersRepositoryInterface
         }
 
         if ($agentsOnly) {
-            $query->whereHas('roles', function($q) use ($agentsOnly) {
+            $query->whereHas('roles', function($q) {
                 $table = (new Role)->_getTable();
-                $q->whereIn($table.'.id', [$agentsOnly]);
+                $q->whereIn($table.'.id', [config('constants.roles.rentals-agent')]);
             });
         }
 
