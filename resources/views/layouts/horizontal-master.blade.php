@@ -19,6 +19,7 @@
         @yield('before-css')
 
         {{-- theme css --}}
+        <link rel="stylesheet" href="{{ asset('assets/styles/vendor/calendar/fullcalendar.min.css') }}">
         <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/styles/vendor/perfect-scrollbar.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/styles/vendor/fastselect.min.css') }}">
@@ -91,6 +92,10 @@
 
         {{-- scripts for horizontal sidebar --}}
         <script src="{{asset('assets/js/sidebar-horizontal.script.js')}}"></script>
+
+        {{-- scripts for goole map --}}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKF1GvQF4ZJdoUtDFe-nmLe0v8FCl5HtA"
+                async defer></script>
 
         {{-- app js --}}
         <script src="{{asset('js/app.js')}}"></script>

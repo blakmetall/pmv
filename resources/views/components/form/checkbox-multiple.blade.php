@@ -30,10 +30,12 @@
             <label class="checkbox checkbox-primary mb-2">
                 
                 @php
+                   
                     $checkedProp = '';
                     if(in_array($item['value'], old($requestName, $default))) {
                         $checkedProp = 'checked';
                     }
+
                 @endphp
 
                 <input type="checkbox" 

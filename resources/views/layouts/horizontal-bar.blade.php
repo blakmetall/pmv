@@ -12,7 +12,7 @@
                         <li>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a href="{{ route('calendar') }}">
                                         <i class="nav-icon mr-2 i-Calendar-2 text-primary"></i>
                                         {{ __('Calendar') }}
                                     </a>
@@ -55,7 +55,7 @@
 
                                         @if ($_current_role->isAllowed('booking', 'agents'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('agents') }}">
                                                     <span class="item-name">{{ __('Agents') }}</span>
                                                 </a>
                                             </li>
@@ -299,10 +299,10 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('settings', 'workgroup'))
+                                        @if ($_current_role->isAllowed('settings', 'workgroups'))
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('workgroup') }}">
-                                                    <span class="item-name">{{ __('Staff Groups') }}</span>
+                                                <a class="" href="{{ route('workgroups') }}">
+                                                    <span class="item-name">{{ __('Workgroups') }}</span>
                                                 </a>
                                             </li>
                                         @endif
@@ -327,6 +327,14 @@
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('zones') }}">
                                                     <span class="item-name">{{ __('Zones') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if ($_current_role->isAllowed('settings', 'contacts'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('contacts') }}">
+                                                    <span class="item-name">{{ __('Contacts') }}</span>
                                                 </a>
                                             </li>
                                         @endif
