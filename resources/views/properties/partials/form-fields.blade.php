@@ -201,6 +201,7 @@
             'default' => prepareSelectDefaultValues($row->amenities, [
                 'valueRef' => 'id',
             ]),
+        ])
 
         <hr>
 
