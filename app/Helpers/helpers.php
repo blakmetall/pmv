@@ -107,6 +107,43 @@ if (!function_exists('prepareCheckboxDefaultValues')) {
     }
 }
 
+if (!function_exists('prepareSelectValuesFromRows')) {
+    function prepareSelectValuesFromRows($items, $config = [])
+    {
+        $values = [];
+
+        $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+        $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+        if ($items->count()) {
+            foreach($items as $item) {
+                $values[] = [
+                    'label' => $item->{$labelRef},
+                    'value' => $item->{$valueRef},
+                ];
+            }
+        }
+
+        return $values;
+    }
+}
+
+if (!function_exists('prepareSelectDefaultValues')) {
+    function prepareSelectDefaultValues($items, $config = [])
+    {
+        $defaultValues = [];
+
+        $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+
+        if ($items->count()) {
+            foreach($items as $item) {
+                $defaultValues[] = $item->{$valueRef};
+            }
+        }
+
+        return $defaultValues;
+    }
+}
+
 if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {

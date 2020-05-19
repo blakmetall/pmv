@@ -90,6 +90,11 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         
         $property->es->fill($request->es);
         $property->es->save();
+
+        // amenities assignation
+        if ($request->amenities_ids && is_array($request->amenities_ids) && count($request->amenities_ids)) {
+            $property->amenities()->sync($request->amenities_ids);
+        }
         
         return $property;
     }

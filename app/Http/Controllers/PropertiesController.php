@@ -11,6 +11,7 @@ use App\Repositories\{
     ZonesRepositoryInterface,
     CleaningOptionsRepositoryInterface,
     PropertyTypesRepositoryInterface,
+    AmenitiesRepositoryInterface
 };
 
 class PropertiesController extends Controller
@@ -19,6 +20,7 @@ class PropertiesController extends Controller
     private $usersRepository;
     private $citiesRepository;
     private $zonesRepository;
+    private $amenitiesRepository;
     private $cleaningOptionsRepository;
     private $propertyTypesRepository;
 
@@ -27,6 +29,7 @@ class PropertiesController extends Controller
         UsersRepositoryInterface $usersRepository,
         CitiesRepositoryInterface $citiesRepository,
         ZonesRepositoryInterface $zonesRepository,
+        AmenitiesRepositoryInterface $amenitiesRepository,
         CleaningOptionsRepositoryInterface $cleaningOptionsRepository,
         PropertyTypesRepositoryInterface $propertyTypesRepository
     ) {
@@ -34,6 +37,7 @@ class PropertiesController extends Controller
         $this->usersRepository = $usersRepository;
         $this->citiesRepository = $citiesRepository;
         $this->zonesRepository = $zonesRepository;
+        $this->amenitiesRepository = $amenitiesRepository;
         $this->cleaningOptionsRepository = $cleaningOptionsRepository;
         $this->propertyTypesRepository = $propertyTypesRepository;
     }
@@ -68,6 +72,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $config);
         $zones = $this->zonesRepository->all('', $config);
+        $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
@@ -76,6 +81,7 @@ class PropertiesController extends Controller
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('zones', $zones)
+            ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
     }
@@ -108,6 +114,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $config);
         $zones = $this->zonesRepository->all('', $config);
+        $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
@@ -116,6 +123,7 @@ class PropertiesController extends Controller
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('zones', $zones)
+            ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
     }
@@ -136,6 +144,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $config);
         $zones = $this->zonesRepository->all('', $config);
+        $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
@@ -144,6 +153,7 @@ class PropertiesController extends Controller
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('zones', $zones)
+            ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
     }
