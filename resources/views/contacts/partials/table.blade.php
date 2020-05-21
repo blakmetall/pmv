@@ -15,6 +15,7 @@
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('Phones') }}</th>
+                        <th scope="col">{{ __('Emergency Phones') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
@@ -41,6 +42,9 @@
                                 <td>
                                     {!! preparePhoneContacts([$row->phone, $row->mobile]) !!}
                                 </td>
+
+                                 <!-- contact_type -->
+                                <td>{{ $row->emergencyphone }}</td>
 
                                 <!-- contact_type -->
                                 <td>{{ $row->contact_type }}</td>

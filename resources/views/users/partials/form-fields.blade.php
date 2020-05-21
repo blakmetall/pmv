@@ -144,7 +144,7 @@
             'name' => 'phone',
             'parentName' => 'profile',
             'value' => $row->profile->phone
-        ])
+        ])        
 
         <!-- mobile -->
         @include('components.form.input', [
@@ -153,6 +153,16 @@
             'name' => 'mobile',
             'parentName' => 'profile',
             'value' => $row->profile->mobile
+        ])
+
+        <!-- emergency phone -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Emergency Phone'),
+            'name' => 'emergencyphone',
+            'required' => true,
+            'parentName' => 'profile',
+            'value' => $row->profile->emergencyphone
         ])
 
         @if ( RoleHelper::hasValidRoleId( config('constants.roles.rentals-agent') ) )

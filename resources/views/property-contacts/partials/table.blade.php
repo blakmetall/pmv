@@ -16,6 +16,7 @@
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('Phone') }}</th>
                         <th scope="col">{{ __('Mobile') }}</th>
+                        <th scope="col">{{ __('Emergency Phone') }}</th>
                         <th scope="col">{{ __('Address') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
@@ -43,6 +44,9 @@
 
                                 <!-- mobile -->
                                 <td>{{ $row->mobile }}</td>
+
+                                <!-- mobile -->
+                                <td>{{ $row->emergencyphone }}</td>
 
                                 <!-- address -->
                                 <td>{{ $row->address }}</td>

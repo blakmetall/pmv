@@ -36,7 +36,7 @@
             'label' => __('Phone'),
             'name' => 'phone',
             'value' => $row->phone
-        ])
+        ])        
 
         <!-- mobile -->
         @include('components.form.input', [
@@ -44,6 +44,15 @@
             'label' => __('Mobile'),
             'name' => 'mobile',
             'value' => $row->mobile
+        ])
+
+        <!-- emergency phone -->
+        @include('components.form.input', [
+            'group' => 'contact',
+            'label' => __('Emargency Phone'),
+            'name' => 'emergencyphone',
+            'required' => true,
+            'value' => $row->emergencyphone
         ])
 
         <!-- address -->

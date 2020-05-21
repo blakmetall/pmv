@@ -32,6 +32,7 @@ class UsersValidations
             'profile.country' => 'required',
             'profile.state' => 'required',
             'profile.city' => 'required',
+            'profile.emergencyphone' => 'required',
             'profile.street' => 'required',
             'profile.zip' => 'required|numeric',
             'profile.config_agent_commission' => 'nullable|integer|between:0,100',
