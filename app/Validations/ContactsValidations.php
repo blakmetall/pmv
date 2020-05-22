@@ -24,7 +24,7 @@ class ContactsValidations
         $defaultValidations = [
             'firstname' => 'required',
             'lastname' => 'required',
-            'emergencyphone' => 'required',
+            'emergency_phone' => 'required',
             'email'     => 'required|email',
         ];
 

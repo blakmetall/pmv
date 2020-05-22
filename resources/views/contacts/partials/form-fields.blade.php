@@ -49,10 +49,10 @@
         <!-- emergency phone -->
         @include('components.form.input', [
             'group' => 'contact',
-            'label' => __('Emargency Phone'),
-            'name' => 'emergencyphone',
+            'label' => __('Emergency Phone'),
+            'name' => 'emergency_phone',
             'required' => true,
-            'value' => $row->emergencyphone
+            'value' => $row->emergency_phone
         ])
 
         <!-- address -->

@@ -20,7 +20,7 @@ class Profile extends Model {
         'street',
         'zip',
         'phone',
-        'emergencyphone',
+        'emergency_phone',
         'mobile',
         'config_language',
         'config_agent_commission',

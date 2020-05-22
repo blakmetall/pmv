@@ -15,7 +15,7 @@
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('Phones') }}</th>
-                        <th scope="col">{{ __('Emergency Phones') }}</th>
+                        <th scope="col">{{ __('Emergency Phone') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
@@ -43,8 +43,8 @@
                                     {!! preparePhoneContacts([$row->phone, $row->mobile]) !!}
                                 </td>
 
-                                 <!-- contact_type -->
-                                <td>{{ $row->emergencyphone }}</td>
+                                <!-- emergency_phone -->
+                                <td>{{ $row->emergency_phone }}</td>
 
                                 <!-- contact_type -->
                                 <td>{{ $row->contact_type }}</td>
@@ -53,7 +53,7 @@
                                 <td>
                                     {!! getStatusIcon($row->is_active) !!}
                                 </td>
-                                
+
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [

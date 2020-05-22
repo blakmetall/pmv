@@ -46,7 +46,7 @@
                                 <td>{{ $row->mobile }}</td>
 
                                 <!-- mobile -->
-                                <td>{{ $row->emergencyphone }}</td>
+                                <td>{{ $row->emergency_phone }}</td>
 
                                 <!-- address -->
                                 <td>{{ $row->address }}</td>

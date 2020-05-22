@@ -14,7 +14,7 @@ class UpdatePropertyContactsAddEmergecyPhoneNumber extends Migration
     public function up()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->string('emergencyphone', 30)->nullable()->after('phone');
+            $table->string('emergency_phone', 30)->nullable()->after('phone');
         });
     }
 
@@ -26,7 +26,7 @@ class UpdatePropertyContactsAddEmergecyPhoneNumber extends Migration
     public function down()
     {
         Schema::table('contacts', function($table) {
-            $table->dropColumn('emergencyphone');
+            $table->dropColumn('emergency_phone');
         });
     }
 }

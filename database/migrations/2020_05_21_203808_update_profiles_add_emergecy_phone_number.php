@@ -15,7 +15,7 @@ class UpdateProfilesAddEmergecyPhoneNumber extends Migration
     {
         //
         Schema::table('profiles', function (Blueprint $table) {
-            $table->string('emergencyphone', 30)->nullable()->after('phone');
+            $table->string('emergency_phone', 30)->nullable()->after('phone');
         });
     }
 
@@ -28,7 +28,7 @@ class UpdateProfilesAddEmergecyPhoneNumber extends Migration
     {
         //
         Schema::table('profiles', function($table) {
-            $table->dropColumn('emergencyphone');
+            $table->dropColumn('emergency_phone');
         });
     }
 }
