@@ -16,6 +16,7 @@ class Contact extends Model {
         'lastname',
         'email',
         'phone',
+        'emergency_phone',
         'mobile',
         'address',
         'is_active',

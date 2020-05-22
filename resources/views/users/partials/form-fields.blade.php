@@ -27,7 +27,7 @@
             'name' => 'password',
         ])
 
-         <!-- confirm password -->
+        <!-- confirm password -->
         @include('components.form.input', [
             'group' => 'user',
             'type' => 'password',
@@ -144,7 +144,7 @@
             'name' => 'phone',
             'parentName' => 'profile',
             'value' => $row->profile->phone
-        ])
+        ])        
 
         <!-- mobile -->
         @include('components.form.input', [
@@ -153,6 +153,16 @@
             'name' => 'mobile',
             'parentName' => 'profile',
             'value' => $row->profile->mobile
+        ])
+
+        <!-- emergency phone -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Emergency Phone'),
+            'name' => 'emergency_phone',
+            'required' => true,
+            'parentName' => 'profile',
+            'value' => $row->profile->emergency_phone
         ])
 
         @if ( RoleHelper::hasValidRoleId( config('constants.roles.rentals-agent') ) )
