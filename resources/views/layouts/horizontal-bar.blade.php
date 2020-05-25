@@ -166,14 +166,6 @@
                                                 </a>
                                             </li>
                                         @endif
-
-                                        @if ($_current_role->isAllowed('cleaning-services', 'staff'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('cleaning-staff') }}">
-                                                    <span class="item-name">{{ __('Staff') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
                                     </ul>
                                 </div>
                             </div>

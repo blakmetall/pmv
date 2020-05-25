@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\{
     CleaningServicesRepositoryInterface,
-    CleaningStaffRepositoryInterface,
+    HumanResourcesRepositoryInterface,
     PropertiesRepositoryInterface
 };
 use App\Models\CleaningService;
@@ -18,7 +18,7 @@ class CleaningServicesController extends Controller
 
     public function __construct(
         CleaningServicesRepositoryInterface $repository,
-        CleaningStaffRepositoryInterface $cleaningStaffRepository,
+        HumanResourcesRepositoryInterface $cleaningStaffRepository,
         PropertiesRepositoryInterface $propertiesRepository
     )
     {
