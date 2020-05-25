@@ -66,7 +66,21 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
             $note = $this->find($id);
         }
 
-        $note->fill($request->all());
+        $checkboxesConfig = ['is_finished' => 0];
+        $requestData = array_merge($checkboxesConfig, $request->all());
+
+        $note->fill($requestData);
+
+        // audit
+        if ($request->is_finished) {           
+            $user = auth()->user();
+            $note->audit_user_id = $user->id;
+            $note->audit_datetime = getCurrentDateTime();
+        } else {
+            $note->audit_user_id = null;
+            $note->audit_datetime = null;
+        }
+
         $note->save();
 
         return $note;

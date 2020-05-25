@@ -24,6 +24,34 @@
             'value' => $row->description,
         ])
 
+        <!-- is_finished -->
+        @include('components.form.checkbox', [
+            'group' => 'property-note',
+            'label' => __('Finished'),
+            'name' => 'is_finished',
+            'value' => 1,
+            'default' => $row->is_finished,
+        ])
+
+        <!-- audit -->
+        @if ($row->auditedBy)
+            @include('components.form.input', [
+                'group' => 'property-note',
+                'label' => __('Audited by'),
+                'name' => 'audited_by',
+                'value' => $row->auditedBy->profile->full_name,
+                'disabled' => true,
+            ])
+        @endif
+
+        <!-- notes -->
+        @include('components.form.textarea', [
+            'group' => 'property-note',
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'value' => $row->notes
+        ])
+
     </div>
 </div>
 

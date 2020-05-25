@@ -15,6 +15,8 @@
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">{{ __('Audited by') }}</th>
+                        <th scope="col">{{ __('Finished') }}</th>
                     </tr>
 
                 </thead>
@@ -40,6 +42,21 @@
                                     @endif
                                 </td>
 
+                                <!-- audit_user_id -->
+                                <td>
+                                    
+                                    @if($row->audit_user_id)
+                                        <a href="{{ route('users.edit', $row->audit_user_id) }}">
+                                            {{ $row->auditedBy->profile->firstname }}
+                                        </a>
+                                    @endif
+                                </td>
+
+                                <!-- is_finished -->
+                                <td>
+                                    {!! getStatusIcon($row->is_finished) !!}
+                                </td>
+
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
@@ -49,6 +66,8 @@
                                         'deleteRoute' => 'property-notes.destroy',
                                     ])
                                 </td>
+
+                                
 
                             </tr>
                         @endforeach
