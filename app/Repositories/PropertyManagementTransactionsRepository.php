@@ -110,4 +110,12 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $pm = new PropertyManagementTransaction;
         return $pm;
     }
+
+    public function getTransactionTypes(){
+        $payments_types = array(
+            (object) ['id' => 'credit', 'label' => 'Payment'],
+            (object) ['id' => 'dabit', 'label' => 'Income'],
+        );
+        return $payments_types;
+    }
 }

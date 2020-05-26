@@ -47,8 +47,10 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->blueprint();
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $payments_type = $this->repository->getTransactionTypes();
 
         return view('property-management-transactions.create')
+            ->with('paymentsTypes', $payments_type)
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
@@ -63,8 +65,9 @@ class PropertyManagementTransactionsController extends Controller
     public function store(Request $request, PropertyManagement $pm)
     {
         $pm = $this->repository->create($request);
+        $property_management_id = $request->property_management_id;
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management-transactions.edit', [$pm->id, $pm->id]));
+        return redirect(route('property-management-transactions.edit', [$property_management_id, $pm->id]));
     }
 
     /**
@@ -77,8 +80,10 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $payments_type = $this->repository->getTransactionTypes();
 
         return view('property-management-transactions.show')
+            ->with('paymentsTypes', $payments_type)
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
@@ -94,8 +99,10 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $payments_type = $this->repository->getTransactionTypes();
 
         return view('property-management-transactions.edit')
+            ->with('paymentsTypes', $payments_type)
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
