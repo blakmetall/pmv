@@ -23,7 +23,7 @@ class DeletePropertyContactsTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('property_contacts')) {
+        if (!Schema::hasTable('property_contacts')) {
             return;
         }
 
