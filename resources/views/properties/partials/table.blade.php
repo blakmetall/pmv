@@ -89,10 +89,9 @@
                                         <i class="nav-icon i-Money-2 font-weight-bold"></i>
                                     </a>
 
-                                    <!-- href="{{ route('property-images', $row->property->id) }}" -->
                                     <!-- property images -->
                                     <a 
-                                        href="#"
+                                        href="{{ route('property-images', $row->property->id) }}"
                                         class="text-primary app-icon-link"
                                         title="{{ __('Images') }}"
                                         alt="{{ __('Images') }}">

@@ -3,17 +3,17 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('View'),
+        'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('property-notes', [$property->id]),
-                'label' => __('Notes'),
+                'url' => route('property-images', [$property->id]),
+                'label' => __('Images'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-notes.create', [$property->id]),
+                'url' => route('property-images.create', [$property->id]),
             ]
         ]
     ])
@@ -26,10 +26,10 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="" onsubmit="return false;" method="post">
-            @include('property-notes.partials.form', [
-                'row' => $note,
-                'disabled' => true
+        <form action="{{ route('property-images.update', [$property->id, $image->id]) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @include('property-images.partials.form', [
+                'row' => $image
             ])        
         </form>
     </div>

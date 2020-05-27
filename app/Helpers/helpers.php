@@ -182,3 +182,43 @@ if (!function_exists('preparePhoneContacts')) {
         return implode(' <b>/</b> ', $phones);
     }
 }
+
+if (!function_exists('cleanString')) {
+    function cleanString($string, $character)
+    {
+        $cleanString   = trim($string);
+        $cleanString   = str_replace(' ',$character, $cleanString);
+        $cleanString   = str_replace('%','', $cleanString);
+        $accentsArray = array('Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+        $cleanString   = strtr( $cleanString, $accentsArray );
+        $cleanString   = strtolower($cleanString);
+        return $cleanString;
+    }
+}
+
+if (!function_exists('saveFile')) {
+    function saveFile($file)
+    {
+        $data['original_name'] = $file->getClientOriginalName();
+        $data['slug']          = cleanString(preg_replace('/\\.[^.\\s]{3,4}$/', '', $data['original_name']), '-');
+        $data['extension']     = $file->getClientOriginalExtension();
+        $date                  = new DateTime();
+        $stamp                 = $date->getTimestamp();
+        $data['file_name']     = $stamp.'.'.$data['extension'];
+        $string_file_path      = "properties/".$data['file_name'];
+
+        Storage::disk('public')->put($string_file_path, \File::get( $file ));
+
+        $data['path_file'] = Storage::url($string_file_path);
+        $data['url_file']  = public_path().Storage::url($string_file_path);
+
+        return $data;
+    }
+}
+
+if (!function_exists('deleteFile')) {
+    function deleteFile($file)
+    {
+        Storage::disk('public')->delete('properties/'.$file);
+    }
+}
