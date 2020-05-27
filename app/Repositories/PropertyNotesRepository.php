@@ -74,7 +74,7 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
 
         $note->fill($requestData);
 
-        if ($request->is_finished) {           
+        if ($request->is_finished && !$hasBeenAudited) {           
             $note->audit_user_id = UserHelper::getCurrentUserID();
             $note->audit_datetime = getCurrentDateTime();
         } else {
