@@ -52,7 +52,7 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 
     public function update(Request $request, $id)
     {
-        CleaningOptionsValidations::validateOnEdit($request);
+        CleaningOptionsValidations::validateOnEdit($request, $id);
         return $this->save($request, $id);
     }
 
