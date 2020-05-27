@@ -44,14 +44,6 @@
             ])
         @endif
 
-        <!-- notes -->
-        @include('components.form.textarea', [
-            'group' => 'property-note',
-            'label' => __('Notes'),
-            'name' => 'notes',
-            'value' => $row->notes
-        ])
-
     </div>
 </div>
 

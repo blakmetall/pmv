@@ -15,7 +15,6 @@ class PropertyNote extends Model {
         'property_id',
         'description',
         'is_finished',
-        'notes'
     ];
 
     public function property() {

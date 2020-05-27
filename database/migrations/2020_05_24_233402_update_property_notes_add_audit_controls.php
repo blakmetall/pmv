@@ -13,12 +13,14 @@ class UpdatePropertyNotesAddAuditControls extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('property_notes')) {
+            return;
+        }
 
         Schema::table('property_notes', function (Blueprint $table) {
             $table->tinyInteger('is_finished')->nullable()->default(0)->after('description');
-            $table->dateTime('audit_datetime')->nullable()->after('is_finished');
-            $table->integer('audit_user_id')->nullable()->after('audit_datetime');
-            $table->text('notes')->nullable()->after('audit_user_id');
+            $table->integer('audit_user_id')->nullable()->after('is_finished');
+            $table->dateTime('audit_datetime')->nullable()->after('audit_user_id');
         });
         
     }
@@ -32,9 +34,8 @@ class UpdatePropertyNotesAddAuditControls extends Migration
     {
         Schema::table('property_notes', function($table) {
             $table->dropColumn('is_finished');
+            $table->dropColumn('audit_user_id');
             $table->dropColumn('audit_datetime');
-            $table->dropColumn('audit_datetime');
-            $table->dropColumn('notes');
         });
     }
 }

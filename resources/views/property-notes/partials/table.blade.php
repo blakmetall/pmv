@@ -14,9 +14,8 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
                         <th scope="col">{{ __('Audited by') }}</th>
-                        <th scope="col">{{ __('Finished') }}</th>
+                        <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
                 </thead>
@@ -50,11 +49,6 @@
                                             {{ $row->auditedBy->profile->firstname }}
                                         </a>
                                     @endif
-                                </td>
-
-                                <!-- is_finished -->
-                                <td>
-                                    {!! getStatusIcon($row->is_finished) !!}
                                 </td>
 
                                 <!-- actions -->
