@@ -1,14 +1,25 @@
 @extends('layouts.horizontal-master')
 
 @section('heading-content')
-
-    @include('components.heading', [
-        'label' => __('Property Management'),
-        'actions' => [
-            [
+    @if($property != 'all')
+        @php
+            $actions_config = [
                 'label' => __('New'),
                 'url' => route('property-management.create', [$property->id])
             ]
+        @endphp
+    @else
+        @php
+            $actions_config = [
+                'label' => __('New'),
+                'url' => route('properties')
+            ]
+        @endphp
+    @endif
+    @include('components.heading', [
+        'label' => __('Property Management'),
+        'actions' => [
+            $actions_config
         ]
     ])
 
@@ -16,7 +27,7 @@
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('property-management', [$property->id])
+        'url' => route('property-management', [$property])
     ])
 
 @endsection

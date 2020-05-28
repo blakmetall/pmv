@@ -13,7 +13,7 @@ class PropertyManagementController extends Controller
     public function __construct(PropertyManagementRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        
+
         PropertyManagement::setFinishedStatusHandler();
     }
 
@@ -22,10 +22,19 @@ class PropertyManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Property $property)
+    public function index(Request $request, $id)
     {
         $search = trim($request->s);
-        $pm_items = $this->repository->all($search);
+
+        if($id != 'all'){
+            $config['property_id'] = $id;
+            $property = Property::find($id);
+        }else {
+            $config['property_id'] = false;
+            $property = $id;
+        }
+
+        $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.index')
             ->with('pm_items', $pm_items)
@@ -54,9 +63,17 @@ class PropertyManagementController extends Controller
      */
     public function store(Request $request, Property $property)
     {
-        $pm = $this->repository->create($request);
-        $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management.edit', [$property->id, $pm->id]));
+        if(!$this->checkStatus($request, $property)){
+            $pm = $this->repository->create($request);
+            $request->session()->flash('success', __('Record created successfully'));
+            return redirect(route('property-management.edit', [$property->id, $pm->id]));
+        }else{
+            $pm = $this->repository->blueprint();
+            $request->session()->flash('error', __("Property Have PM"));
+            return view('property-management.create')
+                ->with('pm', $pm)
+                ->with('property', $property);
+        }
     }
 
     /**
@@ -98,8 +115,13 @@ class PropertyManagementController extends Controller
      */
     public function update(Request $request, Property $property, $id)
     {
-        $this->repository->update($request, $id);
-        $request->session()->flash('success', __('Record updated successfully'));
+        if(!$this->checkStatus($request, $property, $id)){
+            $this->repository->update($request, $id);
+            $request->session()->flash('success', __('Record updated successfully'));
+        }else{
+            $request->session()->flash('error', __("Property Have PM"));
+        }
+
         return redirect( route('property-management.edit', [$property->id, $id]) );
     }
 
@@ -119,5 +141,17 @@ class PropertyManagementController extends Controller
 
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
+    }
+
+
+    private function checkStatus($request, $property, $id = false){
+
+        $pm = false;
+
+        if($request->end_date > getCurrentDate()){
+            $pm = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0)->where('id', '!=', $id)->first();
+        }
+
+        return $pm;
     }
 }
