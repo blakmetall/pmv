@@ -27,10 +27,22 @@ class PropertyManagementTransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, PropertyManagement $pm)
+    public function index(Request $request, $id)
     {
         $search = trim($request->s);
-        $transactions = $this->repository->all($search);
+
+        if($id == 'all'){
+            $config['property_management_id'] = false;
+            $pm = $id;
+        }elseif($id == 'pending') {
+            $config['property_pending_audit'] = true;
+            $pm = $id;
+        }else{
+            $config['property_management_id'] = $id;
+            $pm = PropertyManagement::find($id);
+        }
+
+        $transactions = $this->repository->all($search, $config);
 
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
@@ -62,9 +74,9 @@ class PropertyManagementTransactionsController extends Controller
      */
     public function store(Request $request, PropertyManagement $pm)
     {
-        $pm = $this->repository->create($request);
+        $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management-transactions.edit', [$pm->id, $pm->id]));
+        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
     /**

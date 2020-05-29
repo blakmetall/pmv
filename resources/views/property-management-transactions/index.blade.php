@@ -2,13 +2,26 @@
 
 @section('heading-content')
 
-    @include('components.heading', [
-        'label' => __('Property Management Transactions'),
-        'actions' => [
-            [
+    @if(($pm != 'all') && ($pm != 'pending'))
+        @php
+            $actions_config = [
                 'label' => __('New'),
                 'url' => route('property-management-transactions.create', [$pm->id])
             ]
+        @endphp
+    @else
+        @php
+            $actions_config = [
+                'label' => __('New'),
+                'url' => route('properties')
+            ]
+        @endphp
+    @endif
+
+    @include('components.heading', [
+        'label' => __('Property Management Transactions'),
+        'actions' => [
+            $actions_config
         ]
     ])
 
@@ -16,7 +29,7 @@
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('property-management-transactions', [$pm->id])
+        'url' => route('property-management-transactions', [$pm])
     ])
 
 @endsection
