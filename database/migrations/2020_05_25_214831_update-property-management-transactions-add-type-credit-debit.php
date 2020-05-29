@@ -13,8 +13,12 @@ class UpdatePropertyManagementTransactionsAddTypeCreditDebit extends Migration
      */
     public function up()
     {
+        if (! Schema::hasTable('property_management_transactions')) {
+            return;
+        }
+
         Schema::table('property_management_transactions', function (Blueprint $table) {
-            $table->string('payment_type', 30)->nullable()->after('amount');
+            $table->smallIncrements('operation_type')->nullable()->after('amount');
         });
     }
 
@@ -26,7 +30,7 @@ class UpdatePropertyManagementTransactionsAddTypeCreditDebit extends Migration
     public function down()
     {
         Schema::table('property_management_transactions', function($table) {
-            $table->dropColumn('payment_type');
+            $table->dropColumn('operation_type');
         });
     }
 }

@@ -48,10 +48,10 @@
         <!-- transaction_type_id -->
         @include('components.form.select', [
             'group' => 'property-management-transaction',
-            'label' => __('Payments Type'),
-            'name' => 'payment_type',
-            'value' => $row->payment_type,
-            'options' => $paymentsTypes,
+            'label' => __('Operation Type'),
+            'name' => 'operation_type',
+            'value' => $row->operation_type,
+            'options' => $paymentTypes,
             'translatable' => false,
             'optionValueRef' => 'id',
             'optionLabelRef' => 'label',

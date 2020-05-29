@@ -19,7 +19,7 @@ class PropertyManagementTransaction extends Model {
         'period_end_date',
         'post_date',
         'amount',
-        'payment_type',
+        'operation_type',
         'description',
     ];
 
