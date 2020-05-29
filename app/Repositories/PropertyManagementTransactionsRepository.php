@@ -12,9 +12,9 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 {
     protected $model;
 
-    public function __construct(PropertyManagementTransaction $pm)
+    public function __construct(PropertyManagementTransaction $transaction)
     {
-        $this->model = $pm;
+        $this->model = $transaction;
     }
 
     public function all($search = '', $config = [])
@@ -66,15 +66,15 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $is_new = ! $id;
 
         if($is_new){
-            $pm = $this->blueprint();
+            $transaction = $this->blueprint();
         }else{
-            $pm = $this->find($id);
+            $transaction = $this->find($id);
         }
 
-        $pm->fill($request->all());
-        $pm->save();
+        $transaction->fill($request->all());
+        $transaction->save();
 
-        return $pm;
+        return $transaction;
     }
 
     public function find($id_or_obj)
@@ -91,13 +91,13 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function delete($id)
     {
-        $pm = $this->model->find($id);
+        $transaction = $this->model->find($id);
         
-        if ($pm && $this->canDelete($id)) {
-            $pm->delete();
+        if ($transaction && $this->canDelete($id)) {
+            $transaction->delete();
         }
 
-        return $pm;
+        return $transaction;
     }
 
     public function canDelete($id) 
@@ -107,7 +107,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function blueprint()
     {
-        $pm = new PropertyManagementTransaction;
-        return $pm;
+        $transaction = new PropertyManagementTransaction;
+        return $transaction;
     }
 }

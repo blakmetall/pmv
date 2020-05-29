@@ -17,7 +17,7 @@
                         <th scope="col">{{ __('Period End Date') }}</th>
                         <th scope="col">{{ __('Post Date') }}</th>
                         <th scope="col">{{ __('Amount') }}</th>
-                        <th scope="col">{{ __('Description') }}</th>
+                        <th scope="col">{{ __('Operation') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Audited By') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
@@ -36,9 +36,10 @@
 
                                 <!-- transaction_type_id -->
                                 <td>
-                                    @if ($row->transaction_type_id)
+                                    <!-- PENDIENTE: obtener label de transacción de acuerdo al lenguaje -->
+                                    {{-- @if ($row->type)
                                         {{ $row->type->translate()->name }}
-                                    @endif
+                                    @endif --}}
                                 </td>
 
                                 <!-- period_start_date -->
@@ -53,8 +54,10 @@
                                 <!-- amount -->
                                 <td>{{ priceFormat($row->amount) }}</td>
 
-                                <!-- description -->
-                                <td>{{ $row->description }}</td>
+                                <!-- operation_type -->
+                                <td>
+                                    {{ getOperationTypeById($row->operation_type) }}
+                                </td>
 
                                 <!-- property -->
                                 <td>

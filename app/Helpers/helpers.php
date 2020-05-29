@@ -1,8 +1,8 @@
 <?php
 
 // namespace App\Helpers;
- 
- if (!function_exists('prepareFormInputName')) {
+
+if (!function_exists('prepareFormInputName')) {
     function prepareFormInputName($name, $parentName, $lang)
     {
         $inputName = $name;
@@ -180,5 +180,12 @@ if (!function_exists('preparePhoneContacts')) {
     function preparePhoneContacts($phones)
     {
         return implode(' <b>/</b> ', $phones);
+    }
+}
+
+if (!function_exists('getOperationTypeById')) {
+    function getOperationTypeById($operationTypeId)
+    {
+        return App\Helpers\PMTransactionHelper::getTypeById($operationTypeId);
     }
 }
