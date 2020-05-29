@@ -63,9 +63,21 @@
     padding-bottom: 17px;
 }
 
-.app-google-map {
-    height: 300px;
+/*************************/
+/** bootstrap overrides **/
+
+.app-map-wrapper {
+    .app-google-map {
+        height: 300px;
+    }
+    .app-google-clear-map {
+        text-transform: uppercase;
+    }
 }
+
+/*************************/
+/*************************/
+
 
 #app-menu {
     width: 100%;
