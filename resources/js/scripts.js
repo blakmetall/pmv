@@ -2,7 +2,7 @@ import { getViewport } from "./scripts/getViewport.js";
 import { handleMenuFit } from "./scripts/handleMenuFit.js";
 import { multiSelect } from "./scripts/multiSelect.js";
 import { initCalendar } from "./scripts/initCalendar.js";
-import { initMap } from "./scripts/initMap.js";
+import { initMapInputComponents } from "./scripts/initMapInputComponents.js";
 
 $(function() {
     /////////////////////////////
@@ -22,7 +22,8 @@ $(function() {
         });
       
         initCalendar();
-        initMap();
+
+        initMapInputComponents();
     }
 
     function resize() {
