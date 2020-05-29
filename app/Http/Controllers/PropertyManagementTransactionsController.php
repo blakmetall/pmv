@@ -62,9 +62,9 @@ class PropertyManagementTransactionsController extends Controller
      */
     public function store(Request $request, PropertyManagement $pm)
     {
-        $pm = $this->repository->create($request);
+        $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management-transactions.edit', [$pm->id, $pm->id]));
+        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
     /**
