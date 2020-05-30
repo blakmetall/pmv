@@ -5,8 +5,9 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\HumanResourcesRepositoryInterface;
-use App\Models\HumanResource;
+use App\Models\{ HumanResource, Property };
 use App\Validations\HumanResourcesValidations;
+use App\Helpers\WorkgroupHelper;
 
 class HumanResourcesRepository implements HumanResourcesRepositoryInterface
 {
@@ -20,6 +21,7 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
 
         if ($search) {
             $query = HumanResource::
@@ -29,6 +31,10 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
                 ->orWhere('department', 'like', $search);
         } else {
             $query = HumanResource::query();
+        }
+
+        if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
+            $query->whereIn('city_id', WorkgroupHelper::getAllowedCities());
         }
 
         if($shouldPaginate) {

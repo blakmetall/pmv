@@ -25,7 +25,9 @@ class ContractorsController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $contractors = $this->repository->all($search);
+
+        $config = ['filterByWorkgroup' => true];
+        $contractors = $this->repository->all($search, $config);
 
         return view('contractors.index')
             ->with('contractors', $contractors)
