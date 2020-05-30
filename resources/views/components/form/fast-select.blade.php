@@ -1,6 +1,8 @@
 @php
     $group = isset($group) ? $group : strtotime('now');
     $label = isset($label) ? $label : '';
+    $placeholder = isset($placeholder) ? $placeholder : __('Select Options');
+    $multiple = isset($multiple) ? $multiple : false;
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
@@ -12,12 +14,12 @@
     $options = isset($options) && count($options) ? $options : [];
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
-    $className = 'field_multiselect';
-    $placeholder = ($placeholder) ? $placeholder : '';
+    $className = 'app-fast-select';
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
 
+    $multipleProp = ($multiple) ? 'multiple' : '';
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
 
@@ -34,8 +36,8 @@
 
     <div class="col-sm-10">
         <select
-            multiple
-            name="{{ $inputName }}"
+            {{ $multipleProp }}
+            name="{{ $inputName }}[]"
             class="{{ $className }} form-control"
             id="{{ $id }}"
             data-placeholder="{{ $placeholder }}"
