@@ -67,19 +67,23 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
             $note = $this->find($id);
         }
 
-        $hasBeenAudited = $note->audit_user_id;
-
         $checkboxesConfig = ['is_finished' => 0];
         $requestData = array_merge($checkboxesConfig, $request->all());
-
+        
         $note->fill($requestData);
+        
+        $hasBeenAudited = $note->audit_user_id;
+        $shouldRemovePreviousAuditedUser = !$request->is_finished && $hasBeenAudited;
+        $shouldNotRemovePreviousAuditedUser = $request->is_finished && !$hasBeenAudited;
 
-        if ($request->is_finished && !$hasBeenAudited) {           
-            $note->audit_user_id = UserHelper::getCurrentUserID();
-            $note->audit_datetime = getCurrentDateTime();
-        } else {
+        if($shouldRemovePreviousAuditedUser) {
             $note->audit_user_id = null;
             $note->audit_datetime = null;
+        }   
+
+        if ($shouldNotRemovePreviousAuditedUser) {           
+            $note->audit_user_id = UserHelper::getCurrentUserID();
+            $note->audit_datetime = getCurrentDateTime();
         }
 
         $note->save();
