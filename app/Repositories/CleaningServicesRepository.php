@@ -5,8 +5,9 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\CleaningServicesRepositoryInterface;
-use App\Models\CleaningService;
+use App\Models\{ CleaningService, Property };
 use App\Validations\CleaningServicesValidations;
+use App\Helpers\WorkgroupHelper;
 
 class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 {
@@ -20,6 +21,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
 
         if ($search) {
             $query = CleaningService::
@@ -32,6 +34,13 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             ->with('cleaningStaff')
             ->orderBy('is_finished', 'asc')
             ->orderBy('created_at', 'desc');
+
+        if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
+            $query->whereHas('property', function($q) {
+                $table = (new Property)->_getTable();
+                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
+            });
+        }
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );
