@@ -42,6 +42,89 @@
         }
     }
 }
+/*************************/
+
+/*************************/
+/** multi-select styles **/
+
+.fstElement{
+    width: 100%;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+.fstElement.fstSingleMode {
+    .fstToggleBtn {
+        height: 33px;
+        padding-top: 6px;
+        font-size: 14px;
+        font-weight: lighter;
+    }
+    .fstQueryInput {
+        width: 100%;
+        height: 33px;
+        padding: 0 10px;
+        font-size: 0.813rem;
+        line-height: 1.5;
+        color: #556774;
+        background-color: rgba(45, 108, 156, 0.08);
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+}
+
+.fstMultipleMode .fstControls{
+    width: 100%;
+    padding-top: 5px;
+    height: 34px;
+
+    .fstChoiceItem {
+        height: 24px;
+        padding-top: 1px;
+        padding-right: 15px;
+        padding-left: 30px;
+        padding: 1px 15px 0 30px;
+        background-color: rgb(45,108,156, 0.9);
+        border-color: rgb(45,108,156, 0.9);
+    }
+}
+
+.fstMultipleMode .fstQueryInput, .fstResultItem, .fstChoiceItem{
+    font-size: 0.813rem;
+}
+
+.fstMultipleMode .fstQueryInput {
+    font-size: 0.813rem;
+    padding: 2px 0 0 10px;
+    color: #3b4651;
+}
+
+.fstResults {
+    .fstResultItem {
+        border-color: transparent;
+        border-bottom: 1px solid #f1f1f1;
+        height: 33px;
+        padding-left: 13px;
+    }
+    .fstResultItem.fstFocused {
+        background-color: rgb(45,108,156, 0.7);
+    }
+    .fstResultItem.fstSelected {
+        background-color: #2d6c9c;
+    }
+}
+.fstNoResults {
+    font-size: 11px;
+    display: block;
+    margin: 0;
+    color: #2d6b9c;
+    padding: 12px 0px 15px 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+/*************************/
 
 /*************************/
 /********* app ***********/
@@ -62,6 +145,7 @@
     top: 9px;
     padding-bottom: 17px;
 }
+/*************************/
 
 /*************************/
 /** bootstrap overrides **/
@@ -74,8 +158,6 @@
         text-transform: uppercase;
     }
 }
-
-/*************************/
 /*************************/
 
 
@@ -90,7 +172,7 @@
 
 .app-alert-success {
     border-radius: 3px;
-    border: 1px solid #4caf50;
+    border: 1px solid #555e56;
     background: #f7fdfa;
 }
 .app-alert-danger {
