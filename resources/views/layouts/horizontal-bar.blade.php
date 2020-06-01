@@ -108,7 +108,7 @@
 
                                              @if ($_current_role->isAllowed('properties', 'property-management'))
                                                 <li class="nav-item">
-                                                    <a class="" href="#">
+                                                    <a class="" href="{{ route('property-management.general') }}">
                                                         <span class="item-name">{{ __('Property Management') }}</span>
                                                     </a>
                                                 </li>
@@ -124,7 +124,7 @@
 
                                             @if ($_current_role->isAllowed('properties', 'transactions'))
                                                 <li class="nav-item">
-                                                    <a class="" href="#">
+                                                    <a class="" href="{{ route('property-management-transactions.general') }}">
                                                         <span class="item-name">{{ __('Transactions') }}</span>
                                                     </a>
                                                 </li>
@@ -132,7 +132,10 @@
 
                                             @if ($_current_role->isAllowed('properties', 'pending-audits'))
                                                 <li class="nav-item">
-                                                    <a class="" href="#">
+                                                    @php 
+                                                        $routeParams = ['filterByPendingAudits' => 1]; 
+                                                    @endphp
+                                                    <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                         <span class="item-name">{{ __('Pending Audits') }}</span>
                                                     </a>
                                                 </li>
@@ -235,8 +238,8 @@
                             </div>
                         </li>
                     @endif
-         
-                    @php    
+
+                    @php
                         /* DISABLED TEMPORARILY
                             @if ($_current_role->isAllowed('reporting', 'heading-menu'))
                                 <li>
@@ -330,7 +333,7 @@
                                                 </a>
                                             </li>
                                         @endif
-                                        
+
                                         @if ($_current_role->isAllowed('settings', 'amenities'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('amenities') }}">
@@ -388,7 +391,7 @@
                             </div>
                         </div>
                     </li>
-                    
+
                 </ul>
 
 

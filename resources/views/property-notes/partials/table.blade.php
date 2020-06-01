@@ -14,6 +14,7 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
+                        <th scope="col">{{ __('Audited by') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -40,6 +41,16 @@
                                     @endif
                                 </td>
 
+                                <!-- audit_user_id -->
+                                <td>
+                                    
+                                    @if($row->audit_user_id)
+                                        <a href="{{ route('users.edit', $row->audit_user_id) }}">
+                                            {{ $row->auditedBy->profile->firstname }}
+                                        </a>
+                                    @endif
+                                </td>
+
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
@@ -49,6 +60,8 @@
                                         'deleteRoute' => 'property-notes.destroy',
                                     ])
                                 </td>
+
+                                
 
                             </tr>
                         @endforeach

@@ -50,7 +50,9 @@ class PropertiesController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $properties = $this->repository->all($search);
+
+        $config = ['filterByWorkgroup' => true];
+        $properties = $this->repository->all($search, $config);
 
         return view('properties.index')
             ->with('properties', $properties)

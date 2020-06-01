@@ -8,6 +8,7 @@ use App\Helpers\LanguageHelper;
 use App\Models\{ Property, PropertyTranslation };
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Validations\PropertiesValidations;
+use App\Helpers\WorkgroupHelper;
 
 class PropertiesRepository implements PropertiesRepositoryInterface
 {
@@ -21,6 +22,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
 
         $lang = LanguageHelper::current();
         
@@ -35,9 +37,16 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             ->with('property')
             ->orderBy('id', 'desc');
 
-        if($shouldPaginate) {
+        if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
+            $query->whereHas('property', function($q) {
+                $table = (new Property)->_getTable();
+                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
+            });
+        }
+
+        if ($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        } else {
             $result = $query->get();
         }
         

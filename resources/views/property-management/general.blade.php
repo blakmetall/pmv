@@ -3,19 +3,13 @@
 @section('heading-content')
     @include('components.heading', [
         'label' => __('Property Management'),
-        'actions' => [ 
-            [
-                'label' => __('New'),
-                'url' => route('property-management.create', [$property->id])
-            ]
-        ]
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('property-management', [$property->id])
+        'url' => route('property-management.general')
     ])
 
 @endsection

@@ -12,20 +12,21 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 {
     protected $model;
 
-    public function __construct(PropertyManagementTransaction $pm)
+    public function __construct(PropertyManagementTransaction $transaction)
     {
-        $this->model = $pm;
+        $this->model = $transaction;
     }
 
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyManagementID = isset($config['property_management_id']) ? $config['property_management_id'] : '';
+        $shouldFilterByPendingAudits = isset($config['filterByPendingAudits']) ? $config['filterByPendingAudits'] : '';
 
         if ($search) {
-            $query = 
+            $query =
                 PropertyManagementTransaction::
-                    where('period_start_date', $search)
+                where('period_start_date', $search)
                     ->orWhere('period_end_date', $search)
                     ->orWhere('description', 'like', '%'.$search.'%');
         } else {
@@ -34,6 +35,10 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         if($hasPropertyManagementID) {
             $query->where('property_management_id', $config['property_management_id']);
+        }
+
+        if($shouldFilterByPendingAudits) {
+            $query->whereNull('audit_user_id');
         }
 
         $query->with('propertyManagement');
@@ -45,7 +50,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         }else{
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -66,15 +71,15 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $is_new = ! $id;
 
         if($is_new){
-            $pm = $this->blueprint();
+            $transaction = $this->blueprint();
         }else{
-            $pm = $this->find($id);
+            $transaction = $this->find($id);
         }
 
-        $pm->fill($request->all());
-        $pm->save();
+        $transaction->fill($request->all());
+        $transaction->save();
 
-        return $pm;
+        return $transaction;
     }
 
     public function find($id_or_obj)
@@ -91,23 +96,23 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function delete($id)
     {
-        $pm = $this->model->find($id);
+        $transaction = $this->model->find($id);
         
-        if ($pm && $this->canDelete($id)) {
-            $pm->delete();
+        if ($transaction && $this->canDelete($id)) {
+            $transaction->delete();
         }
 
-        return $pm;
+        return $transaction;
     }
 
-    public function canDelete($id) 
+    public function canDelete($id)
     {
         return true;
     }
 
     public function blueprint()
     {
-        $pm = new PropertyManagementTransaction;
-        return $pm;
+        $transaction = new PropertyManagementTransaction;
+        return $transaction;
     }
 }

@@ -8,6 +8,7 @@ use App\Repositories\{
     PropertyManagementTransactionsRepositoryInterface,
     TransactionTypesRepositoryInterface
 };
+use App\Helpers\PMTransactionHelper;
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -30,11 +31,25 @@ class PropertyManagementTransactionsController extends Controller
     public function index(Request $request, PropertyManagement $pm)
     {
         $search = trim($request->s);
-        $transactions = $this->repository->all($search);
+
+        $config = ['property_management_id' => $pm->id];
+        $transactions = $this->repository->all($search, $config);
 
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
+            ->with('search', $search);
+    }
+
+    public function general(Request $request)
+    {
+        $search = trim($request->s);
+
+        $config = ['filterByPendingAudits' => !!$request->filterByPendingAudits];
+        $transactions = $this->repository->all($search, $config);
+
+        return view('property-management-transactions.general')
+            ->with('transactions', $transactions)
             ->with('search', $search);
     }
 
@@ -47,10 +62,12 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->blueprint();
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         return view('property-management-transactions.create')
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('pm', $pm);
     }
 
@@ -62,9 +79,9 @@ class PropertyManagementTransactionsController extends Controller
      */
     public function store(Request $request, PropertyManagement $pm)
     {
-        $pm = $this->repository->create($request);
+        $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management-transactions.edit', [$pm->id, $pm->id]));
+        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
     /**
@@ -77,10 +94,12 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         return view('property-management-transactions.show')
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('pm', $pm);
     }
 
@@ -94,8 +113,10 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         return view('property-management-transactions.edit')
+            ->with('paymentTypes', $paymentTypes)
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\PropertyNotesRepositoryInterface;
 use App\Models\{ Property, PropertyNote };
 use App\Validations\PropertyNotesValidations;
+use App\Helpers\UserHelper;
 
 class PropertyNotesRepository implements PropertyNotesRepositoryInterface
 {
@@ -66,7 +67,25 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
             $note = $this->find($id);
         }
 
-        $note->fill($request->all());
+        $checkboxesConfig = ['is_finished' => 0];
+        $requestData = array_merge($checkboxesConfig, $request->all());
+        
+        $note->fill($requestData);
+        
+        $hasBeenAudited = $note->audit_user_id;
+        $shouldRemovePreviousAuditedUser = !$request->is_finished && $hasBeenAudited;
+        $shouldNotRemovePreviousAuditedUser = $request->is_finished && !$hasBeenAudited;
+
+        if($shouldRemovePreviousAuditedUser) {
+            $note->audit_user_id = null;
+            $note->audit_datetime = null;
+        }   
+
+        if ($shouldNotRemovePreviousAuditedUser) {           
+            $note->audit_user_id = UserHelper::getCurrentUserID();
+            $note->audit_datetime = getCurrentDateTime();
+        }
+
         $note->save();
 
         return $note;
