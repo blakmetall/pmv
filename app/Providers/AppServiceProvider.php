@@ -57,11 +57,6 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \App\Repositories\CleaningStaffRepositoryInterface::class,
-            \App\Repositories\CleaningStaffRepository::class
-        );
-
-        $this->app->bind(
             \App\Repositories\ContractorsRepositoryInterface::class,
             \App\Repositories\ContractorsRepository::class
         );

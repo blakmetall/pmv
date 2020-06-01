@@ -22,7 +22,7 @@ class CleaningService extends Model {
     ];
 
     public function cleaningStaff(){
-        return $this->belongsToMany('App\Models\CleaningStaff', 'cleaning_services_has_cleaning_staff');
+        return $this->belongsToMany('App\Models\HumanResource', 'cleaning_services_has_cleaning_staff', 'cleaning_service_id', 'cleaning_staff_id');
     }
 
     public function property() {
