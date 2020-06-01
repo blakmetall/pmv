@@ -38,7 +38,7 @@
                                 <!-- end_date -->
                                 <td>{{ $row->end_date }}</td>
 
-                                <!-- nightly -->
+                                <!-- management_fee -->
                                 <td>{{ priceFormat($row->management_fee) }}</td>
 
                                 <!-- is_finished -->

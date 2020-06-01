@@ -23,7 +23,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $lang = LanguageHelper::current();
 
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $hasPropertyID = isset($config['property_id']) ? $config['property_id'] : '';
+        $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
 
         if ($search) {
             $query = 
@@ -34,10 +34,12 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query = PropertyManagement::query();
         }
 
+        $query->with('property');
 
         if($hasPropertyID) {
-            $query->where('property_id', $config['property_id']);
-            $query->orderBy('start_date', 'asc');
+            $query->where('property_id', $config['propertyID']);
+            $query->orderBy('is_finished', 'asc');
+            $query->orderBy('start_date', 'desc');
         }else{
             $query->where('is_finished', 0);
             $query->select('property_management.*');

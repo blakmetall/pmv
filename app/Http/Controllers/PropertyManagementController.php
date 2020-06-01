@@ -22,23 +22,26 @@ class PropertyManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
 
-        if($id != 'all'){
-            $config['property_id'] = $id;
-            $property = Property::find($id);
-        }else {
-            $config['property_id'] = false;
-            $property = $id;
-        }
-
+        $config = ['propertyID' => $property->id];
         $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.index')
             ->with('pm_items', $pm_items)
             ->with('property', $property)
+            ->with('search', $search);
+    }
+
+    public function general(Request $request)
+    {
+        $search = trim($request->s);
+        $pm_items = $this->repository->all($search);
+
+        return view('property-management.general')
+            ->with('pm_items', $pm_items)
             ->with('search', $search);
     }
 
@@ -63,17 +66,9 @@ class PropertyManagementController extends Controller
      */
     public function store(Request $request, Property $property)
     {
-        if(!$this->checkStatus($request, $property)){
-            $pm = $this->repository->create($request);
-            $request->session()->flash('success', __('Record created successfully'));
-            return redirect(route('property-management.edit', [$property->id, $pm->id]));
-        }else{
-            $pm = $this->repository->blueprint();
-            $request->session()->flash('error', __("Property Have PM"));
-            return view('property-management.create')
-                ->with('pm', $pm)
-                ->with('property', $property);
-        }
+        $pm = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
+        return redirect(route('property-management.edit', [$property->id, $pm->id]));
     }
 
     /**
@@ -85,7 +80,6 @@ class PropertyManagementController extends Controller
     public function show(Property $property, PropertyManagement $pm)
     {
         $pm = $this->repository->find($pm);
-
         return view('property-management.show')
             ->with('pm', $pm)
             ->with('property', $property);
@@ -115,13 +109,8 @@ class PropertyManagementController extends Controller
      */
     public function update(Request $request, Property $property, $id)
     {
-        if(!$this->checkStatus($request, $property, $id)){
-            $this->repository->update($request, $id);
-            $request->session()->flash('success', __('Record updated successfully'));
-        }else{
-            $request->session()->flash('error', __("Property Have PM"));
-        }
-
+        $this->repository->update($request, $id);
+        $request->session()->flash('success', __('Record updated successfully'));
         return redirect( route('property-management.edit', [$property->id, $id]) );
     }
 
