@@ -28,26 +28,28 @@ class PropertyManagementTransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, PropertyManagement $pm)
     {
         $search = trim($request->s);
 
-        if($id == 'all'){
-            $config['property_management_id'] = false;
-            $pm = $id;
-        }elseif($id == 'pending') {
-            $config['property_pending_audit'] = true;
-            $pm = $id;
-        }else{
-            $config['property_management_id'] = $id;
-            $pm = PropertyManagement::find($id);
-        }
-
+        $config = ['property_management_id' => $pm->id];
         $transactions = $this->repository->all($search, $config);
 
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
+            ->with('search', $search);
+    }
+
+    public function general(Request $request)
+    {
+        $search = trim($request->s);
+
+        $config = ['filterByPendingAudits' => !!$request->filterByPendingAudits];
+        $transactions = $this->repository->all($search, $config);
+
+        return view('property-management-transactions.general')
+            ->with('transactions', $transactions)
             ->with('search', $search);
     }
 

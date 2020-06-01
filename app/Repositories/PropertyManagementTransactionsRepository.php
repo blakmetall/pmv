@@ -21,7 +21,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyManagementID = isset($config['property_management_id']) ? $config['property_management_id'] : '';
-        $pendingPropertyManagementTransaction = isset($config['property_pending_audit']) ? $config['property_pending_audit'] : '';
+        $shouldFilterByPendingAudits = isset($config['filterByPendingAudits']) ? $config['filterByPendingAudits'] : '';
 
         if ($search) {
             $query =
@@ -37,7 +37,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $query->where('property_management_id', $config['property_management_id']);
         }
 
-        if($pendingPropertyManagementTransaction) {
+        if($shouldFilterByPendingAudits) {
             $query->whereNull('audit_user_id');
         }
 

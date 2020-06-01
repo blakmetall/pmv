@@ -4,19 +4,13 @@
 
     @include('components.heading', [
         'label' => __('Property Management Transactions'),
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-management-transactions.create', [$pm->id])
-            ]
-        ]
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
 
     @include('components.search', [
-        'url' => route('property-management-transactions', [$pm])
+        'url' => route('property-management-transactions.general')
     ])
 
 @endsection
