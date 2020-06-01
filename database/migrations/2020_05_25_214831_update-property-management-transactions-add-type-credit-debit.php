@@ -18,7 +18,7 @@ class UpdatePropertyManagementTransactionsAddTypeCreditDebit extends Migration
         }
 
         Schema::table('property_management_transactions', function (Blueprint $table) {
-            $table->smallInteger('operation_type')->nullable()->after('amount');
+            $table->tinyInteger('operation_type')->nullable()->after('amount');
         });
     }
 
