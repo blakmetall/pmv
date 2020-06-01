@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use App\Helpers\LanguageHelper;
 use App\Repositories\PropertyManagementRepositoryInterface;
 use App\Models\{ Property, PropertyManagement };
 use App\Validations\PropertyManagementValidations;
@@ -19,8 +20,10 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function all($search = '', $config = [])
     {
+        $lang = LanguageHelper::current();
+
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $hasPropertyID = isset($config['property_id']) ? $config['property_id'] : '';
+        $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
 
         if ($search) {
             $query = 
@@ -31,12 +34,20 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query = PropertyManagement::query();
         }
 
-        if($hasPropertyID) {
-            $query->where('property_id', $config['property_id']);
-        }
-
         $query->with('property');
-        $query->orderBy('start_date', 'asc');
+
+        if($hasPropertyID) {
+            $query->where('property_id', $config['propertyID']);
+            $query->orderBy('is_finished', 'asc');
+            $query->orderBy('start_date', 'desc');
+        }else{
+            $query->where('is_finished', 0);
+            $query->select('property_management.*');
+            $query->join('properties', 'property_management.property_id', '=', 'properties.id');
+            $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
+            $query->where('language_id', $lang->id);
+            $query->orderBy('name', 'asc');
+        }
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );

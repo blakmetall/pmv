@@ -111,6 +111,7 @@
     "Profile updated successfully": "Profile updated successfully",
     "Properties": "Properties",
     "Property": "Property",
+    "Property Have PM": "The property already have a property management active, finish it for create new",
     "Property Management": "Property Management",
     "Property Management Transactions": "Property Management Transactions",
     "Property Name": "Property Name",
