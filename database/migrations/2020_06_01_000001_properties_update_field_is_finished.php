@@ -18,7 +18,7 @@ class PropertiesUpdateFieldIsFinished extends Migration
         }
 
         Schema::table('property_management', function (Blueprint $table) {
-            $table->date('is_finished')->nullable()->default(0)->change();
+            $table->tinyInteger('is_finished')->nullable()->default(0)->change();
         });
     }
 
@@ -30,7 +30,7 @@ class PropertiesUpdateFieldIsFinished extends Migration
     public function down()
     {
         Schema::table('property_management', function($table) {
-            $table->date('is_finished')->nullable()->change();
+            $table->tinyInteger('is_finished')->nullable()->change();
         });
     }
 }
