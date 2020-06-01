@@ -18,7 +18,7 @@ class PropertyManagementUpdateFieldIsFinished extends Migration
         }
 
         Schema::table('property_management', function (Blueprint $table) {
-            $table->smallInteger('is_finished')->tinyInteger('is_finished')->default(0)->nullable()->change();
+            $table->tinyInteger('is_finished')->default(0)->nullable()->change();
         });
     }
 
