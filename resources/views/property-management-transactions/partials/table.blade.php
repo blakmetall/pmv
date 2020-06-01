@@ -13,10 +13,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Transaction') }}</th>
+                        <th scope="col">{{ __('Amount') }}</th>
                         <th scope="col">{{ __('Period Start Date') }}</th>
                         <th scope="col">{{ __('Period End Date') }}</th>
-                        <th scope="col">{{ __('Post Date') }}</th>
-                        <th scope="col">{{ __('Amount') }}</th>
                         <th scope="col">{{ __('Operation') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Audited By') }}</th>
@@ -42,17 +41,14 @@
                                     @endif --}}
                                 </td>
 
+                                <!-- amount -->
+                                <td>{{ priceFormat($row->amount) }}</td>
+
                                 <!-- period_start_date -->
                                 <td>{{ $row->period_start_date }}</td>
 
                                 <!-- period_end_date -->
                                 <td>{{ $row->period_end_date }}</td>
-
-                                <!-- post_date -->
-                                <td>{{ $row->post_date }}</td>
-
-                                <!-- amount -->
-                                <td>{{ priceFormat($row->amount) }}</td>
 
                                 <!-- operation_type -->
                                 <td>
@@ -71,7 +67,9 @@
                                 <!-- audit_user_id -->
                                 <td>
                                     @if ($row->auditedBy)
-                                        {{ $row->auditedBy->profile->full_name }}
+                                        <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
+                                            {{ $row->auditedBy->profile->full_name }}
+                                        </a>
                                     @endif
                                 </td>
 

@@ -158,6 +158,10 @@ Route::group(['middleware' => ['web']], function () {
         // property management
         Route::group(['prefix' => 'property-management'], function () {
 
+            Route::group(['prefix' => 'transactions'], function () {
+                Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
+            });
+
             // single property management
             Route::group(['prefix' => '{pm}'], function () {
 

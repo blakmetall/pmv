@@ -21,11 +21,12 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyManagementID = isset($config['property_management_id']) ? $config['property_management_id'] : '';
+        $shouldFilterByPendingAudits = isset($config['filterByPendingAudits']) ? $config['filterByPendingAudits'] : '';
 
         if ($search) {
-            $query = 
+            $query =
                 PropertyManagementTransaction::
-                    where('period_start_date', $search)
+                where('period_start_date', $search)
                     ->orWhere('period_end_date', $search)
                     ->orWhere('description', 'like', '%'.$search.'%');
         } else {
@@ -34,6 +35,10 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         if($hasPropertyManagementID) {
             $query->where('property_management_id', $config['property_management_id']);
+        }
+
+        if($shouldFilterByPendingAudits) {
+            $query->whereNull('audit_user_id');
         }
 
         $query->with('propertyManagement');
@@ -45,7 +50,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         }else{
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -100,7 +105,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         return $transaction;
     }
 
-    public function canDelete($id) 
+    public function canDelete($id)
     {
         return true;
     }

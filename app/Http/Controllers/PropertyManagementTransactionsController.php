@@ -31,11 +31,25 @@ class PropertyManagementTransactionsController extends Controller
     public function index(Request $request, PropertyManagement $pm)
     {
         $search = trim($request->s);
-        $transactions = $this->repository->all($search);
+
+        $config = ['property_management_id' => $pm->id];
+        $transactions = $this->repository->all($search, $config);
 
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
+            ->with('search', $search);
+    }
+
+    public function general(Request $request)
+    {
+        $search = trim($request->s);
+
+        $config = ['filterByPendingAudits' => !!$request->filterByPendingAudits];
+        $transactions = $this->repository->all($search, $config);
+
+        return view('property-management-transactions.general')
+            ->with('transactions', $transactions)
             ->with('search', $search);
     }
 
