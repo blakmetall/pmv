@@ -31,7 +31,9 @@ class HumanResourcesController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $human_resources = $this->repository->all($search);
+
+        $config = ['filterByWorkgroup' => true];
+        $human_resources = $this->repository->all($search, $config);
 
         return view('human-resources.index')
             ->with('human_resources', $human_resources)

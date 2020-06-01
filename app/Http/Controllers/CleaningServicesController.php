@@ -35,7 +35,9 @@ class CleaningServicesController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $cleaning_services = $this->repository->all($search);
+
+        $config = ['filterByWorkgroup' => true];
+        $cleaning_services = $this->repository->all($search, $config);
 
         return view('cleaning-services.index')
             ->with('cleaning_services', $cleaning_services)
@@ -51,7 +53,10 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->blueprint();
 
-        $propertiesConfig = ['paginate' => false];
+        $propertiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
         $properties = $this->propertiesRepository->all('', $propertiesConfig);
 
         $configCleaningStaff = ['paginate' => false];

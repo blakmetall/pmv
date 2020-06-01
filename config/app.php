@@ -229,8 +229,10 @@ return [
         // custom helpers
 
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
+        'PMTransationHelper' => App\Helpers\PMTransationHelper::class,
         'RoleHelper' => App\Helpers\RoleHelper::class,
         'UserHelper' => App\Helpers\UserHelper::class,
+        'WorkgroupHelper' => App\Helpers\WorkgroupHelper::class,
         
     ],
 

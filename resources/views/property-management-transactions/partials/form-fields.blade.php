@@ -10,7 +10,7 @@
             'value' => $pm->property->translate()->name,
             'disabled' => true,
         ]) 
-
+       
         <!-- property_management_id -->
         @include('components.form.select', [
             'group' => 'property-management-transaction',
@@ -34,7 +34,7 @@
             'options' => $transactionTypes,
             'optionValueRef' => 'transaction_type_id',
             'optionLabelRef' => 'transactionType:translate,name',
-        ])  
+        ]) 
 
         <!-- amount -->
         @include('components.form.input', [
@@ -44,6 +44,20 @@
             'value' => $row->amount,
             'required' => true
         ])
+
+        <!-- transaction_type_id -->
+        @include('components.form.select', [
+            'group' => 'property-management-transaction',
+            'label' => __('Operation Type'),
+            'name' => 'operation_type',
+            'value' => $row->operation_type,
+            'options' => $paymentTypes,
+            'translatable' => false,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'label',
+            'required' => true,
+            'disableDefaultOption' => true
+        ]) 
 
         <!-- period_start_date -->
         @include('components.form.input', [

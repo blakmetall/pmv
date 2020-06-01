@@ -8,6 +8,7 @@ use App\Repositories\{
     PropertyManagementTransactionsRepositoryInterface,
     TransactionTypesRepositoryInterface
 };
+use App\Helpers\PMTransactionHelper;
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -59,10 +60,12 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->blueprint();
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         return view('property-management-transactions.create')
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('pm', $pm);
     }
 
@@ -89,10 +92,12 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         return view('property-management-transactions.show')
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('pm', $pm);
     }
 
@@ -106,8 +111,10 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         return view('property-management-transactions.edit')
+            ->with('paymentTypes', $paymentTypes)
             ->with('transaction', $transaction)
             ->with('transactionTypes', $transactionTypes)
             ->with('pm', $pm);
