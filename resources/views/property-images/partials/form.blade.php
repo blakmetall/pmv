@@ -7,11 +7,7 @@
 <fieldset {{ $disabled }}>
 
     <!-- load fields -->
-    @include('agents.partials.form-fields', [
-        'label' => __('Account'),
-        'row' => $row,
-        'roles' => $roles,
-    ])
+    @include('property-images.partials.form-fields', ['row' => $row])
 
 </fieldset>
 
@@ -19,7 +15,8 @@
 @include('components.form.actions', [
     'id' => $row->id,
     'disabled' => $disabled,
-    'edit_route' => 'agents.edit',
-    'cancel_route' => 'agents',
-    'delete_route' => 'agents.destroy',
+    'edit_route' => 'property-images.edit',
+    'cancel_route' => 'property-images',
+    'delete_route' => 'property-images.destroy',
+    'routeParams' => [$property->id]
 ])

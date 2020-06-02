@@ -3,17 +3,17 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('View'),
+        'label' => __('Edit'),
         'breadcrumbs' => [
             [
-                'url' => route('agents'),
-                'label' => __('Agents'),
+                'url' => route('property-images', [$property->id]),
+                'label' => __('Images'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('agents.create'),
+                'url' => route('property-images.create', [$property->id]),
             ]
         ]
     ])
@@ -24,12 +24,14 @@
 @endsection
 
 @section('main-content')
+
     <div class="container app-container-sm">
-        <form action="" onsubmit="return false;" method="post">
-            @include('agents.partials.form', [
-                'row' => $agent,
-                'disabled' => true
+        <form action="{{ route('property-images.update', [$property->id, $image->id]) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @include('property-images.partials.form', [
+                'row' => $image
             ])        
         </form>
     </div>
+
 @endsection

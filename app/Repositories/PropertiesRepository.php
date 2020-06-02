@@ -139,10 +139,18 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function delete($id)
     {
         $property = $this->model->find($id);
-        
         if ($property && $this->canDelete($id)) {
+
+            if($property->images()->count()){
+                foreach ($property->images as $image){
+                    $image->delete();
+                    deleteFile($image->file_name);
+                }
+            }
+
             $property->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $property->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
+
 
             $property->delete();
         }

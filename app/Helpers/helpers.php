@@ -1,8 +1,7 @@
 <?php
 
-// namespace App\Helpers;
-
 if (!function_exists('prepareFormInputName')) {
+
     function prepareFormInputName($name, $parentName, $lang)
     {
         $inputName = $name;
@@ -59,36 +58,6 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
         return $values;
     }
 }
-
-// Helper for agents
-if (!function_exists('prepareCheckboxValuesFromRowsAgents')) {
-    function prepareCheckboxValuesFromRowsAgents($items, $config = [])
-    {
-        $values = [];
-        $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
-        $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
-        $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
-
-        // Id agents
-        $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : ''; // default empty
-
-        if ($items->count()) {
-            foreach($items as $item) {
-                if($item->{$valueRef} == 5){
-
-                    $values[] = [
-                        'label' => $item->{$labelRef}.' '.$item->{$secondLabelRef},
-                        'value' => $item->{$valueRef},
-                    ];  
-
-                }
-            }
-        }
-        
-        return $values;
-    }
-}
-
 
 if (!function_exists('prepareCheckboxDefaultValues')) {
     function prepareCheckboxDefaultValues($items, $config = [])
@@ -183,9 +152,42 @@ if (!function_exists('preparePhoneContacts')) {
     }
 }
 
+if (!function_exists('saveFile')) {
+    function saveFile($file)
+    {
+        $extension             = $file->getClientOriginalExtension();
+        $originalName    = $file->getClientOriginalName();
+        $originalNameRaw = substr($originalName, 0, strrpos($originalName, "."));
+        
+        $folder          = 'properties';
+        $slug            = \Illuminate\Support\Str::slug($originalNameRaw, '-');
+        $fileName        = $slug . '-' . strtotime('now') . '.' . $extension;
+        $filePath        = $folder . '/' . $fileName;
+
+        Storage::disk('public')->put($filePath, \File::get( $file ));
+
+        return [
+            'slug' => $slug,
+            'extension' => $extension,
+            'file_original_name' => $originalName,
+            'file_name' => $fileName,
+            'file_path' => Storage::url($filePath),
+            'file_url' => public_path() . Storage::url($filePath),
+        ];
+    }
+}
+
+if (!function_exists('deleteFile')) {
+    function deleteFile($file)
+    {
+        Storage::disk('public')->delete('properties/'.$file);
+    }
+}
+
 if (!function_exists('getOperationTypeById')) {
     function getOperationTypeById($operationTypeId)
     {
         return App\Helpers\PMTransactionHelper::getTypeById($operationTypeId);
     }
 }
+

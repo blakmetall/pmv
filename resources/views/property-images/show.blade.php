@@ -6,14 +6,14 @@
         'label' => __('View'),
         'breadcrumbs' => [
             [
-                'url' => route('property-notes', [$property->id]),
-                'label' => __('Notes'),
+                'url' => route('property-images', [$property->id]),
+                'label' => __('Images'),
             ],
         ],
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-notes.create', [$property->id]),
+                'url' => route('property-images.create', [$property->id]),
             ]
         ]
     ])
@@ -27,8 +27,8 @@
 
     <div class="container app-container-sm">
         <form action="" onsubmit="return false;" method="post">
-            @include('property-notes.partials.form', [
-                'row' => $note,
+            @include('property-images.partials.form', [
+                'row' => $image,
                 'disabled' => true
             ])        
         </form>
