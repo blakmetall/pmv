@@ -98,6 +98,15 @@
                                         <i class="nav-icon i-Old-Camera font-weight-bold"></i>
                                     </a>
 
+                                    <!-- bookings from specific to property -->
+                                    <a 
+                                        href="{{ route('bookings.by-property', $row->property->id) }}" 
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Bookings') }}"
+                                        alt="{{ __('Bookings') }}">
+                                        <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
+                                    </a>
+
                                     <!-- property management -->
                                     <a 
                                         href="{{ route('property-management', $row->property->id) }}" 
