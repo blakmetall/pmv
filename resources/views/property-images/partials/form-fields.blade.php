@@ -17,7 +17,6 @@
         ])
 
         <img src="{{ asset($row->file_path) }}" alt="" width="100">
-        <input type="hidden" value="{{ $row->file_name }}" name="old_file">
 
         <!-- images -->
         <input type="file" class="form-control" name="property_image" />

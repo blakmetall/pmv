@@ -130,10 +130,10 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function delete($id)
     {
         $property = $this->model->find($id);
-        $images = $property->images->all();
         if ($property && $this->canDelete($id)) {
-            if(count($images) > 0){
-                foreach ($images as $image){
+
+            if($property->images()->count()){
+                foreach ($property->images as $image){
                     $image->delete();
                     deleteFile($image->file_name);
                 }

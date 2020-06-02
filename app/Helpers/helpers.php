@@ -154,24 +154,24 @@ if (!function_exists('preparePhoneContacts')) {
 if (!function_exists('saveFile')) {
     function saveFile($file)
     {
-        $ext             = $file->getClientOriginalExtension();
+        $extension             = $file->getClientOriginalExtension();
         $originalName    = $file->getClientOriginalName();
         $originalNameRaw = substr($originalName, 0, strrpos($originalName, "."));
         
         $folder          = 'properties';
         $slug            = \Illuminate\Support\Str::slug($originalNameRaw, '-');
-        $fileName        = $slug . '-' . strtotime('now') . '.' . $ext;
+        $fileName        = $slug . '-' . strtotime('now') . '.' . $extension;
         $filePath        = $folder . '/' . $fileName;
 
         Storage::disk('public')->put($filePath, \File::get( $file ));
 
         return [
-            'extension' => $ext,
+            'slug' => $slug,
+            'extension' => $extension,
+            'file_original_name' => $originalName,
             'file_name' => $fileName,
-            'original_name' => $originalName,
-            'path_file' => Storage::url($filePath),
-            'slug' => $ext,
-            'url_file' => public_path() . Storage::url($filePath),
+            'file_path' => Storage::url($filePath),
+            'file_url' => public_path() . Storage::url($filePath),
         ];
     }
 }

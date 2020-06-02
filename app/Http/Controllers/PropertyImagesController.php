@@ -22,13 +22,11 @@ class PropertyImagesController extends Controller
      */
     public function index(Request $request, Property $property)
     {
-        $search = trim($request->s);
-        $images = $this->repository->all($search);
+        $images = $this->repository->all();
 
         return view('property-images.index')
             ->with('images', $images)
-            ->with('property', $property)
-            ->with('search', $search);
+            ->with('property', $property);
     }
 
     /**

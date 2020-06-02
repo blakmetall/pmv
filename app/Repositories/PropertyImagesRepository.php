@@ -7,7 +7,6 @@ use DateTime;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Helpers\LanguageHelper;
 use App\Repositories\PropertyImagesRepositoryInterface;
 use App\Models\{ Property, PropertyImage };
 use App\Validations\PropertyImagesValidations;
@@ -60,27 +59,33 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
     {
         $is_new = ! $id;
 
+        $hasPreviousImage = false;
+        $hasUploadedFile = $request->hasFile( 'property_image' );
+
         if($is_new){
             $image = $this->blueprint();
+            $image->property_id = $request->property_id; 
+            $image->save();
+            $image->order = $image->property->images()->count();
         }else{
             $image = $this->find($id);
+            $hasPreviousImage = true;
+            $oldImage = $image->file_name;
         }
 
-        $image->property_id = $request->property_id;
-        $image->order = 0;
-
-        if($request->hasFile( 'property_image' )){
-            $data_img = saveFile($request->file( 'property_image' ));
-            $image->slug = $data_img['slug'];
-            $image->extension = $data_img['extension'];
-            $image->file_original_name = $data_img['original_name'];
-            $image->file_name = $data_img['file_name'];
-            $image->file_path = $data_img['path_file'];
-            $image->file_url = $data_img['url_file'];
+        if($hasUploadedFile){
+            $imgData = saveFile($request->file( 'property_image' ));
+            
+            $image->slug = $imgData['slug'];
+            $image->extension = $imgData['extension'];
+            $image->file_original_name = $imgData['file_original_name'];
+            $image->file_name = $imgData['file_name'];
+            $image->file_path = $imgData['file_path'];
+            $image->file_url = $imgData['file_url'];
         }
 
-        if($image->save()){
-            deleteFile($request->old_file);
+        if($image->save() && $hasUploadedFile && $hasPreviousImage ){
+            deleteFile($oldImage);
         }
 
         return $image;

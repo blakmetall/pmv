@@ -12,7 +12,6 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Order') }}</th>
                         <th scope="col">{{ __('Thumbnail') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
@@ -27,11 +26,6 @@
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $row->id }}
-                                </th>
-
-                                <!-- order -->
-                                <th>
-                                    {{ $row->order }}
                                 </th>
 
                                 <!-- thumbnail -->
