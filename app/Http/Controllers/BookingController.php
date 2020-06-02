@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\{ Property, User };
 
 class BookingController extends Controller
 {
@@ -11,9 +12,21 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        echo 'bookings will be here';
+    }
+
+    public function propertyBookings(Request $request, Property $property)
+    {
+        echo 'property bookings will be here';
+        echo '<hr><pre>', print_r($property), '<pre>'; exit; 
+    }
+
+    public function ownerBookings(Request $request, User $user)
+    {
+        echo 'owner bookings will be here';
+        echo '<hr><pre>', print_r($user), '<pre>'; exit; 
     }
 
     /**

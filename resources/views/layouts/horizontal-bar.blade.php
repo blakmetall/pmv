@@ -21,7 +21,7 @@
                         </li>
                     @endif
 
-                    @if ($_current_role->isAllowed('booking', 'heading-menu'))
+                    @if ($_current_role->isAllowed('bookings', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -29,7 +29,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Bookings') }}
                                     </label>
-                                    <a href="#">
+                                    <a href="{{ route('bookings') }}">
                                         <i class="nav-icon mr-2 i-Calendar-4"></i>
                                         {{ __('Bookings') }}
                                     </a>
@@ -37,15 +37,15 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_current_role->isAllowed('booking', 'index'))
+                                        @if ($_current_role->isAllowed('bookings', 'index'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('bookings') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('booking', 'requests'))
+                                        @if ($_current_role->isAllowed('bookings', 'requests'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Requests') }}</span>
@@ -53,7 +53,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('booking', 'agents'))
+                                        @if ($_current_role->isAllowed('bookings', 'agents'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('agents') }}">
                                                     <span class="item-name">{{ __('Agents') }}</span>
@@ -69,7 +69,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('booking', 'general-availability'))
+                                        @if ($_current_role->isAllowed('bookings', 'general-availability'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('General Availability') }}</span>

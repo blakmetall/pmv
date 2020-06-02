@@ -79,6 +79,26 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('', 'CalendarController@index')->name('calendar');
         });
 
+        // bookings group
+        Route::group(['prefix' => 'bookings'], function () {
+
+            // bookings
+            Route::group(['middleware' => 'role-permission:bookings,index'], function () {
+                Route::get('', 'BookingController@index')->name('bookings');
+            });
+
+            // bookings by property
+            Route::group(['middleware' => 'role-permission:bookings,property'], function () {
+                Route::get('property/{property}', 'BookingController@propertyBookings')->name('bookings.by-property');
+            });
+    
+            // bookings by owner
+            Route::group(['middleware' => 'role-permission:bookings,owner'], function () {
+                Route::get('property/{owner}', 'BookingController@ownerBookings')->name('bookings.by-owner');
+            });
+        });
+
+
         // properties
         Route::group(['prefix' => 'properties', 'middleware' => 'role-permission:properties,index'], function () {
             Route::get('', 'PropertiesController@index')->name('properties');

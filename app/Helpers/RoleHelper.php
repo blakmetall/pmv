@@ -134,7 +134,7 @@ class RoleHelper
                     'concierge',
                 ]),
             ],
-            'booking' => [
+            'bookings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
@@ -163,6 +163,25 @@ class RoleHelper
                     'administrative-assistant',
                     'concierge',
                     'owner',
+                    'regular',
+                ]),
+                'property' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                    'owner',
+                    'regular',
+                ]),
+                'owner' => self::transformSluggedRolesToIds([
+                    'owner',
+                ]),
+                'regular' => self::transformSluggedRolesToIds([
                     'regular',
                 ]),
                 'requests' => self::transformSluggedRolesToIds([
