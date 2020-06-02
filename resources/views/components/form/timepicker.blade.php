@@ -9,14 +9,16 @@
     $value = isset($value) ? $value : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
-
-    $validTypes = ['text', 'email', 'password', 'date', 'time'];
-    $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
+    $timeInterval = isset($timeInterval) ? (integer) $timeInterval : 15;
+    $timeFormatJS = isset($timeFormatJS) ? $timeFormatJS : 'HH:mm';
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
+
+    $value = old($requestName, $value);
+    $valueWithoutSeconds = date('H:i', strtotime($value));
 
     $disabledProp = ($disabled) ? 'disabled' : '';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
@@ -36,15 +38,17 @@
 
     <div class="col-sm-10">
 
-        <input type="{{ $type }}" 
-            value="{{ old($requestName, $value) }}"
+        <input type="text" 
+            value="{{ $valueWithoutSeconds }}"
             name="{{ $inputName }}"
-            class="form-control" 
+            class="form-control app-input-timepicker" 
             id="{{ $id }}"
             {{ $disabledProp }}
             {{ $readOnlyProp }}
-        />
 
+            data-time-interval="{{ $timeInterval }}"
+            data-time-format="{{ $timeFormatJS }}"
+        />
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">

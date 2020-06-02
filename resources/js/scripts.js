@@ -3,6 +3,7 @@ import { handleMenuFit } from "./scripts/handleMenuFit.js";
 import { initCalendar } from "./scripts/initCalendar.js";
 import { initFastSelectComponents } from "./scripts/initFastSelectComponents.js";
 import { initMapInputComponents } from "./scripts/initMapInputComponents.js";
+import { initTimePickerComponents } from "./scripts/initTimePickerComponents.js";
 
 $(function() {
     /////////////////////////////
@@ -21,6 +22,7 @@ $(function() {
 
         initFastSelectComponents();
         initMapInputComponents();
+        initTimePickerComponents();
     }
 
     function resize() {

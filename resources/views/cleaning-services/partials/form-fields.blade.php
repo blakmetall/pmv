@@ -37,11 +37,12 @@
         ])
 
         <!-- hours -->
-        @include('components.form.input', [
+        @include('components.form.timepicker', [
             'group' => 'cleaning-service',
             'label' => __('Hour'),
             'name' => 'hour',
-            'value' => $row->hour
+            'value' => $row->hour,
+            'timeInterval' => 15,
         ])
 
         <!-- description -->
