@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateProfilesAddEmergecyPhoneNumber extends Migration
+class PropertyManagementUpdateFieldIsFinished extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class UpdateProfilesAddEmergecyPhoneNumber extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('profiles')) {
+        if (!Schema::hasTable('property_management')) {
             return;
         }
 
-        Schema::table('profiles', function (Blueprint $table) {
-            $table->string('emergency_phone', 30)->nullable()->after('phone');
+        Schema::table('property_management', function (Blueprint $table) {
+            $table->tinyInteger('is_finished')->default(0)->nullable()->change();
         });
     }
 
@@ -29,8 +29,8 @@ class UpdateProfilesAddEmergecyPhoneNumber extends Migration
      */
     public function down()
     {
-        Schema::table('profiles', function($table) {
-            $table->dropColumn('emergency_phone');
+        Schema::table('property_management', function($table) {
+            $table->tinyInteger('is_finished')->nullable()->change();
         });
     }
 }

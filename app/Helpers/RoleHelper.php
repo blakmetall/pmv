@@ -302,12 +302,6 @@ class RoleHelper
                     'concierge',
                     'owner',
                 ]),
-                'staff' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'operations-assistant',
-                    'concierge',
-                ]),
             ],
             'contractors' => [
                 '*' => self::transformSluggedRolesToIds([

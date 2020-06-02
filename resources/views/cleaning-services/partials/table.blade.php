@@ -46,7 +46,7 @@
                                 <td>
                                     @if ($row->cleaningStaff()->count())
                                         @foreach ($row->cleaningStaff as $staff)
-                                            <a href="{{ route('cleaning-staff.show', $staff->id) }}">
+                                            <a href="{{ route('human-resources.show', $staff->id) }}">
                                                 {{ $staff->full_name }} 
                                             </a>
                                             <br>

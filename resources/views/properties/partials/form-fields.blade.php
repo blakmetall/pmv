@@ -189,11 +189,11 @@
         ])
 
         <!-- amenities -->
-        @include('components.form.multi-select', [
+        @include('components.form.fast-select', [
             'group' => 'property',
             'label' => __('Amenities'),
-            'name' => 'amenities_ids[]',
-            'placeholder' => __('Select Options'),
+            'multiple' => true,
+            'name' => 'amenities_ids',
             'disableDefaultOption' => true,
             'options' => prepareSelectValuesFromRows($amenities, [
                 'valueRef' => 'amenity_id'

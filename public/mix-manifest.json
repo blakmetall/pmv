@@ -4,8 +4,6 @@
     "/js/scripts.js": "/js/scripts.js",
     "/css/app.css": "/css/app.css",
     "/assets/styles/css/themes/palmera-vacations.min.css": "/assets/styles/css/themes/palmera-vacations.min.css",
-    "/assets/styles/css/themes/lite-purple.min.css": "/assets/styles/css/themes/lite-purple.min.css",
-    "/assets/styles/css/themes/lite-blue.min.css": "/assets/styles/css/themes/lite-blue.min.css",
-    "/assets/styles/css/themes/dark-purple.min.css": "/assets/styles/css/themes/dark-purple.min.css",
+    "/css/vendor.css": "/css/vendor.css",
     "/assets/js/common-bundle-script.js": "/assets/js/common-bundle-script.js"
 }

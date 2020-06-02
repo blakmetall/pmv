@@ -13,6 +13,10 @@ class UpdatePropertyContactsAddEmergecyPhoneNumber extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('contacts')) {
+            return;
+        }
+
         Schema::table('contacts', function (Blueprint $table) {
             $table->string('emergency_phone', 30)->nullable()->after('phone');
         });

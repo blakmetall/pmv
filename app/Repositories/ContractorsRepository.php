@@ -6,8 +6,9 @@ use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\ContractorsRepositoryInterface;
-use App\Models\{ City, Contractor };
+use App\Models\{ City, Contractor, Property };
 use App\Validations\ContractorsValidations;
+use App\Helpers\WorkgroupHelper;
 
 class ContractorsRepository implements ContractorsRepositoryInterface
 {
@@ -21,6 +22,7 @@ class ContractorsRepository implements ContractorsRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
 
         if ($search) {
             $query = Contractor::
@@ -37,6 +39,10 @@ class ContractorsRepository implements ContractorsRepositoryInterface
         }
 
         $query->orderBy('company', 'asc');
+
+        if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
+            $query->whereIn('city_id', WorkgroupHelper::getAllowedCities());
+        }
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );

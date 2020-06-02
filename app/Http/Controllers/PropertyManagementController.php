@@ -13,7 +13,7 @@ class PropertyManagementController extends Controller
     public function __construct(PropertyManagementRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        
+
         PropertyManagement::setFinishedStatusHandler();
     }
 
@@ -25,11 +25,23 @@ class PropertyManagementController extends Controller
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-        $pm_items = $this->repository->all($search);
+
+        $config = ['propertyID' => $property->id];
+        $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.index')
             ->with('pm_items', $pm_items)
             ->with('property', $property)
+            ->with('search', $search);
+    }
+
+    public function general(Request $request)
+    {
+        $search = trim($request->s);
+        $pm_items = $this->repository->all($search);
+
+        return view('property-management.general')
+            ->with('pm_items', $pm_items)
             ->with('search', $search);
     }
 
@@ -68,7 +80,6 @@ class PropertyManagementController extends Controller
     public function show(Property $property, PropertyManagement $pm)
     {
         $pm = $this->repository->find($pm);
-
         return view('property-management.show')
             ->with('pm', $pm)
             ->with('property', $property);
@@ -119,5 +130,17 @@ class PropertyManagementController extends Controller
 
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
+    }
+
+
+    private function checkStatus($request, $property, $id = false){
+
+        $pm = false;
+
+        if($request->end_date > getCurrentDate()){
+            $pm = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0)->where('id', '!=', $id)->first();
+        }
+
+        return $pm;
     }
 }

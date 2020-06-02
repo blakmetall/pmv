@@ -89,6 +89,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('update/{id}', 'PropertiesController@update')->name('properties.update');
             Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
 
+            // property management
+            Route::group(['prefix' => 'property-management', 'middleware' => 'role-permission:properties,property-management'], function () {
+                Route::get('', 'PropertyManagementController@general')->name('property-management.general');
+            });
+
             // property routes
             Route::group(['prefix' => '{property}'], function () {
 
@@ -152,6 +157,10 @@ Route::group(['middleware' => ['web']], function () {
 
         // property management
         Route::group(['prefix' => 'property-management'], function () {
+
+            Route::group(['prefix' => 'transactions'], function () {
+                Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
+            });
 
             // single property management
             Route::group(['prefix' => '{pm}'], function () {

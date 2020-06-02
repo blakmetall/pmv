@@ -48,6 +48,12 @@
                 'value' => $longitude
             ])
         </div>
+
+        <div class="text-right">
+            <button type="button" class="btn btn-outline-secondary btn-sm app-google-clear-map">
+                {{  __('Reset Map') }}
+            </button>
+        </div>
     </div>
 
 </div>
