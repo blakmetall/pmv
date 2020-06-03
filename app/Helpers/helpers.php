@@ -36,25 +36,36 @@ if (!function_exists('prepareFormRequestName')) {
         return $requestName;
     }
 }
- 
+
+if (!function_exists('isORMObj')) {
+    function isORMObj($obj)
+    {
+        return method_exists($obj, 'count');
+    }
+}
+
 if (!function_exists('prepareCheckboxValuesFromRows')) {
     function prepareCheckboxValuesFromRows($items, $config = [])
     {
+        $shouldLoopForValues = (isORMObj($items) && $items->count()) || (!isORMObj($items) && is_array($items));
         $values = [];
 
-        $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
-        $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
-        $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
-
-        if ($items->count()) {
+        if ($shouldLoopForValues) {
+            $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+            $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+            $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
+        
             foreach($items as $item) {
+                $labelRefValue = isset($item->{$labelRef}) ? $item->{$labelRef} : '';
+                $secondLabelRefValue = isset($item->{$secondLabelRef}) ? $item->{$secondLabelRef} : '';
+                
                 $values[] = [
-                    'label' => $item->{$labelRef}.' '.$item->{$secondLabelRef},
-                    'value' => $item->{$valueRef},
+                    'label' => trim($labelRefValue . ' ' . $item->{$secondLabelRefValue}),
+                    'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }
         }
-        
+
         return $values;
     }
 }
@@ -62,13 +73,14 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
 if (!function_exists('prepareCheckboxDefaultValues')) {
     function prepareCheckboxDefaultValues($items, $config = [])
     {
+        $shouldLoopForValues = (isORMObj($items) && $items->count()) || (!isORMObj($items) && is_array($items));
         $defaultValues = [];
 
-        $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+        if ($shouldLoopForValues) {
+            $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
 
-        if ($items->count()) {
             foreach($items as $item) {
-                $defaultValues[] = $item->{$valueRef};
+                $defaultValues[] = isset($item->{$valueRef}) ? $item->{$valueRef} : '';
             }
         }
         
@@ -79,15 +91,17 @@ if (!function_exists('prepareCheckboxDefaultValues')) {
 if (!function_exists('prepareSelectValuesFromRows')) {
     function prepareSelectValuesFromRows($items, $config = [])
     {
+        $shouldLoopForValues = (isORMObj($items) && $items->count()) || (!isORMObj($items) && is_array($items));
         $values = [];
 
-        $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
-        $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
-        if ($items->count()) {
+        if ($shouldLoopForValues) {
+            $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+            $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+
             foreach($items as $item) {
                 $values[] = [
-                    'label' => $item->{$labelRef},
-                    'value' => $item->{$valueRef},
+                    'label' => isset($item->{$labelRef}) ? $item->{$labelRef} : '',
+                    'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }
         }
@@ -99,13 +113,14 @@ if (!function_exists('prepareSelectValuesFromRows')) {
 if (!function_exists('prepareSelectDefaultValues')) {
     function prepareSelectDefaultValues($items, $config = [])
     {
+        $shouldLoopForValues = (isORMObj($items) && $items->count()) || (!isORMObj($items) && is_array($items));
         $defaultValues = [];
 
-        $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+        if ($shouldLoopForValues) {
+            $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
 
-        if ($items->count()) {
             foreach($items as $item) {
-                $defaultValues[] = $item->{$valueRef};
+                $defaultValues[] = isset($item->{$valueRef}) ? $item->{$valueRef} : '';
             }
         }
 
