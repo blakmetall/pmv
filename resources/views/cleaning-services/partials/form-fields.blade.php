@@ -15,7 +15,7 @@
         ])
 
         <!-- cleaning_staff_ids -->
-        @include('components.form.checkbox-multiple', [
+        {{-- @include('components.form.checkbox-multiple', [
             'group' => 'cleaning-staff',
             'label' => __('Cleaning Staff'),
             'name' => 'cleaning_staff_ids',
@@ -25,6 +25,16 @@
             'default' => prepareCheckboxDefaultValues($row->cleaningStaff, [
                 'valueRef' => 'id',
             ]),
+        ]) --}}
+
+         <!-- amenities -->
+        @include('components.form.fast-select', [
+            'group' => 'cleaning-staff',
+            'label' => __('Cleaning Staff'),
+            'multiple' => true,
+            'name' => 'cleaning_staff_ids',
+            'options' => prepareSelectValuesFromRows($cleaning_staff, ['labelRef' => 'full_name']),
+            'default' => prepareSelectDefaultValues($row->cleaningStaff, ['valueRef' => 'id']),
         ])
 
         <!-- date -->
