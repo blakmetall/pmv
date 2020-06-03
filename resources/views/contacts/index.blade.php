@@ -3,7 +3,7 @@
 @section('heading-content')
 
     @include('components.heading', [
-        'label' => __('Contact'),
+        'label' => __('Contacts'),
         'actions' => [
             [
                 'label' => __('New'),
