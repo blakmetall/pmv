@@ -34,23 +34,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('', 'ProfileController@edit')->name('profile');
             Route::post('update', 'ProfileController@update')->name('profile.update');
         });
-
-
-        // bookings
-        Route::group(['prefix' => 'booking'], function () {
-
-            // agents
-            Route::group(['prefix' => 'agents', 'middleware' => 'role-permission:booking,agents'], function () {
-                Route::get('', 'AgentsController@index')->name('agents');
-                Route::get('create', 'AgentsController@create')->name('agents.create');
-                Route::post('store', 'AgentsController@store')->name('agents.store');
-                Route::get('show/{agent}', 'AgentsController@show')->name('agents.show');
-                Route::get('edit/{agent}', 'AgentsController@edit')->name('agents.edit');
-                Route::post('update/{id}', 'AgentsController@update')->name('agents.update');
-                Route::get('destroy/{id}', 'AgentsController@destroy')->name('agents.destroy');
-            });
-        });
-
   
         // contractors
         Route::group(['prefix' => 'contractors', 'middleware' => 'role-permission:contractors,index'], function () {
@@ -95,6 +78,17 @@ Route::group(['middleware' => ['web']], function () {
             // bookings by owner
             Route::group(['middleware' => 'role-permission:bookings,owner'], function () {
                 Route::get('property/{owner}', 'BookingController@ownerBookings')->name('bookings.by-owner');
+            });
+
+            // agents
+            Route::group(['prefix' => 'agents', 'middleware' => 'role-permission:bookings,agents'], function () {
+                Route::get('', 'AgentsController@index')->name('agents');
+                Route::get('create', 'AgentsController@create')->name('agents.create');
+                Route::post('store', 'AgentsController@store')->name('agents.store');
+                Route::get('show/{agent}', 'AgentsController@show')->name('agents.show');
+                Route::get('edit/{agent}', 'AgentsController@edit')->name('agents.edit');
+                Route::post('update/{id}', 'AgentsController@update')->name('agents.update');
+                Route::get('destroy/{id}', 'AgentsController@destroy')->name('agents.destroy');
             });
         });
 
