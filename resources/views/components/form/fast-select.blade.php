@@ -10,6 +10,12 @@
     $disabled = isset($disabled) ? $disabled : false;
     $disableDefaultOption = isset($disableDefaultOption) ? (bool) $disableDefaultOption : false;
     $hidden = isset($hidden) ? (bool) $hidden : false;
+    $default = isset($default) ? $default : false;
+    
+    if($multiple && $default === false) {
+        $default = [];
+    }
+
 
     $options = isset($options) && count($options) ? $options : [];
 
@@ -18,6 +24,9 @@
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
+    if($multiple) {
+        $inputName = $inputName . '[]';
+    }
 
     $multipleProp = ($multiple) ? 'multiple' : '';
     $disabledProp = ($disabled) ? 'disabled' : '';
@@ -37,7 +46,7 @@
     <div class="col-sm-10">
         <select
             {{ $multipleProp }}
-            name="{{ $inputName }}[]"
+            name="{{ $inputName }}"
             class="{{ $className }} form-control"
             id="{{ $id }}"
             data-placeholder="{{ $placeholder }}"
@@ -49,7 +58,10 @@
 
             @foreach($options as $option)
                 @php
-                    $selected = (in_array($option['value'], old($requestName, $default)))?'selected':'';
+                    $defaultValue = old($requestName, $default);
+                    $defaultValue = is_array($defaultValue) ? $defaultValue : [];
+
+                    $selected = (in_array($option['value'], $defaultValue)) ? 'selected' : '';
                 @endphp
 
                 <option value="{{ $option['value'] }}" {{ $selected }}>

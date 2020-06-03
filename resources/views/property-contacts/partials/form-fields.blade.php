@@ -11,18 +11,14 @@
             'value' => $row->id
         ])
 
-        <!-- contact_id -->
-        @include('components.form.checkbox-multiple', [
+        <!-- contacts_id -->
+        @include('components.form.fast-select', [
             'group' => 'property-contact',
             'label' => __('Contacts'),
+            'multiple' => true,
             'name' => 'contacts_ids',
-            'values' => prepareCheckboxValuesFromRows($contacts, [
-                'valueRef' => 'id',
-                'labelRef' => 'full_name'
-            ]),
-            'default' => prepareCheckboxDefaultValues($row->contacts, [
-                'valueRef' => 'id',
-            ]),
+            'options' => prepareSelectValuesFromRows($contacts, ['labelRef' => 'full_name']),
+            'default' => prepareSelectDefaultValues($row->contacts, ['valueRef' => 'id']),
         ])
 
     </div>
