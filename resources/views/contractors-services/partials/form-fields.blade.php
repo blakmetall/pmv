@@ -10,15 +10,14 @@
         @endif 
 
         <!-- contractor_id -->
-        @include('components.form.select', [
+        @include('components.form.fast-select', [
             'group' => 'contractor-service',
             'label' => __('Contractor'),
+            'multiple' => false,
             'name' => 'contractor_id',
             'required' => true,
-            'value' => $row->contractor_id,
-            'options' => $contractors,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'company',
+            'options' => prepareSelectValuesFromRows($contractors, ['valueRef' => 'id', 'labelRef' => 'company']),
+            'default' => prepareSelectDefaultValues([$row->contractor], ['valueRef' => 'id']),
         ])
 
         <!-- base_price -->
