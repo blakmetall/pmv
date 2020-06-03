@@ -17,20 +17,22 @@
         ])
 
         <!-- start_date -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'property-rate',
             'label' => __('Start Date'),
             'name' => 'start_date',
             'value' => $row->start_date,
             'required' => true,
+            'maxDaysLimitFromNow' => 1000,
         ])
 
         <!-- end_date -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'property-rate',
             'label' => __('End Date'),
             'name' => 'end_date',
             'value' => $row->end_date,
+            'maxDaysLimitFromNow' => 4000,
         ])
 
         <!-- management_fee -->

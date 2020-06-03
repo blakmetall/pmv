@@ -25,12 +25,13 @@
         ])
 
         <!-- date -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'cleaning-service',
             'label' => __('Date'),
             'name' => 'date',
             'required' => true,
-            'value' => $row->date
+            'value' => $row->date,
+            'maxDaysLimitFromNow' => 365,
         ])
 
         <!-- hours -->
