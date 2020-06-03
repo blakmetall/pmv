@@ -42,7 +42,9 @@
         }
     }
 }
+/******* end *************/
 /*************************/
+
 
 /*************************/
 /** multi-select styles **/
@@ -124,7 +126,9 @@
     text-transform: uppercase;
     font-weight: bold;
 }
+/******* end *************/
 /*************************/
+
 
 /*************************/
 /******* timepicker ******/
@@ -145,7 +149,45 @@
         background-color: rgba(45,108,156, 0.2);
     }
 }
+/******* end *************/
 /*************************/
+
+/*************************/
+/******* timepicker ******/
+
+.picker__select--month, .picker__select--year{
+    height: 40px;
+    font-size: 15px;
+}
+
+/******* end *************/
+/*************************/
+
+
+/*************************/
+/*** theme markup ********/
+
+.checkbox .checkmark.app-checkmark, 
+.radio .checkmark.app-checkmark{
+    top: 6px;
+}
+
+.form-actions {
+    .btn-outline-secondary:hover, 
+    .btn-outline-secondary:focus, 
+    .btn-outline-secondary:active {
+        background: inherit;
+        color: inherit;
+    }
+}
+
+.span-right-input-icon {
+    pointer-events: none;
+}
+
+/******* end *************/
+/*************************/
+
 
 /*************************/
 /********* app ***********/
@@ -166,10 +208,6 @@
     top: 9px;
     padding-bottom: 17px;
 }
-/*************************/
-
-/*************************/
-/** bootstrap overrides **/
 
 .app-map-wrapper {
     .app-google-map {
@@ -179,8 +217,6 @@
         text-transform: uppercase;
     }
 }
-/*************************/
-
 
 #app-menu {
     width: 100%;
@@ -223,20 +259,6 @@
     margin-right: 7px;
 }
 
-.checkbox .checkmark.app-checkmark, 
-.radio .checkmark.app-checkmark{
-    top: 6px;
-}
-
-.form-actions {
-    .btn-outline-secondary:hover, 
-    .btn-outline-secondary:focus, 
-    .btn-outline-secondary:active {
-        background: inherit;
-        color: inherit;
-    }
-}
-
 @media (max-width: 767px) {
     .app-heading-buttons {
         padding-top: 10px;
@@ -245,3 +267,6 @@
         padding-top: 10px;
     }
 }
+
+/******* end *************/
+/*************************/

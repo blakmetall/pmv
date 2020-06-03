@@ -9,8 +9,10 @@
     $value = isset($value) ? $value : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
+    $dateFormatJS = isset($dateFormatJS) ? $dateFormatJS : 'yyyy-mm-dd';
+    $maxDaysLimitFromNow = isset($maxDaysLimitFromNow) ? $maxDaysLimitFromNow : '0';
 
-    $validTypes = ['text', 'email', 'password', 'date', 'time', 'hidden'];
+    $validTypes = ['text', 'hidden'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
@@ -36,14 +38,22 @@
 
     <div class="col-sm-10">
 
-        <input type="{{ $type }}" 
-            value="{{ old($requestName, $value) }}"
-            name="{{ $inputName }}"
-            class="form-control" 
-            id="{{ $id }}"
-            {{ $disabledProp }}
-            {{ $readOnlyProp }}
-        />
+        <div class="input-right-icon">
+            <input type="{{ $type }}" 
+                value="{{ old($requestName, $value) }}"
+                name="{{ $inputName }}"
+                class="form-control app-input-datepicker" 
+                id="{{ $id }}"
+                {{ $disabledProp }}
+                {{ $readOnlyProp }}
+
+                data-format="{{ $dateFormatJS }}"
+                data-max-days-limit-from-now="{{ $maxDaysLimitFromNow }}"
+            />
+            <span class="span-right-input-icon">
+                <i class="ul-form__icon i-Calendar-4"></i>
+            </span>
+        </div>
 
 
         @if ($errors->has($requestName))

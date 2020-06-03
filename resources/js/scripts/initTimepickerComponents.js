@@ -1,4 +1,4 @@
-export function initTimePickerComponents(className) {
+export function initTimepickerComponents() {
     $('.app-input-timepicker').each(function() {
         var input = $(this);
 

@@ -60,27 +60,30 @@
         ]) 
 
         <!-- period_start_date -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'property-management-transaction',
             'label' => __('Period Start Date'),
             'name' => 'period_start_date',
             'value' => $row->period_start_date,
+            'maxDaysLimitFromNow' => 360,
         ])
 
         <!-- period_end_date -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'property-management-transaction',
             'label' => __('Period End Date'),
             'name' => 'period_end_date',
             'value' => $row->period_end_date,
+            'maxDaysLimitFromNow' => 360,
         ])
 
         <!-- post_date -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'property-management-transaction',
             'label' => __('Post Date'),
             'name' => 'post_date',
             'value' => $row->post_date,
+            'maxDaysLimitFromNow' => 360,
         ])
 
         <!-- description -->

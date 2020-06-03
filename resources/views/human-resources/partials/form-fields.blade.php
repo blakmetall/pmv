@@ -49,11 +49,11 @@
         ])
 
         <!-- birthday -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'human-resource',
             'label' => __('Birthday'),
             'name' => 'birthday',
-            'value' => $row->birthday
+            'value' => $row->birthday,
         ])
 
         <!-- children -->
@@ -68,11 +68,11 @@
         <hr>
 
         <!-- entry_at -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'human-resource',
             'label' => __('Entry Date'),
             'name' => 'entry_at',
-            'value' => $row->entry_at
+            'value' => $row->entry_at,
         ])
 
         <!-- days_vacations -->
@@ -85,19 +85,22 @@
         ])
 
         <!-- vacations_start_at -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'human-resource',
             'label' => __('Start Date'),
             'name' => 'vacations_start_at',
-            'value' => $row->vacations_start_at
+            'value' => $row->vacations_start_at,
+            'maxDaysLimitFromNow' => 730,
+
         ])
 
         <!-- vacations_end_at -->
-        @include('components.form.input', [
+        @include('components.form.datepicker', [
             'group' => 'human-resource',
             'label' => __('End Date'),
             'name' => 'vacations_end_at',
-            'value' => $row->vacations_end_at
+            'value' => $row->vacations_end_at,
+            'maxDaysLimitFromNow' => 730,
         ])
 
         <hr>

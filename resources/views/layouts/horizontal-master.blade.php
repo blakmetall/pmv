@@ -26,6 +26,8 @@
 
         <!-- TEMPORAL - se deberá pasar al webpack.mix.js más adelante -->
         <link rel="stylesheet" href="{{ asset('assets/styles/vendor/jquery.timepicker.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/styles/vendor/pickadate/classic.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/styles/vendor/pickadate/classic.date.css') }}">
 
         {{-- app css --}}
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -101,6 +103,9 @@
 
         <!-- TEMPORAL - se deberá pasar al webpack.mix.js más adelante -->
         <script src="{{ asset('assets/js/vendor/jquery.timepicker.min.js') }}"></script>
+        <script src="{{ asset('assets/js/vendor/pickadate/legacy.js') }}"></script>
+        <script src="{{ asset('assets/js/vendor/pickadate/picker.js') }}"></script>
+        <script src="{{ asset('assets/js/vendor/pickadate/picker.date.js') }}"></script>
 
         {{-- app js --}}
         <script src="{{asset('js/app.js')}}"></script>
