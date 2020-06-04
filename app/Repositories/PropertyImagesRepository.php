@@ -14,10 +14,12 @@ use App\Validations\PropertyImagesValidations;
 class PropertyImagesRepository implements PropertyImagesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(PropertyImage $image)
     {
         $this->model = $image;
+        $this->validation = new PropertyImagesValidations();
     }
 
     public function all($config = [])
@@ -45,13 +47,13 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
 
     public function create(Request $request)
     {
-        PropertyImagesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertyImagesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
