@@ -12,10 +12,12 @@ use App\Helpers\WorkgroupHelper;
 class HumanResourcesRepository implements HumanResourcesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(HumanResource $human_resource)
     {
         $this->model = $human_resource;
+        $this->validation = new HumanResourcesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -48,13 +50,13 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
 
     public function create(Request $request)
     {
-        HumanResourcesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        HumanResourcesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
