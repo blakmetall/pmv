@@ -3,56 +3,32 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class CleaningServicesValidations
+class CleaningServicesValidations extends Validation
 {  
-    public static function validateOnCreate(Request $request)
+    public function __construct()
     {
-        return self::validate('create', $request);
-    }
-    
-    public static function validateOnEdit(Request $request, $id = '')
-    {
-        return self::validate('edit', $request, $id);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [
+        $this->setDefaultValidations([
             'property_id'                        => 'required',
             'date'                               => 'required|date_format:Y-m-d',
             'hour'                               => 'nullable|date_format:H:i',
             'description'                        => 'required',
             'maid_fee'                           => 'required|numeric',
-        ];
-
-        return $defaultValidations;
+        ]);
     }
 
-    public static function validate($validateEvent, Request $request, $id = '')
+    public function validate($validateEvent, Request $request, $id = '')
     {
-        $redirectRoute = '';
-        $validations = [];
+        $eventValidations = [];
+        $customValidationMessages = [];
 
         switch($validateEvent)   {
-            case 'create':
-                $redirectRoute = 'cleaning-services.create';
-                $validations = [];
-            break;
-            case 'edit':
-                $redirectRoute = 'cleaning-services.edit';
-                $validations = [];
-            break;
+            case 'create': break;
+            case 'edit': break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
-        $validator = Validator::make($request->all(), $validations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }

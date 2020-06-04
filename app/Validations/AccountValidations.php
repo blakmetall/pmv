@@ -25,7 +25,7 @@ class AccountValidations extends Validation
             break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $eventValidations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
         $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
