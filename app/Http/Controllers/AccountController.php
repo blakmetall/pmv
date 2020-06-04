@@ -10,6 +10,12 @@ use App\Validations\AccountValidations;
 
 class AccountController extends Controller
 {
+    private $validation;
+
+    public function __construct() {
+        $this->validation = new AccountValidations();
+    }
+
     public function edit()
     {
         return view('account.edit')->with('user', Auth::user());
@@ -19,8 +25,8 @@ class AccountController extends Controller
     {
         $user = Auth::user();
         
-        AccountValidations::validateOnEdit($request, $user->id);
-
+        $this->validation->validate('edit', $request, $user->id);
+        
         $user->email = $request->email;
 
         if ($request->password) {
