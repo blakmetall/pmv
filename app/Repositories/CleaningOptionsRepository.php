@@ -12,10 +12,12 @@ use App\Validations\CleaningOptionsValidations;
 class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(CleaningOption $cleaning_option, $config = [])
     {
         $this->model = $cleaning_option;
+        $this->validation = new CleaningOptionsValidations();
     }
 
     public function all($search = '', $config = [])
@@ -46,13 +48,13 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 
     public function create(Request $request)
     {
-        CleaningOptionsValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        CleaningOptionsValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
