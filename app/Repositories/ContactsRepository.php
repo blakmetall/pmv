@@ -12,10 +12,12 @@ use App\Validations\ContactsValidations;
 class ContactsRepository implements ContactsRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(Contact $contact)
     {
         $this->model = $contact;
+        $this->validation = new ContactsValidations();
     }
 
     public function all($search = '', $config = [])
@@ -50,13 +52,13 @@ class ContactsRepository implements ContactsRepositoryInterface
 
     public function create(Request $request)
     {
-        ContactsValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        ContactsValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
