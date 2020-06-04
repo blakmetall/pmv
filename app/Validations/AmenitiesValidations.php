@@ -3,7 +3,6 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use App\Validations\Validation;
 
 class AmenitiesValidations extends Validation
 {  

@@ -11,10 +11,12 @@ use App\Validations\CitiesValidations;
 class CitiesRepository implements CitiesRepositoryInterface
 {
     private $model;
+    private $validation;
 
     public function __construct(City $city)
     {
         $this->model = $city;
+        $this->validation = new CitiesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -42,13 +44,13 @@ class CitiesRepository implements CitiesRepositoryInterface
 
     public function create(Request $request)
     {
-        CitiesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        CitiesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
