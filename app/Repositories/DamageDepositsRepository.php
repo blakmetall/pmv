@@ -12,10 +12,12 @@ use App\Validations\DamageDepositsValidations;
 class DamageDepositsRepository implements DamageDepositsRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(DamageDeposit $damage_deposit)
     {
         $this->model = $damage_deposit;
+        $this->validation = new DamageDepositsValidations();
     }
 
     public function all($search = '', $config = [])
@@ -46,13 +48,13 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
 
     public function create(Request $request)
     {
-        DamageDepositsValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        DamageDepositsValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
