@@ -12,10 +12,12 @@ use App\Validations\PropertyManagementValidations;
 class PropertyManagementRepository implements PropertyManagementRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(PropertyManagement $pm)
     {
         $this->model = $pm;
+        $this->validation = new PropertyManagementValidations();
     }
 
     public function all($search = '', $config = [])
@@ -60,13 +62,13 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function create(Request $request)
     {
-        PropertyManagementValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertyManagementValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

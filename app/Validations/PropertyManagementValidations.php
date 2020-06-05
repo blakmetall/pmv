@@ -3,32 +3,17 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class PropertyManagementValidations
+class PropertyManagementValidations extends Validation
 {  
-    public static function validateOnCreate(Request $request)
+    public function __construct()
     {
-        return self::validate('create', $request);
-    }
-    
-    public static function validateOnEdit(Request $request, $id = '')
-    {
-        return self::validate('edit', $request, $id);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [
+        $this->setDefaultValidations([
             'property_id' => 'required',
             'management_fee' => 'required|numeric|min:0',
             'start_date' => 'required|date_format:Y-m-d',
             'end_date' => 'nullable|date_format:Y-m-d',
-        ];
-
-        return $defaultValidations;
+        ]);
     }
 
     /*
@@ -42,28 +27,18 @@ class PropertyManagementValidations
         }
     */
 
-    public static function validate($validateEvent, Request $request, $id = '')
+    public function validate($validateEvent = '', Request $request, $id = '')
     {
-        $redirectRoute = '';
-        $validations = [];
+        $eventValidations = [];
+        $customValidationMessages = [];
 
         switch($validateEvent)   {
-            case 'create':
-                $redirectRoute = 'property-management.create';
-                $validations = [];
-            break;
-            case 'edit':
-                $redirectRoute = 'property-management.edit';
-                $validations = [];
-            break;
+            case 'create': break;
+            case 'edit': break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        $validator = Validator::make($request->all(), $validations);
-
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }
