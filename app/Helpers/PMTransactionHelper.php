@@ -9,8 +9,8 @@ class PMTransactionHelper
     public static function getTypes()
     {
         return [
-            '1' => (object) ['id' => 1, 'label' => __('Payment')],
-            '2' => (object) ['id' => 2, 'label' => __('Income')],
+            '1' => (object) ['id' => 1, 'label' => __('Charge')],
+            '2' => (object) ['id' => 2, 'label' => __('Credit')],
         ];
     }
 
