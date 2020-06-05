@@ -3,70 +3,43 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use App\Models\WorkgroupUser;
 
-class WorkgroupUsersValidations
+class WorkgroupUsersValidations extends Validation
 {  
-    public static function validateOnCreate(Request $request)
+    public function __construct()
     {
-        return self::validate('create', $request);
-    }
-
-    public static function validateOnEdit(Request $request, $id = '')
-    {
-        return self::validate('edit', $request, $id);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [
+        $this->setDefaultValidations([
             'workgroup_id' => 'required',
-        ];
-
-        return $defaultValidations;
+        ]);
     }
 
-    public static function getDefaultMessages()
+    public function validate($validateEvent, Request $request, $id = '')
     {
-        $defaultMessages = [
+        $eventValidations = [];
+        $customValidationMessages = [
             'user_id.unique_with' => __('This user already belongs to the current Workgroup.')
         ];
 
-        return $defaultMessages;
-    }
-
-    public static function validate($validateEvent, Request $request, $id = '')
-    {
-        $redirectRoute = '';
-        $validations = [];
-
-        $workgroupTemplate = new WorkgroupUser;
-        $table = $workgroupTemplate->_getTable();
+        $workgroupUserObj = new WorkgroupUser;
+        $table = $workgroupUserObj->_getTable();
 
         switch($validateEvent)   {
             case 'create':
-                $redirectRoute = 'workgroup-users.create';
-                $validations = [
+                $eventValidations = [
                     'user_id' => "required|unique_with:{$table},workgroup_id"
                 ];
             break;
             case 'edit':
                 $skipID = $id;
-                $redirectRoute = 'workgroup-users.edit';
-                $validations = [
+                $eventValidations = [
                     'user_id' => "required|unique_with:{$table},workgroup_id,{$skipID}"
                 ];
             break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
-        $validator = Validator::make($request->all(), $validations, self::getDefaultMessages());
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }
