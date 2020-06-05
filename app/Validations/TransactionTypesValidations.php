@@ -3,10 +3,8 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
 
-class TransactionTypesValidations
+class TransactionTypesValidations extends Validation
 {  
     public function __construct()
     {
