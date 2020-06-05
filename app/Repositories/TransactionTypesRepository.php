@@ -12,10 +12,12 @@ use App\Validations\TransactionTypesValidations;
 class TransactionTypesRepository implements TransactionTypesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(TransactionType $transaction_type)
     {
         $this->model = $transaction_type;
+        $this->validation = new TransactionTypesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -47,13 +49,13 @@ class TransactionTypesRepository implements TransactionTypesRepositoryInterface
 
     public function create(Request $request)
     {
-        TransactionTypesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        TransactionTypesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
