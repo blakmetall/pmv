@@ -22,8 +22,8 @@ return [
     ],
 
     'operation_types' => [
-        'charge' => 1,
-        'credit' => 2,
+        'credit' => 1,
+        'charge' => 2,
     ]   
 
 ];
