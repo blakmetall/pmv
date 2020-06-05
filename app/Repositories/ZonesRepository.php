@@ -12,10 +12,12 @@ use App\Validations\ZonesValidations;
 class ZonesRepository implements ZonesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(Zone $zone)
     {
         $this->model = $zone;
+        $this->validation = new ZonesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -46,13 +48,13 @@ class ZonesRepository implements ZonesRepositoryInterface
 
     public function create(Request $request)
     {
-        ZonesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        ZonesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
