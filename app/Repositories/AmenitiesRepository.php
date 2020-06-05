@@ -12,10 +12,12 @@ use App\Validations\AmenitiesValidations;
 class AmenitiesRepository implements AmenitiesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(Amenity $amenity)
     {
         $this->model = $amenity;
+        $this->validation = new AmenitiesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -48,13 +50,13 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
 
     public function create(Request $request)
     {
-        AmenitiesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        AmenitiesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

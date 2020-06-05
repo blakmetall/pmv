@@ -3,56 +3,31 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class ContractorsValidations
+class ContractorsValidations extends Validation
 {  
-    public static function validateOnCreate(Request $request)
+    public function __construct()
     {
-        return self::validate('create', $request);
-    }
-    
-    public static function validateOnEdit(Request $request, $id = '')
-    {
-        return self::validate('edit', $request, $id);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [
+        $this->setDefaultValidations([
             'city_id'      => 'required',
             'company'      => 'required',
             'contact_name' => 'required',
             'email'        => 'nullable|email'
-        ];
-
-        return $defaultValidations;
+        ]);
     }
 
-    public static function validate($validateEvent, Request $request, $id = '')
+    public function validate($validateEvent, Request $request, $id = '')
     {
-        $redirectRoute = '';
-        $validations = [];
+        $eventValidations = [];
+        $customValidationMessages = [];
 
         switch($validateEvent)   {
-            case 'create':
-                $redirectRoute = 'contractors.create';
-                $validations = [];
-            break;
-            case 'edit':
-                $redirectRoute = 'contractors.edit';
-                $validations = [];
-            break;
+            case 'create': break;
+            case 'edit': break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        $validator = Validator::make($request->all(), $validations);
-
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }

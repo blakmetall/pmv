@@ -13,10 +13,12 @@ use App\Helpers\WorkgroupHelper;
 class PropertiesRepository implements PropertiesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(Property $property)
     {
         $this->model = $property;
+        $this->validation = new PropertiesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -55,13 +57,13 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
     public function create(Request $request)
     {
-        PropertiesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertiesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

@@ -11,10 +11,12 @@ use App\Validations\WorkgroupUsersValidations;
 class WorkgroupUsersRepository implements WorkgroupUsersRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(WorkgroupUser $workgroupUser)
     {
         $this->model = $workgroupUser;
+        $this->validation = new WorkgroupUsersValidations();
     }
 
     public function all($search = '', $config = [])
@@ -45,13 +47,13 @@ class WorkgroupUsersRepository implements WorkgroupUsersRepositoryInterface
 
     public function create(Request $request)
     {
-        WorkgroupUsersValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        WorkgroupUsersValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

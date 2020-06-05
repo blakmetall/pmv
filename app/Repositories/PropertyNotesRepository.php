@@ -12,10 +12,12 @@ use App\Helpers\UserHelper;
 class PropertyNotesRepository implements PropertyNotesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(PropertyNote $note)
     {
         $this->model = $note;
+        $this->validation = new PropertyNotesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -47,13 +49,13 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
 
     public function create(Request $request)
     {
-        PropertyNotesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertyNotesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

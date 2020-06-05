@@ -3,32 +3,18 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class AccountValidations
+class AccountValidations extends Validation
 {  
-    public static function validateOnEdit(Request $request, $id)
+    public function validate($validateEvent, Request $request, $id)
     {
-        return self::validate('edit', $request, $id);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [];
-        return $defaultValidations;
-    }
-
-    public static function validate($validateEvent, Request $request, $id)
-    {
-        $redirectRoute = '';
-        $validations = [];
-
+        $eventValidations = [];
+        $customValidationMessages = [];
+    
         switch($validateEvent)   {
             case 'edit':
-                $redirectRoute = 'account';
-                $validations = [
+                $eventValidations = [
                     'email' => [
                         'required',
                         'email',
@@ -39,12 +25,8 @@ class AccountValidations
             break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        $validator = Validator::make($request->all(), $validations);
-
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }

@@ -13,10 +13,12 @@ use App\Helpers\WorkgroupHelper;
 class ContractorsRepository implements ContractorsRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(Contractor $contractor)
     {
         $this->model = $contractor;
+        $this->validation = new ContractorsValidations();
     }
 
     public function all($search = '', $config = [])
@@ -55,13 +57,13 @@ class ContractorsRepository implements ContractorsRepositoryInterface
 
     public function create(Request $request)
     {
-        ContractorsValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        ContractorsValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

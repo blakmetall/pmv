@@ -3,53 +3,28 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
 
-class AmenitiesValidations
+class AmenitiesValidations extends Validation
 {  
-    public static function validateOnCreate(Request $request)
-    {
-        return self::validate('create', $request);
-    }
-
-    public static function validateOnEdit(Request $request, $id = '')
-    {
-        return self::validate('edit', $request, $id);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [
+    public function __construct() {
+        $this->setDefaultValidations([
             'en.name' => 'required',
             'es.name' => 'required',
-        ];
-
-        return $defaultValidations;
+        ]);
     }
 
-    public static function validate($validateEvent, Request $request, $id = '')
+    public function validate($validateEvent = '', Request $request, $id = '')
     {
-        $redirectRoute = '';
-        $validations = [];
+        $eventValidations = [];
+        $customValidationMessages = [];
 
         switch($validateEvent)   {
-            case 'create':
-                $redirectRoute = 'amenities.create';
-                $validations = [];
-            break;
-            case 'edit':
-                $redirectRoute = 'amenities.edit';
-                $validations = [];
-            break;
+            case 'create': break;
+            case 'edit': break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        $validator = Validator::make($request->all(), $validations);
-
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }

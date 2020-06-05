@@ -12,10 +12,12 @@ use App\Validations\UsersValidations;
 class UsersRepository implements UsersRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(User $user)
     {
         $this->model = $user;
+        $this->validation = new UsersValidations();
     }
 
     public function all($search = '', $config = [])
@@ -69,13 +71,13 @@ class UsersRepository implements UsersRepositoryInterface
 
     public function create(Request $request)
     {
-        UsersValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        UsersValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

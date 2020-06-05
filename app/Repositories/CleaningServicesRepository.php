@@ -12,10 +12,12 @@ use App\Helpers\WorkgroupHelper;
 class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(CleaningService $cleaning_service)
     {
         $this->model = $cleaning_service;
+        $this->validation = new CleaningServicesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -53,13 +55,13 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
     public function create(Request $request)
     {
-        CleaningServicesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        CleaningServicesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 

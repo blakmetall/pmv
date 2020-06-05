@@ -12,10 +12,12 @@ use App\Validations\ContractorsServicesValidations;
 class ContractorsServicesRepository implements ContractorsServicesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(ContractorService $service)
     {
         $this->model = $service;
+        $this->validation = new ContractorsServicesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -47,13 +49,13 @@ class ContractorsServicesRepository implements ContractorsServicesRepositoryInte
 
     public function create(Request $request)
     {
-        ContractorsServicesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        ContractorsServicesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
