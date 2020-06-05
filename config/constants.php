@@ -19,6 +19,11 @@ return [
 
     'pagination' => [
         'per-page' => 50
-    ]
+    ],
+
+    'operation_types' => [
+        'credit' => 1,
+        'charge' => 2,
+    ]   
 
 ];
