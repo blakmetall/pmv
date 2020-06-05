@@ -11,10 +11,12 @@ use App\Validations\PropertyRatesValidations;
 class PropertyRatesRepository implements PropertyRatesRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(PropertyRate $rate)
     {
         $this->model = $rate;
+        $this->validation = new PropertyRatesValidations();
     }
 
     public function all($search = '', $config = [])
@@ -49,13 +51,13 @@ class PropertyRatesRepository implements PropertyRatesRepositoryInterface
 
     public function create(Request $request)
     {
-        PropertyRatesValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertyRatesValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
