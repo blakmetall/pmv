@@ -11,10 +11,12 @@ use App\Validations\PropertyManagementTransactionsValidations;
 class PropertyManagementTransactionsRepository implements PropertyManagementTransactionsRepositoryInterface
 {
     protected $model;
+    protected $validation;
 
     public function __construct(PropertyManagementTransaction $transaction)
     {
         $this->model = $transaction;
+        $this->validation = new PropertyManagementTransactionsValidations();
     }
 
     public function all($search = '', $config = [])
@@ -56,13 +58,13 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function create(Request $request)
     {
-        PropertyManagementTransactionsValidations::validateOnCreate($request);
+        $this->validation->validate('create', $request);
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
-        PropertyManagementTransactionsValidations::validateOnEdit($request, $id);
+        $this->validation->validate('edit', $request, $id);
         return $this->save($request, $id);
     }
 
