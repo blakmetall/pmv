@@ -3,14 +3,18 @@
 namespace App\Helpers;
 
 use Config;
+use App\Models\PropertyManagementTransaction;
 
 class PMTransactionHelper
 {
     public static function getTypes()
     {
+        $chargeID = config('constants.operation_types.charge');
+        $creditID = config('constants.operation_types.credit');
+
         return [
-            '1' => (object) ['id' => 1, 'label' => __('Charge')],
-            '2' => (object) ['id' => 2, 'label' => __('Credit')],
+            $chargeID => (object) ['id' => $chargeID, 'label' => __('Charge')],
+            $creditID => (object) ['id' => $creditID, 'label' => __('Credit')],
         ];
     }
 
