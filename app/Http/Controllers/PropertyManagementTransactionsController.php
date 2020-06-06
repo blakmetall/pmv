@@ -8,7 +8,7 @@ use App\Repositories\{
     PropertyManagementTransactionsRepositoryInterface,
     TransactionTypesRepositoryInterface
 };
-use App\Helpers\{ PMHelper, PMTransactionHelper };
+use App\Helpers\PMTransactionHelper;
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -35,13 +35,10 @@ class PropertyManagementTransactionsController extends Controller
         $config = ['property_management_id' => $pm->id];
         $transactions = $this->repository->all($search, $config);
 
-        $balance = PMHelper::getPropertyManagementBalance($pm->id);
-
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
-            ->with('search', $search)
-            ->with('balance', $balance);
+            ->with('search', $search);
     }
 
     public function general(Request $request)

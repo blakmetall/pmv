@@ -172,12 +172,23 @@ Route::group(['middleware' => ['web']], function () {
         // property management
         Route::group(['prefix' => 'property-management'], function () {
 
+            // all properties balances
+            Route::group(['prefix' => 'balances'], function () {
+                Route::get('', 'PropertyManagementBalancesController@general')->name('property-management-balances.general');
+            });
+
+            // general transactions
             Route::group(['prefix' => 'transactions'], function () {
                 Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
             });
 
             // single property management
             Route::group(['prefix' => '{pm}'], function () {
+
+                // pm: property management balances
+                Route::group(['prefix' => 'balances'], function () {
+                    Route::get('', 'PropertyManagementBalancesController@index')->name('property-management-balances');
+                });
 
                 // pm: property management transactions
                 Route::group(['prefix' => 'transactions'], function () {
