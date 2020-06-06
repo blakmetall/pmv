@@ -113,7 +113,6 @@ class ContractorsRepository implements ContractorsRepositoryInterface
 
     public function blueprint()
     {
-        $contractor = new Contractor;
-        return $contractor;
+        return new Contractor;
     }
 }

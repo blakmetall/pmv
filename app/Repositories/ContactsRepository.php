@@ -111,7 +111,6 @@ class ContactsRepository implements ContactsRepositoryInterface
 
     public function blueprint()
     {
-        $contact = new Contact;
-        return $contact;
+        return new Contact;
     }
 }

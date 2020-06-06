@@ -57,6 +57,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\ContactsRepositoryInterface::class,
+            \App\Repositories\ContactsRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\ContractorsRepositoryInterface::class,
             \App\Repositories\ContractorsRepository::class
         );
@@ -87,13 +92,18 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \App\Repositories\PropertyManagementRepositoryInterface::class,
-            \App\Repositories\PropertyManagementRepository::class
+            \App\Repositories\PropertyImagesRepositoryInterface::class,
+            \App\Repositories\PropertyImagesRepository::class
         );
 
         $this->app->bind(
             \App\Repositories\PropertyManagementTransactionsRepositoryInterface::class,
             \App\Repositories\PropertyManagementTransactionsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyManagementRepositoryInterface::class,
+            \App\Repositories\PropertyManagementRepository::class
         );
 
         $this->app->bind(
@@ -104,11 +114,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\PropertyRatesRepositoryInterface::class,
             \App\Repositories\PropertyRatesRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\PropertyImagesRepositoryInterface::class,
-            \App\Repositories\PropertyImagesRepository::class
         );
 
         $this->app->bind(
@@ -144,11 +149,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\ZonesRepositoryInterface::class,
             \App\Repositories\ZonesRepository::class
-        );
-
-        $this->app->bind(
-            \App\Repositories\ContactsRepositoryInterface::class,
-            \App\Repositories\ContactsRepository::class
         );
     }
 }

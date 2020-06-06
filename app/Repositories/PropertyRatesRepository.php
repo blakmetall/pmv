@@ -107,7 +107,6 @@ class PropertyRatesRepository implements PropertyRatesRepositoryInterface
 
     public function blueprint()
     {
-        $rate = new PropertyRate;
-        return $rate;
+        return new PropertyRate;
     }
 }

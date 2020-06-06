@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 

@@ -116,7 +116,7 @@
 
                                             @if ($_current_role->isAllowed('properties', 'balances'))
                                                 <li class="nav-item">
-                                                    <a class="" href="#">
+                                                    <a class="" href="{{ route('property-management-balances.general') }}">
                                                         <span class="item-name">{{ __('Balances') }}</span>
                                                     </a>
                                                 </li>

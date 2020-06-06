@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Helpers\LanguageHelper;
 use App\Repositories\TransactionTypesRepositoryInterface;
 use App\Models\TransactionType;
 
@@ -16,11 +15,6 @@ class TransactionTypesController extends Controller
         $this->repository = $repository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {   
         $search = trim($request->s);
@@ -31,23 +25,12 @@ class TransactionTypesController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $transaction_type = $this->repository->blueprint();
         return view('transaction-types.create')->with('transaction_type', $transaction_type);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $transaction_type = $this->repository->create($request);
@@ -55,37 +38,18 @@ class TransactionTypesController extends Controller
         return redirect(route('transaction-types.edit', [$transaction_type->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(TransactionType $transaction_type)
     {   
         $transaction_type = $this->repository->find($transaction_type);        
         return view('transaction-types.show')->with('transaction_type', $transaction_type);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(TransactionType $transaction_type)
     {
         $transaction_type = $this->repository->find($transaction_type);
         return view('transaction-types.edit')->with('transaction_type', $transaction_type);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
@@ -93,12 +57,6 @@ class TransactionTypesController extends Controller
         return redirect(route('transaction-types.edit', [$id]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         if ( $this->repository->canDelete($id) ) {

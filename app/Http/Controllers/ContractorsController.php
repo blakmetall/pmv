@@ -11,17 +11,14 @@ class ContractorsController extends Controller
     private $repository;
     private $citiesRepository;
 
-    public function __construct(ContractorsRepositoryInterface $repository, CitiesRepositoryInterface $citiesRepository)
-    {
+    public function __construct(
+        ContractorsRepositoryInterface $repository, 
+        CitiesRepositoryInterface $citiesRepository
+    ) {
         $this->repository = $repository;
         $this->citiesRepository = $citiesRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $search = trim($request->s);
@@ -34,11 +31,6 @@ class ContractorsController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $contractor = $this->repository->blueprint();
@@ -51,12 +43,6 @@ class ContractorsController extends Controller
             ->with('contractor', $contractor);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $contractor = $this->repository->create($request);
@@ -64,12 +50,6 @@ class ContractorsController extends Controller
         return redirect(route('contractors.edit', [$contractor->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Contractor $contractor)
     {
         $contractor = $this->repository->find($contractor);
@@ -82,12 +62,6 @@ class ContractorsController extends Controller
             ->with('contractor', $contractor);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Contractor $contractor)
     {
         $contractor = $this->repository->find($contractor);
@@ -100,13 +74,6 @@ class ContractorsController extends Controller
             ->with('contractor', $contractor);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
@@ -114,12 +81,6 @@ class ContractorsController extends Controller
         return redirect( route('contractors.edit', [$id]) );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         if ( $this->repository->canDelete($id) ) {

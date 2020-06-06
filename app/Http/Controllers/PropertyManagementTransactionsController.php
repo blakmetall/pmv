@@ -8,7 +8,7 @@ use App\Repositories\{
     PropertyManagementTransactionsRepositoryInterface,
     TransactionTypesRepositoryInterface
 };
-use App\Helpers\{ PMHelper, PMTransactionHelper };
+use App\Helpers\PMTransactionHelper;
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -23,11 +23,6 @@ class PropertyManagementTransactionsController extends Controller
         $this->transactionTypesRepository = $transactionTypesRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, PropertyManagement $pm)
     {
         $search = trim($request->s);
@@ -35,13 +30,10 @@ class PropertyManagementTransactionsController extends Controller
         $config = ['property_management_id' => $pm->id];
         $transactions = $this->repository->all($search, $config);
 
-        $balance = PMHelper::getPropertyManagementBalance($pm->id);
-
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
-            ->with('search', $search)
-            ->with('balance', $balance);
+            ->with('search', $search);
     }
 
     public function general(Request $request)
@@ -56,11 +48,6 @@ class PropertyManagementTransactionsController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(PropertyManagement $pm)
     {
         $transaction = $this->repository->blueprint();
@@ -74,12 +61,6 @@ class PropertyManagementTransactionsController extends Controller
             ->with('pm', $pm);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, PropertyManagement $pm)
     {
         $transaction = $this->repository->create($request);
@@ -87,12 +68,6 @@ class PropertyManagementTransactionsController extends Controller
         return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
         $transaction = $this->repository->find($transaction);
@@ -106,12 +81,6 @@ class PropertyManagementTransactionsController extends Controller
             ->with('pm', $pm);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
         $transaction = $this->repository->find($transaction);
@@ -125,13 +94,6 @@ class PropertyManagementTransactionsController extends Controller
             ->with('pm', $pm);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, PropertyManagement $pm, $id)
     {
         $this->repository->update($request, $id);
@@ -139,12 +101,6 @@ class PropertyManagementTransactionsController extends Controller
         return redirect( route('property-management-transactions.edit', [$pm->id, $id]) );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, PropertyManagement $pm, $id)
     {
         if ( $this->repository->canDelete($id) ) {

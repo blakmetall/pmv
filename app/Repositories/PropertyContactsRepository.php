@@ -78,17 +78,12 @@ class PropertyContactsRepository implements PropertyContactsRepositoryInterface
         return $property;
     }
 
-    public function delete($id)
-    {
-    }
+    public function delete($id) {}
 
-    public function canDelete($id)
-    {
-    }
+    public function canDelete($id) {}
 
     public function blueprint()
     {
-        $contacts = Contact::where('is_active', 1)->get();
-        return $contacts;
+        return Contact::where('is_active', 1)->get();
     }
 }

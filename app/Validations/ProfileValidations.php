@@ -3,20 +3,12 @@
 namespace App\Validations;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class ProfileValidations
+class ProfileValidations extends Validation
 {  
-    public static function validateOnEdit(Request $request)
+    public function __construct()
     {
-        return self::validate('edit', $request);
-    }
-
-    public static function getDefaultValidations()
-    {
-        $defaultValidations = [
+        $this->setDefaultValidations([
             'firstname' => 'required',
             'lastname' => 'required',
             'country' => 'required',
@@ -26,29 +18,20 @@ class ProfileValidations
             'emergency_phone' => 'required',
             'zip' => 'required|numeric',
             'config_agent_commission' => 'nullable|numeric|between:0,100',
-        ];
-
-        return $defaultValidations;
+        ]);
     }
 
-    public static function validate($validateEvent, Request $request)
+    public function validate($validateEvent, Request $request)
     {
-        $redirectRoute = '';
-        $validations = [];
+        $eventValidations = [];
+        $customValidationMessages = [];
 
         switch($validateEvent)   {
-            case 'edit':
-                $redirectRoute = 'profile';
-                $validations = [];
-            break;
+            case 'edit': break;
         }
 
-        $validations = array_merge(self::getDefaultValidations(), $validations);
+        $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        $validator = Validator::make($request->all(), $validations);
-
-        if( $validator->fails() ) {
-            throw new ValidationException($validator);
-        }
+        $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
 }

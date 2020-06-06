@@ -8,6 +8,12 @@ use App\Validations\ProfileValidations;
 
 class ProfileController extends Controller
 {
+    protected $validation;
+
+    public function __construct() {
+        $this->validation = new ProfileValidations();
+    }
+
     public function edit()
     {
         return view('profile.edit')->with('profile', Auth::user()->profile);
@@ -15,7 +21,8 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        ProfileValidations::validateOnEdit($request);
+        $this->validation->validate('edit', $request);
+
         $profile = Auth::user()->profile;
         $profile->fill($request->all());
         $profile->save();

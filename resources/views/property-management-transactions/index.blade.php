@@ -29,11 +29,4 @@
         'rows' => $transactions
     ])
 
-
-    <!-- here the data is loaded -->
-    @include('property-management-transactions.partials.balance-table', [
-        'label' => __('Balance'),
-        'balance' => $balance
-    ])
-
 @endsection

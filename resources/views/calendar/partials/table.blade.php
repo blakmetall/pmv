@@ -27,7 +27,8 @@
             </div>
         </div>
     </div><!-- end of main-content -->
-    <script>
+    
+    {{-- <script>
         var cleaning_services = {!! json_encode($cleaning_services->toArray(), JSON_HEX_TAG) !!};
-    </script>
+    </script> --}}
 </div>

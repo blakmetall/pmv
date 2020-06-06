@@ -103,7 +103,6 @@ class WorkgroupUsersRepository implements WorkgroupUsersRepositoryInterface
 
     public function blueprint()
     {
-        $workgroupUser = new WorkgroupUser;
-        return $workgroupUser;
+        return new WorkgroupUser;
     }
 }

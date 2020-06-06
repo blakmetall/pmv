@@ -123,7 +123,6 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
 
     public function blueprint()
     {
-        $note = new PropertyNote;
-        return $note;
+        return new PropertyNote;
     }
 }

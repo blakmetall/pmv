@@ -114,7 +114,6 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function blueprint()
     {
-        $transaction = new PropertyManagementTransaction;
-        return $transaction;
+        return new PropertyManagementTransaction;
     }
 }

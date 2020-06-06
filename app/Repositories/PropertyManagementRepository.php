@@ -118,7 +118,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function blueprint()
     {
-        $pm = new PropertyManagement;
-        return $pm;
+        return new PropertyManagement;
     }
 }

@@ -100,7 +100,6 @@ class CitiesRepository implements CitiesRepositoryInterface
 
     public function blueprint()
     {
-        $city = new City;
-        return $city;
+        return new City;
     }
 }
