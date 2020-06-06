@@ -131,7 +131,6 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
     public function blueprint()
     {
-        $cleaning_service = new CleaningService;
-        return $cleaning_service;
+        return new CleaningService;
     }
 }

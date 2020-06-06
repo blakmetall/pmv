@@ -110,7 +110,6 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
 
     public function blueprint()
     {
-        $human_resource = new HumanResource;
-        return $human_resource;
+        return new HumanResource;
     }
 }

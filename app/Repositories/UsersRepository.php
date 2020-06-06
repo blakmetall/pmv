@@ -169,7 +169,6 @@ class UsersRepository implements UsersRepositoryInterface
      */
     public function blueprint()
     {
-        $user = new User;
-        return $user;
+        return new User;
     }
 }

@@ -2,9 +2,8 @@
 
 namespace App\Repositories;
 
-use Storage;
-use DateTime;
-
+// use Storage;
+// use DateTime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\PropertyImagesRepositoryInterface;

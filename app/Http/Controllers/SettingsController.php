@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 class SettingsController extends Controller
 {
-    /**
-     * Sets the active language for the user in the database
-     */
     public function index() 
     {
         $menu = [

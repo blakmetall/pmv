@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App;
 use Closure;
 use Auth;
 use App\Helpers\LanguageHelper;

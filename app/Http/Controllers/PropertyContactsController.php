@@ -15,11 +15,6 @@ class PropertyContactsController extends Controller
         $this->repository = $repository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
@@ -31,11 +26,6 @@ class PropertyContactsController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Property $property)
     {
         $contacts = $this->repository->blueprint();
@@ -44,12 +34,6 @@ class PropertyContactsController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Property $property)
     {
         $this->repository->create($request, $property);

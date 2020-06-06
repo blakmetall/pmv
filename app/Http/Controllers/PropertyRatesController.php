@@ -15,11 +15,6 @@ class PropertyRatesController extends Controller
         $this->repository = $repository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
@@ -31,11 +26,6 @@ class PropertyRatesController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Property $property)
     {
         $rate = $this->repository->blueprint();
@@ -44,12 +34,6 @@ class PropertyRatesController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Property $property)
     {
         $rate = $this->repository->create($request);
@@ -57,12 +41,6 @@ class PropertyRatesController extends Controller
         return redirect(route('property-rates.edit', [$property->id, $rate->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Property $property, PropertyRate $rate)
     {
         $rate = $this->repository->find($rate);
@@ -72,12 +50,6 @@ class PropertyRatesController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Property $property, PropertyRate $rate)
     {
         $rate = $this->repository->find($rate);
@@ -87,13 +59,6 @@ class PropertyRatesController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Property $property, $id)
     {
         $this->repository->update($request, $id);
@@ -101,12 +66,6 @@ class PropertyRatesController extends Controller
         return redirect( route('property-rates.edit', [$property->id, $id]) );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, Property $property, $id)
     {
         if ( $this->repository->canDelete($id) ) {

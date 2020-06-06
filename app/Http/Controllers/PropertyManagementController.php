@@ -17,11 +17,6 @@ class PropertyManagementController extends Controller
         PropertyManagement::setFinishedStatusHandler();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
@@ -45,11 +40,6 @@ class PropertyManagementController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Property $property)
     {
         $pm = $this->repository->blueprint();
@@ -58,12 +48,6 @@ class PropertyManagementController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Property $property)
     {
         $pm = $this->repository->create($request);
@@ -71,12 +55,6 @@ class PropertyManagementController extends Controller
         return redirect(route('property-management.edit', [$property->id, $pm->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Property $property, PropertyManagement $pm)
     {
         $pm = $this->repository->find($pm);
@@ -85,12 +63,6 @@ class PropertyManagementController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Property $property, PropertyManagement $pm)
     {
         $pm = $this->repository->find($pm);
@@ -100,13 +72,6 @@ class PropertyManagementController extends Controller
             ->with('property', $property);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Property $property, $id)
     {
         $this->repository->update($request, $id);
@@ -114,12 +79,6 @@ class PropertyManagementController extends Controller
         return redirect( route('property-management.edit', [$property->id, $id]) );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, Property $property, $id)
     {
         if ( $this->repository->canDelete($id) ) {
@@ -130,17 +89,5 @@ class PropertyManagementController extends Controller
 
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
-    }
-
-
-    private function checkStatus($request, $property, $id = false){
-
-        $pm = false;
-
-        if($request->end_date > getCurrentDate()){
-            $pm = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0)->where('id', '!=', $id)->first();
-        }
-
-        return $pm;
     }
 }

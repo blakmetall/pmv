@@ -15,11 +15,6 @@ class DamageDepositsController extends Controller
         $this->repository = $repository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $search = trim($request->s);
@@ -30,60 +25,31 @@ class DamageDepositsController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $damage_deposit = $this->repository->blueprint();
         return view('damage-deposits.create')->with('damage_deposit', $damage_deposit);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     { 
         $damage_deposit = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('damage-deposits.edit', [$damage_deposit->id]));
-}
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    }
+
     public function show(DamageDeposit $damage_deposit)
     {
         $damage_deposit = $this->repository->find($damage_deposit);
         return view('damage-deposits.show')->with('damage_deposit', $damage_deposit);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(DamageDeposit $damage_deposit)
     {
         $damage_deposit = $this->repository->find($damage_deposit);
         return view('damage-deposits.edit')->with('damage_deposit', $damage_deposit);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
@@ -91,12 +57,6 @@ class DamageDepositsController extends Controller
         return redirect(route('damage-deposits.edit', [$id]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         if ( $this->repository->canDelete($id) ) {

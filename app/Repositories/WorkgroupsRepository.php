@@ -98,7 +98,6 @@ class WorkgroupsRepository implements WorkgroupsRepositoryInterface
 
     public function blueprint()
     {
-        $workgroup = new Workgroup;
-        return $workgroup;
+        return new Workgroup;
     }
 }

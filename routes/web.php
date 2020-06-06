@@ -43,7 +43,12 @@ Route::group(['middleware' => ['web']], function () {
     
             // bookings by owner
             Route::group(['middleware' => 'role-permission:bookings,owner'], function () {
-                Route::get('property/{owner}', 'BookingController@ownerBookings')->name('bookings.by-owner');
+                Route::get('owner/{owner}', 'BookingController@ownerBookings')->name('bookings.by-owner');
+            });
+
+            // bookings by client user
+            Route::group(['middleware' => 'role-permission:bookings,client'], function () {
+                Route::get('client/{client}', 'BookingController@clientBookings')->name('bookings.by-client');
             });
 
             // agents

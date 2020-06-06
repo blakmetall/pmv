@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\CalendarRepositoryInterface;
 
@@ -33,38 +32,11 @@ class CalendarRepository implements CalendarRepositoryInterface
         return $result;
     }
 
-    public function create(Request $request)
-    {
-
-    }
-
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    public function save(Request $request, $id = '')
-    {
-
-    }
-
-    public function find($id_or_obj)
-    {
-
-    }
-
-    public function delete($id)
-    {
-
-    }
-
-    public function canDelete($id) 
-    {
-        return true;
-    }
-
-    public function blueprint()
-    {
-
-    }
+    public function create(Request $request) {}
+    public function update(Request $request, $id) {}
+    public function save(Request $request, $id = '') {}
+    public function find($id_or_obj) {}
+    public function delete($id) {}
+    public function canDelete($id) {}
+    public function blueprint() {}
 }

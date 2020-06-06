@@ -38,11 +38,6 @@ class WorkgroupUsersController extends Controller
             ->with('search', $search);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Workgroup $workgroup)
     {
         $workgroup = $this->workgroupsRepository->find($workgroup);
@@ -57,12 +52,6 @@ class WorkgroupUsersController extends Controller
             ->with('users', $users);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Workgroup $workgroup)
     {
         $workgroupUser = $this->repository->create($request);
@@ -70,12 +59,6 @@ class WorkgroupUsersController extends Controller
         return redirect(route('workgroup-users.edit', [$workgroup->id, $workgroupUser->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Workgroup $workgroup, WorkgroupUser $workgroupUser)
     {
         $workgroup = $this->workgroupsRepository->find($workgroup);
@@ -90,12 +73,6 @@ class WorkgroupUsersController extends Controller
             ->with('users', $users);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Workgroup $workgroup, WorkgroupUser $workgroupUser)
     {
         $workgroupUser = $this->repository->find($workgroupUser);
@@ -110,13 +87,6 @@ class WorkgroupUsersController extends Controller
             ->with('users', $users);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Workgroup $workgroup, $id)
     {
         $this->repository->update($request, $id);
@@ -124,12 +94,6 @@ class WorkgroupUsersController extends Controller
         return redirect(route('workgroup-users.edit', [$workgroup->id, $id]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, Workgroup $workgroup, $id)
     {
         if ( $this->repository->canDelete($id) ) {

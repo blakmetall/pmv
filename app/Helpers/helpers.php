@@ -174,7 +174,7 @@ if (!function_exists('preparePhoneContacts')) {
 if (!function_exists('saveFile')) {
     function saveFile($file)
     {
-        $extension             = $file->getClientOriginalExtension();
+        $extension       = $file->getClientOriginalExtension();
         $originalName    = $file->getClientOriginalName();
         $originalNameRaw = substr($originalName, 0, strrpos($originalName, "."));
         
@@ -206,7 +206,7 @@ if (!function_exists('deleteFile')) {
 if (!function_exists('getOperationTypeById')) {
     function getOperationTypeById($operationTypeId)
     {
-        return App\Helpers\PMTransactionHelper::getTypeById($operationTypeId);
+        return \App\Helpers\PMTransactionHelper::getTypeById($operationTypeId);
     }
 }
 
