@@ -12,7 +12,7 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Thumbnail') }}</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
@@ -31,7 +31,7 @@
                                 <!-- thumbnail -->
                                 <th>
                                     <a href="{{ asset(getUrlPath($row->file_url)) }}" target="_blank">
-                                        <img src="{{ asset(getUrlPath($row->file_url, 'small')) }}" alt="" width="100">
+                                        <img src="{{ asset(getUrlPath($row->file_url, 'small-ls')) }}" alt="" width="100">
                                     </a>
                                 </th>
 

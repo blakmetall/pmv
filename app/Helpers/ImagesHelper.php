@@ -66,7 +66,9 @@ class ImagesHelper
                 $filePath = storage_path() . '/app/public/' . $folder . '/' . $timedFileName . '-' . $sizeSlug . '.' . $extension;
     
                 Image::make($source)
-                    ->resize($size['width'], $size['height'])
+                    ->fit($size['width'], $size['height'], function ($constraint) {
+                        $constraint->upsize();
+                    })
                     ->save($filePath);
             }
         }
@@ -75,6 +77,15 @@ class ImagesHelper
     public static function getUrlPath($filePath, $thumbnailType = '') 
     {
         $newFilePath = $filePath;
+
+        $shouldPrepareThumbnail = $thumbnailType !== '';
+
+        if($shouldPrepareThumbnail) {
+            $nameWithoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filePath);
+            $extension = preg_match('/\./', $filePath) ? preg_replace('/^.*\./', '', $filePath) : '';
+            
+            return $nameWithoutExt . '-' . $thumbnailType . '.' . $extension;
+        }
         
         return $newFilePath;
     }
