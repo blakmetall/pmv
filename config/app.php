@@ -228,6 +228,7 @@ return [
 
         // custom helpers
 
+        'ImagesHelper' => App\Helpers\ImagesHelper::class,
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
         'PMTransationHelper' => App\Helpers\PMTransationHelper::class,
         'RoleHelper' => App\Helpers\RoleHelper::class,

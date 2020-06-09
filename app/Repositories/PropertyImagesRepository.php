@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Repositories\PropertyImagesRepositoryInterface;
 use App\Models\{ Property, PropertyImage };
 use App\Validations\PropertyImagesValidations;
+use App\Helpers\ImagesHelper;
 
 class PropertyImagesRepository implements PropertyImagesRepositoryInterface
 {
@@ -58,38 +59,51 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
+        $folder = 'properties';
         $is_new = ! $id;
 
         $hasPreviousImage = false;
-        $hasUploadedFile = $request->hasFile( 'property_image' );
+        $hasUploadedFile = $request->hasFile( 'photos' );
 
-        if($is_new){
-            $image = $this->blueprint();
-            $image->property_id = $request->property_id; 
-            $image->save();
-            $image->order = $image->property->images()->count();
-        }else{
-            $image = $this->find($id);
-            $hasPreviousImage = true;
-            $oldImage = $image->file_name;
+        // if($is_new){
+        //     $image = $this->blueprint();
+        //     $image->property_id = $request->property_id; 
+        //     $image->save();
+        //     $image->order = $image->property->images()->count();
+        // }else{
+        //     $image = $this->find($id);
+        //     $hasPreviousImage = true;
+        //     $oldImage = $image->file_name;
+        // }
+
+        if($is_new && $hasUploadedFile){
+            if(count($request->photos)) {
+                foreach($request->photos as $img) {
+                    $imgData = ImagesHelper::saveFile($img, $folder);
+
+                    $image = $this->blueprint();
+                    $image->property_id = $request->property_id; 
+                    $image->slug = $imgData['slug'];
+                    $image->extension = $imgData['extension'];
+                    $image->file_original_name = $imgData['file_original_name'];
+                    $image->file_name = $imgData['file_name'];
+                    $image->file_path = $imgData['file_path'];
+                    $image->file_url = $imgData['file_url'];  
+                    
+                    $image->save();
+
+                    // setup initial order
+                    $image->order = $image->property->images()->count();
+                    $image->save();
+                }
+            }   
         }
+        
+        // if($image->save() && $hasUploadedFile && $hasPreviousImage ){
+        //     deleteFile($oldImage);
+        // }
 
-        if($hasUploadedFile){
-            $imgData = saveFile($request->file( 'property_image' ));
-            
-            $image->slug = $imgData['slug'];
-            $image->extension = $imgData['extension'];
-            $image->file_original_name = $imgData['file_original_name'];
-            $image->file_name = $imgData['file_name'];
-            $image->file_path = $imgData['file_path'];
-            $image->file_url = $imgData['file_url'];
-        }
-
-        if($image->save() && $hasUploadedFile && $hasPreviousImage ){
-            deleteFile($oldImage);
-        }
-
-        return $image;
+        return;
     }
 
     public function find($id_or_obj)
@@ -109,7 +123,7 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
         $image = $this->model->find($id);
 
         if ($image && $this->canDelete($id)) {
-            deleteFile($image->file_name);
+            ImagesHelper::deleteFile($image->file_path);
             $image->delete();
         }
 

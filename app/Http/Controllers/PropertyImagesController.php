@@ -36,7 +36,7 @@ class PropertyImagesController extends Controller
     {
         $image = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-images.edit', [$property->id, $image->id]));
+        return redirect(route('property-images', [$property->id]));
     }
 
     public function show(Property $property, PropertyImage $image)

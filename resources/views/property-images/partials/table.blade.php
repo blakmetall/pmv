@@ -30,7 +30,7 @@
 
                                 <!-- thumbnail -->
                                 <th>
-                                    <img src="{{ asset($row->file_path) }}" alt="" width="100">
+                                    <img src="{{ asset($row->file_url) }}" alt="" width="100">
                                 </th>
 
                                 <!-- property -->

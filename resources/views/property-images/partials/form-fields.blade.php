@@ -19,7 +19,13 @@
         <img src="{{ asset($row->file_path) }}" alt="" width="100">
 
         <!-- images -->
-        <input type="file" class="form-control" name="property_image" />
+        @include('components.form.file', [
+            'group' => 'property-image',
+            'label' => __('Images'),
+            'name' => 'photos',
+            'required' => true,
+            'isMultiple' => true,
+        ])
 
     </div>
 </div>

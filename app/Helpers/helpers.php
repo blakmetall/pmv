@@ -171,38 +171,6 @@ if (!function_exists('preparePhoneContacts')) {
     }
 }
 
-if (!function_exists('saveFile')) {
-    function saveFile($file)
-    {
-        $extension       = $file->getClientOriginalExtension();
-        $originalName    = $file->getClientOriginalName();
-        $originalNameRaw = substr($originalName, 0, strrpos($originalName, "."));
-        
-        $folder          = 'properties';
-        $slug            = \Illuminate\Support\Str::slug($originalNameRaw, '-');
-        $fileName        = $slug . '-' . strtotime('now') . '.' . $extension;
-        $filePath        = $folder . '/' . $fileName;
-
-        Storage::disk('public')->put($filePath, \File::get( $file ));
-
-        return [
-            'slug' => $slug,
-            'extension' => $extension,
-            'file_original_name' => $originalName,
-            'file_name' => $fileName,
-            'file_path' => Storage::url($filePath),
-            'file_url' => public_path() . Storage::url($filePath),
-        ];
-    }
-}
-
-if (!function_exists('deleteFile')) {
-    function deleteFile($file)
-    {
-        Storage::disk('public')->delete('properties/'.$file);
-    }
-}
-
 if (!function_exists('getOperationTypeById')) {
     function getOperationTypeById($operationTypeId)
     {
