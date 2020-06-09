@@ -115,6 +115,9 @@ Route::group(['middleware' => ['web']], function () {
                         Route::get('edit/{image}', 'PropertyImagesController@edit')->name('property-images.edit');
                         Route::post('update/{id}', 'PropertyImagesController@update')->name('property-images.update');
                         Route::get('destroy/{id}', 'PropertyImagesController@destroy')->name('property-images.destroy');
+
+                        Route::get('orderUp/{image}', 'PropertyImagesController@orderUp')->name('property-images.order-up');
+                        Route::get('orderDown/{image}', 'PropertyImagesController@orderDown')->name('property-images.order-down');
                     });
 
                     // property: property management

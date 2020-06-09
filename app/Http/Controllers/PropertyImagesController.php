@@ -17,7 +17,8 @@ class PropertyImagesController extends Controller
 
     public function index(Request $request, Property $property)
     {
-        $images = $this->repository->all();
+        $config = ['property_id' => $property->id];
+        $images = $this->repository->all($config);
 
         return view('property-images.index')
             ->with('images', $images)
@@ -74,5 +75,41 @@ class PropertyImagesController extends Controller
 
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
+    }
+
+    public function orderUp( Property $property, PropertyImage $image) 
+    {
+        self::order($image, '<');
+        return back();
+    }
+
+    public function orderDown( Property $property, PropertyImage $image) 
+    {
+        self::order($image, '>');
+        return back();
+    }
+
+    public static function order($imageToMove, $direction) {
+        $imgToMoveOrder = $imageToMove->order;
+
+        $orderDirection = $direction === '<' ? 'desc' : 'asc';
+
+        $replaceImage = 
+            PropertyImage::
+                where('order', $direction, $imgToMoveOrder)
+                ->orderBy('order', $orderDirection)
+                ->first();
+        
+        if ($replaceImage) {
+            $replaceImageOrder = $replaceImage->order;
+
+            $replaceImage->order = $imgToMoveOrder;
+            $replaceImage->save();
+
+            $imageToMove->order = $replaceImageOrder;
+            $imageToMove->save();
+        }
+        
+        return back();
     }
 }

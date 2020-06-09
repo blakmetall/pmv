@@ -80,7 +80,7 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
                     
                     $image->save();
 
-                    $image->order = $image->property->images()->count(); // setup order
+                    $image->order = $image->getNextOrder(); // setup order
                     $image->save();
                 }
             }   
