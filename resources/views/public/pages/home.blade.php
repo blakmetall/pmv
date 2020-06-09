@@ -1,5 +1,36 @@
-home page
+@extends('layouts.auth-master')
 
-<hr>
+@section('main-content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+        
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6 text-right">
+                            @include('partials.language-switcher')
+                        </div>
+                    </div>
+                </div>
 
-<a href="/system">Go to dashboard</a>
+                <div class="card-body">
+
+                    <p>
+                        Welcome to Palmera Vacations, this site is under maintenance...
+
+                        <hr>
+
+                        <a href="{{ route('dashboard') }}">
+                            {{ __('Go to new dashboard') }}
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
