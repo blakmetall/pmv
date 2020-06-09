@@ -227,6 +227,7 @@ return [
 
 
         // custom helpers
+        'Image' => Intervention\Image\Facades\Image::class,
 
         'ImagesHelper' => App\Helpers\ImagesHelper::class,
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
