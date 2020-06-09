@@ -28,6 +28,6 @@ class ContractorsValidations extends Validation
 
         $validations = array_merge($this->getDefaultValidations(), $eventValidations);
 
-        $this->runValidations($request->all(), $validations, $customValidationMessages);
+        $this->runValidations($request->all(), $this->getDefaultValidations(), $customValidationMessages);
     }
 }

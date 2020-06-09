@@ -15,10 +15,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('forbidden', 'ErrorController@forbidden')->name('error.forbidden');
         Route::get('not-found', 'ErrorController@notFound')->name('error.not-found');
     });
-
+    
     // auth middleware
     Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
-        
         // dashboard
         Route::get('', 'DashboardController@index');
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
