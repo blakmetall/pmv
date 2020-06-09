@@ -35,10 +35,9 @@
 
                                 <!-- transaction_type_id -->
                                 <td>
-                                    <!-- PENDIENTE: obtener label de transacción de acuerdo al lenguaje -->
-                                    {{-- @if ($row->type)
+                                    @if ($row->type)
                                         {{ $row->type->translate()->name }}
-                                    @endif --}}
+                                    @endif
                                 </td>
 
                                 <!-- amount -->
