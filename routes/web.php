@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // auth middleware
-    Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
+    Route::group(['prefix' => 'system', 'middleware' => 'auth'], function() {
         
         // dashboard
         Route::get('', 'DashboardController@index');
@@ -363,4 +363,8 @@ Route::group(['middleware' => ['web']], function () {
         });
 
     });
+
+    // public routes here
+    Route::get('', '_Public\PagesController@home')->name('public.home');
+
 });

@@ -42,6 +42,24 @@
         }
     }
 }
+@media (max-width: 768px) {
+    .layout-horizontal-bar {
+        .main-header {
+            .logo {
+                max-width: 100px;
+            }
+        }
+    }
+}
+@media (max-width: 580px) {
+    .layout-horizontal-bar {
+        .main-header {
+            .logo {
+                left: 0;
+            }
+        }
+    }
+}
 /******* end *************/
 /*************************/
 
@@ -185,6 +203,26 @@
     pointer-events: none;
 }
 
+.auth-layout-wrap {
+    background: #ededed;
+
+    .auth-about {
+        margin-top: -150px;
+
+        img {
+            display: block;
+            max-width: 300px;
+            margin: 0 auto; 
+            margin-bottom: 50px;
+
+        }
+
+        @media (max-width: 767px) { 
+            margin-top: 0;    
+        }
+    } 
+}
+
 /******* end *************/
 /*************************/
 
@@ -259,7 +297,7 @@
     margin-right: 7px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .app-heading-buttons {
         padding-top: 10px;
     }
