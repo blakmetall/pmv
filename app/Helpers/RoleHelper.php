@@ -149,8 +149,6 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'concierge',
-                    'owner',
-                    'regular',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -188,8 +186,6 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
-                    'owner',
-                    'regular',
                 ]),
                 'owner-requests' => self::transformSluggedRolesToIds([
                     'owner',

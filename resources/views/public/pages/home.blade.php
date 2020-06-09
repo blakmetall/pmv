@@ -18,7 +18,7 @@
                 <div class="card-body">
 
                     <p>
-                        Welcome to Palmera Vacations, this site is under maintenance...
+                        {{ __('Welcome to Palmera Vacations, this site is under maintenance...') }}
 
                         <hr>
 

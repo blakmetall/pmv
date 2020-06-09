@@ -30,7 +30,9 @@
             <div class="auth-content">
 
                 <div class="auth-about">
-                    <img src="{{ asset('assets/images/logo-full.png')}}" alt="">
+                    <a href="{{ route('public.home') }}">
+                        <img src="{{ asset('assets/images/logo-full.png')}}" alt="">
+                    </a>
                 </div>
 
 
