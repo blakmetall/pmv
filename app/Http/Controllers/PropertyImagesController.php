@@ -35,7 +35,7 @@ class PropertyImagesController extends Controller
 
     public function store(Request $request, Property $property)
     {
-        $image = $this->repository->create($request);
+        $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('property-images', [$property->id]));
     }

@@ -51,6 +51,7 @@ return [
             'width' => 1200,
             'height' => 800,
         ],
-    ]
+    ],
 
+    'valid_image_types' => ['jpg', 'jpeg', 'png', 'bmp'],
 ];

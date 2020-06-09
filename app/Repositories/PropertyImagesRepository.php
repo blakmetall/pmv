@@ -113,6 +113,10 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
 
             return $image;
         }
+
+        if(!$is_new) {
+            return $this->find($id);
+        }
     }
 
     public function find($id_or_obj)

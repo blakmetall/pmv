@@ -16,7 +16,7 @@
     $fileExtension = isset($fileExtension) ? $fileExtension : false;
     
     $isImage = false;
-    $validImageExtensions = ['jpg', 'jpeg', 'png'];
+    $validImageExtensions = Config::get('constants.valid_image_types');
     if ($fileExtension !== false && in_array($fileExtension, $validImageExtensions)) {
         $isImage = true;
     }

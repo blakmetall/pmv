@@ -56,7 +56,7 @@ class ImagesHelper
 
     public static function makeThumbnails($folder, $timedFileName, $extension) 
     {
-        $allowedExtensions = ['jpg', 'jpeg', 'png'];
+        $allowedExtensions = config('constants.valid_image_types');
         $shouldMakeThumbnails = in_array($extension, $allowedExtensions) ? true : false;
 
         if($shouldMakeThumbnails) {
