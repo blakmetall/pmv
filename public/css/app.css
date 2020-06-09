@@ -296,6 +296,27 @@
   padding-top: 30px;
 }
 
+.card-img-overlay .card-title {
+  color: white;
+}
+
+.card-img-overlay .card-title a {
+  color: white;
+}
+
+.app-card-file-overlay {
+  background: rgba(59, 71, 80, 0.4);
+  padding: 22px 0 0 23px;
+}
+
+.app-card-file-overlay .card-title {
+  color: white;
+}
+
+.app-card-file-overlay .card-title a {
+  color: white;
+}
+
 @media (max-width: 768px) {
   .app-heading-buttons {
     padding-top: 10px;

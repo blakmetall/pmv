@@ -62,19 +62,7 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
         $folder = 'properties';
         $is_new = ! $id;
 
-        $hasPreviousImage = false;
         $hasUploadedFile = $request->hasFile( 'photos' );
-
-        // if($is_new){
-        //     $image = $this->blueprint();
-        //     $image->property_id = $request->property_id; 
-        //     $image->save();
-        //     $image->order = $image->property->images()->count();
-        // }else{
-        //     $image = $this->find($id);
-        //     $hasPreviousImage = true;
-        //     $oldImage = $image->file_name;
-        // }
 
         if($is_new && $hasUploadedFile){
             if(count($request->photos)) {
@@ -92,18 +80,38 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
                     
                     $image->save();
 
-                    // setup initial order
-                    $image->order = $image->property->images()->count();
+                    $image->order = $image->property->images()->count(); // setup order
                     $image->save();
                 }
             }   
-        }
-        
-        // if($image->save() && $hasUploadedFile && $hasPreviousImage ){
-        //     deleteFile($oldImage);
-        // }
 
-        return;
+            return;
+        }
+
+        if(!$is_new && $hasUploadedFile) {
+            $oldImage = $this->find($id);
+            
+            // creates new image record
+            $imgData = ImagesHelper::saveFile($request->photos, $folder);
+            $image = $this->blueprint();
+            $image->property_id = $request->property_id; 
+            $image->slug = $imgData['slug'];
+            $image->extension = $imgData['extension'];
+            $image->file_original_name = $imgData['file_original_name'];
+            $image->file_name = $imgData['file_name'];
+            $image->file_path = $imgData['file_path'];
+            $image->file_url = $imgData['file_url'];  
+
+            $image->order = $oldImage->order; // setup order
+            
+            $image->save();
+
+            // delete previous data
+            $oldImage->delete();
+            ImagesHelper::deleteFile($oldImage->file_path);
+
+            return $image;
+        }
     }
 
     public function find($id_or_obj)

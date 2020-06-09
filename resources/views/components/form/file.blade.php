@@ -10,11 +10,16 @@
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
     $isMultiple = isset($isMultiple) ? (bool) $isMultiple : false;
 
-    $folderName = isset($folderName) ? $folderName : '';
     $fileName = isset($fileName) ? $fileName : '';
     $filePath = isset($filePath) ? $filePath : false;
     $fileUrl = isset($fileUrl) ? $fileUrl : false;
-    $isImage = isset($isImage) ? true : false;
+    $fileExtension = isset($fileExtension) ? $fileExtension : false;
+    
+    $isImage = false;
+    $validImageExtensions = ['jpg', 'jpeg', 'png'];
+    if ($fileExtension !== false && in_array($fileExtension, $validImageExtensions)) {
+        $isImage = true;
+    }
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -65,20 +70,23 @@
                 <div class="card bg-dark text-white o-hidden mb-4">
 
                     @if ($isImage)
-                        <img class="card-img" src="{{ asset(getUrlPath($fileUrl, $folderName)) }}" alt="Card image">
+                        <img class="card-img" src="{{ asset(getUrlPath($fileUrl)) }}" alt="Card image">
                     @endif
 
-                    @if ($fileName !== '')
-                        <div class="card-img-overlay">
-                            @php 
-                                $textBgClass = $isImage ? 'text-white' : ''; 
-                            @endphp
+                    @php 
+                        $overlayClass = $isImage ? 'card-img-overlay' : 'app-card-file-overlay';
+                        $textBgClass = $isImage ? 'text-white' : ''; 
+                    @endphp
+                    <div class="{{ $overlayClass }}">
 
+                        @if ($fileName !== '')
                             <h5 class="card-title {{ $textBgClass }}">
-                                {{ $fileName }}
+                                <a href="{{ asset(getUrlPath($fileUrl)) }}" target="_blank">
+                                    {{ $fileName }}
+                                </a>
                             </h5>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         @endif

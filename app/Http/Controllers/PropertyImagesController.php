@@ -59,9 +59,9 @@ class PropertyImagesController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
-        $this->repository->update($request, $id);
+        $image = $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-images.edit', [$property->id, $id]) );
+        return redirect( route('property-images.edit', [$property->id, $image->id]) );
     }
 
     public function destroy(Request $request, Property $property, $id)

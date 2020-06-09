@@ -32,8 +32,7 @@
             'fileName' => $row->file_original_name,
             'filePath' => $row->file_path,
             'fileUrl' => $row->file_url,
-            'folderName' => 'properties',
-            'isImage' => true,
+            'fileExtension' => $row->extension,
         ])
 
     </div>

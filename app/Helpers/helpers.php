@@ -179,7 +179,7 @@ if (!function_exists('getOperationTypeById')) {
 }
 
 if (!function_exists('getUrlPath')) {
-    function getUrlPath($filePath, $thumbnailType)
+    function getUrlPath($filePath, $thumbnailType = '')
     {
         return \App\Helpers\ImagesHelper::getUrlPath($filePath, $thumbnailType);
     }

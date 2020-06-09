@@ -30,7 +30,9 @@
 
                                 <!-- thumbnail -->
                                 <th>
-                                    <img src="{{ asset($row->file_url) }}" alt="" width="100">
+                                    <a href="{{ asset(getUrlPath($row->file_url)) }}" target="_blank">
+                                        <img src="{{ asset(getUrlPath($row->file_url, 'small')) }}" alt="" width="100">
+                                    </a>
                                 </th>
 
                                 <!-- property -->
