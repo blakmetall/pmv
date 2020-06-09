@@ -109,6 +109,7 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
             // delete previous data
             $oldImage->delete();
             ImagesHelper::deleteFile($oldImage->file_path);
+            ImagesHelper::deleteThumbnails($oldImage->file_path);
 
             return $image;
         }
@@ -131,8 +132,9 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
         $image = $this->model->find($id);
 
         if ($image && $this->canDelete($id)) {
-            ImagesHelper::deleteFile($image->file_path);
             $image->delete();
+            ImagesHelper::deleteFile($image->file_path);
+            ImagesHelper::deleteThumbnails($image->file_path);
         }
 
         return $image;

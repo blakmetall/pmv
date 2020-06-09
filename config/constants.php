@@ -44,12 +44,12 @@ return [
             'height' => 600,
         ],
         'large' => [
-            'width' => 1200,
-            'height' => 1000,
+            'width' => 1000,
+            'height' => 650,
         ],
         'large-ls' => [
             'width' => 1200,
-            'height' => 850,
+            'height' => 800,
         ],
     ]
 

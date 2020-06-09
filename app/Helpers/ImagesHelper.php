@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Image;
+use Config;
 use Storage;
 
 class ImagesHelper
@@ -14,12 +16,13 @@ class ImagesHelper
         
         $slug            = \Illuminate\Support\Str::slug($originalNameRaw, '-');
         $timedFileName   = $slug . '-' . strtotime('now') ;
-        $fileName        = $timedFileName . '.' . $extension;
+        $fileName = $timedFileName . '.' . $extension;
         $filePath        = $folder . '/' . $fileName;
 
+        Storage::disk('public')->makeDirectory($folder);
         Storage::disk('public')->put($filePath, \File::get( $file ));
-        
-        self::makeThumbnails($file, $timedFileName, $extension, $folder);
+    
+        self::makeThumbnails($folder, $timedFileName, $extension);
 
         return [
             'slug' => $slug,
@@ -40,20 +43,40 @@ class ImagesHelper
         }
     }
 
+    public static function deleteThumbnails($filePath) 
+    {
+        $nameWithoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filePath);
+        $extension = preg_match('/\./', $filePath) ? preg_replace('/^.*\./', '', $filePath) : '';
+
+        foreach(config('constants.thumbnails') as $sizeSlug => $size) {
+            $toDelete = $nameWithoutExt . '-' . $sizeSlug . '.' . $extension;
+            self::deleteFile($toDelete);
+        }
+    }
+
+    public static function makeThumbnails($folder, $timedFileName, $extension) 
+    {
+        $allowedExtensions = ['jpg', 'jpeg', 'png'];
+        $shouldMakeThumbnails = in_array($extension, $allowedExtensions) ? true : false;
+
+        if($shouldMakeThumbnails) {
+            $source = storage_path() . '/app/public/' . $folder . '/' . $timedFileName . '.' . $extension;
+    
+            foreach(config('constants.thumbnails') as $sizeSlug => $size) {
+                $filePath = storage_path() . '/app/public/' . $folder . '/' . $timedFileName . '-' . $sizeSlug . '.' . $extension;
+    
+                Image::make($source)
+                    ->resize($size['width'], $size['height'])
+                    ->save($filePath);
+            }
+        }
+    }
+
     public static function getUrlPath($filePath, $thumbnailType = '') 
     {
         $newFilePath = $filePath;
         
-        // return by thumbnail type
-
         return $newFilePath;
     }
 
-    public static function makeThumbnails($timedFileName, $extension, $folder) {
-        $sizes = config('constants.thumbnails');
-
-        foreach($sizes as $size) {
-
-        }
-    }
 }
