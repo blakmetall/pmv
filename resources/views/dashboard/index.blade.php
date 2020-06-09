@@ -32,8 +32,15 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    <!-- Content Goes Here-->
-    <div id="react-example">react component here</div>
+    <div class="container app-container">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    {{ __('Coming Soon') }}...
+                </p>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
