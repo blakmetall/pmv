@@ -9,7 +9,12 @@
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
     $isMultiple = isset($isMultiple) ? (bool) $isMultiple : false;
-    // $value = isset($value) ? $value : '';
+
+    $folderName = isset($folderName) ? $folderName : '';
+    $fileName = isset($fileName) ? $fileName : '';
+    $filePath = isset($filePath) ? $filePath : false;
+    $fileUrl = isset($fileUrl) ? $fileUrl : false;
+    $isImage = isset($isImage) ? true : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -38,19 +43,43 @@
 
     <div class="col-sm-10">
 
-        <input type="file"
-            name="{{ $inputName }}"
-            class="form-control" 
-            id="{{ $id }}"
-            {{ $disabledProp }}
-            {{ $readOnlyProp }}
-            {{ $multipleProp }}
-        />
+        <div>
+            <input type="file"
+                name="{{ $inputName }}"
+                class="form-control" 
+                id="{{ $id }}"
+                {{ $disabledProp }}
+                {{ $readOnlyProp }}
+                {{ $multipleProp }}
+            />
 
+            @if ($errors->has($requestName))
+                <div class="app-form-input-error">
+                    {{ $errors->first($requestName) }}
+                </div>
+            @endif
+        </div>
 
-        @if ($errors->has($requestName))
-            <div class="app-form-input-error">
-                {{ $errors->first($requestName) }}
+        @if ($fileUrl !== false)
+            <div class="app-file-wrapper">
+                <div class="card bg-dark text-white o-hidden mb-4">
+
+                    @if ($isImage)
+                        <img class="card-img" src="{{ asset(getUrlPath($fileUrl, $folderName)) }}" alt="Card image">
+                    @endif
+
+                    @if ($fileName !== '')
+                        <div class="card-img-overlay">
+                            @php 
+                                $textBgClass = $isImage ? 'text-white' : ''; 
+                            @endphp
+
+                            <h5 class="card-title {{ $textBgClass }}">
+                                {{ $fileName }}
+                            </h5>
+                        </div>
+                    @endif
+                </div>
             </div>
         @endif
     </div>

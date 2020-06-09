@@ -35,6 +35,15 @@ class ImagesHelper
         if ($fileExists) {
             Storage::disk('public')->delete($filePath);
         }
-        
     }
+
+    public static function getUrlPath($filePath, $thumbnailType = '') 
+    {
+        $newFilePath = $filePath;
+        
+        // return by thumbnail type
+
+        return $newFilePath;
+    }
+
 }

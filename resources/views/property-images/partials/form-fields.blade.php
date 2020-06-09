@@ -19,12 +19,21 @@
         <img src="{{ asset($row->file_path) }}" alt="" width="100">
 
         <!-- images -->
+        @php
+            $isMultiple = !$row->id ? true :  false;    
+        @endphp
+
         @include('components.form.file', [
             'group' => 'property-image',
             'label' => __('Images'),
             'name' => 'photos',
             'required' => true,
-            'isMultiple' => true,
+            'isMultiple' => $isMultiple,
+            'fileName' => $row->file_original_name,
+            'filePath' => $row->file_path,
+            'fileUrl' => $row->file_url,
+            'folderName' => 'properties',
+            'isImage' => true,
         ])
 
     </div>
