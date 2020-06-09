@@ -13,10 +13,13 @@ class ImagesHelper
         $originalNameRaw = substr($originalName, 0, strrpos($originalName, "."));
         
         $slug            = \Illuminate\Support\Str::slug($originalNameRaw, '-');
-        $fileName        = $slug . '-' . strtotime('now') . '.' . $extension;
+        $timedFileName   = $slug . '-' . strtotime('now') ;
+        $fileName        = $timedFileName . '.' . $extension;
         $filePath        = $folder . '/' . $fileName;
 
         Storage::disk('public')->put($filePath, \File::get( $file ));
+        
+        self::makeThumbnails($file, $timedFileName, $extension, $folder);
 
         return [
             'slug' => $slug,
@@ -46,4 +49,11 @@ class ImagesHelper
         return $newFilePath;
     }
 
+    public static function makeThumbnails($timedFileName, $extension, $folder) {
+        $sizes = config('constants.thumbnails');
+
+        foreach($sizes as $size) {
+
+        }
+    }
 }

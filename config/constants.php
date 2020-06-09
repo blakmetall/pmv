@@ -24,6 +24,33 @@ return [
     'operation_types' => [
         'credit' => 1,
         'charge' => 2,
-    ]   
+    ],
+
+    'thumbnails' => [
+        'small' => [
+            'width' => 300,
+            'height' => 300,
+        ],
+        'small-ls' => [
+            'width' => 300,
+            'height' => 200,
+        ],
+        'medium' => [
+            'width' => 700,
+            'height' => 700,
+        ],
+        'medium-ls' => [
+            'width' => 800,
+            'height' => 600,
+        ],
+        'large' => [
+            'width' => 1200,
+            'height' => 1000,
+        ],
+        'large-ls' => [
+            'width' => 1200,
+            'height' => 850,
+        ],
+    ]
 
 ];
