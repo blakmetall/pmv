@@ -15,6 +15,8 @@ use App\Repositories\{
 };
 use App\Helpers\{ RoleHelper, UserHelper };
 
+use App\Helpers\ReportExcelHelper;
+
 class PropertiesController extends Controller
 {
     private $repository;
@@ -54,6 +56,10 @@ class PropertiesController extends Controller
         }
 
         $properties = $this->repository->all($search, $config);
+
+        if($request->shouldGenerateExcel) {
+            return ReportExcelHelper::generate($properties, 'properties');
+        }
 
         return view('properties.index')
             ->with('properties', $properties)
@@ -156,5 +162,12 @@ class PropertiesController extends Controller
 
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
+    }
+
+    public function export(){
+
+        $collection = Property::all();
+        prepareExportationExcel($collection);
+
     }
 }

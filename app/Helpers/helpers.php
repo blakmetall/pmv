@@ -185,3 +185,11 @@ if (!function_exists('getUrlPath')) {
     }
 }
 
+
+if (!function_exists('getCurrentUrlFull')) {
+    function getCurrentUrlFull($export)
+    {        
+        $union = (Request::fullUrl() ==  Request::url()) ? '?' : '&';                
+        return Request::fullUrl().$union.$export.'=1';
+    }
+}

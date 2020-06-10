@@ -1,11 +1,18 @@
 <div class="mb-5"></div>
 <div class="card">
-    <div class="card-header">{{ $label }}</div>
+    <div class="card-header">{{ $label }} </div>
     <div class="card-body pt-5">
-
+        <!-- Export Link -->
+        @include('partials.buttons.export-button',[
+            'label' =>false,
+            'url' => getCurrentUrlFull('shouldGenerateExcel'),
+            'icon' => 'i-File-Excel',
+        ])
+        
+        
+        
         <!-- pagination is loeaded here -->
         @include('partials.pagination', ['rows' => $rows])
-
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -115,6 +122,10 @@
                                         alt="{{ __('Property Management') }}">
                                         <i class="nav-icon i-Building font-weight-bold"></i>
                                     </a>
+
+                                          
+
+                                    
                                 </td>
 
                                 <!-- actions -->

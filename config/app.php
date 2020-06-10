@@ -226,6 +226,11 @@ return [
 
 
 
+        // custom export classes
+
+        'HumanResourcesExport' => App\Exports\HumanResourcesExport::class,
+
+
         // custom helpers
         'Image' => Intervention\Image\Facades\Image::class,
 
@@ -233,6 +238,7 @@ return [
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
         'PMTransationHelper' => App\Helpers\PMTransationHelper::class,
         'RoleHelper' => App\Helpers\RoleHelper::class,
+        'ReportExcelHelper' => App\Helpers\ReportExcelHelper::class,
         'UserHelper' => App\Helpers\UserHelper::class,
         'WorkgroupHelper' => App\Helpers\WorkgroupHelper::class,
         
