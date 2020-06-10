@@ -15,4 +15,18 @@ class PropertyImage extends Model {
     public function property() {
         return $this->belongsTo('App\Models\Property');
     }
+
+
+    public function getNextOrder() {
+        $nextOrderImage = $this
+            ->where('property_id', $this->property_id)
+            ->orderBy('order', 'desc')
+            ->first();
+
+        if($nextOrderImage) {
+            return $nextOrderImage->order + 1;
+        }
+
+        return 1;
+    }
 }

@@ -12,6 +12,9 @@
         ]
     ])
 
+    <!-- separator -->
+    <div class="mb-4"></div>
+
 @endsection
 
 @section('main-content')

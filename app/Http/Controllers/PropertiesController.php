@@ -13,6 +13,7 @@ use App\Repositories\{
     PropertyTypesRepositoryInterface,
     AmenitiesRepositoryInterface
 };
+use App\Helpers\{ RoleHelper, UserHelper };
 
 use App\Helpers\ReportExcelHelper;
 
@@ -49,6 +50,11 @@ class PropertiesController extends Controller
         $search = trim($request->s);
 
         $config = ['filterByWorkgroup' => true];
+        
+        if(RoleHelper::is('owner') || RoleHelper::is('regular')) {
+            $config['filterByUserId'] = UserHelper::getCurrentUserID();
+        }
+
         $properties = $this->repository->all($search, $config);
 
         if($request->shouldGenerateExcel) {
