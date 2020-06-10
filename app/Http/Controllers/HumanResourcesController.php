@@ -8,8 +8,7 @@ use App\Repositories\{
     CitiesRepositoryInterface
 };
 use App\Models\HumanResource;
-//Helper
-use App\Helpers\ReportExcelHelper;
+use App\Exports\HumanResourcesExport;
 
 class HumanResourcesController extends Controller
 {
@@ -31,9 +30,8 @@ class HumanResourcesController extends Controller
         $config = ['filterByWorkgroup' => true];
         $human_resources = $this->repository->all($search, $config);        
         
-        //Export Excel
         if($request->shouldGenerateExcel) {
-            return ReportExcelHelper::generate($human_resources, 'human-resources');
+            return (new HumanResourcesExport($human_resources))->download();
         }
 
         return view('human-resources.index')
