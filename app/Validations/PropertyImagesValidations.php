@@ -16,11 +16,18 @@ class PropertyImagesValidations extends Validation
     public function validate($validateEvent, Request $request, $id = '')
     {
         $eventValidations = [];
-        $customValidationMessages = [];
+        $customValidationMessages = [
+            'photos.*.mimes' => __('Allowed formats: jpg, jpeg, png, bnm'),
+            'photos.mimes' => __('Allowed formats: jpg, jpeg, png, bnm'),
+        ];
 
         switch($validateEvent)   {
-            case 'create': break;
-            case 'edit': break;
+            case 'create': 
+                $eventValidations['photos.*'] = 'required|mimes:jpeg,png,bmp';
+            break;
+            case 'edit': 
+                $eventValidations['photos'] = 'required|mimes:jpeg,png,bmp';
+            break;
         }
 
         $validations = array_merge($this->getDefaultValidations(), $eventValidations);

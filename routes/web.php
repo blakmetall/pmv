@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // auth middleware
-    Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
+    Route::group(['prefix' => 'system', 'middleware' => 'auth'], function() {
         
         // dashboard
         Route::get('', 'DashboardController@index');
@@ -115,6 +115,9 @@ Route::group(['middleware' => ['web']], function () {
                         Route::get('edit/{image}', 'PropertyImagesController@edit')->name('property-images.edit');
                         Route::post('update/{id}', 'PropertyImagesController@update')->name('property-images.update');
                         Route::get('destroy/{id}', 'PropertyImagesController@destroy')->name('property-images.destroy');
+
+                        Route::get('orderUp/{image}', 'PropertyImagesController@orderUp')->name('property-images.order-up');
+                        Route::get('orderDown/{image}', 'PropertyImagesController@orderDown')->name('property-images.order-down');
                     });
 
                     // property: property management
@@ -363,4 +366,8 @@ Route::group(['middleware' => ['web']], function () {
         });
 
     });
+
+    // public routes here
+    Route::get('', '_Public\PagesController@home')->name('public.home');
+
 });

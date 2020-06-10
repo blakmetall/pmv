@@ -142,6 +142,12 @@
                         @csrf
                     </form>
 
+                    <hr class="mt-1 mb-1">
+
+                    <a class="dropdown-item app-header-return-to-site-dropdown" href="{{ route('public.home') }}">
+                        {{  __('Return to public site') }}
+                    </a>
+
                 </div>
             </div>
         </div>

@@ -12,8 +12,9 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Thumbnail') }}</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Property') }}</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
@@ -30,7 +31,9 @@
 
                                 <!-- thumbnail -->
                                 <th>
-                                    <img src="{{ asset($row->file_path) }}" alt="" width="100">
+                                    <a href="{{ asset(getUrlPath($row->file_url)) }}" target="_blank">
+                                        <img src="{{ asset(getUrlPath($row->file_url, 'small-ls')) }}" alt="" width="100">
+                                    </a>
                                 </th>
 
                                 <!-- property -->
@@ -40,6 +43,16 @@
                                             {{ $row->property->translate()->name }}
                                         </a>
                                     @endif
+                                </td>
+
+                                <!-- property -->
+                                <td>
+                                    <a href="{{ route('property-images.order-up', [$row->property->id, $row->id]) }}">
+                                        <i class="nav-icon i-Up font-weight-bold"></i>
+                                    </a>
+                                    <a href="{{ route('property-images.order-down', [$row->property->id, $row->id]) }}">
+                                        <i class="nav-icon i-Down font-weight-bold"></i>
+                                    </a>
                                 </td>
 
                                 <!-- actions -->

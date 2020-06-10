@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\User;
 use App\Models\Role;
 use App\Helpers\LanguageHelper;
+use Config;
 
 class RoleHelper
 {
@@ -61,6 +62,14 @@ class RoleHelper
         }
 
         return $roles;
+    }
+
+    public static function is($roleSlug) {
+        $compareRoleId = config('constants.roles.' . $roleSlug);
+
+        $current = self::current();
+        
+        return $current->id === $compareRoleId;
     }
 
     public static function hasValidRoleId($id) 
@@ -149,8 +158,6 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'concierge',
-                    'owner',
-                    'regular',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -188,8 +195,6 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
-                    'owner',
-                    'regular',
                 ]),
                 'owner-requests' => self::transformSluggedRolesToIds([
                     'owner',

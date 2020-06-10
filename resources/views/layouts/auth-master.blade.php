@@ -18,13 +18,23 @@
         {{-- theme css --}}
         <link rel="stylesheet" href="{{asset('assets/styles/css/themes/palmera-vacations.min.css')}}">
 
+        {{-- app css --}}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
         {{-- page specific css --}}
         @yield('page-css')
     </head>
 
     <body>
-        <div class="auth-layout-wrap" style="background-image: url({{asset('assets/images/photo-wide-4.jpg')}})">
+        <div class="auth-layout-wrap">
             <div class="auth-content">
+
+                <div class="auth-about">
+                    <a href="{{ route('public.home') }}">
+                        <img src="{{ asset('assets/images/logo-full.png')}}" alt="">
+                    </a>
+                </div>
+
 
                 @yield('main-content')
 
