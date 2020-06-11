@@ -22,10 +22,6 @@ class PropertyManagement extends Model {
         return $this->hasMany('App\Models\PropertyManagementTransaction');
     }
 
-    public function payments() {
-        return $this->hasMany('App\Models\PropertyManagementPayment');
-    }
-
     public function property() {
         return $this->belongsTo('App\Models\Property');
     }

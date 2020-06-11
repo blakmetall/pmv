@@ -23,7 +23,7 @@ class CreateNotificationsTable extends Migration
             $table->string('href')->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->string('is_viewed')->nullable();
+            $table->string('is_viewed')->nullable()->default(0);
             $table->text('data_JSON')->nullable();
             $table->timestamps();
         });

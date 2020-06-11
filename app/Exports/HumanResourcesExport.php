@@ -34,7 +34,7 @@ class HumanResourcesExport implements WithMapping, FromCollection
             $row->birthday,
             $row->vacation_start_at,
             $row->vacation_end_at,
-            $row->days_vacations,
+            $row->vacation_days,
             $row->children,
             $row->is_active,
             $row->created_at,

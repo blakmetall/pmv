@@ -20,8 +20,8 @@ class CreatePropertyImagesTable extends Migration
         Schema::create('property_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('property_id');
-            $table->string('slug')->nullable();
-            $table->string('extension')->nullable();
+            $table->string('file_slug')->nullable();
+            $table->string('file_extension')->nullable();
             $table->string('file_original_name')->nullable();
             $table->string('file_name')->nullable();
             $table->text('file_path')->nullable();

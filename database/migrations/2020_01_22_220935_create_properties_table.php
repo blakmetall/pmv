@@ -24,9 +24,9 @@ class CreatePropertiesTable extends Migration
             $table->integer('zone_id');
             $table->integer('property_type_id');
             $table->integer('cleaning_option_id');
-            $table->tinyInteger('is_featured')->nullable();
-            $table->tinyInteger('is_enabled')->nullable();
-            $table->tinyInteger('is_online')->nullable();
+            $table->tinyInteger('is_featured')->nullable()->default(0);
+            $table->tinyInteger('is_enabled')->nullable()->default(0);
+            $table->tinyInteger('is_online')->nullable()->default(0);
             $table->string('building')->nullable();
             $table->decimal('rental_commission', 5, 2)->nullable();
             $table->decimal('maid_fee', 15, 2)->nullable();

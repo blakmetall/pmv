@@ -22,9 +22,9 @@ class CreateHumanResourcesTable extends Migration
             $table->string('department')->nullable();
             $table->date('entry_at')->nullable();
             $table->date('birthday')->nullable();
-            $table->date('vacations_start_at')->nullable();
-            $table->date('vacations_end_at')->nullable();
-            $table->integer('days_vacations')->nullable();
+            $table->date('vacation_start_date')->nullable();
+            $table->date('vacation_end_date')->nullable();
+            $table->integer('vacation_days')->nullable();
             $table->integer('children')->nullable();
             $table->tinyInteger('is_active')->nullable()->default(1);
             $table->timestamps();

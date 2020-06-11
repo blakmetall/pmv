@@ -19,9 +19,9 @@ class HumanResource extends Model
         'department',
         'entry_at',
         'birthday',
-        'vacations_start_at',
-        'vacations_end_at',
-        'days_vacations',
+        'vacation_start_date',
+        'vacation_end_date',
+        'vacation_days',
         'children',
         'is_active'
     ];

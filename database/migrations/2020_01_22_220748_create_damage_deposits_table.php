@@ -20,7 +20,7 @@ class CreateDamageDepositsTable extends Migration
         Schema::create('damage_deposits', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->decimal('price', 15, 2)->nullable();
-            $table->tinyInteger('is_refundable')->nullable();
+            $table->tinyInteger('is_refundable')->nullable()->default(0);
         });
     }
 

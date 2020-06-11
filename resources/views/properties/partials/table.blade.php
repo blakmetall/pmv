@@ -2,12 +2,13 @@
 <div class="card">
     <div class="card-header">{{ $label }} </div>
     <div class="card-body pt-5">
+
         <!-- Export Link -->
-        @include('partials.buttons.export-button',[
+        {{-- @include('partials.buttons.export-button',[
             'label' =>false,
             'url' => getCurrentUrlFull('shouldGenerateExcel'),
             'icon' => 'i-File-Excel',
-        ])
+        ]) --}}
         
         
         
