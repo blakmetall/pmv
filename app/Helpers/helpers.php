@@ -185,6 +185,12 @@ if (!function_exists('getUrlPath')) {
     }
 }
 
+if (!function_exists('isRole')) {
+    function isRole($roleSlug = '')
+    {
+        return \App\Helpers\RoleHelper::is($roleSlug);
+    }
+}
 
 if (!function_exists('getCurrentUrlFull')) {
     function getCurrentUrlFull($export)

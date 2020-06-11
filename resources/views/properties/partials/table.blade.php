@@ -89,31 +89,37 @@
                                     </a>
 
                                     <!-- property rates -->
-                                    <a 
-                                        href="{{ route('property-rates', $row->property->id) }}" 
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Rates') }}"
-                                        alt="{{ __('Rates') }}">
-                                        <i class="nav-icon i-Money-2 font-weight-bold"></i>
-                                    </a>
+                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                        <a 
+                                            href="{{ route('property-rates', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Rates') }}"
+                                            alt="{{ __('Rates') }}">
+                                            <i class="nav-icon i-Money-2 font-weight-bold"></i>
+                                        </a>
+                                    @endif
 
                                     <!-- property images -->
-                                    <a 
-                                        href="{{ route('property-images', $row->property->id) }}"
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Images') }}"
-                                        alt="{{ __('Images') }}">
-                                        <i class="nav-icon i-Old-Camera font-weight-bold"></i>
-                                    </a>
+                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                        <a 
+                                            href="{{ route('property-images', $row->property->id) }}"
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Images') }}"
+                                            alt="{{ __('Images') }}">
+                                            <i class="nav-icon i-Old-Camera font-weight-bold"></i>
+                                        </a>
+                                    @endif
 
                                     <!-- bookings from specific to property -->
-                                    <a 
-                                        href="{{ route('bookings.by-property', $row->property->id) }}" 
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Bookings') }}"
-                                        alt="{{ __('Bookings') }}">
-                                        <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
-                                    </a>
+                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                        <a 
+                                            href="{{ route('bookings.by-property', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Bookings') }}"
+                                            alt="{{ __('Bookings') }}">
+                                            <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
+                                        </a>
+                                    @endif
 
                                     <!-- property management -->
                                     <a 
@@ -131,12 +137,14 @@
 
                                 <!-- actions -->
                                 <td>
-                                    @include('components.table.actions', [
-                                        'params' => [$row->property->id],
-                                        'showRoute' => 'properties.show',
-                                        'editRoute' => 'properties.edit',
-                                        'deleteRoute' => 'properties.destroy',
-                                    ])
+                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                        @include('components.table.actions', [
+                                            'params' => [$row->property->id],
+                                            'showRoute' => 'properties.show',
+                                            'editRoute' => 'properties.edit',
+                                            'deleteRoute' => 'properties.destroy',
+                                        ])
+                                    @endif
                                 </td>
 
                             </tr>

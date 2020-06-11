@@ -16,9 +16,9 @@ class CreateHumanResourcesTable extends Migration
         Schema::create('human_resources', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('city_id');
-            $table->string('address');
             $table->string('firstname');
             $table->string('lastname');
+            $table->string('address')->nullable();
             $table->string('department')->nullable();
             $table->date('entry_at')->nullable();
             $table->date('birthday')->nullable();
