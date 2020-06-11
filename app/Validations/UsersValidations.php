@@ -15,7 +15,6 @@ class UsersValidations extends Validation
             'profile.country' => 'required',
             'profile.state' => 'required',
             'profile.city' => 'required',
-            'profile.emergency_phone' => 'required',
             'profile.street' => 'required',
             'profile.zip' => 'required|numeric',
             'profile.config_agent_commission' => 'nullable|integer|between:0,100',
@@ -52,7 +51,7 @@ class UsersValidations extends Validation
             break;
             case 'edit-agent':
                 $eventValidations = [
-                    'profile.config_agent_commission' => 'nullable|integer|between:0,100',
+                    'profile.config_agent_commission' => 'integer|between:0,100',
                 ];
                 $shouldUseDefaultValidations = false;
             break;

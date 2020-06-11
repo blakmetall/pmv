@@ -83,15 +83,6 @@
             'value' => $row->mobile
         ])
 
-        <!-- commision -->
-        @include('components.form.input', [
-            'group' => 'profile',
-            'label' => __('Agent Commission'),
-            'name' => 'config_agent_commission',
-            'required' => true,
-            'value' => $row->config_agent_commission
-        ])
-
     </div>
 </div>
 

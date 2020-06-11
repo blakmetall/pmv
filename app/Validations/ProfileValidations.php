@@ -15,9 +15,7 @@ class ProfileValidations extends Validation
             'state' => 'required',
             'city' => 'required',
             'street' => 'required',
-            'emergency_phone' => 'required',
             'zip' => 'required|numeric',
-            'config_agent_commission' => 'nullable|numeric|between:0,100',
         ]);
     }
 
