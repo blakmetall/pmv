@@ -32,7 +32,7 @@
             'fileName' => $row->file_original_name,
             'filePath' => $row->file_path,
             'fileUrl' => $row->file_url,
-            'fileExtension' => $row->extension,
+            'fileExtension' => $row->file_extension,
         ])
 
     </div>

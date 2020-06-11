@@ -25,8 +25,8 @@ class ImagesHelper
         self::makeThumbnails($folder, $timedFileName, $extension);
 
         return [
-            'slug' => $slug,
-            'extension' => $extension,
+            'file_slug' => $slug,
+            'file_extension' => $extension,
             'file_original_name' => $originalName,
             'file_name' => $fileName,
             'file_path' => $filePath,
