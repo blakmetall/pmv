@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('cleaning-options.create')
+                'url' => route('cleaning-options.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

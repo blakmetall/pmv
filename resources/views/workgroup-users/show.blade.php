@@ -18,6 +18,7 @@
             [
                 'label' => __('New'),
                 'url' => route('workgroup-users.create', [$workgroup->id]),
+                'icon' => 'i-Add',
             ]
         ]
     ])

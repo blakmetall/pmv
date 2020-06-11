@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('property-management.create', [$property->id]),
+                'icon' => 'i-Add',
             ]
         ]
     ])

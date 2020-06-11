@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('workgroups.create')
+                'url' => route('workgroups.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

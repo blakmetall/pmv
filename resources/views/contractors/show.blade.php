@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('contractors.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

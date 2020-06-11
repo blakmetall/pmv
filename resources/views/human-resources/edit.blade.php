@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('human-resources.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

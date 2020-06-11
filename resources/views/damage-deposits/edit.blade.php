@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('damage-deposits.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

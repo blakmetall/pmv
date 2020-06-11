@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-management-transactions.create', [$pm->id])
+                'url' => route('property-management-transactions.create', [$pm->id]),
+                'icon' => 'i-Add',
             ]
         ]
     ])

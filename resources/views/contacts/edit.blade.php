@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('contacts.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

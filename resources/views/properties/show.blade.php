@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('properties.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

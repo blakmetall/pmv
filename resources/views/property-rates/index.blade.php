@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-rates.create', [$property->id])
+                'url' => route('property-rates.create', [$property->id]),
+                'icon' => 'i-Add',
             ]
         ]
     ])

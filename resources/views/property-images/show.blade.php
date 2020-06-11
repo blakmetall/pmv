@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('property-images.create', [$property->id]),
+                'icon' => 'i-Add',
             ]
         ]
     ])

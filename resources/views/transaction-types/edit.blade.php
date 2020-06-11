@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('transaction-types.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

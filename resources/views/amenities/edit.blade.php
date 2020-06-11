@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('amenities.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

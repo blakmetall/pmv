@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('cities.create')
+                'url' => route('cities.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

@@ -14,6 +14,7 @@
             [
                 'label' => __('New'),
                 'url' => route('workgroups.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])
