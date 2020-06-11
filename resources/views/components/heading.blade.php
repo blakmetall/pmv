@@ -40,11 +40,24 @@
                         @foreach($actions as $action)
                             
                             @php
+                                $hasIcon = isset($action['icon']);
+                                $btnIconClass = $hasIcon ? ' btn-icon ' : '';
+
                                 $btnColor = isset($action['color']) ? $action['color'] : 'dark';
                             @endphp
 
-                            <a href="{{ $action['url'] }}" class="btn btn-{{ $btnColor }} ripple m-1" role="button" >
-                                {{ $action['label'] }}
+                            <a href="{{ $action['url'] }}" class="btn btn-{{ $btnColor }} {{ $btnIconClass }} ripple m-1" role="button" >
+
+                                @if ($hasIcon)
+                                    <span class="ul-btn__icon">
+                                        <i class="{{ $action['icon'] }}"></i>
+                                    </span>
+                                    <span class="ul-btn__text">
+                                        {{ $action['label'] }}
+                                    </span>
+                                @else
+                                    {{ $action['label'] }}
+                                @endif
                             </a>
 
                         @endforeach
