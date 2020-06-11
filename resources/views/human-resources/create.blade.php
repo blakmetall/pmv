@@ -9,6 +9,12 @@
                 'url' => route('human-resources'),
                 'label' => __('Human Resources'),
             ],
+        ],
+        'actions' => [
+            [
+                'url' => route('human-resources'),
+                'icon' => 'i-Receipt-4',
+            ],
         ]
     ])
 

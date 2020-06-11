@@ -12,6 +12,10 @@
         ],
         'actions' => [
             [
+                'url' => route('contacts'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('contacts.create'),
                 'icon' => 'i-Add',

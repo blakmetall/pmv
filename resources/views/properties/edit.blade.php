@@ -12,6 +12,10 @@
         ],
         'actions' => [
             [
+                'url' => route('properties'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('properties.create'),
                 'icon' => 'i-Add',

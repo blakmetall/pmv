@@ -44,6 +44,8 @@
                                 $btnIconClass = $hasIcon ? ' btn-icon ' : '';
 
                                 $btnColor = isset($action['color']) ? $action['color'] : 'dark';
+
+                                $hasActionLabel = isset($action['label']);
                             @endphp
 
                             <a href="{{ $action['url'] }}" class="btn btn-{{ $btnColor }} {{ $btnIconClass }} ripple m-1" role="button" >
@@ -52,11 +54,16 @@
                                     <span class="ul-btn__icon">
                                         <i class="{{ $action['icon'] }}"></i>
                                     </span>
-                                    <span class="ul-btn__text">
-                                        {{ $action['label'] }}
-                                    </span>
+
+                                    @if ($hasActionLabel)
+                                        <span class="ul-btn__text">
+                                            {{ $action['label'] }}
+                                        </span>
+                                    @endif
                                 @else
-                                    {{ $action['label'] }}
+                                    @if ($hasActionLabel)
+                                        {{ $action['label'] }}
+                                    @endif
                                 @endif
                             </a>
 

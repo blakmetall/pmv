@@ -12,6 +12,10 @@
         ],
         'actions' => [
             [
+                'url' => route('cleaning-services'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('cleaning-services.create'),
                 'icon' => 'i-Add',

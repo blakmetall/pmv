@@ -9,6 +9,12 @@
                 'url' => route('damage-deposits'),
                 'label' => __('Damage Deposits'),
             ],
+        ],
+        'actions' => [
+            [
+                'url' => route('damage-deposits'),
+                'icon' => 'i-Receipt-4',
+            ],
         ]
     ])
 

@@ -12,6 +12,10 @@
         ],
         'actions' => [
             [
+                'url' => route('contractors-services'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('contractors-services.create'),
                 'icon' => 'i-Add',

@@ -11,6 +11,11 @@
             ],
         ],
         'actions' => [
+            'actions' => [
+            [
+                'url' => route('damage-deposits'),
+                'icon' => 'i-Receipt-4',
+            ],
             [
                 'label' => __('New'),
                 'url' => route('damage-deposits.create'),

@@ -9,6 +9,12 @@
                 'url' => route('cleaning-services'),
                 'label' => __('Cleaning Services'),
             ],
+        ],
+        'actions' => [
+            [
+                'url' => route('cleaning-services'),
+                'icon' => 'i-Receipt-4',
+            ],
         ]
     ])
 
