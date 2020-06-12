@@ -21,7 +21,7 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('property-management-transactions.store', [$pm->id]) }}" method="post">
+        <form action="{{ route('property-management-transactions.store', [$pm->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @include('property-management-transactions.partials.form', ['row' => $transaction])
         </form>

@@ -27,7 +27,7 @@
 @section('main-content')
 
     <div class="container app-container-sm">
-        <form action="{{ route('property-management-transactions.update', [$pm->id, $transaction->id]) }}" method="post">
+        <form action="{{ route('property-management-transactions.update', [$pm->id, $transaction->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @include('property-management-transactions.partials.form', [
                 'row' => $transaction
