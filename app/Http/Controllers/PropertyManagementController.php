@@ -50,9 +50,14 @@ class PropertyManagementController extends Controller
 
     public function store(Request $request, Property $property)
     {
-        $pm = $this->repository->create($request);
-        $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management.edit', [$property->id, $pm->id]));
+        if(!$this->checkStatus($request, $property)) {
+            $pm = $this->repository->create($request);
+            $request->session()->flash('success', __('Record created successfully'));
+            return redirect(route('property-management.edit', [$property->id, $pm->id]));
+        } else {
+            $request->session()->flash('error', __('The dates you are trying to set are invalid'));
+            return redirect()->back()->withInput();
+        }
     }
 
     public function show(Property $property, PropertyManagement $pm)
@@ -74,9 +79,14 @@ class PropertyManagementController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
-        $this->repository->update($request, $id);
-        $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-management.edit', [$property->id, $id]) );
+        if(!$this->checkStatus($request, $property, $id)){
+            $this->repository->update($request, $id);
+            $request->session()->flash('success', __('Record updated successfully'));
+            return redirect( route('property-management.edit', [$property->id, $id]) );
+        }else{
+            $request->session()->flash('error', __('The dates you are trying to set are invalid'));
+            return redirect()->back()->withInput();
+        }
     }
 
     public function destroy(Request $request, Property $property, $id)
@@ -90,4 +100,17 @@ class PropertyManagementController extends Controller
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
     }
+
+    private function checkStatus($request, $property, $id = false) {
+        
+        if($request->end_date > getCurrentDate()){
+            $pm = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0)->where('id', '!=', $id)->first();
+            if($pm) { 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
