@@ -135,6 +135,9 @@ return [
         ],
     ],
 
+    // custom validation messages
+    'is_even_string' => "The :attribute must be odd string lenght.",
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

@@ -128,17 +128,14 @@ return [
     */
 
     'custom' => [
-        /* 'en' => [
-            'name' => [
-                'required' => __('The name is required'),
-            ]
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
         ],
-        'es' => [
-            'name' =>  [
-                'required' => __('The name is required'),
-            ]
-        ], */
     ],
+
+    // custom validation messages
+    'is_even_string' => "The :attribute must be odd string lenght.",
+
 
     /*
     |--------------------------------------------------------------------------

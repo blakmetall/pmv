@@ -6,6 +6,7 @@ use URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Helpers\AppHelper;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,15 @@ class AppServiceProvider extends ServiceProvider
         if ( AppHelper::shouldApplyHttps() ) {
             URL::forceScheme('https');
         }
+
+        // custom validations
+        Validator::extend('is_even_string', function($attribute, $value, $parameters, $validator) {
+            if(!empty($value) && (strlen($value) % 2) == 0){
+                return false;
+            }
+            
+            return true;
+        });
     }
 
     /**
