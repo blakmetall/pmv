@@ -19,7 +19,7 @@ class PropertyManagementController extends Controller
     {
         $search = trim($request->s);
 
-        $config = ['propertyID' => $property->id];
+        $config = ['propertyID' => $property->id, 'unfinishedOnly' => true];
         $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.index')
@@ -31,7 +31,9 @@ class PropertyManagementController extends Controller
     public function general(Request $request)
     {
         $search = trim($request->s);
-        $pm_items = $this->repository->all($search);
+
+        $config = ['unfinishedOnly' => true];
+        $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.general')
             ->with('pm_items', $pm_items)

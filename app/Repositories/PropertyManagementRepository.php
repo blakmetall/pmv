@@ -25,6 +25,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $lang = LanguageHelper::current();
 
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $unfinishedOnly = isset($config['unfinishedOnly']) ? $config['unfinishedOnly'] : false;
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
 
         if ($search) {
@@ -43,12 +44,15 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query->orderBy('is_finished', 'asc');
             $query->orderBy('start_date', 'desc');
         }else{
-            $query->where('is_finished', 0);
             $query->select('property_management.*');
             $query->join('properties', 'property_management.property_id', '=', 'properties.id');
             $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
             $query->where('language_id', $lang->id);
             $query->orderBy('name', 'asc');
+        }
+        
+        if($unfinishedOnly) {
+            $query->where('is_finished', 0);
         }
 
         if($shouldPaginate) {
