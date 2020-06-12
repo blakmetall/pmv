@@ -12,7 +12,7 @@ class PropertyManagementValidations extends Validation
             'property_id' => 'required',
             'management_fee' => 'required|numeric|min:0',
             'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'nullable|date_format:Y-m-d',
+            'end_date' => 'nullable|date_format:Y-m-d|after:start_date',
         ]);
     }
 

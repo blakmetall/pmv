@@ -13,8 +13,6 @@ class PropertyManagementController extends Controller
     public function __construct(PropertyManagementRepositoryInterface $repository)
     {
         $this->repository = $repository;
-
-        PropertyManagement::setFinishedStatusHandler();
     }
 
     public function index(Request $request, Property $property)
@@ -50,12 +48,12 @@ class PropertyManagementController extends Controller
 
     public function store(Request $request, Property $property)
     {
-        if(!$this->checkStatus($request, $property)) {
+        if($this->canCreatePM($request, $property)) {
             $pm = $this->repository->create($request);
             $request->session()->flash('success', __('Record created successfully'));
             return redirect(route('property-management.edit', [$property->id, $pm->id]));
         } else {
-            $request->session()->flash('error', __('The dates you are trying to set are invalid'));
+            $request->session()->flash('error', __('You can only have one unfinished property management.'));
             return redirect()->back()->withInput();
         }
     }
@@ -79,12 +77,12 @@ class PropertyManagementController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
-        if(!$this->checkStatus($request, $property, $id)){
+        if($this->canCreatePM($request, $property, $id)){
             $this->repository->update($request, $id);
             $request->session()->flash('success', __('Record updated successfully'));
             return redirect( route('property-management.edit', [$property->id, $id]) );
         }else{
-            $request->session()->flash('error', __('The dates you are trying to set are invalid'));
+            $request->session()->flash('error', __('You can only have one unfinished property management.'));
             return redirect()->back()->withInput();
         }
     }
@@ -101,16 +99,22 @@ class PropertyManagementController extends Controller
         return redirect()->back();
     }
 
-    private function checkStatus($request, $property, $id = false) {
-        
-        if($request->end_date > getCurrentDate()){
-            $pm = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0)->where('id', '!=', $id)->first();
-            if($pm) { 
-                return true;
+    // ensures not creating new property management if an active one is enabled
+    private function canCreatePM($request, $property, $id = false) {
+
+        if( ! $request->is_finished ) {
+            $pmQuery = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0);
+            if($id) {
+                $pmQuery->where('id', '!=', $id);
+            }
+    
+            $unfinishedPM = $pmQuery->first();
+            if($unfinishedPM) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
 }

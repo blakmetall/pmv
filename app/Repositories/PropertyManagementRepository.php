@@ -82,7 +82,11 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $pm = $this->find($id);
         }
 
-        $pm->fill($request->all());
+        $checkboxesConfig = ['is_finished' => 0];
+        $requestData = array_merge($checkboxesConfig, $request->all());
+
+        $pm->fill($requestData);
+
         $pm->save();
 
         return $pm;

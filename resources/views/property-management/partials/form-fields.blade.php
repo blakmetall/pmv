@@ -4,7 +4,7 @@
 
         <!-- property_id -->
         @include('components.form.select', [
-            'group' => 'property-rate',
+            'group' => 'property-management',
             'label' => __('Property'),
             'name' => 'property_id',
             'required' => true,
@@ -18,7 +18,7 @@
 
         <!-- start_date -->
         @include('components.form.datepicker', [
-            'group' => 'property-rate',
+            'group' => 'property-management',
             'label' => __('Start Date'),
             'name' => 'start_date',
             'value' => $row->start_date,
@@ -28,7 +28,7 @@
 
         <!-- end_date -->
         @include('components.form.datepicker', [
-            'group' => 'property-rate',
+            'group' => 'property-management',
             'label' => __('End Date'),
             'name' => 'end_date',
             'value' => $row->end_date,
@@ -37,11 +37,20 @@
 
         <!-- management_fee -->
         @include('components.form.input', [
-            'group' => 'property-rate',
+            'group' => 'property-management',
             'label' => __('Fee'),
             'name' => 'management_fee',
             'value' => $row->management_fee,
             'required' => true,
+        ])
+
+        <!-- is_finished -->
+        @include('components.form.checkbox', [
+            'group' => 'property-management',
+            'label' => __('Finished'),
+            'name' => 'is_finished',
+            'value' => 1,
+            'default' => $row->is_finished,
         ])
 
     </div>
