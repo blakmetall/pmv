@@ -19,7 +19,8 @@ class PropertyManagementBalancesController extends Controller
 
     public function index(Request $request, PropertyManagement $pm)
     {
-        $pm = $this->propertyManagementRepository->find($pm->id);
+        $config = ['paginate' => false];
+        $pm = $this->propertyManagementRepository->find($pm->id, $config);
 
         $pm->_balance = PMHelper::getBalance($pm->id);
         $pm_items = [$pm];
@@ -32,7 +33,8 @@ class PropertyManagementBalancesController extends Controller
     public function general(Request $request)
     {
         $search = trim($request->s);
-        $pm_items = $this->propertyManagementRepository->all($search);
+        $config = ['paginate' => false];
+        $pm_items = $this->propertyManagementRepository->all($search, $config);
 
         if($pm_items->count()) {
             foreach($pm_items as $index => $pm_item) {
