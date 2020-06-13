@@ -12,12 +12,13 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Transaction') }}</th>
-                        <th scope="col">{{ __('Amount') }}</th>
-                        <th scope="col">{{ __('Period Start Date') }}</th>
-                        <th scope="col">{{ __('Period End Date') }}</th>
-                        <th scope="col">{{ __('Operation') }}</th>
+                        <th scope="col">{{ __('Date') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
+                        <th scope="col">{{ __('Transaction') }}</th>
+                        <th scope="col">{{ __('Period') }}</th>
+                        <th scope="col">{{ __('Credits') }}</th>
+                        <th scope="col">{{ __('Charges') }}</th>
+                        <th scope="col">{{ __('Balance') }}</th>
                         <th scope="col">{{ __('Audited By') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>
@@ -33,26 +34,8 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- transaction_type_id -->
-                                <td>
-                                    @if ($row->type)
-                                        {{ $row->type->translate()->name }}
-                                    @endif
-                                </td>
-
-                                <!-- amount -->
-                                <td>{{ priceFormat($row->amount) }}</td>
-
-                                <!-- period_start_date -->
-                                <td>{{ $row->period_start_date }}</td>
-
-                                <!-- period_end_date -->
-                                <td>{{ $row->period_end_date }}</td>
-
-                                <!-- operation_type -->
-                                <td>
-                                    {{ getOperationTypeById($row->operation_type) }}
-                                </td>
+                                <!-- post_date -->
+                                <td>{{ $row->post_date }}</td>
 
                                 <!-- property -->
                                 <td>
@@ -60,6 +43,44 @@
                                         <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
                                             {{ $row->propertyManagement->property->translate()->name }}
                                         </a>
+                                    @endif
+                                </td>
+
+                                <!-- transaction_type_id -->
+                                <td>
+                                    @if ($row->type)
+                                        {{ $row->type->translate()->name }}
+                                    @endif
+
+                                    <p class="app-pm-description">{{ $row->description }}</p>
+                                </td>
+
+                                <!-- period -->
+                                <td>
+                                    {{ $row->period_start_date }} 
+                                    
+                                    @if($row->period_end_date)
+                                        -
+                                    @endif
+                                    
+                                    {{ $row->period_end_date }}
+                                </td>
+
+                                <!-- credit -->
+                                <td>
+                                     @if($row->operation_type === config('constants.operation_types.credit'))
+                                        {{ priceFormat($row->amount) }}
+                                    @else
+                                        --
+                                    @endif
+                                </td>
+
+                                <!-- charges -->
+                                <td>
+                                    @if($row->operation_type === config('constants.operation_types.charge'))
+                                        {{ priceFormat($row->amount) }}
+                                    @else
+                                        --
                                     @endif
                                 </td>
 

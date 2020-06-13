@@ -18,6 +18,10 @@ class DbVariousUpdates extends Migration
             Schema::table('property_management', function($table) {
                 $table->decimal('average_month', 15, 2)->nullable()->default(0)->after('end_date');
             });
+            
+            Schema::table('property_management', function($table) {
+                $table->dropColumn('property_management_payment_id');
+            });
         }
     }
 
