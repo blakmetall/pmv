@@ -36,17 +36,29 @@
 
                                 <!-- balance -->
                                 <td>
-                                    {{ priceFormat($pm->_balance['balance']) }}
+                                    @php 
+                                        $isUnderAverage = $pm->average_month > $pm->_balance['balance']; 
+                                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                    @endphp
+
+                                    <span class="{{ $underAverageClass }}">
+                                        {{ priceFormat($pm->_balance['balance']) }}
+                                    </span>
                                 </td>
 
                                 <!-- pending audits -->
-                                <td>
-                                    {{ priceFormat($pm->_balance['pendingAudit']) }}
-                                </td>
+                                <td>{{ priceFormat($pm->_balance['pendingAudit']) }}</td>
 
                                 <!-- estimated balance -->
                                 <td>
-                                    {{ priceFormat($pm->_balance['estimatedBalance']) }}
+                                    @php 
+                                        $isUnderAverage = $pm->average_month > $pm->_balance['estimatedBalance']; 
+                                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                    @endphp
+
+                                    <span class="{{ $underAverageClass }}">
+                                        {{ priceFormat($pm->_balance['estimatedBalance']) }}
+                                    </span>
                                 </td>
 
                             </tr>
