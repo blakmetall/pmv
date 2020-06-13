@@ -38,6 +38,13 @@ class HumanResource extends Model
         return $this->belongsTo('App\Models\City');
     }
 
+    function filterPublic() {
+        return $this->select('name','phone');
+     }
+     function filterPrivate() {
+        return $this->select('name','phone','address','email');
+     }
+
     // mutator: full_name
     public function getFullNameAttribute()
     {

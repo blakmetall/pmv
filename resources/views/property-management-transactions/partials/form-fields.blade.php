@@ -94,6 +94,40 @@
             'value' => $row->description,
         ])
 
+        <!-- transaction file -->
+        @include('components.form.file', [
+            'group' => 'property-management-transaction',
+            'label' => __('File'),
+            'name' => 'transaction_file',
+            'isMultiple' => false,
+            'fileName' => $row->file_original_name,
+            'filePath' => $row->file_path,
+            'fileUrl' => $row->file_url,
+            'fileExtension' => $row->file_extension,
+        ])
+
+        @if ($row->file_url)
+            <!-- do audit -->
+            @include('components.form.checkbox', [
+                'group' => 'property-management-transaction',
+                'label' => __('Audit'),
+                'name' => 'do_audit',
+                'value' => 1,
+                'default' => !! $row->audit_user_id,
+            ])
+        @endif
+
+        <!-- audit -->
+        @if ($row->auditedBy)
+            @include('components.form.input', [
+                'group' => 'property-management-transaction',
+                'label' => __('Audited by'),
+                'name' => '__',
+                'value' => $row->auditedBy->profile->full_name,
+                'disabled' => true,
+            ])
+        @endif
+
     </div>
 </div>
 

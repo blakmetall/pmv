@@ -14,6 +14,7 @@ class PropertyManagementTransactionsValidations extends Validation
             'post_date' => 'nullable|date_format:Y-m-d',
             'amount' => 'required|numeric|min:0',
             'operation_type' => 'required|numeric|between:1,2',
+            'transaction_file' => '' // validation types
         ]);
     }
 
