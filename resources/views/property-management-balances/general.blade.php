@@ -18,7 +18,8 @@
 
     @include('property-management-balances.partials.table', [
         'label' => __('Balances'),
-        'pm_items' => $pm_items
+        'pm_items' => $pm_items,
+        'totalBalances' => $totalBalances
     ])
 
 @endsection

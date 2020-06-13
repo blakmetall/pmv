@@ -41,7 +41,7 @@
 
                                 <!-- pending audits -->
                                 <td>
-                                    {{ priceFormat($pm->_balance['pendingAudits']) }}
+                                    {{ priceFormat($pm->_balance['pendingAudit']) }}
                                 </td>
 
                                 <!-- estimated balance -->
@@ -52,7 +52,22 @@
                             </tr>
                         @endforeach
                     @endif
+                    
+                    <tr><th colspan="5">&nbsp;</th></tr>
 
+                    <tr>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">
+                            {{ priceFormat($totalBalances['balances']) }}
+                        </th>
+                        <th scope="col">
+                            {{ priceFormat($totalBalances['pendingAudits']) }}
+                        </th>
+                        <th scope="col">
+                            {{ priceFormat($totalBalances['estimatedBalances']) }}
+                        </th>
+                    </tr>
                 </tbody>
             </table>
         </div>

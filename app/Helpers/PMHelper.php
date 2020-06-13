@@ -49,12 +49,12 @@ class PMHelper
         $config = ['skipAudited' => true];
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
-        $pendingAudits = $totalCredit - $totalCharge;
+        $pendingAudit = $totalCredit - $totalCharge;
 
         return [
             'balance' => $balance,
-            'pendingAudits' => $pendingAudits,
-            'estimatedBalance' => $balance + $pendingAudits,
+            'pendingAudit' => $pendingAudit,
+            'estimatedBalance' => $balance + $pendingAudit,
         ];
     }
 }

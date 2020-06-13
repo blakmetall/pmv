@@ -25,9 +25,16 @@ class PropertyManagementBalancesController extends Controller
         $pm->_balance = PMHelper::getBalance($pm->id);
         $pm_items = [$pm];
 
+        $totalBalances = [
+            'balances' => $pm->_balance['balance'],
+            'pendingAudits' => $pm->_balance['pendingAudit'],
+            'estimatedBalances' => $pm->_balance['estimatedBalance'],
+        ];
+
         return view('property-management-balances.index')
             ->with('pm', $pm)
-            ->with('pm_items', $pm_items);
+            ->with('pm_items', $pm_items)
+            ->with('totalBalances', $totalBalances);
     }
 
     public function general(Request $request)
@@ -36,12 +43,25 @@ class PropertyManagementBalancesController extends Controller
         $config = ['paginate' => false];
         $pm_items = $this->propertyManagementRepository->all($search, $config);
 
+        $totalBalances = [
+            'balances' => 0,
+            'pendingAudits' => 0,
+            'estimatedBalances' => 0
+        ];
+
         if($pm_items->count()) {
             foreach($pm_items as $index => $pm_item) {
-                $pm_items[$index]->_balance = PMHelper::getBalance($pm_item->id);
+                $balance = PMHelper::getBalance($pm_item->id);
+                $pm_items[$index]->_balance = $balance;
+                
+                $totalBalances['balances'] += $balance['balance'];
+                $totalBalances['pendingAudits'] += $balance['pendingAudit'];
+                $totalBalances['estimatedBalances'] += $balance['estimatedBalance'];
             }
         }
 
-        return view('property-management-balances.general')->with('pm_items', $pm_items);
+        return view('property-management-balances.general')
+            ->with('pm_items', $pm_items)
+            ->with('totalBalances', $totalBalances);
     }
 }
