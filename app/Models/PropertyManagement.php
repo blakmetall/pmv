@@ -27,4 +27,10 @@ class PropertyManagement extends Model {
     public function property() {
         return $this->belongsTo('App\Models\Property');
     }
+
+    public function getActivePropertyManagementID() {
+        $pm = $this->where('property_id', $this->property_id)->where('is_finished', 0)->first();
+        
+        return $pm ? $pm->id : '';
+    }
 }
