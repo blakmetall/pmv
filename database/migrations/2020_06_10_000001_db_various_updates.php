@@ -14,6 +14,11 @@ class DbVariousUpdates extends Migration
             });
         }
 
+        if (Schema::hasTable('property_management')) {
+            Schema::table('property_management', function($table) {
+                $table->decimal('average_month', 15, 2)->nullable()->default(0)->after('end_date');
+            });
+        }
     }
 
     public function down()
@@ -21,6 +26,12 @@ class DbVariousUpdates extends Migration
         if (Schema::hasTable('property_management_transactions')) {
             Schema::table('property_management_transactions', function($table) {
                 $table->date('is_paid')->nullable()->after('file_url');
+            });
+        }
+
+        if (Schema::hasTable('property_management')) {
+            Schema::table('property_management', function($table) {
+                $table->dropColumn('average_month');
             });
         }
     }

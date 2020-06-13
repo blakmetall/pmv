@@ -15,6 +15,7 @@
                         <th scope="col">{{ __('Start Date') }}</th>
                         <th scope="col">{{ __('End Date') }}</th>
                         <th scope="col">{{ __('Fee') }}</th>
+                        <th scope="col">{{ __('Avg. Month') }}</th>
                         <th scope="col">{{ __('Finished') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -40,6 +41,9 @@
 
                                 <!-- management_fee -->
                                 <td>{{ priceFormat($row->management_fee) }}</td>
+
+                                <!-- average_month -->
+                                <td>{{ priceFormat($row->average_month) }}</td>
 
                                 <!-- is_finished -->
                                 <td>{!! getStatusIcon($row->is_finished) !!}</td>

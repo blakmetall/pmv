@@ -16,6 +16,7 @@ class PropertyManagement extends Model {
         'management_fee',
         'start_date',
         'end_date',
+        'average_month',
         'is_finished',
     ];
 
