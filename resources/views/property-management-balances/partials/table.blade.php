@@ -9,10 +9,10 @@
 
                     <tr>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Credit') }}</th>
-                        <th scope="col">{{ __('Charge') }}</th>
+                        <th scope="col">{{ __('Avg. Month') }}</th>
+                        <th scope="col">{{ __('Balance') }}</th>
                         <th scope="col">{{ __('Pending Audits') }}</th>
-                        <th scope="col">{{ __('Subtotal') }}</th>
+                        <th scope="col">{{ __('Estimated Balance') }}</th>
                     </tr>
 
                 </thead>
@@ -29,17 +29,25 @@
                                     @endif
                                 </td>
 
-                                <!-- credit -->
-                                <td>{{ priceFormat($pm->_balance['totalCredit']) }}</td>
+                                <!-- average_month -->
+                                <td>
+                                    {{ priceFormat($pm->average_month) }}
+                                </td>
 
-                                <!-- charge -->
-                                <td>{{ priceFormat($pm->_balance['totalCharge']) }}</td>
+                                <!-- balance -->
+                                <td>
+                                    {{ priceFormat($pm->_balance['balance']) }}
+                                </td>
 
                                 <!-- pending audits -->
-                                <td>{{ priceFormat($pm->_balance['pendingAuditsSubtotal']) }}</td>
+                                <td>
+                                    {{ priceFormat($pm->_balance['pendingAudits']) }}
+                                </td>
 
-                                <!-- subtotal -->
-                                <td>{{ priceFormat($pm->_balance['subtotal']) }}</td>
+                                <!-- estimated balance -->
+                                <td>
+                                    {{ priceFormat($pm->_balance['estimatedBalance']) }}
+                                </td>
 
                             </tr>
                         @endforeach

@@ -21,7 +21,7 @@ class PropertyManagementBalancesController extends Controller
     {
         $pm = $this->propertyManagementRepository->find($pm->id);
 
-        $pm->_balance = PMHelper::getPropertyManagementBalance($pm->id);
+        $pm->_balance = PMHelper::getBalance($pm->id);
         $pm_items = [$pm];
 
         return view('property-management-balances.index')
@@ -36,7 +36,7 @@ class PropertyManagementBalancesController extends Controller
 
         if($pm_items->count()) {
             foreach($pm_items as $index => $pm_item) {
-                $pm_items[$index]->_balance = PMHelper::getPropertyManagementBalance($pm_item->id);
+                $pm_items[$index]->_balance = PMHelper::getBalance($pm_item->id);
             }
         }
 
