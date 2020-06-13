@@ -23,7 +23,7 @@
                             <tr>
                                 <td>
                                     @if ($pm->property->hasTranslation())
-                                        <a href="{{ route('property-management-balances', [$pm->id]) }}">
+                                        <a href="{{ route('property-management-transactions', [$pm->id]) }}">
                                             {{ $pm->property->translate()->name }}
                                         </a>
                                     @endif

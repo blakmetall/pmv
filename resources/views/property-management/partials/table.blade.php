@@ -58,12 +58,6 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ route('property-management-balances', $row->id) }}" 
-                                        alt="{{ __('Balances') }}"
-                                        class="text-primary mr-2">
-                                        <i class="nav-icon i-Money-2 font-weight-bold"></i>
-                                    </a>
-                                    
                                     <a href="{{ route('property-management-transactions', $row->id) }}" 
                                         alt="{{ __('Transactions') }}"
                                         class="text-primary mr-2">

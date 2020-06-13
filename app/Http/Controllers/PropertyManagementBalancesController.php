@@ -17,26 +17,6 @@ class PropertyManagementBalancesController extends Controller
         $this->propertyManagementRepository = $propertyManagementRepository;
     }
 
-    public function index(Request $request, PropertyManagement $pm)
-    {
-        $config = ['paginate' => false];
-        $pm = $this->propertyManagementRepository->find($pm->id, $config);
-
-        $pm->_balance = PMHelper::getBalance($pm->id);
-        $pm_items = [$pm];
-
-        $totalBalances = [
-            'balances' => $pm->_balance['balance'],
-            'pendingAudits' => $pm->_balance['pendingAudit'],
-            'estimatedBalances' => $pm->_balance['estimatedBalance'],
-        ];
-
-        return view('property-management-balances.index')
-            ->with('pm', $pm)
-            ->with('pm_items', $pm_items)
-            ->with('totalBalances', $totalBalances);
-    }
-
     public function general(Request $request)
     {
         $search = trim($request->s);

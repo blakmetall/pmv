@@ -16,9 +16,8 @@
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Transaction') }}</th>
                         <th scope="col">{{ __('Period') }}</th>
-                        <th scope="col">{{ __('Credits') }}</th>
-                        <th scope="col">{{ __('Charges') }}</th>
-                        <th scope="col">{{ __('Balance') }}</th>
+                        <th scope="col">{{ __('Credit') }}</th>
+                        <th scope="col">{{ __('Charge') }}</th>
                         <th scope="col">{{ __('Audited By') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                     </tr>

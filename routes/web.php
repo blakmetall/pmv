@@ -155,11 +155,6 @@ Route::group(['middleware' => ['web']], function () {
                 // single property management
                 Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
 
-                    // single property management balances
-                    Route::group(['prefix' => 'balances'], function () {
-                        Route::get('', 'PropertyManagementBalancesController@index')->name('property-management-balances');
-                    });
-
                     // single property management transactions
                     Route::group(['prefix' => 'transactions'], function () {
                         Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
