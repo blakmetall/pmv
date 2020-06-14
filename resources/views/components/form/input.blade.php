@@ -4,8 +4,8 @@
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
     $lang = isset($lang) ? $lang : '';
-    $required = isset($required) ? $required : false;
-    $disabled = isset($disabled) ? $disabled : false;
+    $required = isset($required) ? (bool) $required : false;
+    $disabled = isset($disabled) ? (bool) $disabled : false;
     $value = isset($value) ? $value : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
