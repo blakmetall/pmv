@@ -25,9 +25,24 @@ class PropertyManagementTransactionsController extends Controller
 
     public function index(Request $request, PropertyManagement $pm)
     {
+        if (!$request->year && !$request->month) { // prepare year and month for first call
+            $urlParams = [
+                'year' => date('Y', strtotime('now')),
+                'month' => date('m', strtotime('now')),
+            ];
+
+            $appendUrl = '?' . http_build_query($urlParams);
+            $redirectUrl = route('property-management-transactions', [$pm->id]) . $appendUrl;
+
+            return redirect($redirectUrl);
+        }
+
         $search = trim($request->s);
 
         $config = ['property_management_id' => $pm->id];
+        $config['filterByYear'] = $request->year;
+        $config['filterByMonth'] = $request->month;
+
         $transactions = $this->repository->all($search, $config);
 
         return view('property-management-transactions.index')

@@ -326,6 +326,29 @@
   color: white;
 }
 
+.app-months-list {
+  padding-top: 8px;
+  -webkit-padding-start: 10px;
+          padding-inline-start: 10px;
+}
+
+.app-months-list li {
+  display: inline-block;
+  list-style-type: none;
+  width: auto;
+  margin-right: 5px;
+  padding: 0 7px 7px 0;
+}
+
+.app-months-list li .app-month-inactive {
+  color: #7b7b7b;
+}
+
+.app-months-list li .app-month-selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .app-heading-buttons {
     padding-top: 10px;

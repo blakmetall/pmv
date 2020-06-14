@@ -9,10 +9,6 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
-        'url' => route('property-management-transactions.general')
-    ])
-
 @endsection
 
 @section('main-content')

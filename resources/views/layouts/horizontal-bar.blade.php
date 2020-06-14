@@ -122,13 +122,13 @@
                                                 </li>
                                             @endif
 
-                                            @if ($_current_role->isAllowed('properties', 'transactions'))
+                                            {{-- @if ($_current_role->isAllowed('properties', 'transactions'))
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('property-management-transactions.general') }}">
                                                         <span class="item-name">{{ __('Transactions') }}</span>
                                                     </a>
                                                 </li>
-                                            @endif
+                                            @endif --}}
 
                                             @if ($_current_role->isAllowed('properties', 'pending-audits'))
                                                 <li class="nav-item">

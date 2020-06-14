@@ -25,13 +25,11 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyManagementID = isset($config['property_management_id']) ? $config['property_management_id'] : '';
         $shouldFilterByPendingAudits = isset($config['filterByPendingAudits']) ? $config['filterByPendingAudits'] : '';
+        $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
+        $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
 
         if ($search) {
-            $query =
-                PropertyManagementTransaction::
-                where('period_start_date', $search)
-                    ->orWhere('period_end_date', $search)
-                    ->orWhere('description', 'like', '%'.$search.'%');
+            $query = PropertyManagementTransaction::where('description', 'like', '%'.$search.'%');
         } else {
             $query = PropertyManagementTransaction::query();
         }
@@ -44,9 +42,17 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $query->whereNull('audit_user_id');
         }
 
+        if($shouldFilterByYear) {
+            $query->whereYear('post_date', $config['filterByYear']);
+        }
+
+        if($shouldFilterByMonth) {
+            $query->whereMonth('post_date', $config['filterByMonth']);
+        }
+
         $query->with('propertyManagement');
         $query->with('auditedBy');
-        $query->orderBy('period_start_date', 'asc');
+        $query->orderBy('post_date', 'asc');
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );

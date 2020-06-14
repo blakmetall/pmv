@@ -85,9 +85,9 @@ php artisan db:seed
 
 composer dump-autload --> al correr algunos comandos de laravel en local, es buena idea limpiar los autoloads que ya configuró el composer, son caches que guarda laravel, en caso de agregar migraciones, seeders, paquetes, etc; mientras se desarrolla esa parte será necesario limpiar el composer varias veces mientas hacen sus pruebas.
 
-php artisan cache:clear <br>
-php artisan route:cache <br>
-php artisan config:cache <br>
+php artisan cache:clear 
+php artisan route:cache 
+php artisan config:cache 
 php artisan view:clear <br>
 
 php artisan optimize ---> limpia y regenera archivos
