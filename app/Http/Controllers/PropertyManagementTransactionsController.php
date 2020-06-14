@@ -8,7 +8,7 @@ use App\Repositories\{
     PropertyManagementTransactionsRepositoryInterface,
     TransactionTypesRepositoryInterface
 };
-use App\Helpers\PMTransactionHelper;
+use App\Helpers\{ PMHelper, PMTransactionHelper };
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -39,16 +39,25 @@ class PropertyManagementTransactionsController extends Controller
 
         $search = trim($request->s);
 
-        $config = ['property_management_id' => $pm->id];
-        $config['filterByYear'] = $request->year;
-        $config['filterByMonth'] = $request->month;
-
+        $config = [
+            'paginate' => false,
+            'property_management_id' => $pm->id,
+            'filterByYear' => $request->year,
+            'filterByMonth' => $request->month,
+        ];
         $transactions = $this->repository->all($search, $config);
+
+        $config = [
+            'filterByYear' => $request->year,
+            'filterByMonth' => $request->month,
+        ];
+        $currentBalance = PMHelper::getBalance($pm->id, $config);
 
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
-            ->with('search', $search);
+            ->with('search', $search)
+            ->with('currentBalance', $currentBalance);
     }
 
     public function general(Request $request)

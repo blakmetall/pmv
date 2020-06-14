@@ -26,8 +26,10 @@
 
     <!-- here the data is loaded -->
     @include('property-management-transactions.partials.table', [
-        'label' => __('Property Management Transactions'),
-        'rows' => $transactions
+        'label' => __('Transactions'),
+        'rows' => $transactions,
+        'showBalanceColumn' => true,
+        'currentBalance' => $currentBalance,
     ])
 
 @endsection
