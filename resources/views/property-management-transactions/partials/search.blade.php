@@ -1,14 +1,13 @@
 @php
 
-
-    $search = isset($_GET['s']) ? $_GET['s'] : '';
     $url = isset($url) ? $url : '';
-
-    $yearSearched = isset($_GET['year']) ? $_GET['year'] : $currentYear;
-    $monthSearched = isset($_GET['month']) ? $_GET['month'] : $currentMonth;
 
     $currentYear = date('Y', strtotime('now'));
     $currentMonth = date('m', strtotime('now'));
+
+    $textSearched = isset($_GET['s']) ? $_GET['s'] : '';
+    $yearSearched = isset($_GET['year']) ? $_GET['year'] : $currentYear;
+    $monthSearched = isset($_GET['month']) ? $_GET['month'] : $currentMonth;
 
     $isYearInProgress = $currentYear === $yearSearched;
 
@@ -27,14 +26,14 @@
         12 => __('December'),
     ];
 
-
 @endphp
 
 <div class="container app-container mb-5">
+
     <div class="card">
         <div class="card-body">
-            <form action="{{ $url }}" action="get">
 
+            <form action="{{ $url }}" action="get">
                 <div class="row row-xs">
                     <div class="col-md-10">
                         <input 
@@ -42,7 +41,7 @@
                             placeholder="{{ __('Search...') }}" 
                             type="text" 
                             name="s" 
-                            value="{{ $search }}"/>
+                            value="{{ $textSearched }}"/>
                     </div>
                     <div class="col-md-2 text-md-right app-search-buttons">
                         <button class="btn btn-dark btn-icon mr-2" type="submit">
@@ -66,11 +65,12 @@
                         <select name="year" class="form-control">
                             @for($i = 0; $i < 60; $i++)
                                 @php
-                                    $selected = ($yearSearched == ($currentYear - $i)) ? ' selected ' : '';
+                                    $inputYear = $currentYear - $i;
+                                    $selected = ($yearSearched == $inputYear) ? ' selected ' : '';
                                 @endphp
 
-                                <option value="{{ $currentYear - $i }}" {{ $selected }}>
-                                    {{ $currentYear - $i }}
+                                <option value="{{ $inputYear }}" {{ $selected }}>
+                                    {{ $inputYear }}
                                 </option>
                             @endfor
                         </select>
@@ -83,29 +83,28 @@
                                 <li>
                                     @php
 
-                                        $colorClass = '';
-
-                                        if($isYearInProgress) {
-                                            if($monthNumber !== 1) {
-                                                $colorClass = ' app-month-inactive ';
-                                            }
-
-                                            if($monthNumber > 1 && $currentMonth >= $monthNumber) {
-                                                $colorClass = '';
-                                            }
-                                        }
-
-                                        $colorClass .= ($monthSearched == $monthNumber) ? ' app-month-selected ' : '';
-
                                         $urlParams = [
-                                            's' => $search,
+                                            's' => $textSearched,
                                             'year' => $yearSearched,
                                             'month' => $monthNumber,
                                         ];
                                         $monthUrl = $url . '?' . http_build_query($urlParams);
 
+                                        $monthColorClass = '';
+                                        if($isYearInProgress) {
+                                            if($monthNumber !== 1) {
+                                                $monthColorClass = ' app-month-inactive ';
+                                            }
+
+                                            if($monthNumber > 1 && $currentMonth >= $monthNumber) {
+                                                $monthColorClass = '';
+                                            }
+                                        }
+
+                                        $selecteMonthClass = ($monthSearched == $monthNumber) ? ' app-month-selected ' : '';
+
                                     @endphp
-                                    <a href="{{ $monthUrl }}" class="{{ $colorClass }}">
+                                    <a href="{{ $monthUrl }}" class="{{ $monthColorClass }} {{ $selecteMonthClass }}">
                                         {{ $month }}
                                     </a>
                                 </li>
@@ -116,6 +115,8 @@
                 </div>
 
             </form>
+
         </div>
     </div>
+
 </div>
