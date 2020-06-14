@@ -16,7 +16,7 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
+    @include('property-management-transactions.partials.search', [
         'url' => route('property-management-transactions', [$pm])
     ])
 
