@@ -104,6 +104,9 @@ class UsersRepository implements UsersRepositoryInterface
 
         $user->save();
 
+        // workgroups assignation
+        $user->workgroups()->sync($request->workgroups_ids);
+
         // roles assignation
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
             $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -123,6 +126,7 @@ class UsersRepository implements UsersRepositoryInterface
             $user->roles()->sync($roles_to_assign);
         }
 
+        // profile data
         if ($user->id) {
             if (!$user->profile) {
                 $user->profile = new Profile;
