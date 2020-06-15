@@ -22,6 +22,11 @@
 
                     @if(count($rows))
                         @foreach($rows as $row)
+
+                            @php
+                                // echo '<pre>', print_r($row), '</pre>';
+                            @endphp
+
                             <tr>
                                 <!-- id -->
                                 <th scope="row">

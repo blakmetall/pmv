@@ -12,6 +12,10 @@
         ],
         'actions' => [
             [
+                'url' => route('workgroups'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('workgroup-users.create', [$workgroup->id]),
                 'icon' => 'i-Add',
