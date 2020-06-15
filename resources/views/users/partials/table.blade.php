@@ -65,6 +65,12 @@
                                     @endforeach
                                 </td>
 
+                                <!-- created/updated cols -->
+                                @include('components.table.created-updated', [
+                                    'created_at' => $row->created_at,
+                                    'updated_at' => $row->updated_at,
+                                ])
+
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
@@ -75,10 +81,7 @@
                                     ])
                                 </td>
 
-                                @include('components.table.created-updated', [
-                                    'created_at' => $row->created_at,
-                                    'updated_at' => $row->updated_at,
-                                ])
+                                
                             </tr>
                         @endforeach
                     @endif

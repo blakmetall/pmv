@@ -16,10 +16,6 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
-        'url' => route('cities')
-    ])
-
 @endsection
 
 @section('main-content')
