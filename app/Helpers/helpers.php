@@ -199,3 +199,31 @@ if (!function_exists('getCurrentUrlFull')) {
         return Request::fullUrl().$union.$export.'=1';
     }
 }
+
+if (!function_exists('isProduction')) {
+    function isProduction()
+    {        
+        return 'production' == config('app.env');
+    }
+}
+
+if (!function_exists('isStaging')) {
+    function isStaging()
+    {        
+        return 'staging' == config('app.env');
+    }
+}
+
+if (!function_exists('isDevelopment')) {
+    function isDevelopment()
+    {        
+        return 'development' == config('app.env');
+    }
+}
+
+if (!function_exists('hasSSL')) {
+    function hasSSL()
+    {        
+        return env('APP_SSL') == true ? true : false;;
+    }
+}

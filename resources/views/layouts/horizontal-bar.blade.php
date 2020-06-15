@@ -8,7 +8,7 @@
             <div class=" topnav rtl-ps-none" id="" data-perfect-scrollbar data-suppress-scroll-x="true">
                 <ul class="menu float-left" id="app-menu">
 
-                    @if ($_current_role->isAllowed('calendar', 'heading-menu'))
+                    @if (!isProduction() && $_current_role->isAllowed('calendar', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -21,7 +21,7 @@
                         </li>
                     @endif
 
-                    @if ($_current_role->isAllowed('bookings', 'heading-menu'))
+                    @if (!isProduction() && $_current_role->isAllowed('bookings', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -158,24 +158,12 @@
                                         <i class="nav-icon mr-2 i-Green-House"></i>
                                         {{ __('Cleaning Services') }}
                                     </a>
-
-                                    <!-- dropdown menu -->
-                                    <input type="checkbox" id="dropdownMenuBooking">
-                                    <ul>
-                                        @if ($_current_role->isAllowed('cleaning-services', 'index'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('cleaning-services') }}">
-                                                    <span class="item-name">{{ __('All') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-                                    </ul>
                                 </div>
                             </div>
                         </li>
                     @endif
 
-                    @if ($_current_role->isAllowed('contractors', 'heading-menu'))
+                    @if (!isProduction() && $_current_role->isAllowed('contractors', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -224,16 +212,6 @@
                                         <i class="nav-icon mr-2 i-Professor"></i>
                                         {{ __('H.R.') }}
                                     </a>
-
-                                    <!-- dropdown menu -->
-                                    <input type="checkbox" id="dropdownMenuBooking">
-                                    <ul>
-                                        <li class="nav-item">
-                                            <a class="" href="{{ route('human-resources') }}">
-                                                <span class="item-name">{{ __('All') }}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </li>
