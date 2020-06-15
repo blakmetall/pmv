@@ -48,13 +48,14 @@
                                 <!-- address -->
                                 <td>{{ $row->address }}</td>
 
+                                <!-- contact_type -->
+                                <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
+
                                 <!-- is_active -->
                                 <td>
                                     {!! getStatusIcon($row->is_active) !!}
                                 </td>
 
-                                <!-- contact_type -->
-                                <td>{{ $row->contact_type }}</td>
                             </tr>
                         @endforeach
                     @endif

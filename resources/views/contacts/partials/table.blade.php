@@ -49,7 +49,7 @@
                                 <td>{{ $row->emergency_phone }}</td>
 
                                 <!-- contact_type -->
-                                <td>{{ $row->contact_type }}</td>
+                                <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
 
                                 <!-- is_active -->
                                 <td>

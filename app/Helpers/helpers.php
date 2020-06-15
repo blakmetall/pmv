@@ -241,3 +241,10 @@ if (!function_exists('hasSSL')) {
         return env('APP_SSL') == true ? true : false;;
     }
 }
+
+if (!function_exists('getContactTypeBySlug')) {
+    function getContactTypeBySlug($typeSlug = '')
+    {        
+        return \App\Helpers\ContactsHelper::getLabelBySlug($typeSlug);
+    }
+}
