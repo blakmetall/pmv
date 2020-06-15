@@ -57,6 +57,16 @@
             ]),
         ])
 
+        @if (!$row->id)
+            <!-- request_reset_password -->
+            @include('components.form.checkbox', [
+                'group' => 'user',
+                'label' => __('Request password reset'),
+                'name' => 'request_password_reset',
+                'value' => 1,
+            ])
+        @endif
+
     </div>
 </div>
 

@@ -206,6 +206,7 @@ return [
         'property_id' => __('Property'),
         'property_type_id' => __('Property Type'),
         'rental_commission' => __('Rental Commission'),
+        'roles_ids' => __('Roles'),
         'start_date' => __('Start Date'),
         'state' => __('State'),
         'state_id' => __('State'),

@@ -10,6 +10,7 @@ class UsersValidations extends Validation
     public function __construct()
     {
         $this->setDefaultValidations([
+            'roles_ids' => 'required',
             'profile.firstname' => 'required',
             'profile.lastname' => 'required',
             'profile.country' => 'required',

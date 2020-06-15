@@ -206,6 +206,7 @@ return [
         'profile.zip' => __('Zip'),
         'property_id' => __('Property'),
         'property_type_id' => __('Property Type'),
+        'roles_ids' => __('Roles'),
         'rental_commission' => __('Rental Commission'),
         'start_date' => __('Start Date'),
         'state' => __('State'),

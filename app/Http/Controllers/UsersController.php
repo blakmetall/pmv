@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
 use App\Models\{Profile, User};
+use Illuminate\Support\Facades\Password;
 
 class UsersController extends Controller
 {
@@ -44,6 +45,12 @@ class UsersController extends Controller
     {
         $user = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+
+        if($request->request_password_reset) {
+            $resetToken = Password::broker()->createToken($user);
+            $user->sendPasswordResetNotification($resetToken);
+        }
+
         return redirect(route('users.edit', [$user->id]));
     }
 
