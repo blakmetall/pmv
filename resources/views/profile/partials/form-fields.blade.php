@@ -70,7 +70,6 @@
             'group' => 'profile',
             'label' => __('Phone'),
             'name' => 'phone',
-            'required' => true,
             'value' => $row->phone
         ])
 
@@ -79,7 +78,6 @@
             'group' => 'profile',
             'label' => __('Mobile'),
             'name' => 'mobile',
-            'required' => true,
             'value' => $row->mobile
         ])
 
