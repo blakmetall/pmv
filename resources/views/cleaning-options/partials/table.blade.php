@@ -11,7 +11,6 @@
                 <thead>
 
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
@@ -22,10 +21,6 @@
                     @if(count($rows))
                         @foreach($rows as $row)
                             <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->cleaning_option->id }}
-                                </th>
 
                                 <!-- name -->
                                 <td>{{ $row->name }}</td>

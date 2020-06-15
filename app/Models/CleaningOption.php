@@ -25,7 +25,7 @@ class CleaningOption extends Model {
     }
     
     public function properties() {
-        return $this->belongsTo('App\Models\Property');
+        return $this->hasMany('App\Models\Property');
     }
 
 }
