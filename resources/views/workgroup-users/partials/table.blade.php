@@ -11,7 +11,6 @@
                 <thead>
 
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">{{ __('User') }}</th>
                         <th scope="col">{{ __('Workgroup') }}</th>
                     </tr>
@@ -21,16 +20,7 @@
 
                     @if(count($rows))
                         @foreach($rows as $row)
-
-                            @php
-                                // echo '<pre>', print_r($row), '</pre>';
-                            @endphp
-
                             <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->id }}
-                                </th>
 
                                 <!-- user -->
                                 <td>
