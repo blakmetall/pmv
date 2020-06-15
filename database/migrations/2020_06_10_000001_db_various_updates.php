@@ -23,6 +23,12 @@ class DbVariousUpdates extends Migration
                 $table->dropColumn('property_management_payment_id');
             });
         }
+
+        if (Schema::hasTable('profiles')) {
+            Schema::table('profiles', function($table) {
+                $table->tinyInteger('config_agent_is_enabled')->nullable()->default(0)->after('config_agent_commission');
+            });
+        }
     }
 
     public function down()
@@ -36,6 +42,12 @@ class DbVariousUpdates extends Migration
         if (Schema::hasTable('property_management')) {
             Schema::table('property_management', function($table) {
                 $table->dropColumn('average_month');
+            });
+        }
+
+        if (Schema::hasTable('profiles')) {
+            Schema::table('profiles', function($table) {
+                $table->dropColumn('config_agent_is_enabled');
             });
         }
     }

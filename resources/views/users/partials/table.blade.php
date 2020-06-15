@@ -12,10 +12,10 @@
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
-                        <th scope="col">{{ __('Roles') }}</th>
+                        <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col">{{ __('Roles') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
@@ -32,28 +32,14 @@
                                     {{ $row->id }}
                                 </th>
 
-                                <!-- name -->
-                                <td>
-                                    @if($row->profile)
-                                        {{ $row->profile->firstname }}
-                                        {{ $row->profile->lastname}}
-                                    @else
-                                        ...
-                                    @endif
-                                </td>
-                                
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
-                                <!-- roles -->
+                                <!-- name -->
                                 <td>
-                                    @foreach (RoleHelper::available($row->id) as $role)
-                                        <div>
-                                            <span class="badge badge-secondary p-1 mb-1">
-                                                {{ $role['name'] }}
-                                            </span>
-                                        </div>
-                                    @endforeach
+                                    @if($row->profile)
+                                        {{ $row->profile->full_name }}
+                                    @endif
                                 </td>
 
                                 <!-- is_enabled -->
@@ -67,6 +53,17 @@
                                         {{ $enabledLabel }}
                                     </span>
                                 </th>
+
+                                <!-- roles -->
+                                <td>
+                                    @foreach (RoleHelper::available($row->id) as $role)
+                                        <div>
+                                            <span class="badge badge-secondary p-1 mb-1">
+                                                {{ $role['name'] }}
+                                            </span>
+                                        </div>
+                                    @endforeach
+                                </td>
 
                                 <!-- actions -->
                                 <td>

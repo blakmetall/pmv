@@ -37,7 +37,8 @@ class UsersRepository implements UsersRepositoryInterface
                             ->orWhere('profiles.state', 'like', $search)
                             ->orWhere('profiles.city', 'like', $search)
                             ->orWhere('profiles.street', 'like', $search);
-                });
+                })
+                ->orWhere('id', $search);
         } else {
             $query = User::query();
         }
@@ -130,7 +131,10 @@ class UsersRepository implements UsersRepositoryInterface
                 $user->profile->config_language = 'es'; // default language on create
             }
 
-            $user->profile->fill($request->profile);
+            $checkboxesConfig = ['config_agent_is_enabled' => 0];
+            $profileData = array_merge($checkboxesConfig, $request->profile);
+
+            $user->profile->fill($profileData);
             $user->profile->save();
         }
 

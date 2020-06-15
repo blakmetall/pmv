@@ -165,16 +165,26 @@
             'value' => $row->profile->mobile
         ])
 
-        @if ( RoleHelper::hasValidRoleId( config('constants.roles.rentals-agent') ) )
-            <!-- commission -->
-            @include('components.form.input', [
-                'group' => 'user',
-                'label' => __('Agent Commission') . ' %',
-                'name' => 'config_agent_commission',
-                'parentName' => 'profile',
-                'value' => $row->profile->config_agent_commission
-            ])
-        @endif
+        <hr>
+
+        <!-- agent enabled status -->
+        @include('components.form.checkbox', [
+            'group' => 'user',
+            'label' => __('Agent Enabled'),
+            'name' => 'config_agent_is_enabled',
+            'parentName' => 'profile',
+            'value' => 1,
+            'default' => $row->profile->config_agent_is_enabled
+        ])
+
+        <!-- commission -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Agent Commission') . ' %',
+            'name' => 'config_agent_commission',
+            'parentName' => 'profile',
+            'value' => $row->profile->config_agent_commission
+        ])
 
     </div>
 </div>
