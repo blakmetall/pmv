@@ -29,6 +29,12 @@ class DbVariousUpdates extends Migration
                 $table->tinyInteger('config_agent_is_enabled')->nullable()->default(0)->after('config_agent_commission');
             });
         }
+
+        if (Schema::hasTable('bookings')) {
+            Schema::table('bookings', function($table) {
+                $table->tinyInteger('user_agent_id')->nullable()->after('reservation_request_id');
+            });
+        }
     }
 
     public function down()

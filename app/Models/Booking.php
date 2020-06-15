@@ -7,7 +7,7 @@ use App\Traits\AppModel;
 
 class Booking extends Model {
 
-    use App\Model;
+    use AppModel;
     
     protected $table = 'bookings';
     public $timestamps = true;

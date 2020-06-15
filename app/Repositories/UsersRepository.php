@@ -158,6 +158,9 @@ class UsersRepository implements UsersRepositoryInterface
         $user = $this->model->find($id);
         
         if ($user) {
+            $user->profile->delete();
+            $user->roles()->sync([]);
+            $user->workgroups()->sync([]);
             $user->delete();
         }
 
@@ -165,12 +168,29 @@ class UsersRepository implements UsersRepositoryInterface
     }
 
     public function canDelete($id) {
+        $user = $this->find($id);
+
+        if($user) {
+            if ($user->properties()->count()) {
+                return false;
+            }
+    
+            if ($user->bookings()->count()) {
+                return false;
+            }
+    
+            if ($user->agentBookings()->count()) {
+                return false;
+            }
+    
+            if ($user->reservationRequests()->count()) {
+                return false;
+            }
+        }
+
         return ($id > 1); // to not delete super admin 
     }
 
-    /**
-     * Return the blueprint of the model including translation elements
-     */
     public function blueprint()
     {
         return new User;
