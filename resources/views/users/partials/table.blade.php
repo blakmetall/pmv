@@ -17,6 +17,8 @@
                         <th scope="col">{{ __('Roles') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">{{ __('Created') }}</th>
+                        <th scope="col">{{ __('Updated') }}</th>
                     </tr>
 
                 </thead>
@@ -76,6 +78,10 @@
                                     ])
                                 </td>
 
+                                @include('components.table.created-updated', [
+                                    'created_at' => $row->created_at,
+                                    'updated_at' => $row->updated_at,
+                                ])
                             </tr>
                         @endforeach
                     @endif
