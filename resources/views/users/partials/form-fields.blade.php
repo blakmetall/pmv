@@ -186,6 +186,21 @@
             'value' => $row->profile->config_agent_commission
         ])
 
+        <hr>
+
+        <!-- workgroup selection -->
+        @include('components.form.checkbox-multiple', [
+            'group' => 'user',
+            'label' => __('Workgroups'),
+            'name' => 'workgroups_ids',
+            'values' => prepareCheckboxValuesFromRows($workgroups, [
+                'valueRef' => 'id'
+            ]),
+            'default' => prepareCheckboxDefaultValues($row->workgroups, [
+                'valueRef' => 'id',
+            ]),
+        ])
+
     </div>
 </div>
 

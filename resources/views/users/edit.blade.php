@@ -38,6 +38,7 @@
             @include('users.partials.form', [
                 'row' => $user,
                 'roles' => $roles,
+                'workgroups' => $workgroups,
             ])        
         </form>
     </div>
