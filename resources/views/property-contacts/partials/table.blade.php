@@ -8,15 +8,14 @@
                 <thead>
 
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('Phone') }}</th>
                         <th scope="col">{{ __('Mobile') }}</th>
                         <th scope="col">{{ __('Emergency Phone') }}</th>
                         <th scope="col">{{ __('Address') }}</th>
-                        <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
+                        <th scope="col">{{ __('Active') }}</th>
                     </tr>
 
                 </thead>
@@ -25,11 +24,6 @@
                     @if(count($rows))
                         @foreach($rows as $row)
                             <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->id }}
-                                </th>
-
                                 <!-- full_name -->
                                 <td>{{ $row->full_name }}</td>
 

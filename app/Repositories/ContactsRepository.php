@@ -106,6 +106,7 @@ class ContactsRepository implements ContactsRepositoryInterface
         $contact = $this->model->find($id);
 
         if ($contact && $this->canDelete($id)) {
+            $contact->properties()->sync([]);
             $contact->delete();
         }
 
