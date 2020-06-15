@@ -14,7 +14,6 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('User') }}</th>
                         <th scope="col">{{ __('Workgroup') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
                     </tr>
 
                 </thead>
@@ -49,16 +48,6 @@
                                             {{ $row->workgroup->city->name }}
                                         </a>
                                     @endif
-                                </td>
-
-                                <!-- actions -->
-                                <td>
-                                    @include('components.table.actions', [
-                                        'params' => [$row->workgroup->id, $row->id],
-                                        'showRoute' => 'workgroup-users.show',
-                                        'editRoute' => 'workgroup-users.edit',
-                                        'deleteRoute' => 'workgroup-users.destroy',
-                                    ])
                                 </td>
 
                             </tr>
