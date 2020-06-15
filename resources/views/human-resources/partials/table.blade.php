@@ -19,7 +19,7 @@
                         <th scope="col">{{ __('Birthday') }}</th>
                         <th scope="col">{{ __('Vacations') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

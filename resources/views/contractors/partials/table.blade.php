@@ -18,7 +18,7 @@
                         <th scope="col">{{ __('Mobile') }}</th>
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('City') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

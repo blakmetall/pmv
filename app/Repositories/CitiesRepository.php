@@ -95,7 +95,8 @@ class CitiesRepository implements CitiesRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 2); // to not delete seed items
+        $isNotDefaultItem = $id > 2;
+        return $isNotDefaultItem;
     }
 
     public function blueprint()

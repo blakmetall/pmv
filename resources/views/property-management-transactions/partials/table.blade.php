@@ -33,7 +33,7 @@
                         @endif
 
                         <th scope="col">{{ __('Audited By') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -171,7 +171,7 @@
                         @endif
 
                         <th scope="col">{{ __('Audited By') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

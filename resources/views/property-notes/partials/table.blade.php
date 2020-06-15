@@ -15,7 +15,7 @@
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Audited by') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

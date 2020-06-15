@@ -18,7 +18,7 @@
                         <th scope="col">{{ __('Emergency Phone') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

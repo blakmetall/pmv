@@ -27,7 +27,7 @@
                         <th scope="col">{{ __('Online') }}</th>
                         <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">&nbsp;</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
