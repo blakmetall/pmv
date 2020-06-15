@@ -89,10 +89,6 @@ Route::group(['middleware' => ['web']], function () {
                         Route::get('', 'PropertyContactsController@index')->name('property-contacts');
                         Route::get('create', 'PropertyContactsController@create')->name('property-contacts.create');
                         Route::post('store', 'PropertyContactsController@store')->name('property-contacts.store');
-                        Route::get('show/{contact}', 'PropertyContactsController@show')->name('property-contacts.show');
-                        Route::get('edit/{contact}', 'PropertyContactsController@edit')->name('property-contacts.edit');
-                        Route::post('update/{id}', 'PropertyContactsController@update')->name('property-contacts.update');
-                        Route::get('destroy/{id}', 'PropertyContactsController@destroy')->name('property-contacts.destroy');
                     });
 
                     // property: property rates

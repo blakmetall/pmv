@@ -165,9 +165,7 @@ class PropertiesController extends Controller
     }
 
     public function export(){
-
         $collection = Property::all();
         prepareExportationExcel($collection);
-
     }
 }

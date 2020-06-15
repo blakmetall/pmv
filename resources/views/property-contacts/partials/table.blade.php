@@ -3,9 +3,6 @@
     <div class="card-header">{{ $label }}</div>
     <div class="card-body pt-5">
 
-        <!-- pagination is loeaded here -->
-        @include('partials.pagination', ['rows' => $rows])
-
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -65,9 +62,6 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- pagination is loeaded here -->
-        @include('partials.pagination', ['rows' => $rows])
 
     </div>
 </div>

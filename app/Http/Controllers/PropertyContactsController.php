@@ -2,33 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ PropertyContactsRepositoryInterface };
+use App\Repositories\{ ContactsRepositoryInterface };
 use Illuminate\Http\Request;
 use App\Models\Property;
 
 class PropertyContactsController extends Controller
 {
-    private $repository;
+    private $contactsRepository;
 
-    public function __construct(PropertyContactsRepositoryInterface $repository)
+    public function __construct(ContactsRepositoryInterface $contactsRepository)
     {
-        $this->repository = $repository;
+        $this->contactsRepository = $contactsRepository;
     }
 
     public function index(Request $request, Property $property)
     {
-        $search = trim($request->s);
-        $contacts = $this->repository->all($search, [], $property);
+        $contacts = 
+            $property
+                ->contacts()
+                ->orderBy('firstname', 'asc')
+                ->orderBy('lastname', 'asc')
+                ->get();
 
         return view('property-contacts.index')
             ->with('contacts', $contacts)
             ->with('property', $property)
-            ->with('search', $search);
+            ->with('search', '');
     }
 
     public function create(Property $property)
     {
-        $contacts = $this->repository->blueprint();
+        $config = ['activeOnly' => true];
+        $contacts = $this->contactsRepository->all('', $config);
+
         return view('property-contacts.create')
             ->with('contacts', $contacts)
             ->with('property', $property);
@@ -36,8 +42,8 @@ class PropertyContactsController extends Controller
 
     public function store(Request $request, Property $property)
     {
-        $this->repository->create($request, $property);
-        $request->session()->flash('success', __('Record created successfully'));
+        $property->contacts()->sync($request->contacts_ids);
+        $request->session()->flash('success', __('Contacts Updated'));
         return redirect(route('property-contacts', $property->id));
     }
 }

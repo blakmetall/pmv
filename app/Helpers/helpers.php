@@ -167,7 +167,21 @@ if (!function_exists('getCurrentDateTime')) {
 if (!function_exists('preparePhoneContacts')) {
     function preparePhoneContacts($phones)
     {
-        return implode(' <b>/</b> ', $phones);
+        $phonesMap = [];
+
+        if(is_array($phones)) {
+            foreach($phones as $phone) {
+                if($phone != '') {
+                    $phonesMap[] = $phone;
+                }
+            }
+        }
+
+        if(count($phonesMap)) {
+            return implode('/', $phonesMap);
+        }
+
+        return '';
     }
 }
 
