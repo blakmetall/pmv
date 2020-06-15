@@ -1,3 +1,4 @@
+import { initConfirmClick } from "./scripts/initConfirmClick.js";
 import { getViewport } from "./scripts/getViewport.js";
 import { handleMenuFit } from "./scripts/handleMenuFit.js";
 import { initCalendar } from "./scripts/initCalendar.js";
@@ -18,7 +19,9 @@ $(function() {
     function init() {
         $(window).resize(resize);
         handleMenuFit();
-      
+        
+        initConfirmClick();
+
         initCalendar();
 
         initDatepickerComponents();

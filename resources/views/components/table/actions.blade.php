@@ -14,6 +14,10 @@
     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
 </a>
 
-<a href="{{ route($deleteRoute, $params) }}" class="text-danger mr-2">
+<a 
+    href="{{ route($deleteRoute, $params) }}" 
+    class="text-danger mr-2 app-confirm"
+    data-label="{{ __('Confirm Deletion') }}"
+    >
     <i class="nav-icon i-Close-Window font-weight-bold"></i>
 </a>
