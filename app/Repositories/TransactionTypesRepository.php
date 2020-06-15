@@ -129,7 +129,18 @@ class TransactionTypesRepository implements TransactionTypesRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 84); // to not delete seed items
+        $isNotDefaultItem = $id > 84;
+        
+        $transaction_type = $this->find($id);
+        if ($transaction_type) {
+
+            // validate empty usage in property-management-transactions
+            if($transaction_type->pmTransactions()->count()) {
+                return false;
+            }
+        }
+
+        return $isNotDefaultItem;
     }
 
     public function blueprint()
