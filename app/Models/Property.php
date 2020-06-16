@@ -104,4 +104,12 @@ class Property extends Model {
     public function reservationRequests() {
         return $this->hasMany('App\Models\ReservationRequest');
     }
+
+    public function hasDefaultImage() {
+        return $this->images()->orderBy('order', 'asc')->count();
+    }
+
+    public function getDefaultImage() {
+        return $this->images()->orderBy('order', 'asc')->first();
+    }
 }

@@ -12,6 +12,7 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Bedrooms') }}</th>
                         <th scope="col">{{ __('Baths') }}</th>
@@ -33,6 +34,19 @@
                                     {{ $row->property->id }}
                                 </th>
 
+                                <!-- thumbnail -->
+                                <th>
+                                    @if ($row->property->hasDefaultImage())
+                                        @php
+                                            $propertyImg = $row->property->getDefaultImage();
+                                        @endphp
+                                        <a href="{{ asset(getUrlPath($propertyImg->file_url)) }}" target="_blank">
+                                            <img src="{{ asset(getUrlPath($propertyImg->file_url, 'small-ls')) }}" alt="" width="100">
+                                        </a>
+                                    @endif
+                                </th>
+
+                                <!-- property name -->
                                 <td>
                                     {{ $row->name }}
                                 </td>
