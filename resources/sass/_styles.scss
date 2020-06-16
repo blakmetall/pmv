@@ -295,6 +295,7 @@
 
 .app-icon-link {
     margin-right: 7px;
+    font-size: 15px;
 }
 
 .app-file-wrapper {
@@ -373,6 +374,26 @@
         }
         .text-white a {
             color: #fff;
+        }
+    }
+}
+
+.app-property-info {
+    .app-property-info-title {
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .app-property-info-details {
+        > div {
+            display: inline-block;
+            padding: 0 10px 5px 0;
+            margin-bottom: 5px;
+        }
+    }
+    .app-property-info-icons{
+        a {
+            font-size: 18px;
         }
     }
 }
