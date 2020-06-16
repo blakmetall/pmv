@@ -66,6 +66,7 @@
             'name' => 'post_date',
             'value' => $row->post_date,
             'maxDaysLimitFromNow' => 360,
+            'required' => true,
         ])
 
         <!-- period_start_date -->

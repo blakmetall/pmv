@@ -44,6 +44,11 @@
                     </thead>
                     <tbody>
 
+                        @php 
+                            $creditCount = 0;
+                            $chargeCount = 0;
+                        @endphp
+
                         @if(count($rows))
                             @foreach($rows as $row)
 
@@ -52,8 +57,10 @@
 
                                     $increase = !! ($row->operation_type === config('constants.operation_types.credit'));
                                     if($increase) {
+                                        $creditCount += $row->amount;
                                         $balanceCount += $row->amount;
                                     }else {
+                                        $chargeCount += $row->amount;
                                         $balanceCount -= $row->amount;
                                     }
                                 @endphp
@@ -114,10 +121,17 @@
                                         @endif
                                     </td>
 
+                                    <!-- balance -->
                                     @if($shouldShowBalanceColumn)
-                                        <!-- balance -->
                                         <td>
-                                            {{ priceFormat($balanceCount) }}
+                                            @php 
+                                                $isUnderAverage = $row->propertyManagement->average_month > $balanceCount; 
+                                                $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                            @endphp
+
+                                            <span class="{{ $underAverageClass }}">
+                                                {{ priceFormat($balanceCount) }}
+                                            </span>
                                         </td>
                                     @endif
 
@@ -156,6 +170,19 @@
                                 </tr>
                             @endforeach
                         @endif
+
+                        <!-- table totals -->
+                        <tr>
+                            <td colspan="5">&nbsp;</td>
+                            <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                            <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
+
+                            @if($shouldShowBalanceColumn)
+                                <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                            @endif
+
+                            <td colspan="3">&nbsp;</td>
+                        </tr>
 
                     </tbody>
                 </table>
@@ -198,7 +225,13 @@
                 </thead>
                 <tbody>
 
+                    @php 
+                        $creditCount = 0;
+                        $chargeCount = 0;
+                    @endphp
+
                     @if(count($rows))
+
                         @foreach($rows as $row)
 
                             @php
@@ -207,8 +240,10 @@
                                 $increase = !! ($row->operation_type === config('constants.operation_types.credit'));
                                 if($increase) {
                                     $balanceCount += $row->amount;
+                                    $creditCount += $row->amount;
                                 }else {
                                     $balanceCount -= $row->amount;
+                                    $chargeCount += $row->amount;
                                 }
                             @endphp
 
@@ -271,7 +306,14 @@
                                 <!-- balance -->
                                 @if($shouldShowBalanceColumn)
                                     <td>
-                                        {{ priceFormat($balanceCount) }}
+                                        @php 
+                                            $isUnderAverage = $row->propertyManagement->average_month > $balanceCount; 
+                                            $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                        @endphp
+
+                                        <span class="{{ $underAverageClass }}">
+                                            {{ priceFormat($balanceCount) }}
+                                        </span>
                                     </td>
                                 @endif
 
@@ -308,7 +350,21 @@
 
                             </tr>
                         @endforeach
+
                     @endif
+
+                    <!-- table totals -->
+                    <tr>
+                        <td colspan="5">&nbsp;</td>
+                        <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                        <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
+
+                        @if($shouldShowBalanceColumn)
+                            <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                        @endif
+
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
 
                 </tbody>
             </table>
