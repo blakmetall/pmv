@@ -3,6 +3,8 @@
     $showRoute = isset($showRoute) ? $showRoute : '';
     $editRoute = isset($editRoute) ? $editRoute : '';
     $deleteRoute = isset($deleteRoute) ? $deleteRoute : '';
+
+    $skipDelete = isset($skipDelete) ? (bool) $skipDelete : false;
 @endphp
 
 <div class="d-block text-right">
@@ -14,11 +16,13 @@
         <i class="nav-icon i-Pen-2 font-weight-bold"></i>
     </a>
 
-    <a 
-        href="{{ route($deleteRoute, $params) }}" 
-        class="text-danger mr-2 app-confirm"
-        data-label="{{ __('Confirm Deletion') }}"
-        >
-        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-    </a>
+    @if (!$skipDelete)
+        <a 
+            href="{{ route($deleteRoute, $params) }}" 
+            class="text-danger mr-2 app-confirm"
+            data-label="{{ __('Confirm Deletion') }}"
+            >
+            <i class="nav-icon i-Close-Window font-weight-bold"></i>
+        </a>
+    @endif
 </div>

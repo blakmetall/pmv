@@ -155,6 +155,8 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         
         if ($transaction && $this->canDelete($id)) {
             $transaction->delete();
+            ImagesHelper::deleteFile($transaction->file_path);
+            ImagesHelper::deleteThumbnails($transaction->file_path);
         }
 
         return $transaction;
@@ -162,6 +164,15 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
     public function canDelete($id)
     {
+        $transaction = $this->model->find($id);
+
+        if ($transaction) {
+            $hasBeenAudited = $transaction->audit_user_id;
+            if ($hasBeenAudited) {
+                return false;
+            }
+        }
+
         return true;
     }
 

@@ -149,6 +149,7 @@
                                             'showRoute' => 'property-management-transactions.show',
                                             'editRoute' => 'property-management-transactions.edit',
                                             'deleteRoute' => 'property-management-transactions.destroy',
+                                            'skipDelete' => true,
                                         ])
                                     </td>
 
