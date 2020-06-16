@@ -62,7 +62,7 @@ class Property extends Model {
     }
 
     public function type() {
-        return $this->hasOne('App\Models\PropertyType', 'id');
+        return $this->belongsTo('App\Models\PropertyType', 'property_type_id');
     }
 
     public function city() {

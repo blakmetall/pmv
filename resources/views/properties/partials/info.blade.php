@@ -41,9 +41,12 @@
                                 @endif
                             </div>
                             <div class="app-property-info-details">
-                                <div>
-                                    <b>{{ __('Type')}}: </b> {{ $property->type->getLabel() }}
-                                </div>
+                                @if($property->type)
+                                    <div>
+                                        <b>{{ __('Type')}}: </b> {{ $property->type->getLabel() }}
+                                    </div>
+                                @endif
+
                                 @if($property->sleeps)
                                     <div>
                                         <b>{{ __('Sleeps')}}: </b> {{ $property->sleeps }}
