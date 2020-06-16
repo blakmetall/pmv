@@ -355,6 +355,7 @@
 
         .card-img-overlay {
             padding: 10px 10px 12px 15px;
+            overflow: hidden;
 
             h5 { margin-bottom: 0; }
         }
@@ -362,6 +363,7 @@
         .app-card-text-overlay {
             background: transparent;
             padding: 10px 10px 12px 15px;
+            overflow: hidden;
 
             h5 { margin-bottom: 0; }
         }

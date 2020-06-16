@@ -12,14 +12,21 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Start Date') }}</th>
                         <th scope="col">{{ __('End Date') }}</th>
                         <th scope="col">{{ __('Fee') }}</th>
-                        <th scope="col">{{ __('Avg. Month') }}</th>
+
+                        @if(!isRole('owner'))
+                            <th scope="col">{{ __('Avg. Month') }}</th>
+                        @endif
+
                         <th scope="col">{{ __('Finished') }}</th>
-                        <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">&nbsp;</th>
-                        <th scope="col">&nbsp;</th>
+
+                        @if(!isRole('owner'))
+                            <th scope="col">&nbsp;</th>
+                        @endif
                     </tr>
 
                 </thead>
@@ -33,6 +40,15 @@
                                     {{ $row->id }}
                                 </th>
 
+                                <!-- property -->
+                                <td>
+                                    @if ($row->property->hasTranslation())
+                                        <a href="{{ route('properties.show', [$row->property->id]) }}">
+                                            {{ $row->property->translate()->name }}
+                                        </a>
+                                    @endif
+                                </td>
+
                                 <!-- start_date -->
                                 <td>{{ $row->start_date }}</td>
 
@@ -43,19 +59,12 @@
                                 <td>{{ priceFormat($row->management_fee) }}</td>
 
                                 <!-- average_month -->
-                                <td>{{ priceFormat($row->average_month) }}</td>
+                                @if(!isRole('owner'))
+                                    <td>{{ priceFormat($row->average_month) }}</td>
+                                @endif
 
                                 <!-- is_finished -->
                                 <td>{!! getStatusIcon($row->is_finished) !!}</td>
-
-                                <!-- property -->
-                                <td>
-                                    @if ($row->property->hasTranslation())
-                                        <a href="{{ route('properties.show', [$row->property->id]) }}">
-                                            {{ $row->property->translate()->name }}
-                                        </a>
-                                    @endif
-                                </td>
 
                                 <td>
                                     <a href="{{ route('property-management-transactions', $row->id) }}" 
@@ -66,14 +75,16 @@
                                 </td>
 
                                 <!-- actions -->
-                                <td>
-                                    @include('components.table.actions', [
-                                        'params' => [$row->property->id, $row->id],
-                                        'showRoute' => 'property-management.show',
-                                        'editRoute' => 'property-management.edit',
-                                        'deleteRoute' => 'property-management.destroy',
-                                    ])
-                                </td>
+                                @if(!isRole('owner'))
+                                    <td>
+                                        @include('components.table.actions', [
+                                            'params' => [$row->property->id, $row->id],
+                                            'showRoute' => 'property-management.show',
+                                            'editRoute' => 'property-management.edit',
+                                            'deleteRoute' => 'property-management.destroy',
+                                        ])
+                                    </td>
+                                @endif
 
                             </tr>
                         @endforeach
