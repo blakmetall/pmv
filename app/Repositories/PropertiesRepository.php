@@ -149,16 +149,21 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $property = $this->model->find($id);
         if ($property && $this->canDelete($id)) {
 
-            if($property->images()->count()){
-                foreach ($property->images as $image){
-                    $image->delete();
-                    deleteFile($image->file_name);
-                }
-            }
-
             $property->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $property->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
+            if($property->images()->count()){
+                foreach ($property->images as $image){
+                    $image->delete();
+                    ImagesHelper::deleteFile($image->file_path);
+                    ImagesHelper::deleteThumbnails($image->file_path);
+                }
+            }
+
+            $property->rates()->delete();
+            $property->notes()->delete();
+            $property->amenities()->sync([]);
+            $property->contacts()->sync([]);
 
             $property->delete();
         }
@@ -168,6 +173,26 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
     public function canDelete($id)
     {
+        $property = $this->model->find($id);
+
+        if($property) {
+            if ($property->management()->count()) {
+                return false;
+            }
+
+            if ($property->bookings()->count()) {
+                return false;
+            }
+
+            if ($property->reservationRequests()->count()) {
+                return false;
+            }
+
+            if ($property->cleaningServices()->count()) {
+                return false;
+            }
+        }
+
         return true;
     }
 

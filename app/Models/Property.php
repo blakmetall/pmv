@@ -96,4 +96,12 @@ class Property extends Model {
     public function contacts() {
         return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
     }
+
+    public function bookings() {
+        return $this->hasMany('App\Models\Booking');
+    }
+
+    public function reservationRequests() {
+        return $this->hasMany('App\Models\ReservationRequest');
+    }
 }
