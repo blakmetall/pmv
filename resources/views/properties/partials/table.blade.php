@@ -2,18 +2,10 @@
 <div class="card">
     <div class="card-header">{{ $label }} </div>
     <div class="card-body pt-5">
-
-        <!-- Export Link -->
-        {{-- @include('partials.buttons.export-button',[
-            'label' =>false,
-            'url' => getCurrentUrlFull('shouldGenerateExcel'),
-            'icon' => 'i-File-Excel',
-        ]) --}}
-        
-        
         
         <!-- pagination is loeaded here -->
         @include('partials.pagination', ['rows' => $rows])
+
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -38,7 +30,7 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    {{ $row->id }}
+                                    {{ $row->property->id }}
                                 </th>
 
                                 <td>
@@ -89,7 +81,7 @@
                                     </a>
 
                                     <!-- property rates -->
-                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                    @if( !isRole('owner') )
                                         <a 
                                             href="{{ route('property-rates', $row->property->id) }}" 
                                             class="text-primary app-icon-link"
@@ -100,7 +92,7 @@
                                     @endif
 
                                     <!-- property images -->
-                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                    @if( !isRole('owner') )
                                         <a 
                                             href="{{ route('property-images', $row->property->id) }}"
                                             class="text-primary app-icon-link"
@@ -111,7 +103,7 @@
                                     @endif
 
                                     <!-- bookings from specific to property -->
-                                    @if( ! (isRole('owner') || isRole('regular')) )
+                                    @if( !isRole('owner') )
                                         <a 
                                             href="{{ route('bookings.by-property', $row->property->id) }}" 
                                             class="text-primary app-icon-link"
@@ -137,14 +129,14 @@
 
                                 <!-- actions -->
                                 <td>
-                                    @if( ! (isRole('owner') || isRole('regular')) )
-                                        @include('components.table.actions', [
-                                            'params' => [$row->property->id],
-                                            'showRoute' => 'properties.show',
-                                            'editRoute' => 'properties.edit',
-                                            'deleteRoute' => 'properties.destroy',
-                                        ])
-                                    @endif
+                                    @include('components.table.actions', [
+                                        'params' => [$row->property->id],
+                                        'showRoute' => 'properties.show',
+                                        'editRoute' => 'properties.edit',
+                                        'deleteRoute' => 'properties.destroy',
+                                        'skipEdit' => isRole('owner'),
+                                        'skipDelete' => isRole('owner')
+                                    ])
                                 </td>
 
                             </tr>

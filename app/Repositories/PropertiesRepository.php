@@ -8,7 +8,7 @@ use App\Helpers\LanguageHelper;
 use App\Models\{ Property, PropertyTranslation };
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Validations\PropertiesValidations;
-use App\Helpers\WorkgroupHelper;
+use App\Helpers\{ ImagesHelper, WorkgroupHelper };
 
 class PropertiesRepository implements PropertiesRepositoryInterface
 {
@@ -30,7 +30,17 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $lang = LanguageHelper::current();
         
         if ($search) {
-            $query = PropertyTranslation::where('description', 'like', "%".$search."%");
+            $query = PropertyTranslation::query();
+            $query->where(function($query) use ($lang, $search) {
+                $query->where(function($query) use ($lang, $search) {
+                    $query->where('name', 'like', "%".$search."%");
+                    $query->orWhere('description', 'like', "%".$search."%");
+                    $query->where('language_id', $lang->id);
+                });
+                $query->orWhereHas('property', function($query) use ($search) {
+                    $query->where('id', $search);
+                });
+            });
         } else {
             $query = PropertyTranslation::query();
         }
