@@ -36,7 +36,10 @@
                                 <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
                             @endif
 
-                            <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
+                            @if(!isRole('owner'))
+                                <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
+                            @endif
+
                             <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
                             <th scope="col" class="transaction-col-actions">&nbsp;</th>
                         </tr>
@@ -135,14 +138,16 @@
                                         </td>
                                     @endif
 
-                                    <!-- audit_user_id -->
-                                    <td>
-                                        @if ($row->auditedBy)
-                                            <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
-                                                {{ $row->auditedBy->profile->full_name }}
-                                            </a>
-                                        @endif
-                                    </td>
+                                    @if(!isRole('owner'))
+                                        <!-- audit_user_id -->
+                                        <td>
+                                            @if ($row->auditedBy)
+                                                <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
+                                                    {{ $row->auditedBy->profile->full_name }}
+                                                </a>
+                                            @endif
+                                        </td>
+                                    @endif
 
                                     <!-- file -->
                                     <td>
@@ -163,6 +168,7 @@
                                             'showRoute' => 'property-management-transactions.show',
                                             'editRoute' => 'property-management-transactions.edit',
                                             'deleteRoute' => 'property-management-transactions.destroy',
+                                            'skipEdit' => isRole('owner'),
                                             'skipDelete' => true,
                                         ])
                                     </td>
@@ -345,6 +351,8 @@
                                         'showRoute' => 'property-management-transactions.show',
                                         'editRoute' => 'property-management-transactions.edit',
                                         'deleteRoute' => 'property-management-transactions.destroy',
+                                        'skipEdit' => isRole('owner'),
+                                        'skipDelete' => isRole('owner'),
                                     ])
                                 </td>
 
