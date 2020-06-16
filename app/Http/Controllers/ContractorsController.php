@@ -25,17 +25,20 @@ class ContractorsController extends Controller
 
         $config = ['filterByWorkgroup' => true];
         $contractors = $this->repository->all($search, $config);
-
+        
         return view('contractors.index')
             ->with('contractors', $contractors)
             ->with('search', $search);
     }
-
+    
     public function create()
     {
         $contractor = $this->repository->blueprint();
-
-        $citiesConfig = ['paginate' => false];
+        
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('contractors.create')
@@ -66,7 +69,10 @@ class ContractorsController extends Controller
     {
         $contractor = $this->repository->find($contractor);
         
-        $citiesConfig = ['paginate' => false];
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('contractors.edit')

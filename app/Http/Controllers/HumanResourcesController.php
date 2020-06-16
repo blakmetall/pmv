@@ -43,7 +43,10 @@ class HumanResourcesController extends Controller
     {
         $human_resource = $this->repository->blueprint();
 
-        $citiesConfig = ['paginate' => false];
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('human-resources.create')
@@ -74,7 +77,10 @@ class HumanResourcesController extends Controller
     {
         $human_resource = $this->repository->find($human_resource);
 
-        $citiesConfig = ['paginate' => false];
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
         $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('human-resources.edit')
