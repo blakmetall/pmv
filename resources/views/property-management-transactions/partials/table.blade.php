@@ -201,182 +201,186 @@
 
 @endif
 
-<!-- pending transactions -->
-<div class="card">
-    <div class="card-header">{{ __('Pending Transactions') }}</div>
-    <div class="card-body pt-5">
+@if(!isRole('owner'))
 
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
+    <!-- pending transactions -->
+    <div class="card">
+        <div class="card-header">{{ __('Pending Transactions') }}</div>
+        <div class="card-body pt-5">
 
-                    <tr>
-                        <th scope="col" class="transaction-col-id">#</th>
-                        <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
-                        <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
-                        <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
-                        <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
-                        <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
-                        <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
 
-                        @if($shouldShowBalanceColumn)
-                            <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
-                        @endif
+                        <tr>
+                            <th scope="col" class="transaction-col-id">#</th>
+                            <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
+                            <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
+                            <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
+                            <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
+                            <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
+                            <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
 
-                        <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
-                        <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
-                        <th scope="col" class="transaction-col-actions">&nbsp;</th>
-                    </tr>
+                            @if($shouldShowBalanceColumn)
+                                <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
+                            @endif
 
-                </thead>
-                <tbody>
+                            <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
+                            <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
+                            <th scope="col" class="transaction-col-actions">&nbsp;</th>
+                        </tr>
 
-                    @php 
-                        $creditCount = 0;
-                        $chargeCount = 0;
-                    @endphp
+                    </thead>
+                    <tbody>
 
-                    @if(count($rows))
+                        @php 
+                            $creditCount = 0;
+                            $chargeCount = 0;
+                        @endphp
 
-                        @foreach($rows as $row)
+                        @if(count($rows))
 
-                            @php
-                                if ($row->auditedBy) { continue; }
+                            @foreach($rows as $row)
 
-                                $increase = !! ($row->operation_type === config('constants.operation_types.credit'));
-                                if($increase) {
-                                    $balanceCount += $row->amount;
-                                    $creditCount += $row->amount;
-                                }else {
-                                    $balanceCount -= $row->amount;
-                                    $chargeCount += $row->amount;
-                                }
-                            @endphp
+                                @php
+                                    if ($row->auditedBy) { continue; }
 
-                            <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->id }}
-                                </th>
+                                    $increase = !! ($row->operation_type === config('constants.operation_types.credit'));
+                                    if($increase) {
+                                        $balanceCount += $row->amount;
+                                        $creditCount += $row->amount;
+                                    }else {
+                                        $balanceCount -= $row->amount;
+                                        $chargeCount += $row->amount;
+                                    }
+                                @endphp
 
-                                <!-- post_date -->
-                                <td>{{ $row->post_date }}</td>
+                                <tr>
+                                    <!-- id -->
+                                    <th scope="row">
+                                        {{ $row->id }}
+                                    </th>
 
-                                <!-- property -->
-                                <td>
-                                    @if ($row->propertyManagement->property->hasTranslation())
-                                        <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
-                                            {{ $row->propertyManagement->property->translate()->name }}
-                                        </a>
-                                    @endif
-                                </td>
+                                    <!-- post_date -->
+                                    <td>{{ $row->post_date }}</td>
 
-                                <!-- transaction_type_id -->
-                                <td>
-                                    @if ($row->type)
-                                        {{ $row->type->translate()->name }}
-                                    @endif
-
-                                    <p class="app-pm-description">{{ $row->description }}</p>
-                                </td>
-
-                                <!-- period -->
-                                <td>
-                                    {{ $row->period_start_date }} 
-                                    
-                                    @if($row->period_end_date)
-                                        -
-                                    @endif
-                                    
-                                    {{ $row->period_end_date }}
-                                </td>
-
-                                <!-- credit -->
-                                <td>
-                                     @if($row->operation_type === config('constants.operation_types.credit'))
-                                        {{ priceFormat($row->amount) }}
-                                    @else
-                                        --
-                                    @endif
-                                </td>
-
-                                <!-- charges -->
-                                <td>
-                                    @if($row->operation_type === config('constants.operation_types.charge'))
-                                        {{ priceFormat($row->amount) }}
-                                    @else
-                                        --
-                                    @endif
-                                </td>
-
-                                <!-- balance -->
-                                @if($shouldShowBalanceColumn)
+                                    <!-- property -->
                                     <td>
-                                        @php 
-                                            $isUnderAverage = $row->propertyManagement->average_month > $balanceCount; 
-                                            $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
-                                        @endphp
-
-                                        <span class="{{ $underAverageClass }}">
-                                            {{ priceFormat($balanceCount) }}
-                                        </span>
+                                        @if ($row->propertyManagement->property->hasTranslation())
+                                            <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
+                                                {{ $row->propertyManagement->property->translate()->name }}
+                                            </a>
+                                        @endif
                                     </td>
-                                @endif
 
-                                <!-- audit_user_id -->
-                                <td>
-                                    @if ($row->auditedBy)
-                                        <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
-                                            {{ $row->auditedBy->profile->full_name }}
-                                        </a>
+                                    <!-- transaction_type_id -->
+                                    <td>
+                                        @if ($row->type)
+                                            {{ $row->type->translate()->name }}
+                                        @endif
+
+                                        <p class="app-pm-description">{{ $row->description }}</p>
+                                    </td>
+
+                                    <!-- period -->
+                                    <td>
+                                        {{ $row->period_start_date }} 
+                                        
+                                        @if($row->period_end_date)
+                                            -
+                                        @endif
+                                        
+                                        {{ $row->period_end_date }}
+                                    </td>
+
+                                    <!-- credit -->
+                                    <td>
+                                        @if($row->operation_type === config('constants.operation_types.credit'))
+                                            {{ priceFormat($row->amount) }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+
+                                    <!-- charges -->
+                                    <td>
+                                        @if($row->operation_type === config('constants.operation_types.charge'))
+                                            {{ priceFormat($row->amount) }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+
+                                    <!-- balance -->
+                                    @if($shouldShowBalanceColumn)
+                                        <td>
+                                            @php 
+                                                $isUnderAverage = $row->propertyManagement->average_month > $balanceCount; 
+                                                $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                            @endphp
+
+                                            <span class="{{ $underAverageClass }}">
+                                                {{ priceFormat($balanceCount) }}
+                                            </span>
+                                        </td>
                                     @endif
-                                </td>
 
-                                <!-- file -->
-                                <td>
-                                    <div class="app-table-file-limit-width">
-                                        @include('components.file-card', [
-                                            'imgSize' => 'small-ls',
-                                            'url' => $row->file_url,
-                                            'extension' => $row->file_extension,
-                                            'name' => $row->file_original_name,
+                                    <!-- audit_user_id -->
+                                    <td>
+                                        @if ($row->auditedBy)
+                                            <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
+                                                {{ $row->auditedBy->profile->full_name }}
+                                            </a>
+                                        @endif
+                                    </td>
+
+                                    <!-- file -->
+                                    <td>
+                                        <div class="app-table-file-limit-width">
+                                            @include('components.file-card', [
+                                                'imgSize' => 'small-ls',
+                                                'url' => $row->file_url,
+                                                'extension' => $row->file_extension,
+                                                'name' => $row->file_original_name,
+                                            ])
+                                        </div>
+                                    </td>
+
+                                    <!-- actions -->
+                                    <td>
+                                        @include('components.table.actions', [
+                                            'params' => [$row->propertyManagement->id, $row->id],
+                                            'showRoute' => 'property-management-transactions.show',
+                                            'editRoute' => 'property-management-transactions.edit',
+                                            'deleteRoute' => 'property-management-transactions.destroy',
+                                            'skipEdit' => isRole('owner'),
+                                            'skipDelete' => isRole('owner'),
                                         ])
-                                    </div>
-                                </td>
+                                    </td>
 
-                                <!-- actions -->
-                                <td>
-                                    @include('components.table.actions', [
-                                        'params' => [$row->propertyManagement->id, $row->id],
-                                        'showRoute' => 'property-management-transactions.show',
-                                        'editRoute' => 'property-management-transactions.edit',
-                                        'deleteRoute' => 'property-management-transactions.destroy',
-                                        'skipEdit' => isRole('owner'),
-                                        'skipDelete' => isRole('owner'),
-                                    ])
-                                </td>
+                                </tr>
+                            @endforeach
 
-                            </tr>
-                        @endforeach
-
-                    @endif
-
-                    <!-- table totals -->
-                    <tr>
-                        <td colspan="5">&nbsp;</td>
-                        <th class="text-primary">{{ priceFormat($creditCount) }}</th>
-                        <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
-
-                        @if($shouldShowBalanceColumn)
-                            <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
                         @endif
 
-                        <td colspan="3">&nbsp;</td>
-                    </tr>
+                        <!-- table totals -->
+                        <tr>
+                            <td colspan="5">&nbsp;</td>
+                            <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                            <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
-                </tbody>
-            </table>
+                            @if($shouldShowBalanceColumn)
+                                <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                            @endif
+
+                            <td colspan="3">&nbsp;</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-
     </div>
-</div>
+
+@endif

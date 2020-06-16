@@ -46,10 +46,7 @@
                                 <td>
                                     @if ($row->cleaningStaff()->count())
                                         @foreach ($row->cleaningStaff as $staff)
-                                            <a href="{{ route('human-resources.show', $staff->id) }}">
-                                                {{ $staff->full_name }} 
-                                            </a>
-                                            <br>
+                                            {{ $staff->full_name }} <br>
                                         @endforeach
                                     @endif
                                 </td>
@@ -85,6 +82,8 @@
                                         'showRoute' => 'cleaning-services.show',
                                         'editRoute' => 'cleaning-services.edit',
                                         'deleteRoute' => 'cleaning-services.destroy',
+                                        'skipEdit' => isRole('owner'),
+                                        'skipDelete' => isRole('owner'),
                                     ])
                                 </td>
 

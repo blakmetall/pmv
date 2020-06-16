@@ -31,7 +31,12 @@ class CleaningServicesController extends Controller
     {
         $search = trim($request->s);
 
-        $config = ['filterByWorkgroup' => true];
+        $config = [];
+        if(isRole('owner')) {
+            $config = ['filterByOwner' => true];
+        } else {
+            $config = ['filterByWorkgroup' => true];
+        }
         $cleaning_services = $this->repository->all($search, $config);
 
         return view('cleaning-services.index')
