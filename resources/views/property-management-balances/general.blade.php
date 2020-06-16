@@ -8,17 +8,14 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
-        'url' => route('property-management-balances.general')
-    ])
-
 @endsection
 
 @section('main-content')
 
     @include('property-management-balances.partials.table', [
         'label' => __('Balances'),
-        'pm_items' => $pm_items
+        'pm_items' => $pm_items,
+        'totalBalances' => $totalBalances
     ])
 
 @endsection

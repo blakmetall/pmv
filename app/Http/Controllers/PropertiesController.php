@@ -51,6 +51,7 @@ class PropertiesController extends Controller
 
         $config = ['filterByWorkgroup' => true];
         
+        // review this code
         if(RoleHelper::is('owner') || RoleHelper::is('regular')) {
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
@@ -73,8 +74,12 @@ class PropertiesController extends Controller
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
         
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
+        $cities = $this->citiesRepository->all('', $citiesConfig);
         $config = ['paginate' => false];
-        $cities = $this->citiesRepository->all('', $config);
         $zones = $this->zonesRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
@@ -104,8 +109,9 @@ class PropertiesController extends Controller
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
         
+        $citiesConfig = ['paginate' => false];
+        $cities = $this->citiesRepository->all('', $citiesConfig);
         $config = ['paginate' => false];
-        $cities = $this->citiesRepository->all('', $config);
         $zones = $this->zonesRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
@@ -128,8 +134,12 @@ class PropertiesController extends Controller
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
         
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
+        $cities = $this->citiesRepository->all('', $citiesConfig);
         $config = ['paginate' => false];
-        $cities = $this->citiesRepository->all('', $config);
         $zones = $this->zonesRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
@@ -165,9 +175,7 @@ class PropertiesController extends Controller
     }
 
     public function export(){
-
         $collection = Property::all();
         prepareExportationExcel($collection);
-
     }
 }

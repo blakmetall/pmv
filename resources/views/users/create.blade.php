@@ -9,6 +9,12 @@
                 'url' => route('users'),
                 'label' => __('Users'),
             ],
+        ],
+        'actions' => [
+            [
+                'url' => route('users'),
+                'icon' => 'i-Receipt-4',
+            ],
         ]
     ])
 
@@ -26,6 +32,7 @@
             @include('users.partials.form', [
                 'row' => $user,
                 'roles' => $roles,
+                'workgroups' => $workgroups,
             ])        
         </form>
     </div>

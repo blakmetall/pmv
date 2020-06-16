@@ -23,7 +23,7 @@ class CreateBookingExtraPaymentsTable extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->decimal('total', 15, 2)->nullable();
-            $table->tinyInteger('is_paid')->nullable();
+            $table->tinyInteger('is_paid')->nullable()->default(0);
             $table->tinyInteger('payment_is_manual')->nullable()->default(0);
             $table->string('payment_transaction_ID')->nullable();
             $table->text('payment_description')->nullable();

@@ -234,6 +234,7 @@ return [
         // custom helpers
         'Image' => Intervention\Image\Facades\Image::class,
 
+        'ContactsHelper' => App\Helpers\ContactsHelper::class,
         'ImagesHelper' => App\Helpers\ImagesHelper::class,
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
         'PMTransationHelper' => App\Helpers\PMTransationHelper::class,

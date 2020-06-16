@@ -71,8 +71,8 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
 
                     $image = $this->blueprint();
                     $image->property_id = $request->property_id; 
-                    $image->slug = $imgData['slug'];
-                    $image->extension = $imgData['extension'];
+                    $image->file_slug = $imgData['file_slug'];
+                    $image->file_extension = $imgData['file_extension'];
                     $image->file_original_name = $imgData['file_original_name'];
                     $image->file_name = $imgData['file_name'];
                     $image->file_path = $imgData['file_path'];
@@ -95,8 +95,8 @@ class PropertyImagesRepository implements PropertyImagesRepositoryInterface
             $imgData = ImagesHelper::saveFile($request->photos, $folder);
             $image = $this->blueprint();
             $image->property_id = $request->property_id; 
-            $image->slug = $imgData['slug'];
-            $image->extension = $imgData['extension'];
+            $image->file_slug = $imgData['file_slug'];
+            $image->file_extension = $imgData['file_extension'];
             $image->file_original_name = $imgData['file_original_name'];
             $image->file_name = $imgData['file_name'];
             $image->file_path = $imgData['file_path'];

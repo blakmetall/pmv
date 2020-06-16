@@ -12,12 +12,11 @@ class HumanResourcesValidations extends Validation
             'city_id'   => 'required',
             'firstname' => 'required',
             'lastname'  => 'required',
-            'address'   => 'required',
             'entry_at'  => 'nullable|date_format:Y-m-d',
             'birthday'  => 'nullable|date_format:Y-m-d',
-            'vacations_start_at'  => 'nullable|date_format:Y-m-d',
-            'vacations_end_at'  => 'nullable|date_format:Y-m-d',
-            'days_vacations'  => 'nullable|integer',
+            'vacation_start_date'  => 'nullable|date_format:Y-m-d',
+            'vacation_end_date'  => 'nullable|date_format:Y-m-d',
+            'vacation_days'  => 'nullable|integer',
             'children'  => 'nullable|integer',
         ]);
     }

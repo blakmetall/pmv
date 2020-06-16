@@ -29,8 +29,14 @@ class CreateProfilesTable extends Migration
             $table->string('zip', 10)->nullable();
             $table->string('phone', 30)->nullable();
             $table->string('mobile', 30)->nullable();
+            $table->string('photo_slug')->nullable();
+            $table->string('photo_extension')->nullable();
+            $table->string('photo_original_name')->nullable();
+            $table->string('photo_name')->nullable();
+            $table->text('photo_path')->nullable();
+            $table->text('photo_url')->nullable();
             $table->string('config_language', 2)->nullable();
-            $table->string('config_agent_commission', 2)->nullable()->default(0); // percentage
+            $table->string('config_agent_commission', 2)->nullable()->default(0);
             $table->timestamps();
         });
     }

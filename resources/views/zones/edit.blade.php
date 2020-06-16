@@ -12,8 +12,13 @@
         ],
         'actions' => [
             [
+                'url' => route('zones'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('zones.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

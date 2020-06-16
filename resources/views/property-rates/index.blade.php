@@ -7,9 +7,18 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('property-rates.create', [$property->id])
+                'url' => route('property-rates.create', [$property->id]),
+                'icon' => 'i-Add',
             ]
         ]
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
+    @include('properties.partials.info', [
+        'propertyID' => $property->id,
+        'property' => $property
     ])
 
     <!-- separator -->

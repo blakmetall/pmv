@@ -57,6 +57,16 @@
             ]),
         ])
 
+        @if (!$row->id)
+            <!-- request_reset_password -->
+            @include('components.form.checkbox', [
+                'group' => 'user',
+                'label' => __('Request password reset'),
+                'name' => 'request_password_reset',
+                'value' => 1,
+            ])
+        @endif
+
     </div>
 </div>
 
@@ -155,26 +165,41 @@
             'value' => $row->profile->mobile
         ])
 
-        <!-- emergency phone -->
-        @include('components.form.input', [
+        <hr>
+
+        <!-- agent enabled status -->
+        @include('components.form.checkbox', [
             'group' => 'user',
-            'label' => __('Emergency Phone'),
-            'name' => 'emergency_phone',
-            'required' => true,
+            'label' => __('Agent Enabled'),
+            'name' => 'config_agent_is_enabled',
             'parentName' => 'profile',
-            'value' => $row->profile->emergency_phone
+            'value' => 1,
+            'default' => $row->profile->config_agent_is_enabled
         ])
 
-        @if ( RoleHelper::hasValidRoleId( config('constants.roles.rentals-agent') ) )
-            <!-- state -->
-            @include('components.form.input', [
-                'group' => 'user',
-                'label' => __('Agent Commission') . ' %',
-                'name' => 'config_agent_commission',
-                'parentName' => 'profile',
-                'value' => $row->profile->config_agent_commission
-            ])
-        @endif
+        <!-- commission -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Agent Commission') . ' %',
+            'name' => 'config_agent_commission',
+            'parentName' => 'profile',
+            'value' => $row->profile->config_agent_commission
+        ])
+
+        <hr>
+
+        <!-- workgroup selection -->
+        @include('components.form.checkbox-multiple', [
+            'group' => 'user',
+            'label' => __('Workgroups'),
+            'name' => 'workgroups_ids',
+            'values' => prepareCheckboxValuesFromRows($workgroups, [
+                'valueRef' => 'id'
+            ]),
+            'default' => prepareCheckboxDefaultValues($row->workgroups, [
+                'valueRef' => 'id',
+            ]),
+        ])
 
     </div>
 </div>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\CleaningServicesRepositoryInterface;
 use App\Models\{ CleaningService, Property };
 use App\Validations\CleaningServicesValidations;
-use App\Helpers\WorkgroupHelper;
+use App\Helpers\{ UserHelper, WorkgroupHelper };
 
 class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 {
@@ -24,6 +24,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
+        $shouldFilterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : false;
 
         if ($search) {
             $query = CleaningService::
@@ -39,8 +40,13 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
         if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function($q) {
-                $table = (new Property)->_getTable();
-                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
+                $q->whereIn('properties.city_id', WorkgroupHelper::getAllowedCities());
+            });
+        }
+
+        if ($shouldFilterByOwner && isRole('owner')) {
+            $query->whereHas('property', function($query) {
+                $query->where('properties.user_id', UserHelper::getCurrentUserID());
             });
         }
 
@@ -81,10 +87,14 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $cleaning_service->fill($requestData);
         
         // audit
+        $hasPreviousAudit = $cleaning_service->audit_user_id;
+
         if ($request->is_finished) {
-            $user = auth()->user();
-            $cleaning_service->audit_user_id = $user->id;
-            $cleaning_service->audit_datetime = getCurrentDateTime();
+            if(!$hasPreviousAudit) {
+                $user = auth()->user();
+                $cleaning_service->audit_user_id = $user->id;
+                $cleaning_service->audit_datetime = getCurrentDateTime();
+            }
         } else {
             $cleaning_service->audit_user_id = null;
             $cleaning_service->audit_datetime = null;

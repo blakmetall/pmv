@@ -6,10 +6,14 @@
     $latitude = isset($latitude) ? $latitude : '';
     $longitude = isset($longitude) ? $longitude : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
+    $disabled = isset($disabled) ? (bool) $disabled : false;
+    $readOnly = isset($readOnly) ? (bool) $readOnly : false;
 
     $id = 'field_' . $group . '_' . $latitudeName;
 
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
+    $disabledProp = ($disabled) ? ' disabled ' : '';
+    $readOnlyProp = ($readOnly) ? ' readonly ' : '';
 
 @endphp
 
@@ -25,6 +29,8 @@
             data-lat="{{ $latitude }}" 
             data-lng="{{ $longitude }}"
             data-map-id="{{ $id }}"
+            data-disabled="{{ $disabledProp }}"
+            data-read-only="{{ $readOnlyProp }}"
             ></div>
 
         <br>
@@ -35,7 +41,9 @@
                 'labrel' => __('Latitude'),
                 'name' => $latitudeName,
                 'readOnly' => true,
-                'value' => $latitude
+                'value' => $latitude,
+                'disabled' => $disabled,
+                'readOnly' => $readOnly,
             ])
         </div>
 
@@ -45,7 +53,9 @@
                 'label' => __('Longitude'),
                 'name' => $longitudeName,
                 'readOnly' => true,
-                'value' => $longitude
+                'value' => $longitude,
+                'disabled' => $disabled,
+                'readOnly' => $readOnly,
             ])
         </div>
 

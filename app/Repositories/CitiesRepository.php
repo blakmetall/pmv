@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\City;
 use App\Repositories\CitiesRepositoryInterface;
 use App\Validations\CitiesValidations;
+use App\Helpers\WorkgroupHelper;
 
 class CitiesRepository implements CitiesRepositoryInterface
 {
@@ -22,6 +23,7 @@ class CitiesRepository implements CitiesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
 
         if ($search) {
             $query = 
@@ -29,6 +31,10 @@ class CitiesRepository implements CitiesRepositoryInterface
                     ->orWhere('id', $search);
         } else {
             $query = City::query();
+        }
+
+        if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
+            $query->whereIn('id', WorkgroupHelper::getAllowedCities());
         }
         
         $query->orderBy('name', 'asc');
@@ -95,7 +101,8 @@ class CitiesRepository implements CitiesRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 2); // to not delete seed items
+        $isNotDefaultItem = $id > 2;
+        return $isNotDefaultItem;
     }
 
     public function blueprint()

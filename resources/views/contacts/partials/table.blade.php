@@ -18,7 +18,9 @@
                         <th scope="col">{{ __('Emergency Phone') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">{{ __('Created') }}</th>
+                        <th scope="col">{{ __('Updated') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -47,12 +49,18 @@
                                 <td>{{ $row->emergency_phone }}</td>
 
                                 <!-- contact_type -->
-                                <td>{{ $row->contact_type }}</td>
+                                <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
 
                                 <!-- is_active -->
                                 <td>
                                     {!! getStatusIcon($row->is_active) !!}
                                 </td>
+
+                                <!-- created/updated cols -->
+                                @include('components.table.created-updated', [
+                                    'created_at' => $row->created_at,
+                                    'updated_at' => $row->updated_at,
+                                ])
 
                                 <!-- actions -->
                                 <td>

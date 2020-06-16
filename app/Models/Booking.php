@@ -7,7 +7,7 @@ use App\Traits\AppModel;
 
 class Booking extends Model {
 
-    use App\Model;
+    use AppModel;
     
     protected $table = 'bookings';
     public $timestamps = true;
@@ -46,6 +46,10 @@ class Booking extends Model {
 
     public function extraPayments() {
         return $this->hasMany('App\Models\BookingExtraPayment');
+    }
+
+    public function damageDeposit() {
+        return $this->belongsTo('App\Models\DamageDeposit');
     }
 
 }

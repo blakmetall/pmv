@@ -70,7 +70,6 @@
             'group' => 'profile',
             'label' => __('Phone'),
             'name' => 'phone',
-            'required' => true,
             'value' => $row->phone
         ])
 
@@ -79,17 +78,7 @@
             'group' => 'profile',
             'label' => __('Mobile'),
             'name' => 'mobile',
-            'required' => true,
             'value' => $row->mobile
-        ])
-
-        <!-- commision -->
-        @include('components.form.input', [
-            'group' => 'profile',
-            'label' => __('Agent Commission'),
-            'name' => 'config_agent_commission',
-            'required' => true,
-            'value' => $row->config_agent_commission
         ])
 
     </div>

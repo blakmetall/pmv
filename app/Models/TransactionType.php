@@ -24,7 +24,7 @@ class TransactionType extends Model {
         return $this->hasMany('App\Models\TransactionTypeTranslation');
     }
 
-    public function managementTransactions(){
+    public function pmTransactions(){
         return $this->hasMany('App\Models\PropertyManagementTransaction');
     }
 }

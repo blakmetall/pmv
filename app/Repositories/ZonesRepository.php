@@ -27,7 +27,7 @@ class ZonesRepository implements ZonesRepositoryInterface
         $lang = LanguageHelper::current();
 
         if ($search) {
-            $query = ZoneTranslation::where('name', 'like', "%".$search."%");
+            $query = ZoneTranslation::where('zones_translations.name', 'like', "%".$search."%");
         } else {
             $query = ZoneTranslation::query();
         }
@@ -35,7 +35,7 @@ class ZonesRepository implements ZonesRepositoryInterface
         $query
             ->where('language_id', $lang->id)
             ->with('zone')
-            ->orderBy('name', 'asc');
+            ->orderBy('zones_translations.name', 'asc');
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );
@@ -131,7 +131,19 @@ class ZonesRepository implements ZonesRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 36); // to not delete seed items
+        $isNotDefaultItem = $id > 36;
+
+        $zone = $this->find($id);
+        if($zone) {
+
+            // do not delete if zone is assigned to property
+            if( $zone->properties()->count() ) {
+                return false;
+            }
+
+        }
+
+        return $isNotDefaultItem;
     }
 
     public function blueprint()

@@ -11,6 +11,7 @@
         'label' => __('Account'),
         'row' => $row,
         'roles' => $roles,
+        'workgroups' => $workgroups,
     ])
 
 </fieldset>

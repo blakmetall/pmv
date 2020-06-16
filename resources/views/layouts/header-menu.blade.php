@@ -22,39 +22,41 @@
 
     <div class="header-part-right">
 
-        <!-- Notification -->
-        <div class="dropdown">
-            <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="badge badge-primary">
-                    {{ '3' }}
-                </span>
-                <i class="i-Bell text-muted header-icon"></i>
-            </div>
+        @if(!isProduction())
+            <!-- Notification -->
+            <div class="dropdown">
+                <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="badge badge-primary">
+                        {{ '3' }}
+                    </span>
+                    <i class="i-Bell text-muted header-icon"></i>
+                </div>
 
-            <!-- Notification dropdown -->
-            <div class="dropdown-menu dropdown-menu-right notification-dropdown rtl-ps-none"
-                aria-labelledby="dropdownNotification" data-perfect-scrollbar data-suppress-scroll-x="true">
+                <!-- Notification dropdown -->
+                <div class="dropdown-menu dropdown-menu-right notification-dropdown rtl-ps-none"
+                    aria-labelledby="dropdownNotification" data-perfect-scrollbar data-suppress-scroll-x="true">
 
-                <!-- single notification -->
-                <div class="dropdown-item d-flex">
-                    <div class="notification-icon"></div>
+                    <!-- single notification -->
+                    <div class="dropdown-item d-flex">
+                        <div class="notification-icon"></div>
 
-                    <div class="notification-details flex-grow-1">
-                        <p class="m-0 d-flex align-items-center">
-                            <span>Title of notification</span>
+                        <div class="notification-details flex-grow-1">
+                            <p class="m-0 d-flex align-items-center">
+                                <span>Title of notification</span>
 
-                            <span class="flex-grow-1"></span>
+                                <span class="flex-grow-1"></span>
 
-                            <span class="text-small text-muted ml-auto">10 sec ago</span>
-                        </p>
-                        <p class="text-small text-muted m-0">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing...
-                        </p>
+                                <span class="text-small text-muted ml-auto">10 sec ago</span>
+                            </p>
+                            <p class="text-small text-muted m-0">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing...
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
 
         <!-- Language switch -->
@@ -115,8 +117,9 @@
         <!-- User avatar dropdown -->
         <div class="dropdown">
             <div class="user col align-self-end">
-                <img src="{{asset('assets/images/faces/1.jpg')}}" id="userDropdown" alt="" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+
+                <i class="i-Administrator text-muted header-icon" role="button" 
+                    id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <div class="dropdown-header text-uppercase">

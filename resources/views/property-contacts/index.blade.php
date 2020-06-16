@@ -1,26 +1,35 @@
 @extends('layouts.horizontal-master')
 
 @section('heading-content')
+    @php 
+        $actions = [];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('Assign Contacts'),
+                    'url' => route('property-contacts.create', [$property->id]),
+                    'icon' => 'i-Add-User',
+                ]
+            ]);
+        }
+    @endphp
 
     @include('components.heading', [
         'label' => __('Contacts'),
-        'actions' => [
-            [
-                'label' => __('Assign Contacts'),
-                'url' => route('property-contacts.create', [$property->id])
-            ]
-        ]
+        'actions' => $actions
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
 
+    @include('properties.partials.info', [
+        'propertyID' => $property->id,
+        'property' => $property
+    ])
 
-    {{-- DESHABILITADO TEMPORALMENTE PARA RESOLVER SEARCH MAS ADELANTE --}}
-
-    {{-- @include('components.search', [
-        'url' => route('property-contacts', [$property->id])
-    ]) --}}
+    <!-- separator -->
+    <div class="mb-4"></div>
 
 @endsection
 

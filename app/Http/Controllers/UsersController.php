@@ -3,18 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface };
+use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface, WorkgroupsRepositoryInterface };
 use App\Models\{Profile, User};
+use Illuminate\Support\Facades\Password;
 
 class UsersController extends Controller
 {
     private $repository;
     private $rolesRepository;
+    private $workgroupsRepository;
 
-    public function __construct(UsersRepositoryInterface $repository, RolesRepositoryInterface $rolesRepository)
-    {
+    public function __construct(
+        UsersRepositoryInterface $repository, 
+        RolesRepositoryInterface $rolesRepository,
+        WorkgroupsRepositoryInterface $workgroupsRepository
+    ) {
         $this->repository = $repository;
         $this->rolesRepository = $rolesRepository;
+        $this->workgroupsRepository = $workgroupsRepository;
     }
 
     public function index(Request $request)
@@ -35,15 +41,27 @@ class UsersController extends Controller
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
+        $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
+        foreach($workgroups as $index => $workgroup) {
+            $workgroups[$index]->name = $workgroup->city->name;
+        }
+
         return view('users.create')
             ->with('user', $user)
-            ->with('roles', $roles);
+            ->with('roles', $roles)
+            ->with('workgroups', $workgroups);
     }
 
     public function store(Request $request)
     {
         $user = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+
+        if($request->request_password_reset) {
+            $resetToken = Password::broker()->createToken($user);
+            $user->sendPasswordResetNotification($resetToken);
+        }
+
         return redirect(route('users.edit', [$user->id]));
     }
 
@@ -54,9 +72,15 @@ class UsersController extends Controller
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
+        $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
+        foreach($workgroups as $index => $workgroup) {
+            $workgroups[$index]->name = $workgroup->city->name;
+        }
+
         return view('users.show')
             ->with('user', $user)
-            ->with('roles', $roles);
+            ->with('roles', $roles)
+            ->with('workgroups', $workgroups);
     }
 
     public function edit(Request $request, User $user)
@@ -70,9 +94,15 @@ class UsersController extends Controller
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
+        $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
+        foreach($workgroups as $index => $workgroup) {
+            $workgroups[$index]->name = $workgroup->city->name;
+        }
+
         return view('users.edit')
             ->with('user', $user)
-            ->with('roles', $roles);
+            ->with('roles', $roles)
+            ->with('workgroups', $workgroups);
     }
 
     public function update(Request $request, $id)

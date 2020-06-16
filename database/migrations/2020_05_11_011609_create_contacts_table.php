@@ -21,7 +21,7 @@ class CreateContactsTable extends Migration
             $table->string('phone', 30)->nullable();
             $table->string('mobile', 30)->nullable();
             $table->text('address')->nullable();
-            $table->tinyInteger('is_active')->nullable();
+            $table->tinyInteger('is_active')->nullable()->default(1);
             $table->string('contact_type')->nullable();
             $table->timestamps();
         });

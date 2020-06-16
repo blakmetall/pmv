@@ -62,7 +62,7 @@ class Property extends Model {
     }
 
     public function type() {
-        return $this->hasOne('App\Models\PropertyType', 'id');
+        return $this->belongsTo('App\Models\PropertyType', 'property_type_id');
     }
 
     public function city() {
@@ -95,5 +95,21 @@ class Property extends Model {
 
     public function contacts() {
         return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
+    }
+
+    public function bookings() {
+        return $this->hasMany('App\Models\Booking');
+    }
+
+    public function reservationRequests() {
+        return $this->hasMany('App\Models\ReservationRequest');
+    }
+
+    public function hasDefaultImage() {
+        return $this->images()->orderBy('order', 'asc')->count();
+    }
+
+    public function getDefaultImage() {
+        return $this->images()->orderBy('order', 'asc')->first();
     }
 }

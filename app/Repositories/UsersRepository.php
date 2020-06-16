@@ -37,7 +37,8 @@ class UsersRepository implements UsersRepositoryInterface
                             ->orWhere('profiles.state', 'like', $search)
                             ->orWhere('profiles.city', 'like', $search)
                             ->orWhere('profiles.street', 'like', $search);
-                });
+                })
+                ->orWhere('id', $search);
         } else {
             $query = User::query();
         }
@@ -103,6 +104,9 @@ class UsersRepository implements UsersRepositoryInterface
 
         $user->save();
 
+        // workgroups assignation
+        $user->workgroups()->sync($request->workgroups_ids);
+
         // roles assignation
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
             $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -122,6 +126,7 @@ class UsersRepository implements UsersRepositoryInterface
             $user->roles()->sync($roles_to_assign);
         }
 
+        // profile data
         if ($user->id) {
             if (!$user->profile) {
                 $user->profile = new Profile;
@@ -130,7 +135,10 @@ class UsersRepository implements UsersRepositoryInterface
                 $user->profile->config_language = 'es'; // default language on create
             }
 
-            $user->profile->fill($request->profile);
+            $checkboxesConfig = ['config_agent_is_enabled' => 0];
+            $profileData = array_merge($checkboxesConfig, $request->profile);
+
+            $user->profile->fill($profileData);
             $user->profile->save();
         }
 
@@ -154,6 +162,9 @@ class UsersRepository implements UsersRepositoryInterface
         $user = $this->model->find($id);
         
         if ($user) {
+            $user->profile->delete();
+            $user->roles()->sync([]);
+            $user->workgroups()->sync([]);
             $user->delete();
         }
 
@@ -161,12 +172,29 @@ class UsersRepository implements UsersRepositoryInterface
     }
 
     public function canDelete($id) {
+        $user = $this->find($id);
+
+        if($user) {
+            if ($user->properties()->count()) {
+                return false;
+            }
+    
+            if ($user->bookings()->count()) {
+                return false;
+            }
+    
+            if ($user->agentBookings()->count()) {
+                return false;
+            }
+    
+            if ($user->reservationRequests()->count()) {
+                return false;
+            }
+        }
+
         return ($id > 1); // to not delete super admin 
     }
 
-    /**
-     * Return the blueprint of the model including translation elements
-     */
     public function blueprint()
     {
         return new User;

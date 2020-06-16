@@ -128,7 +128,19 @@ class CleaningOptionsRepository implements CleaningOptionsRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 6);
+        $isNotDefaultItem = $id > 6;
+
+        $cleaning_option = $this->model->find($id);
+        if ($cleaning_option) {
+
+            // validate empty usage in properties
+            if ($cleaning_option->properties()->count()) {
+                return false;
+            }
+            
+        }
+
+        return $isNotDefaultItem;
     }
 
     public function blueprint()

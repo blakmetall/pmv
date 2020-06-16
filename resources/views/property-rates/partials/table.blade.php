@@ -19,7 +19,7 @@
                         <th scope="col">{{ __('Monthly') }}</th>
                         <th scope="col">{{ __('Min Stay') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

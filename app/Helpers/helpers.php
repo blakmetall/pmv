@@ -167,7 +167,21 @@ if (!function_exists('getCurrentDateTime')) {
 if (!function_exists('preparePhoneContacts')) {
     function preparePhoneContacts($phones)
     {
-        return implode(' <b>/</b> ', $phones);
+        $phonesMap = [];
+
+        if(is_array($phones)) {
+            foreach($phones as $phone) {
+                if($phone != '') {
+                    $phonesMap[] = $phone;
+                }
+            }
+        }
+
+        if(count($phonesMap)) {
+            return implode('/', $phonesMap);
+        }
+
+        return '';
     }
 }
 
@@ -185,11 +199,59 @@ if (!function_exists('getUrlPath')) {
     }
 }
 
+if (!function_exists('isRole')) {
+    function isRole($roleSlug = '')
+    {
+        return \App\Helpers\RoleHelper::is($roleSlug);
+    }
+}
 
 if (!function_exists('getCurrentUrlFull')) {
     function getCurrentUrlFull($export)
     {        
         $union = (Request::fullUrl() ==  Request::url()) ? '?' : '&';                
         return Request::fullUrl().$union.$export.'=1';
+    }
+}
+
+if (!function_exists('isProduction')) {
+    function isProduction()
+    {        
+        return 'production' == config('app.env');
+    }
+}
+
+if (!function_exists('isStaging')) {
+    function isStaging()
+    {        
+        return 'staging' == config('app.env');
+    }
+}
+
+if (!function_exists('isDevelopment')) {
+    function isDevelopment()
+    {        
+        return 'development' == config('app.env');
+    }
+}
+
+if (!function_exists('hasSSL')) {
+    function hasSSL()
+    {        
+        return env('APP_SSL') == true ? true : false;;
+    }
+}
+
+if (!function_exists('getContactTypeBySlug')) {
+    function getContactTypeBySlug($typeSlug = '')
+    {        
+        return \App\Helpers\ContactsHelper::getLabelBySlug($typeSlug);
+    }
+}
+
+if (!function_exists('isImage')) {
+    function isImage($extension = '')
+    {        
+        return (in_array($extension, \Config::get('constants.valid_image_types')));
     }
 }

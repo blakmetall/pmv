@@ -16,22 +16,21 @@ class PropertyManagement extends Model {
         'management_fee',
         'start_date',
         'end_date',
+        'average_month',
+        'is_finished',
     ];
 
     public function transactions() {
         return $this->hasMany('App\Models\PropertyManagementTransaction');
     }
 
-    public function payments() {
-        return $this->hasMany('App\Models\PropertyManagementPayment');
-    }
-
     public function property() {
         return $this->belongsTo('App\Models\Property');
     }
 
-    public static function setFinishedStatusHandler() {
-        self::where('end_date', '<', getCurrentDate())->update(['is_finished' => 1]);
-        self::where('end_date', '>=', getCurrentDate())->update(['is_finished' => 0]);
+    public function getActivePropertyManagementID() {
+        $pm = $this->where('property_id', $this->property_id)->where('is_finished', 0)->first();
+        
+        return $pm ? $pm->id : '';
     }
 }

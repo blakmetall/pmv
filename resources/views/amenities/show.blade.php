@@ -12,8 +12,13 @@
         ],
         'actions' => [
             [
+                'url' => route('amenities'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('amenities.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

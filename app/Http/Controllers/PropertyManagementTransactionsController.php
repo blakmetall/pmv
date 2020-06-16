@@ -8,7 +8,7 @@ use App\Repositories\{
     PropertyManagementTransactionsRepositoryInterface,
     TransactionTypesRepositoryInterface
 };
-use App\Helpers\PMTransactionHelper;
+use App\Helpers\{ PMHelper, PMTransactionHelper };
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -25,15 +25,39 @@ class PropertyManagementTransactionsController extends Controller
 
     public function index(Request $request, PropertyManagement $pm)
     {
+        if (!$request->year && !$request->month) { // prepare year and month for first call
+            $urlParams = [
+                'year' => date('Y', strtotime('now')),
+                'month' => date('m', strtotime('now')),
+            ];
+
+            $appendUrl = '?' . http_build_query($urlParams);
+            $redirectUrl = route('property-management-transactions', [$pm->id]) . $appendUrl;
+
+            return redirect($redirectUrl);
+        }
+
         $search = trim($request->s);
 
-        $config = ['property_management_id' => $pm->id];
+        $config = [
+            'paginate' => false,
+            'property_management_id' => $pm->id,
+            'filterByYear' => $request->year,
+            'filterByMonth' => $request->month,
+        ];
         $transactions = $this->repository->all($search, $config);
+
+        $config = [
+            'filterByYear' => $request->year,
+            'filterByMonth' => $request->month,
+        ];
+        $currentBalance = PMHelper::getBalance($pm->id, $config);
 
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
-            ->with('search', $search);
+            ->with('search', $search)
+            ->with('currentBalance', $currentBalance);
     }
 
     public function general(Request $request)

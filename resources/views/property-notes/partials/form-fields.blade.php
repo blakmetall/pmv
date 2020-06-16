@@ -27,7 +27,7 @@
         <!-- is_finished -->
         @include('components.form.checkbox', [
             'group' => 'property-note',
-            'label' => __('Finished'),
+            'label' => __('Audit'),
             'name' => 'is_finished',
             'value' => 1,
             'default' => $row->is_finished,

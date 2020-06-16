@@ -11,11 +11,10 @@
                 <thead>
 
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">{{ __('Price') }}</th>
                         <th scope="col">{{ __('Refundable') }}</th>
                         <th scope="col">{{ __('Description') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -24,10 +23,6 @@
                     @if(count($rows))
                         @foreach($rows as $row)
                             <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->damageDeposit->id }}
-                                </th>
 
                                 <!-- price -->
                                 <td>

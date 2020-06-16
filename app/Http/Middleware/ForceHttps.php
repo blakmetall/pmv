@@ -11,7 +11,11 @@ class ForceHttps
     {
         if (
             !$request->secure() && 
-            (App::environment() === 'production' || App::environment() === 'staging')
+            (
+                (App::environment() === 'production' || App::environment() === 'staging')
+                &&
+                hasSSL()
+            )
         ) {
             return redirect()->secure($request->getRequestUri());
         }

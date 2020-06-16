@@ -9,10 +9,6 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
-        'url' => route('property-management-transactions.general')
-    ])
-
 @endsection
 
 @section('main-content')
@@ -20,7 +16,8 @@
     <!-- here the data is loaded -->
     @include('property-management-transactions.partials.table', [
         'label' => __('Property Management Transactions'),
-        'rows' => $transactions
+        'rows' => $transactions,
+        'skipAuditedTable' => true,
     ])
 
 @endsection

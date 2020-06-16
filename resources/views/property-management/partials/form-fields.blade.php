@@ -44,6 +44,24 @@
             'required' => true,
         ])
 
+        <!-- average_month -->
+        @include('components.form.input', [
+            'group' => 'property-management',
+            'label' => __('Avg. Month'),
+            'name' => 'average_month',
+            'value' => $row->average_month,
+            'required' => true,
+        ])
+
+        <!-- is_finished -->
+        @include('components.form.checkbox', [
+            'group' => 'property-management',
+            'label' => __('Finished'),
+            'name' => 'is_finished',
+            'value' => 1,
+            'default' => $row->is_finished,
+        ])
+
     </div>
 </div>
 

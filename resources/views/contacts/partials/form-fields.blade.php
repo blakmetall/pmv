@@ -63,6 +63,17 @@
             'value' => $row->address
         ])
 
+        <!-- type -->
+        @include('components.form.select', [
+            'group' => 'contact',
+            'label' => __('Contact Type'),
+            'name' => 'contact_type',
+            'value' => $row->contact_type,
+            'options' => $types,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'label',
+        ]) 
+
         <!-- is_active -->
         @include('components.form.checkbox', [
             'group' => 'contact',
@@ -70,14 +81,6 @@
             'name' => 'is_active',
             'value' => 1,
             'default' => $row->is_active,
-        ])
-
-        <!-- type -->
-        @include('components.form.input', [
-            'group' => 'contact',
-            'label' => __('Contact Type'),
-            'name' => 'contact_type',
-            'value' => $row->contact_type
         ])
 
     </div>

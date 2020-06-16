@@ -28,10 +28,13 @@ class CreatePropertyManagementTransactionsTable extends Migration
             $table->date('post_date')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
             $table->text('description')->nullable();
+            $table->string('file_slug')->nullable();
+            $table->string('file_extension')->nullable();
             $table->string('file_original_name')->nullable();
             $table->string('file_name')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_url')->nullable();
+            $table->tinyInteger('is_paid')->nullable()->default(0);
             $table->date('audit_date')->nullable();
             $table->integer('audit_user_id')->nullable();
             $table->timestamps();

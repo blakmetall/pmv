@@ -13,15 +13,13 @@ class PropertyManagementController extends Controller
     public function __construct(PropertyManagementRepositoryInterface $repository)
     {
         $this->repository = $repository;
-
-        PropertyManagement::setFinishedStatusHandler();
     }
 
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
 
-        $config = ['propertyID' => $property->id];
+        $config = ['propertyID' => $property->id, 'unfinishedOnly' => true];
         $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.index')
@@ -33,7 +31,9 @@ class PropertyManagementController extends Controller
     public function general(Request $request)
     {
         $search = trim($request->s);
-        $pm_items = $this->repository->all($search);
+
+        $config = ['unfinishedOnly' => true];
+        $pm_items = $this->repository->all($search, $config);
 
         return view('property-management.general')
             ->with('pm_items', $pm_items)
@@ -50,9 +50,14 @@ class PropertyManagementController extends Controller
 
     public function store(Request $request, Property $property)
     {
-        $pm = $this->repository->create($request);
-        $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-management.edit', [$property->id, $pm->id]));
+        if($this->canCreatePM($request, $property)) {
+            $pm = $this->repository->create($request);
+            $request->session()->flash('success', __('Record created successfully'));
+            return redirect(route('property-management.edit', [$property->id, $pm->id]));
+        } else {
+            $request->session()->flash('error', __('You can only have one unfinished property management.'));
+            return redirect()->back()->withInput();
+        }
     }
 
     public function show(Property $property, PropertyManagement $pm)
@@ -74,9 +79,14 @@ class PropertyManagementController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
-        $this->repository->update($request, $id);
-        $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-management.edit', [$property->id, $id]) );
+        if($this->canCreatePM($request, $property, $id)){
+            $this->repository->update($request, $id);
+            $request->session()->flash('success', __('Record updated successfully'));
+            return redirect( route('property-management.edit', [$property->id, $id]) );
+        }else{
+            $request->session()->flash('error', __('You can only have one unfinished property management.'));
+            return redirect()->back()->withInput();
+        }
     }
 
     public function destroy(Request $request, Property $property, $id)
@@ -90,4 +100,23 @@ class PropertyManagementController extends Controller
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
     }
+
+    // ensures not creating new property management if an active one is enabled
+    private function canCreatePM($request, $property, $id = false) {
+
+        if( ! $request->is_finished ) {
+            $pmQuery = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0);
+            if($id) {
+                $pmQuery->where('id', '!=', $id);
+            }
+    
+            $unfinishedPM = $pmQuery->first();
+            if($unfinishedPM) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

@@ -12,8 +12,13 @@
         ],
         'actions' => [
             [
+                'url' => route('workgroups'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('workgroups.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

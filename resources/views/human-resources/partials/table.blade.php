@@ -19,7 +19,7 @@
                         <th scope="col">{{ __('Birthday') }}</th>
                         <th scope="col">{{ __('Vacations') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -50,11 +50,11 @@
 
                                 <!-- vacations -->
                                 <td>
-                                    @if( $row->vacations_start_at && $row->vacations_end_at )
-                                        {{ $row->vacations_start_at }}
+                                    @if( $row->vacation_start_date && $row->vacation_end_date )
+                                        {{ $row->vacation_start_date }}
                                         -
-                                        {{ $row->vacations_end_at }}
-                                        ({{ $row->days_vacations }})
+                                        {{ $row->vacation_end_date }}
+                                        ({{ $row->vacation_days }})
                                     @endif 
                                 </td>
 

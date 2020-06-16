@@ -31,7 +31,12 @@ class CleaningServicesController extends Controller
     {
         $search = trim($request->s);
 
-        $config = ['filterByWorkgroup' => true];
+        $config = [];
+        if(isRole('owner')) {
+            $config = ['filterByOwner' => true];
+        } else {
+            $config = ['filterByWorkgroup' => true];
+        }
         $cleaning_services = $this->repository->all($search, $config);
 
         return view('cleaning-services.index')
@@ -46,6 +51,7 @@ class CleaningServicesController extends Controller
         $properties = $this->propertiesRepository->all('', [
             'paginate' => false,
             'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
         ]);
       
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
@@ -80,7 +86,12 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->find($cleaning_service);
 
-        $properties = $this->propertiesRepository->all('', ['paginate' => false]);
+        $properties = $this->propertiesRepository->all('', [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ]);
+        
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
 
         return view('cleaning-services.edit')

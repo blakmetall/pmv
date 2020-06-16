@@ -2,6 +2,25 @@
 
 @section('heading-content')
 
+    @php 
+        $actions = [
+            [
+                'url' => route('properties'),
+                'icon' => 'i-Receipt-4',
+            ],
+        ];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('New'),
+                    'url' => route('properties.create'),
+                    'icon' => 'i-Add',
+                ]
+            ]);
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('View'),
         'breadcrumbs' => [
@@ -10,12 +29,15 @@
                 'label' => __('Properties'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('properties.create'),
-            ]
-        ]
+        'actions' => $actions
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
+    @include('properties.partials.info', [
+        'propertyID' => $property->id,
+        'property' => $property
     ])
 
     <!--- separator -->

@@ -7,17 +7,14 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('workgroups.create')
+                'url' => route('workgroups.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
-
-    @include('components.search', [
-        'url' => route('workgroups')
-    ])
 
 @endsection
 

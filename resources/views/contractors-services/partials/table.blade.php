@@ -16,7 +16,7 @@
                         <th scope="col">{{ __('Price') }}</th>
                         <th scope="col">{{ __('Previous Price') }}</th>
                         <th scope="col">{{ __('Contractor') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

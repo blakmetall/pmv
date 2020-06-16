@@ -119,6 +119,8 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
         $amenity = $this->model->find($id);
         
         if ($amenity && $this->canDelete($id)) {
+            $amenity->properties()->sync([]);
+
             $amenity->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $amenity->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
@@ -130,7 +132,9 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 91); // to not delete seed items
+        $isNotDefaultItem = $id > 91;
+
+        return $isNotDefaultItem;
     }
 
     public function blueprint()

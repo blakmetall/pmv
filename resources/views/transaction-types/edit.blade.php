@@ -12,8 +12,13 @@
         ],
         'actions' => [
             [
+                'url' => route('transaction-types'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('transaction-types.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

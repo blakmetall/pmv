@@ -135,6 +135,9 @@ return [
         ],
     ],
 
+    // custom validation messages
+    'is_even_string' => "The :attribute must be odd string lenght.",
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
@@ -165,7 +168,7 @@ return [
         'country' => __('Country'),
         'date' => __('Date'),
         'description' => __('Description'),
-        'days_vacations' => __('Vacation Days'),
+        'vacation_days' => __('Vacation Days'),
         'email' => __('Email'),
         'emergency_phone' => __('Emergency Phone'),
         'end_date' => __('End Date'),
@@ -203,14 +206,15 @@ return [
         'profile.zip' => __('Zip'),
         'property_id' => __('Property'),
         'property_type_id' => __('Property Type'),
+        'roles_ids' => __('Roles'),
         'rental_commission' => __('Rental Commission'),
         'start_date' => __('Start Date'),
         'state' => __('State'),
         'state_id' => __('State'),
         'street' => __('Street'),
         'user_id' => __('User'),
-        'vacations_start_at' => __('Vacation Start Date'),
-        'vacations_end_at' => __('Vacation End Date'),
+        'vacation_start_date' => __('Vacation Start Date'),
+        'vacation_end_date' => __('Vacation End Date'),
         'zip' => __('Zip'),    
         'zone_id' => __('Zone'),
         'weekly' => __('Weekly'),

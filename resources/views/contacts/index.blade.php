@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('contacts.create')
+                'url' => route('contacts.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

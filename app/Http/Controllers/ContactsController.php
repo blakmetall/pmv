@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\{ ContactsRepositoryInterface };
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Helpers\ContactsHelper;
 
 class ContactsController extends Controller
 {
@@ -28,9 +29,11 @@ class ContactsController extends Controller
     public function create()
     {
         $contact = $this->repository->blueprint();
+        $types = ContactsHelper::getTypes();
 
         return view('contacts.create')
-            ->with('contact', $contact);
+            ->with('contact', $contact)
+            ->with('types', $types);
     }
 
     public function store(Request $request)
@@ -43,17 +46,21 @@ class ContactsController extends Controller
     public function show(Contact $contact)
     {
         $contact = $this->repository->find($contact);
+        $types = ContactsHelper::getTypes();
 
         return view('contacts.show')
-            ->with('contact', $contact);
+            ->with('contact', $contact)
+            ->with('types', $types);
     }
 
     public function edit(Contact $contact)
     {
         $contact = $this->repository->find($contact);
+        $types = ContactsHelper::getTypes();
 
         return view('contacts.edit')
-            ->with('contact', $contact);
+            ->with('contact', $contact)
+            ->with('types', $types);
     }
 
     public function update(Request $request, $id)

@@ -17,7 +17,7 @@
                         <th scope="col">{{ __('Phones') }}</th>
                         <th scope="col">{{ __('Active Agent') }}</th>
                         <th scope="col">{{ __('Active User') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>

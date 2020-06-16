@@ -2,6 +2,25 @@
 
 @section('heading-content')
 
+    @php 
+        $actions = [
+            [
+                'url' => route('cleaning-services'),
+                'icon' => 'i-Receipt-4',
+            ],
+        ];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('New'),
+                    'url' => route('cleaning-services.create'),
+                    'icon' => 'i-Add',
+                ]
+            ]);
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('View'),
         'breadcrumbs' => [
@@ -10,12 +29,7 @@
                 'label' => __('Cleaning Services'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('cleaning-services.create'),
-            ]
-        ]
+        'actions' => $actions,
     ])
 
     <!-- separator -->

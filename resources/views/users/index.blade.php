@@ -7,7 +7,8 @@
         'actions' => [
             [
                 'label' => __('New'),
-                'url' => route('users.create')
+                'url' => route('users.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

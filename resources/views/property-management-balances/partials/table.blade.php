@@ -9,10 +9,10 @@
 
                     <tr>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col">{{ __('Credit') }}</th>
-                        <th scope="col">{{ __('Charge') }}</th>
+                        <th scope="col">{{ __('Avg. Month') }}</th>
+                        <th scope="col">{{ __('Balance') }}</th>
                         <th scope="col">{{ __('Pending Audits') }}</th>
-                        <th scope="col">{{ __('Subtotal') }}</th>
+                        <th scope="col">{{ __('Estimated Balance') }}</th>
                     </tr>
 
                 </thead>
@@ -23,28 +23,63 @@
                             <tr>
                                 <td>
                                     @if ($pm->property->hasTranslation())
-                                        <a href="{{ route('properties.show', [$pm->property->id]) }}">
+                                        <a href="{{ route('property-management-transactions', [$pm->id]) }}">
                                             {{ $pm->property->translate()->name }}
                                         </a>
                                     @endif
                                 </td>
 
-                                <!-- credit -->
-                                <td>{{ priceFormat($pm->_balance['totalCredit']) }}</td>
+                                <!-- average_month -->
+                                <td>
+                                    {{ priceFormat($pm->average_month) }}
+                                </td>
 
-                                <!-- charge -->
-                                <td>{{ priceFormat($pm->_balance['totalCharge']) }}</td>
+                                <!-- balance -->
+                                <td>
+                                    @php 
+                                        $isUnderAverage = $pm->average_month > $pm->_balance['balance']; 
+                                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                    @endphp
+
+                                    <span class="{{ $underAverageClass }}">
+                                        {{ priceFormat($pm->_balance['balance']) }}
+                                    </span>
+                                </td>
 
                                 <!-- pending audits -->
-                                <td>{{ priceFormat($pm->_balance['pendingAuditsSubtotal']) }}</td>
+                                <td>{{ priceFormat($pm->_balance['pendingAudit']) }}</td>
 
-                                <!-- subtotal -->
-                                <td>{{ priceFormat($pm->_balance['subtotal']) }}</td>
+                                <!-- estimated balance -->
+                                <td>
+                                    @php 
+                                        $isUnderAverage = $pm->average_month > $pm->_balance['estimatedBalance']; 
+                                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                    @endphp
+
+                                    <span class="{{ $underAverageClass }}">
+                                        {{ priceFormat($pm->_balance['estimatedBalance']) }}
+                                    </span>
+                                </td>
 
                             </tr>
                         @endforeach
                     @endif
+                    
+                    <tr><th colspan="5">&nbsp;</th></tr>
 
+                    <tr>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">
+                            {{ priceFormat($totalBalances['balances']) }}
+                        </th>
+                        <th scope="col">
+                            {{ priceFormat($totalBalances['pendingAudits']) }}
+                        </th>
+                        <th scope="col">
+                            {{ priceFormat($totalBalances['estimatedBalances']) }}
+                        </th>
+                    </tr>
                 </tbody>
             </table>
         </div>

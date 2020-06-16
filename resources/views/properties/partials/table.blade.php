@@ -2,23 +2,17 @@
 <div class="card">
     <div class="card-header">{{ $label }} </div>
     <div class="card-body pt-5">
-        <!-- Export Link -->
-        @include('partials.buttons.export-button',[
-            'label' =>false,
-            'url' => getCurrentUrlFull('shouldGenerateExcel'),
-            'icon' => 'i-File-Excel',
-        ])
-        
-        
         
         <!-- pagination is loeaded here -->
         @include('partials.pagination', ['rows' => $rows])
+
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Bedrooms') }}</th>
                         <th scope="col">{{ __('Baths') }}</th>
@@ -26,7 +20,7 @@
                         <th scope="col">{{ __('Online') }}</th>
                         <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">&nbsp;</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -37,9 +31,22 @@
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
-                                    {{ $row->id }}
+                                    {{ $row->property->id }}
                                 </th>
 
+                                <!-- thumbnail -->
+                                <th>
+                                    @if ($row->property->hasDefaultImage())
+                                        @php
+                                            $propertyImg = $row->property->getDefaultImage();
+                                        @endphp
+                                        <a href="{{ asset(getUrlPath($propertyImg->file_url)) }}" target="_blank">
+                                            <img src="{{ asset(getUrlPath($propertyImg->file_url, 'small-ls')) }}" alt="" width="100">
+                                        </a>
+                                    @endif
+                                </th>
+
+                                <!-- property name -->
                                 <td>
                                     {{ $row->name }}
                                 </td>
@@ -88,31 +95,37 @@
                                     </a>
 
                                     <!-- property rates -->
-                                    <a 
-                                        href="{{ route('property-rates', $row->property->id) }}" 
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Rates') }}"
-                                        alt="{{ __('Rates') }}">
-                                        <i class="nav-icon i-Money-2 font-weight-bold"></i>
-                                    </a>
+                                    @if( !isRole('owner') )
+                                        <a 
+                                            href="{{ route('property-rates', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Rates') }}"
+                                            alt="{{ __('Rates') }}">
+                                            <i class="nav-icon i-Money-2 font-weight-bold"></i>
+                                        </a>
+                                    @endif
 
                                     <!-- property images -->
-                                    <a 
-                                        href="{{ route('property-images', $row->property->id) }}"
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Images') }}"
-                                        alt="{{ __('Images') }}">
-                                        <i class="nav-icon i-Old-Camera font-weight-bold"></i>
-                                    </a>
+                                    @if( !isRole('owner') )
+                                        <a 
+                                            href="{{ route('property-images', $row->property->id) }}"
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Images') }}"
+                                            alt="{{ __('Images') }}">
+                                            <i class="nav-icon i-Old-Camera font-weight-bold"></i>
+                                        </a>
+                                    @endif
 
                                     <!-- bookings from specific to property -->
-                                    <a 
-                                        href="{{ route('bookings.by-property', $row->property->id) }}" 
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Bookings') }}"
-                                        alt="{{ __('Bookings') }}">
-                                        <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
-                                    </a>
+                                    @if( !isRole('owner') )
+                                        <a 
+                                            href="{{ route('bookings.by-property', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Bookings') }}"
+                                            alt="{{ __('Bookings') }}">
+                                            <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
+                                        </a>
+                                    @endif
 
                                     <!-- property management -->
                                     <a 
@@ -135,6 +148,8 @@
                                         'showRoute' => 'properties.show',
                                         'editRoute' => 'properties.edit',
                                         'deleteRoute' => 'properties.destroy',
+                                        'skipEdit' => isRole('owner'),
+                                        'skipDelete' => isRole('owner')
                                     ])
                                 </td>
 

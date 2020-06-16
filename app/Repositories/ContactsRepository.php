@@ -23,17 +23,25 @@ class ContactsRepository implements ContactsRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByActive = isset($config['activeOnly']) ? $config['activeOnly'] : true;
 
         if ($search) {
             $query = Contact::
-                where('firstname', 'like', "%".$search."%")
-                ->orWhere('lastname', 'like', "%".$search."%")
-                ->orWhere('email', 'like', "%".$search."%")
-                ->orWhere('phone', 'like', "%".$search."%")
-                ->orWhere('mobile', 'like', "%".$search."%")
-                ->orWhere('address', 'like', "%".$search."%");
+                where(function($q) use($search) {
+                    $q->where('firstname', 'like', "%".$search."%")
+                    ->orWhere('lastname', 'like', "%".$search."%")
+                    ->orWhere('email', 'like', "%".$search."%")
+                    ->orWhere('phone', 'like', "%".$search."%")
+                    ->orWhere('mobile', 'like', "%".$search."%")
+                    ->orWhere('address', 'like', "%".$search."%");
+                })
+                ->orWhere('id', $search);
         } else {
             $query = Contact::query();
+        }
+
+        if ($shouldFilterByActive) {
+            $query->where('is_active', 1);
         }
 
         $query
@@ -98,6 +106,7 @@ class ContactsRepository implements ContactsRepositoryInterface
         $contact = $this->model->find($id);
 
         if ($contact && $this->canDelete($id)) {
+            $contact->properties()->sync([]);
             $contact->delete();
         }
 

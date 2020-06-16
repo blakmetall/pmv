@@ -2,14 +2,23 @@
 
 @section('heading-content')
 
+    @php 
+        $actions = [];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('New'),
+                    'url' => route('cleaning-services.create'),
+                    'icon' => 'i-Add',
+                ]
+            ]);
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('Cleaning Services'),
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('cleaning-services.create')
-            ]
-        ]
+        'actions' => $actions,
     ])
 
     <!-- separator -->

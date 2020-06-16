@@ -93,7 +93,9 @@ class WorkgroupsRepository implements WorkgroupsRepositoryInterface
 
     public function canDelete($id)
     {
-        return true;
+        $isNotDefaultWorkgroup = $id > 2;
+
+        return $isNotDefaultWorkgroup;
     }
 
     public function blueprint()

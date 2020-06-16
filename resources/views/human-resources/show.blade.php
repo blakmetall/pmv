@@ -12,8 +12,13 @@
         ],
         'actions' => [
             [
+                'url' => route('human-resources'),
+                'icon' => 'i-Receipt-4',
+            ],
+            [
                 'label' => __('New'),
                 'url' => route('human-resources.create'),
+                'icon' => 'i-Add',
             ]
         ]
     ])

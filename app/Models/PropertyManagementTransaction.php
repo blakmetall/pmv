@@ -42,8 +42,4 @@ class PropertyManagementTransaction extends Model {
     public function contractorService() {
         return $this->belongsTo('App\Models\ContractorService', 'contractor_service_id');
     }
-
-    public function payment() {
-        return $this->belongsTo('App\Models\PropertyManagementPayment');
-    }
 }

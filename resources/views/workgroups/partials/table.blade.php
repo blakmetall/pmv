@@ -10,10 +10,9 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Users') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
 
@@ -22,10 +21,6 @@
                     @if(count($rows))
                         @foreach($rows as $row)
                             <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->id }}
-                                </th>
 
                                 <!-- name -->
                                 <td>{{ $row->city->name }}</td>

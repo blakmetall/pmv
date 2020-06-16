@@ -18,4 +18,6 @@
     'edit_route' => 'cleaning-services.edit',
     'cancel_route' => 'cleaning-services',
     'delete_route' => 'cleaning-services.destroy',
+    'skipEdit' => isRole('owner'),
+    'skipDelete' => isRole('owner'),
 ])

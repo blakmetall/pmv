@@ -295,6 +295,7 @@
 
 .app-icon-link {
     margin-right: 7px;
+    font-size: 15px;
 }
 
 .app-file-wrapper {
@@ -310,15 +311,89 @@
     }
 }
 
-.app-card-file-overlay {
-    background: rgba(59, 71, 80, 0.4);
-    padding: 22px 0 0 23px;
+.app-price-red {
+    color: #e3342f;
+}
 
-    .card-title {
-        color: white;
+.app-pm-description {
+    font-size: 13px;
+    color: #7b7b7b;
+    margin-bottom: 0;
+}
+.app-months-list {
+    padding-top: 8px;
+    padding-inline-start: 10px;
 
+    li {
+        display: inline-block;
+        list-style-type: none;
+        width: auto;
+        margin-right: 5px;
+        padding: 0 7px 7px 0;
+
+        .app-month-inactive {
+            color: #7b7b7b;
+        }
+        .app-month-selected {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    }
+}
+
+.app-td-date {
+    font-size: 11px;
+}
+
+.app-table-file-limit-width {
+    max-width: 120px;
+    width: 100%;
+}
+.app-file-card {
+    .card {
+        border-radius: 5px;
+        background: #e0e0e0;
+
+        .card-img-overlay {
+            padding: 10px 10px 12px 15px;
+            overflow: hidden;
+
+            h5 { margin-bottom: 0; }
+        }
+
+        .app-card-text-overlay {
+            background: transparent;
+            padding: 10px 10px 12px 15px;
+            overflow: hidden;
+
+            h5 { margin-bottom: 0; }
+        }
         a {
-            color: white;
+            color: #333;
+            font-size: 14px;
+        }
+        .text-white a {
+            color: #fff;
+        }
+    }
+}
+
+.app-property-info {
+    .app-property-info-title {
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .app-property-info-details {
+        > div {
+            display: inline-block;
+            padding: 0 10px 5px 0;
+            margin-bottom: 5px;
+        }
+    }
+    .app-property-info-icons{
+        a {
+            font-size: 18px;
         }
     }
 }
@@ -333,4 +408,23 @@
 }
 
 /******* end *************/
+/*************************/
+
+
+/*************************/
+/********* tables ********/
+
+.transaction-col-id { width: 4%; }
+.transaction-col-date { width: 7%; }
+.transaction-col-property { width: 12%; }
+.transaction-col-name { width: 12%; }
+.transaction-col-period { width: 14%; }
+.transaction-col-credit { width: 7%; }
+.transaction-col-charge { width: 7%; }
+.transaction-col-balance { width: 10%; }
+.transaction-col-audit { width: 10%; }
+.transaction-col-file { width: 10%; }
+.transaction-col-actions { width: 7%; }
+
+/********* end ***********/
 /*************************/

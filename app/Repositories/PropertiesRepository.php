@@ -8,7 +8,7 @@ use App\Helpers\LanguageHelper;
 use App\Models\{ Property, PropertyTranslation };
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Validations\PropertiesValidations;
-use App\Helpers\WorkgroupHelper;
+use App\Helpers\{ ImagesHelper, WorkgroupHelper };
 
 class PropertiesRepository implements PropertiesRepositoryInterface
 {
@@ -25,12 +25,23 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
+        $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
 
         $lang = LanguageHelper::current();
         
         if ($search) {
-            $query = PropertyTranslation::where('description', 'like', "%".$search."%");
+            $query = PropertyTranslation::query();
+            $query->where(function($query) use ($lang, $search) {
+                $query->where(function($query) use ($lang, $search) {
+                    $query->where('name', 'like', "%".$search."%");
+                    $query->orWhere('description', 'like', "%".$search."%");
+                    $query->where('language_id', $lang->id);
+                });
+                $query->orWhereHas('property', function($query) use ($search) {
+                    $query->where('id', $search);
+                });
+            });
         } else {
             $query = PropertyTranslation::query();
         }
@@ -38,7 +49,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $query
             ->where('language_id', $lang->id)
             ->with('property')
-            ->orderBy('id', 'desc');
+            ->orderBy('name', 'asc');
 
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function($q) {
@@ -49,8 +60,13 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         if ($shouldFilterByUserId) {
             $query->whereHas('property', function($q) use ($config) {
-                $table = (new Property)->_getTable();
                 $q->where('properties.user_id', $config['filterByUserId']);
+            });
+        }
+
+        if ($shouldFilterByEnabled) {
+            $query->whereHas('property', function($q) use ($config) {
+                $q->where('properties.is_enabled', 1);
             });
         }
 
@@ -149,16 +165,21 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $property = $this->model->find($id);
         if ($property && $this->canDelete($id)) {
 
-            if($property->images()->count()){
-                foreach ($property->images as $image){
-                    $image->delete();
-                    deleteFile($image->file_name);
-                }
-            }
-
             $property->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $property->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
+            if($property->images()->count()){
+                foreach ($property->images as $image){
+                    $image->delete();
+                    ImagesHelper::deleteFile($image->file_path);
+                    ImagesHelper::deleteThumbnails($image->file_path);
+                }
+            }
+
+            $property->rates()->delete();
+            $property->notes()->delete();
+            $property->amenities()->sync([]);
+            $property->contacts()->sync([]);
 
             $property->delete();
         }
@@ -168,6 +189,26 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
     public function canDelete($id)
     {
+        $property = $this->model->find($id);
+
+        if($property) {
+            if ($property->management()->count()) {
+                return false;
+            }
+
+            if ($property->bookings()->count()) {
+                return false;
+            }
+
+            if ($property->reservationRequests()->count()) {
+                return false;
+            }
+
+            if ($property->cleaningServices()->count()) {
+                return false;
+            }
+        }
+
         return true;
     }
 

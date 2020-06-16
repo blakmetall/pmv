@@ -21,7 +21,16 @@ class CreateBookingsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('property_id');
             $table->integer('user_id');
-            $table->integer('reservation_request_id');
+            $table->integer('reservation_request_id')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('street')->nullable();
+            $table->string('zip', 10)->nullable();
+            $table->string('phone', 30)->nullable();
+            $table->string('mobile', 30)->nullable();
             $table->text('comments')->nullable();
             $table->string('arrival_airline')->nullable();
             $table->string('arrival_flight_number')->nullable();
@@ -40,8 +49,8 @@ class CreateBookingsTable extends Migration
             $table->decimal('total', 15, 2)->nullable();
             $table->smallInteger('adults')->nullable();
             $table->smallInteger('kids')->nullable();
-            $table->tinyInteger('is_refundable')->nullable();
-            $table->tinyInteger('is_property_damaged')->nullable();
+            $table->tinyInteger('is_refundable')->nullable()->default(0);
+            $table->tinyInteger('is_property_damaged')->nullable()->default(0);
             $table->dateTime('audit_refund_datetime')->nullable();
             $table->integer('audit_refund_user_id')->nullable();
             $table->tinyInteger('is_cancelled')->nullable()->default(0);

@@ -9,11 +9,12 @@ class PropertyManagementTransactionsValidations extends Validation
     public function __construct()
     {
         $this->setDefaultValidations([
+            'post_date' => 'required|date_format:Y-m-d',
             'period_start_date' => 'nullable|date_format:Y-m-d',
             'period_end_date' => 'nullable|date_format:Y-m-d',
-            'post_date' => 'nullable|date_format:Y-m-d',
             'amount' => 'required|numeric|min:0',
             'operation_type' => 'required|numeric|between:1,2',
+            'transaction_file' => '' // validation types
         ]);
     }
 

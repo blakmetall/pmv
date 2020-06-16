@@ -11,9 +11,8 @@
                 <thead>
 
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">{{ __('Name') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -22,11 +21,6 @@
                     @if(count($rows))
                         @foreach($rows as $row)
                             <tr>
-                                <!-- id -->
-                                <th scope="row">
-                                    {{ $row->amenity->id }}
-                                </th>
-
                                 <!-- name -->
                                 <td>{{ $row->name }}</td>
 

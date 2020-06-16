@@ -25,13 +25,15 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $lang = LanguageHelper::current();
 
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $unfinishedOnly = isset($config['unfinishedOnly']) ? $config['unfinishedOnly'] : false;
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
 
         if ($search) {
-            $query = 
-                PropertyManagement::
-                    where('start_date', $search)
-                    ->orWhere('end_date', $search);
+            $query = PropertyManagement::query();
+            $query->where(function($query) use ($search) {
+                $query->where('start_date', 'like', '%'.$search.'%');
+                $query->orWhere('end_date', 'like', '%'.$search.'%');
+            });
         } else {
             $query = PropertyManagement::query();
         }
@@ -43,16 +45,23 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query->orderBy('is_finished', 'asc');
             $query->orderBy('start_date', 'desc');
         }else{
-            $query->where('is_finished', 0);
             $query->select('property_management.*');
             $query->join('properties', 'property_management.property_id', '=', 'properties.id');
             $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
             $query->where('language_id', $lang->id);
             $query->orderBy('name', 'asc');
+
+            if ($search) {
+                $query->orWhere('properties_translations.name', 'like', '%'.$search.'%');
+            }
+        }
+
+        if($unfinishedOnly) {
+            $query->where('is_finished', 0);
         }
 
         if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
+            $result = $query->paginate( 9999 );
         }else{
             $result = $query->get();
         }
@@ -82,7 +91,11 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $pm = $this->find($id);
         }
 
-        $pm->fill($request->all());
+        $checkboxesConfig = ['is_finished' => 0];
+        $requestData = array_merge($checkboxesConfig, $request->all());
+
+        $pm->fill($requestData);
+
         $pm->save();
 
         return $pm;
@@ -113,6 +126,17 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function canDelete($id) 
     {
+        $pm = $this->model->find($id);
+        
+        if($pm) {
+
+            // validate empty usage in transactions
+            if ($pm->transactions()->count()) {
+                return false;
+            }
+            
+        }
+
         return true;
     }
 

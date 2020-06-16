@@ -35,11 +35,11 @@ class User extends Authenticatable {
         return $this->hasMany('App\Models\Property');
     }
 
-    public function booking() {
+    public function bookings() {
         return $this->hasMany('App\Models\Booking');
     }
 
-    public function agentBooking() {
+    public function agentBookings() {
         return $this->hasMany('App\Models\Booking', 'user_agent_id');
     }
 

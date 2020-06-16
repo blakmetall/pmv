@@ -49,7 +49,7 @@ class CreateReservationRequestsTable extends Migration
             $table->decimal('total', 15, 2)->nullable();
             $table->smallInteger('adults')->nullable();
             $table->smallInteger('kids')->nullable();
-            $table->tinyInteger('is_refundable')->nullable();
+            $table->tinyInteger('is_refundable')->nullable()->default(0);
             $table->timestamps();
         });
     }

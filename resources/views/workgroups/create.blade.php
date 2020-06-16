@@ -9,6 +9,12 @@
                 'url' => route('workgroups'),
                 'label' => __('Workgroups'),
             ],
+        ],
+        'actions' => [
+            [
+                'url' => route('workgroups'),
+                'icon' => 'i-Receipt-4',
+            ],
         ]
     ])
 

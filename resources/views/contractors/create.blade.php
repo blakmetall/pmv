@@ -9,6 +9,12 @@
                 'url' => route('contractors'),
                 'label' => __('Contractors'),
             ],
+        ],
+        'actions' => [
+            [
+                'url' => route('contractors'),
+                'icon' => 'i-Receipt-4',
+            ],
         ]
     ])
 

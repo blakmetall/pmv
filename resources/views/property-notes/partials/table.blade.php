@@ -15,7 +15,7 @@
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Audited by') }}</th>
-                        <th scope="col">{{ __('Actions') }}</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
 
                 </thead>
@@ -58,6 +58,8 @@
                                         'showRoute' => 'property-notes.show',
                                         'editRoute' => 'property-notes.edit',
                                         'deleteRoute' => 'property-notes.destroy',
+                                        'skipEdit' => isRole('owner'),
+                                        'skipDelete' => isRole('owner'),
                                     ])
                                 </td>
 

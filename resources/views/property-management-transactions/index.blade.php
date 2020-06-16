@@ -2,20 +2,37 @@
 
 @section('heading-content')
 
+    @php 
+        $actions = [];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('New'),
+                    'url' => route('property-management-transactions.create', [$pm->id]),
+                    'icon' => 'i-Add',
+                ]
+            ]);
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('Property Management Transactions'),
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-management-transactions.create', [$pm->id])
-            ]
-        ]
+        'actions' => $actions
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
+    @include('properties.partials.info', [
+        'propertyID' => $pm->property->id,
+        'property' => $pm->property
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
+    @include('property-management-transactions.partials.search', [
         'url' => route('property-management-transactions', [$pm])
     ])
 
@@ -25,8 +42,10 @@
 
     <!-- here the data is loaded -->
     @include('property-management-transactions.partials.table', [
-        'label' => __('Property Management Transactions'),
-        'rows' => $transactions
+        'label' => __('Transactions'),
+        'rows' => $transactions,
+        'showBalanceColumn' => true,
+        'currentBalance' => $currentBalance,
     ])
 
 @endsection

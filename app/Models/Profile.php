@@ -24,6 +24,7 @@ class Profile extends Model {
         'mobile',
         'config_language',
         'config_agent_commission',
+        'config_agent_is_enabled',
     ];
 
     public function user() {
