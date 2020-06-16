@@ -18,5 +18,7 @@
     'edit_route' => 'property-rates.edit',
     'cancel_route' => 'property-rates',
     'delete_route' => 'property-rates.destroy',
-    'routeParams' => [$property->id]
+    'routeParams' => [$property->id],
+    'skipEdit' => isRole('owner'),
+    'skipDelete' => isRole('owner'),
 ])

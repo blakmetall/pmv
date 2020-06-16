@@ -18,5 +18,7 @@
     'edit_route' => 'property-management-transactions.edit',
     'cancel_route' => 'property-management-transactions',
     'delete_route' => 'property-management-transactions.destroy',
-    'routeParams' => [$pm->id]
+    'routeParams' => [$pm->id],
+    'skipEdit' => isRole('owner'),
+    'skipDelete' => isRole('owner'),
 ])

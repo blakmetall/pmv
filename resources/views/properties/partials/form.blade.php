@@ -35,4 +35,6 @@
     'edit_route' => 'properties.edit',
     'cancel_route' => 'properties',
     'delete_route' => 'properties.destroy',
+    'skipEdit' => isRole('owner'),
+    'skipDelete' => isRole('owner'),
 ])

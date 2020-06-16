@@ -10,6 +10,7 @@
         $routeParams[] = $id;
     }
 
+    $skipEdit = isset($skipEdit) ? (bool) $skipEdit : false;
     $skipDelete = isset($skipDelete) ? (bool) $skipDelete : false;
 
 @endphp
@@ -20,23 +21,26 @@
             <div class="row">
                 <div class="col-lg-12">
 
-                    @if ($disabled && $id) 
+                    @if ($disabled && $id && !$skipEdit) 
                         <a 
                             href="{{ route($edit_route, $routeParams) }}" 
                             class="btn btn-outline-secondary m-1" 
                             role="button">
-                                {{  __('Edit') }}
+                                {{  __('Update') }}
                         </a>
                     @endif
 
                     @if (!$disabled)
-                        <button type="submit" class="btn  btn-primary m-1">
-                            @if( !$id )
-                                {{ __('Create') }}
-                            @else
-                                {{ __('Update') }}
-                            @endif
-                        </button>
+
+                        @if(!$skipEdit)
+                            <button type="submit" class="btn  btn-primary m-1">
+                                @if( !$id )
+                                    {{ __('Create') }}
+                                @else
+                                    {{ __('Update') }}
+                                @endif
+                            </button>
+                        @endif
 
                         @if ($cancel_route)
                             <a href="{{ route($cancel_route, $routeParams) }}" class="btn btn-outline-secondary m-1" role="button">

@@ -2,6 +2,20 @@
 
 @section('heading-content')
 
+    @php 
+        $actions = [];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('New'),
+                    'url' => route('property-management-transactions.create', [$pm->id]),
+                    'icon' => 'i-Add',
+                ]
+            ]);
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('View'),
         'breadcrumbs' => [
@@ -10,13 +24,7 @@
                 'label' => __('Property Management Transactions'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-management-transactions.create', [$pm->id]),
-                'icon' => 'i-Add',
-            ]
-        ]
+        'actions' => $actions
     ])
 
     <!-- separator -->
