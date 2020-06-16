@@ -52,7 +52,12 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         $query->with('propertyManagement');
         $query->with('auditedBy');
-        $query->orderBy('post_date', 'asc');
+
+        if ($shouldFilterByPendingAudits) {
+            $query->orderBy('post_date', 'desc');
+        } else {
+            $query->orderBy('post_date', 'asc');
+        }
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );

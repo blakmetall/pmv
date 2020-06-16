@@ -317,19 +317,7 @@
 .app-pm-description {
     font-size: 13px;
     color: #7b7b7b;
-}
-
-.app-card-file-overlay {
-    background: rgba(59, 71, 80, 0.4);
-    padding: 22px 0 0 23px;
-
-    .card-title {
-        color: white;
-
-        a {
-            color: white;
-        }
-    }
+    margin-bottom: 0;
 }
 .app-months-list {
     padding-top: 8px;
@@ -356,6 +344,37 @@
     font-size: 11px;
 }
 
+.app-table-file-limit-width {
+    max-width: 120px;
+    width: 100%;
+}
+.app-file-card {
+    .card {
+        border-radius: 5px;
+        background: #e0e0e0;
+
+        .card-img-overlay {
+            padding: 10px 10px 12px 15px;
+
+            h5 { margin-bottom: 0; }
+        }
+
+        .app-card-text-overlay {
+            background: transparent;
+            padding: 10px 10px 12px 15px;
+
+            h5 { margin-bottom: 0; }
+        }
+        a {
+            color: #333;
+            font-size: 14px;
+        }
+        .text-white a {
+            color: #fff;
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .app-heading-buttons {
         padding-top: 10px;
@@ -366,4 +385,23 @@
 }
 
 /******* end *************/
+/*************************/
+
+
+/*************************/
+/********* tables ********/
+
+.transaction-col-id { width: 4%; }
+.transaction-col-date { width: 7%; }
+.transaction-col-property { width: 12%; }
+.transaction-col-name { width: 12%; }
+.transaction-col-period { width: 14%; }
+.transaction-col-credit { width: 7%; }
+.transaction-col-charge { width: 7%; }
+.transaction-col-balance { width: 10%; }
+.transaction-col-audit { width: 10%; }
+.transaction-col-file { width: 10%; }
+.transaction-col-actions { width: 7%; }
+
+/********* end ***********/
 /*************************/

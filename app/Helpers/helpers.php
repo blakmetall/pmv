@@ -248,3 +248,10 @@ if (!function_exists('getContactTypeBySlug')) {
         return \App\Helpers\ContactsHelper::getLabelBySlug($typeSlug);
     }
 }
+
+if (!function_exists('isImage')) {
+    function isImage($extension = '')
+    {        
+        return (in_array($extension, \Config::get('constants.valid_image_types')));
+    }
+}

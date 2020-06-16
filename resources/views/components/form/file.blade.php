@@ -66,15 +66,15 @@
         </div>
 
         @if ($fileUrl !== false)
-            <div class="app-file-wrapper">
-                <div class="card bg-dark text-white o-hidden mb-4">
+            <div class="app-file-card pt-4">
+                <div class="card">
 
                     @if ($isImage)
                         <img class="card-img" src="{{ asset(getUrlPath($fileUrl)) }}" alt="Card image">
                     @endif
 
                     @php 
-                        $overlayClass = $isImage ? 'card-img-overlay' : 'app-card-file-overlay';
+                        $overlayClass = $isImage ? 'card-img-overlay' : 'app-card-text-overlay';
                         $textBgClass = $isImage ? 'text-white' : ''; 
                     @endphp
                     <div class="{{ $overlayClass }}">
