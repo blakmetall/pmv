@@ -10,6 +10,8 @@
         $routeParams[] = $id;
     }
 
+    $skipDelete = isset($skipDelete) ? (bool) $skipDelete : false;
+
 @endphp
 
 <div class="card form-actions">
@@ -44,7 +46,7 @@
                     @endif
 
                     <!-- if editing might be a chance to delete -->
-                    @if( $id && $delete_route)
+                    @if( $id && $delete_route && !$skipDelete)
                         <a 
                             href="{{ route($delete_route, $routeParams) }}" 
                             class="btn btn-danger m-1 footer-delete-right" 

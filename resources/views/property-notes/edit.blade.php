@@ -2,6 +2,20 @@
 
 @section('heading-content')
 
+    @php 
+        $actions = [];
+
+        if(!isRole('owner')) {
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('New'),
+                    'url' => route('property-notes.create', [$property->id]),
+                    'icon' => 'i-Add',
+                ]
+            ]);
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('Edit'),
         'breadcrumbs' => [
@@ -10,13 +24,7 @@
                 'label' => __('Notes'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-notes.create', [$property->id]),
-                'icon' => 'i-Add',
-            ]
-        ]
+        'actions' => $actions
     ])
 
     <!-- separator -->
