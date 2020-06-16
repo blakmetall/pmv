@@ -26,6 +26,14 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
+    @include('properties.partials.info', [
+        'propertyID' => $property->id,
+        'property' => $property
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
 @endsection
 
 @section('main-content')

@@ -16,6 +16,14 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
+    @include('properties.partials.info', [
+        'propertyID' => $pm->property->id,
+        'property' => $pm->property
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+
     @include('property-management-transactions.partials.search', [
         'url' => route('property-management-transactions', [$pm])
     ])
