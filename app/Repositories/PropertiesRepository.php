@@ -25,6 +25,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
+        $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
 
         $lang = LanguageHelper::current();
@@ -48,7 +49,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $query
             ->where('language_id', $lang->id)
             ->with('property')
-            ->orderBy('id', 'desc');
+            ->orderBy('name', 'asc');
 
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function($q) {
@@ -59,8 +60,13 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         if ($shouldFilterByUserId) {
             $query->whereHas('property', function($q) use ($config) {
-                $table = (new Property)->_getTable();
                 $q->where('properties.user_id', $config['filterByUserId']);
+            });
+        }
+
+        if ($shouldFilterByEnabled) {
+            $query->whereHas('property', function($q) use ($config) {
+                $q->where('properties.is_enabled', 1);
             });
         }
 

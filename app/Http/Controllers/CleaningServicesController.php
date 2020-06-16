@@ -46,6 +46,7 @@ class CleaningServicesController extends Controller
         $properties = $this->propertiesRepository->all('', [
             'paginate' => false,
             'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
         ]);
       
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
@@ -80,7 +81,12 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->find($cleaning_service);
 
-        $properties = $this->propertiesRepository->all('', ['paginate' => false]);
+        $properties = $this->propertiesRepository->all('', [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ]);
+        
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
 
         return view('cleaning-services.edit')
