@@ -15,10 +15,6 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
-        'url' => route('property-management', [$property->id])
-    ])
-
 @endsection
 
 @section('main-content')

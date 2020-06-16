@@ -1,3 +1,10 @@
+@php
+
+    $skipRepeated = isset($skipRepeated) ? (bool) $skipRepeated : true;
+    $repeatedIDS = [];
+
+@endphp
+
 <div class="mb-5"></div>
 <div class="card">
     <div class="card-header">{{ $label }}</div>
@@ -34,6 +41,17 @@
 
                     @if(count($rows))
                         @foreach($rows as $row)
+
+                            <!-- skip repeated control -->
+                            @if (in_array($row->id, $repeatedIDS))
+                                @php continue; @endphp
+                            @endif
+                            @php 
+                                if (!in_array($row->id, $repeatedIDS)) {
+                                    $repeatedIDS[] = $row->id;
+                                }
+                            @endphp
+
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
