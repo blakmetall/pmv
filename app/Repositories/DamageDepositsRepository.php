@@ -134,7 +134,24 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
 
     public function canDelete($id)
     {
-        return ($id > 3); // to not delete seed items
+        $isNotDefaultItem = $id > 3;
+
+        $damage_deposit = $this->model->find($id);
+        if($damage_deposit) {
+
+            // validation empty usage in bookings
+            if ($damage_deposit->bookings()->count()) {
+                return false;
+            }
+
+            // validation empty usage in reservation_requests
+            if ($damage_deposit->reservationRequests()->count()) {
+                return false;
+            }
+        }
+
+
+        return $isNotDefaultItem;
     }
 
     public function blueprint()

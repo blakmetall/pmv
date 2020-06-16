@@ -48,4 +48,8 @@ class Booking extends Model {
         return $this->hasMany('App\Models\BookingExtraPayment');
     }
 
+    public function damageDeposit() {
+        return $this->belongsTo('App\Models\DamageDeposit');
+    }
+
 }
