@@ -69,9 +69,13 @@
 
                                 <td>
                                     @if ($row->property->user)
-                                        <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                        @if(!isRole('owner'))
+                                            <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                                {{ $row->property->user->profile->full_name }}
+                                            </a>
+                                        @else
                                             {{ $row->property->user->profile->full_name }}
-                                        </a>
+                                        @endif
                                     @endif
                                 </td>
 
@@ -117,7 +121,7 @@
                                     @endif
 
                                     <!-- bookings from specific to property -->
-                                    @if( !isRole('owner') )
+                                    @if( !isRole('owner') && !isProduction())
                                         <a 
                                             href="{{ route('bookings.by-property', $row->property->id) }}" 
                                             class="text-primary app-icon-link"
