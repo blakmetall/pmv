@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -10,7 +10,6 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
 
 // files mixes
 mix.react("resources/js/app.js", "public/js/app.js");
@@ -29,13 +28,16 @@ mix.combine(
         "public/assets/styles/vendor/fastselect.min.css",
         "public/assets/styles/vendor/jquery.timepicker.min.css",
         "public/assets/styles/vendor/pickadate/classic.css",
-        "public/assets/styles/vendor/pickadate/classic.date.css",
+        "public/assets/styles/vendor/pickadate/classic.date.css"
     ],
     "public/css/vendor.css"
 );
 
-// gull scripts 
-mix.js(["resources/gull/assets/js/script.js"], "public/assets/js/script.js");
+// gull scripts
+mix.js(
+    ["resources/gull/assets/js/script.js"],
+    "public/assets/js/gull-script.js"
+);
 
 // vendor scripts mix
 mix.combine(
@@ -50,7 +52,7 @@ mix.combine(
         "public/assets/js/vendor/jquery.timepicker.min.js",
         "public/assets/js/vendor/pickadate/legacy.js",
         "public/assets/js/vendor/pickadate/picker.js",
-        "public/assets/js/vendor/pickadate/picker.date.js",
+        "public/assets/js/vendor/pickadate/picker.date.js"
     ],
     "public/assets/js/common-bundle-script.js"
 );
