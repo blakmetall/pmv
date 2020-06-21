@@ -33,9 +33,18 @@
 
                         <tr>
                             <th scope="col" class="transaction-col-id">#</th>
+                            
+                            @if(!isRole('owner'))
+                                <th scope="col" class="transaction-col-checkbox">&nbsp;</th>
+                            @endif
+
                             <th scope="col" class="transaction-col-file">&nbsp;</th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
-                            <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
+
+                            @if(!isRole('owner'))
+                                <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
+                            @endif
+
                             <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
                             <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
                             <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
@@ -85,6 +94,11 @@
                                         {{ $row->id }}
                                     </th>
 
+                                    @if(!isRole('owner'))
+                                        <!-- checkbox -->
+                                        <td>&nbsp;</td>
+                                    @endif
+
                                     <!-- file -->
                                     <td>
                                         @include('components.table.file-modal', [
@@ -102,14 +116,16 @@
                                         </div>
                                     </td>
 
-                                    <!-- property -->
-                                    <td>
-                                        @if ($row->propertyManagement->property->hasTranslation())
-                                            <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
-                                                {{ $row->propertyManagement->property->translate()->name }}
-                                            </a>
-                                        @endif
-                                    </td>
+                                    @if(!isRole('owner'))
+                                        <!-- property -->
+                                        <td>
+                                            @if ($row->propertyManagement->property->hasTranslation())
+                                                <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
+                                                    {{ $row->propertyManagement->property->translate()->name }}
+                                                </a>
+                                            @endif
+                                        </td>
+                                    @endif
 
                                     <!-- transaction_type_id -->
                                     <td>
@@ -199,7 +215,13 @@
 
                         <!-- table totals -->
                         <tr>
-                            <td colspan="6">&nbsp;</td>
+                            @if(isRole('owner'))
+                                <td colspan="5">&nbsp;</td>
+                            @else
+                                <td colspan="7">&nbsp;</td>
+                            @endif
+                            
+
                             <th class="text-primary">{{ priceFormat($creditCount) }}</th>
                             <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
