@@ -45,7 +45,7 @@
                                 <!-- is_enabled -->
                                 <th scope="row">
                                     @php 
-                                        $enabledClass = ($row->is_enabled) ? 'success' : 'danger';
+                                        $enabledClass = ($row->is_enabled) ? 'secondary' : 'danger';
                                         $enabledLabel = ($row->is_enabled) ? __('Enabled') : __('Disabled');
                                     @endphp
 
@@ -58,7 +58,7 @@
                                 <td>
                                     @foreach (RoleHelper::available($row->id) as $role)
                                         <div>
-                                            <span class="badge badge-secondary p-1 mb-1">
+                                            <span class="badge badge-primary p-1 mb-1">
                                                 {{ $role['name'] }}
                                             </span>
                                         </div>
