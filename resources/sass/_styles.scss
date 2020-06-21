@@ -42,6 +42,7 @@
         }
     }
 }
+
 @media (max-width: 768px) {
     .layout-horizontal-bar {
         .main-header {
@@ -398,7 +399,23 @@
     }
 }
 
+.app-table-file-modal-dialog {
+    max-width: 1200px;
+}
+
+@media (max-width: 1200px) {
+    .app-table-file-modal-dialog {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 992px) {}
+
 @media (max-width: 768px) {
+    .app-table-file-modal-dialog {
+        max-width: 95%;
+    }
+
     .app-heading-buttons {
         padding-top: 10px;
     }

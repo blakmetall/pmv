@@ -214,6 +214,7 @@
 
                         <tr>
                             <th scope="col" class="transaction-col-id">#</th>
+                            <th scope="col" class="transaction-col-file">&nbsp;</th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
                             <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
@@ -226,7 +227,6 @@
                             @endif
 
                             <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
-                            <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
                             <th scope="col" class="transaction-col-actions">&nbsp;</th>
                         </tr>
 
@@ -240,7 +240,7 @@
 
                         @if(count($rows))
 
-                            @foreach($rows as $row)
+                            @foreach($rows as $index => $row)
 
                                 @php
                                     if ($row->auditedBy) { continue; }
@@ -256,10 +256,20 @@
                                 @endphp
 
                                 <tr>
-                                    <!-- id -->
+                                    <!-- counter -->
                                     <th scope="row">
-                                        {{ $row->id }}
+                                        {{ $index + 1 }}
                                     </th>
+
+                                    <!-- file -->
+                                    <td>
+                                        @include('components.table.file-modal', [
+                                            'fileName' => $row->file_original_name,
+                                            'filePath' => $row->file_path,
+                                            'fileUrl' => $row->file_url,
+                                            'fileSlug' => $row->file_slug,
+                                        ])
+                                    </td>
 
                                     <!-- post_date -->
                                     <td>{{ $row->post_date }}</td>
@@ -332,18 +342,6 @@
                                                 {{ $row->auditedBy->profile->full_name }}
                                             </a>
                                         @endif
-                                    </td>
-
-                                    <!-- file -->
-                                    <td>
-                                        <div class="app-table-file-limit-width">
-                                            @include('components.file-card', [
-                                                'imgSize' => 'small-ls',
-                                                'url' => $row->file_url,
-                                                'extension' => $row->file_extension,
-                                                'name' => $row->file_original_name,
-                                            ])
-                                        </div>
                                     </td>
 
                                     <!-- actions -->

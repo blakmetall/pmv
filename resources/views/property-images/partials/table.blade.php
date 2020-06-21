@@ -31,9 +31,14 @@
 
                                 <!-- thumbnail -->
                                 <th>
-                                    <a href="{{ asset(getUrlPath($row->file_url)) }}" target="_blank">
-                                        <img src="{{ asset(getUrlPath($row->file_url, 'small-ls')) }}" alt="" width="100">
-                                    </a>
+                                    @include('components.table.file-modal', [
+                                        'fileName' => $row->file_original_name,
+                                        'filePath' => $row->file_path,
+                                        'fileUrl' => $row->file_url,
+                                        'fileSlug' => $row->file_slug,
+                                        'imgUrl' => $row->file_url,
+                                        'imgSize' => 'small-ls'
+                                    ])
                                 </th>
 
                                 <!-- property -->
