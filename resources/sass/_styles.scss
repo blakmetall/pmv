@@ -231,6 +231,30 @@
 /*************************/
 /********* app ***********/
 
+.layout-horizontal-bar {
+    .main-header {
+        background: #2c3e4f;
+        height: 66px;
+
+        .header-icon {
+            color: white;
+
+            &:hover {
+                color: white;
+                background: transparent;
+            }
+        }
+    }
+
+    .header-topnav {
+        top: 66px;
+    }
+
+    .main-content-wrap {
+        margin-top: 114px !important;
+    }
+}
+
 .app-container {
     max-width: 1250px;
 }
@@ -420,6 +444,11 @@
     }
     .app-search-buttons {
         padding-top: 10px;
+    }
+    .layout-horizontal-bar {
+        .main-content-wrap {
+            margin-top: 69px !important;
+        }
     }
 }
 

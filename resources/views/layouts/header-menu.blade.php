@@ -61,7 +61,7 @@
 
         <!-- Language switch -->
         <div class="dropdown">
-            <i class="i-Globe text-muted header-icon" role="button" id="languageSwitcherBtn" data-toggle="dropdown"
+            <i class="i-Globe header-icon" role="button" id="languageSwitcherBtn" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageSwitcherBtn">
                 <div class="dropdown-header">
@@ -89,7 +89,7 @@
 
         <!-- Role switch -->
         <div class="dropdown">
-            <i class="i-Two-Windows text-muted header-icon" role="button" id="roleSwitcherButton" data-toggle="dropdown"
+            <i class="i-Two-Windows header-icon" role="button" id="roleSwitcherButton" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="roleSwitcherButton">
                 <div class="dropdown-header">
@@ -118,7 +118,7 @@
         <div class="dropdown">
             <div class="user col align-self-end">
 
-                <i class="i-Administrator text-muted header-icon" role="button" 
+                <i class="i-Administrator header-icon" role="button" 
                     id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">

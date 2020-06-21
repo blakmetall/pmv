@@ -1,3 +1,8 @@
 .breadcrumb {
     background: transparent;
 }
+.layout-horizontal-bar .main-header .menu-toggle {
+    > div {
+        background: white;
+    }
+}
