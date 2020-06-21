@@ -1,8 +1,36 @@
 .breadcrumb {
     background: transparent;
+    padding-left: 5px;
+
+    ul {
+        position: relative;
+        top: -4px;
+    }
 }
 .layout-horizontal-bar .main-header .menu-toggle {
     > div {
         background: white;
+    }
+}
+
+@media (max-width: 768px) {
+
+}
+
+
+@media (max-width: 576px) {
+    .breadcrumb {
+        ul {
+            top: 0;
+
+            li {
+                &:first-child {
+                    display: none;
+                }
+                &:nth-child(2) {
+                    padding-left: 0;
+                }
+            }
+        }
     }
 }
