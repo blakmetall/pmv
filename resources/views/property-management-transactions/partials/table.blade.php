@@ -1,10 +1,12 @@
 @php
 
     $skipAuditedTable = isset($skipAuditedTable) ? (bool) $skipAuditedTable : false;
+    $usePendingAuditPresentation = isset($usePendingAuditPresentation) ? (bool) $usePendingAuditPresentation : false;
+
+    $shouldShowBalanceColumn = !$usePendingAuditPresentation;
 
     $balanceCount = 0;
-    $shouldShowBalanceColumn = isset($showBalanceColumn) ? $showBalanceColumn : false;
-    if($shouldShowBalanceColumn && isset($currentBalance)) {
+    if($usePendingAuditPresentation && isset($currentBalance)) {
         $balanceCount = $currentBalance['balance'];
     }
 
@@ -219,15 +221,30 @@
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
                             <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
                             <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
-                            <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
-                            <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
+
+                            @if ($usePendingAuditPresentation)
+                                <th scope="col" class="transaction-col-amount">{{ __('Amount') }}</th>
+                                <th scope="col" class="transaction-col-type">{{ __('Type') }}</th>
+                            @else
+                                <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
+                                <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
+                            @endif
 
                             @if($shouldShowBalanceColumn)
                                 <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
                             @endif
 
-                            <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
-                            <th scope="col" class="transaction-col-actions">&nbsp;</th>
+                            @if (!$usePendingAuditPresentation)
+                                <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
+                            @endif
+
+                            <th scope="col">{{ __('Created') }}</th>
+                            <th scope="col">{{ __('Updated') }}</th>
+
+                            @if (!$usePendingAuditPresentation)
+                                <th scope="col" class="transaction-col-actions">&nbsp;</th>
+                            @endif
+                            
                         </tr>
 
                     </thead>
@@ -303,23 +320,34 @@
                                         {{ $row->period_end_date }}
                                     </td>
 
-                                    <!-- credit -->
-                                    <td>
-                                        @if($row->operation_type === config('constants.operation_types.credit'))
-                                            {{ priceFormat($row->amount) }}
-                                        @else
-                                            --
-                                        @endif
-                                    </td>
+                                    @if ($usePendingAuditPresentation)
+                                        <!-- amount -->
+                                        <td>{{ priceFormat($row->amount) }}</td>
 
-                                    <!-- charges -->
-                                    <td>
-                                        @if($row->operation_type === config('constants.operation_types.charge'))
-                                            {{ priceFormat($row->amount) }}
-                                        @else
-                                            --
-                                        @endif
-                                    </td>
+                                        <!-- type -->
+                                        <td>{{ getOperationTypeById($row->operation_type) }}</td>
+                                    @else
+                                        
+                                        <!-- credit -->
+                                        <td>
+                                            @if($row->operation_type === config('constants.operation_types.credit'))
+                                                {{ priceFormat($row->amount) }}
+                                            @else
+                                                --
+                                            @endif
+                                        </td>
+
+                                        <!-- charges -->
+                                        <td>
+                                            @if($row->operation_type === config('constants.operation_types.charge'))
+                                                {{ priceFormat($row->amount) }}
+                                            @else
+                                                --
+                                            @endif
+                                        </td>
+
+                                    @endif
+                                    
 
                                     <!-- balance -->
                                     @if($shouldShowBalanceColumn)
@@ -335,26 +363,36 @@
                                         </td>
                                     @endif
 
-                                    <!-- audit_user_id -->
-                                    <td>
-                                        @if ($row->auditedBy)
-                                            <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
-                                                {{ $row->auditedBy->profile->full_name }}
-                                            </a>
-                                        @endif
-                                    </td>
+                                    @if (!$usePendingAuditPresentation)
+                                        <!-- audit_user_id -->
+                                        <td>
+                                            @if ($row->auditedBy)
+                                                <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
+                                                    {{ $row->auditedBy->profile->full_name }}
+                                                </a>
+                                            @endif
+                                        </td>
+                                    @endif
 
-                                    <!-- actions -->
-                                    <td>
-                                        @include('components.table.actions', [
-                                            'params' => [$row->propertyManagement->id, $row->id],
-                                            'showRoute' => 'property-management-transactions.show',
-                                            'editRoute' => 'property-management-transactions.edit',
-                                            'deleteRoute' => 'property-management-transactions.destroy',
-                                            'skipEdit' => isRole('owner'),
-                                            'skipDelete' => isRole('owner'),
-                                        ])
-                                    </td>
+                                    <!-- created/updated cols -->
+                                    @include('components.table.created-updated', [
+                                        'created_at' => $row->created_at,
+                                        'updated_at' => $row->updated_at,
+                                    ])
+
+                                    @if (!$usePendingAuditPresentation)
+                                        <!-- actions -->
+                                        <td>
+                                            @include('components.table.actions', [
+                                                'params' => [$row->propertyManagement->id, $row->id],
+                                                'showRoute' => 'property-management-transactions.show',
+                                                'editRoute' => 'property-management-transactions.edit',
+                                                'deleteRoute' => 'property-management-transactions.destroy',
+                                                'skipEdit' => isRole('owner'),
+                                                'skipDelete' => isRole('owner'),
+                                            ])
+                                        </td>
+                                    @endif
 
                                 </tr>
                             @endforeach

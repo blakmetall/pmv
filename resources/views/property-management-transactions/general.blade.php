@@ -18,6 +18,7 @@
         'label' => __('Property Management Transactions'),
         'rows' => $transactions,
         'skipAuditedTable' => true,
+        'usePendingAuditPresentation' => true,
     ])
 
 @endsection

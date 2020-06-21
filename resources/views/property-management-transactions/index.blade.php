@@ -44,7 +44,6 @@
     @include('property-management-transactions.partials.table', [
         'label' => __('Transactions'),
         'rows' => $transactions,
-        'showBalanceColumn' => true,
         'currentBalance' => $currentBalance,
     ])
 
