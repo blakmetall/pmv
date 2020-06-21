@@ -433,37 +433,54 @@
 
 .app-transaction-list {
     .transaction-col-id { width: 4%; }
+    .transaction-col-file { width: 10%; }
     .transaction-col-date { width: 7%; }
     .transaction-col-property { width: 12%; }
-    .transaction-col-name { width: 12%; }
+    .transaction-col-transaction-name { width: 12%; }
     .transaction-col-period { width: 14%; }
     .transaction-col-credit { width: 7%; }
     .transaction-col-charge { width: 7%; }
     .transaction-col-balance { width: 10%; }
     .transaction-col-audit { width: 10%; }
-    .transaction-col-file { width: 10%; }
     .transaction-col-actions { width: 7%; }
 }
 
-.app-transaction-pending-audit-list {
+.app-transaction-list-pending {
     .transaction-col-id { width: 4%; }
+    .transaction-col-file { width: 10%; }
     .transaction-col-date { width: 7%; }
     .transaction-col-property { width: 12%; }
-    .transaction-col-name { width: 12%; }
+    .transaction-col-transaction-name { width: 12%; }
     .transaction-col-period { width: 14%; }
     .transaction-col-credit { width: 7%; }
     .transaction-col-charge { width: 7%; }
     .transaction-col-balance { width: 10%; }
     .transaction-col-audit { width: 10%; }
-    .transaction-col-file { width: 10%; }
     .transaction-col-actions { width: 7%; }
+}
+
+.app-transaction-pending-audit-list-pending {
+    font-size: 12px;
+    min-width: 1200px;
+
+    .transaction-col-id { width: 5%; }
+    .transaction-col-checkbox { width: 4%; }
+    .transaction-col-file { width: 4%; }
+    .transaction-col-date { width: 8%; }
+    .transaction-col-property { width: 17%; }
+    .transaction-col-transaction-name { width: 23%; }
+    .transaction-col-period { width: 12%; }
+    .transaction-col-amount { width: 6%; }
+    .transaction-col-type { width: 5%; }
+    .transaction-col-created { width: 8%; }
+    .transaction-col-updated { width: 8%; }
 }
 
 .app-transaction-owner-list {
     .transaction-col-id { width: 4%; }
     .transaction-col-date { width: 7%; }
     .transaction-col-property { width: 12%; }
-    .transaction-col-name { width: 12%; }
+    .transaction-col-transaction-name { width: 12%; }
     .transaction-col-period { width: 14%; }
     .transaction-col-credit { width: 7%; }
     .transaction-col-charge { width: 7%; }

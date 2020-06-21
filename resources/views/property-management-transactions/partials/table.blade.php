@@ -14,6 +14,7 @@
     if(isRole('owner')) {
         $tableClass = 'app-transaction-owner-list';
     }
+    $pendingTableClass = $tableClass . '-pending';
 
 @endphp
 
@@ -32,10 +33,10 @@
 
                         <tr>
                             <th scope="col" class="transaction-col-id">#</th>
-                            <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
+                            <th scope="col" class="transaction-col-file">&nbsp;</th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
-                            <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
+                            <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
                             <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
                             <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
                             <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
@@ -95,7 +96,11 @@
                                     </td>
 
                                     <!-- post_date -->
-                                    <td>{{ $row->post_date }}</td>
+                                    <td>
+                                        <div class="app-td-date">
+                                            {{ $row->post_date }}
+                                        </div>
+                                    </td>
 
                                     <!-- property -->
                                     <td>
@@ -117,13 +122,15 @@
 
                                     <!-- period -->
                                     <td>
-                                        {{ $row->period_start_date }} 
-                                        
-                                        @if($row->period_end_date)
-                                            -
-                                        @endif
-                                        
-                                        {{ $row->period_end_date }}
+                                        <div class="app-td-date">
+                                            {{ $row->period_start_date }} 
+                                            
+                                            @if($row->period_end_date)
+                                                -
+                                            @endif
+                                            
+                                            {{ $row->period_end_date }}
+                                        </div>
                                     </td>
 
                                     <!-- credit -->
@@ -224,15 +231,20 @@
         <div class="card-body pt-5">
 
             <div class="table-responsive">
-                <table class="table table-striped {{ $tableClass }}">
+                <table class="table table-striped {{ $pendingTableClass }}">
                     <thead>
 
                         <tr>
                             <th scope="col" class="transaction-col-id">#</th>
+                            <th scope="col" class="transaction-col-checkbox">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                </div>
+                            </th>
                             <th scope="col" class="transaction-col-file">&nbsp;</th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
-                            <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
+                            <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
                             <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
 
                             @if ($usePendingAuditPresentation)
@@ -289,6 +301,12 @@
                                         {{ $row->id }}
                                     </th>
 
+                                    <td>
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        </div>
+                                    </td>
+
                                     <!-- file -->
                                     <td>
                                         @include('components.table.file-modal', [
@@ -300,7 +318,11 @@
                                     </td>
 
                                     <!-- post_date -->
-                                    <td>{{ $row->post_date }}</td>
+                                    <td>
+                                        <div class="app-td-date">
+                                            {{ $row->post_date }}
+                                        </div>
+                                    </td>
 
                                     <!-- property -->
                                     <td>
@@ -322,13 +344,16 @@
 
                                     <!-- period -->
                                     <td>
-                                        {{ $row->period_start_date }} 
-                                        
-                                        @if($row->period_end_date)
-                                            -
-                                        @endif
-                                        
-                                        {{ $row->period_end_date }}
+                                        <div class="app-td-date">
+                                            {{ $row->period_start_date }}
+
+                                            @if($row->period_end_date)
+                                                -
+                                            @endif
+                                            2010-20-20 - 2010-10-10
+                                            
+                                            {{ $row->period_end_date }}
+                                        </div>
                                     </td>
 
                                     @if ($usePendingAuditPresentation)
@@ -408,14 +433,14 @@
                         <!-- table totals -->
                         @if ($usePendingAuditPresentation)
                             <tr>
-                                <td colspan="5">&nbsp;</td>
+                                <td colspan="6">&nbsp;</td>
                                 <td class="text-right">Total:</td>
                                 <th class="text-primary">{{ priceFormat($totalPendingAudits) }}</th>
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                         @else
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="7">&nbsp;</td>
                                 <th class="text-primary">{{ priceFormat($creditCount) }}</th>
                                 <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
