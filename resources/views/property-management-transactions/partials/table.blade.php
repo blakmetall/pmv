@@ -10,6 +10,11 @@
         $balanceCount = $currentBalance['balance'];
     }
 
+    $tableClass = $usePendingAuditPresentation ? 'app-transaction-pending-audit-list' : 'app-transaction-list';
+    if(isRole('owner')) {
+        $tableClass = 'app-transaction-owner-list';
+    }
+
 @endphp
 
 <div class="mb-5"></div>
@@ -22,11 +27,12 @@
         <div class="card-body pt-5">
 
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped {{ $tableClass }}">
                     <thead>
 
                         <tr>
                             <th scope="col" class="transaction-col-id">#</th>
+                            <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
                             <th scope="col" class="transaction-col-name">{{ __('Transaction') }}</th>
@@ -38,12 +44,14 @@
                                 <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
                             @endif
 
+                            <th scope="col" class="transaction-col-created">{{ __('Created') }}</th>
+                            <th scope="col" class="transaction-col-updated">{{ __('Updated') }}</th>
+
                             @if(!isRole('owner'))
-                                <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
+                                <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
+                                <th scope="col" class="transaction-col-actions">&nbsp;</th>
                             @endif
 
-                            <th scope="col" class="transaction-col-file">{{ __('File') }}</th>
-                            <th scope="col" class="transaction-col-actions">&nbsp;</th>
                         </tr>
 
                     </thead>
@@ -75,6 +83,16 @@
                                     <th scope="row">
                                         {{ $row->id }}
                                     </th>
+
+                                    <!-- file -->
+                                    <td>
+                                        @include('components.table.file-modal', [
+                                            'fileName' => $row->file_original_name,
+                                            'filePath' => $row->file_path,
+                                            'fileUrl' => $row->file_url,
+                                            'fileSlug' => $row->file_slug,
+                                        ])
+                                    </td>
 
                                     <!-- post_date -->
                                     <td>{{ $row->post_date }}</td>
@@ -139,41 +157,34 @@
                                             </span>
                                         </td>
                                     @endif
+                                    
+                                    <!-- created/updated cols -->
+                                    @include('components.table.created-updated', [
+                                        'created_at' => $row->created_at,
+                                        'updated_at' => $row->updated_at,
+                                        'trimTime' => true,
+                                    ])
 
                                     @if(!isRole('owner'))
-                                        <!-- audit_user_id -->
+                                        <!-- audited cols -->
+                                        @include('components.table.created-updated', [
+                                            'audited_at' => $row->audit_date,
+                                            'auditedBy' => $row->auditedBy,
+                                            'trimTime' => true,
+                                        ])
+
+                                        <!-- actions -->
                                         <td>
-                                            @if ($row->auditedBy)
-                                                <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
-                                                    {{ $row->auditedBy->profile->full_name }}
-                                                </a>
-                                            @endif
+                                            @include('components.table.actions', [
+                                                'params' => [$row->propertyManagement->id, $row->id],
+                                                'showRoute' => 'property-management-transactions.show',
+                                                'editRoute' => 'property-management-transactions.edit',
+                                                'deleteRoute' => 'property-management-transactions.destroy',
+                                                'skipDelete' => true,
+                                            ])
                                         </td>
                                     @endif
 
-                                    <!-- file -->
-                                    <td>
-                                        <div class="app-table-file-limit-width">
-                                            @include('components.file-card', [
-                                                'imgSize' => 'small-ls',
-                                                'url' => $row->file_url,
-                                                'extension' => $row->file_extension,
-                                                'name' => $row->file_original_name,
-                                            ])
-                                        </div>
-                                    </td>
-
-                                    <!-- actions -->
-                                    <td>
-                                        @include('components.table.actions', [
-                                            'params' => [$row->propertyManagement->id, $row->id],
-                                            'showRoute' => 'property-management-transactions.show',
-                                            'editRoute' => 'property-management-transactions.edit',
-                                            'deleteRoute' => 'property-management-transactions.destroy',
-                                            'skipEdit' => isRole('owner'),
-                                            'skipDelete' => true,
-                                        ])
-                                    </td>
 
                                 </tr>
                             @endforeach
@@ -181,7 +192,7 @@
 
                         <!-- table totals -->
                         <tr>
-                            <td colspan="5">&nbsp;</td>
+                            <td colspan="6">&nbsp;</td>
                             <th class="text-primary">{{ priceFormat($creditCount) }}</th>
                             <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
@@ -203,6 +214,8 @@
 
 @endif
 
+
+
 @if(!isRole('owner'))
 
     <!-- pending transactions -->
@@ -211,7 +224,7 @@
         <div class="card-body pt-5">
 
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped {{ $tableClass }}">
                     <thead>
 
                         <tr>
@@ -234,14 +247,11 @@
                                 <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
                             @endif
 
-                            @if (!$usePendingAuditPresentation)
-                                <th scope="col" class="transaction-col-audit">{{ __('Audited By') }}</th>
-                            @endif
-
-                            <th scope="col">{{ __('Created') }}</th>
-                            <th scope="col">{{ __('Updated') }}</th>
+                            <th scope="col" class="transaction-col-created">{{ __('Created') }}</th>
+                            <th scope="col" class="transaction-col-updated">{{ __('Updated') }}</th>
 
                             @if (!$usePendingAuditPresentation)
+                                <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
                                 <th scope="col" class="transaction-col-actions">&nbsp;</th>
                             @endif
                             
@@ -253,6 +263,7 @@
                         @php 
                             $creditCount = 0;
                             $chargeCount = 0;
+                            $totalPendingAudits = 0;
                         @endphp
 
                         @if(count($rows))
@@ -273,9 +284,9 @@
                                 @endphp
 
                                 <tr>
-                                    <!-- counter -->
+                                    <!-- id -->
                                     <th scope="row">
-                                        {{ $index + 1 }}
+                                        {{ $row->id }}
                                     </th>
 
                                     <!-- file -->
@@ -326,6 +337,8 @@
 
                                         <!-- type -->
                                         <td>{{ getOperationTypeById($row->operation_type) }}</td>
+
+                                        @php $totalPendingAudits += $row->amount; @endphp
                                     @else
                                         
                                         <!-- credit -->
@@ -363,24 +376,17 @@
                                         </td>
                                     @endif
 
-                                    @if (!$usePendingAuditPresentation)
-                                        <!-- audit_user_id -->
-                                        <td>
-                                            @if ($row->auditedBy)
-                                                <a href="{{ route('users.show', [$row->auditedBy->profile->user->id]) }}">
-                                                    {{ $row->auditedBy->profile->full_name }}
-                                                </a>
-                                            @endif
-                                        </td>
-                                    @endif
-
                                     <!-- created/updated cols -->
                                     @include('components.table.created-updated', [
                                         'created_at' => $row->created_at,
                                         'updated_at' => $row->updated_at,
+                                        'trimTime' => true,
                                     ])
 
                                     @if (!$usePendingAuditPresentation)
+                                        <!-- audit col -->
+                                        <td>--</td>
+
                                         <!-- actions -->
                                         <td>
                                             @include('components.table.actions', [
@@ -400,17 +406,26 @@
                         @endif
 
                         <!-- table totals -->
-                        <tr>
-                            <td colspan="5">&nbsp;</td>
-                            <th class="text-primary">{{ priceFormat($creditCount) }}</th>
-                            <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
+                        @if ($usePendingAuditPresentation)
+                            <tr>
+                                <td colspan="5">&nbsp;</td>
+                                <td class="text-right">Total:</td>
+                                <th class="text-primary">{{ priceFormat($totalPendingAudits) }}</th>
+                                <td colspan="3">&nbsp;</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td colspan="6">&nbsp;</td>
+                                <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                                <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
-                            @if($shouldShowBalanceColumn)
-                                <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
-                            @endif
+                                @if($shouldShowBalanceColumn)
+                                    <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                                @endif
 
-                            <td colspan="3">&nbsp;</td>
-                        </tr>
+                                <td colspan="3">&nbsp;</td>
+                            </tr>
+                        @endif
 
                     </tbody>
                 </table>
