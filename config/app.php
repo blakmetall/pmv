@@ -228,7 +228,7 @@ return [
 
         // custom export classes
 
-        'HumanResourcesExport' => App\Exports\HumanResourcesExport::class,
+        // 'HumanResourcesExport' => App\Exports\HumanResourcesExport::class,
 
 
         // custom helpers
