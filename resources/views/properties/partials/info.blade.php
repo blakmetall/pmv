@@ -75,7 +75,7 @@
                             @endif
 
                             <!-- bookings from specific to property -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isProduction())
                                 <a 
                                     role="button"
                                     href="{{ route('bookings.by-property', $property->id) }}" 
