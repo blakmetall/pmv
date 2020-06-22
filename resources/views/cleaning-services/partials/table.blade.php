@@ -16,8 +16,12 @@
                         <th scope="col">{{ __('Staff') }}</th>
                         <th scope="col">{{ __('Date') }}</th>
                         <th scope="col">{{ __('Hour') }}</th>
-                        <th scope="col">{{ __('Booking') }}</th>
-                        <th scope="col">{{ __('Audited by') }}</th>
+
+                        @if(!isProduction())
+                            <th scope="col">{{ __('Booking') }}</th>
+                        @endif
+
+                        <th scope="col">{{ __('Audited By') }}</th>
                         <th scope="col">{{ __('Finished') }}</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
@@ -57,8 +61,10 @@
                                 <!-- hours -->
                                 <td>{{ $row->hour }}</td>
 
-                                <!-- booking_id -->
-                                <td>{{ $row->booking_id }}</td>
+                                @if(!isProduction())
+                                    <!-- booking_id -->
+                                    <td>{{ $row->booking_id }}</td>
+                                @endif
 
                                 <!-- audit_user_id -->
                                 <td>
