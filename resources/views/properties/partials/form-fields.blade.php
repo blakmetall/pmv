@@ -9,7 +9,7 @@
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif
 
-        <!-- user_id -->
+        <!-- user_id --->
         @include('components.form.select', [
             'group' => 'property',
             'label' => __('Owner'),
