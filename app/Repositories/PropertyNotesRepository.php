@@ -24,6 +24,7 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyID = isset($config['property_id']) ? $config['property_id'] : '';
+        $shouldFilterAuditedOnly = isset($config['auditedOnly']) ? $config['auditedOnly'] : '';
 
         if ($search) {
             $query = PropertyNote::where('description', 'like', "%".$search."%");
@@ -33,6 +34,10 @@ class PropertyNotesRepository implements PropertyNotesRepositoryInterface
 
         if($hasPropertyID) {
             $query->where('property_id', $config['property_id']);
+        }
+
+        if($shouldFilterAuditedOnly) {
+            $query->where('audit_user_id', '!=', 1);
         }
 
         $query->with('property');

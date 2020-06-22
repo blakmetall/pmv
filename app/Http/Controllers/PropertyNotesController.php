@@ -18,7 +18,13 @@ class PropertyNotesController extends Controller
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-        $notes = $this->repository->all($search);
+
+        $config = [];
+        if(isRole('owner')) {
+            $config = ['auditedOnly' => true];
+        }
+
+        $notes = $this->repository->all($search, $config);
 
         return view('property-notes.index')
             ->with('notes', $notes)
