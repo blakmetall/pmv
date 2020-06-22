@@ -8,6 +8,7 @@
                 <thead>
 
                     <tr>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Avg. Month') }}</th>
                         <th scope="col">{{ __('Balance') }}</th>
@@ -21,6 +22,15 @@
                     @if(count($pm_items))
                         @foreach($pm_items as $pm)
                             <tr>
+                                <!-- balances -->
+                                <td>
+                                    <a href="{{ route('property-management-transactions', $pm->id) }}" 
+                                        alt="{{ __('Transactions') }}"
+                                        class="text-primary mr-2">
+                                        <i class="nav-icon i-Receipt-3 font-weight-bold"></i>
+                                    </a>
+                                </td>
+
                                 <td>
                                     @if ($pm->property->hasTranslation())
                                         <a href="{{ route('property-management-transactions', [$pm->id]) }}">
@@ -65,11 +75,10 @@
                         @endforeach
                     @endif
                     
-                    <tr><th colspan="5">&nbsp;</th></tr>
+                    <tr><th colspan="6">&nbsp;</th></tr>
 
                     <tr>
-                        <th scope="col">&nbsp;</th>
-                        <th scope="col">&nbsp;</th>
+                        <th scope="col" colspan="3">&nbsp;</th>
                         <th scope="col">
                             {{ priceFormat($totalBalances['balances']) }}
                         </th>
