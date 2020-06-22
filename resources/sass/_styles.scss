@@ -26,18 +26,20 @@
         }
     }
 
-    .header-topnav{
+    .header-topnav {
         .topnav a {
             padding: 13px 10px;
             text-transform: uppercase;
             font-size: 10px;
         }
-    } 
+    }
 }
 
 .table {
     td {
-        i { font-size: 16px;  }
+        i {
+            font-size: 16px;
+        }
     }
 }
 
@@ -50,6 +52,7 @@
         }
     }
 }
+
 @media (max-width: 580px) {
     .layout-horizontal-bar {
         .main-header {
@@ -59,6 +62,7 @@
         }
     }
 }
+
 /******* end *************/
 /*************************/
 
@@ -66,12 +70,13 @@
 /*************************/
 /** multi-select styles **/
 
-.fstElement{
+.fstElement {
     width: 100%;
     border: 1px solid #ced4da;
     background-color: #f8f9fa;
     border-radius: 0.25rem;
 }
+
 .fstElement.fstSingleMode {
     .fstToggleBtn {
         height: 33px;
@@ -79,6 +84,7 @@
         font-size: 14px;
         font-weight: lighter;
     }
+
     .fstQueryInput {
         width: 100%;
         height: 33px;
@@ -94,7 +100,7 @@
     }
 }
 
-.fstMultipleMode .fstControls{
+.fstMultipleMode .fstControls {
     width: 100%;
     padding-top: 5px;
     height: 34px;
@@ -105,12 +111,14 @@
         padding-right: 15px;
         padding-left: 30px;
         padding: 1px 15px 0 30px;
-        background-color: rgba(45,108,156, 0.9);
-        border-color: rgba(45,108,156, 0.9);
+        background-color: rgba(45, 108, 156, 0.9);
+        border-color: rgba(45, 108, 156, 0.9);
     }
 }
 
-.fstMultipleMode .fstQueryInput, .fstResultItem, .fstChoiceItem{
+.fstMultipleMode .fstQueryInput,
+.fstResultItem,
+.fstChoiceItem {
     font-size: 0.813rem;
 }
 
@@ -127,13 +135,16 @@
         height: 33px;
         padding-left: 13px;
     }
+
     .fstResultItem.fstFocused {
-        background-color: rgba(45,108,156, 0.7);
+        background-color: rgba(45, 108, 156, 0.7);
     }
+
     .fstResultItem.fstSelected {
         background-color: #2d6c9c;
     }
 }
+
 .fstNoResults {
     font-size: 11px;
     display: block;
@@ -143,6 +154,7 @@
     text-transform: uppercase;
     font-weight: bold;
 }
+
 /******* end *************/
 /*************************/
 
@@ -155,24 +167,27 @@
     max-width: 80px;
     text-align: center;
 }
-.ui-timepicker-standard{
+
+.ui-timepicker-standard {
     font-size: 12px;
 
     .ui-state-hover {
-        background-color: rgba(45,108,156, 0.2);
+        background-color: rgba(45, 108, 156, 0.2);
     }
 
-    a:hover{
-        background-color: rgba(45,108,156, 0.2);
+    a:hover {
+        background-color: rgba(45, 108, 156, 0.2);
     }
 }
+
 /******* end *************/
 /*************************/
 
 /*************************/
 /******* timepicker ******/
 
-.picker__select--month, .picker__select--year{
+.picker__select--month,
+.picker__select--year {
     height: 40px;
     font-size: 15px;
 }
@@ -184,14 +199,15 @@
 /*************************/
 /*** theme markup ********/
 
-.checkbox .checkmark.app-checkmark, 
-.radio .checkmark.app-checkmark{
+.checkbox .checkmark.app-checkmark,
+.radio .checkmark.app-checkmark {
     top: 6px;
 }
 
 .form-actions {
-    .btn-outline-secondary:hover, 
-    .btn-outline-secondary:focus, 
+
+    .btn-outline-secondary:hover,
+    .btn-outline-secondary:focus,
     .btn-outline-secondary:active {
         background: inherit;
         color: inherit;
@@ -211,15 +227,15 @@
         img {
             display: block;
             max-width: 300px;
-            margin: 0 auto; 
+            margin: 0 auto;
             margin-bottom: 50px;
 
         }
 
-        @media (max-width: 767px) { 
-            margin-top: 0;    
+        @media (max-width: 767px) {
+            margin-top: 0;
         }
-    } 
+    }
 }
 
 /******* end *************/
@@ -256,22 +272,25 @@
 .app-container {
     max-width: 1250px;
 }
+
 .app-container-sm {
     max-width: 991px;
 }
+
 .app-centered {
     margin: 0 auto;
 }
 
 .app-breadcrumb {
     position: relative;
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
 
 .app-map-wrapper {
     .app-google-map {
         height: 300px;
     }
+
     .app-google-clear-map {
         text-transform: uppercase;
     }
@@ -291,6 +310,7 @@
     border: 1px solid #555e56;
     background: #f7fdfa;
 }
+
 .app-alert-danger {
     border-radius: 3px;
     border: 1px solid #e3342f;
@@ -326,6 +346,7 @@
 .card-img-overlay {
     .card-title {
         color: white;
+
         a {
             color: white;
         }
@@ -340,6 +361,7 @@
     color: #7b7b7b;
     margin-bottom: 0;
 }
+
 .app-months-list {
     padding-top: 8px;
     padding-inline-start: 10px;
@@ -354,6 +376,7 @@
         .app-month-inactive {
             color: #7b7b7b;
         }
+
         .app-month-selected {
             font-weight: bold;
             text-decoration: underline;
@@ -369,6 +392,7 @@
     max-width: 120px;
     width: 100%;
 }
+
 .app-file-card {
     .card {
         border-radius: 5px;
@@ -378,7 +402,9 @@
             padding: 10px 10px 12px 15px;
             overflow: hidden;
 
-            h5 { margin-bottom: 0; }
+            h5 {
+                margin-bottom: 0;
+            }
         }
 
         .app-card-text-overlay {
@@ -386,12 +412,16 @@
             padding: 10px 10px 12px 15px;
             overflow: hidden;
 
-            h5 { margin-bottom: 0; }
+            h5 {
+                margin-bottom: 0;
+            }
         }
+
         a {
             color: #333;
             font-size: 14px;
         }
+
         .text-white a {
             color: #fff;
         }
@@ -403,13 +433,15 @@
         text-transform: uppercase;
         font-size: 13px;
     }
+
     .app-property-info-details {
-        > div {
+        >div {
             display: inline-block;
             padding: 0 10px 5px 0;
         }
     }
-    .app-property-info-icons{
+
+    .app-property-info-icons {
         a {
             font-size: 18px;
         }
@@ -436,9 +468,11 @@
     .app-heading-buttons {
         padding-top: 10px;
     }
+
     .app-search-buttons {
         padding-top: 10px;
     }
+
     .layout-horizontal-bar {
         .main-content-wrap {
             margin-top: 69px !important;
@@ -458,53 +492,155 @@
     font-size: 12px;
     min-width: 1300px;
 
-    .transaction-col-id { width: 4%; }
-    .transaction-col-checkbox { width: 3%; }
-    .transaction-col-file { width: 3%; }
-    .transaction-col-date { width: 8%; }
-    .transaction-col-property { width: 13%; }
-    .transaction-col-transaction-name { width: 15%; }
-    .transaction-col-period { width: 9%; }
-    .transaction-col-credit { width: 7%; }
-    .transaction-col-charge { width: 7%; }
-    .transaction-col-balance { width: 7%; }
-    .transaction-col-created { width: 8%; }
-    .transaction-col-updated { width: 8%; }
-    .transaction-col-audited { width: 8%; }
-    .transaction-col-actions { width: 5%; }
+    .transaction-col-id {
+        width: 4%;
+    }
+
+    .transaction-col-checkbox {
+        width: 3%;
+    }
+
+    .transaction-col-file {
+        width: 3%;
+    }
+
+    .transaction-col-date {
+        width: 8%;
+    }
+
+    .transaction-col-property {
+        width: 13%;
+    }
+
+    .transaction-col-transaction-name {
+        width: 15%;
+    }
+
+    .transaction-col-period {
+        width: 9%;
+    }
+
+    .transaction-col-credit {
+        width: 7%;
+    }
+
+    .transaction-col-charge {
+        width: 7%;
+    }
+
+    .transaction-col-balance {
+        width: 7%;
+    }
+
+    .transaction-col-created {
+        width: 8%;
+    }
+
+    .transaction-col-updated {
+        width: 8%;
+    }
+
+    .transaction-col-audited {
+        width: 8%;
+    }
+
+    .transaction-col-actions {
+        width: 5%;
+    }
 }
 
 .app-transaction-pending-audit-list-pending {
     font-size: 12px;
     min-width: 1300px;
 
-    .transaction-col-id { width: 5%; }
-    .transaction-col-checkbox { width: 4%; }
-    .transaction-col-file { width: 4%; }
-    .transaction-col-date { width: 8%; }
-    .transaction-col-property { width: 15%; }
-    .transaction-col-transaction-name { width: 23%; }
-    .transaction-col-period { width: 14%; }
-    .transaction-col-amount { width: 6%; }
-    .transaction-col-type { width: 5%; }
-    .transaction-col-created { width: 8%; }
-    .transaction-col-updated { width: 8%; }
+    .transaction-col-id {
+        width: 5%;
+    }
+
+    .transaction-col-checkbox {
+        width: 4%;
+    }
+
+    .transaction-col-file {
+        width: 4%;
+    }
+
+    .transaction-col-date {
+        width: 8%;
+    }
+
+    .transaction-col-property {
+        width: 15%;
+    }
+
+    .transaction-col-transaction-name {
+        width: 23%;
+    }
+
+    .transaction-col-period {
+        width: 14%;
+    }
+
+    .transaction-col-amount {
+        width: 6%;
+    }
+
+    .transaction-col-type {
+        width: 5%;
+    }
+
+    .transaction-col-created {
+        width: 8%;
+    }
+
+    .transaction-col-updated {
+        width: 8%;
+    }
 }
 
 .app-transaction-owner-list {
     font-size: 12px;
     min-width: 1200px;
 
-    .transaction-col-id { width: 4%; }
-    .transaction-col-file { width: 6%; }
-    .transaction-col-date { width: 8%; }
-    .transaction-col-transaction-name { width: 23%; }
-    .transaction-col-period { width: 11%; }
-    .transaction-col-credit { width: 7%; }
-    .transaction-col-charge { width: 7%; }
-    .transaction-col-balance { width: 10%; }
-    .transaction-col-created { width: 10%; }
-    .transaction-col-updated { width: 10%; }
+    .transaction-col-id {
+        width: 4%;
+    }
+
+    .transaction-col-file {
+        width: 6%;
+    }
+
+    .transaction-col-date {
+        width: 8%;
+    }
+
+    .transaction-col-transaction-name {
+        width: 23%;
+    }
+
+    .transaction-col-period {
+        width: 11%;
+    }
+
+    .transaction-col-credit {
+        width: 7%;
+    }
+
+    .transaction-col-charge {
+        width: 7%;
+    }
+
+    .transaction-col-balance {
+        width: 10%;
+    }
+
+    .transaction-col-created {
+        width: 10%;
+    }
+
+    .transaction-col-updated {
+        width: 10%;
+    }
 }
 
 .app-transaction-list-pending,
@@ -514,11 +650,13 @@
             background: #f79644;
         }
     }
+
     tbody {
         tr {
             &:nth-child(even) {
                 background: #fac08f;
             }
+
             &:nth-child(odd) {
                 background: #fbd5b5;
             }
