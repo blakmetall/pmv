@@ -60,10 +60,10 @@ class ImagesHelper
         $shouldMakeThumbnails = in_array($extension, $allowedExtensions) ? true : false;
 
         if($shouldMakeThumbnails) {
-            $source = storage_path() . '/app/public/' . $folder . '/' . $timedFileName . '.' . $extension;
+            $source = public_path() . '/storage/' . $folder . '/' . $timedFileName . '.' . $extension;
     
             foreach(config('constants.thumbnails') as $sizeSlug => $size) {
-                $filePath = storage_path() . '/app/public/' . $folder . '/' . $timedFileName . '-' . $sizeSlug . '.' . $extension;
+                $filePath = public_path() . '/storage/' . $folder . '/' . $timedFileName . '-' . $sizeSlug . '.' . $extension;
     
                 Image::make($source)
                     ->fit($size['width'], $size['height'], function ($constraint) {
