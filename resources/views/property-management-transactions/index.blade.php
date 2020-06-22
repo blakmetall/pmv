@@ -45,6 +45,7 @@
         'label' => __('Transactions'),
         'rows' => $transactions,
         'currentBalance' => $currentBalance,
+        'useBalancePresentation' => true,
     ])
 
 @endsection

@@ -95,52 +95,54 @@
                                             {{  __('Properties') }}
                                         </a>
 
-                                        <!-- dropdown menu -->
-                                        <input type="checkbox" id="dropdownMenuBooking">
-                                        <ul>
-                                            @if ($_current_role->isAllowed('properties', 'index'))
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('properties') }}">
-                                                        <span class="item-name">{{ __('All') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif
+                                        @if (!isRole('owner'))
+                                            <!-- dropdown menu -->
+                                            <input type="checkbox" id="dropdownMenuBooking">
+                                            <ul>
+                                                @if ($_current_role->isAllowed('properties', 'index'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties') }}">
+                                                            <span class="item-name">{{ __('All') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
 
-                                             @if ($_current_role->isAllowed('properties', 'property-management'))
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('property-management.general') }}">
-                                                        <span class="item-name">{{ __('Property Management') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif
+                                                @if ($_current_role->isAllowed('properties', 'property-management'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('property-management.general') }}">
+                                                            <span class="item-name">{{ __('Property Management') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
 
-                                            @if ($_current_role->isAllowed('properties', 'balances'))
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('property-management-balances.general') }}">
-                                                        <span class="item-name">{{ __('Balances') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif
+                                                @if ($_current_role->isAllowed('properties', 'balances'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('property-management-balances.general') }}">
+                                                            <span class="item-name">{{ __('Balances') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
 
-                                            {{-- @if ($_current_role->isAllowed('properties', 'transactions'))
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('property-management-transactions.general') }}">
-                                                        <span class="item-name">{{ __('Transactions') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif --}}
+                                                {{-- @if ($_current_role->isAllowed('properties', 'transactions'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('property-management-transactions.general') }}">
+                                                            <span class="item-name">{{ __('Transactions') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif --}}
 
-                                            @if ($_current_role->isAllowed('properties', 'pending-audits'))
-                                                <li class="nav-item">
-                                                    @php 
-                                                        $routeParams = ['filterByPendingAudits' => 1]; 
-                                                    @endphp
-                                                    <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                        <span class="item-name">{{ __('Pending Audits') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif
-                                        </ul>
+                                                @if ($_current_role->isAllowed('properties', 'pending-audits'))
+                                                    <li class="nav-item">
+                                                        @php 
+                                                            $routeParams = ['filterByPendingAudits' => 1]; 
+                                                        @endphp
+                                                        <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
+                                                            <span class="item-name">{{ __('Pending Audits') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        @endif
                                     </div>
                             </div>
                         </li>

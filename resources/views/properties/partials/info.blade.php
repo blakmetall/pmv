@@ -9,8 +9,8 @@
         <div class="card">
             <div class="card-body">
                 
-                    <div class="row row-xs">
-                        <div class="col-md-1">
+                    <div class="row align-items-center">
+                        <div class="col-sm-2 col-md-1 d-none d-sm-inline-block">
                             @if ($property->hasDefaultImage())
                                 @php
                                     $propertyImg = $property->getDefaultImage();
@@ -21,45 +21,20 @@
                                 </a>
                             @endif
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-4 col-md-4 mb-2 mb-sm-0">
                             <div class="app-property-info-title">
                                 <a href="{{ route('properties.show', [$property->id]) }}" class="text-primary">
                                     {{ $propertyTranslation->name }}
                                 </a>                                    
                             </div>
-                            <div class="app-property-info-details">
-                                @if($property->bedrooms)
-                                    <div>
-                                        <b>{{ __('Bedrooms')}}: </b> {{ $property->bedrooms }}
-                                    </div>
-                                @endif
-
-                                @if($property->baths)
-                                    <div>
-                                        <b>{{ __('Baths')}}: </b> {{ $property->baths }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="app-property-info-details">
-                                @if($property->type)
-                                    <div>
-                                        <b>{{ __('Type')}}: </b> {{ $property->type->getLabel() }}
-                                    </div>
-                                @endif
-
-                                @if($property->sleeps)
-                                    <div>
-                                        <b>{{ __('Sleeps')}}: </b> {{ $property->sleeps }}
-                                    </div>
-                                @endif
-                            </div>
                         </div>
-                        <div class="col-md-7 text-md-right app-property-info-icons">
+                        <div class="col-sm-6 col-md-7 text-left text-md-right app-property-info-icons">
 
                            <!-- property notes -->
                             <a 
+                                role="button"
                                 href="{{ route('property-notes', $property->id) }}" 
-                                class="text-primary app-icon-link"
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
                                 title="{{ __('Notes') }}"
                                 alt="{{ __('Notes') }}">
                                 <i class="nav-icon i-Notepad font-weight-bold"></i>
@@ -67,8 +42,9 @@
 
                             <!-- property contacts -->
                             <a 
+                                role="button"
                                 href="{{ route('property-contacts', $property->id) }}" 
-                                class="text-primary app-icon-link"
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Contacts') }}"
                                 alt="{{ __('Contacts') }}">
                                 <i class="nav-icon i-Administrator font-weight-bold"></i>
@@ -77,8 +53,9 @@
                             <!-- property rates -->
                             @if( !isRole('owner') )
                                 <a 
+                                    role="button"
                                     href="{{ route('property-rates', $property->id) }}" 
-                                    class="text-primary app-icon-link"
+                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                     title="{{ __('Rates') }}"
                                     alt="{{ __('Rates') }}">
                                     <i class="nav-icon i-Money-2 font-weight-bold"></i>
@@ -88,8 +65,9 @@
                             <!-- property images -->
                             @if( !isRole('owner') )
                                 <a 
+                                    role="button"
                                     href="{{ route('property-images', $property->id) }}"
-                                    class="text-primary app-icon-link"
+                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                     title="{{ __('Images') }}"
                                     alt="{{ __('Images') }}">
                                     <i class="nav-icon i-Old-Camera font-weight-bold"></i>
@@ -99,8 +77,9 @@
                             <!-- bookings from specific to property -->
                             @if( !isRole('owner') )
                                 <a 
+                                    role="button"
                                     href="{{ route('bookings.by-property', $property->id) }}" 
-                                    class="text-primary app-icon-link"
+                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                     title="{{ __('Bookings') }}"
                                     alt="{{ __('Bookings') }}">
                                     <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
@@ -109,8 +88,9 @@
 
                             <!-- property management -->
                             <a 
+                                role="button"
                                 href="{{ route('property-management', $property->id) }}" 
-                                class="text-primary app-icon-link"
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Property Management') }}"
                                 alt="{{ __('Property Management') }}">
                                 <i class="nav-icon i-Building font-weight-bold"></i>

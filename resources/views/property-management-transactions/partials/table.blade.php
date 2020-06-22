@@ -1,6 +1,7 @@
 @php
 
     $skipAuditedTable = isset($skipAuditedTable) ? (bool) $skipAuditedTable : false;
+    $useBalancePresentation = isset($useBalancePresentation) ? (bool) $useBalancePresentation : false;
     $usePendingAuditPresentation = isset($usePendingAuditPresentation) ? (bool) $usePendingAuditPresentation : false;
 
     $shouldShowBalanceColumn = !$usePendingAuditPresentation;
@@ -133,7 +134,9 @@
                                             {{ $row->type->translate()->name }}
                                         @endif
 
-                                        <p class="app-pm-description">{{ $row->description }}</p>
+                                        @if($row->description)
+                                            <p class="app-pm-description">{{ $row->description }}</p>
+                                        @endif
                                     </td>
 
                                     <!-- period -->
@@ -225,11 +228,15 @@
                             <th class="text-primary">{{ priceFormat($creditCount) }}</th>
                             <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
-                            @if($shouldShowBalanceColumn)
+                            @if ($shouldShowBalanceColumn)
                                 <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
                             @endif
 
-                            <td colspan="3">&nbsp;</td>
+                            @if ($useBalancePresentation)
+                                <td colspan="4">&nbsp;</td> 
+                            @else
+                                <td colspan="3">&nbsp;</td>
+                            @endif
                         </tr>
 
                     </tbody>
@@ -361,7 +368,9 @@
                                             {{ $row->type->translate()->name }}
                                         @endif
 
-                                        <p class="app-pm-description">{{ $row->description }}</p>
+                                        @if($row->description)
+                                            <p class="app-pm-description">{{ $row->description }}</p>
+                                        @endif
                                     </td>
 
                                     <!-- period -->
@@ -372,7 +381,6 @@
                                             @if($row->period_end_date)
                                                 -
                                             @endif
-                                            2010-20-20 - 2010-10-10
                                             
                                             {{ $row->period_end_date }}
                                         </div>
@@ -469,8 +477,12 @@
                                 @if($shouldShowBalanceColumn)
                                     <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
                                 @endif
-
-                                <td colspan="3">&nbsp;</td>
+                                
+                                @if ($useBalancePresentation)
+                                    <td colspan="4">&nbsp;</td>
+                                @else
+                                    <td colspan="3">&nbsp;</td>
+                                @endif
                             </tr>
                         @endif
 

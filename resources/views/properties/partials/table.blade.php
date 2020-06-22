@@ -45,9 +45,15 @@
                                             @php
                                                 $propertyImg = $row->property->getDefaultImage();
                                             @endphp
-                                            <a href="{{ asset(getUrlPath($propertyImg->file_url)) }}" target="_blank">
-                                                <img src="{{ asset(getUrlPath($propertyImg->file_url, 'small-ls')) }}" alt="" width="100">
-                                            </a>
+
+                                            @include('components.table.file-modal', [
+                                                'fileName' => $propertyImg->file_original_name,
+                                                'filePath' => $propertyImg->file_path,
+                                                'fileUrl' => $propertyImg->file_url,
+                                                'fileSlug' => $propertyImg->file_slug,
+                                                'imgUrl' => $propertyImg->file_url,
+                                                'imgSize' => 'small-ls',
+                                            ])
                                         @endif
                                     </th>
                                 @endif

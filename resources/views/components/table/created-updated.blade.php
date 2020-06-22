@@ -55,11 +55,11 @@
         {!! $audited_at !!}
 
         @if (isset($auditedBy) && $auditedBy) 
-            <div class="pt-1">
+            {{-- <div class="pt-1">
                 <a href="{{ route('users.show', [$auditedBy->profile->user->id]) }}">
                     {{ $auditedBy->profile->full_name }}
                 </a>
-            </div>
+            </div> --}}
         @endif
     </td>
 @endif

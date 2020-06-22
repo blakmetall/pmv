@@ -364,7 +364,7 @@
 }
 
 .app-td-date {
-    font-size: 11px;
+    // font-size: 11px;
 }
 
 .app-table-file-limit-width {
@@ -402,15 +402,13 @@
 
 .app-property-info {
     .app-property-info-title {
+        text-transform: uppercase;
         font-size: 13px;
-        font-weight: bold;
-        margin-bottom: 15px;
     }
     .app-property-info-details {
         > div {
             display: inline-block;
             padding: 0 10px 5px 0;
-            margin-bottom: 5px;
         }
     }
     .app-property-info-icons{
@@ -472,9 +470,9 @@
     .transaction-col-credit { width: 7%; }
     .transaction-col-charge { width: 7%; }
     .transaction-col-balance { width: 7%; }
-    .transaction-col-created { width: 7%; }
-    .transaction-col-updated { width: 7%; }
-    .transaction-col-audited { width: 7%; }
+    .transaction-col-created { width: 8%; }
+    .transaction-col-updated { width: 8%; }
+    .transaction-col-audited { width: 8%; }
     .transaction-col-actions { width: 5%; }
 }
 
@@ -509,6 +507,25 @@
     .transaction-col-balance { width: 10%; }
     .transaction-col-created { width: 10%; }
     .transaction-col-updated { width: 10%; }
+}
+
+.app-transaction-list-pending,
+.app-transaction-pending-audit-list-pending {
+    thead {
+        tr {
+            background: #f79644;
+        }
+    }
+    tbody {
+        tr {
+            &:nth-child(even) {
+                background: #fac08f;
+            }
+            &:nth-child(odd) {
+                background: #fbd5b5;
+            }
+        }
+    }
 }
 
 /********* end ***********/
