@@ -19,7 +19,7 @@
     @yield('before-css')
 
     {{-- theme css --}}
-    <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
+    <link id="gull-theme" rel="stylesheet" href="{{ asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
 
     {{-- vendor css --}}
     <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
@@ -81,25 +81,25 @@
 
 
     {{-- common js --}}
-    <script src="{{asset('assets/js/common-bundle-script.js')}}"></script>
+    <script src="{{ asset('assets/js/common-bundle-script.js') }}"></script>
 
     {{-- page specific javascript --}}
     @yield('page-js')
 
     {{-- theme javascript --}}
-    <script src="{{asset('assets/js/gull-script.js')}}"></script>
+    <script src="{{ asset('assets/js/gull-script.js') }}"></script>
 
     {{-- scripts for horizontal sidebar --}}
-    <script src="{{asset('assets/js/sidebar-horizontal.script.js')}}"></script>
+    <script src="{{ asset('assets/js/sidebar-horizontal.script.js') }}"></script>
 
     {{-- scripts for goole map --}}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKF1GvQF4ZJdoUtDFe-nmLe0v8FCl5HtA" async defer></script>
 
     {{-- app js --}}
-    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     {{-- scripts js --}}
-    <script src="{{asset('js/scripts.js')}}"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
 
     <!-- yield js bottom -->
     @yield('bottom-js')
