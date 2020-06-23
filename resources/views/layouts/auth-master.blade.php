@@ -23,6 +23,10 @@
 
         {{-- page specific css --}}
         @yield('page-css')
+        
+        {{-- favicon --}}
+        @include('partials.favicon')
+        
     </head>
 
     <body>

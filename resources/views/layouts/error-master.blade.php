@@ -58,6 +58,9 @@
 
         <!-- yield js bottom -->
         @yield('bottom-js')
+
+        {{-- favicon --}}
+        @include('partials.favicon')
     </body>
 
 </html>
