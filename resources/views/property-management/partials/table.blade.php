@@ -74,11 +74,11 @@
                                 <td>{{ $row->end_date }}</td>
 
                                 <!-- management_fee -->
-                                <td>{{ priceFormat($row->management_fee) }}</td>
+                                <td>{{ priceFormat($row->management_fee) }} USD</td>
 
                                 <!-- average_month -->
                                 @if(!isRole('owner'))
-                                    <td>{{ priceFormat($row->average_month) }}</td>
+                                    <td>{{ priceFormat($row->average_month) }} MXN</td>
                                 @endif
 
                                 <!-- is_finished -->

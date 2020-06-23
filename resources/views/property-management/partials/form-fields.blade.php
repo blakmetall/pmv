@@ -38,7 +38,7 @@
         <!-- management_fee -->
         @include('components.form.input', [
             'group' => 'property-rate',
-            'label' => __('Fee'),
+            'label' => __('Fee') . ' USD',
             'name' => 'management_fee',
             'value' => $row->management_fee,
             'required' => true,
@@ -47,7 +47,7 @@
         <!-- average_month -->
         @include('components.form.input', [
             'group' => 'property-management',
-            'label' => __('Avg. Month'),
+            'label' => __('Avg. Month') . ' MXN',
             'name' => 'average_month',
             'value' => $row->average_month,
             'required' => true,
