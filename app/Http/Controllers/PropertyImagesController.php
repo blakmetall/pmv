@@ -89,14 +89,15 @@ class PropertyImagesController extends Controller
         return back();
     }
 
-    public static function order($imageToMove, $direction) {
+    public static function order($imageToMove, $direction = 'asc') {
         $imgToMoveOrder = $imageToMove->order;
 
-        $orderDirection = $direction === '<' ? 'desc' : 'asc';
+        $orderDirection = $direction == '<' ? 'desc' : 'asc';
 
         $replaceImage = 
             PropertyImage::
                 where('order', $direction, $imgToMoveOrder)
+                ->where('property_id', $imageToMove->property_id)
                 ->orderBy('order', $orderDirection)
                 ->first();
         

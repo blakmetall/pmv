@@ -14,14 +14,16 @@ class PropertyManagementTransactionsValidations extends Validation
             'period_end_date' => 'nullable|date_format:Y-m-d',
             'amount' => 'required|numeric|min:0',
             'operation_type' => 'required|numeric|between:1,2',
-            'transaction_file' => '' // validation types
+            'transaction_file' => 'nullable|mimes:jpeg,png,bmp',
         ]);
     }
 
     public function validate($validateEvent, Request $request, $id = '')
     {
         $eventValidations = [];
-        $customValidationMessages = [];
+        $customValidationMessages = [
+            'transaction_file.mimes' => __('Allowed formats: jpg, jpeg, png, bnm'),
+        ];
 
         switch($validateEvent)   {
             case 'create': break;
