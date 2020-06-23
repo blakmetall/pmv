@@ -136,4 +136,62 @@ class PropertyManagementTransactionsController extends Controller
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
     }
+
+    public function auditBatch(Request $request, $transactionIDs)
+    {
+        $user = auth()->user();
+        $transactionIDs = explode('_', $transactionIDs);
+
+        if (count($transactionIDs)) {
+            foreach($transactionIDs as $transactionID) {
+                $transaction = PropertyManagementTransaction::find($transactionID);
+                if ($transaction) {
+                    $hasPreviousAudit = $transaction->audit_user_id;
+                    if(!$hasPreviousAudit) {
+                        $transaction->audit_user_id = $user->id;
+                        $transaction->audit_date = getCurrentDate();
+                        $transaction->save();
+                    }
+                }
+            }
+        }
+
+        $request->session()->flash('success', __('Records updated successfully'));
+        return redirect()->back();
+    }
+
+    public function removeAuditBatch(Request $request, $transactionIDs)
+    {
+        $transactionIDs = explode('_', $transactionIDs);
+
+        if (count($transactionIDs)) {
+            foreach($transactionIDs as $transactionID) {
+                $transaction = PropertyManagementTransaction::find($transactionID);
+                if ($transaction) {
+                    $transaction->audit_user_id = null;
+                    $transaction->audit_date = null;
+                    $transaction->save();
+                }
+            }
+        }
+
+        $request->session()->flash('success', __('Records updated successfully'));
+        return redirect()->back();
+    }
+
+    public function deleteBatch(Request $request, $transactionIDs)
+    {
+        $transactionIDs = explode('_', $transactionIDs);
+
+        if (count($transactionIDs)) {
+            foreach($transactionIDs as $transactionID) {
+                if ( $this->repository->canDelete($transactionID) ) {
+                    $this->repository->delete($transactionID);
+                }
+            }
+        }
+
+        $request->session()->flash('success', __('Records deleted successfully'));
+        return redirect()->back();
+    }
 }

@@ -5,15 +5,18 @@
     $editRoute = isset($editRoute) ? $editRoute : '';
     $deleteRoute = isset($deleteRoute) ? $deleteRoute : '';
 
+    $skipShow = isset($skipShow) ? (bool) $skipShow : false;
     $skipEdit = isset($skipEdit) ? (bool) $skipEdit : false;
     $skipDelete = isset($skipDelete) ? (bool) $skipDelete : false;
 
 @endphp
 
 <div class="d-block text-right">
-    <a href="{{ route($showRoute, $params) }}" class="text-primary mr-2">
-        <i class="nav-icon i-Eye font-weight-bold"></i>
-    </a>
+    @if (!$skipShow)
+        <a href="{{ route($showRoute, $params) }}" class="text-primary mr-2">
+            <i class="nav-icon i-Eye font-weight-bold"></i>
+        </a>
+    @endif
 
     @if (!$skipEdit)
         <a href="{{ route($editRoute, $params) }}" class="text-success mr-2">

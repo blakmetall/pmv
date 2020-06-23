@@ -39,7 +39,9 @@
                                 <th scope="col" class="transaction-col-checkbox">&nbsp;</th>
                             @endif
 
-                            <th scope="col" class="transaction-col-file">&nbsp;</th>
+                            <th scope="col" class="transaction-col-file">
+                                <div style="min-width: 70px;"></div>
+                            </th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
 
                             @if(!isRole('owner'))
@@ -60,7 +62,6 @@
 
                             @if(!isRole('owner'))
                                 <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
-                                <th scope="col" class="transaction-col-actions">&nbsp;</th>
                             @endif
 
                         </tr>
@@ -100,7 +101,7 @@
                                         <td>&nbsp;</td>
                                     @endif
 
-                                    <!-- file -->
+                                    <!-- edit and file -->
                                     <td>
                                         @include('components.table.file-modal', [
                                             'fileName' => $row->file_original_name,
@@ -108,6 +109,14 @@
                                             'fileUrl' => $row->file_url,
                                             'fileSlug' => $row->file_slug,
                                         ])
+
+                                        @if(!isRole('owner'))
+                                            <a 
+                                                href="{{ route('property-management-transactions.edit', [$row->propertyManagement->id, $row->id]) }}" 
+                                                target="_blank" class="text-success app-icon-link mr-0">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                            </a>
+                                        @endif
                                     </td>
 
                                     <!-- post_date -->
@@ -198,17 +207,6 @@
                                             'auditedBy' => $row->auditedBy,
                                             'trimTime' => true,
                                         ])
-
-                                        <!-- actions -->
-                                        <td>
-                                            @include('components.table.actions', [
-                                                'params' => [$row->propertyManagement->id, $row->id],
-                                                'showRoute' => 'property-management-transactions.show',
-                                                'editRoute' => 'property-management-transactions.edit',
-                                                'deleteRoute' => 'property-management-transactions.destroy',
-                                                'skipDelete' => true,
-                                            ])
-                                        </td>
                                     @endif
 
 
@@ -259,7 +257,7 @@
         <div class="card-header">{{ __('Pending Transactions') }}</div>
         <div class="card-body pt-5">
 
-            <div class="table-responsive">
+            <div class="table-responsive app-checkbox-actions">
                 <table class="table table-striped {{ $pendingTableClass }}">
                     <thead>
 
@@ -267,10 +265,12 @@
                             <th scope="col" class="transaction-col-id">#</th>
                             <th scope="col" class="transaction-col-checkbox">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <input type="checkbox" class="form-check-input app-checkbox-actions-header">
                                 </div>
                             </th>
-                            <th scope="col" class="transaction-col-file">&nbsp;</th>
+                            <th scope="col" class="transaction-col-file">
+                                <div style="min-width: 70px;"></div>
+                            </th>
                             <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
                             <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
@@ -293,7 +293,6 @@
 
                             @if (!$usePendingAuditPresentation)
                                 <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
-                                <th scope="col" class="transaction-col-actions">&nbsp;</th>
                             @endif
                             
                         </tr>
@@ -332,11 +331,14 @@
 
                                     <td>
                                         <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                            <input 
+                                                type="checkbox" 
+                                                class="form-check-input app-checkbox-actions-item" 
+                                                value="{{ $row->id }}">
                                         </div>
                                     </td>
 
-                                    <!-- file -->
+                                    <!-- edit, file and delete -->
                                     <td>
                                         @include('components.table.file-modal', [
                                             'fileName' => $row->file_original_name,
@@ -344,6 +346,24 @@
                                             'fileUrl' => $row->file_url,
                                             'fileSlug' => $row->file_slug,
                                         ])
+
+                                        @if(!isRole('owner'))
+                                            <a 
+                                                href="{{ route('property-management-transactions.edit', [$row->propertyManagement->id, $row->id]) }}" 
+                                                target="_blank"
+                                                class="text-success app-icon-link mr-0">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                            </a>
+
+                                            @if (!$usePendingAuditPresentation)
+                                                <a 
+                                                    href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}" 
+                                                    class="text-danger app-icon-link app-confirm ml-1 mr-0">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                </a>
+                                            @endif
+                                        @endif
+
                                     </td>
 
                                     <!-- post_date -->
@@ -441,18 +461,6 @@
                                     @if (!$usePendingAuditPresentation)
                                         <!-- audit col -->
                                         <td>--</td>
-
-                                        <!-- actions -->
-                                        <td>
-                                            @include('components.table.actions', [
-                                                'params' => [$row->propertyManagement->id, $row->id],
-                                                'showRoute' => 'property-management-transactions.show',
-                                                'editRoute' => 'property-management-transactions.edit',
-                                                'deleteRoute' => 'property-management-transactions.destroy',
-                                                'skipEdit' => isRole('owner'),
-                                                'skipDelete' => isRole('owner'),
-                                            ])
-                                        </td>
                                     @endif
 
                                 </tr>
@@ -488,6 +496,25 @@
 
                     </tbody>
                 </table>
+
+                <div class="pt-2">
+                    <a 
+                        href="#" 
+                        role="button" 
+                        class="btn btn-secondary btn-sm mr-3 app-checkbox-actions-btn" 
+                        data-confirm-label="{{ __('Confirm audit batch') }}"
+                        data-base-url="{{ route('property-management-transactions.audit-batch') }}">
+                        {{ __('Audit selected')}}
+                    </a>
+                    <a 
+                        href="#" 
+                        role="button" 
+                        class="btn btn-secondary btn-sm app-checkbox-actions-btn" 
+                        data-confirm-label="{{ __('Confirm delete batch') }}"
+                        data-base-url="{{ route('property-management-transactions.delete-batch') }}">
+                        {{ __('Delete selected')}}
+                    </a>
+                </div>
             </div>
 
         </div>

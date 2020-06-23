@@ -148,6 +148,15 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
                 });
 
+                // audit transaction batch
+                Route::get('audit-batch/{batch?}', 'PropertyManagementTransactionsController@auditBatch')->name('property-management-transactions.audit-batch');
+
+                // remove audit transaction batch
+                Route::get('remove-audit-batch/{batch?}', 'PropertyManagementTransactionsController@removeAuditBatch')->name('property-management-transactions.remove-audit-batch');
+
+                // delete transaction batch
+                Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
+
                 // single property management
                 Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
 
