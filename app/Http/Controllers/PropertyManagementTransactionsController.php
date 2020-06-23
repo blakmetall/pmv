@@ -5,21 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{ PropertyManagement, PropertyManagementTransaction };
 use App\Repositories\{
+    PropertiesRepositoryInterface,
+    TransactionTypesRepositoryInterface,
     PropertyManagementTransactionsRepositoryInterface,
-    TransactionTypesRepositoryInterface
+    CitiesRepositoryInterface
 };
 use App\Helpers\{ PMHelper, PMTransactionHelper };
 
 class PropertyManagementTransactionsController extends Controller
 {
     private $repository;
+    private $propertiesRepository;
     private $transactionTypesRepository;
+    private $citiesRepository;
 
     public function __construct(
         PropertyManagementTransactionsRepositoryInterface $repository,
-        TransactionTypesRepositoryInterface $transactionTypesRepository
+        PropertiesRepositoryInterface $propertiesRepository,
+        TransactionTypesRepositoryInterface $transactionTypesRepository,
+        CitiesRepositoryInterface $citiesRepository
     ) {
         $this->repository = $repository;
+        $this->citiesRepository = $citiesRepository;
+        $this->propertiesRepository = $propertiesRepository;
         $this->transactionTypesRepository = $transactionTypesRepository;
     }
 
@@ -64,11 +72,33 @@ class PropertyManagementTransactionsController extends Controller
     {
         $search = trim($request->s);
 
-        $config = ['filterByPendingAudits' => !!$request->filterByPendingAudits];
+        $config = [
+            'filterByPendingAudits' => !!$request->filterByPendingAudits,
+            'paginate' => false,
+            'filterByProperty' => $request->property,
+            'filterByTransactionType' => $request->transaction_type,
+            'filterByCity' => $request->city,
+        ];
         $transactions = $this->repository->all($search, $config);
+
+        // for search filters
+        $properties = $this->propertiesRepository->all('', [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ]);
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
+        $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('property-management-transactions.general')
             ->with('transactions', $transactions)
+            ->with('properties', $properties)
+            ->with('transactionTypes', $transactionTypes)
+            ->with('cities', $cities)
             ->with('search', $search);
     }
 

@@ -28,6 +28,10 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
         $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
 
+        $shouldFilterByProperty = isset($config['filterByProperty']) ? $config['filterByProperty'] : '';
+        $shouldFilterByTransactionType = isset($config['filterByTransactionType']) ? $config['filterByTransactionType'] : '';
+        $shouldFilterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
+
         if ($search) {
             $query = PropertyManagementTransaction::where('description', 'like', '%'.$search.'%');
         } else {
@@ -48,6 +52,30 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         if($shouldFilterByMonth) {
             $query->whereMonth('post_date', $config['filterByMonth']);
+        }
+
+        if($shouldFilterByProperty) {
+            $propertyID = $config['filterByProperty'];
+            $query->whereHas('propertyManagement', function($q) use ($propertyID) {
+                $q->whereHas('property', function($q2) use ($propertyID) {
+                    $q2->where('properties.id', $propertyID);
+                });
+            });
+        }
+
+        if($shouldFilterByCity) {
+            $cityID = $config['filterByCity'];
+            $query->whereHas('propertyManagement', function($q) use ($cityID) {
+                $q->whereHas('property', function($q2) use ($cityID) {
+                    $q2->whereHas('city', function($q3) use ($cityID) {
+                        $q3->where('cities.id', $cityID);
+                    });
+                });
+            });
+        }
+
+        if($shouldFilterByTransactionType) {
+            $query->where('transaction_type_id', $config['filterByTransactionType']);
         }
 
         $query->with('propertyManagement');

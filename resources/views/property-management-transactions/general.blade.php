@@ -9,6 +9,9 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
+    <!-- general pending audits search -->
+    @include('property-management-transactions.partials.search-general')
+
 @endsection
 
 @section('main-content')
