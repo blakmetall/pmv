@@ -39,9 +39,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
     protected function attemptLogin(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_enabled' => 1])) {
+            Auth::logoutOtherDevices(request('password'));
             return redirect()->intended('/system/dashboard');
         }
     }
