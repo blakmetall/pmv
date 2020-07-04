@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use App\Helpers\RoleHelper;
 
 class LoginController extends Controller
 {
@@ -43,7 +44,13 @@ class LoginController extends Controller
     protected function attemptLogin(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_enabled' => 1])) {
-            Auth::logoutOtherDevices(request('password'));
+
+            $isAdmin = RoleHelper::is('super') || RoleHelper::is('admin');
+
+            if(!$isAdmin) {
+                Auth::logoutOtherDevices(request('password'));
+            }
+
             return redirect()->intended('/system/dashboard');
         }
     }
