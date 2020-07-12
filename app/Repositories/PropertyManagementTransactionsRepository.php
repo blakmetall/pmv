@@ -50,12 +50,14 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $query->whereNull('audit_user_id');
         }
 
-        if($shouldFilterByYear) {
-            $query->whereYear('post_date', $config['filterByYear']);
-        }
-
-        if($shouldFilterByMonth) {
-            $query->whereMonth('post_date', $config['filterByMonth']);
+        if($shouldFilterByYear && $shouldFilterByMonth) {
+            $query->where(function($q) use ($config){
+                $q->where(function($q2) use ($config) {
+                    $q2->whereYear('post_date', $config['filterByYear']);
+                    $q2->whereMonth('post_date', $config['filterByMonth']);
+                });
+                $q->orWhereNull('audit_user_id');
+            });
         }
 
         if($shouldFilterByProperty) {
