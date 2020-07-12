@@ -54,4 +54,9 @@ return [
     ],
 
     'valid_image_types' => ['jpg', 'jpeg', 'png', 'bmp'],
+
+    'cities' => [
+        'puerto-vallarta' => 1,
+        'mazatlan' => 2
+    ]
 ];

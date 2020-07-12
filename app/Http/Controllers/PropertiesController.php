@@ -181,4 +181,8 @@ class PropertiesController extends Controller
         $collection = Property::all();
         prepareExportationExcel($collection);
     }
+
+    public function generalAvailability() {
+        return view('properties.general-availability');
+    }
 }

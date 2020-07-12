@@ -224,4 +224,8 @@ class PropertyManagementTransactionsController extends Controller
         $request->session()->flash('success', __('Records deleted successfully'));
         return redirect()->back();
     }
+
+    public function createBulk() {
+        return view('property-management-transactions.create-bulk');
+    }
 }

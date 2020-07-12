@@ -4,6 +4,7 @@ import { handleMenuFit } from "./scripts/handleMenuFit.js";
 import { initCalendar } from "./scripts/initCalendar.js";
 import { initDatepickerComponents } from "./scripts/initDatepickerComponents.js";
 import { initFastSelectComponents } from "./scripts/initFastSelectComponents.js";
+import { initGetPmPropertySelectionEvent } from "./scripts/initGetPmPropertySelectionEvent.js";
 import { initTransactionCheckboxHandler } from "./scripts/initTransactionCheckboxHandler.js";
 import { initMapInputComponents } from "./scripts/initMapInputComponents.js";
 import { initTimepickerComponents } from "./scripts/initTimepickerComponents.js";
@@ -27,6 +28,7 @@ $(function() {
 
         initDatepickerComponents();
         initFastSelectComponents();
+        initGetPmPropertySelectionEvent();
         initTransactionCheckboxHandler();
         initMapInputComponents();
         initTimepickerComponents();

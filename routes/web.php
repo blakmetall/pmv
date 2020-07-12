@@ -129,50 +129,62 @@ Route::group(['middleware' => ['web']], function () {
                     
                 });
             });
-            
-            // all property managements prefix
-            Route::group(['prefix' => 'property-management'], function () {
 
-                // all property managements
-                Route::group(['middleware' => 'role-permission:properties,property-management'], function () {
-                    Route::get('', 'PropertyManagementController@general')->name('property-management.general');
-                });
-
-                // all properties balances
-                Route::group(['prefix' => 'balances', 'middleware' => 'role-permission:properties,balances'], function () {
-                    Route::get('', 'PropertyManagementBalancesController@general')->name('property-management-balances.general');
-                });
-
-                // all transactions
-                Route::group(['prefix' => 'transactions', 'middleware' => 'role-permission:properties,transactions'], function () {
-                    Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
-                });
-
-                // audit transaction batch
-                Route::get('audit-batch/{batch?}', 'PropertyManagementTransactionsController@auditBatch')->name('property-management-transactions.audit-batch');
-
-                // remove audit transaction batch
-                Route::get('remove-audit-batch/{batch?}', 'PropertyManagementTransactionsController@removeAuditBatch')->name('property-management-transactions.remove-audit-batch');
-
-                // delete transaction batch
-                Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
-
-                // single property management
-                Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
-
-                    // single property management transactions
-                    Route::group(['prefix' => 'transactions'], function () {
-                        Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
-                        Route::get('create', 'PropertyManagementTransactionsController@create')->name('property-management-transactions.create');
-                        Route::post('store', 'PropertyManagementTransactionsController@store')->name('property-management-transactions.store');
-                        Route::get('show/{transaction}', 'PropertyManagementTransactionsController@show')->name('property-management-transactions.show');
-                        Route::get('edit/{transaction}', 'PropertyManagementTransactionsController@edit')->name('property-management-transactions.edit');
-                        Route::post('update/{id}', 'PropertyManagementTransactionsController@update')->name('property-management-transactions.update');
-                        Route::get('destroy/{id}', 'PropertyManagementTransactionsController@destroy')->name('property-management-transactions.destroy');
-                    });
-                });
-
+            // general availability
+            Route::group(['middleware' => 'role-permission:properties,general-availability'], function () {
+                Route::get('general-availability', 'PropertiesController@generalAvailability')->name('properties.general-availability');
             });
+        });
+
+        // all property managements prefix
+        Route::group(['prefix' => 'property-management'], function () {
+
+            // all property managements
+            Route::group(['middleware' => 'role-permission:property-management,index'], function () {
+                Route::get('', 'PropertyManagementController@general')->name('property-management.general');
+            });
+
+            // property selection partial for creating new transaction
+            Route::get('property-selection', 'PropertyManagementController@getPropertySelection')->name('property-management.get-property-selection');
+            Route::get('generate-pm-transaction-url/{property?}', 'PropertyManagementController@generatePMTransactionUrl')->name('property-management.generate-pm-transaction-url');
+
+            // all properties balances
+            Route::group(['prefix' => 'balances', 'middleware' => 'role-permission:property-management,balances'], function () {
+                Route::get('', 'PropertyManagementBalancesController@general')->name('property-management-balances.general');
+            });
+
+            // all transactions
+            Route::group(['prefix' => 'transactions', 'middleware' => 'role-permission:property-management,transactions'], function () {
+                Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
+            });
+
+            // audit transaction batch
+            Route::get('audit-batch/{batch?}', 'PropertyManagementTransactionsController@auditBatch')->name('property-management-transactions.audit-batch');
+
+            // remove audit transaction batch
+            Route::get('remove-audit-batch/{batch?}', 'PropertyManagementTransactionsController@removeAuditBatch')->name('property-management-transactions.remove-audit-batch');
+
+            // delete transaction batch
+            Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
+
+            // property management transactions create bulk
+            Route::get('transactions/create-bulk', 'PropertyManagementTransactionsController@createBulk')->name('property-management-transactions.create-bulk');
+
+            // single property management
+            Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
+
+                // single property management transactions
+                Route::group(['prefix' => 'transactions'], function () {
+                    Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
+                    Route::get('create', 'PropertyManagementTransactionsController@create')->name('property-management-transactions.create');
+                    Route::post('store', 'PropertyManagementTransactionsController@store')->name('property-management-transactions.store');
+                    Route::get('show/{transaction}', 'PropertyManagementTransactionsController@show')->name('property-management-transactions.show');
+                    Route::get('edit/{transaction}', 'PropertyManagementTransactionsController@edit')->name('property-management-transactions.edit');
+                    Route::post('update/{id}', 'PropertyManagementTransactionsController@update')->name('property-management-transactions.update');
+                    Route::get('destroy/{id}', 'PropertyManagementTransactionsController@destroy')->name('property-management-transactions.destroy');
+                });
+            });
+
         });
 
         // cleaning-services
@@ -228,7 +240,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['prefix' => 'reporting', 'middleware' => 'role-permission:reporting,index'], function () {
             Route::get('', 'ReportingController@index')->name('reporting');
         });
-
 
         // settings
         Route::group(['prefix' => 'settings'], function() {

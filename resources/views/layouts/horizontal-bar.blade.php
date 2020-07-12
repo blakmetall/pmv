@@ -11,83 +11,140 @@
                     @if ($_current_role->isAllowed('properties', 'heading-menu'))
                         <li>
                             <div>
-                                    <div>
-                                        <!-- label for menu and sidebar menu for responsive -->
-                                        <label class="toggle" for="dropdownMenuProperties">
-                                            {{  __('Properties') }}
-                                        </label>
-                                        <a href="{{ route('properties') }}">
-                                            <i class="nav-icon mr-2 i-Home1"></i>
-                                            {{  __('Properties') }}
-                                        </a>
+                                <div>
+                                    <!-- label for menu and sidebar menu for responsive -->
+                                    <label class="toggle" for="dropdownMenuProperties">
+                                        {{  __('Properties') }}
+                                    </label>
+                                    <a href="{{ route('properties') }}">
+                                        <i class="nav-icon mr-2 i-Home1"></i>
+                                        {{  __('Properties') }}
+                                    </a>
 
-                                        @if (!isRole('owner'))
-                                            <!-- dropdown menu -->
-                                            <input type="checkbox" id="dropdownMenuBooking">
-                                            <ul>
-                                                @if ($_current_role->isAllowed('properties', 'index'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('properties.create') }}">
-                                                            <span class="item-name">{{ __('New Listing') }}</span>
-                                                        </a>
-                                                    </li>
+                                    @if (!isRole('owner'))
+                                        <!-- dropdown menu -->
+                                        <input type="checkbox" id="dropdownMenuBooking">
+                                        <ul>
+                                            @if ($_current_role->isAllowed('properties', 'index'))
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('properties.create') }}">
+                                                        <span class="item-name">{{ __('New Listing') }}</span>
+                                                    </a>
+                                                </li>
 
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('properties') }}">
-                                                            <span class="item-name">{{ __('All') }}</span>
-                                                        </a>
-                                                    </li>
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('properties') }}">
+                                                        <span class="item-name">{{ __('All') }}</span>
+                                                    </a>
+                                                </li>
 
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('properties') }}?filterOffline=1">
-                                                            <span class="item-name">{{ __('Properties Offline') }}</span>
-                                                        </a>
-                                                    </li>
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('properties') }}?filterOffline=1">
+                                                        <span class="item-name">{{ __('Properties Offline') }}</span>
+                                                    </a>
+                                                </li>
 
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('properties') }}?filterDisabled=1">
-                                                            <span class="item-name">{{ __('Properties Disabled') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('properties') }}?filterDisabled=1">
+                                                        <span class="item-name">{{ __('Properties Disabled') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
 
-                                                @if ($_current_role->isAllowed('properties', 'property-management'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('property-management.general') }}">
-                                                            <span class="item-name">{{ __('Property Management') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('properties.general-availability') }}">
+                                                    <span class="item-name">{{ __('General Availability') }}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    @endif
+                                </div>
+                            </div>
+                        </li>
+                    @endif
 
-                                                @if ($_current_role->isAllowed('properties', 'balances'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('property-management-balances.general') }}">
-                                                            <span class="item-name">{{ __('Balances') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
+                    @if ($_current_role->isAllowed('property-management', 'heading-menu'))
+                        <li>
+                            <div>
+                                <div>
+                                    <!-- label for menu and sidebar menu for responsive -->
+                                    <label class="toggle" for="dropdownMenuProperties">
+                                        {{  __('Property Management') }}
+                                    </label>
+                                    <a href="{{ route('property-management.general') }}">
+                                        <i class="nav-icon mr-2 i-Home1"></i>
+                                        {{  __('Property Management') }}
+                                    </a>
 
-                                                {{-- @if ($_current_role->isAllowed('properties', 'transactions'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('property-management-transactions.general') }}">
-                                                            <span class="item-name">{{ __('Transactions') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif --}}
+                                    @if (!isRole('owner'))
+                                        <!-- dropdown menu -->
+                                        <input type="checkbox" id="dropdownMenuBooking">
+                                        <ul>
+                                            @if ($_current_role->isAllowed('property-management', 'index'))
+                                                <li class="nav-item">
+                                                    <a class="" href="#" data-toggle="modal" data-target="#app-pm-property-selection-modal">
+                                                        <span class="item-name">{{ __('New Transaction') }}</span>
+                                                    </a>
+                                                </li>
 
-                                                @if ($_current_role->isAllowed('properties', 'pending-audits'))
-                                                    <li class="nav-item">
-                                                        @php 
-                                                            $routeParams = ['filterByPendingAudits' => 1]; 
-                                                        @endphp
-                                                        <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                            <span class="item-name">{{ __('Pending Audits') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                            </ul>
-                                        @endif
-                                    </div>
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('property-management-transactions.create-bulk') }}">
+                                                        <span class="item-name">{{ __('New Transaction Bulk') }}</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('property-management.general') }}">
+                                                        <span class="item-name">{{ __('All') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+
+                                            @if ($_current_role->isAllowed('property-management', 'balances'))
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('property-management-balances.general') }}">
+                                                        <span class="item-name">{{ __('Balances') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+
+                                            @if ($_current_role->isAllowed('property-management', 'pending-audits'))
+                                                {{-- <li class="nav-item">
+                                                    @php 
+                                                        $routeParams = ['filterByPendingAudits' => 1]; 
+                                                    @endphp
+                                                    <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
+                                                        <span class="item-name">{{ __('Pending Audits') }}</span>
+                                                    </a>
+                                                </li> --}}
+
+                                                <li class="nav-item">
+                                                    @php 
+                                                        $routeParams = [
+                                                            'filterByPendingAudits' => 1,
+                                                            'city' => config('constants.cities.mazatlan'),
+                                                        ]; 
+                                                    @endphp
+                                                    <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
+                                                        <span class="item-name">{{ __('Pending Audits') }}: Mazatlan</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    @php 
+                                                        $routeParams = [
+                                                            'filterByPendingAudits' => 1,
+                                                            'city' => config('constants.cities.puerto-vallarta'),
+                                                        ]; 
+                                                    @endphp
+                                                    <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
+                                                        <span class="item-name">{{ __('Pending Audits') }}: Puerto Vallarta</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    @endif
+                                </div>
                             </div>
                         </li>
                     @endif
@@ -396,4 +453,29 @@
     </div>
 
 </div>
+
+<!-- transaction bulk modal -->
+<div class="modal fade" id="app-pm-property-selection-modal" tabindex="-1" role="dialog" aria-labelledby="app-pm-property-selection-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('Select Property') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="app-pm-property-selection-container" data-url="{{ route('property-management.get-property-selection') }}">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                {{ __('Close') }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--=============== Horizontal bar End ================-->

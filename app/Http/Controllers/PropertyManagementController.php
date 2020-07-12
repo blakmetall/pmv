@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ PropertyManagementRepositoryInterface };
+use App\Repositories\{ PropertiesRepositoryInterface, PropertyManagementRepositoryInterface };
 use Illuminate\Http\Request;
 use App\Models\{ Property, PropertyManagement };
 
 class PropertyManagementController extends Controller
 {
     private $repository;
+    private $propertiesRepository;
 
-    public function __construct(PropertyManagementRepositoryInterface $repository)
-    {
+    public function __construct(
+        PropertiesRepositoryInterface $propertiesRepository,
+        PropertyManagementRepositoryInterface $repository
+    ) {
         $this->repository = $repository;
+        $this->propertiesRepository = $propertiesRepository;
     }
 
     public function index(Request $request, Property $property)
@@ -117,6 +121,31 @@ class PropertyManagementController extends Controller
         }
 
         return true;
+    }
+
+    // get the partial section to select property; used to create new transaction url
+    public function getPropertySelection() {
+        $config = [
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ];
+        $properties = $this->propertiesRepository->all('', $config);
+
+        return view('property-management.get-property-selection')->with('properties', $properties);
+    }
+
+    // generates the url and redirects to create new transaction for specific property management
+    public function generatePMTransactionUrl(Property $property) {
+        if($property->management()->count()) {
+            foreach($property->management as $pm) {
+                if(!$pm->is_finished) {
+                    return redirect(route('property-management-transactions.create', $pm->id));
+                    exit;
+                }
+            }
+        }
+
+        return redirect(route('property-management.general'));
     }
 
 }

@@ -262,7 +262,33 @@ class RoleHelper
                     'owner',
                     'regular',
                 ]),
-                'property-management' => self::transformSluggedRolesToIds([
+                'general-availability' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+            ],
+            'property-management' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
                     'property-management',
