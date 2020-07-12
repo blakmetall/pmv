@@ -393,8 +393,15 @@ class RoleHelper
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'concierge',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -405,8 +412,15 @@ class RoleHelper
                 'directory' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'concierge',
                 ]),
             ],
             'reporting' => [
