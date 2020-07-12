@@ -100,32 +100,31 @@
         ])
 
         <!-- vacation_days -->
-        @include('components.form.input', [
+        {{-- @include('components.form.input', [
             'group' => 'human-resource',
             'type' => 'number',
             'label' => __('Vacation Days'),
             'name' => 'vacation_days',
             'value' => $row->vacation_days
-        ])
+        ]) --}}
 
         <!-- vacation_start_date -->
-        @include('components.form.datepicker', [
+        {{-- @include('components.form.datepicker', [
             'group' => 'human-resource',
             'label' => __('Start Date'),
             'name' => 'vacation_start_date',
             'value' => $row->vacation_start_date,
             'maxDaysLimitFromNow' => 730,
-
-        ])
+        ]) --}}
 
         <!-- vacation_end_date -->
-        @include('components.form.datepicker', [
+        {{-- @include('components.form.datepicker', [
             'group' => 'human-resource',
             'label' => __('End Date'),
             'name' => 'vacation_end_date',
             'value' => $row->vacation_end_date,
             'maxDaysLimitFromNow' => 730,
-        ])
+        ]) --}}
 
         <hr>
 
