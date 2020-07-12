@@ -101,7 +101,13 @@
                                             }
                                         }
 
+                                        // detect empty transaction
+                                        if(!monthHasPmTransactions($pm->id, $monthNumber, $yearSearched)) {
+                                            $monthColorClass = ' app-month-inactive ';
+                                        }
+
                                         $selecteMonthClass = ($monthSearched == $monthNumber) ? ' app-month-selected ' : '';
+
 
                                     @endphp
                                     <a href="{{ $monthUrl }}" class="{{ $monthColorClass }} {{ $selecteMonthClass }}">

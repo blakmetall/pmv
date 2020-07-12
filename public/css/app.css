@@ -11349,14 +11349,16 @@ a.text-dark:focus {
   width: auto;
   margin-right: 5px;
   padding: 0 7px 7px 0;
+  font-weight: 600;
 }
 
 .app-months-list li .app-month-inactive {
-  color: #7b7b7b;
+  color: #9b9b9b;
+  font-weight: 300;
 }
 
 .app-months-list li .app-month-selected {
-  font-weight: bold;
+  font-weight: 900;
   text-decoration: underline;
 }
 

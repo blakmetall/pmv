@@ -30,4 +30,18 @@ class PMTransactionHelper
         }
         return 'operation undefined';
     }
+
+    public static function monthHasTransactions($pmID, $month, $year) {
+        $foundTransactions = PropertyManagementTransaction::
+            where('property_management_id', $pmID)
+            ->whereYear('post_date', $year)
+            ->whereMonth('post_date', $month)
+            ->count();
+
+        if($foundTransactions) {
+            return true;
+        } 
+
+        return false;
+    }
 }

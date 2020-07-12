@@ -247,3 +247,10 @@ if (!function_exists('isImage')) {
         return (in_array($extension, \Config::get('constants.valid_image_types')));
     }
 }
+
+if (!function_exists('monthHasPmTransactions')) {
+    function monthHasPmTransactions($pmID, $month, $year)
+    {        
+        return \App\Helpers\PMTransactionHelper::monthHasTransactions($pmID, $month, $year);
+    }
+}
