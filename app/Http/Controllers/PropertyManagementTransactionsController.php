@@ -79,6 +79,8 @@ class PropertyManagementTransactionsController extends Controller
             'filterByTransactionType' => $request->transaction_type,
             'filterByCity' => $request->city,
             'filterByImage' => $request->withImage,
+            'orderBy' => $request->orderBy,
+            'orderDirection' => $request->orderDirection,
         ];
         $transactions = $this->repository->all($search, $config);
 

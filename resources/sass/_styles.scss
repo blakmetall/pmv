@@ -451,6 +451,17 @@
     max-width: 1200px;
 }
 
+.app-table-th-icon {
+    margin-left: 5px;
+    i {
+        color: #000;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 @media (max-width: 1200px) {
     .app-table-file-modal-dialog {
         max-width: 90%;

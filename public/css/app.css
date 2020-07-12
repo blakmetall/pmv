@@ -11416,6 +11416,18 @@ a.text-dark:focus {
   max-width: 1200px;
 }
 
+.app-table-th-icon {
+  margin-left: 5px;
+}
+
+.app-table-th-icon i {
+  color: #000;
+}
+
+.app-table-th-icon:hover {
+  text-decoration: none;
+}
+
 @media (max-width: 1200px) {
   .app-table-file-modal-dialog {
     max-width: 90%;

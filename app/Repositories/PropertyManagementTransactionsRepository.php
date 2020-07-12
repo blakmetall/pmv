@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
 use App\Models\{ PropertyManagement, PropertyManagementTransaction };
 use App\Validations\PropertyManagementTransactionsValidations;
-use App\Helpers\ImagesHelper;
+use App\Helpers\{ ImagesHelper, LanguageHelper };
 
 class PropertyManagementTransactionsRepository implements PropertyManagementTransactionsRepositoryInterface
 {
@@ -32,6 +32,9 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $shouldFilterByTransactionType = isset($config['filterByTransactionType']) ? $config['filterByTransactionType'] : '';
         $shouldFilterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $shouldFilterByImage = isset($config['filterByImage']) ? $config['filterByImage'] : ''; // withImage value: 1 || 2
+
+        $orderByFilter = isset($config['orderBy']) ? $config['orderBy'] : '';
+        $orderByDirectionFilter = isset($config['orderDirection']) ? $config['orderDirection'] : '';
 
         if ($search) {
             $query = PropertyManagementTransaction::where('description', 'like', '%'.$search.'%');
@@ -90,8 +93,27 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $query->with('propertyManagement');
         $query->with('auditedBy');
 
+        // ordering section
         if ($shouldFilterByPendingAudits) {
-            $query->orderBy('post_date', 'desc');
+            if($orderByFilter && $orderByDirectionFilter) {
+                if($orderByFilter == 'date') { // order by date
+                    $direction = $orderByDirectionFilter == 'down' ? 'asc' : 'desc';
+                    $query->orderBy('post_date', $direction);
+                }else if($orderByFilter == 'property') { // order by property name
+                    $query->select('property_management_transactions.*');
+                    $query->join('property_management', 'property_management_transactions.property_management_id', '=', 'property_management.id');
+                    $query->join('properties', 'property_management.property_id', '=', 'properties.id');
+                    $query->join('properties_translations', 'properties_translations.property_id', '=', 'properties.id');
+                    
+                    $direction = $orderByDirectionFilter == 'down' ? 'desc' : 'asc';
+                    $query->orderBy('properties.id', $direction);
+                    
+                    $lang = LanguageHelper::current();
+                    $query->where('properties_translations.language_id', $lang->id);
+                }
+            }else {
+                $query->orderBy('post_date', 'asc');
+            }
         } else {
             $query->orderBy('post_date', 'asc');
         }

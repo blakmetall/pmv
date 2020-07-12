@@ -103,15 +103,6 @@
                                             @endif
 
                                             @if ($_current_role->isAllowed('property-management', 'pending-audits'))
-                                                {{-- <li class="nav-item">
-                                                    @php 
-                                                        $routeParams = ['filterByPendingAudits' => 1]; 
-                                                    @endphp
-                                                    <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                        <span class="item-name">{{ __('Pending Audits') }}</span>
-                                                    </a>
-                                                </li> --}}
-
                                                 <li class="nav-item">
                                                     @php 
                                                         $routeParams = [

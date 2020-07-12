@@ -307,8 +307,50 @@
                                 <th scope="col" class="transaction-col-file">
                                     <div style="min-width: 70px;"></div>
                                 </th>
-                                <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
-                                <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
+                                <th scope="col" class="transaction-col-date">
+                                    {{ __('Date') }}
+
+                                    @if($usePendingAuditPresentation)
+                                        @php
+                                            $_GET['orderBy'] = 'date';
+                                            $_GET['orderDirection'] = 'down';
+                                        @endphp
+
+                                        <a href="{{ route('property-management-transactions.general', $_GET) }}" class="app-table-th-icon">
+                                            <i class="i-Arrow-Down-2"></i>
+                                        </a>
+
+                                        @php
+                                            $_GET['orderBy'] = 'date';
+                                            $_GET['orderDirection'] = 'up';
+                                        @endphp
+                                        <a href="{{ route('property-management-transactions.general', $_GET) }}" class="app-table-th-icon">
+                                            <i class="i-Arrow-Up-2"></i>
+                                        </a>
+                                    @endif
+                                </th>
+                                <th scope="col" class="transaction-col-property">
+                                    {{ __('Property') }}
+
+                                    @if($usePendingAuditPresentation)
+                                        @php
+                                            $_GET['orderBy'] = 'property';
+                                            $_GET['orderDirection'] = 'down';
+                                        @endphp
+
+                                        <a href="{{ route('property-management-transactions.general', $_GET) }}" class="app-table-th-icon">
+                                            <i class="i-Arrow-Down-2"></i>
+                                        </a>
+
+                                        @php
+                                            $_GET['orderBy'] = 'property';
+                                            $_GET['orderDirection'] = 'up';
+                                        @endphp
+                                        <a href="{{ route('property-management-transactions.general', $_GET) }}" class="app-table-th-icon">
+                                            <i class="i-Arrow-Up-2"></i>
+                                        </a>
+                                    @endif
+                                </th>
                                 <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
                                 <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
 

@@ -17,6 +17,10 @@
         <div class="card-body">
 
             <form action="" action="get">
+                <input type="hidden" name="filterByPendingAudits" value="{{ isset($_GET['filterByPendingAudits']) ? '1' : '0' }}">
+                <input type="hidden" name="orderBy" value="{{ isset($_GET['orderBy']) ? $_GET['orderBy'] : '' }}">
+                <input type="hidden" name="orderDirection" value="{{ isset($_GET['orderDirection']) ? $_GET['orderDirection'] : '' }}">
+
                 <div class="row pt-3">
                     <div class="col-sm-6 col-md-3">
                         <select name="property" class="form-control">
