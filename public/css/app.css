@@ -11252,6 +11252,15 @@ a.text-dark:focus {
   margin-top: 114px !important;
 }
 
+.app-top-search {
+  position: relative;
+  top: 7px;
+}
+
+.app-top-search .btn-dark {
+  border: 0.5px solid #aaa;
+}
+
 .app-container {
   max-width: 1250px;
 }

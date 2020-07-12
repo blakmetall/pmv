@@ -15,4 +15,9 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
+
+    public function generalSearch()
+    {
+        return view('dashboard.general-search');
+    }
 }

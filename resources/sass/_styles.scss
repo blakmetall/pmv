@@ -272,6 +272,15 @@
     }
 }
 
+.app-top-search {
+    position: relative;
+    top: 7px;
+
+    .btn-dark {
+        border: 0.5px solid #aaa;
+    }
+}
+
 .app-container {
     max-width: 1250px;
 }

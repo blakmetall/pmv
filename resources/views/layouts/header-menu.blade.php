@@ -22,6 +22,42 @@
 
     <div class="header-part-right">
 
+        @if(!isRole('owner') && $_current_role->isAllowed('dashboard', 'general-search'))
+            <div class="dropdown d-none d-md-block pr-3">
+                <div class="form-group">
+                    <form action="{{ route('dashboard.general-search') }}" method="GET">
+                        <div class="d-flex align-items-center app-top-search">
+                            @php
+                                $topSearchValue = isset($_GET['topSearch']) ? $_GET['topSearch'] : '';     
+                            @endphp
+                            <input name="topSearch" value="{{ old('topSearch', $topSearchValue) }}" type="text" class="form-control form-control-sm mr-3">
+                            <select name="topFilter" class="form-control form-control-sm mr-3">
+                                <option value="">{{ __('Select') }}</option>
+
+                                @php
+                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties' ? 'selected' : '';
+                                @endphp
+                                <option value="properties" {{ $selected }}>{{ __('Properties') }}</option>
+
+                                @php
+                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'bookings' ? 'selected' : '';
+                                @endphp
+                                <option value="bookings" {{ $selected }}>{{ __('Bookings') }}</option>
+
+                                @php
+                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'transactions' ? 'selected' : '';
+                                @endphp
+                                <option value="transactions" {{ $selected }}>{{ __('Transactions') }}</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-dark">
+                                <i class="i-Magnifi-Glass-"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+        @endif
+
         @if(!isProduction())
             <!-- Notification -->
             <div class="dropdown">

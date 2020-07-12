@@ -112,6 +112,47 @@ class RoleHelper
     public static function getAllowedSections() 
     {
         $sections = [
+            'dashboard' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                ]),
+                'general-search' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'rentals-agent',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                ]),
+            ],
             'calendar' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',

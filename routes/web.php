@@ -23,6 +23,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('', 'DashboardController@index');
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+        // dashboard: general search
+        Route::group(['middleware' => 'role-permission:dashboard,general-search'], function () {
+            Route::get('dashboard/general-search', 'DashboardController@generalSearch')->name('dashboard.general-search');
+        });
+
         // calendar
         Route::group(['prefix' => 'calendar', 'middleware' => 'role-permission:calendar,index'], function () {
             Route::get('', 'CalendarController@index')->name('calendar');
