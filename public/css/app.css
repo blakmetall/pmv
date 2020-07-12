@@ -11226,6 +11226,10 @@ a.text-dark:focus {
 
 /********* app ***********/
 
+.underline {
+  text-decoration: underline !important;
+}
+
 .layout-horizontal-bar .main-header {
   background: #2c3e4f;
   height: 66px;

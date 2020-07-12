@@ -2,7 +2,7 @@
 
 @section('heading-content')
     @include('components.heading', [
-        'label' => __('Property Management Balances'),
+        'label' => __('Balances'),
     ])
 
     <!-- separator -->
