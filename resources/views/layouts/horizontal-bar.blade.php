@@ -50,12 +50,6 @@
                                                     </a>
                                                 </li>
                                             @endif
-
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('properties.general-availability') }}">
-                                                    <span class="item-name">{{ __('General Availability') }}</span>
-                                                </a>
-                                            </li>
                                         </ul>
                                     @endif
                                 </div>
@@ -167,7 +161,25 @@
                                     <ul>
                                         @if ($_current_role->isAllowed('bookings', 'index'))
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('bookings') }}">
+                                                <a class="" href="#">
+                                                    <span class="item-name">{{ __('New Reservation') }}</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="" href="#">
+                                                    <span class="item-name">{{ __('Arrivals && Departures') }}</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="" href="#">
+                                                    <span class="item-name">{{ __('Main Schedule') }}</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="" href="#">
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>

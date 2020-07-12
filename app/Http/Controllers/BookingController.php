@@ -32,31 +32,31 @@ class BookingController extends Controller
 
     public function create()
     {
-        //
+        echo __('Coming soon');
     }
 
     public function store(Request $request)
     {
-        //
+        echo __('Coming soon');
     }
 
     public function show($id)
     {
-        //
+        echo __('Coming soon');
     }
 
     public function edit($id)
     {
-        //
+        echo __('Coming soon');
     }
 
     public function update(Request $request, $id)
     {
-        //
+        echo __('Coming soon');
     }
 
     public function destroy($id)
     {
-        //
+        echo __('Coming soon');
     }
 }

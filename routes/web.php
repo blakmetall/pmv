@@ -34,6 +34,12 @@ Route::group(['middleware' => ['web']], function () {
             // all bookings
             Route::group(['middleware' => 'role-permission:bookings,index'], function () {
                 Route::get('', 'BookingController@index')->name('bookings');
+                Route::get('create', 'BookingController@create')->name('bookings.create');
+                // Route::post('store', 'BookingController@store')->name('bookings.store');
+                // Route::get('show/{property}', 'BookingController@show')->name('bookings.show');
+                // Route::get('edit/{property}', 'BookingController@edit')->name('bookings.edit');
+                // Route::post('update/{id}', 'BookingController@update')->name('bookings.update');
+                // Route::get('destroy/{id}', 'BookingController@destroy')->name('bookings.destroy');
             });
 
             // bookings by property
@@ -128,11 +134,6 @@ Route::group(['middleware' => ['web']], function () {
                     });
                     
                 });
-            });
-
-            // general availability
-            Route::group(['middleware' => 'role-permission:properties,general-availability'], function () {
-                Route::get('general-availability', 'PropertiesController@generalAvailability')->name('properties.general-availability');
             });
         });
 
