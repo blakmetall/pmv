@@ -13,9 +13,12 @@ class HumanResource extends Model
     public $timestamps = false;
     protected $fillable = [
         'city_id',
-        'address',
         'firstname',
         'lastname',
+        'address',
+        'phone',
+        'emergency_phone',
+        'mobile',
         'department',
         'entry_at',
         'birthday',

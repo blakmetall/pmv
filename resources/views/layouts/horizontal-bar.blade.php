@@ -8,15 +8,86 @@
             <div class=" topnav rtl-ps-none" id="" data-perfect-scrollbar data-suppress-scroll-x="true">
                 <ul class="menu float-left" id="app-menu">
 
-                    @if (!isProduction() && $_current_role->isAllowed('calendar', 'heading-menu'))
+                    @if ($_current_role->isAllowed('properties', 'heading-menu'))
                         <li>
                             <div>
-                                <div>
-                                    <a href="{{ route('calendar') }}">
-                                        <i class="nav-icon mr-2 i-Calendar-2 text-primary"></i>
-                                        {{ __('Calendar') }}
-                                    </a>
-                                </div>
+                                    <div>
+                                        <!-- label for menu and sidebar menu for responsive -->
+                                        <label class="toggle" for="dropdownMenuProperties">
+                                            {{  __('Properties') }}
+                                        </label>
+                                        <a href="{{ route('properties') }}">
+                                            <i class="nav-icon mr-2 i-Home1"></i>
+                                            {{  __('Properties') }}
+                                        </a>
+
+                                        @if (!isRole('owner'))
+                                            <!-- dropdown menu -->
+                                            <input type="checkbox" id="dropdownMenuBooking">
+                                            <ul>
+                                                @if ($_current_role->isAllowed('properties', 'index'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties.create') }}">
+                                                            <span class="item-name">{{ __('New Listing') }}</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties') }}">
+                                                            <span class="item-name">{{ __('All') }}</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties') }}?filterOffline=1">
+                                                            <span class="item-name">{{ __('Properties Offline') }}</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties') }}?filterDisabled=1">
+                                                            <span class="item-name">{{ __('Properties Disabled') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+
+                                                @if ($_current_role->isAllowed('properties', 'property-management'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('property-management.general') }}">
+                                                            <span class="item-name">{{ __('Property Management') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+
+                                                @if ($_current_role->isAllowed('properties', 'balances'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('property-management-balances.general') }}">
+                                                            <span class="item-name">{{ __('Balances') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+
+                                                {{-- @if ($_current_role->isAllowed('properties', 'transactions'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('property-management-transactions.general') }}">
+                                                            <span class="item-name">{{ __('Transactions') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif --}}
+
+                                                @if ($_current_role->isAllowed('properties', 'pending-audits'))
+                                                    <li class="nav-item">
+                                                        @php 
+                                                            $routeParams = ['filterByPendingAudits' => 1]; 
+                                                        @endphp
+                                                        <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
+                                                            <span class="item-name">{{ __('Pending Audits') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        @endif
+                                    </div>
                             </div>
                         </li>
                     @endif
@@ -27,11 +98,11 @@
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Bookings') }}
+                                        {{ __('Reservations') }}
                                     </label>
                                     <a href="{{ route('bookings') }}">
                                         <i class="nav-icon mr-2 i-Calendar-4"></i>
-                                        {{ __('Bookings') }}
+                                        {{ __('Reservations') }}
                                     </a>
 
                                     <!-- dropdown menu -->
@@ -82,72 +153,6 @@
                         </li>
                     @endif
 
-                    @if ($_current_role->isAllowed('properties', 'heading-menu'))
-                        <li>
-                            <div>
-                                    <div>
-                                        <!-- label for menu and sidebar menu for responsive -->
-                                        <label class="toggle" for="dropdownMenuProperties">
-                                            {{  __('Properties') }}
-                                        </label>
-                                        <a href="{{ route('properties') }}">
-                                            <i class="nav-icon mr-2 i-Home1"></i>
-                                            {{  __('Properties') }}
-                                        </a>
-
-                                        @if (!isRole('owner'))
-                                            <!-- dropdown menu -->
-                                            <input type="checkbox" id="dropdownMenuBooking">
-                                            <ul>
-                                                @if ($_current_role->isAllowed('properties', 'index'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('properties') }}">
-                                                            <span class="item-name">{{ __('All') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
-
-                                                @if ($_current_role->isAllowed('properties', 'property-management'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('property-management.general') }}">
-                                                            <span class="item-name">{{ __('Property Management') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
-
-                                                @if ($_current_role->isAllowed('properties', 'balances'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('property-management-balances.general') }}">
-                                                            <span class="item-name">{{ __('Balances') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
-
-                                                {{-- @if ($_current_role->isAllowed('properties', 'transactions'))
-                                                    <li class="nav-item">
-                                                        <a class="" href="{{ route('property-management-transactions.general') }}">
-                                                            <span class="item-name">{{ __('Transactions') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif --}}
-
-                                                @if ($_current_role->isAllowed('properties', 'pending-audits'))
-                                                    <li class="nav-item">
-                                                        @php 
-                                                            $routeParams = ['filterByPendingAudits' => 1]; 
-                                                        @endphp
-                                                        <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                            <span class="item-name">{{ __('Pending Audits') }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                            </ul>
-                                        @endif
-                                    </div>
-                            </div>
-                        </li>
-                    @endif
-
                     @if ($_current_role->isAllowed('cleaning-services', 'heading-menu'))
                         <li>
                             <div>
@@ -165,34 +170,34 @@
                         </li>
                     @endif
 
-                    @if (!isProduction() && $_current_role->isAllowed('contractors', 'heading-menu'))
+                    @if ($_current_role->isAllowed('human-resources', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Contractors') }}
+                                        {{ __('H.R.') }}
                                     </label>
-                                    <a href="{{ route('contractors') }}">
-                                        <i class="nav-icon mr-2 i-Engineering"></i>
-                                        {{ __('Contractors') }}
+                                    <a href="#">
+                                        <i class="nav-icon mr-2 i-Professor"></i>
+                                        {{ __('H.R.') }}
                                     </a>
 
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_current_role->isAllowed('contractors', 'index'))
+                                        @if ($_current_role->isAllowed('human-resources', 'index'))
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('contractors') }}">
+                                                <a class="" href="{{ route('human-resources') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('contractors', 'services'))
+                                        @if ($_current_role->isAllowed('human-resources', 'directory'))
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('contractors-services') }}">
-                                                    <span class="item-name">{{ __('Services') }}</span>
+                                                <a class="" href="{{ route('human-resources.directory') }}">
+                                                    <span class="item-name">{{ __('Directory') }}</span>
                                                 </a>
                                             </li>
                                         @endif
@@ -202,53 +207,22 @@
                         </li>
                     @endif
 
-                    @if ($_current_role->isAllowed('human-resources', 'heading-menu'))
+                    @if ($_current_role->isAllowed('reporting', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('H.R.') }}
+                                        {{ __('Reporting') }}
                                     </label>
-                                    <a href="{{ route('human-resources') }}">
-                                        <i class="nav-icon mr-2 i-Professor"></i>
-                                        {{ __('H.R.') }}
+                                    <a href="{{ route('reporting') }}">
+                                        <i class="nav-icon mr-2 i-Newspaper"></i>
+                                        {{ __('Reporting') }}
                                     </a>
                                 </div>
                             </div>
                         </li>
                     @endif
-
-                    @php
-                        /* DISABLED TEMPORARILY
-                            @if ($_current_role->isAllowed('reporting', 'heading-menu'))
-                                <li>
-                                    <div>
-                                        <div>
-                                            <!-- label for menu and sidebar menu for responsive -->
-                                            <label class="toggle" for="dropdownMenuBooking">
-                                                {{ __('Reporting') }}
-                                            </label>
-                                            <a href="#">
-                                                <i class="nav-icon mr-2 i-Newspaper"></i>
-                                                {{ __('Reporting') }}
-                                            </a>
-
-                                            <!-- dropdown menu -->
-                                            <input type="checkbox" id="dropdownMenuBooking">
-                                            <ul>
-                                                <li class="nav-item">
-                                                    <a class="" href="#">
-                                                        <span class="item-name">{{ __('All') }}</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-                        */
-                    @endphp
 
                     @if ($_current_role->isAllowed('settings', 'heading-menu'))
                         <li>
@@ -352,6 +326,48 @@
                         </li>
                     @endif
 
+                    @if (!isProduction() && $_current_role->isAllowed('contractors', 'heading-menu'))
+                        @php 
+                            /* DISABLED TEMPORARILY
+                            <li>
+                                <div>
+                                    <div>
+                                        <!-- label for menu and sidebar menu for responsive -->
+                                        <label class="toggle" for="dropdownMenuBooking">
+                                            {{ __('Contractors') }}
+                                        </label>
+                                        <a href="{{ route('contractors') }}">
+                                            <i class="nav-icon mr-2 i-Engineering"></i>
+                                            {{ __('Contractors') }}
+                                        </a>
+
+                                        <!-- dropdown menu -->
+                                        <input type="checkbox" id="dropdownMenuBooking">
+                                        <ul>
+                                            @if ($_current_role->isAllowed('contractors', 'index'))
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('contractors') }}">
+                                                        <span class="item-name">{{ __('All') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+
+                                            @if ($_current_role->isAllowed('contractors', 'services'))
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('contractors-services') }}">
+                                                        <span class="item-name">{{ __('Services') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            */ 
+                        @endphp
+                    @endif
+
+                    <!-- menu fit controller -->
                     <li id="app-menu-fit-li">
                         <div>
                             <div>

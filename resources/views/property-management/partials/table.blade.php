@@ -26,9 +26,9 @@
 
                         @if(!isRole('owner'))
                             <th scope="col">{{ __('Avg. Month') }}</th>
+                            <th scope="col">{{ __('Finished') }}</th>
                         @endif
 
-                        <th scope="col">{{ __('Finished') }}</th>
                         <th scope="col">&nbsp;</th>
 
                         @if(!isRole('owner'))
@@ -79,10 +79,11 @@
                                 <!-- average_month -->
                                 @if(!isRole('owner'))
                                     <td>{{ priceFormat($row->average_month) }} MXN</td>
+                                    
+                                    <!-- is_finished -->
+                                    <td>{!! getStatusIcon($row->is_finished) !!}</td>
                                 @endif
 
-                                <!-- is_finished -->
-                                <td>{!! getStatusIcon($row->is_finished) !!}</td>
 
                                 <td>
                                     <a href="{{ route('property-management-transactions', $row->id) }}" 

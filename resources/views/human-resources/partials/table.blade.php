@@ -17,6 +17,7 @@
                         <th scope="col">{{ __('City') }}</th>
                         <th scope="col">{{ __('Department') }}</th>
                         <th scope="col">{{ __('Birthday') }}</th>
+                        <th scope="col">{{ __('Phone') }}</th>
                         <th scope="col">{{ __('Vacations') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -47,6 +48,9 @@
 
                                 <!-- birthday -->
                                 <td>{{ $row->birthday }}</td>
+
+                                <!-- phone -->
+                                <td>{{ $row->phone }}</td>
 
                                 <!-- vacations -->
                                 <td>

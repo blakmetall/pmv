@@ -19,6 +19,9 @@ class CreateHumanResourcesTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('address')->nullable();
+            $table->string('phone', 30)->nullable();
+            $table->string('emergency_phone', 30)->nullable();
+            $table->string('mobile', 30)->nullable();
             $table->string('department')->nullable();
             $table->date('entry_at')->nullable();
             $table->date('birthday')->nullable();

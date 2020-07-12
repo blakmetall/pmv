@@ -48,6 +48,30 @@
             'value' => $row->department
         ])
 
+        <!-- phone -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Phone'),
+            'name' => 'phone',
+            'value' => $row->phone
+        ])
+
+        <!-- emergency_phone -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Emergency Phone'),
+            'name' => 'emergency_phone',
+            'value' => $row->emergency_phone
+        ])
+
+        <!-- mobile -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Mobile'),
+            'name' => 'mobile',
+            'value' => $row->mobile
+        ])
+
         <!-- birthday -->
         @include('components.form.datepicker', [
             'group' => 'human-resource',

@@ -218,6 +218,17 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('update/{id}', 'HumanResourcesController@update')->name('human-resources.update');
             Route::get('destroy/{id}', 'HumanResourcesController@destroy')->name('human-resources.destroy');
         });
+        
+        // human-resources directory
+        Route::group(['prefix' => 'human-resources/directory', 'middleware' => 'role-permission:human-resources,directory'], function () {
+            Route::get('directory', 'HumanResourcesController@directory')->name('human-resources.directory');
+        });
+
+        // reporting
+        Route::group(['prefix' => 'reporting', 'middleware' => 'role-permission:reporting,index'], function () {
+            Route::get('', 'ReportingController@index')->name('reporting');
+        });
+
 
         // settings
         Route::group(['prefix' => 'settings'], function() {

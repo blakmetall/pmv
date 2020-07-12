@@ -80,8 +80,8 @@
                                     role="button"
                                     href="{{ route('bookings.by-property', $property->id) }}" 
                                     class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
-                                    title="{{ __('Bookings') }}"
-                                    alt="{{ __('Bookings') }}">
+                                    title="{{ __('Reservations') }}"
+                                    alt="{{ __('Reservations') }}">
                                     <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
                                 </a>
                             @endif

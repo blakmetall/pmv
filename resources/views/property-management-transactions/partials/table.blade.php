@@ -68,8 +68,13 @@
                                     <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
                                 @endif
 
-                                <th scope="col" class="transaction-col-created">{{ __('Created') }}</th>
-                                <th scope="col" class="transaction-col-updated">{{ __('Updated') }}</th>
+                                @if(!isRole('owner'))
+                                    <th scope="col" class="transaction-col-created">{{ __('Created') }}</th>
+                                    <th scope="col" class="transaction-col-updated">{{ __('Updated') }}</th>
+                                @else
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                @endif
 
                                 @if(!isRole('owner'))
                                     <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
@@ -206,12 +211,17 @@
                                             </td>
                                         @endif
                                         
-                                        <!-- created/updated cols -->
-                                        @include('components.table.created-updated', [
-                                            'created_at' => $row->created_at,
-                                            'updated_at' => $row->updated_at,
-                                            'trimTime' => true,
-                                        ])
+                                        @if(!isRole('owner'))
+                                            <!-- created/updated cols -->
+                                            @include('components.table.created-updated', [
+                                                'created_at' => $row->created_at,
+                                                'updated_at' => $row->updated_at,
+                                                'trimTime' => true,
+                                            ])
+                                        @else
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        @endif
 
                                         @if(!isRole('owner'))
                                             <!-- audited cols -->

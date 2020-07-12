@@ -106,4 +106,14 @@ class HumanResourcesController extends Controller
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
     }
+
+    public function directory(Request $request) {
+        $search = trim($request->s);
+
+        $human_resources = $this->repository->all($search, []);        
+
+        return view('human-resources.directory')
+            ->with('human_resources', $human_resources)
+            ->with('search', $search);
+    }
 }

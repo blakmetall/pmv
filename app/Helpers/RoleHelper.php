@@ -376,6 +376,12 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                 ]),
+                'directory' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
             ],
             'reporting' => [
                 '*' => self::transformSluggedRolesToIds([

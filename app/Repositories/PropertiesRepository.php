@@ -27,6 +27,8 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
         $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
+        $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
 
         $lang = LanguageHelper::current();
         
@@ -67,6 +69,18 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         if ($shouldFilterByEnabled) {
             $query->whereHas('property', function($q) use ($config) {
                 $q->where('properties.is_enabled', 1);
+            });
+        }
+
+        if ($shouldFilterByOffline) {
+            $query->whereHas('property', function($q) use ($config) {
+                $q->where('properties.is_online', '!=', 1);
+            });
+        }
+
+        if ($shouldFilterByDisabled) {
+            $query->whereHas('property', function($q) use ($config) {
+                $q->where('properties.is_enabled', '!=', 1);
             });
         }
 

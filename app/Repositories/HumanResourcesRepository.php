@@ -27,10 +27,13 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
 
         if ($search) {
             $query = HumanResource::
-                where('address', 'like', "%".$search."%")
-                ->orWhere('lastname', 'like', $search)
-                ->orWhere('firstname', 'like', $search)
-                ->orWhere('department', 'like', $search);
+                where('id', $search)
+                ->orWhere(function($q) use ($search) {
+                    $q->where('address', 'like', "%".$search."%")
+                    ->orWhere('lastname', 'like', "%".$search."%")
+                    ->orWhere('firstname', 'like', "%".$search."%")
+                    ->orWhere('department', 'like', "%".$search."%");
+                });
         } else {
             $query = HumanResource::query();
         }

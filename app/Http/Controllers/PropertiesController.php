@@ -56,6 +56,9 @@ class PropertiesController extends Controller
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
 
+        $config['filterByOffline'] = !!$request->filterOffline;
+        $config['filterByDisabled'] = !!$request->filterDisabled;
+
         $properties = $this->repository->all($search, $config);
 
         if($request->shouldGenerateExcel) {

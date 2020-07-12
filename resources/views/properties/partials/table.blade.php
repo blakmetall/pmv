@@ -137,8 +137,8 @@
                                         <a 
                                             href="{{ route('bookings.by-property', $row->property->id) }}" 
                                             class="text-primary app-icon-link"
-                                            title="{{ __('Bookings') }}"
-                                            alt="{{ __('Bookings') }}">
+                                            title="{{ __('Reservations') }}"
+                                            alt="{{ __('Reservations') }}">
                                             <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
                                         </a>
                                     @endif
