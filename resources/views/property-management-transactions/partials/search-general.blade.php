@@ -69,6 +69,28 @@
                             @endif
                         </select>
                     </div>
+                    <div class="col-sm-6 col-md-2">
+                        <select name="withImage" class="form-control">
+                            <option value="">-- {{ __('Image Filter') }}</option>
+
+                            @php
+                                $withImageOptions = [
+                                    1 => __('With Image'),
+                                    2 => __('Without Image'),
+                                ]; 
+                            @endphp
+                            @foreach($withImageOptions as $value => $label)
+                                @php 
+                                    $selected = isset($_GET['withImage']) && $_GET['withImage'] == $value ? 'selected' : ''; 
+                                @endphp
+
+                                <option value="{{ $value }}" {{ $selected }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
                     <div class="col-sm-6 col-md-2 app-search-buttons">
                         <button class="btn btn-dark btn-icon mr-2" type="submit">
                             <span class="ul-btn__icon">

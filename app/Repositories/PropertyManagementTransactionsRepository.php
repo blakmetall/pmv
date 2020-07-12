@@ -31,6 +31,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $shouldFilterByProperty = isset($config['filterByProperty']) ? $config['filterByProperty'] : '';
         $shouldFilterByTransactionType = isset($config['filterByTransactionType']) ? $config['filterByTransactionType'] : '';
         $shouldFilterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
+        $shouldFilterByImage = isset($config['filterByImage']) ? $config['filterByImage'] : ''; // withImage value: 1 || 2
 
         if ($search) {
             $query = PropertyManagementTransaction::where('description', 'like', '%'.$search.'%');
@@ -72,6 +73,14 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                     });
                 });
             });
+        }
+
+        if($shouldFilterByImage) {
+            if($shouldFilterByImage == 1) {
+                $query->where('file_url', '!=', '');
+            }else if($shouldFilterByImage == 2) {
+                $query->whereNull('file_url');
+            }
         }
 
         if($shouldFilterByTransactionType) {
