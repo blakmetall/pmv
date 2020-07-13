@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\{ PropertiesRepositoryInterface, PropertyManagementTransactionsRepositoryInterface };
 
 class DashboardController extends Controller
 {
-    public function __construct()
+    private $pmTransactionsRepository;
+    private $propertiesRepository;
+
+    public function __construct(
+        PropertiesRepositoryInterface $propertiesRepository,
+        PropertyManagementTransactionsRepositoryInterface $pmTransactionsRepository
+    )
     {
         $this->middleware('auth');
+        $this->pmTransactionsRepository = $pmTransactionsRepository;
+        $this->propertiesRepository = $propertiesRepository;
     }
 
     public function index()
@@ -16,8 +25,40 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
-    public function generalSearch()
+    public function generalSearch(Request $request)
     {
-        return view('dashboard.general-search');
+        $search = trim($request->topSearch);
+
+        $topFilter = $request->topFilter;
+
+        // properties
+        $properties = [];
+        $showProperties = true;
+        if($topFilter != '' && $topFilter != 'properties') {
+            $showProperties = false;
+        }
+        if($showProperties) {
+            $config = [
+                'filterByWorkgroup' => true,
+            ];
+            $properties = $this->propertiesRepository->all($search, $config);
+        }
+
+        // transactions
+        $transactions = [];
+        $showTransactions = true;
+        if($topFilter != '' && $topFilter != 'transactions') {
+            $showTransactions = false;
+        }
+        if($showTransactions) {
+            $config = [];
+            $transactions = $this->pmTransactionsRepository->all($search, $config);
+        }
+
+        return view('dashboard.general-search')
+            ->with('properties', $properties)
+            ->with('showProperties', $showProperties)
+            ->with('transactions', $transactions)
+            ->with('showTransactions', $showTransactions);
     }
 }

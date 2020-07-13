@@ -34,14 +34,24 @@
 
 @section('main-content')
 
-    <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
-                <p>
-                    {{ __('Coming Soon') }}...
-                </p>
-            </div>
-        </div>
-    </div>
+    @if($showProperties)
+        <!-- properties table content -->
+        @include('properties.partials.table', [
+            'label' => __('Properties'),
+            'rows' => $properties
+        ])
+
+        <div class="pt-4"></div>
+        <hr>
+    @endif
+
+    @if($showTransactions)
+        <!-- properties table content -->
+        @include('property-management-transactions.partials.table', [
+            'label' => __('Transactions'),
+            'rows' => $transactions,
+            'useGeneralSearchPresentation' => true,
+        ])
+    @endif
 
 @endsection

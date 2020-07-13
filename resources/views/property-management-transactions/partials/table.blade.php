@@ -3,19 +3,24 @@
     $skipAuditedTable = isset($skipAuditedTable) ? (bool) $skipAuditedTable : false;
     $useBalancePresentation = isset($useBalancePresentation) ? (bool) $useBalancePresentation : false;
     $usePendingAuditPresentation = isset($usePendingAuditPresentation) ? (bool) $usePendingAuditPresentation : false;
-
-    $shouldShowBalanceColumn = !$usePendingAuditPresentation;
+    $useGeneralSearchPresentation = isset($useGeneralSearchPresentation) ? (bool) $useGeneralSearchPresentation : false;
 
     $balanceCount = 0;
     if(isset($currentBalance)) {
         $balanceCount = $currentBalance['estimatedBalance'];
     }
-
+    
     $tableClass = $usePendingAuditPresentation ? 'app-transaction-pending-audit-list' : 'app-transaction-list';
     if(isRole('owner')) {
         $tableClass = 'app-transaction-owner-list';
     }
     $pendingTableClass = $tableClass . '-pending';
+    
+    $hideBalance = $useGeneralSearchPresentation;
+    $hideTotalsRow = $useGeneralSearchPresentation;
+    
+    $shouldShowBalanceColumn = !$usePendingAuditPresentation;
+    $shouldShowBalanceColumn = $hideBalance ? false : $shouldShowBalanceColumn;
 
 @endphp
 
@@ -238,27 +243,29 @@
                             @endif
 
                             <!-- table totals -->
-                            <tr>
-                                @if(isRole('owner'))
-                                    <td colspan="5">&nbsp;</td>
-                                @else
-                                    <td colspan="7">&nbsp;</td>
-                                @endif
-                                
+                            @if(!$hideTotalsRow)
+                                <tr>
+                                    @if(isRole('owner'))
+                                        <td colspan="5">&nbsp;</td>
+                                    @else
+                                        <td colspan="7">&nbsp;</td>
+                                    @endif
+                                    
 
-                                <th class="text-primary">{{ priceFormat($creditCount) }}</th>
-                                <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
+                                    <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                                    <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
-                                @if ($shouldShowBalanceColumn)
-                                    <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
-                                @endif
+                                    @if ($shouldShowBalanceColumn)
+                                        <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                                    @endif
 
-                                @if ($useBalancePresentation)
-                                    <td colspan="4">&nbsp;</td> 
-                                @else
-                                    <td colspan="3">&nbsp;</td>
-                                @endif
-                            </tr>
+                                    @if ($useBalancePresentation)
+                                        <td colspan="4">&nbsp;</td> 
+                                    @else
+                                        <td colspan="3">&nbsp;</td>
+                                    @endif
+                                </tr>
+                            @endif
 
                         </tbody>
                     </table>
@@ -549,29 +556,31 @@
                             @endif
 
                             <!-- table totals -->
-                            @if ($usePendingAuditPresentation)
-                                <tr>
-                                    <td colspan="6">&nbsp;</td>
-                                    <td class="text-right">Total:</td>
-                                    <th class="text-primary">{{ priceFormat($totalPendingAudits) }}</th>
-                                    <td colspan="3">&nbsp;</td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td colspan="7">&nbsp;</td>
-                                    <th class="text-primary">{{ priceFormat($creditCount) }}</th>
-                                    <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
-
-                                    @if($shouldShowBalanceColumn)
-                                        <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
-                                    @endif
-                                    
-                                    @if ($useBalancePresentation)
-                                        <td colspan="4">&nbsp;</td>
-                                    @else
+                            @if(!$hideTotalsRow)
+                                @if ($usePendingAuditPresentation)
+                                    <tr>
+                                        <td colspan="6">&nbsp;</td>
+                                        <td class="text-right">Total:</td>
+                                        <th class="text-primary">{{ priceFormat($totalPendingAudits) }}</th>
                                         <td colspan="3">&nbsp;</td>
-                                    @endif
-                                </tr>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td colspan="7">&nbsp;</td>
+                                        <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                                        <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
+
+                                        @if($shouldShowBalanceColumn)
+                                            <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                                        @endif
+                                        
+                                        @if ($useBalancePresentation)
+                                            <td colspan="4">&nbsp;</td>
+                                        @else
+                                            <td colspan="3">&nbsp;</td>
+                                        @endif
+                                    </tr>
+                                @endif
                             @endif
 
                         </tbody>

@@ -7,8 +7,8 @@
  -->
 
 @if( isset($rows) )
-    @if(isset($_GET['s']))
-        {{ $rows->appends(['s' => $search])->render() }}
+    @if(count($_GET))
+        {{ $rows->appends($_GET)->render() }}
     @else
         {{ $rows->links() }}
     @endif
