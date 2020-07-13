@@ -36,4 +36,8 @@ class Profile extends Model {
     {
         return "{$this->firstname} {$this->lastname}";
     }
+
+    public function getNameInitialsAttribute() {
+        return ucfirst(substr($this->firstname, 0, 1)) . '. ' . ucfirst(substr($this->lastname, 0, 1)) . '.';
+    }
 }

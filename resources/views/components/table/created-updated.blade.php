@@ -52,15 +52,19 @@
 
 @if(isset($audited_at))
     <td class="app-td-date">
-        {!! $audited_at !!}
+        <div class="d-flex flex-column justify-items-center">
+            <div>
+                {!! $audited_at !!}
+            </div>
+            @if (isset($auditedBy) && $auditedBy) 
+                <div class="pt-1">
+                <a href="javascript:;" title="{{ $auditedBy->profile->full_name }}">
+                        ( {{ $auditedBy->profile->name_initials }} )
+                    </a>
+                </div>
+            @endif
+        </div>
 
-        @if (isset($auditedBy) && $auditedBy) 
-            {{-- <div class="pt-1">
-                <a href="{{ route('users.show', [$auditedBy->profile->user->id]) }}">
-                    {{ $auditedBy->profile->full_name }}
-                </a>
-            </div> --}}
-        @endif
     </td>
 @endif
         

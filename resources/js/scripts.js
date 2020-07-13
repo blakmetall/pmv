@@ -32,6 +32,12 @@ $(function() {
         initTransactionCheckboxHandler();
         initMapInputComponents();
         initTimepickerComponents();
+
+        $(document).ready(function () {
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+        });
     }
 
     function resize() {
