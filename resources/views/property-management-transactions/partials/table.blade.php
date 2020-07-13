@@ -256,7 +256,16 @@
                                     <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
                                     @if ($shouldShowBalanceColumn)
-                                        <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                                        <th class="text-primary">
+                                            @php 
+                                                $isUnderAverage = $row->propertyManagement->average_month > $balanceCount; 
+                                                $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                            @endphp
+
+                                            <span class="{{ $underAverageClass }}">
+                                                {{ priceFormat($balanceCount) }}
+                                            </span>
+                                        </th>
                                     @endif
 
                                     @if ($useBalancePresentation)
@@ -571,7 +580,16 @@
                                         <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 
                                         @if($shouldShowBalanceColumn)
-                                            <th class="text-primary">{{ priceFormat($balanceCount) }}</th>
+                                            <th class="text-primary">
+                                                @php 
+                                                    $isUnderAverage = $row->propertyManagement->average_month > $balanceCount; 
+                                                    $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                                @endphp
+
+                                                <span class="{{ $underAverageClass }}">
+                                                    {{ priceFormat($balanceCount) }}
+                                                </span>
+                                            </th>
                                         @endif
                                         
                                         @if ($useBalancePresentation)
