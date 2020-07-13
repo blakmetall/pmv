@@ -58,6 +58,7 @@ class PropertyManagementTransactionsController extends Controller
         $config = [
             'filterByYear' => $request->year,
             'filterByMonth' => $request->month,
+            'skipOldNotAudited' => true,
         ];
         $currentBalance = PMHelper::getBalance($pm->id, $config);
 

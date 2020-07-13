@@ -34,6 +34,7 @@ class PMHelper
     public static function getTotalCharge($pmID, $config = []) {
         $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
         $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
+        $skipOldNotAudited = isset($config['skipOldNotAudited']) ? $config['skipOldNotAudited'] : '';
 
         $query = PropertyManagementTransaction::
             where('property_management_id', $pmID)
@@ -50,19 +51,24 @@ class PMHelper
         if($shouldFilterByYear && $shouldFilterByMonth) {
             $filterDate = $config['filterByYear'] . '-' . $config['filterByMonth'] . '-01';
             $query->where('post_date', '<', $filterDate);
+
+            if($skipOldNotAudited) {
+                $query->whereNotNull('audit_user_id');
+            }
         }
 
         return $query->sum('amount');
     }
 
     public static function getBalance($pmID, $config = []) {
+        $baseConfig = $config;
 
-        $config = array_merge($config, ['skipNotAudited' => true]);
+        $config = array_merge($baseConfig, ['skipNotAudited' => true]);
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
         $balance = $totalCredit - $totalCharge;
 
-        $config = array_merge($config, ['skipAudited' => true]);
+        $config = array_merge($baseConfig, ['skipAudited' => true]);
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
         $pendingAudit = $totalCredit - $totalCharge;

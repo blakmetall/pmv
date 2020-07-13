@@ -22,6 +22,10 @@
 
                     @if(count($pm_items))
                         @foreach($pm_items as $pm)
+                            @if($pm->is_finished) 
+                                @php continue; @endphp
+                            @endif
+
                             <tr>
                                 <!-- property ID -->
                                 <td>
