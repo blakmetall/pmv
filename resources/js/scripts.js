@@ -8,6 +8,7 @@ import { initGetPmPropertySelectionEvent } from "./scripts/initGetPmPropertySele
 import { initTransactionCheckboxHandler } from "./scripts/initTransactionCheckboxHandler.js";
 import { initMapInputComponents } from "./scripts/initMapInputComponents.js";
 import { initTimepickerComponents } from "./scripts/initTimepickerComponents.js";
+import { initTooltip } from "./scripts/initTooltip.js"; 
 
 $(function() {
     /////////////////////////////
@@ -18,26 +19,19 @@ $(function() {
     /////////////////////////////
     /////////////////////////////
 
-    function init() {
-        $(window).resize(resize);
+    $(window).resize(resize);
+
+    function init() {    
         handleMenuFit();
-        
         initConfirmClick();
-
         initCalendar();
-
         initDatepickerComponents();
         initFastSelectComponents();
         initGetPmPropertySelectionEvent();
         initTransactionCheckboxHandler();
         initMapInputComponents();
         initTimepickerComponents();
-
-        $(document).ready(function () {
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            });
-        });
+        initTooltip();
     }
 
     function resize() {

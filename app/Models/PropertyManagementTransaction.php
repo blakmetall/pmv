@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Wildside\Userstamps\Userstamps;
 use App\Traits\AppModel;
 
 class PropertyManagementTransaction extends Model {
 
     use AppModel;
+    use Userstamps;
     
     protected $table = 'property_management_transactions';
     public $timestamps = true;

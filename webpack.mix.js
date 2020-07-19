@@ -45,7 +45,6 @@ mix.combine(
         "resources/gull/assets/js/vendor/jquery-3.3.1.min.js",
         "resources/gull/assets/js/vendor/bootstrap.bundle.min.js",
         "resources/gull/assets/js/vendor/perfect-scrollbar.min.js",
-        "resources/gull/assets/js/vendor/calendar/jquery-ui.min.js",
         "resources/gull/assets/js/vendor/calendar/moment.min.js",
         "resources/gull/assets/js/vendor/calendar/fullcalendar.min.js",
         "public/assets/js/vendor/fastselect.standalone.js",
@@ -53,7 +52,6 @@ mix.combine(
         "public/assets/js/vendor/pickadate/legacy.js",
         "public/assets/js/vendor/pickadate/picker.js",
         "public/assets/js/vendor/pickadate/picker.date.js",
-        "public/assets/js/vendor/popper.min.js",
     ],
     "public/assets/js/common-bundle-script.js"
 );

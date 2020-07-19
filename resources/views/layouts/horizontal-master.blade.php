@@ -21,6 +21,9 @@
     {{-- theme css --}}
     <link id="gull-theme" rel="stylesheet" href="{{ asset('assets/styles/css/themes/palmera-vacations.min.css') }}">
 
+    <!-- material design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     {{-- vendor css --}}
     <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
 
@@ -79,6 +82,8 @@
     </div>
     <!-- ============ Horizontal Layout End ============= -->
 
+    {{-- popper --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
     {{-- common js --}}
     <script src="{{ asset('assets/js/common-bundle-script.js') }}"></script>

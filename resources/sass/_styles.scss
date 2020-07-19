@@ -398,8 +398,14 @@
     }
 }
 
-.app-td-date {
-    // font-size: 11px;
+.app-tooltip-person {
+    position: absolute;
+    top: 2px;
+    right: -5px;
+
+    i {
+        font-size: 13px !important;
+    }
 }
 
 .app-table-file-limit-width {

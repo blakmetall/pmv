@@ -222,6 +222,7 @@
                                                 'created_at' => $row->created_at,
                                                 'updated_at' => $row->updated_at,
                                                 'trimTime' => true,
+                                                'model' => $row,
                                             ])
                                         @else
                                             <td>&nbsp;</td>
@@ -552,6 +553,7 @@
                                             'created_at' => $row->created_at,
                                             'updated_at' => $row->updated_at,
                                             'trimTime' => true,
+                                            'model' => $row,
                                         ])
 
                                         @if (!$usePendingAuditPresentation)

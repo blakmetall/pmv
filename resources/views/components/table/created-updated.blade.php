@@ -40,28 +40,74 @@
         }
     }
 
+    // to control created and updated user visualization
+    $creator = false;
+    $editor = false;
+    $hasCreator = false;
+    $hasEditor = false;
+
+    if(isset($model) && is_object($model)) {
+        $creator = $model->creator;
+        if($creator) {
+            $hasCreator = true;
+        }
+
+        $editor = $model->editor;
+        if($editor) {
+            $hasEditor = true;
+        }
+    }
+ 
 @endphp
 
 @if(isset($created_at))
-    <td class="app-td-date"> {!! $created_at !!}</td>
+    <td class="app-td-date">
+
+        <!-- updated by -->
+        <div class="position-relative">
+            <span>{!! $created_at !!}</span>
+    
+            @if ($hasCreator && !isRole('owner')) 
+                <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $creator->profile->full_name }}"
+                    class="app-tooltip-person">
+                    <i class="material-icons">person</i>
+                </a>
+            @endif
+        </div>
+
+    </td>
 @endif
 
 @if(isset($updated_at))
-    <td class="app-td-date"> {!! $updated_at !!}</td>
+    <td class="app-td-date"> 
+
+        <!-- updated by -->
+        <div class="position-relative">
+            <span>{!! $updated_at !!}</span>
+
+            @if ($hasEditor && !isRole('owner')) 
+                <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $editor->profile->full_name }}"
+                    class="app-tooltip-person">
+                    <i class="material-icons">person</i>
+                </a>
+            @endif
+        </div>
+
+    </td>
 @endif
 
 @if(isset($audited_at))
     <td class="app-td-date">
-        <div class="d-flex flex-column justify-items-center">
-            <div>
-                {!! $audited_at !!}
-            </div>
-            @if (isset($auditedBy) && $auditedBy) 
-                <div class="pt-1">
-                <a href="javascript:;" title="{{ $auditedBy->profile->full_name }}">
-                        ( {{ $auditedBy->profile->name_initials }} )
-                    </a>
-                </div>
+
+        <!-- audited by -->
+        <div class="position-relative">
+            <span>{!! $audited_at !!}</span>
+
+            @if (isset($auditedBy) && $auditedBy && !isRole('owner')) 
+                <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $auditedBy->profile->full_name }}"
+                    class="app-tooltip-person">
+                    <i class="material-icons">person</i>
+                </a>
             @endif
         </div>
 
