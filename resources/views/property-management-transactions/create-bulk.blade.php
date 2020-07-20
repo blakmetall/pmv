@@ -47,6 +47,33 @@
 <!-- separator -->
 <div class="mb-4"></div>
 
+@if($successfulTransactions)
+    <div class="container app-container app-bulk-success mb-4">
+        <div class="alert alert-success alert-dismissible fade show pt-4" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <h5 class="mb-3">{{ __('Transactions Added') }}</h5>
+
+            <ul>
+                @foreach($successfulTransactions as $transaction)
+                    <li>
+                        <div class="row">
+                            <!-- property name -->
+                            <div class="col-3">{{ $transaction->propertyManagement->property->translate()->name }}</div>
+                            <div class="col-3">{{ $transaction->type->translate()->name }}</div>
+                            <div class="col-2">{{ getOperationTypeById($transaction->operation_type) }}</div>
+                            <div class="col-2">{{ priceFormat($transaction->amount) }}</div>
+                            <div class="col-2">{{ $transaction->post_date }}</div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif
+
 <div class="container app-container">
 
     <div class="card">
@@ -68,9 +95,13 @@
                                     {{ __('Property') }}
                                 </th>
                                 <th scope="col" class="bulk-transaction-col">
+                                    <span class="text-red">*</span>
                                     {{ __('Transaction') }}
                                 </th>
-                                <th scope="col" class="bulk-transaction-type-col">{{ __('Type') }}</th>
+                                <th scope="col" class="bulk-transaction-type-col">
+                                    <span class="text-red">*</span>
+                                    {{ __('Type') }}
+                                </th>
                                 <th scope="col" class="bulk-from-col">{{ __('From') }}</th>
                                 <th scope="col" class="bulk-to-col">{{ __('To') }}</th>
                                 <th scope="col" class="bulk-post-date-col">
@@ -103,7 +134,7 @@
 
                                 <!-- transaction -->
                                 <td>
-                                    <select name="bulk[default][transactionId]" class="form-control form-control-sm app-bulk-input">
+                                    <select name="bulk[default][transaction_type_id]" class="form-control form-control-sm app-bulk-input">
                                         <option value="">{{ __('Select') }}</option>
 
                                         @foreach($transactionTypes as $index => $transactionType)
@@ -118,10 +149,10 @@
                                 <td>
                                     <select name="bulk[default][operation_type]" class="form-control form-control-sm app-bulk-input">
                                         <option value="">{{ __('Select') }}</option>
-                                        <option value="{{ config('constants.operation_type.credit') }}">
+                                        <option value="{{ config('constants.operation_types.charge') }}">
                                             {{ __('Charge') }}
                                         </option>
-                                        <option value="{{ config('constants.operation_type.credit') }}">
+                                        <option value="{{ config('constants.operation_types.credit') }}">
                                             {{ __('Credit') }}
                                         </option>
                                     </select>
@@ -129,12 +160,12 @@
 
                                 <!-- from -->
                                 <td>
-                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][from]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][period_start_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                 </td>
 
                                 <!-- to -->
                                 <td>
-                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][to]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][period_end_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                 </td>
 
                                 <!-- post date -->
@@ -173,17 +204,20 @@
 
                                     <!-- property -->
                                     <td>
-                                        <select name="bulk[{{ $loopIndex }}][propertyManagementId]" class="form-control form-control-sm app-bulk-input">
+                                        <select name="bulk[{{ $loopIndex }}][property_management_id]" class="form-control form-control-sm app-bulk-input">
                                             <option value="">{{ __('Select') }}</option>
 
-                                            @foreach($properties as $propertyIndex => $property)
+                                            @foreach($properties as $propertyIndex => $propertyTranslation)
                                                 @php
                                                     $selected = $propertyIndex == $loopIndex ? ' selected' : '';
+                                                    $activePM = $propertyTranslation->property->getActivePM();
                                                 @endphp
 
-                                                <option value="" {{ $selected }}>
-                                                    {{ $property->name }}
-                                                </option>
+                                                @if($activePM)
+                                                    <option value="{{ $activePM->id }}" {{ $selected }}>
+                                                        {{ $propertyTranslation->name }}
+                                                    </option>
+                                                @endif
                                             @endforeach
 
                                         </select>
@@ -191,7 +225,7 @@
 
                                     <!-- transaction -->
                                     <td>
-                                        <select name="bulk[{{ $loopIndex }}][transactionId]" class="form-control form-control-sm app-bulk-input">
+                                        <select name="bulk[{{ $loopIndex }}][transaction_type_id]" class="form-control form-control-sm app-bulk-input">
                                             <option value="">{{ __('Select') }}</option>
 
                                             @foreach($transactionTypes as $index => $transactionType)
@@ -207,10 +241,10 @@
                                         <select name="bulk[{{ $loopIndex }}][operation_type]" class="form-control form-control-sm app-bulk-input">
                                             <option value="">{{ __('Select') }}</option>
 
-                                            <option value="{{ config('constants.operation_type.credit') }}">
+                                            <option value="{{ config('constants.operation_types.charge') }}">
                                                 {{ __('Charge') }}
                                             </option>
-                                            <option value="{{ config('constants.operation_type.credit') }}">
+                                            <option value="{{ config('constants.operation_types.credit') }}">
                                                 {{ __('Credit') }}
                                             </option>
                                         </select>
@@ -218,12 +252,12 @@
 
                                     <!-- from -->
                                     <td>
-                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][from]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][period_start_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                     </td>
 
                                     <!-- to -->
                                     <td>
-                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][to]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][period_end_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                     </td>
 
                                     <!-- post date -->
@@ -243,7 +277,7 @@
 
                                     <!-- file -->
                                     <td>
-                                        <input type="file" class="app-bulk-input" name="bulk[{{ $loopIndex }}][file]">
+                                        <input type="file" class="app-bulk-input" name="bulk[{{ $loopIndex }}][transaction_file]">
                                     </td>
 
                                 </tr>

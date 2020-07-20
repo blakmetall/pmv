@@ -248,6 +248,10 @@
     color: #dc3545;
 }
 
+.text-black {
+    color: #000;
+}
+
 .underline {
     text-decoration: underline !important;
 }
@@ -276,27 +280,27 @@
     }
 
     .bulk-property-col {
-        width: 110px;
+        width: 115px;
     }
 
     .bulk-transaction-col {
-        width: 110px;
+        width: 115px;
     }
 
     .bulk-transaction-type-col {
-        width: 110px;
+        width: 120px;
     }
 
     .bulk-from-col {
-        width: 105px;
+        width: 115px;
     }
 
     .bulk-to-col {
-        width: 105px;
+        width: 115px;
     }
 
     .bulk-post-date-col {
-        width: 154px;
+        width: 170px;
     }
 
     .bulk-amount-col {
@@ -328,6 +332,15 @@
                     background: #fff !important;
                 }
             }
+        }
+    }
+}
+
+.app-bulk-success {
+    ul {
+        li {
+            color: #333;
+            font-size: 14px;
         }
     }
 }

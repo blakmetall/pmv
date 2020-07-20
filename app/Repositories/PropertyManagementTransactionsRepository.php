@@ -5,9 +5,11 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
-use App\Models\{ PropertyManagement, PropertyManagementTransaction };
+use App\Models\PropertyManagement;
+use App\Models\PropertyManagementTransaction;
 use App\Validations\PropertyManagementTransactionsValidations;
-use App\Helpers\{ ImagesHelper, LanguageHelper };
+use App\Helpers\ImagesHelper;
+use App\Helpers\LanguageHelper;
 
 class PropertyManagementTransactionsRepository implements PropertyManagementTransactionsRepositoryInterface
 {
@@ -38,7 +40,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         if ($search) {
             $query = PropertyManagementTransaction::
-                where(function($q) use ($search) {
+                where(function ($q) use ($search) {
                     $q->where('id', $search);
                     $q->orWhere('amount', 'like', '%'.$search.'%');
                     $q->orWhere('post_date', $search);
@@ -52,17 +54,17 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $query = PropertyManagementTransaction::query();
         }
 
-        if($hasPropertyManagementID) {
+        if ($hasPropertyManagementID) {
             $query->where('property_management_id', $config['property_management_id']);
         }
 
-        if($shouldFilterByPendingAudits) {
+        if ($shouldFilterByPendingAudits) {
             $query->whereNull('audit_user_id');
         }
 
-        if($shouldFilterByYear && $shouldFilterByMonth) {
-            $query->where(function($q) use ($config){
-                $q->where(function($q2) use ($config) {
+        if ($shouldFilterByYear && $shouldFilterByMonth) {
+            $query->where(function ($q) use ($config) {
+                $q->where(function ($q2) use ($config) {
                     $q2->whereYear('post_date', $config['filterByYear']);
                     $q2->whereMonth('post_date', $config['filterByMonth']);
                 });
@@ -70,35 +72,35 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             });
         }
 
-        if($shouldFilterByProperty) {
+        if ($shouldFilterByProperty) {
             $propertyID = $config['filterByProperty'];
-            $query->whereHas('propertyManagement', function($q) use ($propertyID) {
-                $q->whereHas('property', function($q2) use ($propertyID) {
+            $query->whereHas('propertyManagement', function ($q) use ($propertyID) {
+                $q->whereHas('property', function ($q2) use ($propertyID) {
                     $q2->where('properties.id', $propertyID);
                 });
             });
         }
 
-        if($shouldFilterByCity) {
+        if ($shouldFilterByCity) {
             $cityID = $config['filterByCity'];
-            $query->whereHas('propertyManagement', function($q) use ($cityID) {
-                $q->whereHas('property', function($q2) use ($cityID) {
-                    $q2->whereHas('city', function($q3) use ($cityID) {
+            $query->whereHas('propertyManagement', function ($q) use ($cityID) {
+                $q->whereHas('property', function ($q2) use ($cityID) {
+                    $q2->whereHas('city', function ($q3) use ($cityID) {
                         $q3->where('cities.id', $cityID);
                     });
                 });
             });
         }
 
-        if($shouldFilterByImage) {
-            if($shouldFilterByImage == 1) {
+        if ($shouldFilterByImage) {
+            if ($shouldFilterByImage == 1) {
                 $query->where('file_url', '!=', '');
-            }else if($shouldFilterByImage == 2) {
+            } elseif ($shouldFilterByImage == 2) {
                 $query->whereNull('file_url');
             }
         }
 
-        if($shouldFilterByTransactionType) {
+        if ($shouldFilterByTransactionType) {
             $query->where('transaction_type_id', $config['filterByTransactionType']);
         }
 
@@ -107,11 +109,11 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         // ordering section
         if ($shouldFilterByPendingAudits) {
-            if($orderByFilter && $orderByDirectionFilter) {
-                if($orderByFilter == 'date') { // order by date
+            if ($orderByFilter && $orderByDirectionFilter) {
+                if ($orderByFilter == 'date') { // order by date
                     $direction = $orderByDirectionFilter == 'down' ? 'asc' : 'desc';
                     $query->orderBy('post_date', $direction);
-                }else if($orderByFilter == 'property') { // order by property name
+                } elseif ($orderByFilter == 'property') { // order by property name
                     $query->select('property_management_transactions.*');
                     $query->join('property_management', 'property_management_transactions.property_management_id', '=', 'property_management.id');
                     $query->join('properties', 'property_management.property_id', '=', 'properties.id');
@@ -123,16 +125,16 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                     $lang = LanguageHelper::current();
                     $query->where('properties_translations.language_id', $lang->id);
                 }
-            }else {
+            } else {
                 $query->orderBy('post_date', 'asc');
             }
         } else {
             $query->orderBy('post_date', 'asc');
         }
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
 
@@ -156,9 +158,9 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $folder = 'transactions';
         $is_new = ! $id;
 
-        if($is_new){
+        if ($is_new) {
             $transaction = $this->blueprint();
-        }else{
+        } else {
             $transaction = $this->find($id);
         }
 
@@ -166,11 +168,11 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $transaction->save();
 
         // file management
-        $hasUploadedFile = $request->hasFile( 'transaction_file' );
+        $hasUploadedFile = $request->hasFile('transaction_file');
         $hasOldFile = $transaction->file_path ? true : false;
         $oldFilePath = $hasOldFile ? $transaction->file_path : '';
 
-        if($hasUploadedFile){
+        if ($hasUploadedFile) {
             $img = $request->transaction_file;
             $imgData = ImagesHelper::saveFile($img, $folder);
 
@@ -179,7 +181,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $transaction->file_original_name = $imgData['file_original_name'];
             $transaction->file_name = $imgData['file_name'];
             $transaction->file_path = $imgData['file_path'];
-            $transaction->file_url = $imgData['file_url'];  
+            $transaction->file_url = $imgData['file_url'];
             $transaction->save();
 
             if ($hasOldFile) {
@@ -193,7 +195,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         
         if ($transaction->file_path) {
             if ($request->do_audit) {
-                if(!$hasPreviousAudit) {
+                if (!$hasPreviousAudit) {
                     $user = auth()->user();
                     $transaction->audit_user_id = $user->id;
                     $transaction->audit_date = getCurrentDate();

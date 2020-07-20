@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AppModel;
 
-class Property extends Model {
-
+class Property extends Model
+{
     use AppModel;
 
     protected $table = 'properties';
@@ -40,76 +40,99 @@ class Property extends Model {
     public $en;
     public $es;
 
-    public function languages() {
+    public function languages()
+    {
         return $this->belongsToMany('App\Models\Language', 'properties_translations')
             ->withPivot('name', 'description', 'cancellation_policies');
     }
 
-    public function translations() {
+    public function translations()
+    {
         return $this->hasMany('App\Models\PropertyTranslation');
     }
 
-    public function images() {
+    public function images()
+    {
         return $this->hasMany('App\Models\PropertyImage');
     }
 
-    public function rates() {
+    public function rates()
+    {
         return $this->hasMany('App\Models\PropertyRate');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo('App\Models\PropertyType', 'property_type_id');
     }
 
-    public function city() {
+    public function city()
+    {
         return $this->belongsTo('App\Models\City');
     }
 
-    public function zone() {
+    public function zone()
+    {
         return $this->belongsTo('App\Models\Zone');
     }
 
-    public function amenities(){
+    public function amenities()
+    {
         return $this->belongsToMany('App\Models\Amenity', 'properties_has_amenities');
     }
 
-    public function cleaningOption() {
-        return $this->hasOne('App\Models\CleaningOption' , 'id');
+    public function cleaningOption()
+    {
+        return $this->hasOne('App\Models\CleaningOption', 'id');
     }
 
-    public function management() {
+    public function management()
+    {
         return $this->hasMany('App\Models\PropertyManagement');
     }
 
-    public function notes() {
+    public function notes()
+    {
         return $this->hasMany('App\Models\PropertyNote');
     }
 
-    public function cleaningServices() {
+    public function cleaningServices()
+    {
         return $this->hasMany('App\Models\CleaningService');
     }
 
-    public function contacts() {
+    public function contacts()
+    {
         return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
     }
 
-    public function bookings() {
+    public function bookings()
+    {
         return $this->hasMany('App\Models\Booking');
     }
 
-    public function reservationRequests() {
+    public function reservationRequests()
+    {
         return $this->hasMany('App\Models\ReservationRequest');
     }
 
-    public function hasDefaultImage() {
+    public function hasDefaultImage()
+    {
         return $this->images()->orderBy('order', 'asc')->count();
     }
 
-    public function getDefaultImage() {
+    public function getDefaultImage()
+    {
         return $this->images()->orderBy('order', 'asc')->first();
+    }
+
+    public function getActivePM()
+    {
+        return $this->management()->where('is_finished', 0)->first();
     }
 }

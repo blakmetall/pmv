@@ -9,8 +9,11 @@ use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\TransactionTypesRepositoryInterface;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
+use App\Helpers\ImagesHelper;
 use App\Helpers\PMHelper;
 use App\Helpers\PMTransactionHelper;
+use Illuminate\Support\Facades\Validator;
+use Session;
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -229,7 +232,7 @@ class PropertyManagementTransactionsController extends Controller
         return redirect()->back();
     }
 
-    public function createBulk()
+    public function createBulk(Request $request)
     {
         $properties = $this->propertiesRepository->all('', [
             'filterByWorkgroup' => true,
@@ -238,9 +241,17 @@ class PropertyManagementTransactionsController extends Controller
 
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
 
+        // successful transactions after save -- data retrieval
+        $successfulTransactions = false;
+        if (Session::has('successfulTransactionIds')) {
+            $successfulTransactionsIds = explode('_', Session::get('successfulTransactionIds'));
+            $successfulTransactions = PropertyManagementTransaction::find($successfulTransactionsIds);
+        }
+
         return view('property-management-transactions.create-bulk')
             ->with('properties', $properties)
-            ->with('transactionTypes', $transactionTypes);
+            ->with('transactionTypes', $transactionTypes)
+            ->with('successfulTransactions', $successfulTransactions);
     }
 
     public function storeBulk(Request $request)
@@ -248,8 +259,85 @@ class PropertyManagementTransactionsController extends Controller
         $shouldProcess = $request->bulk && is_array($request->bulk) && count($request->bulk);
 
         if ($shouldProcess) {
-            foreach ($request->bulk as $index => $transaction) {
+            $folder = 'transactions';
+            $default = $request->bulk["default"];
+
+            $successfulTransactionsIds = [];
+            
+            foreach ($request->bulk as $index => $transactionData) {
+                if ($index !== "default") {
+                    if (!$transactionData['property_management_id']) {
+                        continue;
+                    }
+
+                    // fill default values
+                    if (!$transactionData['transaction_type_id']) {
+                        $transactionData['transaction_type_id'] = $default['transaction_type_id'];
+                    }
+                    
+                    if (!$transactionData['operation_type']) {
+                        $transactionData['operation_type'] = $default['operation_type'];
+                    }
+
+                    if (!$transactionData['period_start_date']) {
+                        $transactionData['period_start_date'] = $default['period_start_date'];
+                    }
+
+                    if (!$transactionData['period_end_date']) {
+                        $transactionData['period_end_date'] = $default['period_end_date'];
+                    }
+
+                    if (!$transactionData['post_date']) {
+                        $transactionData['post_date'] = $default['post_date'];
+                    }
+
+                    if (!$transactionData['amount']) {
+                        $transactionData['amount'] = $default['amount'];
+                    }
+
+                    if (!$transactionData['description']) {
+                        $transactionData['description'] = $default['description'];
+                    }
+
+                    $validator = Validator::make($transactionData, [
+                        'post_date' => 'required|date_format:Y-m-d',
+                        'period_start_date' => 'nullable|date_format:Y-m-d',
+                        'period_end_date' => 'nullable|date_format:Y-m-d',
+                        'amount' => 'required|numeric|min:0',
+                        'operation_type' => 'required|numeric|between:1,2',
+                        'transaction_file' => 'nullable|mimes:jpeg,png,bmp',
+                    ]);
+
+                    if (!$validator->fails()) {
+                        $fileRequestPath = 'bulk.' . $index . '.transaction_file';
+
+                        $transaction = $this->repository->blueprint();
+                        $transaction->fill($transactionData);
+                        $transaction->save();
+
+                        // image save
+                        if ($request->hasFile($fileRequestPath)) {
+                            $img = $request->file($fileRequestPath);
+                            $imgData = ImagesHelper::saveFile($img, $folder);
+    
+                            $transaction->file_extension = $imgData['file_extension'];
+                            $transaction->file_slug = $imgData['file_slug'];
+                            $transaction->file_original_name = $imgData['file_original_name'];
+                            $transaction->file_name = $imgData['file_name'];
+                            $transaction->file_path = $imgData['file_path'];
+                            $transaction->file_url = $imgData['file_url'];
+
+                            $transaction->save();
+                        }
+
+                        $successfulTransactionsIds[] = $transaction->id;
+                    }
+                }
             }
+
+            Session::flash('successfulTransactionIds', implode('_', $successfulTransactionsIds));
+
+            return redirect()->back();
         }
 
         return redirect()->back();
