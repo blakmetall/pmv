@@ -244,8 +244,88 @@
 /*************************/
 /********* app ***********/
 
+.text-red {
+    color: #dc3545; 
+}
+
 .underline {
     text-decoration: underline !important;
+}
+
+.app-font-1 {
+    font-size: 12px;
+}
+
+.app-font-2 {
+    font-size: 14px;
+}
+
+.app-font-3 {
+    font-size: 16px;
+}
+
+.app-font-4 {
+    font-size: 18px;
+}
+
+.app-bulk-table{
+    min-width: 1150px;
+
+    .bulk-count-col {
+        width: 38px;
+    }
+
+    .bulk-property-col {
+        width: 100px;
+    }
+
+    .bulk-transaction-type-col {
+        width: 75px; 
+    }
+
+    .bulk-from-col {
+        width: 105px;
+    }
+
+    .bulk-to-col {
+        width: 105px;
+    }
+
+    .bulk-post-date-col {
+        width: 105px;
+    }
+
+    .bulk-amount-col {
+        width: 110px;
+    }
+
+    .bulk-notes-col {
+        width: 200px;
+    }
+
+    .bulk-file-col {
+        width: 30px;
+    }
+
+    .picker__table {
+        
+        th {
+            color: white !important;
+            background: #2c3d4f !important;
+        }
+    
+        tbody {
+            tr {
+                &:nth-child(odd) {
+                    background: #f4f4f4 !important;
+                }
+    
+                &:nth-child(even) {
+                    background: #fff !important;
+                }
+            }
+        }
+    }
 }
 
 .layout-horizontal-bar {

@@ -162,6 +162,10 @@ Route::group(['middleware' => ['web']], function () {
             // all transactions
             Route::group(['prefix' => 'transactions', 'middleware' => 'role-permission:property-management,transactions'], function () {
                 Route::get('', 'PropertyManagementTransactionsController@general')->name('property-management-transactions.general');
+
+                // property management transactions bulk events
+                Route::get('create-bulk', 'PropertyManagementTransactionsController@createBulk')->name('property-management-transactions.create-bulk');
+                Route::post('store-bulk', 'PropertyManagementTransactionsController@storeBulk')->name('property-management-transactions.store-bulk');
             });
 
             // audit transaction batch
@@ -172,9 +176,6 @@ Route::group(['middleware' => ['web']], function () {
 
             // delete transaction batch
             Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
-
-            // property management transactions create bulk
-            Route::get('transactions/create-bulk', 'PropertyManagementTransactionsController@createBulk')->name('property-management-transactions.create-bulk');
 
             // single property management
             Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {

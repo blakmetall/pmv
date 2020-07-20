@@ -230,6 +230,16 @@ class PropertyManagementTransactionsController extends Controller
     }
 
     public function createBulk() {
-        return view('property-management-transactions.create-bulk');
+        $properties = $this->propertiesRepository->all('', [
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ]);
+
+        return view('property-management-transactions.create-bulk')
+            ->with('properties', $properties);
+    }
+
+    public function storeBulk(Request $request) {
+        echo 'save batch here...';
     }
 }

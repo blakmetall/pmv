@@ -83,7 +83,7 @@
 
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('property-management-transactions.create-bulk') }}">
-                                                        <span class="item-name">{{ __('New Transaction Bulk') }}</span>
+                                                        <span class="item-name">{{ __('Transaction Bulk') }}</span>
                                                     </a>
                                                 </li>
 
