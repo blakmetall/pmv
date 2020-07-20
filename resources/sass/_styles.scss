@@ -102,7 +102,7 @@
 
 .fstMultipleMode .fstControls {
     width: 100%;
-    padding-top: 5px; 
+    padding-top: 5px;
 
     .fstChoiceItem {
         height: 24px;
@@ -245,7 +245,7 @@
 /********* app ***********/
 
 .text-red {
-    color: #dc3545; 
+    color: #dc3545;
 }
 
 .underline {
@@ -268,19 +268,23 @@
     font-size: 18px;
 }
 
-.app-bulk-table{
-    min-width: 1150px;
+.app-bulk-table {
+    min-width: 1270px;
 
     .bulk-count-col {
         width: 38px;
     }
 
     .bulk-property-col {
-        width: 100px;
+        width: 110px;
+    }
+
+    .bulk-transaction-col {
+        width: 110px;
     }
 
     .bulk-transaction-type-col {
-        width: 75px; 
+        width: 110px;
     }
 
     .bulk-from-col {
@@ -292,7 +296,7 @@
     }
 
     .bulk-post-date-col {
-        width: 105px;
+        width: 154px;
     }
 
     .bulk-amount-col {
@@ -308,18 +312,18 @@
     }
 
     .picker__table {
-        
+
         th {
             color: white !important;
             background: #2c3d4f !important;
         }
-    
+
         tbody {
             tr {
                 &:nth-child(odd) {
                     background: #f4f4f4 !important;
                 }
-    
+
                 &:nth-child(even) {
                     background: #fff !important;
                 }
@@ -554,6 +558,7 @@
 
 .app-table-th-icon {
     margin-left: 5px;
+
     i {
         color: #000;
     }
@@ -603,52 +608,151 @@
     font-size: 12px;
     min-width: 1300px;
 
-    .transaction-col-id { width: 4%; }
-    .transaction-col-checkbox { width: 3%; }
-    .transaction-col-file { width: 6%; }
-    .transaction-col-date { width: 8%; }
-    .transaction-col-property { width: 11%; }
-    .transaction-col-transaction-name { width: 15%; }
-    .transaction-col-period { width: 9%; }
-    .transaction-col-credit { width: 6%; }
-    .transaction-col-charge { width: 6%; }
-    .transaction-col-balance { width: 7%; }
-    .transaction-col-created { width: 8%; }
-    .transaction-col-updated { width: 8%; }
-    .transaction-col-audited { width: 8%; }
+    .transaction-col-id {
+        width: 4%;
+    }
+
+    .transaction-col-checkbox {
+        width: 3%;
+    }
+
+    .transaction-col-file {
+        width: 6%;
+    }
+
+    .transaction-col-date {
+        width: 8%;
+    }
+
+    .transaction-col-property {
+        width: 11%;
+    }
+
+    .transaction-col-transaction-name {
+        width: 15%;
+    }
+
+    .transaction-col-period {
+        width: 9%;
+    }
+
+    .transaction-col-credit {
+        width: 6%;
+    }
+
+    .transaction-col-charge {
+        width: 6%;
+    }
+
+    .transaction-col-balance {
+        width: 7%;
+    }
+
+    .transaction-col-created {
+        width: 8%;
+    }
+
+    .transaction-col-updated {
+        width: 8%;
+    }
+
+    .transaction-col-audited {
+        width: 8%;
+    }
 }
 
 .app-transaction-pending-audit-list-pending {
     font-size: 12px;
     min-width: 1300px;
 
-    .transaction-col-id { width: 6%; }
-    .transaction-col-checkbox { width: 4%; }
-    .transaction-col-file { width: 7%; }
-    .transaction-col-date { width: 8%; }
-    .transaction-col-property { width: 14%; }
-    .transaction-col-transaction-name { width: 19%; }
-    .transaction-col-period { width: 15%; }
-    .transaction-col-amount { width: 6%; }
-    .transaction-col-type { width: 5%; }
-    .transaction-col-created { width: 8%; }
-    .transaction-col-updated { width: 8%; }
+    .transaction-col-id {
+        width: 6%;
+    }
+
+    .transaction-col-checkbox {
+        width: 4%;
+    }
+
+    .transaction-col-file {
+        width: 7%;
+    }
+
+    .transaction-col-date {
+        width: 8%;
+    }
+
+    .transaction-col-property {
+        width: 14%;
+    }
+
+    .transaction-col-transaction-name {
+        width: 19%;
+    }
+
+    .transaction-col-period {
+        width: 15%;
+    }
+
+    .transaction-col-amount {
+        width: 6%;
+    }
+
+    .transaction-col-type {
+        width: 5%;
+    }
+
+    .transaction-col-created {
+        width: 8%;
+    }
+
+    .transaction-col-updated {
+        width: 8%;
+    }
 }
 
 .app-transaction-owner-list {
     font-size: 12px;
     min-width: 1200px;
 
-    .transaction-col-id { width: 4%; }
-    .transaction-col-file { width: 6%; }
-    .transaction-col-date { width: 8%; }
-    .transaction-col-transaction-name { width: 23%; }
-    .transaction-col-period { width: 11%; }
-    .transaction-col-credit { width: 7%; }
-    .transaction-col-charge { width: 7%; }
-    .transaction-col-balance { width: 10%; }
-    .transaction-col-created { width: 10%; }
-    .transaction-col-updated { width: 10%; }
+    .transaction-col-id {
+        width: 4%;
+    }
+
+    .transaction-col-file {
+        width: 6%;
+    }
+
+    .transaction-col-date {
+        width: 8%;
+    }
+
+    .transaction-col-transaction-name {
+        width: 23%;
+    }
+
+    .transaction-col-period {
+        width: 11%;
+    }
+
+    .transaction-col-credit {
+        width: 7%;
+    }
+
+    .transaction-col-charge {
+        width: 7%;
+    }
+
+    .transaction-col-balance {
+        width: 10%;
+    }
+
+    .transaction-col-created {
+        width: 10%;
+    }
+
+    .transaction-col-updated {
+        width: 10%;
+    }
 }
 
 .app-transaction-list-pending,

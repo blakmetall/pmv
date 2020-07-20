@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{ PropertyManagement, PropertyManagementTransaction };
-use App\Repositories\{
-    PropertiesRepositoryInterface,
-    TransactionTypesRepositoryInterface,
-    PropertyManagementTransactionsRepositoryInterface,
-    CitiesRepositoryInterface
-};
-use App\Helpers\{ PMHelper, PMTransactionHelper };
+use App\Models\PropertyManagement;
+use App\Models\PropertyManagementTransaction;
+use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\TransactionTypesRepositoryInterface;
+use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Repositories\CitiesRepositoryInterface;
+use App\Helpers\PMHelper;
+use App\Helpers\PMTransactionHelper;
 
 class PropertyManagementTransactionsController extends Controller
 {
@@ -156,12 +156,12 @@ class PropertyManagementTransactionsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-management-transactions.edit', [$pm->id, $id]) );
+        return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
     }
 
     public function destroy(Request $request, PropertyManagement $pm, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('property-management-transactions', [$pm->id]));
@@ -177,11 +177,11 @@ class PropertyManagementTransactionsController extends Controller
         $transactionIDs = explode('_', $transactionIDs);
 
         if (count($transactionIDs)) {
-            foreach($transactionIDs as $transactionID) {
+            foreach ($transactionIDs as $transactionID) {
                 $transaction = PropertyManagementTransaction::find($transactionID);
                 if ($transaction) {
                     $hasPreviousAudit = $transaction->audit_user_id;
-                    if(!$hasPreviousAudit) {
+                    if (!$hasPreviousAudit) {
                         $transaction->audit_user_id = $user->id;
                         $transaction->audit_date = getCurrentDate();
                         $transaction->save();
@@ -199,7 +199,7 @@ class PropertyManagementTransactionsController extends Controller
         $transactionIDs = explode('_', $transactionIDs);
 
         if (count($transactionIDs)) {
-            foreach($transactionIDs as $transactionID) {
+            foreach ($transactionIDs as $transactionID) {
                 $transaction = PropertyManagementTransaction::find($transactionID);
                 if ($transaction) {
                     $transaction->audit_user_id = null;
@@ -218,8 +218,8 @@ class PropertyManagementTransactionsController extends Controller
         $transactionIDs = explode('_', $transactionIDs);
 
         if (count($transactionIDs)) {
-            foreach($transactionIDs as $transactionID) {
-                if ( $this->repository->canDelete($transactionID) ) {
+            foreach ($transactionIDs as $transactionID) {
+                if ($this->repository->canDelete($transactionID)) {
                     $this->repository->delete($transactionID);
                 }
             }
@@ -229,17 +229,29 @@ class PropertyManagementTransactionsController extends Controller
         return redirect()->back();
     }
 
-    public function createBulk() {
+    public function createBulk()
+    {
         $properties = $this->propertiesRepository->all('', [
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
         ]);
 
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+
         return view('property-management-transactions.create-bulk')
-            ->with('properties', $properties);
+            ->with('properties', $properties)
+            ->with('transactionTypes', $transactionTypes);
     }
 
-    public function storeBulk(Request $request) {
-        echo 'save batch here...';
+    public function storeBulk(Request $request)
+    {
+        $shouldProcess = $request->bulk && is_array($request->bulk) && count($request->bulk);
+
+        if ($shouldProcess) {
+            foreach ($request->bulk as $index => $transaction) {
+            }
+        }
+
+        return redirect()->back();
     }
 }
