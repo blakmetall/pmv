@@ -237,6 +237,13 @@
     }
 }
 
+// menu nav
+.layout-horizontal-bar .header-topnav .topnav a {
+    font-size: 12px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
 /******* end *************/
 /*************************/
 
@@ -314,23 +321,23 @@
     .bulk-file-col {
         width: 30px;
     }
+}
 
-    .picker__table {
+.picker__table {
 
-        th {
-            color: white !important;
-            background: #2c3d4f !important;
-        }
+    th {
+        color: white !important;
+        background: #2c3d4f !important;
+    }
 
-        tbody {
-            tr {
-                &:nth-child(odd) {
-                    background: #f4f4f4 !important;
-                }
+    tbody {
+        tr {
+            &:nth-child(odd) {
+                background: #f4f4f4 !important;
+            }
 
-                &:nth-child(even) {
-                    background: #fff !important;
-                }
+            &:nth-child(even) {
+                background: #fff !important;
             }
         }
     }

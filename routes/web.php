@@ -5,19 +5,19 @@ Route::group(['middleware' => ['web']], function () {
     // auth laravel routes
     Auth::routes(['register' => false]); // public register disabled for this app
 
-    // language 
+    // language
     Route::group(['prefix' => 'language'], function () {
         Route::get('update/{locale}', 'LanguageController@update')->name('language.update');
     });
 
     // error pages
-    Route::group(['prefix' => 'error'], function() {
+    Route::group(['prefix' => 'error'], function () {
         Route::get('forbidden', 'ErrorController@forbidden')->name('error.forbidden');
         Route::get('not-found', 'ErrorController@notFound')->name('error.not-found');
     });
     
     // auth middleware
-    Route::group(['prefix' => 'system', 'middleware' => 'auth'], function() {
+    Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
        
         // dashboard
         Route::get('', 'DashboardController@index');
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['web']], function () {
         // properties prefix
         Route::group(['prefix' => 'properties'], function () {
 
-            // properties 
+            // properties
             Route::group(['middleware' => 'role-permission:properties,index'], function () {
                 Route::get('', 'PropertiesController@index')->name('properties');
                 Route::get('create', 'PropertiesController@create')->name('properties.create');
@@ -137,7 +137,6 @@ Route::group(['middleware' => ['web']], function () {
                         Route::post('update/{id}', 'PropertyManagementController@update')->name('property-management.update');
                         Route::get('destroy/{id}', 'PropertyManagementController@destroy')->name('property-management.destroy');
                     });
-                    
                 });
             });
         });
@@ -187,11 +186,11 @@ Route::group(['middleware' => ['web']], function () {
                     Route::post('store', 'PropertyManagementTransactionsController@store')->name('property-management-transactions.store');
                     Route::get('show/{transaction}', 'PropertyManagementTransactionsController@show')->name('property-management-transactions.show');
                     Route::get('edit/{transaction}', 'PropertyManagementTransactionsController@edit')->name('property-management-transactions.edit');
+                    Route::get('editAjax/{transaction}', 'PropertyManagementTransactionsController@editAjax')->name('property-management-transactions.edit-ajax');
                     Route::post('update/{id}', 'PropertyManagementTransactionsController@update')->name('property-management-transactions.update');
                     Route::get('destroy/{id}', 'PropertyManagementTransactionsController@destroy')->name('property-management-transactions.destroy');
                 });
             });
-
         });
 
         // cleaning-services
@@ -249,13 +248,12 @@ Route::group(['middleware' => ['web']], function () {
         });
 
         // settings
-        Route::group(['prefix' => 'settings'], function() {
-
+        Route::group(['prefix' => 'settings'], function () {
             Route::get('', 'SettingsController@index')->name('settings');
 
             // users
             Route::group(['prefix' => 'users'], function () {
-                Route::group(['middleware' => 'role-permission:settings,users'], function() {
+                Route::group(['middleware' => 'role-permission:settings,users'], function () {
                     Route::get('', 'UsersController@index')->name('users');
                     Route::get('create', 'UsersController@create')->name('users.create');
                     Route::post('store', 'UsersController@store')->name('users.store');
@@ -268,7 +266,7 @@ Route::group(['middleware' => ['web']], function () {
 
             // workgroups
             Route::group(['prefix' => 'workgroups'], function () {
-                Route::group(['middleware' => 'role-permission:settings,workgroups'], function() {
+                Route::group(['middleware' => 'role-permission:settings,workgroups'], function () {
                     Route::get('', 'WorkgroupsController@index')->name('workgroups');
                     Route::get('create', 'WorkgroupsController@create')->name('workgroups.create');
                     Route::post('store', 'WorkgroupsController@store')->name('workgroups.store');
@@ -281,7 +279,7 @@ Route::group(['middleware' => ['web']], function () {
                     Route::group(['prefix' => '{workgroup}'], function () {
 
                         // workgroup users
-                        Route::group(['prefix' => 'users'], function() {
+                        Route::group(['prefix' => 'users'], function () {
                             Route::get('', 'WorkgroupUsersController@index')->name('workgroup-users');
                             Route::get('create', 'WorkgroupUsersController@create')->name('workgroup-users.create');
                             Route::post('store', 'WorkgroupUsersController@store')->name('workgroup-users.store');
@@ -290,16 +288,15 @@ Route::group(['middleware' => ['web']], function () {
                             Route::post('update/{id}', 'WorkgroupUsersController@update')->name('workgroup-users.update');
                             Route::get('destroy/{id}', 'WorkgroupUsersController@destroy')->name('workgroup-users.destroy');
                         });
-
                     });
                 });
             });
 
             // roles
             Route::group(['prefix' => 'roles'], function () {
-                Route::group(['middleware' => 'role-permission:settings,roles'], function() {
+                Route::group(['middleware' => 'role-permission:settings,roles'], function () {
                     Route::get('', 'RolesController@index')->name('roles');
-                });    
+                });
                 Route::get('set-active/{id}', 'RolesController@setActive')->name('roles.set-active');
             });
 
@@ -379,24 +376,21 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'DamageDepositsController@update')->name('damage-deposits.update');
                 Route::get('destroy/{id}', 'DamageDepositsController@destroy')->name('damage-deposits.destroy');
             });
-
         });
 
-        // account 
+        // account
         Route::group(['prefix' => 'account'], function () {
             Route::get('', 'AccountController@edit')->name('account');
             Route::post('update', 'AccountController@update')->name('account.update');
         });
 
-        // profile 
+        // profile
         Route::group(['prefix' => 'profile'], function () {
             Route::get('', 'ProfileController@edit')->name('profile');
             Route::post('update', 'ProfileController@update')->name('profile.update');
         });
-
     });
 
     // public routes here
     Route::get('', '_Public\PagesController@home')->name('public.home');
-
 });

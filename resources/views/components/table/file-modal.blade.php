@@ -1,6 +1,4 @@
-@php
-    
-
+<?php
     $fileName = isset($fileName) ? $fileName : '';
     $filePath = isset($filePath) ? $filePath : false;
     $fileUrl = isset($fileUrl) ? $fileUrl : false;
@@ -15,25 +13,17 @@
     }
 
     $useImg = !! $imgUrl;
-
-@endphp
+?>
 
 <!-- table image or icon -->
-<a 
-    href="#" 
-    class="text-primary app-icon-link"
-    title="{{ __('File') }}"
-    alt="{{ __('File') }}"
-    data-toggle="modal"
-    data-target="#{{ $modalID }}"
-    >
+<a href="#" class="text-primary app-icon-link ml-0 mr-1" title="{{ __('File') }}" alt="{{ __('File') }}" data-toggle="modal" data-target="#{{ $modalID }}">
 
     @if($useImg)
         <img src="{{ asset(getUrlPath($imgUrl, $imgSize)) }}" alt="" width="100">
     @else
         <i class="nav-icon i-Magnifi-Glass- font-weight-bold"></i>
     @endif
-    
+
 </a>
 
 

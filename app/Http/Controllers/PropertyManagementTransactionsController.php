@@ -45,6 +45,11 @@ class PropertyManagementTransactionsController extends Controller
             $appendUrl = '?' . http_build_query($urlParams);
             $redirectUrl = route('property-management-transactions', [$pm->id]) . $appendUrl;
 
+            $hasSuccess = $request->session()->get('success');
+            if ($hasSuccess) {
+                $request->session()->flash('success', $hasSuccess);
+            }
+
             return redirect($redirectUrl);
         }
 
@@ -65,10 +70,15 @@ class PropertyManagementTransactionsController extends Controller
         ];
         $currentBalance = PMHelper::getBalance($pm->id, $config);
 
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
+
         return view('property-management-transactions.index')
             ->with('transactions', $transactions)
             ->with('pm', $pm)
             ->with('search', $search)
+            ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('currentBalance', $currentBalance);
     }
 
@@ -95,6 +105,7 @@ class PropertyManagementTransactionsController extends Controller
             'filterByEnabled' => true,
         ]);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
         $citiesConfig = [
             'paginate' => false,
             'filterByWorkgroup' => true,
@@ -105,6 +116,7 @@ class PropertyManagementTransactionsController extends Controller
             ->with('transactions', $transactions)
             ->with('properties', $properties)
             ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('cities', $cities)
             ->with('search', $search);
     }
@@ -155,10 +167,30 @@ class PropertyManagementTransactionsController extends Controller
             ->with('pm', $pm);
     }
 
+    public function editAjax(PropertyManagement $pm, PropertyManagementTransaction $transaction)
+    {
+        $transaction = $this->repository->find($transaction);
+        $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
+
+        return view('property-management-transactions.edit-ajax')
+            ->with('paymentTypes', $paymentTypes)
+            ->with('transaction', $transaction)
+            ->with('transactionTypes', $transactionTypes)
+            ->with('withModal', true)
+            ->with('pm', $pm);
+    }
+
     public function update(Request $request, PropertyManagement $pm, $id)
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+        
+        // redirect back if sent from modal
+        if ($request->fromModal) {
+            return redirect()->back();
+        }
+
         return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
     }
 
@@ -240,6 +272,7 @@ class PropertyManagementTransactionsController extends Controller
         ]);
 
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
+        $paymentTypes = PMTransactionHelper::getTypes();
 
         // successful transactions after save -- data retrieval
         $successfulTransactions = false;
@@ -251,6 +284,7 @@ class PropertyManagementTransactionsController extends Controller
         return view('property-management-transactions.create-bulk')
             ->with('properties', $properties)
             ->with('transactionTypes', $transactionTypes)
+            ->with('paymentTypes', $paymentTypes)
             ->with('successfulTransactions', $successfulTransactions);
     }
 

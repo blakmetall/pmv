@@ -11,14 +11,20 @@
 
 </fieldset>
 
+@php
+    $skipCancel = isset($withModal) ? true : false;
+    $skipDelete = isset($withModal) || isRole('owner') ? true : false;
+@endphp
+
 <!-- form actions -->
 @include('components.form.actions', [
-    'id' => $row->id,
-    'disabled' => $disabled,
-    'edit_route' => 'property-management-transactions.edit',
-    'cancel_route' => 'property-management-transactions',
-    'delete_route' => 'property-management-transactions.destroy',
-    'routeParams' => [$pm->id],
-    'skipEdit' => isRole('owner'),
-    'skipDelete' => isRole('owner'),
+'id' => $row->id,
+'disabled' => $disabled,
+'edit_route' => 'property-management-transactions.edit',
+'cancel_route' => 'property-management-transactions',
+'delete_route' => 'property-management-transactions.destroy',
+'routeParams' => [$pm->id],
+'skipEdit' => isRole('owner'),
+'skipDelete' => $skipDelete,
+'skipCancel' => $skipCancel,
 ])
