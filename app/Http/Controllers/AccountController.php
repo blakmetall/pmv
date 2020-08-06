@@ -12,7 +12,8 @@ class AccountController extends Controller
 {
     private $validation;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->validation = new AccountValidations();
     }
 
@@ -23,10 +24,11 @@ class AccountController extends Controller
 
     public function update(Request $request)
     {
+        dd('asasas');
         $user = Auth::user();
-        
+
         $this->validation->validate('edit', $request, $user->id);
-        
+
         $user->email = $request->email;
 
         if ($request->password) {
