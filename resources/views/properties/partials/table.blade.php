@@ -21,6 +21,7 @@
 
                             <th scope="col">{{ __('Bedrooms') }}</th>
                             <th scope="col">{{ __('Baths') }}</th>
+                            <th scope="col">{{ __('Building') }}</th>
                             <th scope="col">{{ __('Enabled') }}</th>
                             <th scope="col">{{ __('Online') }}</th>
                             <th scope="col">{{ __('Owner') }}</th>
@@ -70,6 +71,10 @@
 
                                     <td>
                                         {{ $row->property->baths }}
+                                    </td>
+
+                                    <td>
+                                        {{ $row->property->building->name }}
                                     </td>
 
                                     <td>

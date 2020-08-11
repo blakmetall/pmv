@@ -5,7 +5,7 @@ namespace App\Validations;
 use Illuminate\Http\Request;
 
 class PropertiesValidations extends Validation
-{  
+{
     public function __construct()
     {
         $this->setDefaultValidations([
@@ -39,9 +39,11 @@ class PropertiesValidations extends Validation
         $eventValidations = [];
         $customValidationMessages = [];
 
-        switch($validateEvent)   {
-            case 'create': break;
-            case 'edit': break;
+        switch ($validateEvent) {
+            case 'create':
+                break;
+            case 'edit':
+                break;
         }
 
         $validations = array_merge($this->getDefaultValidations(), $eventValidations);

@@ -45,6 +45,17 @@
             'optionLabelRef' => 'name',
         ])
 
+        <!-- building_id -->
+        @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('Building'),
+            'name' => 'building_id',
+            'value' => $row->building_id,
+            'options' => $buildings,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
+        ])
+
         <!-- property_type_id -->
         @include('components.form.select', [
             'group' => 'property',

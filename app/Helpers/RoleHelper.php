@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 
@@ -17,10 +17,10 @@ class RoleHelper
     public static function current()
     {
         $config_role_id = null;
-        
+
         $user = auth()->user();
         if ($user && $user->profile) {
-            $config_role_id = $user->profile->config_role_id;          
+            $config_role_id = $user->profile->config_role_id;
         }
 
         return Role::where('id', $config_role_id)->first();
@@ -31,7 +31,7 @@ class RoleHelper
      */
     public static function setActive($id)
     {
-        if(self::hasValidRoleId($id)) {
+        if (self::hasValidRoleId($id)) {
             $profile = auth()->user()->profile;
             $profile->config_role_id = $id;
             $profile->save();
@@ -48,15 +48,15 @@ class RoleHelper
         $roles = [];
 
         $lang = LanguageHelper::current();
-        
-        if($user_id){
+
+        if ($user_id) {
             $user = User::find($user_id);
-        }else{
+        } else {
             $user = auth()->user();
         }
-        
+
         if ($user && $user->roles()->count()) {
-            foreach ($user->roles as $role) {                
+            foreach ($user->roles as $role) {
                 $roles[] = $role->translations()->where('language_id', $lang->id)->first();
             }
         }
@@ -64,21 +64,22 @@ class RoleHelper
         return $roles;
     }
 
-    public static function is($roleSlug) {
+    public static function is($roleSlug)
+    {
         $compareRoleId = config('constants.roles.' . $roleSlug);
 
         $current = self::current();
-        
+
         return $current->id === $compareRoleId;
     }
 
-    public static function hasValidRoleId($id) 
+    public static function hasValidRoleId($id)
     {
         $allowed_roles = self::available();
-        
+
         if (count($allowed_roles)) {
             foreach ($allowed_roles as $role) {
-                if($role->role_id == $id) {
+                if ($role->role_id == $id) {
                     return true;
                 }
             }
@@ -92,24 +93,23 @@ class RoleHelper
      * 
      * @return bool
      */
-    public static function isAllowed($role_id, $section, $sub, $sections) 
+    public static function isAllowed($role_id, $section, $sub, $sections)
     {
-        if ( isset($sections[$section]) && isset($sections[$section][$sub])) {
-            
-            if ( in_array($role_id, $sections[$section][$sub])) {
+        if (isset($sections[$section]) && isset($sections[$section][$sub])) {
+
+            if (in_array($role_id, $sections[$section][$sub])) {
                 return true;
             }
-
         }
 
         return false;
     }
-    
+
     /**
      * @return Array List of url sections with their subsections 
      *               and their allowed roles ids per section
      */
-    public static function getAllowedSections() 
+    public static function getAllowedSections()
     {
         $sections = [
             'dashboard' => [
@@ -513,6 +513,10 @@ class RoleHelper
                     'super',
                     'admin'
                 ]),
+                'buildings' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin'
+                ]),
                 'amenities' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'
@@ -548,7 +552,7 @@ class RoleHelper
      * 
      * @return Array List of roles ids
      */
-    public static function transformSluggedRolesToIds($roles_slug_list) 
+    public static function transformSluggedRolesToIds($roles_slug_list)
     {
 
         $base_roles = [
@@ -574,7 +578,6 @@ class RoleHelper
                 if (isset($base_roles[$role_slug])) {
                     $roles_ids[] = $base_roles[$role_slug];
                 }
-
             }
         }
 

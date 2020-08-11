@@ -15,10 +15,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('forbidden', 'ErrorController@forbidden')->name('error.forbidden');
         Route::get('not-found', 'ErrorController@notFound')->name('error.not-found');
     });
-    
+
     // auth middleware
     Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
-       
+
         // dashboard
         Route::get('', 'DashboardController@index');
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['middleware' => 'role-permission:bookings,property'], function () {
                 Route::get('property/{property}', 'BookingController@propertyBookings')->name('bookings.by-property');
             });
-    
+
             // bookings by owner
             Route::group(['middleware' => 'role-permission:bookings,owner'], function () {
                 Route::get('owner/{owner}', 'BookingController@ownerBookings')->name('bookings.by-owner');
@@ -236,7 +236,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('update/{id}', 'HumanResourcesController@update')->name('human-resources.update');
             Route::get('destroy/{id}', 'HumanResourcesController@destroy')->name('human-resources.destroy');
         });
-        
+
         // human-resources directory
         Route::group(['prefix' => 'human-resources/directory', 'middleware' => 'role-permission:human-resources,directory'], function () {
             Route::get('directory', 'HumanResourcesController@directory')->name('human-resources.directory');
@@ -322,6 +322,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('destroy/{id}', 'ZonesController@destroy')->name('zones.destroy');
             });
 
+            // buildings
+            Route::group(['prefix' => 'buildings', 'middleware' => 'role-permission:settings,buildings'], function () {
+                Route::get('', 'BuildingsController@index')->name('buildings');
+                Route::get('create', 'BuildingsController@create')->name('buildings.create');
+                Route::post('store', 'BuildingsController@store')->name('buildings.store');
+                Route::get('show/{building}', 'BuildingsController@show')->name('buildings.show');
+                Route::get('edit/{building}', 'BuildingsController@edit')->name('buildings.edit');
+                Route::post('update/{id}', 'BuildingsController@update')->name('buildings.update');
+                Route::get('destroy/{id}', 'BuildingsController@destroy')->name('buildings.destroy');
+            });
+
             // contacts
             Route::group(['prefix' => 'contacts', 'middleware' => 'role-permission:settings,contacts'], function () {
                 Route::get('', 'ContactsController@index')->name('contacts');
@@ -332,7 +343,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'ContactsController@update')->name('contacts.update');
                 Route::get('destroy/{id}', 'ContactsController@destroy')->name('contacts.destroy');
             });
-    
+
             // amenities
             Route::group(['prefix' => 'amenities', 'middleware' => 'role-permission:settings,amenities'], function () {
                 Route::get('', 'AmenitiesController@index')->name('amenities');
@@ -354,7 +365,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'TransactionTypesController@update')->name('transaction-types.update');
                 Route::get('destroy/{id}', 'TransactionTypesController@destroy')->name('transaction-types.destroy');
             });
-            
+
             // cleaning-options
             Route::group(['prefix' => 'cleaning-options', 'middleware' => 'role-permission:settings,cleaning-options'], function () {
                 Route::get('', 'CleaningOptionsController@index')->name('cleaning-options');

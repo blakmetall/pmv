@@ -22,12 +22,12 @@ class CreatePropertiesTable extends Migration
             $table->integer('user_id');
             $table->integer('city_id');
             $table->integer('zone_id');
+            $table->integer('building_id')->nullable();
             $table->integer('property_type_id');
             $table->integer('cleaning_option_id');
             $table->tinyInteger('is_featured')->nullable()->default(0);
             $table->tinyInteger('is_enabled')->nullable()->default(0);
             $table->tinyInteger('is_online')->nullable()->default(0);
-            $table->string('building')->nullable();
             $table->decimal('rental_commission', 5, 2)->nullable();
             $table->decimal('maid_fee', 15, 2)->nullable();
             $table->smallInteger('bedrooms')->nullable();

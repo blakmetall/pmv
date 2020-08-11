@@ -340,6 +340,14 @@
                                             </li>
                                         @endif
 
+                                        @if ($_current_role->isAllowed('settings', 'buildings'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('buildings') }}">
+                                                    <span class="item-name">{{ __('Buildings') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
                                         @if ($_current_role->isAllowed('settings', 'contacts'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('contacts') }}">

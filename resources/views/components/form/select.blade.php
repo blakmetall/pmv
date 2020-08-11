@@ -38,7 +38,6 @@
             <span>*</span>
         @endif
     </label>
-
     <div class="col-sm-10">
 
         <select
@@ -50,7 +49,6 @@
             @if (!$disableDefaultOption)
                 <option value="">{{ __('Select') }}</option>
             @endif
-
             @foreach($options as $option)
 
                 @php

@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
-use App\Repositories\{ 
+use App\Repositories\{
     PropertiesRepositoryInterface,
     UsersRepositoryInterface,
     CitiesRepositoryInterface,
     ZonesRepositoryInterface,
+    BuildingsRepositoryInterface,
     CleaningOptionsRepositoryInterface,
     PropertyTypesRepositoryInterface,
     AmenitiesRepositoryInterface
 };
-use App\Helpers\{ RoleHelper, UserHelper };
+use App\Helpers\{RoleHelper, UserHelper};
 
 use App\Helpers\ReportExcelHelper;
 
@@ -23,6 +24,7 @@ class PropertiesController extends Controller
     private $usersRepository;
     private $citiesRepository;
     private $zonesRepository;
+    private $buildingsRepository;
     private $amenitiesRepository;
     private $cleaningOptionsRepository;
     private $propertyTypesRepository;
@@ -32,6 +34,7 @@ class PropertiesController extends Controller
         UsersRepositoryInterface $usersRepository,
         CitiesRepositoryInterface $citiesRepository,
         ZonesRepositoryInterface $zonesRepository,
+        BuildingsRepositoryInterface $buildingsRepository,
         AmenitiesRepositoryInterface $amenitiesRepository,
         CleaningOptionsRepositoryInterface $cleaningOptionsRepository,
         PropertyTypesRepositoryInterface $propertyTypesRepository
@@ -40,6 +43,7 @@ class PropertiesController extends Controller
         $this->usersRepository = $usersRepository;
         $this->citiesRepository = $citiesRepository;
         $this->zonesRepository = $zonesRepository;
+        $this->buildingsRepository = $buildingsRepository;
         $this->amenitiesRepository = $amenitiesRepository;
         $this->cleaningOptionsRepository = $cleaningOptionsRepository;
         $this->propertyTypesRepository = $propertyTypesRepository;
@@ -50,9 +54,9 @@ class PropertiesController extends Controller
         $search = trim($request->s);
 
         $config = ['filterByWorkgroup' => true];
-        
+
         // review this code
-        if(RoleHelper::is('owner') || RoleHelper::is('regular')) {
+        if (RoleHelper::is('owner') || RoleHelper::is('regular')) {
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
 
@@ -61,7 +65,7 @@ class PropertiesController extends Controller
 
         $properties = $this->repository->all($search, $config);
 
-        if($request->shouldGenerateExcel) {
+        if ($request->shouldGenerateExcel) {
             return ReportExcelHelper::generate($properties, 'properties');
         }
 
@@ -73,10 +77,10 @@ class PropertiesController extends Controller
     public function create()
     {
         $property = $this->repository->blueprint();
-        
+
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
-        
+
         $citiesConfig = [
             'paginate' => false,
             'filterByWorkgroup' => true,
@@ -84,6 +88,7 @@ class PropertiesController extends Controller
         $cities = $this->citiesRepository->all('', $citiesConfig);
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
+        $buildings = $this->buildingsRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
@@ -93,13 +98,14 @@ class PropertiesController extends Controller
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('zones', $zones)
+            ->with('buildings', $buildings)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
     }
 
     public function store(Request $request)
-    { 
+    {
         $property = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('properties.edit', [$property->id]));
@@ -111,11 +117,12 @@ class PropertiesController extends Controller
 
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
-        
+
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
+        $buildings = $this->buildingsRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
@@ -125,6 +132,7 @@ class PropertiesController extends Controller
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('zones', $zones)
+            ->with('buildings', $buildings)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
@@ -133,10 +141,10 @@ class PropertiesController extends Controller
     public function edit(Property $property)
     {
         $property = $this->repository->find($property);
-        
+
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
         $users = $this->usersRepository->all('', $configUsers);
-        
+
         $citiesConfig = [
             'paginate' => false,
             'filterByWorkgroup' => true,
@@ -144,6 +152,7 @@ class PropertiesController extends Controller
         $cities = $this->citiesRepository->all('', $citiesConfig);
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
+        $buildings = $this->buildingsRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
@@ -153,6 +162,7 @@ class PropertiesController extends Controller
             ->with('users', $users)
             ->with('cities', $cities)
             ->with('zones', $zones)
+            ->with('buildings', $buildings)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
@@ -167,7 +177,7 @@ class PropertiesController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('properties'));
@@ -177,12 +187,14 @@ class PropertiesController extends Controller
         return redirect()->back();
     }
 
-    public function export(){
+    public function export()
+    {
         $collection = Property::all();
         prepareExportationExcel($collection);
     }
 
-    public function generalAvailability() {
+    public function generalAvailability()
+    {
         return view('properties.general-availability');
     }
 }

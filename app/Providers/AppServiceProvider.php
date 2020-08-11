@@ -6,6 +6,7 @@ use URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Helpers\AppHelper;
+use App\Models\City;
 use Validator;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,18 +22,28 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // https force
-        if ( AppHelper::shouldApplyHttps() ) {
+        if (AppHelper::shouldApplyHttps()) {
             URL::forceScheme('https');
         }
 
         // custom validations
-        Validator::extend('is_even_string', function($attribute, $value, $parameters, $validator) {
-            if(!empty($value) && (strlen($value) % 2) == 0){
+        Validator::extend('is_even_string', function ($attribute, $value, $parameters, $validator) {
+            if (!empty($value) && (strlen($value) % 2) == 0) {
                 return false;
             }
-            
+
             return true;
         });
+
+        $getCities = City::orderBy('name', 'asc')->get();
+        $cities = [];
+
+        foreach ($getCities as $city) {
+            $slug = AppHelper::cleanString($city->name);
+            $cities[$slug] = $city->id;
+        }
+
+        config(['constants.cities' => $cities]);
     }
 
     /**
@@ -40,11 +51,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()  {
+    public function register()
+    {
         $this->registerRepositories();
     }
 
-    public function registerRepositories() {
+    public function registerRepositories()
+    {
 
         $this->app->bind(
             \App\Repositories\AmenitiesRepositoryInterface::class,
@@ -95,7 +108,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\PropertiesRepositoryInterface::class,
             \App\Repositories\PropertiesRepository::class
         );
-        
+
         $this->app->bind(
             \App\Repositories\PropertyContactsRepositoryInterface::class,
             \App\Repositories\PropertyContactsRepository::class
@@ -159,6 +172,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\ZonesRepositoryInterface::class,
             \App\Repositories\ZonesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\BuildingsRepositoryInterface::class,
+            \App\Repositories\BuildingsRepository::class
         );
     }
 }

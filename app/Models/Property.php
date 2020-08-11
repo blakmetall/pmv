@@ -15,12 +15,12 @@ class Property extends Model
         'user_id',
         'city_id',
         'zone_id',
+        'building_id',
         'property_type_id',
         'cleaning_option_id',
         'is_featured',
         'is_enabled',
         'is_online',
-        'building',
         'rental_commission',
         'maid_fee',
         'bedrooms',
@@ -79,6 +79,11 @@ class Property extends Model
     public function zone()
     {
         return $this->belongsTo('App\Models\Zone');
+    }
+
+    public function building()
+    {
+        return $this->belongsTo('App\Models\Building');
     }
 
     public function amenities()

@@ -14,7 +14,7 @@ if (!function_exists('prepareFormInputName')) {
         } else if ($parentName) {
             $inputName = "{$parentName}[{$name}]";
         }
-        
+
         return $inputName;
     }
 }
@@ -32,7 +32,7 @@ if (!function_exists('prepareFormRequestName')) {
         } else if ($parentName) {
             $requestName = "{$parentName}.{$name}";
         }
-        
+
         return $requestName;
     }
 }
@@ -54,11 +54,11 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
             $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
             $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
             $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
-        
-            foreach($items as $item) {
+
+            foreach ($items as $item) {
                 $labelRefValue = isset($item->{$labelRef}) ? $item->{$labelRef} : '';
                 $secondLabelRefValue = isset($item->{$secondLabelRef}) ? $item->{$secondLabelRef} : '';
-                
+
                 $values[] = [
                     'label' => trim($labelRefValue . ' ' . $item->{$secondLabelRefValue}),
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
@@ -79,11 +79,11 @@ if (!function_exists('prepareCheckboxDefaultValues')) {
         if ($shouldLoopForValues) {
             $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $defaultValues[] = isset($item->{$valueRef}) ? $item->{$valueRef} : '';
             }
         }
-        
+
         return $defaultValues;
     }
 }
@@ -98,7 +98,7 @@ if (!function_exists('prepareSelectValuesFromRows')) {
             $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
             $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $values[] = [
                     'label' => isset($item->{$labelRef}) ? $item->{$labelRef} : '',
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
@@ -119,7 +119,7 @@ if (!function_exists('prepareSelectDefaultValues')) {
         if ($shouldLoopForValues) {
             $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $defaultValues[] = isset($item->{$valueRef}) ? $item->{$valueRef} : '';
             }
         }
@@ -131,8 +131,8 @@ if (!function_exists('prepareSelectDefaultValues')) {
 if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
-        if($price < 0) {
-            return '-$' . number_format(abs($price), $decimals);    
+        if ($price < 0) {
+            return '-$' . number_format(abs($price), $decimals);
         }
 
         return '$' . number_format($price, $decimals);
@@ -142,7 +142,7 @@ if (!function_exists('priceFormat')) {
 if (!function_exists('getStatusIcon')) {
     function getStatusIcon($isEnabled = false)
     {
-        if($isEnabled) {
+        if ($isEnabled) {
             return '<i class="nav-icon i-Yes font-weight-bold text-success"></i>';
         }
 
@@ -169,15 +169,15 @@ if (!function_exists('preparePhoneContacts')) {
     {
         $phonesMap = [];
 
-        if(is_array($phones)) {
-            foreach($phones as $phone) {
-                if($phone != '') {
+        if (is_array($phones)) {
+            foreach ($phones as $phone) {
+                if ($phone != '') {
                     $phonesMap[] = $phone;
                 }
             }
         }
 
-        if(count($phonesMap)) {
+        if (count($phonesMap)) {
             return implode('/', $phonesMap);
         }
 
@@ -208,49 +208,49 @@ if (!function_exists('isRole')) {
 
 if (!function_exists('isProduction')) {
     function isProduction()
-    {        
+    {
         return 'production' == config('app.env');
     }
 }
 
 if (!function_exists('isStaging')) {
     function isStaging()
-    {        
+    {
         return 'staging' == config('app.env');
     }
 }
 
 if (!function_exists('isDevelopment')) {
     function isDevelopment()
-    {        
+    {
         return 'development' == config('app.env');
     }
 }
 
 if (!function_exists('hasSSL')) {
     function hasSSL()
-    {        
+    {
         return env('APP_SSL') == true ? true : false;;
     }
 }
 
 if (!function_exists('getContactTypeBySlug')) {
     function getContactTypeBySlug($typeSlug = '')
-    {        
+    {
         return \App\Helpers\ContactsHelper::getLabelBySlug($typeSlug);
     }
 }
 
 if (!function_exists('isImage')) {
     function isImage($extension = '')
-    {        
+    {
         return (in_array($extension, \Config::get('constants.valid_image_types')));
     }
 }
 
 if (!function_exists('monthHasPmTransactions')) {
     function monthHasPmTransactions($pmID, $month, $year)
-    {        
+    {
         return \App\Helpers\PMTransactionHelper::monthHasTransactions($pmID, $month, $year);
     }
 }
