@@ -2,33 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ PropertiesRepositoryInterface, PropertyManagementRepositoryInterface };
+use App\Repositories\{
+    PropertiesRepositoryInterface,
+    PropertyManagementRepositoryInterface,
+    CitiesRepositoryInterface
+};
 use Illuminate\Http\Request;
-use App\Models\{ Property, PropertyManagement };
+use App\Models\{
+    Property,
+    PropertyManagement
+};
 
 class PropertyManagementController extends Controller
 {
     private $repository;
     private $propertiesRepository;
+    private $citiesRepository;
 
     public function __construct(
         PropertiesRepositoryInterface $propertiesRepository,
-        PropertyManagementRepositoryInterface $repository
+        PropertyManagementRepositoryInterface $repository,
+        CitiesRepositoryInterface $citiesRepository
     ) {
         $this->repository = $repository;
         $this->propertiesRepository = $propertiesRepository;
+        $this->citiesRepository = $citiesRepository;
     }
 
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-
         $config = ['propertyID' => $property->id, 'paginate' => false];
         $pm_items = $this->repository->all($search, $config);
+        $cities = $this->citiesRepository->all('', $config);
 
         return view('property-management.index')
             ->with('pm_items', $pm_items)
             ->with('property', $property)
+            ->with('cities', $cities)
             ->with('search', $search);
     }
 
@@ -38,10 +49,15 @@ class PropertyManagementController extends Controller
 
         // $config = ['unfinishedOnly' => true];
         $config = ['paginate' => false];
+        $config = [
+            'filterByCity' => $request->city
+        ];
         $pm_items = $this->repository->all($search, $config);
+        $cities = $this->citiesRepository->all('', '');
 
         return view('property-management.general')
             ->with('pm_items', $pm_items)
+            ->with('cities', $cities)
             ->with('search', $search);
     }
 
@@ -55,7 +71,7 @@ class PropertyManagementController extends Controller
 
     public function store(Request $request, Property $property)
     {
-        if($this->canCreatePM($request, $property)) {
+        if ($this->canCreatePM($request, $property)) {
             $pm = $this->repository->create($request);
             $request->session()->flash('success', __('Record created successfully'));
             return redirect(route('property-management.edit', [$property->id, $pm->id]));
@@ -84,11 +100,11 @@ class PropertyManagementController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
-        if($this->canCreatePM($request, $property, $id)){
+        if ($this->canCreatePM($request, $property, $id)) {
             $this->repository->update($request, $id);
             $request->session()->flash('success', __('Record updated successfully'));
-            return redirect( route('property-management.edit', [$property->id, $id]) );
-        }else{
+            return redirect(route('property-management.edit', [$property->id, $id]));
+        } else {
             $request->session()->flash('error', __('You can only have one unfinished property management.'));
             return redirect()->back()->withInput();
         }
@@ -96,7 +112,7 @@ class PropertyManagementController extends Controller
 
     public function destroy(Request $request, Property $property, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('property-management', [$property->id]));
@@ -107,16 +123,17 @@ class PropertyManagementController extends Controller
     }
 
     // ensures not creating new property management if an active one is enabled
-    private function canCreatePM($request, $property, $id = false) {
+    private function canCreatePM($request, $property, $id = false)
+    {
 
-        if( ! $request->is_finished ) {
+        if (!$request->is_finished) {
             $pmQuery = PropertyManagement::where('property_id', $property->id)->where('is_finished', 0);
-            if($id) {
+            if ($id) {
                 $pmQuery->where('id', '!=', $id);
             }
-    
+
             $unfinishedPM = $pmQuery->first();
-            if($unfinishedPM) {
+            if ($unfinishedPM) {
                 return false;
             }
         }
@@ -125,7 +142,8 @@ class PropertyManagementController extends Controller
     }
 
     // get the partial section to select property; used to create new transaction url
-    public function getPropertySelection() {
+    public function getPropertySelection()
+    {
         $config = [
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
@@ -136,10 +154,11 @@ class PropertyManagementController extends Controller
     }
 
     // generates the url and redirects to create new transaction for specific property management
-    public function generatePMTransactionUrl(Property $property) {
-        if($property->management()->count()) {
-            foreach($property->management as $pm) {
-                if(!$pm->is_finished) {
+    public function generatePMTransactionUrl(Property $property)
+    {
+        if ($property->management()->count()) {
+            foreach ($property->management as $pm) {
+                if (!$pm->is_finished) {
                     return redirect(route('property-management-transactions.create', $pm->id));
                     exit;
                 }
@@ -148,5 +167,4 @@ class PropertyManagementController extends Controller
 
         return redirect(route('property-management.general'));
     }
-
 }

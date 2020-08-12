@@ -8,8 +8,9 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
-        'url' => route('property-management.general')
+    @include('property-management.partials.search-general', [
+        'url' => route('property-management.general'),
+        'cities' => $cities
     ])
 
 @endsection

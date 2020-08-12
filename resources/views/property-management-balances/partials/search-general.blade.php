@@ -1,0 +1,53 @@
+@php
+    $url = isset($url) ? $url : '';
+    $searchedCity = isset($_GET['city']) ? $_GET['city'] : '';
+
+@endphp
+
+<div class="container app-container mb-5">
+
+    <div class="card">
+        <div class="card-body">
+
+            <form action="" action="get">
+                <div class="row pt-3">
+                    <div class="col-sm-6 col-md-2">
+                        <select name="city" class="form-control">
+                            <option value="">-- {{ __('City') }}</option>
+
+                            @if($cities)
+                                @foreach($cities as $city)
+                                    @php 
+                                        $selected = $searchedCity == $city->id ? 'selected' : ''; 
+                                    @endphp
+
+                                    <option value="{{ $city->id }}" {{ $selected }}>
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-2 app-search-buttons">
+                        <button class="btn btn-dark btn-icon mr-2" type="submit">
+                            <span class="ul-btn__icon">
+                                <i class="i-Magnifi-Glass1"></i>
+                            </span>
+                        </button>
+
+                        @if(isset($_GET['city']))
+                            <a href="{{ $url }}" class="btn btn-outline-dark btn-icon" role="button">
+                                <span class="ul-btn__icon">
+                                    <i class="i-Restore-Window"></i>
+                                </span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

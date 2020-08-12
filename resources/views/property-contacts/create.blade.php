@@ -2,7 +2,7 @@
 
 @section('heading-content')
 
-   @include('components.heading', [
+   @include('components.heading-modal', [
         'label' => __('New'),
         'breadcrumbs' => [
             [
@@ -26,8 +26,6 @@
 @endsection
 
 @section('main-content')
-
-
     <div class="container app-container-sm">
         <form action="{{ route('property-contacts.store', [$property->id]) }}" method="post">
             @csrf

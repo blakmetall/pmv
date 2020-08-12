@@ -30,6 +30,9 @@
     {{-- app css --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+    {{-- custom css --}}
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+
     {{-- page specific css --}}
     @yield('page-css')
 
@@ -98,7 +101,8 @@
     <script src="{{ asset('assets/js/sidebar-horizontal.script.js') }}"></script>
 
     {{-- scripts for goole map --}}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer></script>
+    {{-- Desactivado por mientras por que da error por el dominio --}}
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer></script> --}}
 
     {{-- app js --}}
     <script src="{{ asset('js/app.js') }}"></script>

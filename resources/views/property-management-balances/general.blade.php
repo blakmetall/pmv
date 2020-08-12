@@ -8,6 +8,11 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
+    @include('property-management-balances.partials.search-general', [
+        'url' => route('property-management-balances.general'),
+        'cities' => $cities
+    ])
+
 @endsection
 
 @section('main-content')

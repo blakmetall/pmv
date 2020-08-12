@@ -1,0 +1,19 @@
+.card-header-print {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-print {
+    background-color: #2c3e4f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-print:hover,
+.btn-print:focus {
+    color: #fff;
+    text-decoration: none;
+}

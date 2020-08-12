@@ -318,7 +318,7 @@ class RoleHelper
             'property-management' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -328,6 +328,7 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'owner',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -346,6 +347,7 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'owner'
                 ]),
                 'transactions' => self::transformSluggedRolesToIds([
                     'super',
@@ -492,6 +494,7 @@ class RoleHelper
                     'admin',
                     'accounting',
                     'administrative-assistant',
+                    'owner'
                 ]),
                 'users' => self::transformSluggedRolesToIds([
                     'super',
@@ -540,6 +543,7 @@ class RoleHelper
                     'admin',
                     'accounting',
                     'administrative-assistant',
+                    'owner'
                 ]),
             ]
         ];

@@ -98,34 +98,14 @@
                                     </td>
 
                                     <td>
-                                        <!-- property notes -->
+                                        <!-- property view -->
                                         <a 
-                                            href="{{ route('property-notes', $row->property->id) }}" 
+                                            href="{{ route('properties.show', $row->property->id) }}" 
                                             class="text-primary app-icon-link"
-                                            title="{{ __('Notes') }}"
-                                            alt="{{ __('Notes') }}">
-                                            <i class="nav-icon i-Notepad font-weight-bold"></i>
+                                            title="{{ __('View') }}"
+                                            alt="{{ __('View') }}">
+                                            <i class="nav-icon i-Eye font-weight-bold"></i>
                                         </a>
-
-                                        <!-- property contacts -->
-                                        <a 
-                                            href="{{ route('property-contacts', $row->property->id) }}" 
-                                            class="text-primary app-icon-link"
-                                            title="{{ __('Contacts') }}"
-                                            alt="{{ __('Contacts') }}">
-                                            <i class="nav-icon i-Administrator font-weight-bold"></i>
-                                        </a>
-
-                                        <!-- property rates -->
-                                        @if( !isRole('owner') )
-                                            <a 
-                                                href="{{ route('property-rates', $row->property->id) }}" 
-                                                class="text-primary app-icon-link"
-                                                title="{{ __('Rates') }}"
-                                                alt="{{ __('Rates') }}">
-                                                <i class="nav-icon i-Money-2 font-weight-bold"></i>
-                                            </a>
-                                        @endif
 
                                         <!-- property images -->
                                         @if( !isRole('owner') )
@@ -149,6 +129,66 @@
                                             </a>
                                         @endif
 
+                                        <!-- property rates -->
+                                        @if( !isRole('owner') )
+                                            <a 
+                                                href="{{ route('property-rates', $row->property->id) }}" 
+                                                class="text-primary app-icon-link"
+                                                title="{{ __('Rates') }}"
+                                                alt="{{ __('Rates') }}">
+                                                <i class="nav-icon i-Money-2 font-weight-bold"></i>
+                                            </a>
+                                        @endif
+
+                                        <!-- property policies -->
+                                        <a 
+                                            href="#" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Policies') }}"
+                                            alt="{{ __('Policies') }}">
+                                            <i class="nav-icon i-Files font-weight-bold"></i>
+                                        </a>
+
+                                        <!-- property contacts -->
+                                        <a 
+                                            href="{{ route('property-contacts', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Contacts') }}"
+                                            alt="{{ __('Contacts') }}">
+                                            <i class="nav-icon i-Administrator font-weight-bold"></i>
+                                        </a>
+
+                                        <!-- property notes -->
+                                        <a 
+                                            href="{{ route('property-notes', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Notes') }}"
+                                            alt="{{ __('Notes') }}">
+                                            <i class="nav-icon i-Notepad font-weight-bold"></i>
+                                        </a>
+
+                                        <!-- property calendar -->
+                                        @if( !isRole('owner') )
+                                            <a 
+                                                href="{{ route('property-calendar', $row->property->id) }}" 
+                                                class="text-primary app-icon-link"
+                                                title="{{ __('Calendar') }}"
+                                                alt="{{ __('Calendar') }}">
+                                                <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
+                                            </a>
+                                        @endif
+
+                                        <!-- property preview -->
+                                        @if( !isRole('owner') )
+                                            <a 
+                                                href="#"
+                                                class="text-primary app-icon-link"
+                                                title="{{ __('Preview') }}"
+                                                alt="{{ __('Preview') }}">
+                                                <i class="nav-icon i-Right font-weight-bold"></i>
+                                            </a>
+                                        @endif
+                                        
                                         <!-- property management -->
                                         <a 
                                             href="{{ route('property-management', $row->property->id) }}" 
@@ -158,9 +198,6 @@
                                             <i class="nav-icon i-Building font-weight-bold"></i>
                                         </a>
 
-                                            
-
-                                        
                                     </td>
 
                                     <!-- actions -->
@@ -170,6 +207,7 @@
                                             'showRoute' => 'properties.show',
                                             'editRoute' => 'properties.edit',
                                             'deleteRoute' => 'properties.destroy',
+                                            'skipShow' => true,
                                             'skipEdit' => isRole('owner'),
                                             'skipDelete' => isRole('owner')
                                         ])

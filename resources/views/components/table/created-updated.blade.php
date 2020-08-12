@@ -70,7 +70,7 @@
             @if ($hasCreator && !isRole('owner')) 
                 <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $creator->profile->full_name }}"
                     class="app-tooltip-person">
-                    <i class="material-icons">person</i>
+                    <i class="not-print material-icons">person</i>
                 </a>
             @endif
         </div>
@@ -88,7 +88,7 @@
             @if ($hasEditor && !isRole('owner')) 
                 <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $editor->profile->full_name }}"
                     class="app-tooltip-person">
-                    <i class="material-icons">person</i>
+                    <i class="not-print material-icons">person</i>
                 </a>
             @endif
         </div>
@@ -106,7 +106,7 @@
             @if (isset($auditedBy) && $auditedBy && !isRole('owner')) 
                 <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $auditedBy->profile->full_name }}"
                     class="app-tooltip-person">
-                    <i class="material-icons">person</i>
+                    <i class="not-print material-icons">person</i>
                 </a>
             @endif
         </div>

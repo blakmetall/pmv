@@ -40,22 +40,32 @@
 
     <!-- audited transactions -->
     <div class="card">
-        <div class="card-header">{{ $label }}</div>
+        <div class="card-header card-header-print">
+            <div>
+                {{ $label }}
+            </div>
+            @if($hasTransactions)
+                <a href="#" class="btn-print" data-table="table-print-transactions" data-title="{{ __('Transactions') }}">
+                    <i class="nav-icon i-Billing"></i>
+                    {{ __('Print') }}
+                </a>
+            @endif
+        </div>
         <div class="card-body pt-4">
 
             @if($hasTransactions)
-                <div class="table-responsive">
-                    <table class="table table-striped {{ $tableClass }}">
+                <div id="table-print-transactions" class="table-responsive">
+                    <table class="table table-striped {{ $tableClass }}" data-show-print="true">
                         <thead>
 
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
 
                                 @if(!isRole('owner'))
-                                    <th scope="col" class="transaction-col-checkbox">&nbsp;</th>
+                                    <th scope="col" class="not-print transaction-col-checkbox">&nbsp;</th>
                                 @endif
 
-                                <th scope="col" class="transaction-col-file">
+                                <th scope="col" class="not-print transaction-col-file">
                                     <div style="min-width: 70px;"></div>
                                 </th>
 
@@ -121,11 +131,11 @@
 
                                         <!-- checkbox -->
                                         @if(!isRole('owner'))
-                                            <td>&nbsp;</td>
+                                            <td class="not-print">&nbsp;</td>
                                         @endif
 
                                         <!-- edit and file -->
-                                        <td>
+                                        <td class="not-print">
                                             @if(!isRole('owner'))
                                                 @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
                                             @endif
@@ -302,17 +312,26 @@
 
     <!-- pending transactions -->
     <div class="card">
-        <div class="card-header">{{ __('Pending Transactions') }}</div>
-        <div class="card-body pt-4">
-
+        <div class="card-header card-header-print">
+            <div>
+                {{ __('Pending Transactions') }}
+            </div>
             @if($hasPendingAudits)
-                <div class="table-responsive app-checkbox-actions">
+                <a href="#" class="btn-print" data-table="table-print-pending" data-title="{{ __('Pending Transactions') }}">
+                    <i class="nav-icon i-Billing"></i>
+                    {{ __('Print') }}
+                </a>
+            @endif
+        </div>
+        <div class="card-body pt-4">
+            @if($hasPendingAudits)
+                <div id="table-print-pending" class="table-responsive app-checkbox-actions">
                     <table class="table table-striped {{ $pendingTableClass }}">
                         <thead>
 
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
-                                <th scope="col" class="transaction-col-checkbox">
+                                <th scope="col" class="not-print transaction-col-checkbox">
                                     <div class="form-group form-check">
                                         <input type="checkbox" class="form-check-input app-checkbox-actions-header">
                                     </div>
@@ -426,13 +445,13 @@
 
                                         <!-- checkbox -->
                                         <td>
-                                            <div class="form-group form-check">
+                                            <div class="not-print form-group form-check">
                                                 <input type="checkbox" class="form-check-input app-checkbox-actions-item" value="{{ $row->id }}">
                                             </div>
                                         </td>
 
                                         <!-- edit, file and delete -->
-                                        <td>
+                                        <td class="not-print">
                                             @if($row->file_url)
                                                 @include('components.table.file-modal', [
                                                 'fileName' => $row->file_original_name,
@@ -536,15 +555,18 @@
                                                     {{ priceFormat($balanceCount) }}
                                                 </span>
                                             </td>
+                                        @else
+                                            --
                                         @endif
-
-                                        <!-- created/updated cols -->
-                                        @include('components.table.created-updated', [
-                                        'created_at' => $row->created_at,
-                                        'updated_at' => $row->updated_at,
-                                        'trimTime' => true,
-                                        'model' => $row,
-                                        ])
+                                        <span class="not-print">
+                                            <!-- created/updated cols -->
+                                            @include('components.table.created-updated', [
+                                            'created_at' => $row->created_at,
+                                            'updated_at' => $row->updated_at,
+                                            'trimTime' => true,
+                                            'model' => $row,
+                                            ])
+                                        </span>
 
                                         <!-- audit col -->
                                         @if(!$usePendingAuditPresentation)
@@ -597,7 +619,7 @@
                     </table>
 
                     <!-- bulk bottom actions -->
-                    <div class="pt-2">
+                    <div class="not-print pt-2">
                         <a href="#" role="button" class="btn btn-secondary btn-sm mr-3 app-checkbox-actions-btn" data-confirm-label="{{ __('Confirm audit batch') }}" data-base-url="{{ route('property-management-transactions.audit-batch') }}">
                             {{ __('Audit selected') }}
                         </a>
@@ -611,5 +633,4 @@
             @endif
         </div>
     </div>
-
 @endif

@@ -59,7 +59,7 @@
                                 <!-- property -->
                                 <td>
                                     @if ($row->property->hasTranslation())
-                                        <a href="{{ route('properties.show', [$row->property->id]) }}" class="underline">
+                                        <a href="{{ route('property-management.show', [$row->property->id, $row->id]) }}" class="underline">
                                             {{ $row->property->translate()->name }}
                                         </a>
                                     @endif

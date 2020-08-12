@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Repositories\PropertyManagementRepositoryInterface;
-use App\Models\{ Property, PropertyManagement };
+use App\Models\{Property, PropertyManagement};
 use App\Validations\PropertyManagementValidations;
 
 class PropertyManagementRepository implements PropertyManagementRepositoryInterface
@@ -27,24 +27,28 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $unfinishedOnly = isset($config['unfinishedOnly']) ? $config['unfinishedOnly'] : false;
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
+        $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
 
-        if ($search) {
+        if ($search || $filterByCity) {
             $query = PropertyManagement::query();
-            $query->where(function($query) use ($search) {
-                $query->where('start_date', 'like', '%'.$search.'%');
-                $query->orWhere('end_date', 'like', '%'.$search.'%');
+            $query->where(function ($query) use ($search) {
+                $query->where('start_date', 'like', '%' . $search . '%');
+                $query->orWhere('end_date', 'like', '%' . $search . '%');
+            });
+            $query->whereHas('property', function ($q) use ($filterByCity) {
+                $q->where('city_id', 'like', '%' . $filterByCity . '%');
             });
         } else {
             $query = PropertyManagement::query();
+            $query->with('property');
         }
 
-        $query->with('property');
 
-        if($hasPropertyID) {
+        if ($hasPropertyID) {
             $query->where('property_id', $config['propertyID']);
             $query->orderBy('is_finished', 'asc');
             $query->orderBy('start_date', 'desc');
-        }else{
+        } else {
             $query->select('property_management.*');
             $query->join('properties', 'property_management.property_id', '=', 'properties.id');
             $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
@@ -52,20 +56,20 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query->orderBy('name', 'asc');
 
             if ($search) {
-                $query->orWhere('properties_translations.name', 'like', '%'.$search.'%');
+                $query->orWhere('properties_translations.name', 'like', '%' . $search . '%');
             }
         }
 
-        if($unfinishedOnly) {
+        if ($unfinishedOnly) {
             $query->where('is_finished', 0);
         }
 
-        if($shouldPaginate) {
-            $result = $query->paginate( 9999 );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(9999);
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -83,11 +87,11 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
-        if($is_new){
+        if ($is_new) {
             $pm = $this->blueprint();
-        }else{
+        } else {
             $pm = $this->find($id);
         }
 
@@ -116,7 +120,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
     public function delete($id)
     {
         $pm = $this->model->find($id);
-        
+
         if ($pm && $this->canDelete($id)) {
             $pm->delete();
         }
@@ -124,17 +128,16 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         return $pm;
     }
 
-    public function canDelete($id) 
+    public function canDelete($id)
     {
         $pm = $this->model->find($id);
-        
-        if($pm) {
+
+        if ($pm) {
 
             // validate empty usage in transactions
             if ($pm->transactions()->count()) {
                 return false;
             }
-            
         }
 
         return true;

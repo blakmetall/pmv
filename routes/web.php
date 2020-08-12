@@ -95,6 +95,11 @@ Route::group(['middleware' => ['web']], function () {
                         Route::get('destroy/{id}', 'PropertyNotesController@destroy')->name('property-notes.destroy');
                     });
 
+                    // property: property calendar
+                    Route::group(['prefix' => 'calendar'], function () {
+                        Route::get('', 'PropertyNotesController@index')->name('property-calendar');
+                    });
+
                     // property: property contacts
                     Route::group(['prefix' => 'contacts'], function () {
                         Route::get('', 'PropertyContactsController@index')->name('property-contacts');
@@ -340,6 +345,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('store', 'ContactsController@store')->name('contacts.store');
                 Route::get('show/{contact}', 'ContactsController@show')->name('contacts.show');
                 Route::get('edit/{contact}', 'ContactsController@edit')->name('contacts.edit');
+                Route::get('createAjax', 'ContactsController@createAjax')->name('contacts.create-ajax');
                 Route::post('update/{id}', 'ContactsController@update')->name('contacts.update');
                 Route::get('destroy/{id}', 'ContactsController@destroy')->name('contacts.destroy');
             });
