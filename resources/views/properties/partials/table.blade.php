@@ -74,7 +74,9 @@
                                     </td>
 
                                     <td>
-                                        {{ $row->property->building->name }}
+                                        @if ($row->property->building()->count())
+                                            {{ $row->property->building->name }}
+                                        @endif
                                     </td>
 
                                     <td>
@@ -121,7 +123,9 @@
                                         <!-- bookings from specific to property -->
                                         @if( !isRole('owner') && !isProduction())
                                             <a 
-                                                href="{{ route('bookings.by-property', $row->property->id) }}" 
+                                                {{-- comenté la url temporalmente para poner que no funcione el link de momento --}}
+                                                {{-- href="{{ route('bookings.by-property', $row->property->id) }}"  --}}
+                                                href="#" 
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Reservations') }}"
                                                 alt="{{ __('Reservations') }}">

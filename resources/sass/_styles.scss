@@ -588,6 +588,11 @@
     }
 }
 
+.menu-properties-dropdown li{
+    width: auto;
+    min-width: 210px;
+}
+
 @media (max-width: 1200px) {
     .app-table-file-modal-dialog {
         max-width: 90%;
