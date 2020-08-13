@@ -4,7 +4,10 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Models\City;
+use App\Models\{
+    City,
+    State
+};
 use App\Repositories\CitiesRepositoryInterface;
 use App\Validations\CitiesValidations;
 use App\Helpers\WorkgroupHelper;
@@ -26,9 +29,9 @@ class CitiesRepository implements CitiesRepositoryInterface
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
 
         if ($search) {
-            $query = 
-                City::where('name', 'like', "%".$search."%")
-                    ->orWhere('id', $search);
+            $query =
+                City::where('name', 'like', "%" . $search . "%")
+                ->orWhere('id', $search);
         } else {
             $query = City::query();
         }
@@ -36,16 +39,27 @@ class CitiesRepository implements CitiesRepositoryInterface
         if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereIn('id', WorkgroupHelper::getAllowedCities());
         }
-        
+
         $query->orderBy('name', 'asc');
-        
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
+    }
+
+    public function states($cities)
+    {
+        $states = [];
+        foreach ($cities as $city) {
+            $state = State::where('id', $city->state_id)->first();
+            $states[$state->id] = $state;
+        }
+
+        return $states;
     }
 
     public function create(Request $request)
@@ -62,11 +76,11 @@ class CitiesRepository implements CitiesRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
         if ($is_new) {
             $city = $this->blueprint();
-        }else{
+        } else {
             $city = $this->find($id);
         }
 
@@ -81,22 +95,22 @@ class CitiesRepository implements CitiesRepositoryInterface
         $is_obj = is_object($id_or_obj);
         $city = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
-        if (!$city) { 
+        if (!$city) {
             throw new ModelNotFoundException("City not found");
         }
 
         return $city;
     }
-    
+
     public function delete($id)
     {
         $city = $this->model->find($id);
-        
+
         if ($city && $this->canDelete($id)) {
             $city->delete();
         }
 
-        return $city; 
+        return $city;
     }
 
     public function canDelete($id)

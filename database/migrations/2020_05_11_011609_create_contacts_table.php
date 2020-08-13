@@ -23,6 +23,7 @@ class CreateContactsTable extends Migration
             $table->text('address')->nullable();
             $table->tinyInteger('is_active')->nullable()->default(1);
             $table->string('contact_type')->nullable();
+            $table->integer('owner_id')->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 
@@ -7,7 +7,7 @@ use App\Models\Workgroup;
 class WorkgroupHelper
 {
 
-    public static function getAllowedCities() 
+    public static function getAllowedCities()
     {
         $allowedCities = [];
         $user = auth()->user();
@@ -15,7 +15,7 @@ class WorkgroupHelper
         if ($user) {
             $workgroups = $user->workgroups;
             if ($workgroups) {
-                foreach($workgroups as $workgroup) {
+                foreach ($workgroups as $workgroup) {
                     $allowedCities[] = $workgroup->city_id;
                 }
             }
@@ -24,15 +24,15 @@ class WorkgroupHelper
         return $allowedCities;
     }
 
-    public static function hasAccess($city_id) 
+    public static function hasAccess($city_id)
     {
-        if($city_id) {
+        if ($city_id) {
             return in_array($city_id, self::getAllowedCities());
         }
         return false;
     }
-    
-    public static function shouldFilterByCity() 
+
+    public static function shouldFilterByCity()
     {
         $user = auth()->user();
 
@@ -45,5 +45,4 @@ class WorkgroupHelper
 
         return true;
     }
-
 }

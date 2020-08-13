@@ -65,10 +65,15 @@
                                     <label class="toggle" for="dropdownMenuProperties">
                                         {{  __('Property Management') }}
                                     </label>
-                                    <a href="{{ route('property-management.general') }}">
+                                    @if(isRole('owner'))
+                                        <a href="#">
+                                    @else
+                                        <a href="{{ route('property-management.general') }}">
+                                    @endif
                                         <i class="nav-icon mr-2 i-Home1"></i>
                                         {{  __('Property Management') }}
                                     </a>
+
 
 
                                     <!-- dropdown menu -->
@@ -349,7 +354,11 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Settings') }}
                                     </label>
-                                    <a href="{{ route('settings') }}">
+                                    @if(isRole('owner'))
+                                        <a href="#">
+                                    @else
+                                        <a href="{{ route('settings') }}">
+                                    @endif
                                         <i class="nav-icon mr-2 i-Gear-2"></i>
                                         {{ __('Settings') }}
                                     </a>

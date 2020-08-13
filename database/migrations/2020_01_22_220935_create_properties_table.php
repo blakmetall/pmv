@@ -20,6 +20,7 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
+            $table->integer('state_id');
             $table->integer('city_id');
             $table->integer('zone_id');
             $table->integer('building_id')->nullable();

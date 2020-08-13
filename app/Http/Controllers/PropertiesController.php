@@ -86,6 +86,7 @@ class PropertiesController extends Controller
             'filterByWorkgroup' => true,
         ];
         $cities = $this->citiesRepository->all('', $citiesConfig);
+        $states = $this->citiesRepository->states($cities);
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
@@ -96,6 +97,7 @@ class PropertiesController extends Controller
         return view('properties.create')
             ->with('property', $property)
             ->with('users', $users)
+            ->with('states', $states)
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
@@ -120,6 +122,7 @@ class PropertiesController extends Controller
 
         $citiesConfig = ['paginate' => false];
         $cities = $this->citiesRepository->all('', $citiesConfig);
+        $states = $this->citiesRepository->states($cities);
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
@@ -130,6 +133,7 @@ class PropertiesController extends Controller
         return view('properties.show')
             ->with('property', $property)
             ->with('users', $users)
+            ->with('states', $states)
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
@@ -150,6 +154,7 @@ class PropertiesController extends Controller
             'filterByWorkgroup' => true,
         ];
         $cities = $this->citiesRepository->all('', $citiesConfig);
+        $states = $this->citiesRepository->states($cities);
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
@@ -160,6 +165,7 @@ class PropertiesController extends Controller
         return view('properties.edit')
             ->with('property', $property)
             ->with('users', $users)
+            ->with('states', $states)
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)

@@ -17,6 +17,7 @@
                         <th scope="col">{{ __('Phones') }}</th>
                         <th scope="col">{{ __('Emergency Phone') }}</th>
                         <th scope="col">{{ __('Contact Type') }}</th>
+                        <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">{{ __('Active') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
@@ -50,6 +51,13 @@
 
                                 <!-- contact_type -->
                                 <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
+
+                                <!-- owner -->
+                                <td>
+                                    @if($row->owner)
+                                        {{ $row->owner->profile->full_name }}
+                                    @endif
+                                </td>
 
                                 <!-- is_active -->
                                 <td>

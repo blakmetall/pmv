@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Repositories\ContactsRepositoryInterface;
 use App\Models\Contact;
 use App\Validations\ContactsValidations;
+use App\Helpers\UserHelper;
 
 class ContactsRepository implements ContactsRepositoryInterface
 {
@@ -26,15 +27,14 @@ class ContactsRepository implements ContactsRepositoryInterface
         $shouldFilterByActive = isset($config['activeOnly']) ? $config['activeOnly'] : true;
 
         if ($search) {
-            $query = Contact::
-                where(function($q) use($search) {
-                    $q->where('firstname', 'like', "%".$search."%")
-                    ->orWhere('lastname', 'like', "%".$search."%")
-                    ->orWhere('email', 'like', "%".$search."%")
-                    ->orWhere('phone', 'like', "%".$search."%")
-                    ->orWhere('mobile', 'like', "%".$search."%")
-                    ->orWhere('address', 'like', "%".$search."%");
-                })
+            $query = Contact::where(function ($q) use ($search) {
+                $q->where('firstname', 'like', "%" . $search . "%")
+                    ->orWhere('lastname', 'like', "%" . $search . "%")
+                    ->orWhere('email', 'like', "%" . $search . "%")
+                    ->orWhere('phone', 'like', "%" . $search . "%")
+                    ->orWhere('mobile', 'like', "%" . $search . "%")
+                    ->orWhere('address', 'like', "%" . $search . "%");
+            })
                 ->orWhere('id', $search);
         } else {
             $query = Contact::query();
@@ -44,14 +44,18 @@ class ContactsRepository implements ContactsRepositoryInterface
             $query->where('is_active', 1);
         }
 
+        if (isRole('owner')) {
+            $query->where('owner_id', UserHelper::getCurrentUserID());
+        }
+
         $query
             ->orderBy('is_active', 'asc')
             ->orderBy('firstname', 'asc')
             ->orderBy('lastname', 'asc');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
 
@@ -72,16 +76,22 @@ class ContactsRepository implements ContactsRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
-        if($is_new){
+        if ($is_new) {
             $contact = $this->blueprint();
-        }else{
+        } else {
             $contact = $this->find($id);
         }
 
         $checkboxesConfig = ['is_active' => 0];
-        $requestData = array_merge($checkboxesConfig, $request->all());
+        if (isRole('owner')) {
+            $userID = UserHelper::getCurrentUserID();
+        } else {
+            $userID = null;
+        }
+        $owner = ['owner_id' => $userID];
+        $requestData = array_merge($checkboxesConfig, $owner, $request->all());
 
         $contact->fill($requestData);
         $contact->save();

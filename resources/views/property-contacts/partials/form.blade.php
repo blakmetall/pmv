@@ -18,6 +18,5 @@
     'edit_route' => 'property-contacts.edit',
     'cancel_route' => 'property-contacts',
     'routeParams' => [$property->id],
-    'skipEdit' => isRole('owner'),
     'skipDelete' => isRole('owner'),
 ])

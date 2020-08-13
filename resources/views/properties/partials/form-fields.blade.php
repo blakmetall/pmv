@@ -21,6 +21,18 @@
             'optionLabelRef' => 'profile,full_name',
         ])
 
+        <!-- state_id -->
+        @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('State'),
+            'name' => 'state_id',
+            'required' => true,
+            'value' => $row->state_id,
+            'options' => $states,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
+        ])
+
         <!-- city_id -->
         @include('components.form.select', [
             'group' => 'property',

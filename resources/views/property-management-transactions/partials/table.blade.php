@@ -62,11 +62,13 @@
                                 <th scope="col" class="transaction-col-id">#</th>
 
                                 @if(!isRole('owner'))
-                                    <th scope="col" class="not-print transaction-col-checkbox">&nbsp;</th>
+                                    <th scope="col">
+                                        <div class="not-print transaction-col-checkbox">&nbsp;</div>
+                                    </th>
                                 @endif
 
-                                <th scope="col" class="not-print transaction-col-file">
-                                    <div style="min-width: 70px;"></div>
+                                <th scope="col" class="transaction-col-file">
+                                    <div class="not-print" style="min-width: 70px;"></div>
                                 </th>
 
                                 <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
@@ -131,23 +133,29 @@
 
                                         <!-- checkbox -->
                                         @if(!isRole('owner'))
-                                            <td class="not-print">&nbsp;</td>
+                                            <td>
+                                                <div class="not-print">
+                                                &nbsp;
+                                                </div>
+                                            </td>
                                         @endif
 
                                         <!-- edit and file -->
-                                        <td class="not-print">
-                                            @if(!isRole('owner'))
-                                                @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
-                                            @endif
+                                        <td>
+                                            <div class="not-print">
+                                                @if(!isRole('owner'))
+                                                    @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
+                                                @endif
 
-                                            @if($row->file_url)
-                                                @include('components.table.file-modal', [
-                                                'fileName' => $row->file_original_name,
-                                                'filePath' => $row->file_path,
-                                                'fileUrl' => $row->file_url,
-                                                'fileSlug' => $row->file_slug,
-                                                ])
-                                            @endif
+                                                @if($row->file_url)
+                                                    @include('components.table.file-modal', [
+                                                    'fileName' => $row->file_original_name,
+                                                    'filePath' => $row->file_path,
+                                                    'fileUrl' => $row->file_url,
+                                                    'fileSlug' => $row->file_slug,
+                                                    ])
+                                                @endif
+                                            </div>
                                         </td>
 
                                         <!-- post_date -->
@@ -331,8 +339,8 @@
 
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
-                                <th scope="col" class="not-print transaction-col-checkbox">
-                                    <div class="form-group form-check">
+                                <th scope="col" class="transaction-col-checkbox">
+                                    <div class="not-print form-group form-check">
                                         <input type="checkbox" class="form-check-input app-checkbox-actions-header">
                                     </div>
                                 </th>
@@ -451,25 +459,27 @@
                                         </td>
 
                                         <!-- edit, file and delete -->
-                                        <td class="not-print">
-                                            @if($row->file_url)
-                                                @include('components.table.file-modal', [
-                                                'fileName' => $row->file_original_name,
-                                                'filePath' => $row->file_path,
-                                                'fileUrl' => $row->file_url,
-                                                'fileSlug' => $row->file_slug,
-                                                ])
-                                            @endif
-
-                                            @if(!isRole('owner'))
-                                                @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
-
-                                                @if(!$usePendingAuditPresentation)
-                                                    <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                                    </a>
+                                        <td>
+                                            <div class="not-print">
+                                                @if($row->file_url)
+                                                    @include('components.table.file-modal', [
+                                                    'fileName' => $row->file_original_name,
+                                                    'filePath' => $row->file_path,
+                                                    'fileUrl' => $row->file_url,
+                                                    'fileSlug' => $row->file_slug,
+                                                    ])
                                                 @endif
-                                            @endif
+
+                                                @if(!isRole('owner'))
+                                                    @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
+
+                                                    @if(!$usePendingAuditPresentation)
+                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                        </a>
+                                                    @endif
+                                                @endif
+                                            </div>
                                         </td>
 
                                         <!-- post_date -->

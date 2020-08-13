@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AppModel;
 
-class Contact extends Model {
+class Contact extends Model
+{
 
     use AppModel;
 
@@ -20,7 +21,8 @@ class Contact extends Model {
         'mobile',
         'address',
         'is_active',
-        'contact_type'
+        'contact_type',
+        'owner_id'
     ];
 
     // mutator: full_name
@@ -29,7 +31,13 @@ class Contact extends Model {
         return "{$this->firstname} {$this->lastname}";
     }
 
-    public function properties() {
+    public function properties()
+    {
         return $this->belongsToMany('App\Models\Property', 'properties_has_contacts');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\User', 'owner_id');
     }
 }
