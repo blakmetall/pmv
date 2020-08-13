@@ -114,14 +114,6 @@
             'value' => $row->floors
         ])
 
-        <!-- building -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Building'),
-            'name' => 'building',
-            'value' => $row->building
-        ])
-
         <!-- lot_size_sqft -->
         @include('components.form.input', [
             'group' => 'property',
