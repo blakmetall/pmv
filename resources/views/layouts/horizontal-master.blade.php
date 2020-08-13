@@ -102,7 +102,9 @@
 
     {{-- scripts for goole map --}}
     {{-- Desactivado por mientras por que da error por el dominio --}}
-    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer></script> --}}
+    @if (isProduction())
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer></script>
+    @endif
 
     {{-- app js --}}
     <script src="{{ asset('js/app.js') }}"></script>
