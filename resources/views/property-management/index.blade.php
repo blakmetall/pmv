@@ -32,10 +32,12 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('property-management.partials.search', [
-        'url' => route('property-management', [$pm]),
-        'pm' => $pm,
-    ])
+    @if (isset($pm))
+        @include('property-management.partials.search', [
+            'url' => route('property-management', [$pm]),
+            'pm' => $pm,
+        ])
+    @endif
 
 @endsection
 

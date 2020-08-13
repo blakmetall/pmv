@@ -54,14 +54,12 @@ $(function () {
             }
 
             table{
+                width: 100%;
                 display: table;
                 border-collapse: collapse;
                 box-sizing: border-box;
                 border-spacing: 2px;
                 border-color: grey;
-            }
-
-            table {
                 border-collapse: collapse;
                 border-spacing: 2px;
             }
@@ -77,9 +75,16 @@ $(function () {
             }
 
             table th, table td {
+                text-align: left;
+                font-size: 12px;
                 padding: 10px;
                 vertical-align: top;
                 border: 1px solid #000;
+            }
+
+            table th span.app-price-red,
+            table td span.app-price-red {
+                color: #f00;
             }
         `);
 

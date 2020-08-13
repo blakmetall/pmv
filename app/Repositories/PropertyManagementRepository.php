@@ -28,6 +28,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $unfinishedOnly = isset($config['unfinishedOnly']) ? $config['unfinishedOnly'] : false;
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
+        $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
 
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
@@ -35,12 +36,21 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
                 $query->where('start_date', 'like', '%' . $search . '%');
                 $query->orWhere('end_date', 'like', '%' . $search . '%');
             });
-            $query->whereHas('property', function ($q) use ($filterByCity) {
-                $q->where('city_id', 'like', '%' . $filterByCity . '%');
-            });
         } else {
             $query = PropertyManagement::query();
             $query->with('property');
+        }
+
+        if ($filterByCity) {
+            $query->whereHas('property', function ($q) use ($filterByCity) {
+                $q->where('city_id', 'like', '%' . $filterByCity . '%');
+            });
+        }
+
+        if ($filterByOwner) {
+            $query->whereHas('property', function ($q) {
+                $q->where('user_id', \Auth::id());
+            });
         }
 
 

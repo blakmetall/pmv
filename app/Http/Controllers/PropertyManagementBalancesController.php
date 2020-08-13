@@ -28,7 +28,8 @@ class PropertyManagementBalancesController extends Controller
         $search = trim($request->s);
         $config = ['paginate' => false];
         $config = [
-            'filterByCity' => $request->city
+            'filterByCity' => $request->city,
+            'filterByOwner' => isRole('owner'),
         ];
         $pm_items = $this->propertyManagementRepository->all($search, $config);
         $cities = $this->citiesRepository->all('', '');

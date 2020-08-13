@@ -53,13 +53,13 @@ class CitiesRepository implements CitiesRepositoryInterface
 
     public function states($cities)
     {
-        $states = [];
+        $states_ids = [];
+
         foreach ($cities as $city) {
-            $state = State::where('id', $city->state_id)->first();
-            $states[$state->id] = $state;
+            $states_ids[] = $city->state_id;
         }
 
-        return $states;
+        return State::whereIn('id', $states_ids)->orderBy('name', 'asc')->get();
     }
 
     public function create(Request $request)

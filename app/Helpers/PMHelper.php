@@ -72,7 +72,6 @@ class PMHelper
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
         $pendingAudit = $totalCredit - $totalCharge;
-        // exclude month date??        
 
         return [
             'balance' => $balance,
