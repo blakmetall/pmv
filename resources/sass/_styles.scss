@@ -593,6 +593,41 @@
     min-width: 210px;
 }
 
+.app-cleaning-table {
+    .cleaning-th-property,
+    .cleaning-td-property{
+        padding-left: 20px;
+        min-width: 130px;
+        text-align: left;
+    }
+
+    .cleaning-th-days,
+    .cleaning-td-days{
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .cleaning-td-property,
+    .cleaning-td-days {
+        padding: 10px 5px;
+    }
+
+    .cleaning-td-content {
+        a {
+            display: inline-block;
+            width: 100%;
+            color: #888;
+        }
+
+        .cleaning-td-service-finished {
+            display: inline-block;
+            width: 100%;
+            text-align:center;
+            text-decoration: underline;
+        }
+    }
+}
+
 @media (max-width: 1200px) {
     .app-table-file-modal-dialog {
         max-width: 90%;

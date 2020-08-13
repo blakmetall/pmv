@@ -207,6 +207,9 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('edit/{cleaning_service}', 'CleaningServicesController@edit')->name('cleaning-services.edit');
             Route::post('update/{id}', 'CleaningServicesController@update')->name('cleaning-services.update');
             Route::get('destroy/{id}', 'CleaningServicesController@destroy')->name('cleaning-services.destroy');
+
+            // calendar view
+            Route::get('monthly-batch', 'CleaningServicesController@monthlyBatch')->name('cleaning-services.monthly-batch');
         });
 
         // contractors

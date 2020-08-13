@@ -118,4 +118,8 @@ class CleaningServicesController extends Controller
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
     }
+
+    public function monthlyBatch(Request $request) {
+        return view('cleaning-services.monthly-batch');
+    }
 }

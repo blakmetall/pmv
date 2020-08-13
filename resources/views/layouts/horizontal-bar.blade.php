@@ -262,6 +262,26 @@
                                         <i class="nav-icon mr-2 i-Green-House"></i>
                                         {{ __('Cleaning Services') }}
                                     </a>
+
+                                    <!-- dropdown menu -->
+                                    <input type="checkbox" id="dropdownMenuBooking">
+                                    <ul>
+                                        @if ($_current_role->isAllowed('cleaning-services', 'index'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('cleaning-services') }}">
+                                                    <span class="item-name">{{ __('All') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if ($_current_role->isAllowed('cleaning-services', 'monthly-batch'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('cleaning-services.monthly-batch') }}">
+                                                    <span class="item-name">{{ __('Monthly Batch') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
                                 </div>
                             </div>
                         </li>
