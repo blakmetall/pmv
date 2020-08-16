@@ -322,6 +322,7 @@ Route::group(['middleware' => ['web']], function () {
             // zones
             Route::group(['prefix' => 'zones', 'middleware' => 'role-permission:settings,zones'], function () {
                 Route::get('', 'ZonesController@index')->name('zones');
+                Route::get('list/{city}', 'ZonesController@list')->name('zones.list');
                 Route::get('create', 'ZonesController@create')->name('zones.create');
                 Route::post('store', 'ZonesController@store')->name('zones.store');
                 Route::get('show/{zone}', 'ZonesController@show')->name('zones.show');

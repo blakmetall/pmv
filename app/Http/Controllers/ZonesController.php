@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ZonesRepositoryInterface;
-use App\Models\{ City, Zone };
+use App\Models\{City, Zone};
 
 class ZonesController extends Controller
 {
     private $repository;
 
-    public function __construct(ZonesRepositoryInterface $repository) 
+    public function __construct(ZonesRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -25,6 +25,13 @@ class ZonesController extends Controller
             ->with('search', $search);
     }
 
+    public function list($city)
+    {
+        $zones = $this->repository->all('', [], $city);
+
+        return $zones;
+    }
+
     public function create()
     {
         $zone = $this->repository->blueprint();
@@ -36,7 +43,7 @@ class ZonesController extends Controller
     }
 
     public function store(Request $request)
-    { 
+    {
         $zone = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('zones.edit', [$zone->id]));
@@ -71,7 +78,7 @@ class ZonesController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('zones'));

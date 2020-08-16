@@ -12,13 +12,13 @@ import { initTransactionModalHandler } from "./scripts/initTransactionModalHandl
 import { initContactModalHandler } from "./scripts/initContactModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 
-$(function () {
+$(function() {
     /////////////////////////////
     /////////////////////////////
 
     var viewport = {
         x: 0,
-        y: 0,
+        y: 0
     };
 
     /////////////////////////////
@@ -95,7 +95,7 @@ $(function () {
         a.print();
     }
 
-    $(".btn-print").on("click", function (e) {
+    $(".btn-print").on("click", function(e) {
         let tableID = $(this).data("table");
         let tableTitle = $(this).data("title");
         printTable(tableID, tableTitle);
@@ -113,4 +113,14 @@ $(function () {
 
     /////////////////////////////
     /////////////////////////////
+    $("select[name='city_id']").change(function() {
+        $("select[name='zone_id']").empty();
+        $.getJSON("/system/settings/zones/list/" + $(this).val(), function(
+            data
+        ) {
+            $.each(data.data, function(key, value) {
+                $("select[name='zone_id']").append("<option value=" + value.zone_id + ">" + value.name + "</option>");
+            });
+        });
+    });
 });

@@ -88,7 +88,7 @@ class PropertiesController extends Controller
         $cities = $this->citiesRepository->all('', $citiesConfig);
         $states = $this->citiesRepository->states($cities);
         $config = ['paginate' => false];
-        $zones = $this->zonesRepository->all('', $config);
+        $zones = [];
         $buildings = $this->buildingsRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);

@@ -33,6 +33,7 @@
             'optionLabelRef' => 'name',
         ])
 
+<a href="{{ route('zones.list', 2) }}">LISTA HIJA DE BIATCH</a>
         <!-- city_id -->
         @include('components.form.select', [
             'group' => 'property',
