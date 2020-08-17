@@ -30,6 +30,7 @@ class CreateHumanResourcesTable extends Migration
             $table->integer('vacation_days')->nullable();
             $table->integer('children')->nullable();
             $table->tinyInteger('is_active')->nullable()->default(1);
+            $table->tinyInteger('is_cleaning_staff')->nullable();
             $table->timestamps();
         });
     }
