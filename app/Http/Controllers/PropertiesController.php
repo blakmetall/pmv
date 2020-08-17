@@ -4,18 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
-use App\Repositories\{
-    PropertiesRepositoryInterface,
-    UsersRepositoryInterface,
-    CitiesRepositoryInterface,
-    ZonesRepositoryInterface,
-    BuildingsRepositoryInterface,
-    CleaningOptionsRepositoryInterface,
-    PropertyTypesRepositoryInterface,
-    AmenitiesRepositoryInterface
-};
-use App\Helpers\{RoleHelper, UserHelper};
-
+use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\UsersRepositoryInterface;
+use App\Repositories\CitiesRepositoryInterface;
+use App\Repositories\ZonesRepositoryInterface;
+use App\Repositories\BuildingsRepositoryInterface;
+use App\Repositories\CleaningOptionsRepositoryInterface;
+use App\Repositories\PropertyTypesRepositoryInterface;
+use App\Repositories\HumanResourcesRepositoryInterface;
+use App\Repositories\AmenitiesRepositoryInterface;
+use App\Helpers\RoleHelper;
+use App\Helpers\UserHelper;
 use App\Helpers\ReportExcelHelper;
 
 class PropertiesController extends Controller
@@ -26,6 +25,7 @@ class PropertiesController extends Controller
     private $zonesRepository;
     private $buildingsRepository;
     private $amenitiesRepository;
+    private $humanResourcesRepository;
     private $cleaningOptionsRepository;
     private $propertyTypesRepository;
 
@@ -36,6 +36,7 @@ class PropertiesController extends Controller
         ZonesRepositoryInterface $zonesRepository,
         BuildingsRepositoryInterface $buildingsRepository,
         AmenitiesRepositoryInterface $amenitiesRepository,
+        HumanResourcesRepositoryInterface $humanResourcesRepository,
         CleaningOptionsRepositoryInterface $cleaningOptionsRepository,
         PropertyTypesRepositoryInterface $propertyTypesRepository
     ) {
@@ -44,6 +45,7 @@ class PropertiesController extends Controller
         $this->citiesRepository = $citiesRepository;
         $this->zonesRepository = $zonesRepository;
         $this->buildingsRepository = $buildingsRepository;
+        $this->humanResourcesRepository = $humanResourcesRepository;
         $this->amenitiesRepository = $amenitiesRepository;
         $this->cleaningOptionsRepository = $cleaningOptionsRepository;
         $this->propertyTypesRepository = $propertyTypesRepository;
@@ -60,8 +62,8 @@ class PropertiesController extends Controller
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
 
-        $config['filterByOffline'] = !!$request->filterOffline;
-        $config['filterByDisabled'] = !!$request->filterDisabled;
+        $config['filterByOffline'] = (bool) $request->filterOffline;
+        $config['filterByDisabled'] = (bool) $request->filterDisabled;
 
         $properties = $this->repository->all($search, $config);
 
@@ -90,6 +92,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $zones = [];
         $buildings = $this->buildingsRepository->all('', $config);
+        $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
@@ -101,6 +104,7 @@ class PropertiesController extends Controller
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
+            ->with('hr', $hr)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
@@ -110,6 +114,7 @@ class PropertiesController extends Controller
     {
         $property = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+
         return redirect(route('properties.edit', [$property->id]));
     }
 
@@ -126,6 +131,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
+        $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
@@ -137,6 +143,7 @@ class PropertiesController extends Controller
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
+            ->with('hr', $hr)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
@@ -159,6 +166,7 @@ class PropertiesController extends Controller
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
+        $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
@@ -170,6 +178,7 @@ class PropertiesController extends Controller
             ->with('zones', $zones)
             ->with('buildings', $buildings)
             ->with('amenities', $amenities)
+            ->with('hr', $hr)
             ->with('cleaningOptions', $cleaningOptions)
             ->with('propertyTypes', $propertyTypes);
     }
@@ -178,6 +187,7 @@ class PropertiesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+
         return redirect(route('properties.edit', [$id]));
     }
 
@@ -186,10 +196,12 @@ class PropertiesController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect(route('properties'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+
         return redirect()->back();
     }
 

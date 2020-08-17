@@ -137,6 +137,15 @@
             'default' => $row->is_active,
         ])
 
+        <!-- is_cleaning_staff -->
+        @include('components.form.checkbox', [
+            'group' => 'human-resource',
+            'label' => __('Is cleaning staff?'),
+            'name' => 'is_cleaning_staff',
+            'value' => 1,
+            'default' => $row->is_cleaning_staff,
+        ])
+
     </div>
 </div>
 

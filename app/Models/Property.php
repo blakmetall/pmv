@@ -24,6 +24,7 @@ class Property extends Model
         'is_online',
         'rental_commission',
         'maid_fee',
+        'cleaning_staff_ids',
         'bedrooms',
         'bedding_JSON',
         'baths',
@@ -35,7 +36,11 @@ class Property extends Model
         'phone',
         'address',
         'gmaps_lat',
-        'gmaps_lon'
+        'gmaps_lon',
+    ];
+
+    protected $casts = [
+        'cleaning_staff_ids' => 'array',
     ];
 
     public $en;

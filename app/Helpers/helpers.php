@@ -1,7 +1,6 @@
 <?php
 
 if (!function_exists('prepareFormInputName')) {
-
     function prepareFormInputName($name, $parentName, $lang)
     {
         $inputName = $name;
@@ -11,7 +10,7 @@ if (!function_exists('prepareFormInputName')) {
             } else {
                 $inputName = "{$lang}[{$name}]";
             }
-        } else if ($parentName) {
+        } elseif ($parentName) {
             $inputName = "{$parentName}[{$name}]";
         }
 
@@ -29,7 +28,7 @@ if (!function_exists('prepareFormRequestName')) {
             } else {
                 $requestName = "{$lang}.{$name}";
             }
-        } else if ($parentName) {
+        } elseif ($parentName) {
             $requestName = "{$parentName}.{$name}";
         }
 
@@ -51,8 +50,8 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
         $values = [];
 
         if ($shouldLoopForValues) {
-            $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
-            $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+            $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+            $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
             $secondLabelRef = isset($config['secondLabelRef']) ? $config['secondLabelRef'] : ''; // default empty
 
             foreach ($items as $item) {
@@ -60,7 +59,7 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
                 $secondLabelRefValue = isset($item->{$secondLabelRef}) ? $item->{$secondLabelRef} : '';
 
                 $values[] = [
-                    'label' => trim($labelRefValue . ' ' . $item->{$secondLabelRefValue}),
+                    'label' => trim($labelRefValue.' '.$secondLabelRefValue),
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }
@@ -95,8 +94,8 @@ if (!function_exists('prepareSelectValuesFromRows')) {
         $values = [];
 
         if ($shouldLoopForValues) {
-            $valueRef       = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
-            $labelRef       = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+            $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
+            $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
 
             foreach ($items as $item) {
                 $values[] = [
@@ -132,10 +131,10 @@ if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
         if ($price < 0) {
-            return '-$' . number_format(abs($price), $decimals);
+            return '-$'.number_format(abs($price), $decimals);
         }
 
-        return '$' . number_format($price, $decimals);
+        return '$'.number_format($price, $decimals);
     }
 }
 
@@ -230,7 +229,7 @@ if (!function_exists('isDevelopment')) {
 if (!function_exists('hasSSL')) {
     function hasSSL()
     {
-        return env('APP_SSL') == true ? true : false;;
+        return env('APP_SSL') == true ? true : false;
     }
 }
 
@@ -244,7 +243,7 @@ if (!function_exists('getContactTypeBySlug')) {
 if (!function_exists('isImage')) {
     function isImage($extension = '')
     {
-        return (in_array($extension, \Config::get('constants.valid_image_types')));
+        return in_array($extension, \Config::get('constants.valid_image_types'));
     }
 }
 

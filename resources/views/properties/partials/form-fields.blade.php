@@ -182,8 +182,25 @@
             'default' => $row->is_online,
         ])
 
-        <!-- cleaning_option_id -->
-        @include('components.form.select', [
+        <!-- amenities -->
+        @include('components.form.fast-select', [
+            'group' => 'property',
+            'label' => __('Amenities'),
+            'multiple' => true,
+            'name' => 'amenities_ids',
+            'disableDefaultOption' => true,
+            'options' => prepareSelectValuesFromRows($amenities, [
+                'valueRef' => 'amenity_id'
+            ]),
+            'default' => prepareSelectDefaultValues($row->amenities, [
+                'valueRef' => 'id',
+            ]),
+        ])
+
+        <hr>
+
+         <!-- cleaning_option_id -->
+         @include('components.form.select', [
             'group' => 'property',
             'label' => __('Cleaning Option'),
             'name' => 'cleaning_option_id',
@@ -203,19 +220,17 @@
             'value' => $row->maid_fee
         ])
 
-        <!-- amenities -->
-        @include('components.form.fast-select', [
-            'group' => 'property',
-            'label' => __('Amenities'),
-            'multiple' => true,
-            'name' => 'amenities_ids',
-            'disableDefaultOption' => true,
-            'options' => prepareSelectValuesFromRows($amenities, [
-                'valueRef' => 'amenity_id'
-            ]),
-            'default' => prepareSelectDefaultValues($row->amenities, [
+        <!-- cleaning_staff_ids -->
+        @include('components.form.checkbox-multiple', [
+            'group' => 'user',
+            'label' => __('Cleaning Staff'),
+            'name' => 'cleaning_staff_ids',
+            'values' => prepareCheckboxValuesFromRows($hr, [
                 'valueRef' => 'id',
+                'labelRef' => 'firstname',
+                'secondLabelRef' => 'lastname'
             ]),
+            'default' => $row->cleaning_staff_ids,
         ])
 
         <hr>

@@ -4,8 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\HumanResourcesRepositoryInterface;
-use App\Models\{ HumanResource, Property };
+use App\Models\HumanResource;
 use App\Validations\HumanResourcesValidations;
 use App\Helpers\WorkgroupHelper;
 
@@ -24,15 +23,16 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
+        $isCleaningStaffOnly = isset($config['cleaningStaffOnly']) ? $config['cleaningStaffOnly'] : false;
 
         if ($search) {
             $query = HumanResource::
                 where('id', $search)
-                ->orWhere(function($q) use ($search) {
-                    $q->where('address', 'like', "%".$search."%")
-                    ->orWhere('lastname', 'like', "%".$search."%")
-                    ->orWhere('firstname', 'like', "%".$search."%")
-                    ->orWhere('department', 'like', "%".$search."%");
+                ->orWhere(function ($q) use ($search) {
+                    $q->where('address', 'like', '%'.$search.'%')
+                    ->orWhere('lastname', 'like', '%'.$search.'%')
+                    ->orWhere('firstname', 'like', '%'.$search.'%')
+                    ->orWhere('department', 'like', '%'.$search.'%');
                 });
         } else {
             $query = HumanResource::query();
@@ -42,38 +42,44 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
             $query->whereIn('city_id', WorkgroupHelper::getAllowedCities());
         }
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($isCleaningStaffOnly) {
+            $query->where('is_cleaning_staff', 1);
+        }
+
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
-        if($is_new){
+        if ($is_new) {
             $human_resource = $this->blueprint();
-        }else{
+        } else {
             $human_resource = $this->find($id);
         }
 
-        $checkboxesConfig = ['is_active' => 0];
+        $checkboxesConfig = ['is_active' => 0, 'is_cleaning_staff' => 0];
         $requestData = array_merge($checkboxesConfig, $request->all());
 
         $human_resource->fill($requestData);
@@ -89,7 +95,7 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
         $human_resource = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$human_resource) {
-            throw new ModelNotFoundException("Human Resource not found");
+            throw new ModelNotFoundException('Human Resource not found');
         }
 
         return $human_resource;
@@ -98,7 +104,7 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
     public function delete($id)
     {
         $human_resource = $this->model->find($id);
-        
+
         if ($human_resource && $this->canDelete($id)) {
             $human_resource->delete();
         }
@@ -106,13 +112,13 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
         return $human_resource;
     }
 
-    public function canDelete($id) 
+    public function canDelete($id)
     {
         return true;
     }
 
     public function blueprint()
     {
-        return new HumanResource;
+        return new HumanResource();
     }
 }
