@@ -5,9 +5,9 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\CleaningServicesRepositoryInterface;
-use App\Models\{ CleaningService, Property };
+use App\Models\{CleaningService, HumanResource, Property};
 use App\Validations\CleaningServicesValidations;
-use App\Helpers\{ UserHelper, WorkgroupHelper };
+use App\Helpers\{UserHelper, WorkgroupHelper};
 
 class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 {
@@ -27,8 +27,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $shouldFilterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : false;
 
         if ($search) {
-            $query = CleaningService::
-                where('description', 'like', "%".$search."%");
+            $query = CleaningService::where('description', 'like', "%" . $search . "%");
         } else {
             $query = CleaningService::query();
         }
@@ -39,23 +38,23 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             ->orderBy('created_at', 'desc');
 
         if ($shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
-            $query->whereHas('property', function($q) {
+            $query->whereHas('property', function ($q) {
                 $q->whereIn('properties.city_id', WorkgroupHelper::getAllowedCities());
             });
         }
 
         if ($shouldFilterByOwner && isRole('owner')) {
-            $query->whereHas('property', function($query) {
+            $query->whereHas('property', function ($query) {
                 $query->where('properties.user_id', UserHelper::getCurrentUserID());
             });
         }
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -73,11 +72,11 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
-        if($is_new){
+        if ($is_new) {
             $cleaning_service = $this->blueprint();
-        }else{
+        } else {
             $cleaning_service = $this->find($id);
         }
 
@@ -85,12 +84,12 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $requestData = array_merge($checkboxesConfig, $request->all());
 
         $cleaning_service->fill($requestData);
-        
+
         // audit
         $hasPreviousAudit = $cleaning_service->audit_user_id;
 
         if ($request->is_finished) {
-            if(!$hasPreviousAudit) {
+            if (!$hasPreviousAudit) {
                 $user = auth()->user();
                 $cleaning_service->audit_user_id = $user->id;
                 $cleaning_service->audit_datetime = getCurrentDateTime();
@@ -100,11 +99,18 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             $cleaning_service->audit_datetime = null;
         }
 
+        $property = Property::find($request->property_id)->first();
+        $cleaning_staff_ids = [];
+        foreach ($property->cleaning_staff_ids as $staff_id) {
+            $staff = HumanResource::where('id', $staff_id)->get()[0];
+            $cleaning_staff_ids[] = $staff->id;
+        }
+
         $cleaning_service->save();
 
         // cleaning_staff assignation
-        if ($request->cleaning_staff_ids && is_array($request->cleaning_staff_ids) && count($request->cleaning_staff_ids)) {
-            $cleaning_service->cleaningStaff()->sync($request->cleaning_staff_ids);
+        if ($cleaning_staff_ids && is_array($cleaning_staff_ids) && count($cleaning_staff_ids)) {
+            $cleaning_service->cleaningStaff()->sync($cleaning_staff_ids);
         }
 
 
@@ -126,7 +132,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
     public function delete($id)
     {
         $cleaning_service = $this->model->find($id);
-        
+
         if ($cleaning_service && $this->canDelete($id)) {
             $cleaning_service->delete();
         }
@@ -134,7 +140,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         return $cleaning_service;
     }
 
-    public function canDelete($id) 
+    public function canDelete($id)
     {
         return true;
     }

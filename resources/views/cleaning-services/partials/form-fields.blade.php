@@ -14,16 +14,6 @@
             'optionLabelRef' => 'name',
         ])
 
-        <!-- cleaning_staff_ids -->
-        @include('components.form.fast-select', [
-            'group' => 'cleaning-staff',
-            'label' => __('Cleaning Staff'),
-            'multiple' => true,
-            'name' => 'cleaning_staff_ids',
-            'options' => prepareSelectValuesFromRows($cleaning_staff, ['labelRef' => 'full_name']),
-            'default' => prepareSelectDefaultValues($row->cleaningStaff, ['valueRef' => 'id']),
-        ])
-
         <!-- date -->
         @include('components.form.datepicker', [
             'group' => 'cleaning-service',

@@ -20,8 +20,7 @@ class CleaningServicesController extends Controller
         CleaningServicesRepositoryInterface $repository,
         HumanResourcesRepositoryInterface $humanResourcesRepository,
         PropertiesRepositoryInterface $propertiesRepository
-    )
-    {
+    ) {
         $this->repository           = $repository;
         $this->propertiesRepository = $propertiesRepository;
         $this->humanResourcesRepository = $humanResourcesRepository;
@@ -32,7 +31,7 @@ class CleaningServicesController extends Controller
         $search = trim($request->s);
 
         $config = [];
-        if(isRole('owner')) {
+        if (isRole('owner')) {
             $config = ['filterByOwner' => true];
         } else {
             $config = ['filterByWorkgroup' => true];
@@ -53,7 +52,7 @@ class CleaningServicesController extends Controller
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
         ]);
-      
+
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
 
         return view('cleaning-services.create')
@@ -91,7 +90,7 @@ class CleaningServicesController extends Controller
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
         ]);
-        
+
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
 
         return view('cleaning-services.edit')
@@ -104,12 +103,12 @@ class CleaningServicesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('cleaning-services.edit', [$id]) );
+        return redirect(route('cleaning-services.edit', [$id]));
     }
 
     public function destroy(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('cleaning-services'));
@@ -119,7 +118,8 @@ class CleaningServicesController extends Controller
         return redirect()->back();
     }
 
-    public function monthlyBatch(Request $request) {
+    public function monthlyBatch(Request $request)
+    {
         return view('cleaning-services.monthly-batch');
     }
 }
