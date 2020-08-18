@@ -153,16 +153,19 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $transaction = $this->blueprint();
         $currentMonth = Carbon::now();
         $currentMonthFormat = $currentMonth->format('Y-m-d');
-        $cleaningServices = $property->cleaningServices;
+        $cleaningServices = $property->monthlyCleaningServices($currentMonth->format('m'), $currentMonth->format('Y'));
         $amount = 0;
         $description = '';
         foreach ($cleaningServices as $cleaningService) {
             $amount += $cleaningService->maid_fee;
-            $description .= strval($cleaningService->id) . "\n";
+            $description .= 
+                "#" . strval($cleaningService->id) . ' - ' . 
+                $cleaningService->date . ' - ' . 
+                '$' . $cleaningService->maid_fee . "\n";
         };
         $transaction->property_management_id = $pm;
         $transaction->transaction_type_id = 46;
-        $transaction->period_start_date = $currentMonth->startOfMonth();
+        $transaction->period_start_date = $currentMonth->format('Y-m') . '-01';
         $transaction->period_end_date = $currentMonth->lastOfMonth();
         $transaction->post_date = $currentMonthFormat;
         $transaction->amount = $amount;

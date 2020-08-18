@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{
-    CleaningServicesRepositoryInterface,
-    HumanResourcesRepositoryInterface,
-    PropertiesRepositoryInterface
-};
+use App\Repositories\CleaningServicesRepositoryInterface;
+use App\Repositories\HumanResourcesRepositoryInterface;
+use App\Repositories\PropertiesRepositoryInterface;
 use App\Models\CleaningService;
 use Carbon\Carbon;
 
@@ -54,7 +52,7 @@ class CleaningServicesController extends Controller
             'filterByEnabled' => true,
         ]);
 
-        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.create')
             ->with('properties', $properties)
@@ -80,7 +78,7 @@ class CleaningServicesController extends Controller
         $cleaning_service = $this->repository->find($cleaning_service);
 
         $properties = $this->propertiesRepository->all('', ['paginate' => false]);
-        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.show')
             ->with('properties', $properties)
@@ -98,7 +96,7 @@ class CleaningServicesController extends Controller
             'filterByEnabled' => true,
         ]);
 
-        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.edit')
             ->with('properties', $properties)
@@ -146,10 +144,24 @@ class CleaningServicesController extends Controller
         return redirect()->back();
     }
 
-    public function monthlyBatch()
+    public function monthlyBatch(Request $request)
     {
+        if (!$request->year && !$request->month) { // prepare year and month for first call
+            $urlParams = [
+                'year' => date('Y', strtotime('now')),
+                'month' => date('m', strtotime('now')),
+            ];
+
+            $appendUrl = '?' . http_build_query($urlParams);
+            $redirectUrl = route('cleaning-services.monthly-batch') . $appendUrl;
+
+            return redirect($redirectUrl);
+        }
+
+        $currentMonth = Carbon::createFromDate($_GET['year'], $_GET['month'], 1, 'America/Mexico_City');
+
         $properties = $this->propertiesRepository->all('', ['paginate' => false]);
-        $currentMonth = Carbon::now();
+        
         return view('cleaning-services.monthly-batch')
             ->with('properties', $properties)
             ->with('currentMonth', $currentMonth);
@@ -165,7 +177,7 @@ class CleaningServicesController extends Controller
             'filterByEnabled' => true,
         ]);
 
-        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.create-ajax')
             ->with('properties', $properties)
@@ -182,7 +194,7 @@ class CleaningServicesController extends Controller
             'filterByEnabled' => true,
         ]);
 
-        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.edit-ajax')
             ->with('properties', $properties)

@@ -183,7 +183,7 @@
                                             @endif
 
                                             @if($row->description)
-                                                <p class="app-pm-description">{{ $row->description }}</p>
+                                                <p class="app-pm-description">{!! nl2br($row->description) !!}</p>
                                             @endif
                                         </td>
 
@@ -505,7 +505,7 @@
                                             @endif
 
                                             @if($row->description)
-                                                <p class="app-pm-description">{{ $row->description }}</p>
+                                                <p class="app-pm-description">{!! nl2br($row->description) !!}</p>
                                             @endif
                                         </td>
 

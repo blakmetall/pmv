@@ -9,6 +9,9 @@
     <!-- load fields -->
     @include('cleaning-services.partials.form-fields', ['row' => $row])
 
+    {{-- display cleaning staff if assigned --}}
+    @include('cleaning-services.partials.assigned-cleaning-staff', ['cleaning-service', $row])
+
 </fieldset>
 
 @php

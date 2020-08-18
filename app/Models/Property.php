@@ -122,6 +122,15 @@ class Property extends Model
         return $this->hasMany('App\Models\CleaningService', 'property_id');
     }
 
+    public function monthlyCleaningServices($month = '', $year = '')
+    {
+        return $this->cleaningServices()
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->orderBy('date', 'asc')
+            ->get();
+    }
+
     public function contacts()
     {
         return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');

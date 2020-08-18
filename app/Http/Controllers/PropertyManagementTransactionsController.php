@@ -208,12 +208,15 @@ class PropertyManagementTransactionsController extends Controller
     }
 
     // generates the url and redirects to create new transaction for specific property management
-    public function generatePMTransactionMonthly(Property $property)
+    public function generatePMTransactionMonthly(Request $request, Property $property)
     {
         if ($property->management()->count()) {
             foreach ($property->management as $pm) {
                 if (!$pm->is_finished) {
-                    $this->repository->saveMonthly($property, $pm->id);
+                    $transaction = $this->repository->saveMonthly($property, $pm->id);
+                    
+                    $request->session()->flash('success', __('Record deleted successfully'));
+                    return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
                 }
             }
         }

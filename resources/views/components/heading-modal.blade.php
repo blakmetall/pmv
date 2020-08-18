@@ -46,7 +46,9 @@
                            {{ __('New') }}
                         </span>
                     </a>
+                    
                     @include('contacts.partials.modal-create')
+
                     @if (is_array($actions) && count($actions) )
                         @foreach($actions as $action)
                             

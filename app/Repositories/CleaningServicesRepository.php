@@ -5,9 +5,12 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\CleaningServicesRepositoryInterface;
-use App\Models\{CleaningService, HumanResource, Property};
+use App\Models\CleaningService;
+use App\Models\HumanResource;
+use App\Models\Property;
 use App\Validations\CleaningServicesValidations;
-use App\Helpers\{UserHelper, WorkgroupHelper};
+use App\Helpers\UserHelper;
+use App\Helpers\WorkgroupHelper;
 
 class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 {
@@ -101,9 +104,12 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
         $property = Property::find($request->property_id)->first();
         $cleaning_staff_ids = [];
-        foreach ($property->cleaning_staff_ids as $staff_id) {
-            $staff = HumanResource::where('id', $staff_id)->get()[0];
-            $cleaning_staff_ids[] = $staff->id;
+        
+        if ($property->cleaning_staff_ids) {
+            foreach ($property->cleaning_staff_ids as $staff_id) {
+                $staff = HumanResource::where('id', $staff_id)->get()[0];
+                $cleaning_staff_ids[] = $staff->id;
+            }
         }
 
         $cleaning_service->save();

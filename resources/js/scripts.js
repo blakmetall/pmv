@@ -131,4 +131,8 @@ $(function() {
             });
         });
     });
+
+    $("#cleaning-option-batch-year-select").change(function() {
+        $(this).closest('form').submit();
+    });
 });

@@ -588,28 +588,45 @@
     }
 }
 
-.menu-properties-dropdown li{
+.menu-properties-dropdown li {
     width: auto;
     min-width: 210px;
 }
 
 .app-cleaning-table {
+
+    th {
+        padding-top: 0 !important;
+        padding-bottom: 16px !important;
+    }
+
     .cleaning-th-property,
-    .cleaning-td-property{
+    .cleaning-td-property {
         padding-left: 20px;
-        min-width: 130px;
+        min-width: 190px;
         text-align: left;
     }
 
+    .cleaning-td-info {
+        padding: 10px 5px 10px 12px;
+    }
+
+    .cleaning-th-transaction {
+        padding-top: 8px !important;
+    }
+
     .cleaning-th-days,
-    .cleaning-td-days{
-        min-width: 120px;
+    .cleaning-td-days {
+        min-width: 90px;
         text-align: center;
     }
 
-    .cleaning-td-property,
     .cleaning-td-days {
         padding: 10px 5px;
+    }
+
+    .cleaning-td-property {
+        padding: 10px 5px 10px 20px;
     }
 
     .cleaning-td-content {
@@ -619,13 +636,88 @@
             color: #888;
         }
 
+        .cleaning-td-service {
+            margin-bottom: 2px;
+            border-radius: 3px;
+        }
+
         .cleaning-td-service-finished {
             display: inline-block;
             width: 100%;
-            text-align:center;
+            text-align: center;
             text-decoration: underline;
         }
     }
+}
+
+/* alan estilos */
+.card-header-print {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-print {
+    background-color: #2c3e4f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-print:hover,
+.btn-print:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-add-service {
+    padding: 5px;
+    color: #fff !important;
+    text-decoration: none !important;
+    background-color: #3698dd;
+    border-radius: 3px; 
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.cleaning-td-service {
+    padding: 5px;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.cleaning-td-service-open {
+    background-color: #d73636;
+}
+
+.cleaning-td-service-finished {
+    background-color: #7aae36;
+}
+
+.container-btns-modal {
+    display: flex;
+}
+
+.btn-delete-modal {
+    width: auto !important;
+    color: #fff !important;
+}
+
+.btn-create-transaction {
+    background-color: #4d4d4d;
+    padding: 5px 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+}
+
+.btn-create-transaction:hover,
+.btn-create-transaction:focus {
+    color: #fff;
 }
 
 @media (max-width: 1200px) {
