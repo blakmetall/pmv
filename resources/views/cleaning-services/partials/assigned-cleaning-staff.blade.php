@@ -2,7 +2,7 @@
 @if (isset($cleaning_service))
     @php $cleaning_staff = $cleaning_service->cleaningStaff; @endphp
 
-    @if($cleaning_staff)
+    @if($cleaning_service->cleaningStaff()->count())
 
         <div class="card mb-4">
             <div class="card-body">
