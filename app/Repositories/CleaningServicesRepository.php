@@ -102,21 +102,24 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             $cleaning_service->audit_datetime = null;
         }
 
-        $property = Property::find($request->property_id)->first();
-        $cleaning_staff_ids = [];
-        
-        if ($property->cleaning_staff_ids) {
-            foreach ($property->cleaning_staff_ids as $staff_id) {
-                $staff = HumanResource::where('id', $staff_id)->get()[0];
-                $cleaning_staff_ids[] = $staff->id;
-            }
-        }
-
         $cleaning_service->save();
 
-        // cleaning_staff assignation
-        if ($cleaning_staff_ids && is_array($cleaning_staff_ids) && count($cleaning_staff_ids)) {
-            $cleaning_service->cleaningStaff()->sync($cleaning_staff_ids);
+        // $property = Property::find($request->property_id)->first();
+        $property = $cleaning_service->property;
+        if($property) {
+            $cleaning_staff_ids = [];
+            if ($property->cleaning_staff_ids) {
+                foreach ($property->cleaning_staff_ids as $staff_id) {
+                    if(HumanResource::where('id', $staff_id)->count()) {
+                        $cleaning_staff_ids[] = $staff_id;
+                    }
+                }
+            }
+    
+            // cleaning_staff assignation
+            if ($cleaning_staff_ids && is_array($cleaning_staff_ids) && count($cleaning_staff_ids)) {
+                $cleaning_service->cleaningStaff()->sync($cleaning_staff_ids);
+            }
         }
 
 
@@ -140,6 +143,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $cleaning_service = $this->model->find($id);
 
         if ($cleaning_service && $this->canDelete($id)) {
+            $cleaning_service->cleaningStaff()->sync([]);
             $cleaning_service->delete();
         }
 
