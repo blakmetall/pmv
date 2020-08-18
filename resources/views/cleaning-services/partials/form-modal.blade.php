@@ -7,13 +7,14 @@
 <fieldset {{ $disabled }}>
 
     <!-- load fields -->
-    @include('cleaning-services.partials.form-fields', ['row' => $row])
+    @include('cleaning-services.partials.form-fields-modal', ['row' => $row])
 
 </fieldset>
 
 @php
     $skipCancel = isset($withModal) ? true : false;
-    $skipDelete = isset($withModal) || isRole('owner') ? true : false;
+    $skipDelete = false;
+    $isModal = true;
 @endphp
 
 <!-- form actions -->
@@ -22,9 +23,9 @@
     'disabled' => $disabled,
     'edit_route' => 'cleaning-services.edit',
     'cancel_route' => 'cleaning-services',
-    'delete_route' => 'cleaning-services.destroy',
+    'delete_route' => 'cleaning-services.destroy-ajax',
     'skipEdit' => isRole('owner'),
     'skipDelete' => $skipDelete,
-    'skipDelete' => $skipDelete,
     'skipCancel' => $skipCancel,
+    'isModal' => $isModal,
 ])

@@ -17,3 +17,51 @@
     color: #fff;
     text-decoration: none;
 }
+
+.btn-add-service {
+    padding: 5px;
+    color: #fff !important;
+    text-decoration: none !important;
+    background-color: #3698dd;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.cleaning-td-service {
+    padding: 5px;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.cleaning-td-service-open {
+    background-color: #7aae36;
+}
+
+.cleaning-td-service-finished {
+    background-color: #d73636;
+}
+
+.container-btns-modal {
+    display: flex;
+}
+
+.btn-delete-modal {
+    width: auto !important;
+    color: #fff !important;
+}
+
+.btn-create-transaction {
+    background-color: #4d4d4d;
+    padding: 5px 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+}
+
+.btn-create-transaction:hover,
+.btn-create-transaction:focus {
+    color: #fff;
+}

@@ -118,7 +118,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
 /* harmony import */ var _scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scripts/initTransactionModalHandler.js */ "./resources/js/scripts/initTransactionModalHandler.js");
 /* harmony import */ var _scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./scripts/initContactModalHandler.js */ "./resources/js/scripts/initContactModalHandler.js");
-/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+/* harmony import */ var _scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initCleaningServicesModalHandler.js */ "./resources/js/scripts/initCleaningServicesModalHandler.js");
+/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+
 
 
 
@@ -155,7 +157,8 @@ $(function () {
     Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__["initTimepickerComponents"])();
     Object(_scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_10__["initTransactionModalHandler"])();
     Object(_scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_11__["initContactModalHandler"])();
-    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_12__["initTooltip"])();
+    Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_12__["initCleaningServicesModalHandler"])();
+    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_13__["initTooltip"])();
   }
 
   function printTable(table, title) {
@@ -414,6 +417,41 @@ function initCalendar() {
       end: new Date(year, month, date + 8, 22, 0),
       status: true
     }]
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/initCleaningServicesModalHandler.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/scripts/initCleaningServicesModalHandler.js ***!
+  \******************************************************************/
+/*! exports provided: initCleaningServicesModalHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initCleaningServicesModalHandler", function() { return initCleaningServicesModalHandler; });
+function initCleaningServicesModalHandler() {
+  var modals = $(".app-cleaning-service-modal");
+  modals.each(function () {
+    var id = $(this).attr("id");
+    var modal = $("#" + id);
+    var container = $(this).find(".app-cleaning-service-modal-container");
+    var url = container.data("url");
+    modal.on("show.bs.modal", function (e) {
+      var propertyID = $(e.relatedTarget).data("property");
+      var propertyDate = $(e.relatedTarget).data("date");
+      $.get(url, function (html) {
+        container.html(html).promise().done(function () {
+          modal.modal("handleUpdate");
+          setTimeout(function () {
+            $("#field_cleaning-service_property_id_").val(propertyID);
+            $("#field_cleaning-service_date_").val(propertyDate);
+          }, 500);
+        });
+      });
+    });
   });
 }
 

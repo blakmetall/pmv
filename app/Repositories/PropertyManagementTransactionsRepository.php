@@ -5,11 +5,13 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Models\Property;
 use App\Models\PropertyManagement;
 use App\Models\PropertyManagementTransaction;
 use App\Validations\PropertyManagementTransactionsValidations;
 use App\Helpers\ImagesHelper;
 use App\Helpers\LanguageHelper;
+use Carbon\Carbon;
 
 class PropertyManagementTransactionsRepository implements PropertyManagementTransactionsRepositoryInterface
 {
@@ -39,17 +41,16 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $orderByDirectionFilter = isset($config['orderDirection']) ? $config['orderDirection'] : '';
 
         if ($search) {
-            $query = PropertyManagementTransaction::
-                where(function ($q) use ($search) {
-                    $q->where('id', $search);
-                    $q->orWhere('amount', 'like', '%'.$search.'%');
-                    $q->orWhere('post_date', $search);
-                    $q->orWhere('period_start_date', $search);
-                    $q->orWhere('period_end_date', $search);
-                    $q->orWhere('created_at', 'like', '%'.$search.'%');
-                    $q->orWhere('updated_at', 'like', '%'.$search.'%');
-                })
-                ->orWhere('description', 'like', '%'.$search.'%');
+            $query = PropertyManagementTransaction::where(function ($q) use ($search) {
+                $q->where('id', $search);
+                $q->orWhere('amount', 'like', '%' . $search . '%');
+                $q->orWhere('post_date', $search);
+                $q->orWhere('period_start_date', $search);
+                $q->orWhere('period_end_date', $search);
+                $q->orWhere('created_at', 'like', '%' . $search . '%');
+                $q->orWhere('updated_at', 'like', '%' . $search . '%');
+            })
+                ->orWhere('description', 'like', '%' . $search . '%');
         } else {
             $query = PropertyManagementTransaction::query();
         }
@@ -118,10 +119,10 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                     $query->join('property_management', 'property_management_transactions.property_management_id', '=', 'property_management.id');
                     $query->join('properties', 'property_management.property_id', '=', 'properties.id');
                     $query->join('properties_translations', 'properties_translations.property_id', '=', 'properties.id');
-                    
+
                     $direction = $orderByDirectionFilter == 'down' ? 'desc' : 'asc';
                     $query->orderBy('properties.id', $direction);
-                    
+
                     $lang = LanguageHelper::current();
                     $query->where('properties_translations.language_id', $lang->id);
                 }
@@ -141,10 +142,35 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         return $result;
     }
 
-    public function create(Request $request)
+    public function create(Request $request, $property = null)
     {
         $this->validation->validate('create', $request);
         return $this->save($request);
+    }
+
+    public function saveMonthly(Property $property, $pm)
+    {
+        $transaction = $this->blueprint();
+        $currentMonth = Carbon::now();
+        $currentMonthFormat = $currentMonth->format('Y-m-d');
+        $cleaningServices = $property->cleaningServices;
+        $amount = 0;
+        $description = '';
+        foreach ($cleaningServices as $cleaningService) {
+            $amount += $cleaningService->maid_fee;
+            $description .= strval($cleaningService->id) . "\n";
+        };
+        $transaction->property_management_id = $pm;
+        $transaction->transaction_type_id = 46;
+        $transaction->period_start_date = $currentMonth->startOfMonth();
+        $transaction->period_end_date = $currentMonth->lastOfMonth();
+        $transaction->post_date = $currentMonthFormat;
+        $transaction->amount = $amount;
+        $transaction->operation_type = 2;
+        $transaction->description = $description;
+        $transaction->save();
+
+        return $transaction;
     }
 
     public function update(Request $request, $id)
@@ -156,7 +182,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
     public function save(Request $request, $id = '')
     {
         $folder = 'transactions';
-        $is_new = ! $id;
+        $is_new = !$id;
 
         if ($is_new) {
             $transaction = $this->blueprint();
@@ -192,7 +218,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         // audit updates only when transaction has file
         $hasPreviousAudit = $transaction->audit_user_id;
-        
+
         if ($transaction->file_path) {
             if ($request->do_audit) {
                 if (!$hasPreviousAudit) {
@@ -206,7 +232,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             }
             $transaction->save();
         }
-        
+
         return $transaction;
     }
 
@@ -225,7 +251,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
     public function delete($id)
     {
         $transaction = $this->model->find($id);
-        
+
         if ($transaction && $this->canDelete($id)) {
             $transaction->delete();
             ImagesHelper::deleteFile($transaction->file_path);

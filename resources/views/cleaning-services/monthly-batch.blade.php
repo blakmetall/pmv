@@ -8,70 +8,66 @@
     <div class="mb-4"></div>
 
 @endsection
-
+@php
+    $modalID = 'cleaning-service-create-' . strtotime('now') . rand(1,99999);
+    $daysInMonth = $currentMonth->daysInMonth;
+    $currentMonthFormat = $currentMonth->format('Y-m');
+@endphp
+@include('cleaning-services.partials.modal-create')
 @section('main-content')
-
-    <?php
-        $tmpProperties = [
-            'property 1',
-            'property 2',
-            'property 3',
-        ];
-
-        $tmpDaysInMonth = 30;
-    ?>
-
     <div class="px-4">
         <div class="table-responsive app-cleaning-table">
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="cleaning-th-property">&nbsp;</th>
-                        <th>&nbsp;</th>
-
-                        @for($i = 0; $i < $tmpDaysInMonth; $i++)
-                            <th class="cleaning-th-days">{{ $i + 1 }}</th>
+                        <th class="cleaning-th-property">{{ __('Property') }}</th>
+                        <th>{{ __('Services') }}</th>
+                        @for($i = 1; $i <= $daysInMonth; $i++)
+                            <th class="cleaning-th-days">{{ $i }}</th>
                         @endfor
 
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
+                        <th>{{ __('Monthly Transaction') }}</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach($tmpProperties as $tmpProperty)
+                    @foreach($properties as $item)
                         <tr>
-                            <td class="cleaning-td-property">{{ $tmpProperty}}</td>
-                            <td>&nbsp;</td>
+                            <td class="cleaning-td-property">{{ $item->name }}</td>
+                            <td>{{ count($item->property->cleaningServices) }}</td>
 
-                            @for($i = 0; $i < $tmpDaysInMonth; $i++)
+                            @for($i = 1; $i <= $daysInMonth; $i++)
+                                @php
+                                    $zero = ($i < 9)?'0':'';
+                                @endphp
                                 <td class="cleaning-td-days">
                                     <div class="cleaning-td-content">
-                                        <a href="#">{{ __('Add') }}</a>
-
-                                        {{-- fake services for some fake properties and some days --}}
-                                        @if ($tmpProperty == 'property 1' && ($i == 2 || $i == 7 || $i == 21))
+                                        <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalID }}" class="btn-add-service">{{ __('Add') }}&nbsp;&nbsp;<i class="i-Add"></i></a>
+                                        @if($item->property->cleaningServices)
                                             <div class="pt-2">
-                                                <a href="#" class="cleaning-td-service-finished">#44569</a>
-                                                <a href="#" class="cleaning-td-service-finished">#44569</a>
-                                            </div>
-                                        @endif
-
-                                        {{-- fake services for some fake properties and some days --}}
-                                        @if ($tmpProperty == 'property 2' && ($i == 5 || $i == 9 || $i == 16))
-                                            <div class="pt-2">
-                                                <a href="#" class="cleaning-td-service-finished">#3831</a>
+                                                @foreach ($item->property->cleaningServices as $cleaning_service)
+                                                    @php
+                                                    $modalEditID = 'cleaning-service-edit-' . strtotime('now') . rand(1,99999);
+                                                    @endphp
+                                                    @include('cleaning-services.partials.modal-edit', ['cleaning_service' => $cleaning_service->id])
+                                                    @php
+                                                        $date   = $cleaning_service->date;
+                                                        $d      = new DateTime($date);
+                                                        $status = ($cleaning_service->is_finished)?'finished':'open';
+                                                    @endphp
+                                                    @if($d->format('d') == $i)
+                                                        <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalEditID }}" class="cleaning-td-service cleaning-td-service-<?=$status?>">#{{ $cleaning_service->id }}</a>
+                                                    @endif
+                                                @endforeach
                                             </div>
                                         @endif
                                     </div>
                                 </td>
                             @endfor
 
-                            <td>
-                                <a href="#">Crear transacción mensual</a>
+                            <td class="cleaning-td-days">
+                                <a href="{{ route('property-management.generate-pm-transaction-monthly', $item->property_id) }}" class="btn-create-transaction">{{ __('Create') }}&nbsp;&nbsp;<i class="i-Add"></i></a>
                             </td>
-
-                            <td></td>
                         </tr>
                     @endforeach
                 </tbody>

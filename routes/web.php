@@ -170,6 +170,7 @@ Route::group(['middleware' => ['web']], function () {
                 // property management transactions bulk events
                 Route::get('create-bulk', 'PropertyManagementTransactionsController@createBulk')->name('property-management-transactions.create-bulk');
                 Route::post('store-bulk', 'PropertyManagementTransactionsController@storeBulk')->name('property-management-transactions.store-bulk');
+                Route::get('generate-pm-transaction-monthly/{property?}', 'PropertyManagementTransactionsController@generatePMTransactionMonthly')->name('property-management.generate-pm-transaction-monthly');
             });
 
             // audit transaction batch
@@ -207,6 +208,9 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('edit/{cleaning_service}', 'CleaningServicesController@edit')->name('cleaning-services.edit');
             Route::post('update/{id}', 'CleaningServicesController@update')->name('cleaning-services.update');
             Route::get('destroy/{id}', 'CleaningServicesController@destroy')->name('cleaning-services.destroy');
+            Route::get('createAjax', 'CleaningServicesController@createAjax')->name('cleaning-services.create-ajax');
+            Route::get('editAjax/{cleaning_service}', 'CleaningServicesController@editAjax')->name('cleaning-services.edit-ajax');
+            Route::get('destroyAjax/{id}', 'CleaningServicesController@destroyAjax')->name('cleaning-services.destroy-ajax');
 
             // calendar view
             Route::get('monthly-batch', 'CleaningServicesController@monthlyBatch')->name('cleaning-services.monthly-batch');

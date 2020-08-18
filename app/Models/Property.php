@@ -119,7 +119,7 @@ class Property extends Model
 
     public function cleaningServices()
     {
-        return $this->hasMany('App\Models\CleaningService');
+        return $this->hasMany('App\Models\CleaningService', 'property_id');
     }
 
     public function contacts()

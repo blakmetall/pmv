@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Property;
 use App\Models\PropertyManagement;
 use App\Models\PropertyManagementTransaction;
 use App\Repositories\PropertiesRepositoryInterface;
@@ -185,7 +186,7 @@ class PropertyManagementTransactionsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        
+
         // redirect back if sent from modal
         if ($request->fromModal) {
             return redirect()->back();
@@ -203,6 +204,20 @@ class PropertyManagementTransactionsController extends Controller
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+        return redirect()->back();
+    }
+
+    // generates the url and redirects to create new transaction for specific property management
+    public function generatePMTransactionMonthly(Property $property)
+    {
+        if ($property->management()->count()) {
+            foreach ($property->management as $pm) {
+                if (!$pm->is_finished) {
+                    $this->repository->saveMonthly($property, $pm->id);
+                }
+            }
+        }
+
         return redirect()->back();
     }
 
@@ -297,7 +312,7 @@ class PropertyManagementTransactionsController extends Controller
             $default = $request->bulk["default"];
 
             $successfulTransactionsIds = [];
-            
+
             foreach ($request->bulk as $index => $transactionData) {
                 if ($index !== "default") {
                     if (!$transactionData['property_management_id']) {
@@ -308,7 +323,7 @@ class PropertyManagementTransactionsController extends Controller
                     if (!$transactionData['transaction_type_id']) {
                         $transactionData['transaction_type_id'] = $default['transaction_type_id'];
                     }
-                    
+
                     if (!$transactionData['operation_type']) {
                         $transactionData['operation_type'] = $default['operation_type'];
                     }
@@ -353,7 +368,7 @@ class PropertyManagementTransactionsController extends Controller
                         if ($request->hasFile($fileRequestPath)) {
                             $img = $request->file($fileRequestPath);
                             $imgData = ImagesHelper::saveFile($img, $folder);
-    
+
                             $transaction->file_extension = $imgData['file_extension'];
                             $transaction->file_slug = $imgData['file_slug'];
                             $transaction->file_original_name = $imgData['file_original_name'];

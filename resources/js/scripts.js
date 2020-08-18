@@ -10,6 +10,7 @@ import { initMapInputComponents } from "./scripts/initMapInputComponents.js";
 import { initTimepickerComponents } from "./scripts/initTimepickerComponents.js";
 import { initTransactionModalHandler } from "./scripts/initTransactionModalHandler.js";
 import { initContactModalHandler } from "./scripts/initContactModalHandler.js";
+import { initCleaningServicesModalHandler } from "./scripts/initCleaningServicesModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 
 $(function() {
@@ -38,6 +39,7 @@ $(function() {
         initTimepickerComponents();
         initTransactionModalHandler();
         initContactModalHandler();
+        initCleaningServicesModalHandler();
         initTooltip();
     }
 
@@ -119,7 +121,13 @@ $(function() {
             data
         ) {
             $.each(data.data, function(key, value) {
-                $("select[name='zone_id']").append("<option value=" + value.zone_id + ">" + value.name + "</option>");
+                $("select[name='zone_id']").append(
+                    "<option value=" +
+                        value.zone_id +
+                        ">" +
+                        value.name +
+                        "</option>"
+                );
             });
         });
     });

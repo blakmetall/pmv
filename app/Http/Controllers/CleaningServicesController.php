@@ -9,6 +9,7 @@ use App\Repositories\{
     PropertiesRepositoryInterface
 };
 use App\Models\CleaningService;
+use Carbon\Carbon;
 
 class CleaningServicesController extends Controller
 {
@@ -65,6 +66,12 @@ class CleaningServicesController extends Controller
     {
         $cleaning_service = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+
+        // redirect back if sent from modal
+        if ($request->fromModal) {
+            return redirect()->back();
+        }
+
         return redirect(route('cleaning-services.edit', [$cleaning_service->id]));
     }
 
@@ -103,6 +110,12 @@ class CleaningServicesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+
+        // redirect back if sent from modal
+        if ($request->fromModal) {
+            return redirect()->back();
+        }
+
         return redirect(route('cleaning-services.edit', [$id]));
     }
 
@@ -115,11 +128,66 @@ class CleaningServicesController extends Controller
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+
+
         return redirect()->back();
     }
 
-    public function monthlyBatch(Request $request)
+    public function destroyAjax(Request $request, $id)
     {
-        return view('cleaning-services.monthly-batch');
+        if ($this->repository->canDelete($id)) {
+            $this->repository->delete($id);
+            $request->session()->flash('success', __('Record deleted successfully'));
+            return redirect()->back();
+        }
+
+        $request->session()->flash('error', __("This record can't be deleted"));
+
+        return redirect()->back();
+    }
+
+    public function monthlyBatch()
+    {
+        $properties = $this->propertiesRepository->all('', ['paginate' => false]);
+        $currentMonth = Carbon::now();
+        return view('cleaning-services.monthly-batch')
+            ->with('properties', $properties)
+            ->with('currentMonth', $currentMonth);
+    }
+
+    public function createAjax()
+    {
+        $cleaning_service = $this->repository->blueprint();
+
+        $properties = $this->propertiesRepository->all('', [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ]);
+
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+
+        return view('cleaning-services.create-ajax')
+            ->with('properties', $properties)
+            ->with('cleaning_staff', $cleaning_staff)
+            ->with('cleaning_service', $cleaning_service)
+            ->with('withModal', true);
+    }
+
+    public function editAjax(CleaningService $cleaning_service)
+    {
+        $properties = $this->propertiesRepository->all('', [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+            'filterByEnabled' => true,
+        ]);
+
+        $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false]);
+
+        return view('cleaning-services.edit-ajax')
+            ->with('properties', $properties)
+            ->with('cleaning_staff', $cleaning_staff)
+            ->with('withModal', true)
+            ->with('cleaning_service', $cleaning_service);
     }
 }
