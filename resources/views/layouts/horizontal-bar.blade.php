@@ -279,13 +279,15 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('cleaning-services', 'monthly-batch'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('cleaning-services.monthly-batch') }}">
-                                                    <span class="item-name">{{ __('Monthly Batch') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
+                                        @if(!isRole('owner'))
+                                            @if ($_current_role->isAllowed('cleaning-services', 'monthly-batch'))
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('cleaning-services.monthly-batch') }}">
+                                                        <span class="item-name">{{ __('Monthly Batch') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        @endif 
                                     </ul>
                                 </div>
                             </div>
