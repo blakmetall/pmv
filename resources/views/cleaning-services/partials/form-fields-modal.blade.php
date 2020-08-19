@@ -43,7 +43,7 @@
         @include('components.form.number', [
             'group' => 'cleaning-service',
             'type' => 'number',
-            'label' => __('Maid Fee'),
+            'label' => __('Cost'),
             'name' => 'maid_fee',
             'required' => true,
             'value' => $row->maid_fee
