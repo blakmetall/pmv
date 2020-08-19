@@ -1,3 +1,5 @@
+import { initDatepickerComponents } from "./initDatepickerComponents.js";
+
 export function initCleaningServicesModalHandler() {
     var modals = $(".app-cleaning-service-modal");
 
@@ -16,6 +18,7 @@ export function initCleaningServicesModalHandler() {
                     .promise()
                     .done(function() {
                         modal.modal("handleUpdate");
+                        initDatepickerComponents();
                         setTimeout(function() {
                             $("#field_cleaning-service_property_id_").val(
                                 propertyID
