@@ -108,7 +108,7 @@
                                         @endif
 
                                         @if ($_current_role->isAllowed('property-management', 'pending-audits'))
-                                            <li class="nav-item">
+                                            {{-- <li class="nav-item">
                                                 @php 
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
@@ -118,7 +118,7 @@
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Bucerías</span>
                                                 </a>
-                                            </li>
+                                            </li> --}}
 
                                             <li class="nav-item">
                                                 @php 
@@ -132,7 +132,7 @@
                                                 </a>
                                             </li>
 
-                                            <li class="nav-item">
+                                            {{-- <li class="nav-item">
                                                 @php 
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
@@ -142,7 +142,7 @@
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Nuevo Vallarta</span>
                                                 </a>
-                                            </li>
+                                            </li> --}}
 
                                             <li class="nav-item">
                                                 @php 
@@ -158,7 +158,7 @@
 
 
 
-                                            <li class="nav-item">
+                                            {{-- <li class="nav-item">
                                                 @php 
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
@@ -168,7 +168,7 @@
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Punta de Mita</span>
                                                 </a>
-                                            </li>
+                                            </li> --}}
                                         @endif
                                     </ul>
                                 </div>
