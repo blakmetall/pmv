@@ -1181,5 +1181,18 @@
                 "name": "Lavadora"
             }
         ]
+    },
+    {
+        "id": 92,
+        "translations": [
+            {
+                "language_id": 1,
+                "name": "Wireless Internet"
+            },
+            {
+                "language_id": 2,
+                "name": "Internet Wifi"
+            }
+        ]
     }
 ]
