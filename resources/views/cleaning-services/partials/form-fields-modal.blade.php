@@ -48,6 +48,11 @@
             'required' => true,
             'value' => $row->maid_fee
         ])
+        <div class="form-group row maid_fee">
+            <label for="field_cleaning-service_maid_fee_" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10" id="maid_fee_base">Costo base para esta propiedad: $<span></span>
+            </div>
+        </div>
 
         <!-- is_finished -->
         @include('components.form.checkbox', [

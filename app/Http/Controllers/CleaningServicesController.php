@@ -161,7 +161,7 @@ class CleaningServicesController extends Controller
         $currentMonth = Carbon::createFromDate($_GET['year'], $_GET['month'], 1, 'America/Mexico_City');
 
         $properties = $this->propertiesRepository->all('', ['paginate' => false]);
-        
+
         return view('cleaning-services.monthly-batch')
             ->with('properties', $properties)
             ->with('currentMonth', $currentMonth);
@@ -180,7 +180,6 @@ class CleaningServicesController extends Controller
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.create-ajax')
-            ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service)
             ->with('withModal', true);
@@ -197,7 +196,6 @@ class CleaningServicesController extends Controller
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.edit-ajax')
-            ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
             ->with('withModal', true)
             ->with('cleaning_service', $cleaning_service);
