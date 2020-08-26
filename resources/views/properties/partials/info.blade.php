@@ -68,7 +68,7 @@
 
                             <!-- property policies -->
                             <a 
-                                href="#" 
+                                href="{{ route('maintenance') }}" 
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
                                 title="{{ __('Policies') }}"
                                 alt="{{ __('Policies') }}">
@@ -109,7 +109,7 @@
                             <!-- property preview -->
                             @if( !isRole('owner') )
                                 <a 
-                                    href="#"
+                                    href="{{ route('maintenance') }}"
                                     class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
                                     title="{{ __('Preview') }}"
                                     alt="{{ __('Preview') }}">
