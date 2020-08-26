@@ -144,14 +144,7 @@
                                             </a>
                                         @endif
 
-                                        <!-- property policies -->
-                                        <a 
-                                            href="#" 
-                                            class="text-primary app-icon-link"
-                                            title="{{ __('Policies') }}"
-                                            alt="{{ __('Policies') }}">
-                                            <i class="nav-icon i-Files font-weight-bold"></i>
-                                        </a>
+                                        
 
                                         <!-- property contacts -->
                                         <a 
