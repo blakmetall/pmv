@@ -1207,5 +1207,18 @@
                 "name": "Wifi en Áreas Comunes"
             }
         ]
+    },
+    {
+        "id": 94,
+        "translations": [
+            {
+                "language_id": 1,
+                "name": "Wireless speaker for phone or iPad"
+            },
+            {
+                "language_id": 2,
+                "name": "Altavoz inalámbrico para teléfono o iPad"
+            }
+        ]
     }
 ]
