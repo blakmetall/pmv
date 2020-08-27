@@ -1194,5 +1194,18 @@
                 "name": "Internet Wifi"
             }
         ]
+    },
+    {
+        "id": 93,
+        "translations": [
+            {
+                "language_id": 1,
+                "name": "Wifi in Common Areas"
+            },
+            {
+                "language_id": 2,
+                "name": "Wifi en Áreas Comunes"
+            }
+        ]
     }
 ]
