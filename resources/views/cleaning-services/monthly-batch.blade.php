@@ -43,8 +43,8 @@
                             $monthlyCleaningServices = $item->property->monthlyCleaningServices($currentMonth->format('m'), $currentMonth->format('Y'))
                         @endphp
 
-                        <tr>
-                            <td class="cleaning-td-property">{{ $item->name }}</td>
+                        <tr class="hoverable">
+                            <td class="cleaning-td-property hover-action">{{ $item->name }}</td>
                             <td class="cleaning-td-info">{{ count($monthlyCleaningServices) }}</td>
 
                             @for($i = 1; $i <= $daysInMonth; $i++)
@@ -54,7 +54,7 @@
                                 <td class="cleaning-td-days">
                                     <div class="cleaning-td-content">
                                         <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-maid-fee="{{ $item->property->maid_fee }}" data-load-fee="true" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalID }}" class="btn-add-service">
-                                            <i class="i-Add"></i>
+                                            {{ $i }} &nbsp; <i class="i-Add"></i>
                                         </a>
 
                                         @if($monthlyCleaningServices)

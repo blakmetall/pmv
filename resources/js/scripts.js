@@ -41,6 +41,8 @@ $(function() {
         initContactModalHandler();
         initCleaningServicesModalHandler();
         initTooltip();
+
+        initCleaningMonthlyBatchEvents();
     }
 
     function printTable(table, title) {
@@ -135,4 +137,25 @@ $(function() {
     $("#cleaning-option-batch-year-select").change(function() {
         $(this).closest('form').submit();
     });
+
+    /////////////////////////////
+    /////////////////////////////
+
+    function initCleaningMonthlyBatchEvents() {
+        $(".hover-action").each(function() {
+            var item = $(this);
+
+            item.click(function() {
+                var tr = $(this).closest('tr');
+
+                if(tr.length){
+                    if(tr.hasClass('clicked')) {
+                        tr.removeClass('clicked');
+                    }else{
+                        tr.addClass('clicked');
+                    }
+                }
+            });
+        });
+    }
 });

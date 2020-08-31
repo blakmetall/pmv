@@ -648,6 +648,27 @@
             text-decoration: underline;
         }
     }
+
+    tr.hoverable {
+        .hover-action {
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+
+        &.clicked {
+
+            &:nth-child(even) {
+                background: #eee;
+            }
+    
+            &:nth-child(odd) {
+                background: #ddd;
+            }
+        }
+
+    }
 }
 
 /* alan estilos */
