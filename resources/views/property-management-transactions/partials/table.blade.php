@@ -143,10 +143,6 @@
                                         <!-- edit and file -->
                                         <td>
                                             <div class="not-print">
-                                                @if(!isRole('owner'))
-                                                    @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
-                                                @endif
-
                                                 @if($row->file_url)
                                                     @include('components.table.file-modal', [
                                                     'fileName' => $row->file_original_name,
@@ -154,6 +150,16 @@
                                                     'fileUrl' => $row->file_url,
                                                     'fileSlug' => $row->file_slug,
                                                     ])
+                                                @endif
+
+                                                @if(!isRole('owner'))
+                                                    @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
+
+                                                    @if(!$usePendingAuditPresentation)
+                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </td>

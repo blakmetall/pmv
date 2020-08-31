@@ -107,16 +107,14 @@
         'fileExtension' => $row->file_extension,
         ])
 
-        @if($row->file_url)
-            <!-- do audit -->
-            @include('components.form.checkbox', [
-            'group' => 'property-management-transaction',
-            'label' => __('Audit'),
-            'name' => 'do_audit',
-            'value' => 1,
-            'default' => !! $row->audit_user_id,
-            ])
-        @endif
+        <!-- do audit -->
+        @include('components.form.checkbox', [
+        'group' => 'property-management-transaction',
+        'label' => __('Audit'),
+        'name' => 'do_audit',
+        'value' => 1,
+        'default' => !! $row->audit_user_id,
+        ])
 
         <!-- audit -->
         @if($row->auditedBy)
