@@ -34,6 +34,8 @@
             break;
         }
     }
+
+    $urlParams = '?' . http_build_query($_GET);
 ?>
 
 @if(!$skipAuditedTable)
@@ -156,7 +158,7 @@
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                                     @if(!$usePendingAuditPresentation)
-                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
+                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
                                                             <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                         </a>
                                                     @endif
@@ -480,7 +482,7 @@
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                                     @if(!$usePendingAuditPresentation)
-                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
+                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
                                                             <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                         </a>
                                                     @endif

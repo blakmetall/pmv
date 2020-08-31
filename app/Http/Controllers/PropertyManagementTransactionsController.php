@@ -200,6 +200,11 @@ class PropertyManagementTransactionsController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+            
+            if(isset($request->year)) {
+                return redirect()->back();
+            }
+
             return redirect(route('property-management-transactions', [$pm->id]));
         }
 
