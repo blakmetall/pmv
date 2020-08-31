@@ -84,7 +84,7 @@ class PMHelper
         $config = array_merge($baseConfig, ['skipAudited' => true]);
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
-        $pendingAudit = $initialBalance + $totalCredit - $totalCharge;
+        $pendingAudit = $totalCredit - $totalCharge;
 
         return [
             'balance' => $balance,
