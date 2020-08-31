@@ -269,10 +269,12 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $transaction = $this->model->find($id);
 
         if ($transaction) {
-            $hasBeenAudited = $transaction->audit_user_id;
-            if ($hasBeenAudited) {
-                return false;
-            }
+            // deshabilitada temporalmente restriccion de eliminación de transacción en caso que esté editada
+
+            // $hasBeenAudited = $transaction->audit_user_id;
+            // if ($hasBeenAudited) {
+            //     return false;
+            // }
         }
 
         return true;
