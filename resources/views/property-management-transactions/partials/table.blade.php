@@ -22,6 +22,20 @@
     $shouldShowBalanceColumn = !$usePendingAuditPresentation;
     $shouldShowBalanceColumn = $hideBalance ? false : $shouldShowBalanceColumn;
 
+    $months = [
+        1 => __('January'),
+        2 => __('February'),
+        3 => __('March'),
+        4 => __('April'),
+        5 => __('May'),
+        6 => __('June'),
+        7 => __('July'),
+        8 => __('August'),
+        9 => __('September'),
+        10 => __('October'),
+        11 => __('November'),
+        12 => __('December'),
+    ];
 ?>
 
 <div class="mb-5"></div>
@@ -59,6 +73,37 @@
                 <div id="table-print-transactions" class="table-responsive">
                     <table class="table table-striped {{ $tableClass }}" data-show-print="true">
                         <thead>
+                            @if($shouldShowBalanceColumn)
+                                <tr>
+                                    <?php $colspanMonth = !isRole('owner') ? 9 : 7; ?>
+                                    <th colspan="{{ $colspanMonth }}">
+                                        @if(isset($_GET['month']) && $_GET['year'])
+                                            {{ $months[(int)$_GET['month']] }}
+                                            -
+                                            {{ $_GET['year'] }}
+                                        @endif
+                                    </th>
+
+                                    <?php $colspanYear = !isRole('owner') ? 4 : 3; ?>
+                                    <th colspan="{{ $colspanYear }}">
+                                        {{ __('Previous Balance') }}: &nbsp;&nbsp;
+
+                                        <?php
+                                            $isUnderAverage = false;
+
+                                            if(isset($rows[0]) && isset($rows[0]->propertyManagement)) {
+                                                $isUnderAverage = $rows[0]->propertyManagement->average_month > $balanceCount;
+                                            }
+
+                                            $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                        ?>
+
+                                        <span class="{{ $underAverageClass }}">
+                                            {{ priceFormat($balanceCount) }}
+                                        </span>
+                                    </th>
+                                </tr>
+                            @endif
 
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
