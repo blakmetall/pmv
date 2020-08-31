@@ -18,6 +18,7 @@ class PropertyManagement extends Model {
         'end_date',
         'average_month',
         'is_finished',
+        'initial_balance',
     ];
 
     public function transactions() {

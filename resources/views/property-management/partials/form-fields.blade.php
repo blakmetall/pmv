@@ -53,6 +53,14 @@
             'required' => true,
         ])
 
+        <!-- initial_balance -->
+        @include('components.form.input', [
+            'group' => 'property-management',
+            'label' => __('Initial balance') . ' MXN',
+            'name' => 'initial_balance',
+            'value' => $row->initial_balance,
+        ])
+
         <!-- is_finished -->
         @include('components.form.checkbox', [
             'group' => 'property-management',

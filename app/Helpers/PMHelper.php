@@ -4,9 +4,20 @@ namespace App\Helpers;
 
 use Config;
 use App\Models\PropertyManagementTransaction;
+use App\Models\PropertyManagement;
 
 class PMHelper
 {
+    public static function getInitialBalance($pmID) {
+        $pm = PropertyManagement::find($pmID);
+        
+        if($pm) {
+            return $pm->initial_balance;
+        }
+
+        return 0;
+    }
+
     public static function getTotalCredit($pmID, $config = []) {
         $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
         $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
@@ -63,15 +74,17 @@ class PMHelper
     public static function getBalance($pmID, $config = []) {
         $baseConfig = $config;
 
+        $initialBalance = self::getInitialBalance($pmID);
+
         $config = array_merge($baseConfig, ['skipNotAudited' => true]);
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
-        $balance = $totalCredit - $totalCharge;
+        $balance = $initialBalance + $totalCredit - $totalCharge;
 
         $config = array_merge($baseConfig, ['skipAudited' => true]);
         $totalCredit = self::getTotalCredit($pmID, $config);
         $totalCharge = self::getTotalCharge($pmID, $config);
-        $pendingAudit = $totalCredit - $totalCharge;
+        $pendingAudit = $initialBalance + $totalCredit - $totalCharge;
 
         return [
             'balance' => $balance,
