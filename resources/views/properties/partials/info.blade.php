@@ -30,38 +30,6 @@
                         </div>
                         <div class="col-sm-6 col-md-7 text-left text-md-right app-property-info-icons">
 
-                           <!-- property notes -->
-                            <a 
-                                role="button"
-                                href="{{ route('property-notes', $property->id) }}" 
-                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
-                                title="{{ __('Notes') }}"
-                                alt="{{ __('Notes') }}">
-                                <i class="nav-icon i-Notepad font-weight-bold"></i>
-                            </a>
-
-                            <!-- property contacts -->
-                            <a 
-                                role="button"
-                                href="{{ route('property-contacts', $property->id) }}" 
-                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
-                                title="{{ __('Contacts') }}"
-                                alt="{{ __('Contacts') }}">
-                                <i class="nav-icon i-Administrator font-weight-bold"></i>
-                            </a>
-
-                            <!-- property rates -->
-                            @if( !isRole('owner') )
-                                <a 
-                                    role="button"
-                                    href="{{ route('property-rates', $property->id) }}" 
-                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
-                                    title="{{ __('Rates') }}"
-                                    alt="{{ __('Rates') }}">
-                                    <i class="nav-icon i-Money-2 font-weight-bold"></i>
-                                </a>
-                            @endif
-
                             <!-- property images -->
                             @if( !isRole('owner') )
                                 <a 
@@ -83,6 +51,69 @@
                                     title="{{ __('Reservations') }}"
                                     alt="{{ __('Reservations') }}">
                                     <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
+                                </a>
+                            @endif
+
+                            <!-- property rates -->
+                            @if( !isRole('owner') )
+                                <a 
+                                    role="button"
+                                    href="{{ route('property-rates', $property->id) }}" 
+                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
+                                    title="{{ __('Rates') }}"
+                                    alt="{{ __('Rates') }}">
+                                    <i class="nav-icon i-Money-2 font-weight-bold"></i>
+                                </a>
+                            @endif
+
+                            <!-- property policies -->
+                            <a 
+                                href="{{ route('maintenance') }}" 
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
+                                title="{{ __('Policies') }}"
+                                alt="{{ __('Policies') }}">
+                                <i class="nav-icon i-Files font-weight-bold"></i>
+                            </a>
+
+                            <!-- property contacts -->
+                            <a 
+                                role="button"
+                                href="{{ route('property-contacts', $property->id) }}" 
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
+                                title="{{ __('Contacts') }}"
+                                alt="{{ __('Contacts') }}">
+                                <i class="nav-icon i-Administrator font-weight-bold"></i>
+                            </a>
+
+                            <!-- property notes -->
+                            <a 
+                                role="button"
+                                href="{{ route('property-notes', $property->id) }}" 
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
+                                title="{{ __('Notes') }}"
+                                alt="{{ __('Notes') }}">
+                                <i class="nav-icon i-Notepad font-weight-bold"></i>
+                            </a>
+
+                            <!-- property calendar -->
+                            @if( !isRole('owner') )
+                                <a 
+                                    href="{{ route('property-calendar', $property->id) }}" 
+                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
+                                    title="{{ __('Calendar') }}"
+                                    alt="{{ __('Calendar') }}">
+                                    <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
+                                </a>
+                            @endif
+
+                            <!-- property preview -->
+                            @if( !isRole('owner') )
+                                <a 
+                                    href="{{ route('maintenance') }}"
+                                    class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
+                                    title="{{ __('Preview') }}"
+                                    alt="{{ __('Preview') }}">
+                                    <i class="nav-icon i-Right font-weight-bold"></i>
                                 </a>
                             @endif
 

@@ -125,7 +125,7 @@
                                             <a 
                                                 {{-- comenté la url temporalmente para poner que no funcione el link de momento --}}
                                                 {{-- href="{{ route('bookings.by-property', $row->property->id) }}"  --}}
-                                                href="#" 
+                                                href="{{ route('maintenance') }}" 
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Reservations') }}"
                                                 alt="{{ __('Reservations') }}">
@@ -144,14 +144,7 @@
                                             </a>
                                         @endif
 
-                                        <!-- property policies -->
-                                        <a 
-                                            href="#" 
-                                            class="text-primary app-icon-link"
-                                            title="{{ __('Policies') }}"
-                                            alt="{{ __('Policies') }}">
-                                            <i class="nav-icon i-Files font-weight-bold"></i>
-                                        </a>
+                                        
 
                                         <!-- property contacts -->
                                         <a 
@@ -185,7 +178,7 @@
                                         <!-- property preview -->
                                         @if( !isRole('owner') )
                                             <a 
-                                                href="#"
+                                                href="{{ route('maintenance') }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Preview') }}"
                                                 alt="{{ __('Preview') }}">

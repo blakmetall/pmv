@@ -446,13 +446,28 @@ function initCleaningServicesModalHandler() {
     var url = container.data("url");
     modal.on("show.bs.modal", function (e) {
       var propertyID = $(e.relatedTarget).data("property");
+      var maidFee = $(e.relatedTarget).data("maid-fee");
+      var loadFee = $(e.relatedTarget).data("load-fee");
       var propertyDate = $(e.relatedTarget).data("date");
       $.get(url, function (html) {
+        console.log(maidFee);
         container.html(html).promise().done(function () {
           modal.modal("handleUpdate");
           Object(_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__["initDatepickerComponents"])();
           setTimeout(function () {
             $("#field_cleaning-service_property_id_").val(propertyID);
+
+            if (loadFee) {
+              $("#field_cleaning-service_maid_fee_").val(maidFee);
+            }
+
+            if (maidFee == "0.00" || maidFee == "") {
+              $(".maid_fee").hide();
+            } else {
+              $(".maid_fee").show();
+            }
+
+            $("#maid_fee_base span").html(maidFee);
             $("#field_cleaning-service_date_").val(propertyDate);
           }, 500);
         });

@@ -84,7 +84,7 @@
         'label' => __('Period End Date'),
         'name' => 'period_end_date',
         'value' => $row->period_end_date,
-        'maxDaysLimitFromNow' => 360,
+        'maxDaysLimitFromNow' => 730,
         ])
 
         <!-- description -->

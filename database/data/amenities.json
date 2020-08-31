@@ -1181,5 +1181,44 @@
                 "name": "Lavadora"
             }
         ]
+    },
+    {
+        "id": 92,
+        "translations": [
+            {
+                "language_id": 1,
+                "name": "Wireless Internet"
+            },
+            {
+                "language_id": 2,
+                "name": "Internet Wifi"
+            }
+        ]
+    },
+    {
+        "id": 93,
+        "translations": [
+            {
+                "language_id": 1,
+                "name": "Wifi in Common Areas"
+            },
+            {
+                "language_id": 2,
+                "name": "Wifi en Áreas Comunes"
+            }
+        ]
+    },
+    {
+        "id": 94,
+        "translations": [
+            {
+                "language_id": 1,
+                "name": "Wireless speaker for phone or iPad"
+            },
+            {
+                "language_id": 2,
+                "name": "Altavoz inalámbrico para teléfono o iPad"
+            }
+        ]
     }
 ]

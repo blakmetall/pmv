@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{ PropertiesRepositoryInterface, PropertyManagementTransactionsRepositoryInterface };
+use App\Repositories\{PropertiesRepositoryInterface, PropertyManagementTransactionsRepositoryInterface};
 
 class DashboardController extends Controller
 {
@@ -13,8 +13,7 @@ class DashboardController extends Controller
     public function __construct(
         PropertiesRepositoryInterface $propertiesRepository,
         PropertyManagementTransactionsRepositoryInterface $pmTransactionsRepository
-    )
-    {
+    ) {
         $this->middleware('auth');
         $this->pmTransactionsRepository = $pmTransactionsRepository;
         $this->propertiesRepository = $propertiesRepository;
@@ -34,10 +33,10 @@ class DashboardController extends Controller
         // properties
         $properties = [];
         $showProperties = true;
-        if($topFilter != '' && $topFilter != 'properties') {
+        if ($topFilter != '' && $topFilter != 'properties') {
             $showProperties = false;
         }
-        if($showProperties) {
+        if ($showProperties) {
             $config = [
                 'filterByWorkgroup' => true,
             ];
@@ -47,10 +46,10 @@ class DashboardController extends Controller
         // transactions
         $transactions = [];
         $showTransactions = true;
-        if($topFilter != '' && $topFilter != 'transactions') {
+        if ($topFilter != '' && $topFilter != 'transactions') {
             $showTransactions = false;
         }
-        if($showTransactions) {
+        if ($showTransactions) {
             $config = [];
             $transactions = $this->pmTransactionsRepository->all($search, $config);
         }
@@ -60,5 +59,10 @@ class DashboardController extends Controller
             ->with('showProperties', $showProperties)
             ->with('transactions', $transactions)
             ->with('showTransactions', $showTransactions);
+    }
+
+    public function maintenance()
+    {
+        return view('dashboard.maintenance');
     }
 }

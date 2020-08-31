@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function home(Request $request)
     {

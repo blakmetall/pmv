@@ -24,7 +24,6 @@ class AccountController extends Controller
 
     public function update(Request $request)
     {
-        dd('asasas');
         $user = Auth::user();
 
         $this->validation->validate('edit', $request, $user->id);

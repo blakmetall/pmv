@@ -53,7 +53,7 @@
                                 @endphp
                                 <td class="cleaning-td-days">
                                     <div class="cleaning-td-content">
-                                        <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalID }}" class="btn-add-service">
+                                        <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-maid-fee="{{ $item->property->maid_fee }}" data-load-fee="true" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalID }}" class="btn-add-service">
                                             <i class="i-Add"></i>
                                         </a>
 
@@ -70,7 +70,7 @@
                                                         $status = ($cleaning_service->is_finished)?'finished':'open';
                                                     @endphp
                                                     @if($d->format('d') == $i)
-                                                        <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalEditID }}" class="cleaning-td-service cleaning-td-service-<?=$status?>">
+                                                        <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-maid-fee="{{ $item->property->maid_fee }}" data-load-fee="false" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalEditID }}" class="cleaning-td-service cleaning-td-service-<?=$status?>">
                                                             #{{ $cleaning_service->id }}
                                                         </a>
                                                     @endif
