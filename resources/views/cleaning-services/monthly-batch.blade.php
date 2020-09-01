@@ -49,7 +49,7 @@
 
                             @for($i = 1; $i <= $daysInMonth; $i++)
                                 @php
-                                    $zero = ($i < 9)?'0':'';
+                                    $zero = ($i < 10)?'0':'';
                                 @endphp
                                 <td class="cleaning-td-days">
                                     <div class="cleaning-td-content">
