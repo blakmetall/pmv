@@ -552,7 +552,6 @@ class RoleHelper
                     'admin',
                     'accounting',
                     'administrative-assistant',
-                    'owner'
                 ]),
             ]
         ];

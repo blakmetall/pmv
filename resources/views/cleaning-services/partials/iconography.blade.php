@@ -2,9 +2,6 @@
 
     <div class="card">
         <div class="card-body">
-            <div class="title-iconography">
-                <?=__('Cleaning Frecuency')?>
-            </div>
             <div class="icons-frecuency">
                 <div class="icon-item">
                     <div class="square-clean" style="background-color:green">
@@ -47,18 +44,7 @@
                     <div class="icon-desc"><?=__('N/A')?></div>
                 </div>
             </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="container app-container mb-5">
-
-    <div class="card">
-        <div class="card-body">
-            <div class="title-iconography">
-                <?=__('Cleaning Status')?>
-            </div>
+            <br>
             <div class="icons-frecuency">
                 <div class="icon-item">
                     <div class="icon-desc"><?=__('VL - Empty Clean')?></div>
