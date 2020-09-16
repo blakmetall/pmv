@@ -1,4 +1,5 @@
 import { initDatepickerComponents } from "./initDatepickerComponents.js";
+import { initFastSelectComponents } from "./initFastSelectComponents.js";
 
 export function initCleaningServicesModalHandler() {
     var modals = $(".app-cleaning-service-modal");
@@ -15,14 +16,55 @@ export function initCleaningServicesModalHandler() {
             let loadFee = $(e.relatedTarget).data("load-fee");
             let propertyDate = $(e.relatedTarget).data("date");
             $.get(url, function(html) {
-                console.log(maidFee);
                 container
                     .html(html)
                     .promise()
                     .done(function() {
                         modal.modal("handleUpdate");
                         initDatepickerComponents();
+                        initFastSelectComponents();
                         setTimeout(function() {
+                            const maidFee = $(
+                                "#field_cleaning-service_maid_fee_"
+                            ).val();
+                            $("#field_property_status_ids_").change(function() {
+                                if ($.inArray("8", $(this).val()) != -1) {
+                                    $("#field_cleaning-service_maid_fee_").val(
+                                        0
+                                    );
+                                } else {
+                                    $("#field_cleaning-service_maid_fee_").val(
+                                        maidFee
+                                    );
+                                }
+                                setTimeout(function() {
+                                    $(".fstChoiceRemove").each(function() {
+                                        $(this).on("click", function() {
+                                            let text = $(this)
+                                                .parent(".fstChoiceItem")
+                                                .data("value");
+                                            if (text === 8) {
+                                                $(
+                                                    "#field_cleaning-service_maid_fee_"
+                                                ).val(maidFee);
+                                            }
+                                        });
+                                    });
+                                }, 500);
+                            });
+
+                            $(".fstChoiceRemove").each(function() {
+                                $(this).on("click", function() {
+                                    let text = $(this)
+                                        .parent(".fstChoiceItem")
+                                        .data("value");
+                                    if (text === 8) {
+                                        $(
+                                            "#field_cleaning-service_maid_fee_"
+                                        ).val(maidFee);
+                                    }
+                                });
+                            });
                             $("#field_cleaning-service_property_id_").val(
                                 propertyID
                             );

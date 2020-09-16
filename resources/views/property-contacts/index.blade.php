@@ -1,20 +1,22 @@
 @extends('layouts.horizontal-master')
 
 @section('heading-content')
-    @php 
+    @php
         $actions = [];
 
-        $actions = array_merge($actions, [
-            [
-                'label' => __('Create Contact'),
-                'url' => route('contacts.create'),
-            ],
-            [
-                'label' => __('Assign Contacts'),
-                'url' => route('property-contacts.create', [$property->id]),
-                'icon' => 'i-Add-User',
-            ]
-        ]);
+        if (!isRole('owner')){
+            $actions = array_merge($actions, [
+                [
+                    'label' => __('Create Contact'),
+                    'url' => route('contacts.create'),
+                ],
+                [
+                    'label' => __('Assign Contacts'),
+                    'url' => route('property-contacts.create', [$property->id]),
+                    'icon' => 'i-Add-User',
+                ]
+            ]);
+        }
     @endphp
 
     @include('components.heading', [
@@ -40,7 +42,7 @@
     <!-- here the data is loaded -->
     @include('property-contacts.partials.table', [
         'label' => __('Contacts'),
-        'rows' => $contacts
+        'rows' => $property->contacts()->paginate()
     ])
 
 @endsection

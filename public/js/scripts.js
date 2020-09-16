@@ -202,7 +202,36 @@ $(function () {
     });
   });
   $("#cleaning-option-batch-year-select").change(function () {
-    $(this).closest('form').submit();
+    $(this).closest("form").submit();
+  });
+  var maidFee = $("#field_cleaning-service_maid_fee_").val();
+  $("#field_property_status_ids_").change(function () {
+    if ($.inArray("8", $(this).val()) != -1) {
+      $("#field_cleaning-service_maid_fee_").val(0);
+    } else {
+      $("#field_cleaning-service_maid_fee_").val(maidFee);
+    }
+
+    setTimeout(function () {
+      $(".fstChoiceRemove").each(function () {
+        $(this).on("click", function () {
+          var text = $(this).parent(".fstChoiceItem").data("value");
+
+          if (text === 8) {
+            $("#field_cleaning-service_maid_fee_").val(maidFee);
+          }
+        });
+      });
+    }, 500);
+  });
+  $(".fstChoiceRemove").each(function () {
+    $(this).on("click", function () {
+      var text = $(this).parent(".fstChoiceItem").data("value");
+
+      if (text === 8) {
+        $("#field_cleaning-service_maid_fee_").val(maidFee);
+      }
+    });
   }); /////////////////////////////
   /////////////////////////////
 
@@ -210,13 +239,16 @@ $(function () {
     $(".hover-action").each(function () {
       var item = $(this);
       item.click(function () {
-        var tr = $(this).closest('tr');
+        $(".clicked").each(function (i, v) {
+          $(v).removeClass("clicked");
+        });
+        var tr = $(this).closest("tr");
 
         if (tr.length) {
-          if (tr.hasClass('clicked')) {
-            tr.removeClass('clicked');
+          if (tr.hasClass("clicked")) {
+            tr.removeClass("clicked");
           } else {
-            tr.addClass('clicked');
+            tr.addClass("clicked");
           }
         }
       });
@@ -455,6 +487,8 @@ function initCalendar() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initCleaningServicesModalHandler", function() { return initCleaningServicesModalHandler; });
 /* harmony import */ var _initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
+/* harmony import */ var _initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
+
 
 function initCleaningServicesModalHandler() {
   var modals = $(".app-cleaning-service-modal");
@@ -469,11 +503,40 @@ function initCleaningServicesModalHandler() {
       var loadFee = $(e.relatedTarget).data("load-fee");
       var propertyDate = $(e.relatedTarget).data("date");
       $.get(url, function (html) {
-        console.log(maidFee);
         container.html(html).promise().done(function () {
           modal.modal("handleUpdate");
           Object(_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__["initDatepickerComponents"])();
+          Object(_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_1__["initFastSelectComponents"])();
           setTimeout(function () {
+            var maidFee = $("#field_cleaning-service_maid_fee_").val();
+            $("#field_property_status_ids_").change(function () {
+              if ($.inArray("8", $(this).val()) != -1) {
+                $("#field_cleaning-service_maid_fee_").val(0);
+              } else {
+                $("#field_cleaning-service_maid_fee_").val(maidFee);
+              }
+
+              setTimeout(function () {
+                $(".fstChoiceRemove").each(function () {
+                  $(this).on("click", function () {
+                    var text = $(this).parent(".fstChoiceItem").data("value");
+
+                    if (text === 8) {
+                      $("#field_cleaning-service_maid_fee_").val(maidFee);
+                    }
+                  });
+                });
+              }, 500);
+            });
+            $(".fstChoiceRemove").each(function () {
+              $(this).on("click", function () {
+                var text = $(this).parent(".fstChoiceItem").data("value");
+
+                if (text === 8) {
+                  $("#field_cleaning-service_maid_fee_").val(maidFee);
+                }
+              });
+            });
             $("#field_cleaning-service_property_id_").val(propertyID);
 
             if (loadFee) {

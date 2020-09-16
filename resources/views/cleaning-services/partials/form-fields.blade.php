@@ -24,14 +24,29 @@
             'maxDaysLimitFromNow' => 365,
         ])
 
+        <!-- status -->
+        @include('components.form.fast-select', [
+            'group' => 'property',
+            'label' => __('Status'),
+            'multiple' => true,
+            'name' => 'status_ids',
+            'disableDefaultOption' => true,
+            'options' => prepareSelectValuesFromRows($status, [
+                'valueRef' => 'id'
+            ]),
+            'default' => prepareSelectDefaultValues($row->cleaningServicesStatus, [
+                'valueRef' => 'id',
+            ]),
+        ])
+
         <!-- hours -->
-        @include('components.form.timepicker', [
+        {{-- @include('components.form.timepicker', [
             'group' => 'cleaning-service',
             'label' => __('Hour'),
             'name' => 'hour',
             'value' => $row->hour,
             'timeInterval' => 15,
-        ])
+        ]) --}}
 
         <!-- description -->
         @include('components.form.textarea', [

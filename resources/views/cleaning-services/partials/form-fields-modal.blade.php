@@ -1,7 +1,6 @@
 <!-- fields form -->
 <div class="card">
     <div class="card-body">
-
         <!-- property_id -->
         @include('components.form.input', [
             'group' => 'cleaning-service',
@@ -21,14 +20,29 @@
             'maxDaysLimitFromNow' => 365,
         ])
 
-        <!-- hours -->
+        <!-- status -->
+        @include('components.form.fast-select', [
+            'group' => 'property',
+            'label' => __('Status'),
+            'multiple' => true,
+            'name' => 'status_ids',
+            'disableDefaultOption' => true,
+            'options' => prepareSelectValuesFromRows($status, [
+                'valueRef' => 'id'
+            ]),
+            'default' => prepareSelectDefaultValues($row->cleaningServicesStatus, [
+                'valueRef' => 'id',
+            ]),
+        ])
+
+        {{-- <!-- hours -->
         @include('components.form.timepicker', [
             'group' => 'cleaning-service',
             'label' => __('Hour'),
             'name' => 'hour',
             'value' => $row->hour,
             'timeInterval' => 15,
-        ])
+        ]) --}}
 
         <!-- description -->
         @include('components.form.textarea', [

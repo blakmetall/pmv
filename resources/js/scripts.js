@@ -135,7 +135,41 @@ $(function() {
     });
 
     $("#cleaning-option-batch-year-select").change(function() {
-        $(this).closest('form').submit();
+        $(this)
+            .closest("form")
+            .submit();
+    });
+
+    const maidFee = $("#field_cleaning-service_maid_fee_").val();
+    $("#field_property_status_ids_").change(function() {
+        if ($.inArray("8", $(this).val()) != -1) {
+            $("#field_cleaning-service_maid_fee_").val(0);
+        } else {
+            $("#field_cleaning-service_maid_fee_").val(maidFee);
+        }
+        setTimeout(function() {
+            $(".fstChoiceRemove").each(function() {
+                $(this).on("click", function() {
+                    let text = $(this)
+                        .parent(".fstChoiceItem")
+                        .data("value");
+                    if (text === 8) {
+                        $("#field_cleaning-service_maid_fee_").val(maidFee);
+                    }
+                });
+            });
+        }, 500);
+    });
+
+    $(".fstChoiceRemove").each(function() {
+        $(this).on("click", function() {
+            let text = $(this)
+                .parent(".fstChoiceItem")
+                .data("value");
+            if (text === 8) {
+                $("#field_cleaning-service_maid_fee_").val(maidFee);
+            }
+        });
     });
 
     /////////////////////////////
@@ -146,13 +180,16 @@ $(function() {
             var item = $(this);
 
             item.click(function() {
-                var tr = $(this).closest('tr');
+                $(".clicked").each(function(i, v) {
+                    $(v).removeClass("clicked");
+                });
+                var tr = $(this).closest("tr");
 
-                if(tr.length){
-                    if(tr.hasClass('clicked')) {
-                        tr.removeClass('clicked');
-                    }else{
-                        tr.addClass('clicked');
+                if (tr.length) {
+                    if (tr.hasClass("clicked")) {
+                        tr.removeClass("clicked");
+                    } else {
+                        tr.addClass("clicked");
                     }
                 }
             });

@@ -121,7 +121,7 @@
                                         @endif
 
                                         <!-- bookings from specific to property -->
-                                        @if( !isRole('owner') && !isProduction())
+                                        @if(!isProduction())
                                             <a 
                                                 {{-- comenté la url temporalmente para poner que no funcione el link de momento --}}
                                                 {{-- href="{{ route('bookings.by-property', $row->property->id) }}"  --}}
@@ -144,8 +144,6 @@
                                             </a>
                                         @endif
 
-                                        
-
                                         <!-- property contacts -->
                                         <a 
                                             href="{{ route('property-contacts', $row->property->id) }}" 
@@ -156,24 +154,24 @@
                                         </a>
 
                                         <!-- property notes -->
-                                        <a 
-                                            href="{{ route('property-notes', $row->property->id) }}" 
-                                            class="text-primary app-icon-link"
-                                            title="{{ __('Notes') }}"
-                                            alt="{{ __('Notes') }}">
-                                            <i class="nav-icon i-Notepad font-weight-bold"></i>
-                                        </a>
-
-                                        <!-- property calendar -->
                                         @if( !isRole('owner') )
                                             <a 
-                                                href="{{ route('property-calendar', $row->property->id) }}" 
+                                                href="{{ route('property-notes', $row->property->id) }}" 
                                                 class="text-primary app-icon-link"
-                                                title="{{ __('Calendar') }}"
-                                                alt="{{ __('Calendar') }}">
-                                                <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
+                                                title="{{ __('Notes') }}"
+                                                alt="{{ __('Notes') }}">
+                                                <i class="nav-icon i-Notepad font-weight-bold"></i>
                                             </a>
                                         @endif
+
+                                        <!-- property calendar -->
+                                        <a 
+                                            href="{{ route('property-calendar', $row->property->id) }}" 
+                                            class="text-primary app-icon-link"
+                                            title="{{ __('Calendar') }}"
+                                            alt="{{ __('Calendar') }}">
+                                            <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
+                                        </a>
 
                                         <!-- property preview -->
                                         @if( !isRole('owner') )
@@ -187,13 +185,15 @@
                                         @endif
                                         
                                         <!-- property management -->
-                                        <a 
-                                            href="{{ route('property-management', $row->property->id) }}" 
-                                            class="text-primary app-icon-link"
-                                            title="{{ __('Property Management') }}"
-                                            alt="{{ __('Property Management') }}">
-                                            <i class="nav-icon i-Building font-weight-bold"></i>
-                                        </a>
+                                        @if( !isRole('owner') )
+                                            <a 
+                                                href="{{ route('property-management', $row->property->id) }}" 
+                                                class="text-primary app-icon-link"
+                                                title="{{ __('Property Management') }}"
+                                                alt="{{ __('Property Management') }}">
+                                                <i class="nav-icon i-Building font-weight-bold"></i>
+                                            </a>
+                                        @endif
 
                                     </td>
 

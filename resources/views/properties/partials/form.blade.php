@@ -20,6 +20,12 @@
         'row' => $row
     ])
 
+    <!-- load rates fields -->
+    @include('properties.partials.form-rates', [
+        'label' => __('RATES'),
+        'row' => $row
+    ])
+
     <!-- load regular fields -->
     @include('properties.partials.form-fields', [
         'label' => __('SHARED'),

@@ -104,18 +104,21 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
         $cleaning_service->save();
 
+        // status assignation
+        $cleaning_service->cleaningServicesStatus()->sync($request->status_ids);
+
         // $property = Property::find($request->property_id)->first();
         $property = $cleaning_service->property;
-        if($property) {
+        if ($property) {
             $cleaning_staff_ids = [];
             if ($property->cleaning_staff_ids) {
                 foreach ($property->cleaning_staff_ids as $staff_id) {
-                    if(HumanResource::where('id', $staff_id)->count()) {
+                    if (HumanResource::where('id', $staff_id)->count()) {
                         $cleaning_staff_ids[] = $staff_id;
                     }
                 }
             }
-    
+
             // cleaning_staff assignation
             if ($cleaning_staff_ids && is_array($cleaning_staff_ids) && count($cleaning_staff_ids)) {
                 $cleaning_service->cleaningStaff()->sync($cleaning_staff_ids);

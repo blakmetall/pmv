@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CleaningServicesRepositoryInterface;
+use App\Repositories\CleaningServicesStatusRepositoryInterface;
 use App\Repositories\HumanResourcesRepositoryInterface;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Models\CleaningService;
+use App\Models\CleaningServiceStatus;
 use Carbon\Carbon;
 
 class CleaningServicesController extends Controller
@@ -14,15 +16,18 @@ class CleaningServicesController extends Controller
     private $repository;
     private $propertiesRepository;
     private $humanResourcesRepository;
+    private $cleaningServicesStatusRepository;
 
     public function __construct(
         CleaningServicesRepositoryInterface $repository,
+        CleaningServicesStatusRepositoryInterface $cleaningServicesStatusRepository,
         HumanResourcesRepositoryInterface $humanResourcesRepository,
         PropertiesRepositoryInterface $propertiesRepository
     ) {
         $this->repository           = $repository;
         $this->propertiesRepository = $propertiesRepository;
         $this->humanResourcesRepository = $humanResourcesRepository;
+        $this->cleaningServicesStatusRepository = $cleaningServicesStatusRepository;
     }
 
     public function index(Request $request)
@@ -54,9 +59,12 @@ class CleaningServicesController extends Controller
 
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
+        $status = $this->cleaningServicesStatusRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
+
         return view('cleaning-services.create')
             ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
+            ->with('status', $status)
             ->with('cleaning_service', $cleaning_service);
     }
 
@@ -80,9 +88,12 @@ class CleaningServicesController extends Controller
         $properties = $this->propertiesRepository->all('', ['paginate' => false]);
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
+        $status = $this->cleaningServicesStatusRepository->all('', '');
+
         return view('cleaning-services.show')
             ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
+            ->with('status', $status)
             ->with('cleaning_service', $cleaning_service);
     }
 
@@ -98,9 +109,12 @@ class CleaningServicesController extends Controller
 
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
+        $status = $this->cleaningServicesStatusRepository->all('', '');
+
         return view('cleaning-services.edit')
             ->with('properties', $properties)
             ->with('cleaning_staff', $cleaning_staff)
+            ->with('status', $status)
             ->with('cleaning_service', $cleaning_service);
     }
 
@@ -179,9 +193,12 @@ class CleaningServicesController extends Controller
 
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
+        $status = $this->cleaningServicesStatusRepository->all('', '');
+
         return view('cleaning-services.create-ajax')
             ->with('cleaning_staff', $cleaning_staff)
             ->with('cleaning_service', $cleaning_service)
+            ->with('status', $status)
             ->with('withModal', true);
     }
 
@@ -195,9 +212,12 @@ class CleaningServicesController extends Controller
 
         $cleaning_staff = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
+        $status = $this->cleaningServicesStatusRepository->all('', '');
+
         return view('cleaning-services.edit-ajax')
             ->with('cleaning_staff', $cleaning_staff)
             ->with('withModal', true)
+            ->with('status', $status)
             ->with('cleaning_service', $cleaning_service);
     }
 }

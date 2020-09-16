@@ -80,6 +80,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\CleaningServicesStatusRepositoryInterface::class,
+            \App\Repositories\CleaningServicesStatusRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\ContactsRepositoryInterface::class,
             \App\Repositories\ContactsRepository::class
         );
