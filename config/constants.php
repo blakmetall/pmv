@@ -15,6 +15,7 @@ return [
         'concierge' => 10,
         'owner' => 11,
         'regular' => 12,
+        'human-resources' => 13,
     ],
 
     'pagination' => [

@@ -58,7 +58,7 @@ class UsersRepository implements UsersRepositoryInterface
         }
 
         $query
-            ->with('profile')  
+            ->with('profile')
             ->orderBy('email', 'asc');
 
         if($shouldPaginate) {
@@ -66,7 +66,7 @@ class UsersRepository implements UsersRepositoryInterface
         }else{
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -85,13 +85,13 @@ class UsersRepository implements UsersRepositoryInterface
     public function save(Request $request, $id = '')
     {
         $is_new = ! $id;
-        
+
         if($is_new){
             $user = $this->blueprint();
         }else{
             $user = $this->find($id);
         }
-        
+
         $checkboxesConfig = ['is_enabled' => 0];
         $requestData = array_merge($checkboxesConfig, $request->all());
 
@@ -109,7 +109,7 @@ class UsersRepository implements UsersRepositoryInterface
 
         // roles assignation
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
-            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
             $roles_to_assign = [];
             foreach ($request->roles_ids as $role_id) {
                 $hasValidRole = in_array($role_id, $validRolesIds);
@@ -119,7 +119,7 @@ class UsersRepository implements UsersRepositoryInterface
             }
 
             // attach super admin role when super admin edits himself
-            if ($user->id == 1) {   
+            if ($user->id == 1) {
                 $roles_to_assign[] = 1;
             }
 
@@ -156,11 +156,11 @@ class UsersRepository implements UsersRepositoryInterface
 
         return $user;
     }
-    
+
     public function delete($id)
     {
         $user = $this->model->find($id);
-        
+
         if ($user) {
             $user->profile->delete();
             $user->roles()->sync([]);
@@ -178,21 +178,21 @@ class UsersRepository implements UsersRepositoryInterface
             if ($user->properties()->count()) {
                 return false;
             }
-    
+
             if ($user->bookings()->count()) {
                 return false;
             }
-    
+
             if ($user->agentBookings()->count()) {
                 return false;
             }
-    
+
             if ($user->reservationRequests()->count()) {
                 return false;
             }
         }
 
-        return ($id > 1); // to not delete super admin 
+        return ($id > 1); // to not delete super admin
     }
 
     public function blueprint()

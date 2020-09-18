@@ -348,7 +348,43 @@
                     </table>
                 </div>
             @else
-                {{ __('No transactions found.') }}
+                <div id="table-print-transactions" class="table-responsive">
+                    <table class="table table-striped {{ $tableClass }}" data-show-print="true">
+                        <thead>
+                            @if($shouldShowBalanceColumn)
+                                <tr>
+                                    <?php $colspanMonth = !isRole('owner') ? 9 : 7; ?>
+                                    <th colspan="{{ $colspanMonth }}">
+                                        @if(isset($_GET['month']) && $_GET['year'])
+                                            {{ $months[(int)$_GET['month']] }}
+                                            -
+                                            {{ $_GET['year'] }}
+                                        @endif
+                                    </th>
+
+                                    <?php $colspanYear = !isRole('owner') ? 4 : 3; ?>
+                                    <th colspan="{{ $colspanYear }}">
+                                        {{ __('Previous Balance') }}: &nbsp;&nbsp;
+
+                                        <?php
+                                            $isUnderAverage = false;
+
+                                            if(isset($pm)) {
+                                                $isUnderAverage = $pm->average_month > $balanceCount;
+                                            }
+
+                                            $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                        ?>
+
+                                        <span class="{{ $underAverageClass }}">
+                                            {{ priceFormat($balanceCount) }}
+                                        </span>
+                                    </th>
+                                </tr>
+                            @endif
+                        </thead>
+                    </table>
+                </div>
             @endif
 
         </div>
@@ -544,7 +580,7 @@
 
                                         <!-- property -->
                                         <td>
-                                            @if($row->propertyManagement->property->hasTranslation())
+                                            @if($row->propertyManagement && $row->propertyManagement->property && $row->propertyManagement->property->hasTranslation())
                                                 <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
                                                     {{ $row->propertyManagement->property->translate()->name }}
                                                 </a>

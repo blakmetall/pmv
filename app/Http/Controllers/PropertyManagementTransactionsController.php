@@ -99,6 +99,23 @@ class PropertyManagementTransactionsController extends Controller
         ];
         $transactions = $this->repository->all($search, $config);
 
+        // obtiene las transacciones a elegir para el buscador de acuerdo a filtros de búsqueda mandados
+        $config = [
+            'filterByPendingAudits' => !!$request->filterByPendingAudits,
+            'paginate' => false,
+            'filterByProperty' => $request->property,
+            'filterByCity' => $request->city,
+            'filterByImage' => $request->withImage,
+        ];
+        $pendingTransactions = $this->repository->all($search, $config);
+        $transationTypesOptionsIds = false;
+        if($pendingTransactions) {
+            $transationTypesOptionsIds = [];
+            foreach($pendingTransactions as $pt) {
+                $transationTypesOptionsIds[] = $pt->transaction_type_id;
+            }
+        }
+
         // for search filters
         $properties = $this->propertiesRepository->all('', [
             'paginate' => false,
@@ -119,7 +136,8 @@ class PropertyManagementTransactionsController extends Controller
             ->with('transactionTypes', $transactionTypes)
             ->with('paymentTypes', $paymentTypes)
             ->with('cities', $cities)
-            ->with('search', $search);
+            ->with('search', $search)
+            ->with('transationTypesOptionsIds', $transationTypesOptionsIds);
     }
 
     public function create(PropertyManagement $pm)
@@ -200,7 +218,7 @@ class PropertyManagementTransactionsController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
-            
+
             if(isset($request->year)) {
                 return redirect()->back();
             }
@@ -219,7 +237,7 @@ class PropertyManagementTransactionsController extends Controller
             foreach ($property->management as $pm) {
                 if (!$pm->is_finished) {
                     $transaction = $this->repository->saveMonthly($property, $pm->id);
-                    
+
                     $request->session()->flash('success', __('Record deleted successfully'));
                     return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
                 }

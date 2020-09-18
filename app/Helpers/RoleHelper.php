@@ -11,7 +11,7 @@ class RoleHelper
 {
     /**
      * Get the current user role configured in profile
-     * 
+     *
      * @return Illuminate\Database\Eloquent\Model object or false
      */
     public static function current()
@@ -40,7 +40,7 @@ class RoleHelper
 
     /**
      * Get the user roles available
-     * 
+     *
      * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
      */
     public static function available($user_id = false)
@@ -90,13 +90,12 @@ class RoleHelper
 
     /**
      * Checks if role is allowed for a speficic section, subsection and section listing
-     * 
+     *
      * @return bool
      */
     public static function isAllowed($role_id, $section, $sub, $sections)
     {
         if (isset($sections[$section]) && isset($sections[$section][$sub])) {
-
             if (in_array($role_id, $sections[$section][$sub])) {
                 return true;
             }
@@ -106,7 +105,7 @@ class RoleHelper
     }
 
     /**
-     * @return Array List of url sections with their subsections 
+     * @return Array List of url sections with their subsections
      *               and their allowed roles ids per section
      */
     public static function getAllowedSections()
@@ -503,7 +502,6 @@ class RoleHelper
                     'admin',
                     'accounting',
                     'administrative-assistant',
-                    'owner'
                 ]),
                 'users' => self::transformSluggedRolesToIds([
                     'super',
@@ -560,13 +558,12 @@ class RoleHelper
     }
 
     /**
-     * $roles_slug_list Array of role slugs 
-     * 
+     * $roles_slug_list Array of role slugs
+     *
      * @return Array List of roles ids
      */
     public static function transformSluggedRolesToIds($roles_slug_list)
     {
-
         $base_roles = [
             'super' => 1,
             'admin' => 2,
@@ -580,13 +577,13 @@ class RoleHelper
             'concierge' => 10,
             'owner' => 11,
             'regular' => 12,
+            'human-resources' => 13,
         ];
 
         $roles_ids = [];
 
         if (is_array($roles_slug_list) && count($roles_slug_list)) {
             foreach ($roles_slug_list as $role_slug) {
-
                 if (isset($base_roles[$role_slug])) {
                     $roles_ids[] = $base_roles[$role_slug];
                 }

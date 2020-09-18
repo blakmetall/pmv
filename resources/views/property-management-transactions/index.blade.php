@@ -2,7 +2,7 @@
 
 @section('heading-content')
 
-    @php 
+    @php
         $actions = [];
 
         if(!isRole('owner')) {
@@ -47,6 +47,7 @@
         'rows' => $transactions,
         'currentBalance' => $currentBalance,
         'useBalancePresentation' => true,
+        'pm' => $pm,
     ])
 
 @endsection

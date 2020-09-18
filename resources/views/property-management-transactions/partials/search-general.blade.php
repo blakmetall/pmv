@@ -9,6 +9,11 @@
     $searchedTransaction = isset($_GET['transaction_type']) ? $_GET['transaction_type'] : '';
     $searchedCity = isset($_GET['city']) ? $_GET['city'] : '';
 
+    $filterTransactionTypes = false;
+    if($transationTypesOptionsIds !== false){
+        $filterTransactionTypes = true;
+    }
+
 @endphp
 
 <div class="container app-container mb-5">
@@ -28,8 +33,8 @@
 
                             @if($properties)
                                 @foreach($properties as $translatedProperty)
-                                    @php 
-                                        $selected = $searchedProperty == $translatedProperty->property_id ? 'selected' : ''; 
+                                    @php
+                                        $selected = $searchedProperty == $translatedProperty->property_id ? 'selected' : '';
                                     @endphp
 
                                     <option value="{{ $translatedProperty->property_id }}" {{ $selected }}>
@@ -45,8 +50,17 @@
 
                             @if($transactionTypes)
                                 @foreach($transactionTypes as $translatedTransactionType)
-                                    @php 
-                                        $selected = $searchedTransaction == $translatedTransactionType->transaction_type_id ? 'selected' : ''; 
+                                    @php
+                                        $selected = $searchedTransaction == $translatedTransactionType->transaction_type_id ? 'selected' : '';
+                                    @endphp
+
+                                    @php
+                                        // show only transaction types options according to found transactions
+                                        if($filterTransactionTypes){
+                                            if(!in_array($translatedTransactionType->transaction_type_id, $transationTypesOptionsIds)) {
+                                                continue;
+                                            }
+                                        }
                                     @endphp
 
                                     <option value="{{ $translatedTransactionType->transaction_type_id }}" {{ $selected }}>
@@ -62,8 +76,8 @@
 
                             @if($cities)
                                 @foreach($cities as $city)
-                                    @php 
-                                        $selected = $searchedCity == $city->id ? 'selected' : ''; 
+                                    @php
+                                        $selected = $searchedCity == $city->id ? 'selected' : '';
                                     @endphp
 
                                     <option value="{{ $city->id }}" {{ $selected }}>
@@ -81,11 +95,11 @@
                                 $withImageOptions = [
                                     1 => __('With Image'),
                                     2 => __('Without Image'),
-                                ]; 
+                                ];
                             @endphp
                             @foreach($withImageOptions as $value => $label)
-                                @php 
-                                    $selected = isset($_GET['withImage']) && $_GET['withImage'] == $value ? 'selected' : ''; 
+                                @php
+                                    $selected = isset($_GET['withImage']) && $_GET['withImage'] == $value ? 'selected' : '';
                                 @endphp
 
                                 <option value="{{ $value }}" {{ $selected }}>
