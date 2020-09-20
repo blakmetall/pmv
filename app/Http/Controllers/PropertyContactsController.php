@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ ContactsRepositoryInterface };
+use App\Repositories\{ContactsRepositoryInterface};
 use Illuminate\Http\Request;
 use App\Models\Property;
 
@@ -17,14 +17,17 @@ class PropertyContactsController extends Controller
 
     public function index(Request $request, Property $property)
     {
-        $contacts = 
+        $contacts =
             $property
-                ->contacts()
-                ->orderBy('firstname', 'asc')
-                ->orderBy('lastname', 'asc')
-                ->get();
+            ->contacts()
+            ->orderBy('firstname', 'asc')
+            ->orderBy('lastname', 'asc')
+            ->where('contact_type', '!=', 'home-owner')
+            ->paginate();
 
+        $owner = $property->user;
         return view('property-contacts.index')
+            ->with('owner', $owner)
             ->with('contacts', $contacts)
             ->with('property', $property)
             ->with('search', '');

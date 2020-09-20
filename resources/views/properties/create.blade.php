@@ -2,8 +2,10 @@
 
 @section('heading-content')
 
-    @include('components.heading', [
+    @include('components.heading-modal', [
         'label' => __('New'),
+        'labelUser' => __('New User'),
+        'route' => 'users',
         'breadcrumbs' => [
             [
                 'url' => route('properties'),

@@ -6,7 +6,7 @@ use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
-use App\Models\{ Profile, Role, User };
+use App\Models\{Profile, Role, User};
 use App\Validations\UsersValidations;
 
 class UsersRepository implements UsersRepositoryInterface
@@ -27,16 +27,15 @@ class UsersRepository implements UsersRepositoryInterface
         $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
 
         if ($search) {
-            $query = User::
-                where('email', 'like', "%".$search."%")
-                    ->orWhereHas('profile', function($query) use ($search) {
-                        $query
-                            ->where('profiles.firstname', 'like', $search)
-                            ->orWhere('profiles.lastname', 'like', $search)
-                            ->orWhere('profiles.country', 'like', $search)
-                            ->orWhere('profiles.state', 'like', $search)
-                            ->orWhere('profiles.city', 'like', $search)
-                            ->orWhere('profiles.street', 'like', $search);
+            $query = User::where('email', 'like', "%" . $search . "%")
+                ->orWhereHas('profile', function ($query) use ($search) {
+                    $query
+                        ->where('profiles.firstname', 'like', $search)
+                        ->orWhere('profiles.lastname', 'like', $search)
+                        ->orWhere('profiles.country', 'like', $search)
+                        ->orWhere('profiles.state', 'like', $search)
+                        ->orWhere('profiles.city', 'like', $search)
+                        ->orWhere('profiles.street', 'like', $search);
                 })
                 ->orWhere('id', $search);
         } else {
@@ -44,16 +43,16 @@ class UsersRepository implements UsersRepositoryInterface
         }
 
         if ($ownersOnly) {
-            $query->whereHas('roles', function($q) {
+            $query->whereHas('roles', function ($q) {
                 $table = (new Role)->_getTable();
-                $q->whereIn($table.'.id', [config('constants.roles.owner')]);
+                $q->whereIn($table . '.id', [config('constants.roles.owner')]);
             });
         }
 
         if ($agentsOnly) {
-            $query->whereHas('roles', function($q) {
+            $query->whereHas('roles', function ($q) {
                 $table = (new Role)->_getTable();
-                $q->whereIn($table.'.id', [config('constants.roles.rentals-agent')]);
+                $q->whereIn($table . '.id', [config('constants.roles.rentals-agent')]);
             });
         }
 
@@ -61,9 +60,9 @@ class UsersRepository implements UsersRepositoryInterface
             ->with('profile')
             ->orderBy('email', 'asc');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
 
@@ -84,11 +83,11 @@ class UsersRepository implements UsersRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
-        if($is_new){
+        if ($is_new) {
             $user = $this->blueprint();
-        }else{
+        } else {
             $user = $this->find($id);
         }
 
@@ -171,10 +170,11 @@ class UsersRepository implements UsersRepositoryInterface
         return $user;
     }
 
-    public function canDelete($id) {
+    public function canDelete($id)
+    {
         $user = $this->find($id);
 
-        if($user) {
+        if ($user) {
             if ($user->properties()->count()) {
                 return false;
             }

@@ -21,8 +21,10 @@
         }
     @endphp
 
-     @include('components.heading', [
+     @include('components.heading-modal', [
         'label' => __('Edit'),
+        'labelUser' => __('New User'),
+        'route' => 'users',
         'breadcrumbs' => [
             [
                 'url' => route('properties'),

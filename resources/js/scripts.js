@@ -195,4 +195,56 @@ $(function() {
             });
         });
     }
+    /////////////////////////////
+    /////////////////////////////
+    function modalForm(form) {
+        var modal_form = false;
+        $(document).on("submit", form, function(e) {
+            e.preventDefault();
+            var form = $(this);
+
+            if (!modal_form) {
+                // modal_form = true;
+                var action = $(this).attr("action");
+                var req = $(this).serializeArray();
+                $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        )
+                    },
+                    type: "POST",
+                    url: action,
+                    dataType: "json",
+                    data: req
+                })
+                    .done(function(data) {
+                        $(".modal-backdrop").fadeOut();
+                        $(".modal").fadeOut();
+                        $("body").removeClass("modal-open");
+                        $("#errors-modal").fadeOut();
+                        $.each(data.users.data, function(key, value) {
+                            $("select[name='user_id']").append(
+                                `<option value="${value.id}">${value.profile.firstname} ${value.profile.lastname}</option>`
+                            );
+                        });
+                        $("select[name='user_id']").append(
+                            `<option value="${data.user.user_id}" selected>${data.user.firstname} ${data.user.lastname}</option>`
+                        );
+                        modal_form = false;
+                    })
+                    .fail(function(error) {
+                        console.log(error);
+                        const errors = JSON.parse(error.responseText).errors;
+                        $("#errors-modal").empty();
+                        $.each(errors, function(key, value) {
+                            $("#errors-modal").fadeIn(() => {
+                                $("#errors-modal").append(`<li>${value}</li>`);
+                            });
+                        });
+                    });
+            }
+        });
+    }
+    modalForm("#store-ajax");
 });

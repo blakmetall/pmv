@@ -3,6 +3,8 @@
     $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : [];
     $actions = isset($actions) ? $actions : [];
     $modalID = 'contact-create-' . strtotime('now') . rand(1,99999);
+    $labelUser = isset($labelUser) ? $labelUser : $label;
+    $route = isset($route) ? $route.'.partials.modal-create' : 'contacts.partials.modal-create';
  @endphp
  
  <!-- heading -->
@@ -43,11 +45,11 @@
                             <i class="nav-icon i-Add"></i>
                         </span>
                         <span class="ul-btn__text">
-                           {{ __('New') }}
+                           {{ $labelUser }}
                         </span>
                     </a>
                     
-                    @include('contacts.partials.modal-create')
+                    @include($route)
 
                     @if (is_array($actions) && count($actions) )
                         @foreach($actions as $action)

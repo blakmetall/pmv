@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class UsersValidations extends Validation
-{  
+{
     public function __construct()
     {
         $this->setDefaultValidations([
@@ -26,10 +26,10 @@ class UsersValidations extends Validation
     {
         $eventValidations = [];
         $customValidationMessages = [];
-        
+
         $shouldUseDefaultValidations = true;
 
-        switch($validateEvent)   {
+        switch ($validateEvent) {
             case 'create':
                 $eventValidations = [
                     'email' => [
@@ -39,7 +39,7 @@ class UsersValidations extends Validation
                     ],
                     'password' => 'required|confirmed|min:6',
                 ];
-            break;
+                break;
             case 'edit':
                 $eventValidations = [
                     'email' => [
@@ -49,16 +49,16 @@ class UsersValidations extends Validation
                     ],
                     'password' => 'nullable|confirmed|min:6'
                 ];
-            break;
+                break;
             case 'edit-agent':
                 $eventValidations = [
                     'profile.config_agent_commission' => 'integer|between:0,100',
                 ];
                 $shouldUseDefaultValidations = false;
-            break;
+                break;
         }
-        
-        if($shouldUseDefaultValidations) {
+
+        if ($shouldUseDefaultValidations) {
             $validations = array_merge($this->getDefaultValidations(), $eventValidations);
         } else {
             $validations = $eventValidations;

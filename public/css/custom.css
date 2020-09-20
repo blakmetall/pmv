@@ -32,3 +32,15 @@
 .icon-item {
     display: flex;
 }
+
+.app-form-checkbox-label {
+    display: table;
+}
+
+#errors-modal {
+    display: none;
+    text-align: initial;
+    padding: 40px;
+    background-color: #ff5050;
+    color: #fff;
+}

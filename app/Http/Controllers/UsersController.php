@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\{ UsersRepositoryInterface, RolesRepositoryInterface, WorkgroupsRepositoryInterface };
+use App\Repositories\{UsersRepositoryInterface, RolesRepositoryInterface, WorkgroupsRepositoryInterface};
 use App\Models\{Profile, User};
 use Illuminate\Support\Facades\Password;
 
@@ -14,7 +14,7 @@ class UsersController extends Controller
     private $workgroupsRepository;
 
     public function __construct(
-        UsersRepositoryInterface $repository, 
+        UsersRepositoryInterface $repository,
         RolesRepositoryInterface $rolesRepository,
         WorkgroupsRepositoryInterface $workgroupsRepository
     ) {
@@ -42,11 +42,30 @@ class UsersController extends Controller
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
-        foreach($workgroups as $index => $workgroup) {
+        foreach ($workgroups as $index => $workgroup) {
             $workgroups[$index]->name = $workgroup->city->name;
         }
 
         return view('users.create')
+            ->with('user', $user)
+            ->with('roles', $roles)
+            ->with('workgroups', $workgroups);
+    }
+
+    public function createAjax()
+    {
+        $user = $this->repository->blueprint();
+        $user->profile = new Profile;
+
+        $rolesConfig = ['skipSuperAdmin' => true];
+        $roles = $this->rolesRepository->all('', $rolesConfig);
+
+        $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
+        foreach ($workgroups as $index => $workgroup) {
+            $workgroups[$index]->name = $workgroup->city->name;
+        }
+
+        return view('users.create-ajax')
             ->with('user', $user)
             ->with('roles', $roles)
             ->with('workgroups', $workgroups);
@@ -57,12 +76,30 @@ class UsersController extends Controller
         $user = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
-        if($request->request_password_reset) {
+        if ($request->request_password_reset) {
             $resetToken = Password::broker()->createToken($user);
             $user->sendPasswordResetNotification($resetToken);
         }
 
         return redirect(route('users.edit', [$user->id]));
+    }
+
+    public function storeAjax(Request $request)
+    {
+        $users = $this->repository->all('');
+        $user = $this->repository->create($request);
+        $request->session()->flash('success', __('Record created successfully'));
+
+        if ($request->request_password_reset) {
+            $resetToken = Password::broker()->createToken($user);
+            $user->sendPasswordResetNotification($resetToken);
+        }
+
+        $app = app();
+        $data = $app->make('stdClass');
+        $data->users = $users;
+        $data->user = $user->profile;
+        return response()->json($data);
     }
 
     public function show(User $user)
@@ -73,7 +110,7 @@ class UsersController extends Controller
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
-        foreach($workgroups as $index => $workgroup) {
+        foreach ($workgroups as $index => $workgroup) {
             $workgroups[$index]->name = $workgroup->city->name;
         }
 
@@ -95,7 +132,7 @@ class UsersController extends Controller
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
-        foreach($workgroups as $index => $workgroup) {
+        foreach ($workgroups as $index => $workgroup) {
             $workgroups[$index]->name = $workgroup->city->name;
         }
 
@@ -109,12 +146,12 @@ class UsersController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('users.edit', [$id]) );
+        return redirect(route('users.edit', [$id]));
     }
 
     public function destroy(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('users'));

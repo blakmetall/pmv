@@ -271,10 +271,12 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('', 'UsersController@index')->name('users');
                     Route::get('create', 'UsersController@create')->name('users.create');
                     Route::post('store', 'UsersController@store')->name('users.store');
+                    Route::post('storeAjax', 'UsersController@storeAjax')->name('users.store-ajax');
                     Route::get('show/{user}', 'UsersController@show')->name('users.show');
                     Route::get('edit/{user}', 'UsersController@edit')->name('users.edit');
                     Route::post('update/{id}', 'UsersController@update')->name('users.update');
                     Route::get('destroy/{id}', 'UsersController@destroy')->name('users.destroy');
+                    Route::get('createAjax', 'UsersController@createAjax')->name('users.create-ajax');
                 });
             });
 

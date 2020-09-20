@@ -42,7 +42,7 @@
     <!-- here the data is loaded -->
     @include('property-contacts.partials.table', [
         'label' => __('Contacts'),
-        'rows' => $property->contacts()->paginate()
+        'rows' => $contacts
     ])
 
 @endsection
