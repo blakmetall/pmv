@@ -149,6 +149,12 @@ class PropertiesController extends Controller
             ->with('propertyTypes', $propertyTypes);
     }
 
+    public function getBonus(Request $request)
+    {
+        $property = Property::where('id', $request->id)->first();
+        return response()->json($property->cleaning_sunday_bonus);
+    }
+
     public function edit(Property $property)
     {
         $property = $this->repository->find($property);

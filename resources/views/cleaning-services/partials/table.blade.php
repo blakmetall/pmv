@@ -15,7 +15,7 @@
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Staff') }}</th>
                         <th scope="col">{{ __('Date') }}</th>
-                        <th scope="col">{{ __('Hour') }}</th>
+                        <th scope="col">{{ __('Maid Fee') }}</th>
 
                         @if(!isProduction())
                             <th scope="col">{{ __('Booking') }}</th>
@@ -58,8 +58,8 @@
                                 <!-- date -->
                                 <td>{{ $row->date }}</td>
 
-                                <!-- hours -->
-                                <td>{{ $row->hour }}</td>
+                                <!-- total_cost -->
+                                <td>${{ number_format($row->total_cost, 2) }}</td>
 
                                 @if(!isProduction())
                                     <!-- booking_id -->

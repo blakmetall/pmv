@@ -214,10 +214,21 @@
         <!-- maid_fee -->
         @include('components.form.input', [
             'group' => 'property',
+            'type' => 'number',
             'label' => __('Maid Fee'),
             'name' => 'maid_fee',
             'required' => true,
             'value' => $row->maid_fee
+        ])
+
+        <!-- cleaning_sunday_bonus -->
+        @include('components.form.number', [
+            'group' => 'property',
+            'type' => 'number',
+            'label' => __('Sunday Bonus'),
+            'name' => 'cleaning_sunday_bonus',
+            'required' => true,
+            'value' => $row->cleaning_sunday_bonus,
         ])
 
         <!-- cleaning_staff_ids -->

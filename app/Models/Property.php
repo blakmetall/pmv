@@ -37,6 +37,7 @@ class Property extends Model
         'address',
         'gmaps_lat',
         'gmaps_lon',
+        'cleaning_sunday_bonus',
     ];
 
     protected $casts = [

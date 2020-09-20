@@ -2,6 +2,7 @@ import { initConfirmClick } from "./scripts/initConfirmClick.js";
 import { getViewport } from "./scripts/getViewport.js";
 import { handleMenuFit } from "./scripts/handleMenuFit.js";
 import { initCalendar } from "./scripts/initCalendar.js";
+import { getBonus } from "./scripts/getBonus.js";
 import { initDatepickerComponents } from "./scripts/initDatepickerComponents.js";
 import { initFastSelectComponents } from "./scripts/initFastSelectComponents.js";
 import { initGetPmPropertySelectionEvent } from "./scripts/initGetPmPropertySelectionEvent.js";
@@ -196,6 +197,7 @@ $(function() {
         });
     }
     /////////////////////////////
+    //Form for create new user//
     /////////////////////////////
     function modalForm(form) {
         var modal_form = false;
@@ -247,4 +249,14 @@ $(function() {
         });
     }
     modalForm("#store-ajax");
+    ///////////////////////////////
+    //Verify Day for Sundar Bonus//
+    ///////////////////////////////
+    function changeProperty() {
+        $("#field_cleaning-service_property_id_").change(function() {
+            let date = new Date($("input[name='date_submit']").val()).getDay();
+            getBonus($(this).val(), date);
+        });
+    }
+    changeProperty();
 });

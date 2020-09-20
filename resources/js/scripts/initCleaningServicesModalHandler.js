@@ -1,5 +1,6 @@
 import { initDatepickerComponents } from "./initDatepickerComponents.js";
 import { initFastSelectComponents } from "./initFastSelectComponents.js";
+import { getBonus } from "./getBonus.js";
 
 export function initCleaningServicesModalHandler() {
     var modals = $(".app-cleaning-service-modal");
@@ -11,10 +12,11 @@ export function initCleaningServicesModalHandler() {
         var url = container.data("url");
 
         modal.on("show.bs.modal", function(e) {
-            let propertyID = $(e.relatedTarget).data("property");
-            let maidFee = $(e.relatedTarget).data("maid-fee");
+            var propertyID = $(e.relatedTarget).data("property");
+            var maidFee = $(e.relatedTarget).data("maid-fee");
             let loadFee = $(e.relatedTarget).data("load-fee");
             let propertyDate = $(e.relatedTarget).data("date");
+            let date = new Date(propertyDate).getDay();
             $.get(url, function(html) {
                 container
                     .html(html)
@@ -24,18 +26,18 @@ export function initCleaningServicesModalHandler() {
                         initDatepickerComponents();
                         initFastSelectComponents();
                         setTimeout(function() {
-                            const maidFee = $(
-                                "#field_cleaning-service_maid_fee_"
-                            ).val();
+                            getBonus(propertyID, date);
                             $("#field_property_status_ids_").change(function() {
                                 if ($.inArray("8", $(this).val()) != -1) {
                                     $("#field_cleaning-service_maid_fee_").val(
                                         0
                                     );
+                                    $("#field_property_sunday_bonus_").val(0);
                                 } else {
                                     $("#field_cleaning-service_maid_fee_").val(
                                         maidFee
                                     );
+                                    getBonus(propertyID, date);
                                 }
                                 setTimeout(function() {
                                     $(".fstChoiceRemove").each(function() {
@@ -47,6 +49,7 @@ export function initCleaningServicesModalHandler() {
                                                 $(
                                                     "#field_cleaning-service_maid_fee_"
                                                 ).val(maidFee);
+                                                getBonus(propertyID, date);
                                             }
                                         });
                                     });

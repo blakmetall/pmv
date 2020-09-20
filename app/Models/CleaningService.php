@@ -20,7 +20,15 @@ class CleaningService extends Model
         'maid_fee',
         'is_finished',
         'notes',
+        'sunday_bonus',
     ];
+
+    // accessor: total_cost
+    public function getTotalCostAttribute()
+    {
+        $total_cost = $this->maid_fee + $this->sunday_bonus;
+        return $total_cost;
+    }
 
     public function cleaningStaff()
     {

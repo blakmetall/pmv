@@ -110,16 +110,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_getViewport_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scripts/getViewport.js */ "./resources/js/scripts/getViewport.js");
 /* harmony import */ var _scripts_handleMenuFit_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./scripts/handleMenuFit.js */ "./resources/js/scripts/handleMenuFit.js");
 /* harmony import */ var _scripts_initCalendar_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scripts/initCalendar.js */ "./resources/js/scripts/initCalendar.js");
-/* harmony import */ var _scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
-/* harmony import */ var _scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
-/* harmony import */ var _scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/initGetPmPropertySelectionEvent.js */ "./resources/js/scripts/initGetPmPropertySelectionEvent.js");
-/* harmony import */ var _scripts_initTransactionCheckboxHandler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./scripts/initTransactionCheckboxHandler.js */ "./resources/js/scripts/initTransactionCheckboxHandler.js");
-/* harmony import */ var _scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./scripts/initMapInputComponents.js */ "./resources/js/scripts/initMapInputComponents.js");
-/* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
-/* harmony import */ var _scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scripts/initTransactionModalHandler.js */ "./resources/js/scripts/initTransactionModalHandler.js");
-/* harmony import */ var _scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./scripts/initContactModalHandler.js */ "./resources/js/scripts/initContactModalHandler.js");
-/* harmony import */ var _scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initCleaningServicesModalHandler.js */ "./resources/js/scripts/initCleaningServicesModalHandler.js");
-/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+/* harmony import */ var _scripts_getBonus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/getBonus.js */ "./resources/js/scripts/getBonus.js");
+/* harmony import */ var _scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
+/* harmony import */ var _scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
+/* harmony import */ var _scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./scripts/initGetPmPropertySelectionEvent.js */ "./resources/js/scripts/initGetPmPropertySelectionEvent.js");
+/* harmony import */ var _scripts_initTransactionCheckboxHandler_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./scripts/initTransactionCheckboxHandler.js */ "./resources/js/scripts/initTransactionCheckboxHandler.js");
+/* harmony import */ var _scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./scripts/initMapInputComponents.js */ "./resources/js/scripts/initMapInputComponents.js");
+/* harmony import */ var _scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scripts/initTimepickerComponents.js */ "./resources/js/scripts/initTimepickerComponents.js");
+/* harmony import */ var _scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./scripts/initTransactionModalHandler.js */ "./resources/js/scripts/initTransactionModalHandler.js");
+/* harmony import */ var _scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initContactModalHandler.js */ "./resources/js/scripts/initContactModalHandler.js");
+/* harmony import */ var _scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./scripts/initCleaningServicesModalHandler.js */ "./resources/js/scripts/initCleaningServicesModalHandler.js");
+/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+
 
 
 
@@ -149,16 +151,16 @@ $(function () {
     Object(_scripts_handleMenuFit_js__WEBPACK_IMPORTED_MODULE_2__["handleMenuFit"])();
     Object(_scripts_initConfirmClick_js__WEBPACK_IMPORTED_MODULE_0__["initConfirmClick"])();
     Object(_scripts_initCalendar_js__WEBPACK_IMPORTED_MODULE_3__["initCalendar"])();
-    Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_4__["initDatepickerComponents"])();
-    Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_5__["initFastSelectComponents"])();
-    Object(_scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_6__["initGetPmPropertySelectionEvent"])();
-    Object(_scripts_initTransactionCheckboxHandler_js__WEBPACK_IMPORTED_MODULE_7__["initTransactionCheckboxHandler"])();
-    Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_8__["initMapInputComponents"])();
-    Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_9__["initTimepickerComponents"])();
-    Object(_scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_10__["initTransactionModalHandler"])();
-    Object(_scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_11__["initContactModalHandler"])();
-    Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_12__["initCleaningServicesModalHandler"])();
-    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_13__["initTooltip"])();
+    Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_5__["initDatepickerComponents"])();
+    Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_6__["initFastSelectComponents"])();
+    Object(_scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_7__["initGetPmPropertySelectionEvent"])();
+    Object(_scripts_initTransactionCheckboxHandler_js__WEBPACK_IMPORTED_MODULE_8__["initTransactionCheckboxHandler"])();
+    Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_9__["initMapInputComponents"])();
+    Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_10__["initTimepickerComponents"])();
+    Object(_scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_11__["initTransactionModalHandler"])();
+    Object(_scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__["initContactModalHandler"])();
+    Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__["initCleaningServicesModalHandler"])();
+    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_14__["initTooltip"])();
     initCleaningMonthlyBatchEvents();
   }
 
@@ -254,6 +256,7 @@ $(function () {
       });
     });
   } /////////////////////////////
+  //Form for create new user//
   /////////////////////////////
 
 
@@ -299,8 +302,57 @@ $(function () {
     });
   }
 
-  modalForm("#store-ajax");
+  modalForm("#store-ajax"); ///////////////////////////////
+  //Verify Day for Sundar Bonus//
+  ///////////////////////////////
+
+  function changeProperty() {
+    $("#field_cleaning-service_property_id_").change(function () {
+      var date = new Date($("input[name='date_submit']").val()).getDay();
+      Object(_scripts_getBonus_js__WEBPACK_IMPORTED_MODULE_4__["getBonus"])($(this).val(), date);
+    });
+  }
+
+  changeProperty();
 });
+
+/***/ }),
+
+/***/ "./resources/js/scripts/getBonus.js":
+/*!******************************************!*\
+  !*** ./resources/js/scripts/getBonus.js ***!
+  \******************************************/
+/*! exports provided: getBonus */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBonus", function() { return getBonus; });
+function getBonus(value, date) {
+  var url = $("#field_property_sunday_bonus_").data("route");
+
+  if (value) {
+    $.ajax({
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      },
+      type: "GET",
+      url: url,
+      dataType: "json",
+      data: {
+        id: value
+      }
+    }).done(function (data) {
+      if (date == 6) {
+        $("#field_property_sunday_bonus_").val(data);
+      } else {
+        $("#field_property_sunday_bonus_").val("0.00");
+      }
+    });
+  } else {
+    $("#field_property_sunday_bonus_").val("0.00");
+  }
+}
 
 /***/ }),
 
@@ -442,17 +494,17 @@ function initCalendar() {
       date = newDate.getDate(),
       month = newDate.getMonth(),
       year = newDate.getFullYear();
-  $('#calendar').fullCalendar({
+  $("#calendar").fullCalendar({
     header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      left: "prev,next today",
+      center: "title",
+      right: "month,agendaWeek,agendaDay"
     },
     themeSystem: "bootstrap4",
     disableDragging: true,
     eventRender: function eventRender(event, element) {
       var status = event.status ? "<i class='nav-icon i-Yes font-weight-bold text-success'></i>" : "<i class='nav-icon i-Close font-weight-bold text-danger'></i>";
-      element.find('.fc-title').html("<div class='status-event'>" + status + "</div>" + " " + event.title);
+      element.find(".fc-title").html("<div class='status-event'>" + status + "</div>" + " " + event.title);
     },
     events: [{
       title: "Project name here",
@@ -534,6 +586,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initCleaningServicesModalHandler", function() { return initCleaningServicesModalHandler; });
 /* harmony import */ var _initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
 /* harmony import */ var _initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./initFastSelectComponents.js */ "./resources/js/scripts/initFastSelectComponents.js");
+/* harmony import */ var _getBonus_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getBonus.js */ "./resources/js/scripts/getBonus.js");
+
 
 
 function initCleaningServicesModalHandler() {
@@ -548,18 +602,21 @@ function initCleaningServicesModalHandler() {
       var maidFee = $(e.relatedTarget).data("maid-fee");
       var loadFee = $(e.relatedTarget).data("load-fee");
       var propertyDate = $(e.relatedTarget).data("date");
+      var date = new Date(propertyDate).getDay();
       $.get(url, function (html) {
         container.html(html).promise().done(function () {
           modal.modal("handleUpdate");
           Object(_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__["initDatepickerComponents"])();
           Object(_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_1__["initFastSelectComponents"])();
           setTimeout(function () {
-            var maidFee = $("#field_cleaning-service_maid_fee_").val();
+            Object(_getBonus_js__WEBPACK_IMPORTED_MODULE_2__["getBonus"])(propertyID, date);
             $("#field_property_status_ids_").change(function () {
               if ($.inArray("8", $(this).val()) != -1) {
                 $("#field_cleaning-service_maid_fee_").val(0);
+                $("#field_property_sunday_bonus_").val(0);
               } else {
                 $("#field_cleaning-service_maid_fee_").val(maidFee);
+                Object(_getBonus_js__WEBPACK_IMPORTED_MODULE_2__["getBonus"])(propertyID, date);
               }
 
               setTimeout(function () {
@@ -569,6 +626,7 @@ function initCleaningServicesModalHandler() {
 
                     if (text === 8) {
                       $("#field_cleaning-service_maid_fee_").val(maidFee);
+                      Object(_getBonus_js__WEBPACK_IMPORTED_MODULE_2__["getBonus"])(propertyID, date);
                     }
                   });
                 });
@@ -672,6 +730,7 @@ function initContactModalHandler() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initDatepickerComponents", function() { return initDatepickerComponents; });
+/* harmony import */ var _getBonus_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBonus.js */ "./resources/js/scripts/getBonus.js");
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -687,6 +746,7 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
+
 function initDatepickerComponents() {
   $(".app-input-datepicker").each(function () {
     var _$$pickadate;
@@ -697,7 +757,11 @@ function initDatepickerComponents() {
     maxSelectionDate.setDate(maxSelectionDate.getDate() + parseInt(maxDaysLimitFromNow));
     $(this).pickadate((_$$pickadate = {
       selectYears: true
-    }, _defineProperty(_$$pickadate, "selectYears", 70), _defineProperty(_$$pickadate, "selectMonths", true), _defineProperty(_$$pickadate, "format", dateFormat), _defineProperty(_$$pickadate, "formatSubmit", dateFormat), _defineProperty(_$$pickadate, "max", maxSelectionDate), _$$pickadate));
+    }, _defineProperty(_$$pickadate, "selectYears", 70), _defineProperty(_$$pickadate, "selectMonths", true), _defineProperty(_$$pickadate, "format", dateFormat), _defineProperty(_$$pickadate, "formatSubmit", dateFormat), _defineProperty(_$$pickadate, "max", maxSelectionDate), _defineProperty(_$$pickadate, "onSet", function onSet(context) {
+      var date = new Date(context.select * 1000).getDay();
+      var propertyID = $("#field_cleaning-service_property_id_").val() || false;
+      Object(_getBonus_js__WEBPACK_IMPORTED_MODULE_0__["getBonus"])(propertyID, date);
+    }), _$$pickadate));
   });
 }
 

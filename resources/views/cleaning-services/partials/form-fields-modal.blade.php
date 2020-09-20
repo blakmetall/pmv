@@ -68,6 +68,16 @@
             </div>
         </div>
 
+        <!-- sunday_bonus -->
+        @include('components.form.number-bonus', [
+            'group' => 'property',
+            'type' => 'number',
+            'label' => __('Sunday Bonus'),
+            'name' => 'sunday_bonus',
+            'required' => true,
+            'value' => $row->sunday_bonus
+        ])
+
         <!-- is_finished -->
         @include('components.form.checkbox', [
             'group' => 'cleaning-service',

@@ -157,11 +157,11 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $amount = 0;
         $description = '';
         foreach ($cleaningServices as $cleaningService) {
-            $amount += $cleaningService->maid_fee;
-            $description .= 
-                "#" . strval($cleaningService->id) . ' - ' . 
-                $cleaningService->date . ' - ' . 
-                '$' . $cleaningService->maid_fee . "\n";
+            $amount += $cleaningService->total_cost;
+            $description .=
+                "#" . strval($cleaningService->id) . ' - ' .
+                $cleaningService->date . ' - ' .
+                '$' . $cleaningService->total_cost . "\n";
         };
         $transaction->property_management_id = $pm;
         $transaction->transaction_type_id = 46;
