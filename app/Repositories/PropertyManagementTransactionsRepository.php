@@ -53,57 +53,57 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                 ->orWhere('description', 'like', '%' . $search . '%');
         } else {
             $query = PropertyManagementTransaction::query();
-        }
+            if ($hasPropertyManagementID) {
+                $query->where('property_management_id', $config['property_management_id']);
+            }
 
-        if ($hasPropertyManagementID) {
-            $query->where('property_management_id', $config['property_management_id']);
-        }
+            if ($shouldFilterByPendingAudits) {
+                $query->whereNull('audit_user_id');
+            }
 
-        if ($shouldFilterByPendingAudits) {
-            $query->whereNull('audit_user_id');
-        }
-
-        if ($shouldFilterByYear && $shouldFilterByMonth) {
-            $query->where(function ($q) use ($config) {
-                $q->where(function ($q2) use ($config) {
-                    $q2->whereYear('post_date', $config['filterByYear']);
-                    $q2->whereMonth('post_date', $config['filterByMonth']);
+            if ($shouldFilterByYear && $shouldFilterByMonth) {
+                $query->where(function ($q) use ($config) {
+                    $q->where(function ($q2) use ($config) {
+                        $q2->whereYear('post_date', $config['filterByYear']);
+                        $q2->whereMonth('post_date', $config['filterByMonth']);
+                    });
+                    $q->orWhereNull('audit_user_id');
                 });
-                $q->orWhereNull('audit_user_id');
-            });
-        }
+            }
 
-        if ($shouldFilterByProperty) {
-            $propertyID = $config['filterByProperty'];
-            $query->whereHas('propertyManagement', function ($q) use ($propertyID) {
-                $q->whereHas('property', function ($q2) use ($propertyID) {
-                    $q2->where('properties.id', $propertyID);
-                });
-            });
-        }
-
-        if ($shouldFilterByCity) {
-            $cityID = $config['filterByCity'];
-            $query->whereHas('propertyManagement', function ($q) use ($cityID) {
-                $q->whereHas('property', function ($q2) use ($cityID) {
-                    $q2->whereHas('city', function ($q3) use ($cityID) {
-                        $q3->where('cities.id', $cityID);
+            if ($shouldFilterByProperty) {
+                $propertyID = $config['filterByProperty'];
+                $query->whereHas('propertyManagement', function ($q) use ($propertyID) {
+                    $q->whereHas('property', function ($q2) use ($propertyID) {
+                        $q2->where('properties.id', $propertyID);
                     });
                 });
-            });
-        }
+            }
 
-        if ($shouldFilterByImage) {
-            if ($shouldFilterByImage == 1) {
-                $query->where('file_url', '!=', '');
-            } elseif ($shouldFilterByImage == 2) {
-                $query->whereNull('file_url');
+            if ($shouldFilterByCity) {
+                $cityID = $config['filterByCity'];
+                $query->whereHas('propertyManagement', function ($q) use ($cityID) {
+                    $q->whereHas('property', function ($q2) use ($cityID) {
+                        $q2->whereHas('city', function ($q3) use ($cityID) {
+                            $q3->where('cities.id', $cityID);
+                        });
+                    });
+                });
+            }
+
+            if ($shouldFilterByImage) {
+                if ($shouldFilterByImage == 1) {
+                    $query->where('file_url', '!=', '');
+                } elseif ($shouldFilterByImage == 2) {
+                    $query->whereNull('file_url');
+                }
+            }
+
+            if ($shouldFilterByTransactionType) {
+                $query->where('transaction_type_id', $config['filterByTransactionType']);
             }
         }
 
-        if ($shouldFilterByTransactionType) {
-            $query->where('transaction_type_id', $config['filterByTransactionType']);
-        }
 
         $query->with('propertyManagement');
         $query->with('auditedBy');
