@@ -64,7 +64,8 @@
         ])
         <div class="form-group row maid_fee">
             <label for="field_cleaning-service_maid_fee_" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10" id="maid_fee_base">Costo base para esta propiedad: $<span></span>
+            <div class="col-sm-10" id="maid_fee_base">
+                <?=__('Base cost for this property')?>: $<span></span>
             </div>
         </div>
 

@@ -238,7 +238,7 @@ class PropertyManagementTransactionsController extends Controller
                 if (!$pm->is_finished) {
                     $transaction = $this->repository->saveMonthly($property, $pm->id);
 
-                    $request->session()->flash('success', __('Record deleted successfully'));
+                    $request->session()->flash('success', __('Record created successfully'));
                     return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
                 }
             }
