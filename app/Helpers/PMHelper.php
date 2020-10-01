@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 
@@ -10,7 +10,7 @@ class PMHelper
 {
     public static function getInitialBalance($pmID) {
         $pm = PropertyManagement::find($pmID);
-        
+
         if($pm) {
             return $pm->initial_balance;
         }
@@ -21,6 +21,7 @@ class PMHelper
     public static function getTotalCredit($pmID, $config = []) {
         $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
         $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
+        $skipOldNotAudited = isset($config['skipOldNotAudited']) ? $config['skipOldNotAudited'] : '';
 
         $query = PropertyManagementTransaction::
             where('property_management_id', $pmID)
@@ -37,8 +38,12 @@ class PMHelper
         if($shouldFilterByYear && $shouldFilterByMonth) {
             $filterDate = $config['filterByYear'] . '-' . $config['filterByMonth'] . '-01';
             $query->where('post_date', '<', $filterDate);
+
+            if($skipOldNotAudited) {
+                $query->whereNotNull('audit_user_id');
+            }
         }
-        
+
         return $query->sum('amount');
     }
 
