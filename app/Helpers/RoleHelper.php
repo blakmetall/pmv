@@ -329,7 +329,7 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                 ]),
-                'index' => self::transformSluggedRolesToIds([
+                'new-transaction' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
                     'property-management',
@@ -337,6 +337,20 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                ]),
+                'transaction-bulk' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
                 ]),
                 'balances' => self::transformSluggedRolesToIds([
                     'super',

@@ -79,19 +79,23 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul class="menu-properties-dropdown">
-                                        @if ($_current_role->isAllowed('property-management', 'index'))
+                                        @if ($_current_role->isAllowed('property-management', 'new-transaction'))
                                             <li class="nav-item">
                                                 <a class="" href="#" data-toggle="modal" data-target="#app-pm-property-selection-modal">
                                                     <span class="item-name">{{ __('New Transaction') }}</span>
                                                 </a>
                                             </li>
+                                        @endif
 
+                                        @if ($_current_role->isAllowed('property-management', 'transaction-bulk'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('property-management-transactions.create-bulk') }}">
                                                     <span class="item-name">{{ __('Transaction Bulk') }}</span>
                                                 </a>
                                             </li>
+                                        @endif
 
+                                        @if ($_current_role->isAllowed('property-management', 'index'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('property-management.general') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
@@ -109,11 +113,11 @@
 
                                         @if ($_current_role->isAllowed('property-management', 'pending-audits'))
                                             {{-- <li class="nav-item">
-                                                @php 
+                                                @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
                                                         'city' => config('constants.cities.bucerias'),
-                                                    ]; 
+                                                    ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Bucerías</span>
@@ -121,11 +125,11 @@
                                             </li> --}}
 
                                             <li class="nav-item">
-                                                @php 
+                                                @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
                                                         'city' => config('constants.cities.mazatlan'),
-                                                    ]; 
+                                                    ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Mazatlan</span>
@@ -133,11 +137,11 @@
                                             </li>
 
                                             {{-- <li class="nav-item">
-                                                @php 
+                                                @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
                                                         'city' => config('constants.cities.nuevo-vallarta'),
-                                                    ]; 
+                                                    ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Nuevo Vallarta</span>
@@ -145,11 +149,11 @@
                                             </li> --}}
 
                                             <li class="nav-item">
-                                                @php 
+                                                @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
                                                         'city' => config('constants.cities.puerto-vallarta'),
-                                                    ]; 
+                                                    ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Puerto Vallarta</span>
@@ -159,11 +163,11 @@
 
 
                                             {{-- <li class="nav-item">
-                                                @php 
+                                                @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
                                                         'city' => config('constants.cities.punta-de-mita'),
-                                                    ]; 
+                                                    ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Punta de Mita</span>
@@ -287,7 +291,7 @@
                                                     </a>
                                                 </li>
                                             @endif
-                                        @endif 
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -463,7 +467,7 @@
                     @endif
 
                     @if (!isProduction() && $_current_role->isAllowed('contractors', 'heading-menu'))
-                        @php 
+                        @php
                             /* DISABLED TEMPORARILY
                             <li>
                                 <div>
@@ -499,7 +503,7 @@
                                     </div>
                                 </div>
                             </li>
-                            */ 
+                            */
                         @endphp
                     @endif
 
