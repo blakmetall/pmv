@@ -3,7 +3,7 @@
 @endphp
 
 <a href="#" class="text-primary app-icon-link mr-1" data-toggle="modal" data-target="#{{ $modalID }}">
-    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+    <img src="/images/edit.gif" style="width: 15px;" />
 </a>
 
 

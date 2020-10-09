@@ -94,7 +94,7 @@ class PropertyManagementTransactionsController extends Controller
             'filterByTransactionType' => $request->transaction_type,
             'filterByCity' => $request->city,
             'filterByImage' => $request->withImage,
-            'orderBy' => $request->orderBy,
+            'orderBy' => $request->orderBy ? $request->orderBy : 'property', // ordenar por propiedad por defecto
             'orderDirection' => $request->orderDirection,
         ];
         $transactions = $this->repository->all($search, $config);
@@ -109,9 +109,9 @@ class PropertyManagementTransactionsController extends Controller
         ];
         $pendingTransactions = $this->repository->all($search, $config);
         $transationTypesOptionsIds = false;
-        if($pendingTransactions) {
+        if ($pendingTransactions) {
             $transationTypesOptionsIds = [];
-            foreach($pendingTransactions as $pt) {
+            foreach ($pendingTransactions as $pt) {
                 $transationTypesOptionsIds[] = $pt->transaction_type_id;
             }
         }
@@ -219,7 +219,7 @@ class PropertyManagementTransactionsController extends Controller
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
 
-            if(isset($request->year)) {
+            if (isset($request->year)) {
                 return redirect()->back();
             }
 

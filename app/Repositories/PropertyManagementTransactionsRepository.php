@@ -121,9 +121,11 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                     $query->join('properties_translations', 'properties_translations.property_id', '=', 'properties.id');
 
                     $direction = $orderByDirectionFilter == 'down' ? 'desc' : 'asc';
-                    $query->orderBy('properties.id', $direction);
+
+                    $query->orderBy('properties_translations.name', $direction);
 
                     $lang = LanguageHelper::current();
+
                     $query->where('properties_translations.language_id', $lang->id);
                 }
             } else {

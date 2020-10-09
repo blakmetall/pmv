@@ -17,15 +17,14 @@
 
 <!-- table image or icon -->
 <a href="#" class="text-primary app-icon-link ml-0 mr-1" title="{{ __('File') }}" alt="{{ __('File') }}" data-toggle="modal" data-target="#{{ $modalID }}">
-
-    @if($useImg)
-        <img src="{{ asset(getUrlPath($imgUrl, $imgSize)) }}" alt="" width="100">
+    @if($fileUrl !== false)
+        <img src="/images/search-on.gif" alt="" style="width: 15px;">
     @else
-        <i class="nav-icon i-Magnifi-Glass- font-weight-bold"></i>
+        <img src="/images/search-off.gif" alt="" style="width: 15px;">
     @endif
-
 </a>
 
+{{-- <i class="nav-icon i-Magnifi-Glass- font-weight-bold"></i> --}}
 
 <!-- file modal -->
 <div class="modal fade" id="{{ $modalID }}" tabindex="-1" role="dialog" aria-hidden="true">

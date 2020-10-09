@@ -192,10 +192,10 @@
                                             <div class="not-print">
                                                 @if($row->file_url)
                                                     @include('components.table.file-modal', [
-                                                    'fileName' => $row->file_original_name,
-                                                    'filePath' => $row->file_path,
-                                                    'fileUrl' => $row->file_url,
-                                                    'fileSlug' => $row->file_slug,
+                                                        'fileName' => $row->file_original_name,
+                                                        'filePath' => $row->file_path,
+                                                        'fileUrl' => $row->file_url,
+                                                        'fileSlug' => $row->file_slug,
                                                     ])
                                                 @endif
 
@@ -549,15 +549,14 @@
 
                                         <!-- edit, file and delete -->
                                         <td>
+                                            @include('components.table.file-modal', [
+                                                'fileName' => $row->file_original_name,
+                                                'filePath' => $row->file_path,
+                                                'fileUrl' => $row->file_url,
+                                                'fileSlug' => $row->file_slug,
+                                            ])
+
                                             <div class="not-print">
-                                                @if($row->file_url)
-                                                    @include('components.table.file-modal', [
-                                                    'fileName' => $row->file_original_name,
-                                                    'filePath' => $row->file_path,
-                                                    'fileUrl' => $row->file_url,
-                                                    'fileSlug' => $row->file_slug,
-                                                    ])
-                                                @endif
 
                                                 @if(!isRole('owner'))
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
