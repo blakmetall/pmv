@@ -2,7 +2,7 @@
     $modalID = 'transaction-edit-' . strtotime('now') . rand(1,99999);
 @endphp
 
-<a href="#" class="text-primary app-icon-link mr-1" data-toggle="modal" data-target="#{{ $modalID }}">
+<a href="#" class="d-inline-block text-primary app-icon-link mr-1" data-toggle="modal" data-target="#{{ $modalID }}">
     <img src="/images/edit.gif" style="width: 15px;" />
 </a>
 

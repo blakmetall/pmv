@@ -203,7 +203,7 @@
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                                     @if(!$usePendingAuditPresentation)
-                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
+                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}" class="text-danger app-icon-link app-confirm" style="position:relative; top: 3px;" data-label="{{ __('Confirm Deletion') }}">
                                                             <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                         </a>
                                                     @endif
@@ -549,20 +549,19 @@
 
                                         <!-- edit, file and delete -->
                                         <td>
-                                            @include('components.table.file-modal', [
-                                                'fileName' => $row->file_original_name,
-                                                'filePath' => $row->file_path,
-                                                'fileUrl' => $row->file_url,
-                                                'fileSlug' => $row->file_slug,
-                                            ])
-
                                             <div class="not-print">
+                                                @include('components.table.file-modal', [
+                                                    'fileName' => $row->file_original_name,
+                                                    'filePath' => $row->file_path,
+                                                    'fileUrl' => $row->file_url,
+                                                    'fileSlug' => $row->file_slug,
+                                                ])
 
                                                 @if(!isRole('owner'))
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                                     @if(!$usePendingAuditPresentation)
-                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}" class="text-danger app-icon-link app-confirm" data-label="{{ __('Confirm Deletion') }}">
+                                                        <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}" class="text-danger app-icon-link app-confirm" style="position:relative; top: 3px;"  data-label="{{ __('Confirm Deletion') }}">
                                                             <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                         </a>
                                                     @endif
@@ -580,9 +579,18 @@
                                         <!-- property -->
                                         <td>
                                             @if($row->propertyManagement && $row->propertyManagement->property && $row->propertyManagement->property->hasTranslation())
-                                                <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
-                                                    {{ $row->propertyManagement->property->translate()->name }}
-                                                </a>
+                                                <div class="d-flex">
+                                                    <div class="pr-2">
+                                                        <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
+                                                            {{ $row->propertyManagement->property->translate()->name }}
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a href="{{ route('property-management-transactions', [$row->propertyManagement->id]) }}" class="text-primary">
+                                                            <i class="nav-icon i-Receipt-3 font-weight-bold" style="font-size: 11px;"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </td>
 
@@ -659,10 +667,10 @@
                                         <span class="not-print">
                                             <!-- created/updated cols -->
                                             @include('components.table.created-updated', [
-                                            'created_at' => $row->created_at,
-                                            'updated_at' => $row->updated_at,
-                                            'trimTime' => true,
-                                            'model' => $row,
+                                                'created_at' => $row->created_at,
+                                                'updated_at' => $row->updated_at,
+                                                'trimTime' => true,
+                                                'model' => $row,
                                             ])
                                         </span>
 
