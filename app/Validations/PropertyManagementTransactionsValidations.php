@@ -5,10 +5,11 @@ namespace App\Validations;
 use Illuminate\Http\Request;
 
 class PropertyManagementTransactionsValidations extends Validation
-{  
+{
     public function __construct()
     {
         $this->setDefaultValidations([
+            'transaction_type_id' => 'required',
             'post_date' => 'required|date_format:Y-m-d',
             'period_start_date' => 'nullable|date_format:Y-m-d',
             'period_end_date' => 'nullable|date_format:Y-m-d',
