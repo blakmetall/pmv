@@ -21,6 +21,17 @@
             'optionLabelRef' => 'profile,full_name',
         ])
 
+        <!-- office_id -->
+        @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('Office'),
+            'name' => 'office_id',
+            'value' => $row->office_id,
+            'options' => $offices,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
+        ])
+
         <!-- state_id -->
         @include('components.form.select', [
             'group' => 'property',
@@ -64,17 +75,6 @@
             'name' => 'building_id',
             'value' => $row->building_id,
             'options' => $buildings,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'name',
-        ])
-
-        <!-- building_id -->
-        @include('components.form.select', [
-            'group' => 'property',
-            'label' => __('Office'),
-            'name' => 'office_id',
-            'value' => $row->office_id,
-            'options' => $offices,
             'optionValueRef' => 'id',
             'optionLabelRef' => 'name',
         ])
