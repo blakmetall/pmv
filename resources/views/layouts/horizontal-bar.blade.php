@@ -112,23 +112,11 @@
                                         @endif
 
                                         @if ($_current_role->isAllowed('property-management', 'pending-audits'))
-                                            {{-- <li class="nav-item">
-                                                @php
-                                                    $routeParams = [
-                                                        'filterByPendingAudits' => 1,
-                                                        'city' => config('constants.cities.bucerias'),
-                                                    ];
-                                                @endphp
-                                                <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                    <span class="item-name">{{ __('Pending Audits') }}: Bucerías</span>
-                                                </a>
-                                            </li> --}}
-
                                             <li class="nav-item">
                                                 @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
-                                                        'city' => config('constants.cities.mazatlan'),
+                                                        'office' => 2,
                                                     ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
@@ -136,43 +124,17 @@
                                                 </a>
                                             </li>
 
-                                            {{-- <li class="nav-item">
-                                                @php
-                                                    $routeParams = [
-                                                        'filterByPendingAudits' => 1,
-                                                        'city' => config('constants.cities.nuevo-vallarta'),
-                                                    ];
-                                                @endphp
-                                                <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                    <span class="item-name">{{ __('Pending Audits') }}: Nuevo Vallarta</span>
-                                                </a>
-                                            </li> --}}
-
                                             <li class="nav-item">
                                                 @php
                                                     $routeParams = [
                                                         'filterByPendingAudits' => 1,
-                                                        'city' => config('constants.cities.puerto-vallarta'),
+                                                        'office' => 1,
                                                     ];
                                                 @endphp
                                                 <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
                                                     <span class="item-name">{{ __('Pending Audits') }}: Puerto Vallarta</span>
                                                 </a>
                                             </li>
-
-
-
-                                            {{-- <li class="nav-item">
-                                                @php
-                                                    $routeParams = [
-                                                        'filterByPendingAudits' => 1,
-                                                        'city' => config('constants.cities.punta-de-mita'),
-                                                    ];
-                                                @endphp
-                                                <a class="" href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                    <span class="item-name">{{ __('Pending Audits') }}: Punta de Mita</span>
-                                                </a>
-                                            </li> --}}
                                         @endif
                                     </ul>
                                 </div>
