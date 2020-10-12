@@ -7,7 +7,7 @@
 
     $searchedProperty = isset($_GET['property']) ? $_GET['property'] : '';
     $searchedTransaction = isset($_GET['transaction_type']) ? $_GET['transaction_type'] : '';
-    $searchedCity = isset($_GET['city']) ? $_GET['city'] : '';
+    $searchedOffice = isset($_GET['office']) ? $_GET['office'] : '';
 
     $filterTransactionTypes = false;
     if($transationTypesOptionsIds !== false){
@@ -25,15 +25,15 @@
                 <input type="hidden" name="filterByPendingAudits" value="{{ isset($_GET['filterByPendingAudits']) ? '1' : '0' }}">
                 <input type="hidden" name="orderBy" value="{{ isset($_GET['orderBy']) ? $_GET['orderBy'] : '' }}">
                 <input type="hidden" name="orderDirection" value="{{ isset($_GET['orderDirection']) ? $_GET['orderDirection'] : '' }}">
-                
+
 
                 <div class="row pt-3">
                     <div class="col-sm-6 col-md-2">
-                        <input 
-                            class="form-control" 
-                            placeholder="{{ __('Search...') }}" 
-                            type="text" 
-                            name="s" 
+                        <input
+                            class="form-control"
+                            placeholder="{{ __('Search...') }}"
+                            type="text"
+                            name="s"
                             value="{{ $textSearched }}"/>
                     </div>
                     <div class="col-sm-6 col-md-2">
@@ -80,17 +80,17 @@
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-2">
-                        <select name="city" class="form-control">
-                            <option value="">-- {{ __('City') }}</option>
+                        <select name="office" class="form-control">
+                            <option value="">-- {{ __('Office') }}</option>
 
-                            @if($cities)
-                                @foreach($cities as $city)
+                            @if($offices)
+                                @foreach($offices as $office)
                                     @php
-                                        $selected = $searchedCity == $city->id ? 'selected' : '';
+                                        $selected = $searchedOffice == $office->id ? 'selected' : '';
                                     @endphp
 
-                                    <option value="{{ $city->id }}" {{ $selected }}>
-                                        {{ $city->name }}
+                                    <option value="{{ $office->id }}" {{ $selected }}>
+                                        {{ $office->name }}
                                     </option>
                                 @endforeach
                             @endif
