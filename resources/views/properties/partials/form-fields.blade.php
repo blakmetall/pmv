@@ -79,6 +79,14 @@
             'optionLabelRef' => 'name',
         ])
 
+        <!-- unit -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Unit'),
+            'name' => 'unit',
+            'value' => $row->unit,
+        ])
+
         <!-- property_type_id -->
         @include('components.form.select', [
             'group' => 'property',
@@ -257,14 +265,74 @@
 
         <hr>
 
-        <!-- address -->
-        @include('components.form.textarea', [
+        <!-- country -->
+        @include('components.form.input', [
             'group' => 'property',
-            'label' => __('Address'),
-            'name' => 'address',
-            'required' => true,
-            'value' => $row->address,
+            'label' => __('Country'),
+            'name' => 'country',
+            'value' => $row->country,
         ])
+
+        <!-- state -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('State'),
+            'name' => 'state',
+            'value' => $row->state,
+        ])
+
+        <!-- city -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('City'),
+            'name' => 'city',
+            'value' => $row->city,
+        ])
+
+        <!-- street -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Street'),
+            'name' => 'street',
+            'value' => $row->street,
+        ])
+
+        <!-- exterior_number -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Exterior Number'),
+            'name' => 'exterior_number',
+            'value' => $row->exterior_number,
+        ])
+
+        <!-- interior_number -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Interior Number'),
+            'name' => 'interior_number',
+            'value' => $row->interior_number,
+        ])
+
+        <!-- address -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Zip'),
+            'name' => 'zip',
+            'value' => $row->zip,
+        ])
+
+
+
+        <?php /* cambiado campo de dirección único a separados
+            <!-- address -->
+            @include('components.form.textarea', [
+                'group' => 'property',
+                'label' => __('Address'),
+                'name' => 'address',
+                'required' => true,
+                'value' => $row->address,
+            ])
+        */ ?>
 
         <!-- google_map -->
         @include('components.form.map', [
