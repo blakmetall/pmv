@@ -17,6 +17,7 @@ class Property extends Model
         'city_id',
         'zone_id',
         'building_id',
+        'office_id',
         'property_type_id',
         'cleaning_option_id',
         'is_featured',
@@ -86,6 +87,11 @@ class Property extends Model
     public function city()
     {
         return $this->belongsTo('App\Models\City');
+    }
+
+    public function office()
+    {
+        return $this->belongsTo('App\Models\Office');
     }
 
     public function zone()

@@ -9,6 +9,7 @@ use App\Repositories\UsersRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
 use App\Repositories\ZonesRepositoryInterface;
 use App\Repositories\BuildingsRepositoryInterface;
+use App\Repositories\OfficesRepositoryInterface;
 use App\Repositories\CleaningOptionsRepositoryInterface;
 use App\Repositories\PropertyTypesRepositoryInterface;
 use App\Repositories\HumanResourcesRepositoryInterface;
@@ -24,6 +25,7 @@ class PropertiesController extends Controller
     private $citiesRepository;
     private $zonesRepository;
     private $buildingsRepository;
+    private $officesRepository;
     private $amenitiesRepository;
     private $humanResourcesRepository;
     private $cleaningOptionsRepository;
@@ -35,6 +37,7 @@ class PropertiesController extends Controller
         CitiesRepositoryInterface $citiesRepository,
         ZonesRepositoryInterface $zonesRepository,
         BuildingsRepositoryInterface $buildingsRepository,
+        OfficesRepositoryInterface $officesRepository,
         AmenitiesRepositoryInterface $amenitiesRepository,
         HumanResourcesRepositoryInterface $humanResourcesRepository,
         CleaningOptionsRepositoryInterface $cleaningOptionsRepository,
@@ -45,6 +48,7 @@ class PropertiesController extends Controller
         $this->citiesRepository = $citiesRepository;
         $this->zonesRepository = $zonesRepository;
         $this->buildingsRepository = $buildingsRepository;
+        $this->officesRepository = $officesRepository;
         $this->humanResourcesRepository = $humanResourcesRepository;
         $this->amenitiesRepository = $amenitiesRepository;
         $this->cleaningOptionsRepository = $cleaningOptionsRepository;
@@ -92,6 +96,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $zones = [];
         $buildings = $this->buildingsRepository->all('', $config);
+        $offices = $this->officesRepository->all('', $config);
         $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
@@ -104,6 +109,7 @@ class PropertiesController extends Controller
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
+            ->with('offices', $offices)
             ->with('hr', $hr)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
@@ -131,6 +137,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
+        $offices = $this->officesRepository->all('', $config);
         $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
         $amenities = $this->amenitiesRepository->all('', $config);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
@@ -143,6 +150,7 @@ class PropertiesController extends Controller
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
+            ->with('offices', $offices)
             ->with('hr', $hr)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
@@ -171,6 +179,7 @@ class PropertiesController extends Controller
         $config = ['paginate' => false];
         $zones = $this->zonesRepository->all('', $config);
         $buildings = $this->buildingsRepository->all('', $config);
+        $offices = $this->officesRepository->all('', $config);
         $amenities = $this->amenitiesRepository->all('', $config);
         $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
@@ -183,6 +192,7 @@ class PropertiesController extends Controller
             ->with('cities', $cities)
             ->with('zones', $zones)
             ->with('buildings', $buildings)
+            ->with('offices', $offices)
             ->with('amenities', $amenities)
             ->with('hr', $hr)
             ->with('cleaningOptions', $cleaningOptions)

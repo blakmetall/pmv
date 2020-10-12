@@ -110,6 +110,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\OfficesRepositoryInterface::class,
+            \App\Repositories\OfficesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\PropertiesRepositoryInterface::class,
             \App\Repositories\PropertiesRepository::class
         );
