@@ -107,14 +107,19 @@
         'fileExtension' => $row->file_extension,
         ])
 
-        <!-- do audit -->
-        @include('components.form.checkbox', [
-        'group' => 'property-management-transaction',
-        'label' => __('Audit'),
-        'name' => 'do_audit',
-        'value' => 1,
-        'default' => !! $row->audit_user_id,
-        ])
+        <?php
+            /* deshabilitado checbkox de auditar en el formulario por solicitud de PMV
+
+            <!-- do audit -->
+            @include('components.form.checkbox', [
+                'group' => 'property-management-transaction',
+                'label' => __('Audit'),
+                'name' => 'do_audit',
+                'value' => 1,
+                'default' => !! $row->audit_user_id,
+            ])
+            */
+        ?>
 
         <!-- audit -->
         @if($row->auditedBy)
