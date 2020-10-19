@@ -134,7 +134,7 @@
 
                                 <!-- transaction -->
                                 <td>
-                                    <select name="bulk[default][transaction_type_id]" class="form-control form-control-sm app-bulk-input">
+                                    <select name="bulk[default][transaction_type_id]" class="form-control form-control-sm app-bulk-input" id="bulk-transaction-name">
                                         <option value="">{{ __('Select') }}</option>
 
                                         @foreach($transactionTypes as $index => $transactionType)
@@ -147,7 +147,7 @@
 
                                 <!-- type -->
                                 <td>
-                                    <select name="bulk[default][operation_type]" class="form-control form-control-sm app-bulk-input">
+                                    <select name="bulk[default][operation_type]" class="form-control form-control-sm app-bulk-input" id="bulk-transaction-type">
                                         <option value="">{{ __('Select') }}</option>
                                         <option value="{{ config('constants.operation_types.charge') }}">
                                             {{ __('Charge') }}
@@ -160,27 +160,27 @@
 
                                 <!-- from -->
                                 <td>
-                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][period_start_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][period_start_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360" id="bulk-transaction-from-date">
                                 </td>
 
                                 <!-- to -->
                                 <td>
-                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][period_end_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][period_end_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360" id="bulk-transaction-to-date">
                                 </td>
 
                                 <!-- post date -->
                                 <td>
-                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][post_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                    <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[default][post_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360" id="bulk-transaction-post-date">
                                 </td>
 
                                 <!-- amount -->
                                 <td>
-                                    <input type="number" class="form-control form-control-sm app-bulk-input" name="bulk[default][amount]">
+                                    <!--<input type="number" class="form-control form-control-sm app-bulk-input" name="bulk[default][amount]">-->
                                 </td>
 
                                 <!-- notes -->
                                 <td>
-                                    <textarea rows="1" class="form-control form-control-sm app-bulk-input" name="bulk[default][description]"></textarea>
+                                    <!--<textarea rows="1" class="form-control form-control-sm app-bulk-input" name="bulk[default][description]"></textarea>-->
                                 </td>
 
                                 <!-- file -->
@@ -194,8 +194,8 @@
 
 
                             <?php
-                                $maxBulk = (count($properties) < 50) ? 50 : count($properties); 
-                                $loopCount = array_fill(0, $maxBulk, null); 
+                                $maxBulk = (count($properties) < 50) ? 50 : count($properties);
+                                $loopCount = array_fill(0, $maxBulk, null);
                             ?>
 
                             @foreach($loopCount as $loopIndex=> $loop)
@@ -225,7 +225,7 @@
 
                                     <!-- transaction -->
                                     <td>
-                                        <select name="bulk[{{ $loopIndex }}][transaction_type_id]" class="form-control form-control-sm app-bulk-input">
+                                        <select name="bulk[{{ $loopIndex }}][transaction_type_id]" class="form-control form-control-sm app-bulk-input bulk-transaction-name">
                                             <option value="">{{ __('Select') }}</option>
 
                                             @foreach($transactionTypes as $index => $transactionType)
@@ -238,7 +238,7 @@
 
                                     <!-- type -->
                                     <td>
-                                        <select name="bulk[{{ $loopIndex }}][operation_type]" class="form-control form-control-sm app-bulk-input">
+                                        <select name="bulk[{{ $loopIndex }}][operation_type]" class="form-control form-control-sm app-bulk-input bulk-transaction-type">
                                             <option value="">{{ __('Select') }}</option>
 
                                             <option value="{{ config('constants.operation_types.charge') }}">
@@ -252,17 +252,17 @@
 
                                     <!-- from -->
                                     <td>
-                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][period_start_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker bulk-transaction-from-date" name="bulk[{{ $loopIndex }}][period_start_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                     </td>
 
                                     <!-- to -->
                                     <td>
-                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][period_end_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker bulk-transaction-to-date" name="bulk[{{ $loopIndex }}][period_end_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                     </td>
 
                                     <!-- post date -->
                                     <td>
-                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker" name="bulk[{{ $loopIndex }}][post_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
+                                        <input type="text" class="form-control form-control-sm app-bulk-input app-input-datepicker bulk-transaction-post-date" name="bulk[{{ $loopIndex }}][post_date]" data-format="yyyy-mm-dd" data-max-days-limit-from-now="360">
                                     </td>
 
                                     <!-- amount -->

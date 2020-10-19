@@ -46,6 +46,7 @@ $(function() {
         initCleaningMonthlyBatchEvents();
 
         initBalancesFinishedHandler();
+        initBulkTransactionsHandler();
     }
 
     function printTable(table, title) {
@@ -288,6 +289,33 @@ $(function() {
         trigger.on('click', function(e) {
             e.preventDefault();
             toggle();
+        });
+    }
+
+    function initBulkTransactionsHandler() {
+        $("#bulk-transaction-name").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-name").val(value);
+        });
+
+        $("#bulk-transaction-type").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-type").val(value);
+        });
+
+        $("#bulk-transaction-from-date").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-from-date").val(value);
+        });
+
+        $("#bulk-transaction-to-date").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-to-date").val(value);
+        });
+
+        $("#bulk-transaction-post-date").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-post-date").val(value);
         });
     }
 });

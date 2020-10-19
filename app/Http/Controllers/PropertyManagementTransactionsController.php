@@ -341,7 +341,7 @@ class PropertyManagementTransactionsController extends Controller
 
             foreach ($request->bulk as $index => $transactionData) {
                 if ($index !== "default") {
-                    if (!$transactionData['property_management_id']) {
+                    if (!$transactionData['property_management_id'] && !$transactionData['amount']) {
                         continue;
                     }
 
@@ -364,14 +364,6 @@ class PropertyManagementTransactionsController extends Controller
 
                     if (!$transactionData['post_date']) {
                         $transactionData['post_date'] = $default['post_date'];
-                    }
-
-                    if (!$transactionData['amount']) {
-                        $transactionData['amount'] = $default['amount'];
-                    }
-
-                    if (!$transactionData['description']) {
-                        $transactionData['description'] = $default['description'];
                     }
 
                     $validator = Validator::make($transactionData, [
