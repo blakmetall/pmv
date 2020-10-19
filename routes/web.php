@@ -331,7 +331,6 @@ Route::group(['middleware' => ['web']], function () {
             // zones
             Route::group(['prefix' => 'zones', 'middleware' => 'role-permission:settings,zones'], function () {
                 Route::get('', 'ZonesController@index')->name('zones');
-                Route::get('list/{city}', 'ZonesController@list')->name('zones.list');
                 Route::get('create', 'ZonesController@create')->name('zones.create');
                 Route::post('store', 'ZonesController@store')->name('zones.store');
                 Route::get('show/{zone}', 'ZonesController@show')->name('zones.show');
@@ -339,6 +338,9 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('update/{id}', 'ZonesController@update')->name('zones.update');
                 Route::get('destroy/{id}', 'ZonesController@destroy')->name('zones.destroy');
             });
+
+            // necesario fuera para obtener listado para lectura sin requerir permisos
+            Route::get('zones/list/{city}', 'ZonesController@list')->name('zones.list');
 
             // buildings
             Route::group(['prefix' => 'buildings', 'middleware' => 'role-permission:settings,buildings'], function () {
