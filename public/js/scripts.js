@@ -162,6 +162,7 @@ $(function () {
     Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__["initCleaningServicesModalHandler"])();
     Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_14__["initTooltip"])();
     initCleaningMonthlyBatchEvents();
+    initBalancesFinishedHandler();
   }
 
   function printTable(table, title) {
@@ -314,6 +315,33 @@ $(function () {
   }
 
   changeProperty();
+
+  function initBalancesFinishedHandler() {
+    var trigger = $("#show_finished_balances");
+
+    var toggle = function toggle() {
+      var status = trigger.data('status');
+      var isOpened = status === 'open';
+
+      if (isOpened) {
+        $(".tr-finished-balance").hide();
+        trigger.data('status', 'closed');
+        var showText = trigger.data('show-text');
+        trigger.text(showText);
+      } else {
+        $(".tr-finished-balance").show();
+        trigger.data('status', 'open');
+        var hideText = trigger.data('hide-text');
+        trigger.text(hideText);
+      }
+    };
+
+    toggle();
+    trigger.on('click', function (e) {
+      e.preventDefault();
+      toggle();
+    });
+  }
 });
 
 /***/ }),
@@ -1128,9 +1156,9 @@ function isViewport(size) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\laravel\pmproject2\resources\js\scripts.js */"./resources/js/scripts.js");
-__webpack_require__(/*! C:\wamp64\www\laravel\pmproject2\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\wamp64\www\laravel\pmproject2\resources\gull\assets\styles\sass\themes\palmera-vacations.scss */"./resources/gull/assets/styles/sass/themes/palmera-vacations.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/js/scripts.js */"./resources/js/scripts.js");
+__webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/gull/assets/styles/sass/themes/palmera-vacations.scss */"./resources/gull/assets/styles/sass/themes/palmera-vacations.scss");
 
 
 /***/ })

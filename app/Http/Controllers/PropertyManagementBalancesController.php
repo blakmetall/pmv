@@ -42,8 +42,15 @@ class PropertyManagementBalancesController extends Controller
 
         if ($pm_items->count()) {
             foreach ($pm_items as $index => $pm_item) {
+
                 $balance = PMHelper::getBalance($pm_item->id);
                 $pm_items[$index]->_balance = $balance;
+
+                // para no tomar calculos de balances de propiedades con property management finalizados
+                // en el listado de balances general
+                if($pm_item->is_finished){
+                    continue;
+                }
 
                 $totalBalances['balances'] += $balance['balance'];
                 $totalBalances['pendingAudits'] += $balance['pendingAudit'];

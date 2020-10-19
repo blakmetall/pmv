@@ -44,6 +44,8 @@ $(function() {
         initTooltip();
 
         initCleaningMonthlyBatchEvents();
+
+        initBalancesFinishedHandler();
     }
 
     function printTable(table, title) {
@@ -259,4 +261,33 @@ $(function() {
         });
     }
     changeProperty();
+
+
+    function initBalancesFinishedHandler() {
+        var trigger = $("#show_finished_balances");
+
+        var toggle = () => {
+            var status = trigger.data('status');
+            var isOpened = status === 'open';
+
+            if(isOpened) {
+                $(".tr-finished-balance").hide();
+                trigger.data('status', 'closed');
+                var showText = trigger.data('show-text');
+                trigger.text(showText);
+            }else{
+                $(".tr-finished-balance").show();
+                trigger.data('status', 'open');
+                var hideText = trigger.data('hide-text');
+                trigger.text(hideText);
+            }
+        }
+
+        toggle();
+
+        trigger.on('click', function(e) {
+            e.preventDefault();
+            toggle();
+        });
+    }
 });

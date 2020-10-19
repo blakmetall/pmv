@@ -2185,6 +2185,11 @@ pre code {
   box-shadow: 0 0 0 0.2rem rgba(44, 62, 79, 0.25);
 }
 
+.form-control::-webkit-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
 .form-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
@@ -11608,6 +11613,10 @@ a.text-dark:focus {
 
 .app-cleaning-table tr.hoverable.clicked:nth-child(odd) {
   background: #ddd;
+}
+
+.tr-finished-balance {
+  background: #efefef !important;
 }
 
 /* alan estilos */
