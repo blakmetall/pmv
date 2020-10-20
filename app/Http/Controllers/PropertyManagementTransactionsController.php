@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Property;
 use App\Models\PropertyManagement;
 use App\Models\PropertyManagementTransaction;
@@ -15,6 +16,8 @@ use App\Helpers\ImagesHelper;
 use App\Helpers\PMHelper;
 use App\Helpers\PMTransactionHelper;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\DetailsTransaction;
+use Illuminate\Support\Facades\Notification;
 use Session;
 
 class PropertyManagementTransactionsController extends Controller
@@ -128,7 +131,7 @@ class PropertyManagementTransactionsController extends Controller
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
 
-        $offices = $this->officesRepository->all('',['paginate' => false]);
+        $offices = $this->officesRepository->all('', ['paginate' => false]);
 
         return view('property-management-transactions.general')
             ->with('transactions', $transactions)
@@ -315,18 +318,18 @@ class PropertyManagementTransactionsController extends Controller
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
 
-        // successful transactions after save -- data retrieval
-        $successfulTransactions = false;
-        if (Session::has('successfulTransactionIds')) {
-            $successfulTransactionsIds = explode('_', Session::get('successfulTransactionIds'));
-            $successfulTransactions = PropertyManagementTransaction::find($successfulTransactionsIds);
+        // successfull transactions after save -- data retrieval
+        $successfullTransactions = false;
+        if (Session::has('successfullTransactionsIds')) {
+            $successfullTransactionsIds = explode('_', Session::get('successfullTransactionsIds'));
+            $successfullTransactions = PropertyManagementTransaction::find($successfullTransactionsIds);
         }
 
         return view('property-management-transactions.create-bulk')
             ->with('properties', $properties)
             ->with('transactionTypes', $transactionTypes)
             ->with('paymentTypes', $paymentTypes)
-            ->with('successfulTransactions', $successfulTransactions);
+            ->with('successfullTransactions', $successfullTransactions);
     }
 
     public function storeBulk(Request $request)
@@ -337,7 +340,7 @@ class PropertyManagementTransactionsController extends Controller
             $folder = 'transactions';
             $default = $request->bulk["default"];
 
-            $successfulTransactionsIds = [];
+            $successfullTransactionsIds = [];
 
             foreach ($request->bulk as $index => $transactionData) {
                 if ($index !== "default") {
@@ -397,16 +400,28 @@ class PropertyManagementTransactionsController extends Controller
                             $transaction->save();
                         }
 
-                        $successfulTransactionsIds[] = $transaction->id;
+                        $successfullTransactionsIds[] = $transaction->id;
                     }
                 }
             }
 
-            Session::flash('successfulTransactionIds', implode('_', $successfulTransactionsIds));
+
+            Session::flash('successfullTransactionsIds', implode('_', $successfullTransactionsIds));
 
             return redirect()->back();
         }
 
+        return redirect()->back();
+    }
+
+    public function email(Request $request, PropertyManagement $pm, PropertyManagementTransaction $transaction)
+    {
+        $user = User::find($pm->property->user_id);
+        // $user = User::find(32); // Este id es para pruebas de info.devalan
+
+        $user->notify(new DetailsTransaction($transaction));
+
+        $request->session()->flash('success', __("Email sended successfully"));
         return redirect()->back();
     }
 }

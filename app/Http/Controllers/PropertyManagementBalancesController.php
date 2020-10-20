@@ -7,8 +7,11 @@ use App\Repositories\{
     PropertyManagementRepositoryInterface,
     CitiesRepositoryInterface
 };
+use App\Models\User;
 use App\Models\PropertyManagement;
 use App\Helpers\PMHelper;
+use App\Notifications\DetailsBalance;
+use Illuminate\Support\Facades\Notification;
 
 class PropertyManagementBalancesController extends Controller
 {
@@ -48,7 +51,7 @@ class PropertyManagementBalancesController extends Controller
 
                 // para no tomar calculos de balances de propiedades con property management finalizados
                 // en el listado de balances general
-                if($pm_item->is_finished){
+                if ($pm_item->is_finished) {
                     continue;
                 }
 
@@ -62,5 +65,24 @@ class PropertyManagementBalancesController extends Controller
             ->with('pm_items', $pm_items)
             ->with('cities', $cities)
             ->with('totalBalances', $totalBalances);
+    }
+
+    public function email(Request $request, PropertyManagement $pm)
+    {
+        $balance = PMHelper::getBalance($pm->id);
+        $property = $pm->property->translate()->name;
+        $data = [];
+        $data['property'] = $property;
+        $data['balance'] = $balance['balance'];
+        $data['pendingAudit'] = $balance['pendingAudit'];
+        $data['estimatedBalance'] = $balance['estimatedBalance'];
+
+        $user = User::find($pm->property->user_id);
+        // $user = User::find(32); // Este id es para pruebas de info.devalan
+
+        $user->notify(new DetailsBalance((object)$data));
+
+        $request->session()->flash('success', __("Email sended successfully"));
+        return redirect()->back();
     }
 }

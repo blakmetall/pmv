@@ -46,6 +46,11 @@
 
                                 <!-- balances -->
                                 <td>
+                                    <a href="{{ route('property-management-balances.email', $pm->id) }}"
+                                        alt="{{ __('Send Email') }}"
+                                        class="text-primary mr-2">
+                                        <i class="nav-icon i-Mail-2 font-weight-bold"></i>
+                                    </a>
                                     <a href="{{ route('property-management-transactions', $pm->id) }}"
                                         alt="{{ __('Transactions') }}"
                                         class="text-primary mr-2">

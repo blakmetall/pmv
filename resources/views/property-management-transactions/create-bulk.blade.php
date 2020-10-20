@@ -47,17 +47,21 @@
 <!-- separator -->
 <div class="mb-4"></div>
 
-@if($successfulTransactions)
+@if($successfullTransactions)
     <div class="container app-container app-bulk-success mb-4">
         <div class="alert alert-success alert-dismissible fade show pt-4" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
 
-            <h5 class="mb-3">{{ __('Transactions Added') }}</h5>
+            <h5 class="mb-3">{{ __('Transactions Added') }}<a href="#" class="btn-print btn-print-bulk" data-table="table-print-transactions" data-title="{{ __('Transactions') }}">
+                <i class="nav-icon i-Billing"></i>
+                {{ __('Print') }}
+            </a></h5>
 
+            
             <ul>
-                @foreach($successfulTransactions as $transaction)
+                @foreach($successfullTransactions as $transaction)
                     <li>
                         <div class="row">
                             <!-- property name -->
@@ -70,6 +74,120 @@
                     </li>
                 @endforeach
             </ul>
+            <div id="table-print-transactions" class="table-responsive" style="display:none;">
+                <table class="table table-striped app-transaction-list" data-show-print="true">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
+
+                            <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
+
+                            <th scope="col" class="transaction-col-period">{{ __('Type') }}</th>
+
+                            <th scope="col" class="transaction-col-period">{{ __('Period') }}</th>
+
+                            <th scope="col" class="transaction-col-date">{{ __('Post Date') }}</th>
+
+                            <th scope="col" class="transaction-col-date">{{ __('Amount') }}</th>
+
+                            <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
+                            <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        <?php
+                            $creditCount = 0;
+                            $chargeCount = 0;
+                        ?>
+
+                        @foreach($successfullTransactions as $transaction)
+
+                            <?php
+                                $increase = !! ($transaction->operation_type === config('constants.operation_types.credit'));
+
+                                if($increase) {
+                                    $creditCount += $transaction->amount;
+                                }else {
+                                    $chargeCount += $transaction->amount;
+                                }
+                            ?>
+
+                            <tr>
+                                <!-- property -->
+                                <td>
+                                    {{ $transaction->propertyManagement->property->translate()->name }}
+                                </td>
+
+                                <!-- transaction_type_id -->
+                                <td>
+                                    {{ $transaction->type->translate()->name }}
+                                </td>
+
+                                <!-- operation_type -->
+                                <td>
+                                    {{ getOperationTypeById($transaction->operation_type) }}
+                                </td>
+
+                                <!-- period -->
+                                <td>
+                                    <div class="app-td-date">
+                                        {{ $transaction->period_start_date }}
+
+                                        @if($transaction->period_end_date)
+                                            -
+                                        @endif
+
+                                        {{ $transaction->period_end_date }}
+                                    </div>
+                                </td>
+
+                                <!-- post_date -->
+                                <td>
+                                    {{ $transaction->post_date }}
+                                </td>
+
+                                <!-- amount -->
+                                <td>
+                                    {{ priceFormat($transaction->amount) }}
+                                </td>
+
+                                <!-- credit -->
+                                <td>
+                                    @if($transaction->operation_type === config('constants.operation_types.credit'))
+                                        {{ priceFormat($transaction->amount) }}
+                                    @else
+                                        --
+                                    @endif
+                                </td>
+
+                                <!-- charges -->
+                                <td>
+                                    @if($transaction->operation_type === config('constants.operation_types.charge'))
+                                        {{ priceFormat($transaction->amount) }}
+                                    @else
+                                        --
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        <!-- table totals -->
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th class="text-primary">{{ priceFormat($creditCount) }}</th>
+                            <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endif

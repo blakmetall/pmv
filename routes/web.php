@@ -164,6 +164,8 @@ Route::group(['middleware' => ['web']], function () {
             // all properties balances
             Route::group(['prefix' => 'balances', 'middleware' => 'role-permission:property-management,balances'], function () {
                 Route::get('', 'PropertyManagementBalancesController@general')->name('property-management-balances.general');
+
+                Route::get('email/{pm}', 'PropertyManagementBalancesController@email')->name('property-management-balances.email');
             });
 
             // all transactions
@@ -191,6 +193,7 @@ Route::group(['middleware' => ['web']], function () {
                 // single property management transactions
                 Route::group(['prefix' => 'transactions'], function () {
                     Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
+                    Route::get('email/{transaction}', 'PropertyManagementTransactionsController@email')->name('property-management-transactions.email');
                     Route::get('create', 'PropertyManagementTransactionsController@create')->name('property-management-transactions.create');
                     Route::post('store', 'PropertyManagementTransactionsController@store')->name('property-management-transactions.store');
                     Route::get('show/{transaction}', 'PropertyManagementTransactionsController@show')->name('property-management-transactions.show');
@@ -273,6 +276,7 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('create', 'UsersController@create')->name('users.create');
                     Route::post('store', 'UsersController@store')->name('users.store');
                     Route::post('storeAjax', 'UsersController@storeAjax')->name('users.store-ajax');
+                    Route::get('email/{user}', 'UsersController@email')->name('users.email');
                     Route::get('show/{user}', 'UsersController@show')->name('users.show');
                     Route::get('edit/{user}', 'UsersController@edit')->name('users.edit');
                     Route::post('update/{id}', 'UsersController@update')->name('users.update');

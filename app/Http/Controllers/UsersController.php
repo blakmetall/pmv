@@ -160,4 +160,13 @@ class UsersController extends Controller
         $request->session()->flash('error', __("This record can't be deleted"));
         return redirect()->back();
     }
+
+    public function email(Request $request, User $user)
+    {
+        $resetToken = Password::broker()->createToken($user);
+        $user->sendPasswordResetNotification($resetToken);
+
+        $request->session()->flash('success', __("Email sended successfully"));
+        return redirect()->back();
+    }
 }

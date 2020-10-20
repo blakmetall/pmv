@@ -73,8 +73,9 @@
 
                                 <!-- actions -->
                                 <td>
-                                    @include('components.table.actions', [
+                                    @include('components.table.actions-email', [
                                         'params' => [$row->id],
+                                        'emailRoute' => 'users.email',
                                         'showRoute' => 'users.show',
                                         'editRoute' => 'users.edit',
                                         'deleteRoute' => 'users.destroy',

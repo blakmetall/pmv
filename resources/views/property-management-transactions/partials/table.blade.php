@@ -115,7 +115,7 @@
                                 @endif
 
                                 <th scope="col" class="transaction-col-file">
-                                    <div class="not-print" style="min-width: 70px;"></div>
+                                    <div class="not-print" style="min-width: 100px;"></div>
                                 </th>
 
                                 <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
@@ -190,6 +190,10 @@
                                         <!-- edit and file -->
                                         <td>
                                             <div class="not-print">
+                                                <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="text-primary mr-2">
+                                                    <i class="nav-icon i-Mail-2 font-weight-bold"></i>
+                                                </a>
+
                                                 @if($row->file_url)
                                                     @include('components.table.file-modal', [
                                                         'fileName' => $row->file_original_name,
