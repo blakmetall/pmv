@@ -17,6 +17,8 @@ class Property extends Model
         'city_id',
         'zone_id',
         'building_id',
+        'unit',
+        'office_id',
         'property_type_id',
         'cleaning_option_id',
         'is_featured',
@@ -34,6 +36,13 @@ class Property extends Model
         'lot_size_sqft',
         'construction_size_sqft',
         'phone',
+        'country',
+        'state',
+        'city',
+        'street',
+        'exterior_number',
+        'interior_number',
+        'zip',
         'address',
         'gmaps_lat',
         'gmaps_lon',
@@ -86,6 +95,11 @@ class Property extends Model
     public function city()
     {
         return $this->belongsTo('App\Models\City');
+    }
+
+    public function office()
+    {
+        return $this->belongsTo('App\Models\Office');
     }
 
     public function zone()

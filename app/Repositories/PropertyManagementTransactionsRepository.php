@@ -34,6 +34,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
 
         $shouldFilterByProperty = isset($config['filterByProperty']) ? $config['filterByProperty'] : '';
         $shouldFilterByTransactionType = isset($config['filterByTransactionType']) ? $config['filterByTransactionType'] : '';
+        $shouldFilterByOffice = isset($config['filterByOffice']) ? $config['filterByOffice'] : '';
         $shouldFilterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $shouldFilterByImage = isset($config['filterByImage']) ? $config['filterByImage'] : ''; // withImage value: 1 || 2
 
@@ -91,6 +92,17 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                 });
             }
 
+            if ($shouldFilterByOffice) {
+                $officeID = $config['filterByOffice'];
+                $query->whereHas('propertyManagement', function ($q) use ($officeID) {
+                    $q->whereHas('property', function ($q2) use ($officeID) {
+                        $q2->whereHas('office', function ($q3) use ($officeID) {
+                            $q3->where('offices.id', $officeID);
+                        });
+                    });
+                });
+            }
+
             if ($shouldFilterByImage) {
                 if ($shouldFilterByImage == 1) {
                     $query->where('file_url', '!=', '');
@@ -103,7 +115,6 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                 $query->where('transaction_type_id', $config['filterByTransactionType']);
             }
         }
-
 
         $query->with('propertyManagement');
         $query->with('auditedBy');

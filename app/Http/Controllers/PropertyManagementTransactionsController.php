@@ -9,6 +9,7 @@ use App\Models\PropertyManagementTransaction;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\TransactionTypesRepositoryInterface;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Repositories\OfficesRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
 use App\Helpers\ImagesHelper;
 use App\Helpers\PMHelper;
@@ -21,15 +22,18 @@ class PropertyManagementTransactionsController extends Controller
     private $repository;
     private $propertiesRepository;
     private $transactionTypesRepository;
+    private $officesRepository;
     private $citiesRepository;
 
     public function __construct(
         PropertyManagementTransactionsRepositoryInterface $repository,
         PropertiesRepositoryInterface $propertiesRepository,
         TransactionTypesRepositoryInterface $transactionTypesRepository,
+        OfficesRepositoryInterface $officesRepository,
         CitiesRepositoryInterface $citiesRepository
     ) {
         $this->repository = $repository;
+        $this->officesRepository = $officesRepository;
         $this->citiesRepository = $citiesRepository;
         $this->propertiesRepository = $propertiesRepository;
         $this->transactionTypesRepository = $transactionTypesRepository;
@@ -92,7 +96,7 @@ class PropertyManagementTransactionsController extends Controller
             'paginate' => false,
             'filterByProperty' => $request->property,
             'filterByTransactionType' => $request->transaction_type,
-            'filterByCity' => $request->city,
+            'filterByOffice' => $request->office,
             'filterByImage' => $request->withImage,
             'orderBy' => $request->orderBy ? $request->orderBy : 'property', // ordenar por propiedad por defecto
             'orderDirection' => $request->orderDirection ? $request->orderDirection : 'asc',
@@ -104,7 +108,7 @@ class PropertyManagementTransactionsController extends Controller
             'filterByPendingAudits' => !!$request->filterByPendingAudits,
             'paginate' => false,
             'filterByProperty' => $request->property,
-            'filterByCity' => $request->city,
+            'filterByOffice' => $request->office,
             'filterByImage' => $request->withImage,
         ];
         $pendingTransactions = $this->repository->all($search, $config);
@@ -119,23 +123,19 @@ class PropertyManagementTransactionsController extends Controller
         // for search filters
         $properties = $this->propertiesRepository->all('', [
             'paginate' => false,
-            'filterByWorkgroup' => true,
             'filterByEnabled' => true,
         ]);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
-        $citiesConfig = [
-            'paginate' => false,
-            'filterByWorkgroup' => true,
-        ];
-        $cities = $this->citiesRepository->all('', $citiesConfig);
+
+        $offices = $this->officesRepository->all('',['paginate' => false]);
 
         return view('property-management-transactions.general')
             ->with('transactions', $transactions)
             ->with('properties', $properties)
             ->with('transactionTypes', $transactionTypes)
             ->with('paymentTypes', $paymentTypes)
-            ->with('cities', $cities)
+            ->with('offices', $offices)
             ->with('search', $search)
             ->with('transationTypesOptionsIds', $transationTypesOptionsIds);
     }
