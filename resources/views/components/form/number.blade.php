@@ -7,6 +7,7 @@
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
+    $instruction = isset($instruction) ? $instruction : false;
 
     $validTypes = ['number'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
@@ -42,6 +43,9 @@
             {{ $disabledProp }}
         />
 
+        @if ($instruction)
+            <small>{{ $instruction }}</small>
+        @endif
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">

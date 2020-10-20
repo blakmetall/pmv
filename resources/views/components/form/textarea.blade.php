@@ -10,6 +10,7 @@
     $rows = isset($rows) && is_numeric($rows) ? (int) $rows : 3;
     $resize = isset($resize) ? $resize : false;
     $hidden = isset($hidden) ? (bool) $hidden : false;
+    $instruction = isset($instruction) ? $instruction : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -41,6 +42,10 @@
             style="{{ $resizeStyle }}"
             {{ $disabledProp }}
             >{{ old($requestName, $value) }}</textarea>
+
+        @if ($instruction)
+            <small>{{ $instruction }}</small>
+        @endif
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">

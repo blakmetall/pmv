@@ -160,6 +160,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\TransactionSourcesRepositoryInterface::class,
+            \App\Repositories\TransactionSourcesRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\UsersRepositoryInterface::class,
             \App\Repositories\UsersRepository::class
         );
@@ -182,6 +187,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\BuildingsRepositoryInterface::class,
             \App\Repositories\BuildingsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyBookingsRepositoryInterface::class,
+            \App\Repositories\PropertyBookingsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PropertyBookingsPaymentsRepositoryInterface::class,
+            \App\Repositories\PropertyBookingsPaymentsRepository::class
         );
     }
 }

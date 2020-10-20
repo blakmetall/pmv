@@ -124,7 +124,7 @@
                                         @if(!isProduction())
                                             <a 
                                                 {{-- comenté la url temporalmente para poner que no funcione el link de momento --}}
-                                                {{-- href="{{ route('bookings.by-property', $row->property->id) }}"  --}}
+                                                {{-- href="{{ route('property-bookings.by-property', $row->property->id) }}"  --}}
                                                 href="{{ route('maintenance') }}" 
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Reservations') }}"

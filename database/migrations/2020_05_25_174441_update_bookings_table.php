@@ -13,11 +13,11 @@ class UpdateBookingsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('bookings')) {
+        if (!Schema::hasTable('property_bookings')) {
             return;
         }
 
-        Schema::table('bookings', function (Blueprint $table) {
+        Schema::table('property_bookings', function (Blueprint $table) {
             $table->date('arrival_date')->nullable()->after('arrival_airline');
             $table->date('departure_date')->nullable()->after('departure_airline');
         });
@@ -30,7 +30,7 @@ class UpdateBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bookings', function($table) {
+        Schema::table('property_bookings', function ($table) {
             $table->dropColumn('arrival_date');
             $table->dropColumn('departure_date');
         });

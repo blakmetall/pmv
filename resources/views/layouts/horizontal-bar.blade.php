@@ -180,7 +180,7 @@
                         </li>
                     @endif
 
-                    @if (!isProduction() && $_current_role->isAllowed('bookings', 'heading-menu'))
+                    @if (!isProduction() && $_current_role->isAllowed('property-bookings', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
@@ -188,7 +188,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Reservations') }}
                                     </label>
-                                    <a href="{{ route('bookings') }}">
+                                    <a href="{{ route('property-bookings') }}">
                                         <i class="nav-icon mr-2 i-Calendar-4"></i>
                                         {{ __('Reservations') }}
                                     </a>
@@ -196,9 +196,9 @@
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
-                                        @if ($_current_role->isAllowed('bookings', 'index'))
+                                        @if ($_current_role->isAllowed('property-bookings', 'index'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="#" data-toggle="modal" data-target="#app-property-bookings-selection-modal">
                                                     <span class="item-name">{{ __('New Reservation') }}</span>
                                                 </a>
                                             </li>
@@ -216,13 +216,13 @@
                                             </li>
 
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('property-bookings') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('bookings', 'requests'))
+                                        @if ($_current_role->isAllowed('property-bookings', 'requests'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Requests') }}</span>
@@ -230,7 +230,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('bookings', 'agents'))
+                                        @if ($_current_role->isAllowed('property-bookings', 'agents'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('agents') }}">
                                                     <span class="item-name">{{ __('Agents') }}</span>
@@ -238,7 +238,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('booking', 'commisions'))
+                                        @if ($_current_role->isAllowed('property-bookings', 'commisions'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('Commisions') }}</span>
@@ -246,7 +246,7 @@
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('bookings', 'general-availability'))
+                                        @if ($_current_role->isAllowed('property-bookings', 'general-availability'))
                                             <li class="nav-item">
                                                 <a class="" href="#">
                                                     <span class="item-name">{{ __('General Availability') }}</span>
@@ -549,6 +549,30 @@
             </div>
             <div class="modal-body">
                 <div id="app-pm-property-selection-container" data-url="{{ route('property-management.get-property-selection') }}">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                {{ __('Close') }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- booking modal -->
+<div class="modal fade" id="app-property-bookings-selection-modal" tabindex="-1" role="dialog" aria-labelledby="app-property-bookings-selection-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('Select Property') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="app-property-bookings-selection-container" data-url="{{ route('property-bookings.get-property-selection') }}">
 
                 </div>
             </div>

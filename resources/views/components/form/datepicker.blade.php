@@ -11,6 +11,7 @@
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
     $dateFormatJS = isset($dateFormatJS) ? $dateFormatJS : 'yyyy-mm-dd';
     $maxDaysLimitFromNow = isset($maxDaysLimitFromNow) ? $maxDaysLimitFromNow : '0';
+    $instruction = isset($instruction) ? $instruction : false;
 
     $validTypes = ['text', 'hidden'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
@@ -54,6 +55,10 @@
                 <i class="ul-form__icon i-Calendar-4"></i>
             </span>
         </div>
+
+        @if ($instruction)
+            <small>{{ $instruction }}</small>
+        @endif
 
 
         @if ($errors->has($requestName))

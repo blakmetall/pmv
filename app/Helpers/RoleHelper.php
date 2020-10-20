@@ -183,7 +183,7 @@ class RoleHelper
                     'concierge',
                 ]),
             ],
-            'bookings' => [
+            'property-bookings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
                     'admin'

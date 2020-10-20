@@ -36,32 +36,50 @@ Route::group(['middleware' => ['web']], function () {
         });
 
         // bookings prefix
-        Route::group(['prefix' => 'bookings'], function () {
+        Route::group(['prefix' => 'property-bookings'], function () {
 
             // all bookings
-            Route::group(['middleware' => 'role-permission:bookings,index'], function () {
-                Route::get('', 'BookingController@index')->name('bookings');
-                Route::get('create', 'BookingController@create')->name('bookings.create');
-                // Route::post('store', 'BookingController@store')->name('bookings.store');
-                // Route::get('show/{property}', 'BookingController@show')->name('bookings.show');
-                // Route::get('edit/{property}', 'BookingController@edit')->name('bookings.edit');
-                // Route::post('update/{id}', 'BookingController@update')->name('bookings.update');
-                // Route::get('destroy/{id}', 'BookingController@destroy')->name('bookings.destroy');
+            Route::group(['middleware' => 'role-permission:property-bookings,index'], function () {
+                Route::get('', 'PropertyBookingController@index')->name('property-bookings');
+                Route::get('create/{property}', 'PropertyBookingController@create')->name('property-bookings.create');
+                Route::post('store', 'PropertyBookingController@store')->name('property-bookings.store');
+                Route::get('show/{id}', 'PropertyBookingController@show')->name('property-bookings.show');
+                Route::get('edit/{id}', 'PropertyBookingController@edit')->name('property-bookings.edit');
+                Route::post('update/{id}', 'PropertyBookingController@update')->name('property-bookings.update');
+                Route::get('destroy/{id}', 'PropertyBookingController@destroy')->name('property-bookings.destroy');
             });
 
+            Route::group(['prefix' => 'property-booking-payments'], function () {
+
+                // all payments
+                Route::group(['middleware' => 'role-permission:property-bookings,index'], function () {
+                    Route::get('/{booking}', 'PropertyBookingPaymentsController@index')->name('property-booking-payments');
+                    Route::get('create/{booking}', 'PropertyBookingPaymentsController@create')->name('property-booking-payments.create');
+                    Route::post('store', 'PropertyBookingPaymentsController@store')->name('property-booking-payments.store');
+                    Route::get('show/{id}', 'PropertyBookingPaymentsController@show')->name('property-booking-payments.show');
+                    Route::get('edit/{id}', 'PropertyBookingPaymentsController@edit')->name('property-booking-payments.edit');
+                    Route::post('update/{id}', 'PropertyBookingPaymentsController@update')->name('property-booking-payments.update');
+                    Route::get('destroy/{id}', 'PropertyBookingPaymentsController@destroy')->name('property-booking-payments.destroy');
+                });
+            });
+
+            // property selection partial for creating new booking
+            Route::get('property-selection', 'PropertyBookingController@getPropertySelection')->name('property-bookings.get-property-selection');
+            Route::get('generate-booking-url/{property?}', 'PropertyBookingController@generateBookingUrl')->name('property-bookings.generate-booking-url');
+
             // bookings by property
-            Route::group(['middleware' => 'role-permission:bookings,property'], function () {
-                Route::get('property/{property}', 'BookingController@propertyBookings')->name('bookings.by-property');
+            Route::group(['middleware' => 'role-permission:property-bookings,property'], function () {
+                Route::get('property/{property}', 'PropertyBookingController@propertyBookings')->name('property-bookings.by-property');
             });
 
             // bookings by owner
-            Route::group(['middleware' => 'role-permission:bookings,owner'], function () {
-                Route::get('owner/{owner}', 'BookingController@ownerBookings')->name('bookings.by-owner');
+            Route::group(['middleware' => 'role-permission:property-bookings,owner'], function () {
+                Route::get('owner/{owner}', 'PropertyBookingController@ownerBookings')->name('property-bookings.by-owner');
             });
 
             // bookings by client user
-            Route::group(['middleware' => 'role-permission:bookings,client'], function () {
-                Route::get('client/{client}', 'BookingController@clientBookings')->name('bookings.by-client');
+            Route::group(['middleware' => 'role-permission:property-bookings,client'], function () {
+                Route::get('client/{client}', 'PropertyBookingController@clientBookings')->name('property-bookings.by-client');
             });
 
             // agents

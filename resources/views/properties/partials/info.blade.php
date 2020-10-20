@@ -58,7 +58,7 @@
                             @if( !isProduction())
                                 <a 
                                     role="button"
-                                    href="{{ route('bookings.by-property', $property->id) }}" 
+                                    href="{{ route('property-bookings.by-property', $property->id) }}" 
                                     class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                     title="{{ __('Reservations') }}"
                                     alt="{{ __('Reservations') }}">

@@ -10,6 +10,7 @@
     $isTranslatable = isset($translatable) ? (bool) $translatable : false;
     $disableDefaultOption = isset($disableDefaultOption) ? (bool) $disableDefaultOption : false;
     $hidden = isset($hidden) ? (bool) $hidden : false;
+    $instruction = isset($instruction) ? $instruction : false;
 
     $options = isset($options) && count($options) ? $options : [];
     $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
@@ -98,6 +99,10 @@
             @endforeach
 
         </select>
+
+        @if ($instruction)
+            <small>{{ $instruction }}</small>
+        @endif
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">

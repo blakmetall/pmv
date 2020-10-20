@@ -34,7 +34,8 @@ $(function() {
         initCalendar();
         initDatepickerComponents();
         initFastSelectComponents();
-        initGetPmPropertySelectionEvent();
+        initGetPmPropertySelectionEvent("#app-pm-property-selection-modal", "#app-pm-property-selection-container", "generate-pm-transaction-url");
+        initGetPmPropertySelectionEvent("#app-property-bookings-selection-modal", "#app-property-bookings-selection-container", "generate-booking-url");
         initTransactionCheckboxHandler();
         initMapInputComponents();
         initTimepickerComponents();

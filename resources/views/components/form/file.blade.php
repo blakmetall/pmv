@@ -9,6 +9,7 @@
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
     $isMultiple = isset($isMultiple) ? (bool) $isMultiple : false;
+    $instruction = isset($instruction) ? $instruction : false;
 
     $fileName = isset($fileName) ? $fileName : '';
     $filePath = isset($filePath) ? $filePath : false;
@@ -50,6 +51,10 @@
 
         <div>
             <input type="file" name="{{ $inputName }}" class="form-control" id="{{ $id }}" {{ $disabledProp }} {{ $readOnlyProp }} {{ $multipleProp }} />
+
+            @if ($instruction)
+                <small>{{ $instruction }}</small>
+            @endif
 
             @if($errors->has($requestName))
                 <div class="app-form-input-error">

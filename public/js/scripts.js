@@ -153,7 +153,8 @@ $(function () {
     Object(_scripts_initCalendar_js__WEBPACK_IMPORTED_MODULE_3__["initCalendar"])();
     Object(_scripts_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_5__["initDatepickerComponents"])();
     Object(_scripts_initFastSelectComponents_js__WEBPACK_IMPORTED_MODULE_6__["initFastSelectComponents"])();
-    Object(_scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_7__["initGetPmPropertySelectionEvent"])();
+    Object(_scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_7__["initGetPmPropertySelectionEvent"])("#app-pm-property-selection-modal", "#app-pm-property-selection-container", "generate-pm-transaction-url");
+    Object(_scripts_initGetPmPropertySelectionEvent_js__WEBPACK_IMPORTED_MODULE_7__["initGetPmPropertySelectionEvent"])("#app-property-bookings-selection-modal", "#app-property-bookings-selection-container", "generate-booking-url");
     Object(_scripts_initTransactionCheckboxHandler_js__WEBPACK_IMPORTED_MODULE_8__["initTransactionCheckboxHandler"])();
     Object(_scripts_initMapInputComponents_js__WEBPACK_IMPORTED_MODULE_9__["initMapInputComponents"])();
     Object(_scripts_initTimepickerComponents_js__WEBPACK_IMPORTED_MODULE_10__["initTimepickerComponents"])();
@@ -799,18 +800,18 @@ function initFastSelectComponents(className) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initGetPmPropertySelectionEvent", function() { return initGetPmPropertySelectionEvent; });
-function initGetPmPropertySelectionEvent() {
-  var selectionModal = $("#app-pm-property-selection-modal");
-  var selectionContainer = $("#app-pm-property-selection-container");
+function initGetPmPropertySelectionEvent(id, container, dataUrl) {
+  var selectionModal = $(id);
+  var selectionContainer = $(container);
   var url = selectionContainer.data('url');
   selectionModal.on('show.bs.modal', function (e) {
     $.get(url, function (html) {
       selectionContainer.html(html);
     });
   });
-  $(document).on('change', "#app-pm-property-selection-container", function () {
+  $(document).on('change', container, function () {
     var select = $(".app-pm-property-select-wrapper select");
-    var generationUrl = $(".app-pm-property-select-wrapper").data('generate-pm-transaction-url');
+    var generationUrl = $(".app-pm-property-select-wrapper").data(dataUrl);
     var propertyID = select.val();
 
     if (propertyID) {

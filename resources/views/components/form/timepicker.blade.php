@@ -11,6 +11,7 @@
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
     $timeInterval = isset($timeInterval) ? (integer) $timeInterval : 15;
     $timeFormatJS = isset($timeFormatJS) ? $timeFormatJS : 'HH:mm';
+    $instruction = isset($instruction) ? $instruction : false;
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
@@ -49,6 +50,10 @@
             data-time-interval="{{ $timeInterval }}"
             data-time-format="{{ $timeFormatJS }}"
         />
+
+        @if ($instruction)
+            <small>{{ $instruction }}</small>
+        @endif
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">

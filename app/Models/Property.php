@@ -139,7 +139,7 @@ class Property extends Model
 
     public function bookings()
     {
-        return $this->hasMany('App\Models\Booking');
+        return $this->hasMany('App\Models\PropertyBooking');
     }
 
     public function reservationRequests()

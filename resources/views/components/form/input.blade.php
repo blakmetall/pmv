@@ -9,6 +9,7 @@
     $value = isset($value) ? $value : '';
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $readOnly = isset($readOnly) ? (bool) $readOnly : false;
+    $instruction = isset($instruction) ? $instruction : false;
 
     $validTypes = ['text', 'email', 'password', 'date', 'time', 'hidden'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
@@ -45,6 +46,9 @@
             {{ $readOnlyProp }}
         />
 
+        @if ($instruction)
+            <small>{{ $instruction }}</small>
+        @endif
 
         @if ($errors->has($requestName))
             <div class="app-form-input-error">
