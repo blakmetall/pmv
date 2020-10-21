@@ -65,7 +65,6 @@
 /******* end *************/
 /*************************/
 
-
 /*************************/
 /** multi-select styles **/
 
@@ -156,7 +155,6 @@
 /******* end *************/
 /*************************/
 
-
 /*************************/
 /******* timepicker ******/
 
@@ -193,7 +191,6 @@
 /******* end *************/
 /*************************/
 
-
 /*************************/
 /*** theme markup ********/
 
@@ -203,7 +200,6 @@
 }
 
 .form-actions {
-
     .btn-outline-secondary:hover,
     .btn-outline-secondary:focus,
     .btn-outline-secondary:active {
@@ -227,7 +223,6 @@
             max-width: 300px;
             margin: 0 auto;
             margin-bottom: 50px;
-
         }
 
         @media (max-width: 767px) {
@@ -245,7 +240,6 @@
 
 /******* end *************/
 /*************************/
-
 
 /*************************/
 /********* app ***********/
@@ -323,7 +317,6 @@
 }
 
 .picker__table {
-
     th {
         color: white !important;
         background: #2c3d4f !important;
@@ -558,7 +551,7 @@
     }
 
     .app-property-info-details {
-        >div {
+        > div {
             display: inline-block;
             padding: 0 10px 5px 0;
         }
@@ -593,7 +586,6 @@
 }
 
 .app-cleaning-table {
-
     th {
         padding-top: 0 !important;
         padding-bottom: 16px !important;
@@ -657,7 +649,6 @@
         }
 
         &.clicked {
-
             &:nth-child(even) {
                 background: #eee;
             }
@@ -666,7 +657,6 @@
                 background: #ddd;
             }
         }
-
     }
 }
 
@@ -746,7 +736,8 @@
     }
 }
 
-@media (max-width: 992px) {}
+@media (max-width: 992px) {
+}
 
 @media (max-width: 768px) {
     .app-table-file-modal-dialog {
@@ -770,7 +761,6 @@
 
 /******* end *************/
 /*************************/
-
 
 /*************************/
 /********* tables ********/
@@ -946,6 +936,12 @@
             }
         }
     }
+}
+
+.title-th {
+    background: white;
+    font-size: 15px;
+    font-weight: normal;
 }
 
 /********* end ***********/

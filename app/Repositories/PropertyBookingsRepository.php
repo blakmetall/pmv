@@ -106,6 +106,8 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             'is_paid' => 0,
             'is_refundable' => 0,
             'is_cancelled' => 0,
+            'arrival_transportation' => 0,
+            'departure_transportation' => 0,
         ];
 
         $requestData = array_merge($data, $request->all());

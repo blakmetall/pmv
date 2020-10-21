@@ -166,7 +166,7 @@
                                             </li>
 
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('property-bookings.arrivals-departures') }}">
                                                     <span class="item-name">{{ __('Arrivals && Departures') }}</span>
                                                 </a>
                                             </li>

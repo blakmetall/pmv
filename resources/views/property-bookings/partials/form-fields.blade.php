@@ -117,6 +117,7 @@
             'group' => 'booking',
             'label' => __('Arrival Date'),
             'name' => 'arrival_date',
+            'required' => true,
             'value' => $row->arrival_date,
             'maxDaysLimitFromNow' => 4000,
         ])
@@ -135,6 +136,23 @@
             'label' => __('Arrival Time'),
             'name' => 'arrival_time',
             'value' => $row->arrival_time
+        ])
+
+        <!-- check_in -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Check In'),
+            'name' => 'check_in',
+            'value' => $row->check_in
+        ])
+
+        <!-- arrival_transportation -->
+        @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Transportation'),
+            'name' => 'arrival_transportation',
+            'value' => 1,
+            'default' => $row->arrival_transportation,
         ])
     </div>
 </div>
@@ -159,6 +177,7 @@
             'group' => 'booking',
             'label' => __('Departure Date'),
             'name' => 'departure_date',
+            'required' => true,
             'value' => $row->departure_date,
             'maxDaysLimitFromNow' => 4000,
         ])
@@ -178,6 +197,23 @@
             'name' => 'departure_time',
             'value' => $row->departure_time
         ])
+
+        <!-- check_out -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Check Out'),
+            'name' => 'check_out',
+            'value' => $row->check_out
+        ])
+
+        <!-- departure_transportation -->
+        @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Transportation'),
+            'name' => 'departure_transportation',
+            'value' => 1,
+            'default' => $row->departure_transportation,
+        ])
     </div>
 </div>
 
@@ -194,6 +230,7 @@
             'type' => 'number', 
             'label' => __('Adults'),
             'name' => 'adults',
+            'required' => true,
             'value' => $row->adults,
         ])
 

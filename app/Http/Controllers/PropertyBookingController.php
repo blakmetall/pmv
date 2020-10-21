@@ -7,21 +7,25 @@ use App\Models\{PropertyBooking, Property, User};
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
+use App\Repositories\CitiesRepositoryInterface;
 
 class PropertyBookingController extends Controller
 {
     private $repository;
     private $propertiesRepository;
     private $damagesDepositsRepository;
+    private $citiesRepository;
 
     public function __construct(
         PropertyBookingsRepositoryInterface $repository,
         PropertiesRepositoryInterface $propertiesRepository,
-        DamageDepositsRepositoryInterface $damagesDepositsRepository
+        DamageDepositsRepositoryInterface $damagesDepositsRepository,
+        CitiesRepositoryInterface $citiesRepository
     ) {
         $this->repository = $repository;
         $this->propertiesRepository = $propertiesRepository;
         $this->damagesDepositsRepository = $damagesDepositsRepository;
+        $this->citiesRepository = $citiesRepository;
     }
 
     public function index(Request $request)
@@ -32,6 +36,60 @@ class PropertyBookingController extends Controller
         return view('property-bookings.index')
             ->with('bookings', $bookings)
             ->with('search', $search);
+    }
+
+    public function arrivalsDepartures(Request $request)
+    {
+        $currentDate = date('Y-m-d', strtotime('now'));
+        $tomorrowDate = date('Y-m-d', strtotime('now'));
+        $fromDate = (isset($request->from_date)) ? $request->from_date : $currentDate;
+        $toDate = (isset($request->to_date)) ? $request->to_date : $tomorrowDate;
+        $getLocation = 1;
+        $searchedLocation = isset($request->location) ? $request->location : $getLocation;
+        $search = [
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
+            'location' => $searchedLocation,
+        ];
+        $arrivals = $this->getArrivals($search);
+        $departures = $this->getDepartures($search);
+        $locations = $this->citiesRepository->all('');
+
+        return view('property-bookings.arrivals-departures')
+            ->with('arrivals', $arrivals)
+            ->with('departures', $departures)
+            ->with('locations', $locations)
+            ->with('search', $search);
+    }
+
+    public function getArrivals($search)
+    {
+        $query = PropertyBooking::query();
+        $query->where(function ($query) use ($search) {
+            $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+        });
+        $query->whereHas('property', function ($q) use ($search) {
+            $q->where('city_id', 'like', '%' . $search['location'] . '%');
+        });
+
+        $result = $query->get();
+
+        return $result;
+    }
+
+    public function getDepartures($search)
+    {
+        $query = PropertyBooking::query();
+        $query->where(function ($query) use ($search) {
+            $query->whereBetween('departure_date', [$search['from_date'], $search['to_date']]);
+        });
+        $query->whereHas('property', function ($q) use ($search) {
+            $q->where('city_id', 'like', '%' . $search['location'] . '%');
+        });
+
+        $result = $query->get();
+
+        return $result;
     }
 
     public function propertyBookings(Request $request, Property $property)
