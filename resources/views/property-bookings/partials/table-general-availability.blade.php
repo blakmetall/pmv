@@ -14,7 +14,7 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col" colspan="14" style="text-align:center">{{ __('Day') }}</th>
-                        <th scope="col">{{ __('Rooms') }}</th>
+                        <th scope="col">{{ __('Bedrooms') }}</th>
                         <th scope="col">{{ __('Baths') }}</th>
                         <th scope="col">{{ __('Pax') }}</th>
                         <th scope="col">{{ __('Managed') }}</th>

@@ -141,7 +141,7 @@
         <!-- check_in -->
         @include('components.form.input', [
             'group' => 'booking',
-            'label' => __('Check In'),
+            'label' => __('Check-in'),
             'name' => 'check_in',
             'value' => $row->check_in
         ])
@@ -201,7 +201,7 @@
         <!-- check_out -->
         @include('components.form.input', [
             'group' => 'booking',
-            'label' => __('Check Out'),
+            'label' => __('Check-out'),
             'name' => 'check_out',
             'value' => $row->check_out
         ])
@@ -236,7 +236,7 @@
         <!-- kids -->
         @include('components.form.input', [
             'group' => 'booking',
-            'label' => __('Kids'),
+            'label' => __('Children'),
             'name' => 'kids',
             'value' => $row->kids,
         ])

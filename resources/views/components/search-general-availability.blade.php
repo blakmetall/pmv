@@ -52,7 +52,7 @@
                     <!-- pax -->
                     <div class="col-md-1 select-filter">
                         <label for="pax">
-                            {{ __('Max Pax') }}
+                            {{ __('Pax') }}
                         </label>
                         <input id="pax" type="number" name="pax" value="{{ $pax }}" class="form-control">
                     </div>

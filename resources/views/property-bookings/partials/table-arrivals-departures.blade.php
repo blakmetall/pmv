@@ -15,7 +15,7 @@
                 <thead>
                     <tr>
                         <th colspan="8" class="title-th">
-                            {{ $label_arrivals. __(' between  ') .$fromDate. __(' and ') . $toDate. __(' at ') .$currentLocation->name}}
+                            {{ $label_arrivals.' '. __('Between').' '.$fromDate.' '.__('And').' '.$toDate.' '. __('At').' '.$currentLocation->name}}
                         </th>
                     </tr>
                     <tr>
@@ -35,11 +35,11 @@
                     @if(count($arrivals))
                         @foreach($arrivals as $arrival)
                             @php
-                                $occupants = __('Occupants:').' '.$arrival->adults.' Adult(s) - '.$arrival->kids.' Child(ren)';
-                                $managed = ($arrival->property->management)?__('*** MANAGED ***'):'';
+                                $occupants = __('Occupants:').' '.$arrival->adults.' '.__('Adult(s)').' - '.$arrival->kids.' '.__('Child(ren)');
+                                $managed = ($arrival->property->management)?__('MANAGED'):'';
                                 $flight = $arrival->arrival_airline . ' ' . $arrival->arrival_flight_number;
                                 $arrival_transportation = ($arrival->arrival_transportation)?__('YES'):__('NO');
-                                $transportation = __('Transportation?'). ' ' . $arrival_transportation;
+                                $transportation = __('Transportation'). '? ' . $arrival_transportation;
                                 $booked = $arrival->created_at;
                                 $owner = $arrival->user->profile->full_name;
                             @endphp
@@ -98,7 +98,7 @@
                 <thead>
                     <tr>
                         <th colspan="8" class="title-th">
-                            {{ $label_departures. __(' between  ') .$fromDate. __(' and ') . $toDate. __(' at ') .$currentLocation->name}}
+                            {{ $label_departures.' '. __('Between').' '.$fromDate.' '.__('And').' '.$toDate.' '. __('At').' '.$currentLocation->name}}
                         </th>
                     </tr>
                     <tr>
@@ -118,11 +118,11 @@
                     @if(count($departures))
                         @foreach($departures as $departure)
                             @php
-                                $occupants = __('Occupants:').' '.$departure->adults.' Adult(s) - '.$departure->kids.' Child(ren)';
-                                $managed = ($departure->property->management)?__('*** MANAGED ***'):'';
+                                $occupants = __('Occupants:').' '.$departure->adults.' '.__('Adult(s)').' - '.$departure->kids.' '.__('Child(ren)');
+                                $managed = ($departure->property->management)?__('MANAGED'):'';
                                 $flight = $departure->departure_airline . ' ' . $departure->departure_flight_number;
                                 $departure_transportation = ($departure->departure_transportation)?__('YES'):__('NO');
-                                $transportation = __('Transportation?'). ' ' . $departure_transportation;
+                                $transportation = __('Transportation'). '? ' . $departure_transportation;
                                 $booked = $departure->created_at;
                                 $owner = $departure->user->profile->full_name;
                             @endphp
