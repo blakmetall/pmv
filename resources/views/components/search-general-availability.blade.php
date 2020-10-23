@@ -5,27 +5,19 @@
 
                 <div class="row row-xs">
                     <!-- from_date -->
-                    <div class="col-md-4 select-filter">
+                    <div class="col-md-3 select-filter">
                         <label for="from_date">
-                            {{ __('From Date') }}*
+                            {{ __('Date') }}*
                         </label>
                         <input id="from_date" type="date" name="from_date" value="{{ $fromDate }}" class="form-control" required>
-                    </div>
-
-                    <!-- to_date -->
-                    <div class="col-md-4 select-filter">
-                        <label for="to_date">
-                            {{ __('To Date') }}*
-                        </label>
-                        <input id="to_date" type="date" name="to_date" value="{{ $toDate }}" class="form-control" required>
                     </div>
 
                     <!-- location -->
                     <div class="col-md-2 select-filter">
                         <label for="location">
-                            {{ __('Location') }}*
+                            {{ __('Location') }}
                         </label>
-                        <select name="location" class="form-control" required>
+                        <select name="location" class="form-control">
                             <option value="">{{ __('Select') }}</option>
                             @if($locations)
                                 @foreach($locations as $location)
@@ -40,6 +32,43 @@
                             @endif
                         </select>
                     </div>
+
+                    <!-- beds -->
+                    <div class="col-md-1 select-filter">
+                        <label for="beds">
+                            {{ __('Bedrooms') }}
+                        </label>
+                        <input id="beds" type="number" step="0.01" name="beds" value="{{ $beds }}" class="form-control">
+                    </div>
+
+                    <!-- baths -->
+                    <div class="col-md-1 select-filter">
+                        <label for="baths">
+                            {{ __('Baths') }}
+                        </label>
+                        <input id="baths" type="number" step="0.01" name="baths" value="{{ $baths }}" class="form-control">
+                    </div>
+
+                    <!-- pax -->
+                    <div class="col-md-1 select-filter">
+                        <label for="pax">
+                            {{ __('Max Pax') }}
+                        </label>
+                        <input id="pax" type="number" name="pax" value="{{ $pax }}" class="form-control">
+                    </div>
+
+                    <!-- managed -->
+                    <div class="col-md-2 select-filter">
+                        <label for="managed">
+                            {{ __('Managed') }}
+                        </label>
+                        <select name="managed" class="form-control">
+                            <option value="">{{ __('Select') }}</option>
+                            <option value="1" {{ ($selectedManaged == 1)?'selected':'' }}>{{ __('YES') }}</option>
+                            <option value="2" {{ ($selectedManaged == 2)?'selected':'' }}>{{ __('NO') }}</option>
+                        </select>
+                    </div>
+
                     <div class="col-md-2 app-search-buttons">
                         <div style="display: block; margin-bottom: 7px">
                             &nbsp;

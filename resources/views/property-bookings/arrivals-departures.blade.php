@@ -2,7 +2,7 @@
 @php
     $url = isset($url) ? $url : '';
     $currentDate = date('Y-m-d', strtotime('now'));
-    $tomorrowDate = date('Y-m-d', strtotime('now'));
+    $tomorrowDate = date('Y-m-d', strtotime('now + 1 day'));
     $fromDate = (isset($_GET['from_date'])) ? $_GET['from_date'] : $currentDate;
     $toDate = (isset($_GET['to_date'])) ? $_GET['to_date'] : $tomorrowDate;
     $searchedLocation = isset($_GET['location']) ? $_GET['location'] : 1;
@@ -15,7 +15,7 @@
     @endphp
 
     @include('components.heading', [
-        'label' => __('Arrivals and Departures'),
+        'label' => __('Arrivals & Departures'),
         'actions' => $actions
     ])
 

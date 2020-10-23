@@ -1,5 +1,11 @@
 @extends('layouts.horizontal-master')
 
+@php
+    $fromDate = (isset($_GET['from_date'])) ? $_GET['from_date'] : '';
+    $toDate = (isset($_GET['to_date'])) ? $_GET['to_date'] : '';
+    $searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
+@endphp
+
 @section('heading-content')
     @php
         if(isset($property)){
@@ -22,6 +28,10 @@
 
     <!-- separator -->
     <div class="mb-4"></div>
+
+    @include('components.search-arrivals-departures', [
+        'url' => route('property-bookings')
+    ])
 
 @endsection
 

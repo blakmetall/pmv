@@ -8,12 +8,16 @@ class PropertyBookingsPaymentsValidations extends Validation
 {
     public function __construct()
     {
-        // $this->setDefaultValidations([
-        //     'property_id' => 'required',
-        //     'firstname' => 'required',
-        //     'lastname' => 'required',
-        //     'damage_deposit_id' => 'required',
-        // ]);
+        $this->setDefaultValidations([
+            'booking_id'            => 'required',
+            'transaction_source_id' => 'required',
+            'amount'                => 'required',
+            'exchange_rate'         => 'required',
+            'damage_insurance'      => 'required',
+            'comission'             => 'required',
+            'bank_fees'             => 'required',
+            'post_date'             => 'required',
+        ]);
     }
 
     public function validate($validateEvent = '', Request $request, $id = '')

@@ -26,24 +26,19 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
-        $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
 
-        if ($search || $filterByCity) {
+        if ($search['from_date']) {
             $query = PropertyBooking::query();
             $query->where(function ($query) use ($search) {
-                $query->where('start_date', 'like', '%' . $search . '%');
-                $query->orWhere('end_date', 'like', '%' . $search . '%');
+                $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+            });
+            $query->whereHas('property', function ($q) use ($search) {
+                $q->where('city_id', 'like', '%' . $search['location'] . '%');
             });
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
-        }
-
-        if ($filterByCity) {
-            $query->whereHas('property', function ($q) use ($filterByCity) {
-                $q->where('city_id', 'like', '%' . $filterByCity . '%');
-            });
         }
 
         if ($filterByOwner) {
@@ -51,7 +46,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $q->where('user_id', \Auth::id());
             });
         }
-
 
         if ($hasPropertyID) {
             $query->where('property_id', $config['propertyID']);
@@ -62,10 +56,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
             $query->where('language_id', $lang->id);
             $query->orderBy('name', 'asc');
-
-            if ($search) {
-                $query->orWhere('properties_translations.name', 'like', '%' . $search . '%');
-            }
         }
 
         if ($shouldPaginate) {
@@ -122,27 +112,47 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $subtotal_nights = 0;
             $nights = 1;
             $rates = $property->rates;
+            $daysRatesArr = [];
             foreach ($rates as $rate) {
-                if (($arrival_date >= $rate->start_date) && ($arrival_date <= $rate->end_date)) {
-                    $current_arrival_date = new \DateTime($arrival_date);
-                    $current_end_date = new \DateTime($rate->end_date);
-                    $interval_arrival = $current_arrival_date->diff($current_end_date);
-                    $days_arrival = $interval_arrival->format('%a') + 1;
-                    $rate_arrival = $rate->nightly * $days_arrival;
-                    $subtotal_nights += $rate_arrival;
-                    $nights += $days_arrival;
+                $daysRatesArr[] = arrayFlatten(getDatesFromRange($rate->start_date, $rate->end_date));
+            }
+            $daysRates = arrayFlatten($daysRatesArr);
+            foreach ($daysRates as $daysRate) {
+                if ($arrival_date == $daysRate) {
+                    foreach ($rates as $rate) {
+                        if ($daysRate >= $rate->start_date) {
+                            $current_arrival_date = new \DateTime($arrival_date);
+                            if ($departure_date > $rate->end_date) {
+                                $current_end_date = new \DateTime($rate->end_date);
+                                $interval_arrival = $current_arrival_date->diff($current_end_date);
+                                $days_arrival = $interval_arrival->format('%a') - 1;
+                                $rate_arrival = $rate->nightly * $days_arrival;
+                                $subtotal_nights += $rate_arrival;
+                                $nights += $days_arrival;
+                            }
+                        }
+                    }
                 }
 
-                if (($departure_date >= $rate->start_date) && ($departure_date <= $rate->end_date)) {
-                    $current_departure_date = new \DateTime($departure_date);
-                    $current_start_date = new \DateTime($rate->start_date);
-                    $interval_departure = $current_departure_date->diff($current_start_date);
-                    $days_departure = $interval_departure->format('%a') + 1;
-                    $rate_departure = $rate->nightly * $days_departure;
-                    $subtotal_nights += $rate_departure;
-                    $nights += $days_departure;
-                }
+                // if ($departure_date == $daysRate) {
+                //     foreach ($rates as $rate) {
+                //         echo '<pre>' . print_r($rate->start_date) . '</pre>';
+                //         echo '<pre>' . print_r($rate->end_date) . '</pre>';
+                //         if ($daysRate >= $rate->start_date && $daysRate <= $rate->end_date) {
+                //             $current_departure_date = new \DateTime($departure_date);
+                //             if ($departure_date > $rate->end_date) {
+                //                 $current_start_date = new \DateTime($rate->start_date);
+                //                 $interval_departure = $current_departure_date->diff($current_start_date);
+                //                 $days_departure = $interval_departure->format('%a') - 1;
+                //                 $rate_departure = $rate->nightly * $days_departure;
+                //                 $subtotal_nights += $rate_departure;
+                //                 $nights += $days_departure;
+                //             }
+                //         }
+                //     }
+                // }
             }
+            // dd($nights);
 
             $price_per_night = $subtotal_nights / $nights;
 

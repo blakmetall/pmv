@@ -944,5 +944,42 @@
     font-weight: normal;
 }
 
+.current-day {
+    position: relative;
+    z-index: 2;
+}
+
+.arrival-only,
+.departure-only {
+    position: relative;
+    background-color: #c3d69b !important;
+}
+
+.arrival-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 30px 30px 30px 0;
+    border-color: transparent #d99694 transparent transparent;
+}
+
+.departure-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 30px 0 30px 30px;
+    border-color: transparent transparent transparent #d99694;
+}
+
 /********* end ***********/
 /*************************/

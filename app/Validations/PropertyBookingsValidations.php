@@ -9,9 +9,12 @@ class PropertyBookingsValidations extends Validation
     public function __construct()
     {
         $this->setDefaultValidations([
-            'property_id' => 'required',
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'property_id'       => 'required',
+            'firstname'         => 'required',
+            'lastname'          => 'required',
+            'arrival_date'      => 'required',
+            'departure_date'    => 'required',
+            'adults'            => 'required',
             'damage_deposit_id' => 'required',
         ]);
     }

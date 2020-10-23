@@ -30,18 +30,25 @@ class PropertyBookingController extends Controller
 
     public function index(Request $request)
     {
-        $search = trim($request->s);
+        $search = [
+            'from_date' => $request->from_date,
+            'to_date' => $request->to_date,
+            'location' => $request->location,
+        ];
+
         $bookings = $this->repository->all($search);
+        $locations = $this->citiesRepository->all('');
 
         return view('property-bookings.index')
             ->with('bookings', $bookings)
+            ->with('locations', $locations)
             ->with('search', $search);
     }
 
     public function arrivalsDepartures(Request $request)
     {
         $currentDate = date('Y-m-d', strtotime('now'));
-        $tomorrowDate = date('Y-m-d', strtotime('now'));
+        $tomorrowDate = date('Y-m-d', strtotime('now + 1 day'));
         $fromDate = (isset($request->from_date)) ? $request->from_date : $currentDate;
         $toDate = (isset($request->to_date)) ? $request->to_date : $tomorrowDate;
         $getLocation = 1;
@@ -60,6 +67,59 @@ class PropertyBookingController extends Controller
             ->with('departures', $departures)
             ->with('locations', $locations)
             ->with('search', $search);
+    }
+
+    public function generalAvailability(Request $request)
+    {
+        $currentDate = date('Y-m-d', strtotime('now'));
+        $fromDate = (isset($request->from_date)) ? $request->from_date : $currentDate;
+        $endDate = date('Y-m-d', strtotime($fromDate . '+ 13 days'));
+        $getLocation = 1;
+        $searchedLocation = isset($request->location) ? $request->location : $getLocation;
+        $search = [
+            'from_date' => $fromDate,
+            'to_date'   => $endDate,
+            'location'  => $searchedLocation,
+            'beds'      => $request->beds,
+            'baths'     => $request->baths,
+            'pax'       => $request->pax,
+            'managed'   => $request->managed,
+        ];
+        $properties = $this->bookingsAvailability($search);
+        $locations = $this->citiesRepository->all('');
+
+        return view('property-bookings.general-availability')
+            ->with('properties', $properties)
+            ->with('locations', $locations)
+            ->with('search', $search);
+    }
+
+    public function bookingsAvailability($search)
+    {
+        $query = Property::query();
+        if ($search['location']) {
+            $query->where('city_id', 'like', '%' . $search['location'] . '%');
+        }
+        if ($search['beds']) {
+            $query->where('beds', 'like', '%' . $search['beds'] . '%');
+        }
+        if ($search['baths']) {
+            $query->where('baths', 'like', '%' . $search['baths'] . '%');
+        }
+
+        if ($search['pax']) {
+            $query->where('pax', 'like', '%' . $search['pax'] . '%');
+        }
+        if ($search['managed']) {
+            $query->whereHas('management');
+        }
+        $query->whereHas('bookings', function ($q) use ($search) {
+            $q->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+            $q->orWhereBetween('departure_date', [$search['from_date'], $search['to_date']]);
+        });
+        $result = $query->get();
+
+        return $result;
     }
 
     public function getArrivals($search)
@@ -129,10 +189,24 @@ class PropertyBookingController extends Controller
 
     public function store(Request $request)
     {
-        $booking = $this->repository->create($request);
-        $request->session()->flash('success', __('Record created successfully'));
-
-        return redirect(route('property-bookings.edit', [$booking->id]));
+        $bookings = Property::find($request->property_id)->bookings;
+        $bookingExist = false;
+        foreach ($bookings as $booking) {
+            if (($request->arrival_date > $booking->arrival_date) && ($request->arrival_date < $booking->departure_date)) {
+                $bookingExist = true;
+            }
+            if (($request->departure_date > $booking->arrival_date) && ($request->departure_date < $booking->departure_date)) {
+                $bookingExist = true;
+            }
+        }
+        if ($bookingExist) {
+            $request->session()->flash('success', __('A Booking actually have same date successfully'));
+            return redirect()->back();
+        } else {
+            $booking = $this->repository->create($request);
+            $request->session()->flash('success', __('Record created successfully'));
+            return redirect(route('property-bookings.edit', [$booking->id]));
+        }
     }
 
     public function show(PropertyBooking $id)
@@ -161,10 +235,24 @@ class PropertyBookingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->repository->update($request, $id);
-        $request->session()->flash('success', __('Record updated successfully'));
-
-        return redirect(route('property-bookings.edit', [$id]));
+        $bookings = Property::find($request->property_id)->bookings;
+        $bookingExist = false;
+        foreach ($bookings as $booking) {
+            if (($request->arrival_date > $booking->arrival_date) && ($request->arrival_date < $booking->departure_date) && ($booking->id != $id)) {
+                $bookingExist = true;
+            }
+            if (($request->departure_date > $booking->arrival_date) && ($request->departure_date < $booking->departure_date) && ($booking->id != $id)) {
+                $bookingExist = true;
+            }
+        }
+        if ($bookingExist) {
+            $request->session()->flash('success', __('A Booking actually have same date successfully'));
+            return redirect()->back();
+        } else {
+            $this->repository->update($request, $id);
+            $request->session()->flash('success', __('Record updated successfully'));
+            return redirect(route('property-bookings.edit', [$id]));
+        }
     }
 
     public function destroy(Request $request, $id)

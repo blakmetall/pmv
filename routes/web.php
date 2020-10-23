@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['middleware' => 'role-permission:property-bookings,index'], function () {
                 Route::get('', 'PropertyBookingController@index')->name('property-bookings');
                 Route::get('arrivals-departures', 'PropertyBookingController@arrivalsDepartures')->name('property-bookings.arrivals-departures');
+                Route::get('general-availability', 'PropertyBookingController@generalAvailability')->name('property-bookings.general-availability');
                 Route::get('create/{property}', 'PropertyBookingController@create')->name('property-bookings.create');
                 Route::post('store', 'PropertyBookingController@store')->name('property-bookings.store');
                 Route::get('show/{id}', 'PropertyBookingController@show')->name('property-bookings.show');

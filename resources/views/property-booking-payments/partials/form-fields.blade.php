@@ -26,9 +26,8 @@
         ])
 
         <!-- amount -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'payment',
-            'type' => 'number',
             'label' => __('Amount'),
             'name' => 'amount',
             'required' => true,
@@ -37,9 +36,8 @@
         ])
 
         <!-- exchange_rate -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'payment',
-            'type' => 'number',
             'label' => __('Exchange Rate'),
             'name' => 'exchange_rate',
             'required' => true,
@@ -48,9 +46,8 @@
         ])
 
         <!-- damage_insurance -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'payment',
-            'type' => 'number',
             'label' => __('Damage Insurance'),
             'name' => 'damage_insurance',
             'required' => true,
@@ -59,9 +56,8 @@
         ])
 
         <!-- comission -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'payment',
-            'type' => 'number',
             'label' => __('Comission'),
             'name' => 'comission',
             'required' => true,
@@ -70,9 +66,8 @@
         ])
 
         <!-- bank_fees -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'payment',
-            'type' => 'number',
             'label' => __('Bank Fees'),
             'name' => 'bank_fees',
             'required' => true,
@@ -81,9 +76,8 @@
         ])
 
         <!-- net_comission -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'payment',
-            'type' => 'number',
             'label' => __('Net Comission'),
             'name' => 'net_comission',
             'value' => $row->net_comission,

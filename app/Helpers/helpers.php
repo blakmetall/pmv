@@ -59,7 +59,7 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
                 $secondLabelRefValue = isset($item->{$secondLabelRef}) ? $item->{$secondLabelRef} : '';
 
                 $values[] = [
-                    'label' => trim($labelRefValue.' '.$secondLabelRefValue),
+                    'label' => trim($labelRefValue . ' ' . $secondLabelRefValue),
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }
@@ -131,10 +131,10 @@ if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
         if ($price < 0) {
-            return '-$'.number_format(abs($price), $decimals);
+            return '-$' . number_format(abs($price), $decimals);
         }
 
-        return '$'.number_format($price, $decimals);
+        return '$' . number_format($price, $decimals);
     }
 }
 
@@ -251,5 +251,49 @@ if (!function_exists('monthHasPmTransactions')) {
     function monthHasPmTransactions($pmID, $month, $year)
     {
         return \App\Helpers\PMTransactionHelper::monthHasTransactions($pmID, $month, $year);
+    }
+}
+
+if (!function_exists('getDatesFromRange')) {
+    function getDatesFromRange($start, $end, $format = 'Y-m-d')
+    {
+
+        // Declare an empty array 
+        $array = array();
+
+        // Variable that store the date interval 
+        // of period 1 day 
+        $interval = new DateInterval('P1D');
+
+        $realEnd = new DateTime($end);
+        $realEnd->add($interval);
+
+        $period = new DatePeriod(new DateTime($start), $interval, $realEnd);
+
+        // Use loop to store date into array 
+        foreach ($period as $date) {
+            $array[] = $date->format($format);
+        }
+
+        // Return the array elements 
+        return $array;
+    }
+}
+
+if (!function_exists('arrayFlatten')) {
+    function arrayFlatten($array)
+    {
+        if (!is_array($array)) {
+            return false;
+        }
+        $result = array();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $result = array_merge($result, arrayFlatten($value));
+            } else {
+                $result = array_merge($result, array($key => $value));
+            }
+        }
+        return $result;
     }
 }

@@ -167,27 +167,13 @@
 
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('property-bookings.arrivals-departures') }}">
-                                                    <span class="item-name">{{ __('Arrivals && Departures') }}</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="nav-item">
-                                                <a class="" href="#">
-                                                    <span class="item-name">{{ __('Main Schedule') }}</span>
+                                                    <span class="item-name">{{ __('Arrivals & Departures') }}</span>
                                                 </a>
                                             </li>
 
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('property-bookings') }}">
                                                     <span class="item-name">{{ __('All') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        @if ($_current_role->isAllowed('property-bookings', 'requests'))
-                                            <li class="nav-item">
-                                                <a class="" href="#">
-                                                    <span class="item-name">{{ __('Requests') }}</span>
                                                 </a>
                                             </li>
                                         @endif
@@ -210,7 +196,7 @@
 
                                         @if ($_current_role->isAllowed('property-bookings', 'general-availability'))
                                             <li class="nav-item">
-                                                <a class="" href="#">
+                                                <a class="" href="{{ route('property-bookings.general-availability') }}">
                                                     <span class="item-name">{{ __('General Availability') }}</span>
                                                 </a>
                                             </li>

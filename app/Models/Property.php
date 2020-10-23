@@ -32,6 +32,7 @@ class Property extends Model
         'baths',
         'sleeps',
         'floors',
+        'pax',
         'has_parking',
         'lot_size_sqft',
         'construction_size_sqft',

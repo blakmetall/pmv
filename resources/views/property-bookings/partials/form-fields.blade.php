@@ -225,9 +225,8 @@
         <span class="badge badge-primary r-badge mb-4">{{ __('BOOKING') }}</span>
 
         <!-- adults -->
-        @include('components.form.number', [
-            'group' => 'booking',
-            'type' => 'number', 
+        @include('components.form.input', [
+            'group' => 'booking', 
             'label' => __('Adults'),
             'name' => 'adults',
             'required' => true,
@@ -235,9 +234,8 @@
         ])
 
         <!-- kids -->
-        @include('components.form.number', [
+        @include('components.form.input', [
             'group' => 'booking',
-            'type' => 'number',
             'label' => __('Kids'),
             'name' => 'kids',
             'value' => $row->kids,

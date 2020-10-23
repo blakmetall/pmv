@@ -165,6 +165,14 @@
             'value' => $row->rental_commission
         ])
 
+        <!-- pax -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Pax'),
+            'name' => 'pax',
+            'value' => $row->pax
+        ])
+
         <!-- has_parking -->
         @include('components.form.checkbox', [
             'group' => 'property',
@@ -320,8 +328,6 @@
             'name' => 'zip',
             'value' => $row->zip,
         ])
-
-
 
         <?php /* cambiado campo de dirección único a separados
             <!-- address -->
