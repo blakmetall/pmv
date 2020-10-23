@@ -156,9 +156,11 @@ class PropertyBookingController extends Controller
     {
         $search = trim($request->s);
         $bookings = $this->repository->all($search, ['propertyID' => $property->id]);
+        $locations = $this->citiesRepository->all('');
         return view('property-bookings.index')
             ->with('bookings', $bookings)
             ->with('property', $property)
+            ->with('locations', $locations)
             ->with('search', $search);
     }
 

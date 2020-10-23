@@ -28,7 +28,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
 
-        if ($search['from_date']) {
+        if (isset($search['from_date'])) {
             $query = PropertyBooking::query();
             $query->where(function ($query) use ($search) {
                 $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);

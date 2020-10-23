@@ -13,7 +13,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ __('Property') }}</th>
-                        <th scope="col" colspan="14" style="text-align:center;">{{ __('Day') }}</th>
+                        <th scope="col" colspan="14" style="text-align:center">{{ __('Day') }}</th>
                         <th scope="col">{{ __('Rooms') }}</th>
                         <th scope="col">{{ __('Baths') }}</th>
                         <th scope="col">{{ __('Pax') }}</th>
@@ -47,7 +47,7 @@
                                 @include('property-bookings.partials.days-availability', [
                                     'days' => $days,
                                     'property' => $property
-                                ]);
+                                ])
 
                                 <!-- bedrooms -->
                                 <td>{{ $property->bedrooms }}</td>

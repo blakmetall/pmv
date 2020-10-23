@@ -9,13 +9,17 @@
 @section('heading-content')
     @php
         if(isset($property)){
-            $actions = [
-                [
-                    'label' => __('Add Booking'),
-                    'url' => route('property-bookings.create', $property->id),
-                    'icon' => 'i-Add',
-                ]
-            ];
+            if($property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin')){
+                $actions = [
+                    [
+                        'label' => __('Add Booking'),
+                        'url' => route('property-bookings.create', $property->id),
+                        'icon' => 'i-Add',
+                    ]
+                ];
+            }else{
+                $actions = [];
+            }
         }else{
             $actions = [];
         }

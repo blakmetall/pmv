@@ -59,7 +59,7 @@
                                 <td>{{ $row->date }}</td>
 
                                 <!-- total_cost -->
-                                <td>${{ number_format($row->total_cost, 2) }}</td>
+                                <td>{{ priceFormat($row->total_cost) }}</td>
 
                                 @if(!isProduction())
                                     <!-- booking_id -->

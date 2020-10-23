@@ -47,32 +47,32 @@
 
                                 <!-- amount -->
                                 <td>
-                                    {{ $row->amount }}
+                                    {{ priceFormat($row->amount) }}
                                 </td>
 
                                 <!-- exchange_rate -->
                                 <td>
-                                    {{ $row->exchange_rate }}
+                                    {{ priceFormat($row->exchange_rate) }}
                                 </td>
 
                                 <!-- damage_insurance -->
                                 <td>
-                                    {{ $row->damage_insurance }}
+                                    {{ priceFormat($row->damage_insurance) }}
                                 </td>
 
                                 <!-- comission -->
                                 <td>
-                                    {{ $row->comission }}
+                                    {{ priceFormat($row->comission) }}
                                 </td>
 
                                 <!-- bank_fees -->
                                 <td>
-                                    {{ $row->bank_fees }}
+                                    {{ priceFormat($row->bank_fees) }}
                                 </td>
 
                                 <!-- net_comission -->
                                 <td>
-                                    {{ $row->net_comission }}
+                                    {{ priceFormat($row->net_comission) }}
                                 </td>
 
                                 <!-- is_paid -->

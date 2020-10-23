@@ -49,10 +49,10 @@
                                 <td>{{ $row->arrival_date }} - {{ $row->departure_date }}<br>{{ $row->nights }} {{ __('Nights') }}</td>
 
                                 <!-- nightly_rate -->
-                                <td>${{ number_format($row->price_per_night) }}</td>
+                                <td>{{ priceFormat($row->price_per_night) }}</td>
 
                                 <!-- total_stay -->
-                                <td>${{ number_format($row->total) }}</td>
+                                <td>{{ priceFormat($row->total) }}</td>
 
                                 <!-- is_confirmed -->
                                 <td>
@@ -66,15 +66,17 @@
                                     'trimTime' => true,
                                 ])
 
-                                <!-- actions -->
+                                    <!-- actions -->
                                 <td>
-                                    @include('components.table.actions-bookings', [
-                                        'params' => [$row->id],
-                                        'paymentsRoute' => 'property-booking-payments',
-                                        'showRoute' => 'property-bookings.show',
-                                        'editRoute' => 'property-bookings.edit',
-                                        'deleteRoute' => 'property-bookings.destroy',
-                                    ])
+                                    @if($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
+                                        @include('components.table.actions-bookings', [
+                                            'params' => [$row->id],
+                                            'paymentsRoute' => 'property-booking-payments',
+                                            'showRoute' => 'property-bookings.show',
+                                            'editRoute' => 'property-bookings.edit',
+                                            'deleteRoute' => 'property-bookings.destroy',
+                                        ])
+                                    @endif
                                 </td>
 
                             </tr>

@@ -661,8 +661,6 @@
                                                     {{ priceFormat($balanceCount) }}
                                                 </span>
                                             </td>
-                                        @else
-                                            --
                                         @endif
                                         <span class="not-print">
                                             <!-- created/updated cols -->
