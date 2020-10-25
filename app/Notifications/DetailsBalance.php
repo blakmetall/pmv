@@ -48,10 +48,10 @@ class DetailsBalance extends Notification
             ->greeting($greeting)
             ->line(__('Here are the details of your current balance'))
             ->line(__('Date').': '.getCurrentDateTime())
-            ->line(__('Property').': '.$this->data->property)
-            ->line(__('Balance').': '.priceFormat($this->data->balance))
+            ->line(__('Property').': '.(new HtmlString('<strong>' . $this->data->property . '</strong>'))
+            ->line(__('Balance').': '.(new HtmlString('<strong>' . priceFormat($this->data->balance) . '</strong>'))
             // ->line(__('Pending Audit').': '.$this->data->pendingAudit)
-            ->line(__('Estimated Balance').': '.priceFormat($this->data->estimatedBalance));
+            // ->line(__('Estimated Balance').': '.priceFormat($this->data->estimatedBalance));
     }
 
     /**
