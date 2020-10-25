@@ -73,8 +73,7 @@ class PropertyManagementBalancesController extends Controller
         $data['pendingAudit'] = $balance['pendingAudit'];
         $data['estimatedBalance'] = $balance['estimatedBalance'];
 
-        // $user = User::find($pm->property->user_id);
-        $user = User::find(1);
+        $user = User::find($pm->property->user_id);
 
         $user->notify(new DetailsBalance((object) $data));
 
