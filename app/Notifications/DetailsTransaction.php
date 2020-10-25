@@ -49,7 +49,7 @@ class DetailsTransaction extends Notification
         return (new MailMessage())
             ->subject(__('Transaction').': '.$this->transaction->id)
             ->greeting($greeting)
-            ->line(new HtmlString(__('Property').': '.'<strong>'.$this->data->property.'</strong>'))
+            ->line(new HtmlString(__('Property').': '.'<strong>'.$this->transaction->propertyManagement->property->translate()->name.'</strong>'))
             ->line(new HtmlString(__('Post Date').': '.'<strong>'.$this->transaction->post_date.'</strong>'))
             ->line(new HtmlString(__('Description').': '.$this->transaction->description))
             ->line(new HtmlString(__('Period').': '.'<strong>'.$period.'</strong>'))
