@@ -15,7 +15,7 @@
 
 <div class="d-block text-right">
     @if (!$skipEmail)
-        <a href="{{ route($emailRoute, $params) }}" class="text-primary mr-2">
+        <a href="{{ route($emailRoute, $params) }}" class="text-primary mr-2" title="<?=__('Send reset password email')?>">
             <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
         </a>
     @endif
