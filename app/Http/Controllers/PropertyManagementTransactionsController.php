@@ -420,8 +420,7 @@ class PropertyManagementTransactionsController extends Controller
 
     public function email(Request $request, PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
-        // $user = User::find($pm->property->user_id);
-        $user = User::find(1);
+        $user = User::find($pm->property->user_id);
 
         $user->notify(new DetailsTransaction($transaction));
 
