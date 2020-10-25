@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Repositories\{
-    PropertyManagementRepositoryInterface,
-    CitiesRepositoryInterface
-};
-use App\Models\User;
-use App\Models\PropertyManagement;
 use App\Helpers\PMHelper;
+use App\Models\PropertyManagement;
+use App\Models\User;
 use App\Notifications\DetailsBalance;
-use Illuminate\Support\Facades\Notification;
+use App\Repositories\CitiesRepositoryInterface;
+use App\Repositories\PropertyManagementRepositoryInterface;
+use Illuminate\Http\Request;
 
 class PropertyManagementBalancesController extends Controller
 {
@@ -40,12 +37,11 @@ class PropertyManagementBalancesController extends Controller
         $totalBalances = [
             'balances' => 0,
             'pendingAudits' => 0,
-            'estimatedBalances' => 0
+            'estimatedBalances' => 0,
         ];
 
         if ($pm_items->count()) {
             foreach ($pm_items as $index => $pm_item) {
-
                 $balance = PMHelper::getBalance($pm_item->id);
                 $pm_items[$index]->_balance = $balance;
 
@@ -77,12 +73,13 @@ class PropertyManagementBalancesController extends Controller
         $data['pendingAudit'] = $balance['pendingAudit'];
         $data['estimatedBalance'] = $balance['estimatedBalance'];
 
-        $user = User::find($pm->property->user_id);
-        // $user = User::find(32); // Este id es para pruebas de info.devalan
+        // $user = User::find($pm->property->user_id);
+        $user = User::find(1);
 
-        $user->notify(new DetailsBalance((object)$data));
+        $user->notify(new DetailsBalance((object) $data));
 
-        $request->session()->flash('success', __("Email sended successfully"));
+        $request->session()->flash('success', __('Email sended successfully'));
+
         return redirect()->back();
     }
 }

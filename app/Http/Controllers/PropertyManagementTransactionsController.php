@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Property;
-use App\Models\PropertyManagement;
-use App\Models\PropertyManagementTransaction;
-use App\Repositories\PropertiesRepositoryInterface;
-use App\Repositories\TransactionTypesRepositoryInterface;
-use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
-use App\Repositories\OfficesRepositoryInterface;
-use App\Repositories\CitiesRepositoryInterface;
 use App\Helpers\ImagesHelper;
 use App\Helpers\PMHelper;
 use App\Helpers\PMTransactionHelper;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Property;
+use App\Models\PropertyManagement;
+use App\Models\PropertyManagementTransaction;
+use App\Models\User;
 use App\Notifications\DetailsTransaction;
-use Illuminate\Support\Facades\Notification;
+use App\Repositories\CitiesRepositoryInterface;
+use App\Repositories\OfficesRepositoryInterface;
+use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Repositories\TransactionTypesRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Session;
 
 class PropertyManagementTransactionsController extends Controller
@@ -50,8 +49,8 @@ class PropertyManagementTransactionsController extends Controller
                 'month' => date('m', strtotime('now')),
             ];
 
-            $appendUrl = '?' . http_build_query($urlParams);
-            $redirectUrl = route('property-management-transactions', [$pm->id]) . $appendUrl;
+            $appendUrl = '?'.http_build_query($urlParams);
+            $redirectUrl = route('property-management-transactions', [$pm->id]).$appendUrl;
 
             $hasSuccess = $request->session()->get('success');
             if ($hasSuccess) {
@@ -95,7 +94,7 @@ class PropertyManagementTransactionsController extends Controller
         $search = trim($request->s);
 
         $config = [
-            'filterByPendingAudits' => !!$request->filterByPendingAudits,
+            'filterByPendingAudits' => (bool) $request->filterByPendingAudits,
             'paginate' => false,
             'filterByProperty' => $request->property,
             'filterByTransactionType' => $request->transaction_type,
@@ -108,7 +107,7 @@ class PropertyManagementTransactionsController extends Controller
 
         // obtiene las transacciones a elegir para el buscador de acuerdo a filtros de búsqueda mandados
         $config = [
-            'filterByPendingAudits' => !!$request->filterByPendingAudits,
+            'filterByPendingAudits' => (bool) $request->filterByPendingAudits,
             'paginate' => false,
             'filterByProperty' => $request->property,
             'filterByOffice' => $request->office,
@@ -160,6 +159,7 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+
         return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
@@ -230,6 +230,7 @@ class PropertyManagementTransactionsController extends Controller
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+
         return redirect()->back();
     }
 
@@ -242,6 +243,7 @@ class PropertyManagementTransactionsController extends Controller
                     $transaction = $this->repository->saveMonthly($property, $pm->id);
 
                     $request->session()->flash('success', __('Record created successfully'));
+
                     return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
                 }
             }
@@ -270,6 +272,7 @@ class PropertyManagementTransactionsController extends Controller
         }
 
         $request->session()->flash('success', __('Records updated successfully'));
+
         return redirect()->back();
     }
 
@@ -289,6 +292,7 @@ class PropertyManagementTransactionsController extends Controller
         }
 
         $request->session()->flash('success', __('Records updated successfully'));
+
         return redirect()->back();
     }
 
@@ -305,6 +309,7 @@ class PropertyManagementTransactionsController extends Controller
         }
 
         $request->session()->flash('success', __('Records deleted successfully'));
+
         return redirect()->back();
     }
 
@@ -338,12 +343,12 @@ class PropertyManagementTransactionsController extends Controller
 
         if ($shouldProcess) {
             $folder = 'transactions';
-            $default = $request->bulk["default"];
+            $default = $request->bulk['default'];
 
             $successfullTransactionsIds = [];
 
             foreach ($request->bulk as $index => $transactionData) {
-                if ($index !== "default") {
+                if ($index !== 'default') {
                     if (!$transactionData['property_management_id'] && !$transactionData['amount']) {
                         continue;
                     }
@@ -379,7 +384,7 @@ class PropertyManagementTransactionsController extends Controller
                     ]);
 
                     if (!$validator->fails()) {
-                        $fileRequestPath = 'bulk.' . $index . '.transaction_file';
+                        $fileRequestPath = 'bulk.'.$index.'.transaction_file';
 
                         $transaction = $this->repository->blueprint();
                         $transaction->fill($transactionData);
@@ -405,7 +410,6 @@ class PropertyManagementTransactionsController extends Controller
                 }
             }
 
-
             Session::flash('successfullTransactionsIds', implode('_', $successfullTransactionsIds));
 
             return redirect()->back();
@@ -416,12 +420,13 @@ class PropertyManagementTransactionsController extends Controller
 
     public function email(Request $request, PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
-        $user = User::find($pm->property->user_id);
-        // $user = User::find(32); // Este id es para pruebas de info.devalan
+        // $user = User::find($pm->property->user_id);
+        $user = User::find(1);
 
         $user->notify(new DetailsTransaction($transaction));
 
-        $request->session()->flash('success', __("Email sended successfully"));
+        $request->session()->flash('success', __('Email sended successfully'));
+
         return redirect()->back();
     }
 }

@@ -1180,9 +1180,9 @@ function isViewport(size) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\laravel\pmproject2\resources\js\scripts.js */"./resources/js/scripts.js");
-__webpack_require__(/*! C:\wamp64\www\laravel\pmproject2\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\wamp64\www\laravel\pmproject2\resources\gull\assets\styles\sass\themes\palmera-vacations.scss */"./resources/gull/assets/styles/sass/themes/palmera-vacations.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/js/scripts.js */"./resources/js/scripts.js");
+__webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/me/pm-app/resources/gull/assets/styles/sass/themes/palmera-vacations.scss */"./resources/gull/assets/styles/sass/themes/palmera-vacations.scss");
 
 
 /***/ })

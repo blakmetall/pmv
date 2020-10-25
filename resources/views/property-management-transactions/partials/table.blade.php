@@ -190,8 +190,8 @@
                                         <!-- edit and file -->
                                         <td>
                                             <div class="not-print">
-                                                <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="text-primary mr-2">
-                                                    <i class="nav-icon i-Mail-2 font-weight-bold"></i>
+                                                <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
+                                                    <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -2px;">
                                                 </a>
 
                                                 @if($row->file_url)

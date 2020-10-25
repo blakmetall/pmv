@@ -49,7 +49,7 @@
                                     <a href="{{ route('property-management-balances.email', $pm->id) }}"
                                         alt="{{ __('Send Email') }}"
                                         class="text-primary mr-2">
-                                        <i class="nav-icon i-Mail-2 font-weight-bold"></i>
+                                        <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                     </a>
                                     <a href="{{ route('property-management-transactions', $pm->id) }}"
                                         alt="{{ __('Transactions') }}"

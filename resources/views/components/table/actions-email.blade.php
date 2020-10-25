@@ -16,7 +16,7 @@
 <div class="d-block text-right">
     @if (!$skipEmail)
         <a href="{{ route($emailRoute, $params) }}" class="text-primary mr-2">
-            <i class="nav-icon i-Mail-2 font-weight-bold"></i>
+            <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
         </a>
     @endif
 
