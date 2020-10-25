@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
+use App\Models\User;
+use App\Repositories\RolesRepositoryInterface;
+use App\Repositories\UsersRepositoryInterface;
+use App\Repositories\WorkgroupsRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Repositories\{UsersRepositoryInterface, RolesRepositoryInterface, WorkgroupsRepositoryInterface};
-use App\Models\{Profile, User};
 use Illuminate\Support\Facades\Password;
 
 class UsersController extends Controller
@@ -36,7 +39,7 @@ class UsersController extends Controller
     public function create()
     {
         $user = $this->repository->blueprint();
-        $user->profile = new Profile;
+        $user->profile = new Profile();
 
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
@@ -55,7 +58,7 @@ class UsersController extends Controller
     public function createAjax()
     {
         $user = $this->repository->blueprint();
-        $user->profile = new Profile;
+        $user->profile = new Profile();
 
         $rolesConfig = ['skipSuperAdmin' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
@@ -99,6 +102,7 @@ class UsersController extends Controller
         $data = $app->make('stdClass');
         $data->users = $users;
         $data->user = $user->profile;
+
         return response()->json($data);
     }
 
@@ -124,6 +128,7 @@ class UsersController extends Controller
     {
         if ($user->id == 1 && !auth()->user()->isSuper()) {
             $request->session()->flash('error', __("We're sorry, you don't have permissions to this section."));
+
             return redirect()->back();
         }
 
@@ -146,6 +151,7 @@ class UsersController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+
         return redirect(route('users.edit', [$id]));
     }
 
@@ -154,19 +160,24 @@ class UsersController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect(route('users'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+
         return redirect()->back();
     }
 
     public function email(Request $request, User $user)
     {
+        $user = $this->repository->find($user);
+
         $resetToken = Password::broker()->createToken($user);
         $user->sendPasswordResetNotification($resetToken);
 
-        $request->session()->flash('success', __("Email sended successfully"));
+        $request->session()->flash('success', __('Email sended successfully'));
+
         return redirect()->back();
     }
 }
