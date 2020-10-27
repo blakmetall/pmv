@@ -5,8 +5,11 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
+use App\Helpers\RatesHelper;
 use App\Repositories\PropertyBookingsRepositoryInterface;
-use App\Models\{Property, PropertyBooking, DamageDeposit};
+use App\Models\Property;
+use App\Models\PropertyBooking;
+use App\Models\DamageDeposit;
 use App\Validations\PropertyBookingsValidations;
 
 class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
@@ -109,50 +112,9 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
             $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
-            $subtotal_nights = 0;
-            $nights = 1;
-            $rates = $property->rates;
-            $daysRatesArr = [];
-            foreach ($rates as $rate) {
-                $daysRatesArr[] = arrayFlatten(getDatesFromRange($rate->start_date, $rate->end_date));
-            }
-            $daysRates = arrayFlatten($daysRatesArr);
-            foreach ($daysRates as $daysRate) {
-                if ($arrival_date == $daysRate) {
-                    foreach ($rates as $rate) {
-                        if ($daysRate >= $rate->start_date) {
-                            $current_arrival_date = new \DateTime($arrival_date);
-                            if ($departure_date > $rate->end_date) {
-                                $current_end_date = new \DateTime($rate->end_date);
-                                $interval_arrival = $current_arrival_date->diff($current_end_date);
-                                $days_arrival = $interval_arrival->format('%a') - 1;
-                                $rate_arrival = $rate->nightly * $days_arrival;
-                                $subtotal_nights += $rate_arrival;
-                                $nights += $days_arrival;
-                            }
-                        }
-                    }
-                }
 
-                // if ($departure_date == $daysRate) {
-                //     foreach ($rates as $rate) {
-                //         echo '<pre>' . print_r($rate->start_date) . '</pre>';
-                //         echo '<pre>' . print_r($rate->end_date) . '</pre>';
-                //         if ($daysRate >= $rate->start_date && $daysRate <= $rate->end_date) {
-                //             $current_departure_date = new \DateTime($departure_date);
-                //             if ($departure_date > $rate->end_date) {
-                //                 $current_start_date = new \DateTime($rate->start_date);
-                //                 $interval_departure = $current_departure_date->diff($current_start_date);
-                //                 $days_departure = $interval_departure->format('%a') - 1;
-                //                 $rate_departure = $rate->nightly * $days_departure;
-                //                 $subtotal_nights += $rate_departure;
-                //                 $nights += $days_departure;
-                //             }
-                //         }
-                //     }
-                // }
-            }
-            // dd($nights);
+            $nights = RatesHelper::getTotalBookingDays($property, $arrival_date, $departure_date);
+            $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
 
             $price_per_night = $subtotal_nights / $nights;
 
