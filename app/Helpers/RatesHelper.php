@@ -2,8 +2,7 @@
 
 namespace App\Helpers;
 
-use Config;
-use App\Models\PropertyRage;
+use Carbon\Carbon;
 
 class RatesHelper
 {
