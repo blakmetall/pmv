@@ -2,15 +2,14 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Helpers\RatesHelper;
-use App\Repositories\PropertyBookingsRepositoryInterface;
+use App\Models\DamageDeposit;
 use App\Models\Property;
 use App\Models\PropertyBooking;
-use App\Models\DamageDeposit;
 use App\Validations\PropertyBookingsValidations;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 {
@@ -37,7 +36,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
             });
             $query->whereHas('property', function ($q) use ($search) {
-                $q->where('city_id', 'like', '%' . $search['location'] . '%');
+                $q->where('city_id', 'like', '%'.$search['location'].'%');
             });
         } else {
             $query = PropertyBooking::query();
@@ -73,12 +72,14 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
@@ -113,7 +114,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $departure_date = $booking->departure_date;
             $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
 
-            $nights = RatesHelper::getTotalBookingDays($property, $arrival_date, $departure_date);
+            $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
             $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
 
             $price_per_night = $subtotal_nights / $nights;
@@ -148,7 +149,12 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $booking->price_per_night = $price_per_night;
             $booking->subtotal_nights = $subtotal_nights;
             $booking->subtotal_damage_deposit = $damage_deposit->price;
-            $booking->total =  $subtotal_nights + $damage_deposit->price;
+            $booking->total = $subtotal_nights;
+
+            // $booking->total =  $subtotal_nights + $damage_deposit->price;
+            // el deposito para daños creo no se debe poner en el total directamente por que el depósito se está manejando en dolares
+            // considero que debe tener su propio control de pago (unos campos más tal vez)
+            // -- -- no tengo propuestas de momento; pero por lo pronto unir el daño por depósito no funcionaría ;(
 
             $booking->save();
         }
@@ -162,7 +168,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $booking = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$booking) {
-            throw new ModelNotFoundException("Booking not found");
+            throw new ModelNotFoundException('Booking not found');
         }
 
         return $booking;
@@ -191,6 +197,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
     public function blueprint()
     {
-        return new PropertyBooking;
+        return new PropertyBooking();
     }
 }

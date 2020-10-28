@@ -6,26 +6,40 @@ use Carbon\Carbon;
 
 class RatesHelper
 {
-    public static function getTotalBookingDays($arriva_date, $departure_date)
+    public static function getTotalBookingDays($arrival_date_str, $departure_date_str)
     {
-        // compare the available days between those two dates
+        $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
+        $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
-        return 10; // 10 days (dummy)
+        return $arrival_date->diffInDays($departure_date); // 10 days (dummy)
     }
 
-    public static function getNightsSubtotalCost($property, $arrival_date, $departure_date)
+    public static function getNightsSubtotalCost($property, $arrival_date_str, $departure_date_str)
     {
-        // for each day get the nightly rate using
+        $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
+        $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
-        // --- self::getNightlyRate($property, $day, $arrival_date, $departure_date)
+        $cost = 0;
+        $totalNights = self::getTotalBookingDays($arrival_date_str, $departure_date_str);
 
-        // sum all nightly prices and return
+        if ($totalNights > 0) {
+            for ($i = 0; $i < $totalNights; ++$i) {
+                $compare_day_date = $arrival_date->addDays($i);
 
-        return 2000; // $2000 for then days (dummy)
+                $nightlyCost = self::getNightlyRate($property, $compare_day_date, $arrival_date_str, $departure_date_str);
+
+                $cost += $nightlyCost;
+            }
+        }
+
+        return $cost;
     }
 
-    public static function getNightlyRate($property, $day, $start_date, $end_date)
+    public static function getNightlyRate($property, $day_date, $arrival_date_str, $departure_date_str)
     {
+        $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
+        $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
+
         // 1.- con el día a comparar:
 
         // 2.- obtener la tarifa aplicable de acuerdo al día a comparar (utilizando las fechas de la tarifa y la fecha del día)

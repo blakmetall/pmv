@@ -142,7 +142,7 @@
                         </li>
                     @endif
 
-                    @if (!isProduction() && $_current_role->isAllowed('property-bookings', 'heading-menu'))
+                    @if ($_current_role->isAllowed('property-bookings', 'heading-menu'))
                         <li>
                             <div>
                                 <div>
