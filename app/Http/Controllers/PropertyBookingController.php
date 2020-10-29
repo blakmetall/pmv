@@ -8,6 +8,7 @@ use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
+use App\Helpers\UserHelper;
 
 class PropertyBookingController extends Controller
 {
@@ -278,6 +279,7 @@ class PropertyBookingController extends Controller
         $config = [
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
+            'filterByUserId' => UserHelper::getCurrentUserID()
         ];
         $properties = $this->propertiesRepository->all('', $config);
 
