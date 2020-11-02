@@ -118,16 +118,16 @@ Route::group(['middleware' => ['web']], function () {
                         Route::get('destroy/{id}', 'PropertyNotesController@destroy')->name('property-notes.destroy');
                     });
 
-                    // property: property calendar
-                    Route::group(['prefix' => 'calendar'], function () {
-                        Route::get('', 'PropertyNotesController@index')->name('property-calendar');
-                    });
-
                     // property: property contacts
                     Route::group(['prefix' => 'contacts'], function () {
                         Route::get('', 'PropertyContactsController@index')->name('property-contacts');
                         Route::get('create', 'PropertyContactsController@create')->name('property-contacts.create');
                         Route::post('store', 'PropertyContactsController@store')->name('property-contacts.store');
+                    });
+
+                    // property: property calendar
+                    Route::group(['prefix' => 'calendar'], function () {
+                        Route::get('', 'PropertyBookingController@calendar')->name('property-calendar');
                     });
 
                     // property: property rates

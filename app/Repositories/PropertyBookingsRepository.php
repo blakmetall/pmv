@@ -27,8 +27,9 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $lang = LanguageHelper::current();
 
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
-        $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $hasPropertyID  = isset($config['propertyID']) ? $config['propertyID'] : '';
+        $filterByOwner  = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $currentYear    = isset($config['currentYear']) ? $config['currentYear'] : '';
 
         if (isset($search['from_date'])) {
             $query = PropertyBooking::query();
@@ -36,12 +37,13 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
             });
             $query->whereHas('property', function ($q) use ($search) {
-                $q->where('city_id', 'like', '%'.$search['location'].'%');
+                $q->where('city_id', 'like', '%' . $search['location'] . '%');
             });
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
         }
+
 
         if ($filterByOwner) {
             $query->whereHas('property', function ($q) {
@@ -50,7 +52,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         }
 
         if ($hasPropertyID) {
-            $query->where('property_id', $config['propertyID']);
+            $query->where('property_id', $hasPropertyID);
             $query->orderBy('created_at', 'desc');
         } else {
             $query->select('property_bookings.*');
@@ -58,6 +60,10 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
             $query->where('language_id', $lang->id);
             $query->orderBy('name', 'asc');
+        }
+
+        if ($currentYear) {
+            $query->whereYear('arrival_date', $currentYear);
         }
 
         if ($shouldPaginate) {

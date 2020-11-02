@@ -165,6 +165,123 @@ class PropertyBookingController extends Controller
             ->with('search', $search);
     }
 
+    public function calendar(Request $request, Property $property)
+    {
+        $SERVER_TIME = mktime(date('H'), date('i'), date('s'), date('n'), date('j'), date('Y'));
+        $currYear = !empty($_GET['y']) ? $_GET['y'] : date('Y', $SERVER_TIME);
+        $bookings = $this->repository->all('', ['propertyID' => $property->id, 'currentYear' => $currYear]);
+        $calendar = $this->generateCalendar($property, $SERVER_TIME);
+        return view('property-bookings.calendar')
+            ->with('bookings', $bookings)
+            ->with('property', $property)
+            ->with('calendar', $calendar);
+    }
+
+    private function generateCalendar($property, $SERVER_TIME)
+    {
+        $currYear = !empty($_GET['y']) ? $_GET['y'] : date('Y', $SERVER_TIME);
+        $count_cols = 0;
+        $cols_needed = 3;
+
+        $bookings       = $this->repository->all('', ['propertyID' => $property->id]);
+        $bookingDaysArr = [];
+        $firstDays      = [];
+        $endDays        = [];
+        foreach ($bookings as $booking) {
+            $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
+            $bookingDaysSE    = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
+            $firstDays[]      = reset($bookingDaysSE);
+            $endDays[]        = end($bookingDaysSE);
+        }
+        $bookingDays = arrayFlatten($bookingDaysArr);
+
+        $calendar  = '<table align="center" border="0" cellpadding="0" cellspacing="5">';
+        $calendar .= '<tr>';
+        $calendar .= '<td align="left" valign="top">';
+        $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
+
+        for ($i = 0; $i < 12; $i++) {
+            $count_cols++;
+            $cm = mktime(0, 0, 0, 1 + $i, 1, $currYear); //get curr month time string
+            $days_month = date("t", $cm); //calculate number of days in month
+            $first_weekday_unix = mktime(0, 0, 0, date('n', $cm), 1, date('Y', $cm));
+            $first_weekday = date('w', $first_weekday_unix);
+            $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
+            $last_weekday = date('w', $last_weekday_unix);
+
+            $calendar .= '<tr>';
+            $calendar .= '<th colspan="7" align="center" valign="top">' . date('F', $cm) . ' ' . $currYear . '</th>';
+            $calendar .= '</tr>';
+            $calendar .= '<tr>
+                <th>Su</th>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
+            </tr>';
+            $calendar .= '<tr>';
+            if ($first_weekday != 0) {
+                $calendar .= '<td colspan="' . $first_weekday . '">&nbsp;</td>';
+            }
+            $count_fields = $first_weekday;
+            for ($d = 1; $d <= $days_month; $d++) {
+                $addzero = ($d < 10) ? '0' . $d : $d;
+                $formatYear = !empty($_GET['y']) ? $_GET['y'] : date('y', $SERVER_TIME);
+                $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
+                if (in_array($day, $bookingDays)) {
+                    $occupied = true;
+                } else {
+                    $occupied = false;
+                }
+                if (in_array($day, $firstDays)) {
+                    $classDay = 'arrival-only';
+                } else if (in_array($day, $endDays)) {
+                    $classDay = 'departure-only';
+                } else {
+                    $classDay = '';
+                }
+
+                $colorClass = ($occupied) ? '#D99694' : '#C3D69B';
+
+                $calendar .= '<td class="' . $classDay . '" style="background-color:' . $colorClass . '">';
+                $calendar .= '<span class="current-day">' . $d . '</span>';
+                $calendar .= '</td>';
+
+                $count_fields++;
+
+                if ($d != $days_month) {
+                    if (($count_fields % 7) == 0) {
+                        $calendar .= '</tr><tr>';
+                    }
+                } else {
+
+                    if ($last_weekday != 6) {
+                        $calendar .= '<td colspan="' . (6 - $last_weekday) . '">&nbsp;</td>';
+                    }
+
+                    $calendar .= '</tr>';
+                }
+            }
+            $calendar .= '</table>';
+            $calendar .= '</td>';
+            if ($count_cols != 12) {
+                if (($count_cols % $cols_needed) == 0) {
+                    $calendar .= '</tr><tr>';
+                }
+
+                $calendar .= '<td align="left" valign="top">';
+                $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
+            } else {
+                $calendar .= '</tr>';
+            }
+        }
+        $calendar .= '</table>';
+
+        return $calendar;
+    }
+
     public function ownerBookings(Request $request, User $owner)
     {
         echo 'owner bookings will be here';

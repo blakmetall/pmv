@@ -44,3 +44,52 @@
     background-color: #ff5050;
     color: #fff;
 }
+
+.calendar-container {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.calendar-container table {
+    width: 100%;
+}
+
+.calendar-container th,
+.calendar-container td {
+    text-align: center;
+    padding: 10px 0px;
+    border: 2px solid #fff;
+}
+
+.calendar-container .departure-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    left: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    border-color: transparent transparent transparent #d99694;
+}
+
+.calendar-container .arrival-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    right: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 20px 20px 0;
+    border-color: transparent #d99694 transparent transparent;
+}
+
+.month-calendar {
+    width: 100%;
+    padding: 10px;
+}
