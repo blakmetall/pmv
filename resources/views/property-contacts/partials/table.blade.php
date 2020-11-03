@@ -77,29 +77,29 @@
                         @foreach($rows as $row)
                             <tr>
                                 <!-- full_name -->
-                                <td>{{ $row->full_name }}</td>
+                                <td>{{ $row->profile->full_name }}</td>
 
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
                                 <!-- phone -->
-                                <td>{{ $row->phone }}</td>
+                                <td>{{ $row->profile->phone }}</td>
 
                                 <!-- mobile -->
-                                <td>{{ $row->mobile }}</td>
+                                <td>{{ $row->profile->mobile }}</td>
 
                                 <!-- mobile -->
-                                <td>{{ $row->emergency_phone }}</td>
+                                <td>{{ $row->profile->emergency_phone }}</td>
 
                                 <!-- address -->
-                                <td>{{ $row->address }}</td>
+                                <td>{{ $row->profile->street }}, {{ $row->profile->zip }}, {{ $row->profile->city }}, {{ $row->profile->state }}, {{ $row->profile->country }}</td>
 
                                 <!-- contact_type -->
-                                <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
+                                <td>{{ getContactTypeBySlug($row->profile->contact_type) }}</td>
 
-                                <!-- is_active -->
+                                <!-- is_enabled -->
                                 <td>
-                                    {!! getStatusIcon($row->is_active) !!}
+                                    {!! getStatusIcon($row->is_enabled) !!}
                                 </td>
 
                             </tr>

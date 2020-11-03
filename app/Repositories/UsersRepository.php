@@ -23,8 +23,9 @@ class UsersRepository implements UsersRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $ownersOnly = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
-        $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
+        $ownersOnly     = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
+        $agentsOnly     = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
+        $contactsOnly   = isset($config['contactsOnly']) ? $config['contactsOnly'] : false;
 
         if ($search) {
             $query = User::where('email', 'like', "%" . $search . "%")
@@ -42,6 +43,7 @@ class UsersRepository implements UsersRepositoryInterface
             $query = User::query();
         }
 
+
         if ($ownersOnly) {
             $query->whereHas('roles', function ($q) {
                 $table = (new Role)->_getTable();
@@ -55,6 +57,27 @@ class UsersRepository implements UsersRepositoryInterface
                 $q->whereIn($table . '.id', [config('constants.roles.rentals-agent')]);
             });
         }
+
+
+        //Aqui INICIAN los filtros de los contactos
+
+        if ($contactsOnly) {
+            $query->whereHas('roles', function ($q) {
+                $table = (new Role)->_getTable();
+                $q->whereIn($table . '.id', [config('constants.roles.contact')]);
+            });
+
+            $query->where('is_enabled', 1);
+
+            if (isRole('owner')) {
+                $query->whereHas('profile', function ($query) {
+                    $query
+                        ->where('profiles.owner_id', UserHelper::getCurrentUserID());
+                });
+            }
+        }
+
+        //Aqui TERMINAN los filtros de los contactos
 
         $query
             ->with('profile')
@@ -108,7 +131,7 @@ class UsersRepository implements UsersRepositoryInterface
 
         // roles assignation
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
-            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
             $roles_to_assign = [];
             foreach ($request->roles_ids as $role_id) {
                 $hasValidRole = in_array($role_id, $validRolesIds);

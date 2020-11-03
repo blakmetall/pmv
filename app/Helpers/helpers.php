@@ -59,7 +59,7 @@ if (!function_exists('prepareCheckboxValuesFromRows')) {
                 $secondLabelRefValue = isset($item->{$secondLabelRef}) ? $item->{$secondLabelRef} : '';
 
                 $values[] = [
-                    'label' => trim($labelRefValue.' '.$secondLabelRefValue),
+                    'label' => trim($labelRefValue . ' ' . $secondLabelRefValue),
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }
@@ -96,10 +96,20 @@ if (!function_exists('prepareSelectValuesFromRows')) {
         if ($shouldLoopForValues) {
             $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
             $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+            $depthRef = isset($config['depthRef']) ? $config['depthRef'] : false; // default name
+
+            if ($depthRef) {
+                $optionLabelDepth = explode(',', $labelRef);
+            }
 
             foreach ($items as $item) {
+                if ($depthRef) {
+                    $label = $item->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                } else {
+                    $label = $item->{$labelRef};
+                }
                 $values[] = [
-                    'label' => isset($item->{$labelRef}) ? $item->{$labelRef} : '',
+                    'label' => isset($label) ? $label : '',
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }
@@ -131,10 +141,10 @@ if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
         if ($price < 0) {
-            return '-$'.number_format(abs($price), $decimals);
+            return '-$' . number_format(abs($price), $decimals);
         }
 
-        return '$'.number_format($price, $decimals);
+        return '$' . number_format($price, $decimals);
     }
 }
 

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ContactsRepositoryInterface};
+use App\Repositories\{UsersRepositoryInterface};
 use Illuminate\Http\Request;
-use App\Models\Contact;
+use App\Models\{User, Profile};
 use App\Helpers\ContactsHelper;
 
 class ContactsController extends Controller
 {
     private $repository;
 
-    public function __construct(ContactsRepositoryInterface $repository)
+    public function __construct(UsersRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -19,7 +19,8 @@ class ContactsController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $contacts = $this->repository->all($search);
+        $config = ['contactsOnly' => true];
+        $contacts = $this->repository->all($search, $config);
 
         return view('contacts.index')
             ->with('contacts', $contacts)
@@ -29,6 +30,7 @@ class ContactsController extends Controller
     public function create()
     {
         $contact = $this->repository->blueprint();
+        $contact->profile = new Profile();
         $types = ContactsHelper::getTypes();
 
         return view('contacts.create')
@@ -49,7 +51,7 @@ class ContactsController extends Controller
         return redirect(route('contacts.edit', [$contact->id]));
     }
 
-    public function show(Contact $contact)
+    public function show(User $contact)
     {
         $contact = $this->repository->find($contact);
         $types = ContactsHelper::getTypes();
@@ -59,7 +61,7 @@ class ContactsController extends Controller
             ->with('types', $types);
     }
 
-    public function edit(Contact $contact)
+    public function edit(User $contact)
     {
         $contact = $this->repository->find($contact);
         $types = ContactsHelper::getTypes();
@@ -72,6 +74,7 @@ class ContactsController extends Controller
     public function createAjax()
     {
         $contact = $this->repository->blueprint();
+        $contact->profile = new Profile();
         $types = ContactsHelper::getTypes();
 
         return view('contacts.create-ajax')

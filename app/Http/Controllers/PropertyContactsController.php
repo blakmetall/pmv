@@ -2,27 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ContactsRepositoryInterface};
+use App\Repositories\{ContactsRepositoryInterface, UsersRepositoryInterface};
 use Illuminate\Http\Request;
 use App\Models\Property;
 
 class PropertyContactsController extends Controller
 {
+    private $repository;
     private $contactsRepository;
 
-    public function __construct(ContactsRepositoryInterface $contactsRepository)
-    {
+    public function __construct(
+        ContactsRepositoryInterface $contactsRepository,
+        UsersRepositoryInterface $repository
+    ) {
+        $this->repository = $repository;
         $this->contactsRepository = $contactsRepository;
     }
 
-    public function index(Request $request, Property $property)
+    public function index(Property $property)
     {
         $contacts =
             $property
-            ->contacts()
-            ->orderBy('firstname', 'asc')
-            ->orderBy('lastname', 'asc')
-            ->where('contact_type', '!=', 'home-owner')
+            ->contacts()->whereHas('profile', function ($property) {
+                $property
+                    ->where('profiles.contact_type', '!=', 'home-owner');
+            })
             ->paginate();
 
         $owner = $property->user;
@@ -35,8 +39,8 @@ class PropertyContactsController extends Controller
 
     public function create(Property $property)
     {
-        $config = ['activeOnly' => true];
-        $contacts = $this->contactsRepository->all('', $config);
+        $config = ['contactsOnly' => true];
+        $contacts = $this->repository->all('', $config);
 
         return view('property-contacts.create')
             ->with('contacts', $contacts)

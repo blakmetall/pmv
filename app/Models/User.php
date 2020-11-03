@@ -7,7 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\AppModel;
 
-class User extends Authenticatable {
+class User extends Authenticatable
+{
 
     use AppModel;
     use Notifiable;
@@ -23,76 +24,99 @@ class User extends Authenticatable {
         'remember_token'
     ];
 
-    public function roles() {
+    public function roles()
+    {
         return $this->belongsToMany('App\Models\Role', 'user_has_roles');
     }
 
-    public function profile() {
+    public function profile()
+    {
         return $this->hasOne('App\Models\Profile');
     }
 
-    public function properties() {
+    public function properties()
+    {
         return $this->hasMany('App\Models\Property');
     }
 
-    public function bookings() {
+    public function propertiesContacts()
+    {
+        return $this->belongsToMany('App\Models\Property', 'properties_has_contacts');
+    }
+
+    public function bookings()
+    {
         return $this->hasMany('App\Models\Booking');
     }
 
-    public function agentBookings() {
+    public function agentBookings()
+    {
         return $this->hasMany('App\Models\Booking', 'user_agent_id');
     }
 
-    public function bookingCommissions() {
+    public function bookingCommissions()
+    {
         return $this->hasMany('App\Models\BookingCommission');
     }
 
-    public function reservationRequests() {
+    public function reservationRequests()
+    {
         return $this->hasMany('App\Models\ReservationRequest');
     }
 
-    public function notifications() {
+    public function notifications()
+    {
         return $this->hasMany('App\Models\Notification');
     }
 
-    public function auditedReservationRequests() {
+    public function auditedReservationRequests()
+    {
         return $this->hasMany('App\Models\ReservationRequest', 'audit_user_id');
     }
 
-    public function auditedBookings() {
+    public function auditedBookings()
+    {
         return $this->hasMany('App\Models\Booking', 'audit_user_id');
     }
 
-    public function auditedBookingRefunds() {
+    public function auditedBookingRefunds()
+    {
         return $this->hasMany('App\Models\Booking', 'audit_refund_user_id');
     }
 
-    public function auditedPropertyManagementTransactions() {
+    public function auditedPropertyManagementTransactions()
+    {
         return $this->hasMany('App\Models\PropertyManagementTransaction', 'audit_user_id');
     }
 
-    public function auditedPropertyManagementPayments() {
+    public function auditedPropertyManagementPayments()
+    {
         return $this->hasMany('App\Models\CleaningService', 'audit_user_id');
     }
 
-    public function auditedCleaningServices() {
+    public function auditedCleaningServices()
+    {
         return $this->hasMany('App\Models\CleaningService', 'audit_user_id');
     }
 
-    public function auditedBookingCommisions() {
+    public function auditedBookingCommisions()
+    {
         return $this->hasMany('App\Models\BookingCommission', 'audit_user_id');
     }
 
-    public function auditedBookingExtraPayments() {
+    public function auditedBookingExtraPayments()
+    {
         return $this->hasMany('App\Models\BookingExtraPayment', 'audit_user_id');
     }
 
-    public function workgroups() {
+    public function workgroups()
+    {
         return $this->belongsToMany('App\Models\Workgroup', 'workgroup_has_users');
     }
 
-    public function isSuper() {
-        $hasRole = !! $this->roles()->where('role_id', config('constants.roles.super'))->count();
+    public function isSuper()
+    {
+        $hasRole = !!$this->roles()->where('role_id', config('constants.roles.super'))->count();
         return $hasRole;
     }
 }

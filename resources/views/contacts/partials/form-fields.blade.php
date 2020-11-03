@@ -2,22 +2,56 @@
 <div class="card">
     <div class="card-body">
 
+        <!-- is_contact -->
+        @include('components.form.input', [
+            'group' => 'contact',
+            'name' => 'is_contact',
+            'hidden' => 'true',
+            'value' => true
+        ])
+
+        <!-- password -->
+        @include('components.form.input', [
+            'group' => 'contact',
+            'name' => 'password',
+            'hidden' => 'true',
+            'value' => '123456'
+        ])
+
+        <!-- password -->
+        @include('components.form.input', [
+            'group' => 'contact',
+            'name' => 'password_confirmation',
+            'hidden' => 'true',
+            'value' => '123456'
+        ])
+
+        <!-- roles -->
+        @include('components.form.input', [
+            'group' => 'contact',
+            'name' => 'roles_ids[]',
+            'hidden' => 'true',
+            'value' => 14
+        ])
+
         <!-- firstname -->
         @include('components.form.input', [
             'group' => 'contact',
             'label' => __('Firstname'),
             'name' => 'firstname',
+            'parentName' => 'profile',
             'required' => true,
-            'value' => $row->firstname
+            'value' => $row->profile->firstname
         ])
 
         <!-- lastname -->
         @include('components.form.input', [
             'group' => 'contact',
             'label' => __('Lastname'),
+            'parentName' => 'profile',
             'name' => 'lastname',
             'required' => true,
-            'value' => $row->lastname,
+            'value' => $row->profile->lastname
         ])
 
         <!-- email -->
@@ -34,53 +68,99 @@
         @include('components.form.input', [
             'group' => 'contact',
             'label' => __('Phone'),
+            'parentName' => 'profile',
             'name' => 'phone',
-            'value' => $row->phone
+            'value' => $row->profile->phone
         ])        
 
         <!-- mobile -->
         @include('components.form.input', [
             'group' => 'contact',
             'label' => __('Mobile'),
+            'parentName' => 'profile',
             'name' => 'mobile',
-            'value' => $row->mobile
+            'value' => $row->profile->mobile
         ])
 
         <!-- emergency phone -->
         @include('components.form.input', [
             'group' => 'contact',
             'label' => __('Emergency Phone'),
+            'parentName' => 'profile',
             'name' => 'emergency_phone',
             'required' => true,
-            'value' => $row->emergency_phone
+            'value' => $row->profile->emergency_phone
         ])
 
-        <!-- address -->
-        @include('components.form.textarea', [
-            'group' => 'contact',
-            'label' => __('Address'),
-            'name' => 'address',
-            'value' => $row->address
+        <!-- country -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Country'),
+            'name' => 'country',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->country
+        ])
+
+        <!-- state -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('State'),
+            'name' => 'state',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->state
+        ])
+
+        <!-- city -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('City'),
+            'name' => 'city',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->city
+        ])
+
+        <!-- street -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Street'),
+            'name' => 'street',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->street
+        ])
+
+        <!-- zip -->
+        @include('components.form.input', [
+            'group' => 'user',
+            'label' => __('Zip'),
+            'name' => 'zip',
+            'parentName' => 'profile',
+            'required' => true,
+            'value' => $row->profile->zip
         ])
 
         <!-- type -->
         @include('components.form.select', [
             'group' => 'contact',
             'label' => __('Contact Type'),
+            'parentName' => 'profile',
             'name' => 'contact_type',
-            'value' => $row->contact_type,
             'options' => $types,
+            'value' => $row->profile->contact_type,
             'optionValueRef' => 'id',
             'optionLabelRef' => 'label',
         ]) 
 
-        <!-- is_active -->
+        <!-- is_enabled -->
         @include('components.form.checkbox', [
             'group' => 'contact',
             'label' => __('Active'),
-            'name' => 'is_active',
+            'name' => 'is_enabled',
             'value' => 1,
-            'default' => $row->is_active,
+            'default' => $row->is_enabled,
         ])
 
     </div>

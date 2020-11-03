@@ -592,6 +592,7 @@ class RoleHelper
             'owner' => 11,
             'regular' => 12,
             'human-resources' => 13,
+            'contact' => 14,
         ];
 
         $roles_ids = [];
