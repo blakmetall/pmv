@@ -9,6 +9,7 @@ use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
 use App\Helpers\UserHelper;
+use Carbon\Carbon;
 
 class PropertyBookingController extends Controller
 {
@@ -167,19 +168,23 @@ class PropertyBookingController extends Controller
 
     public function calendar(Request $request, Property $property)
     {
-        $SERVER_TIME = mktime(date('H'), date('i'), date('s'), date('n'), date('j'), date('Y'));
-        $currYear = !empty($_GET['y']) ? $_GET['y'] : date('Y', $SERVER_TIME);
+        $currYear = isset($request->year) ? $request->year : Carbon::now()->year;
+        $prevYear = Carbon::create($currYear)->subYear()->year;
+        $nextYear = Carbon::create($currYear)->addYear()->year;
         $bookings = $this->repository->all('', ['propertyID' => $property->id, 'currentYear' => $currYear]);
-        $calendar = $this->generateCalendar($property, $SERVER_TIME);
+        $calendar = $this->generateCalendar($property, $request);
         return view('property-bookings.calendar')
             ->with('bookings', $bookings)
             ->with('property', $property)
+            ->with('currYear', $currYear)
+            ->with('prevYear', $prevYear)
+            ->with('nextYear', $nextYear)
             ->with('calendar', $calendar);
     }
 
-    private function generateCalendar($property, $SERVER_TIME)
+    private function generateCalendar($property, $request)
     {
-        $currYear = !empty($_GET['y']) ? $_GET['y'] : date('Y', $SERVER_TIME);
+        $currYear = isset($request->year) ? $request->year : Carbon::now()->year;
         $count_cols = 0;
         $cols_needed = 3;
 
@@ -228,7 +233,8 @@ class PropertyBookingController extends Controller
             $count_fields = $first_weekday;
             for ($d = 1; $d <= $days_month; $d++) {
                 $addzero = ($d < 10) ? '0' . $d : $d;
-                $formatYear = !empty($_GET['y']) ? $_GET['y'] : date('y', $SERVER_TIME);
+                $formatYear = isset($request->year) ? $request->year : Carbon::now()->year;
+                $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;

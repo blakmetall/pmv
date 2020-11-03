@@ -4,7 +4,11 @@
 <div class="mb-5"></div>
 <div class="card">
     <div class="card-header">
-        {{ $label }}
+        <div class="btns-container">
+            <a href="{{ route('property-calendar', [$property->id, $prevYear]) }}" class="btn btn-dark">{{ __('Prev Year') }}</a>
+            <span>{{ $currYear }}</span>
+            <a href="{{ route('property-calendar', [$property->id, $nextYear]) }}" class="btn btn-dark">{{ __('Next Year') }}</a>
+        </div>
     </div>
     <div class="card-body">
         <div class="calendar-container">

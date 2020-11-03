@@ -20,7 +20,7 @@
     @endphp
 
     @include('components.heading', [
-        'label' => __('Properties Booking'),
+        'label' => __('Availability Calendar'),
         'breadcrumbs' => [
             [
                 'url' => route('property-bookings.by-property', [$property->id]),

@@ -127,7 +127,7 @@ Route::group(['middleware' => ['web']], function () {
 
                     // property: property calendar
                     Route::group(['prefix' => 'calendar'], function () {
-                        Route::get('', 'PropertyBookingController@calendar')->name('property-calendar');
+                        Route::get('/{year?}', 'PropertyBookingController@calendar')->name('property-calendar');
                     });
 
                     // property: property rates

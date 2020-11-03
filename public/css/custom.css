@@ -93,3 +93,15 @@
     width: 100%;
     padding: 10px;
 }
+
+.btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btns-container span {
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0px 10px;
+}
