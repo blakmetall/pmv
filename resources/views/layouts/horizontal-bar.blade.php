@@ -26,11 +26,13 @@
                                         <input type="checkbox" id="dropdownMenuBooking">
                                         <ul>
                                             @if ($_current_role->isAllowed('properties', 'index'))
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('properties.create') }}">
-                                                        <span class="item-name">{{ __('New Listing') }}</span>
-                                                    </a>
-                                                </li>
+                                                @if (!isRole('contact'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties.create') }}">
+                                                            <span class="item-name">{{ __('New Listing') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
 
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('properties') }}">
@@ -38,17 +40,20 @@
                                                     </a>
                                                 </li>
 
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('properties') }}?filterOffline=1">
-                                                        <span class="item-name">{{ __('Properties Offline') }}</span>
-                                                    </a>
-                                                </li>
+                                                @if (!isRole('contact'))
 
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('properties') }}?filterDisabled=1">
-                                                        <span class="item-name">{{ __('Properties Disabled') }}</span>
-                                                    </a>
-                                                </li>
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties') }}?filterOffline=1">
+                                                            <span class="item-name">{{ __('Properties Offline') }}</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties') }}?filterDisabled=1">
+                                                            <span class="item-name">{{ __('Properties Disabled') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
                                             @endif
                                         </ul>
                                     @endif

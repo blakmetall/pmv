@@ -288,6 +288,7 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                     'regular',
+                    'contact',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -301,6 +302,7 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                     'regular',
+                    'contact',
                 ]),
                 'general-availability' => self::transformSluggedRolesToIds([
                     'super',

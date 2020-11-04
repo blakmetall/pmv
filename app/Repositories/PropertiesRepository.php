@@ -25,10 +25,11 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
-        $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
-        $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
-        $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
+        $shouldFilterByEnabled  = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
+        $shouldFilterByUserId   = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldFilterByOffline  = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
         $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
+        $contactID              = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -84,6 +85,12 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             });
         }
 
+        $result = $query->whereHas('property', function ($q) use ($contactID) {
+            $q->whereHas('contacts', function ($c) use ($contactID) {
+                $c->where('users.id', $contactID);
+            });
+        })->get();
+        
         if ($shouldPaginate) {
             $result = $query->paginate(config('constants.pagination.per-page'));
         } else {
