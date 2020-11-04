@@ -71,6 +71,7 @@ class UsersRepository implements UsersRepositoryInterface
 
             $query->where('is_enabled', 1);
 
+            // Este es el filtro original cuando se remova el provicional en la busqueda
             // if ($shouldFilterByUserId) {
             //     $query->whereHas('profile', function ($q) use ($shouldFilterByUserId) {
             //         $q->whereIn('profiles.owners_ids', [$shouldFilterByUserId]);
