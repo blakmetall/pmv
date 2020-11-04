@@ -16,6 +16,7 @@
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
                         <th scope="col">{{ __('Roles') }}</th>
+                        <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -63,6 +64,15 @@
                                             </span>
                                         </div>
                                     @endforeach
+                                </td>
+
+                                <!-- owner -->
+                                <td>
+                                    @if(!empty($row->profile->owners()))
+                                        @foreach ($row->profile->owners() as $owner)
+                                            {{ $owner->profile->full_name }}
+                                        @endforeach
+                                    @endif
                                 </td>
 
                                 <!-- created/updated cols -->

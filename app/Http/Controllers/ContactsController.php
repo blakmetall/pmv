@@ -20,6 +20,7 @@ class ContactsController extends Controller
     {
         $search = trim($request->s);
         $config = ['contactsOnly' => true];
+
         $contacts = $this->repository->all($search, $config);
 
         return view('contacts.index')

@@ -29,6 +29,22 @@
 
                     @if(count($rows))
                         @foreach($rows as $row)
+                            {{-- Filtro provisional para que solo muestre usuarios de tipo contacto --}}
+                            @foreach($row->roles as $role)
+                                @php
+                                    if($role->id == 14){
+                                        $isContact = true;
+                                    }else{
+                                        $isContact = false;
+                                    }
+                                @endphp
+                            @endforeach
+                            @php
+                                if(!$isContact){
+                                    continue;
+                                }
+                            @endphp
+                            {{-- Termina filtro provisional para que solo muestre usuarios de tipo contacto --}}
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
@@ -54,9 +70,9 @@
 
                                 <!-- owner -->
                                 <td>
-                                    @if($row->profile->owner)
-                                        {{ $row->profile->owner->full_name }}
-                                    @endif
+                                    @foreach ($row->profile->owners() as $owner)
+                                        {{ $owner->profile->full_name }}
+                                    @endforeach
                                 </td>
 
                                 <!-- is_enabled -->

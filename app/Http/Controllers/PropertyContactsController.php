@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\{ContactsRepositoryInterface, UsersRepositoryInterface};
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Helpers\UserHelper;
 
 class PropertyContactsController extends Controller
 {
@@ -40,6 +41,9 @@ class PropertyContactsController extends Controller
     public function create(Property $property)
     {
         $config = ['contactsOnly' => true];
+        // if (RoleHelper::is('owner') || RoleHelper::is('regular')) {
+        $config['filterByUserId'] = UserHelper::getCurrentUserID();
+        // }
         $contacts = $this->repository->all('', $config);
 
         return view('property-contacts.create')

@@ -85,12 +85,14 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             });
         }
 
-        $result = $query->whereHas('property', function ($q) use ($contactID) {
-            $q->whereHas('contacts', function ($c) use ($contactID) {
-                $c->where('users.id', $contactID);
-            });
-        })->get();
-        
+        if ($contactID) {
+            $query->orWhereHas('property', function ($q) use ($contactID) {
+                $q->whereHas('contacts', function ($q) use ($contactID) {
+                    $q->where('properties_has_contacts.user_id', $contactID);
+                });
+            })->where('language_id', $lang->id);
+        }
+
         if ($shouldPaginate) {
             $result = $query->paginate(config('constants.pagination.per-page'));
         } else {

@@ -46,11 +46,13 @@
 
                                 <!-- balances -->
                                 <td>
-                                    <a href="{{ route('property-management-balances.email', $pm->id) }}"
-                                        alt="{{ __('Send Email') }}"
-                                        class="text-primary mr-2">
-                                        <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
-                                    </a>
+                                    @if( !isRole('owner') )
+                                        <a href="{{ route('property-management-balances.email', $pm->id) }}"
+                                            alt="{{ __('Send Email') }}"
+                                            class="text-primary mr-2">
+                                            <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
+                                        </a>
+                                    @endif
                                     <a href="{{ route('property-management-transactions', $pm->id) }}"
                                         alt="{{ __('Transactions') }}"
                                         class="text-primary mr-2">

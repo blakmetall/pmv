@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Repositories\UsersRepositoryInterface;
 use App\Models\{Profile, Role, User};
 use App\Validations\UsersValidations;
+use App\Helpers\UserHelper;
 
 class UsersRepository implements UsersRepositoryInterface
 {
@@ -26,6 +27,7 @@ class UsersRepository implements UsersRepositoryInterface
         $ownersOnly     = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
         $agentsOnly     = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
         $contactsOnly   = isset($config['contactsOnly']) ? $config['contactsOnly'] : false;
+        $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
 
         if ($search) {
             $query = User::where('email', 'like', "%" . $search . "%")
@@ -69,12 +71,11 @@ class UsersRepository implements UsersRepositoryInterface
 
             $query->where('is_enabled', 1);
 
-            if (isRole('owner')) {
-                $query->whereHas('profile', function ($query) {
-                    $query
-                        ->where('profiles.owner_id', UserHelper::getCurrentUserID());
-                });
-            }
+            // if ($shouldFilterByUserId) {
+            //     $query->whereHas('profile', function ($q) use ($shouldFilterByUserId) {
+            //         $q->whereIn('profiles.owners_ids', [$shouldFilterByUserId]);
+            //     });
+            // }
         }
 
         //Aqui TERMINAN los filtros de los contactos
@@ -107,27 +108,45 @@ class UsersRepository implements UsersRepositoryInterface
     public function save(Request $request, $id = '')
     {
         $is_new = !$id;
-
+        $updateOwners = false;
         if ($is_new) {
-            $user = $this->blueprint();
+            if ($request->is_contact) {
+                $getUser = User::where('email', $request->email)->get();
+                if ($getUser->count()) {
+                    $updateOwners = true;
+                    $user = $getUser[0];
+                    $ownersIds = $user->profile->owners_ids;
+                } else {
+                    $updateOwners = false;
+                    $ownersIds = [];
+                    $user = $this->blueprint();
+                }
+            } else {
+                $ownersIds = [];
+                $user = $this->blueprint();
+            }
         } else {
             $user = $this->find($id);
+            $ownersIds = $user->owners_ids;
         }
 
-        $checkboxesConfig = ['is_enabled' => 0];
-        $requestData = array_merge($checkboxesConfig, $request->all());
+        if (!$updateOwners) {
 
-        $user->fill($requestData);
+            $checkboxesConfig = ['is_enabled' => 0];
+            $requestData = array_merge($checkboxesConfig, $request->all());
 
-        // passsword
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
+            $user->fill($requestData);
+
+            // passsword
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            // workgroups assignation
+            $user->workgroups()->sync($request->workgroups_ids);
         }
-
-        $user->save();
-
-        // workgroups assignation
-        $user->workgroups()->sync($request->workgroups_ids);
 
         // roles assignation
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
@@ -145,8 +164,14 @@ class UsersRepository implements UsersRepositoryInterface
                 $roles_to_assign[] = 1;
             }
 
+
+            if ($request->is_contact) {
+                $roles_to_assign[] = 14;
+            }
+
             $user->roles()->sync($roles_to_assign);
         }
+
 
         // profile data
         if ($user->id) {
@@ -157,9 +182,16 @@ class UsersRepository implements UsersRepositoryInterface
                 $user->profile->config_language = 'es'; // default language on create
             }
 
+            // if (isRole('owner')) {
+            if (!in_array(UserHelper::getCurrentUserID(), $ownersIds)) {
+                $ownersIds[] = UserHelper::getCurrentUserID();
+            }
+            // }
+
             $checkboxesConfig = ['config_agent_is_enabled' => 0];
             $profileData = array_merge($checkboxesConfig, $request->profile);
 
+            $user->profile->owners_ids = $ownersIds;
             $user->profile->fill($profileData);
             $user->profile->save();
         }

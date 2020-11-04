@@ -17,7 +17,7 @@ class UsersValidations extends Validation
             'profile.state' => 'required',
             'profile.city' => 'required',
             'profile.street' => 'required',
-            'profile.zip' => 'required|numeric',
+            'profile.zip' => 'required',
             'profile.config_agent_commission' => 'nullable|integer|between:0,100',
         ]);
     }
@@ -28,6 +28,11 @@ class UsersValidations extends Validation
         $customValidationMessages = [];
 
         $shouldUseDefaultValidations = true;
+        if ($request->is_contact) {
+            $ruleUnique = '';
+        } else {
+            $ruleUnique = Rule::unique('users');
+        }
 
         switch ($validateEvent) {
             case 'create':
@@ -35,7 +40,7 @@ class UsersValidations extends Validation
                     'email' => [
                         'required',
                         'email',
-                        Rule::unique('users')
+                        $ruleUnique
                     ],
                     'password' => 'required|confirmed|min:6',
                 ];
