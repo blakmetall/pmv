@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Helpers\UserHelper;
+use App\Models\Profile;
+use App\Models\Role;
+use App\Models\User;
+use App\Validations\UsersValidations;
 use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\UsersRepositoryInterface;
-use App\Models\{Profile, Role, User};
-use App\Validations\UsersValidations;
-use App\Helpers\UserHelper;
 
 class UsersRepository implements UsersRepositoryInterface
 {
@@ -24,13 +25,13 @@ class UsersRepository implements UsersRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $ownersOnly     = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
-        $agentsOnly     = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
-        $contactsOnly   = isset($config['contactsOnly']) ? $config['contactsOnly'] : false;
+        $ownersOnly = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
+        $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
+        $contactsOnly = isset($config['contactsOnly']) ? $config['contactsOnly'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
 
         if ($search) {
-            $query = User::where('email', 'like', "%" . $search . "%")
+            $query = User::where('email', 'like', '%'.$search.'%')
                 ->orWhereHas('profile', function ($query) use ($search) {
                     $query
                         ->where('profiles.firstname', 'like', $search)
@@ -45,28 +46,26 @@ class UsersRepository implements UsersRepositoryInterface
             $query = User::query();
         }
 
-
         if ($ownersOnly) {
             $query->whereHas('roles', function ($q) {
-                $table = (new Role)->_getTable();
-                $q->whereIn($table . '.id', [config('constants.roles.owner')]);
+                $table = (new Role())->_getTable();
+                $q->whereIn($table.'.id', [config('constants.roles.owner')]);
             });
         }
 
         if ($agentsOnly) {
             $query->whereHas('roles', function ($q) {
-                $table = (new Role)->_getTable();
-                $q->whereIn($table . '.id', [config('constants.roles.rentals-agent')]);
+                $table = (new Role())->_getTable();
+                $q->whereIn($table.'.id', [config('constants.roles.rentals-agent')]);
             });
         }
-
 
         //Aqui INICIAN los filtros de los contactos
 
         if ($contactsOnly) {
             $query->whereHas('roles', function ($q) {
-                $table = (new Role)->_getTable();
-                $q->whereIn($table . '.id', [config('constants.roles.contact')]);
+                $table = (new Role())->_getTable();
+                $q->whereIn($table.'.id', [config('constants.roles.contact')]);
             });
 
             $query->where('is_enabled', 1);
@@ -97,12 +96,14 @@ class UsersRepository implements UsersRepositoryInterface
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
@@ -132,7 +133,6 @@ class UsersRepository implements UsersRepositoryInterface
         }
 
         if (!$updateOwners) {
-
             $checkboxesConfig = ['is_enabled' => 0];
             $requestData = array_merge($checkboxesConfig, $request->all());
 
@@ -165,7 +165,6 @@ class UsersRepository implements UsersRepositoryInterface
                 $roles_to_assign[] = 1;
             }
 
-
             if ($request->is_contact) {
                 $roles_to_assign[] = 14;
             }
@@ -173,18 +172,17 @@ class UsersRepository implements UsersRepositoryInterface
             $user->roles()->sync($roles_to_assign);
         }
 
-
         // profile data
         if ($user->id) {
             if (!$user->profile) {
-                $user->profile = new Profile;
+                $user->profile = new Profile();
                 $user->profile->user_id = $user->id;
                 $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
                 $user->profile->config_language = 'es'; // default language on create
             }
 
             // if (isRole('owner')) {
-            if (!in_array(UserHelper::getCurrentUserID(), $ownersIds)) {
+            if (is_array($ownersIds) && !in_array(UserHelper::getCurrentUserID(), $ownersIds)) {
                 $ownersIds[] = UserHelper::getCurrentUserID();
             }
             // }
@@ -206,7 +204,7 @@ class UsersRepository implements UsersRepositoryInterface
         $user = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$user) {
-            throw new ModelNotFoundException("User not found");
+            throw new ModelNotFoundException('User not found');
         }
 
         return $user;
@@ -248,11 +246,11 @@ class UsersRepository implements UsersRepositoryInterface
             }
         }
 
-        return ($id > 1); // to not delete super admin
+        return $id > 1; // to not delete super admin
     }
 
     public function blueprint()
     {
-        return new User;
+        return new User();
     }
 }
