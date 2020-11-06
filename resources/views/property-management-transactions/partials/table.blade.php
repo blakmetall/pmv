@@ -190,9 +190,11 @@
                                         <!-- edit and file -->
                                         <td>
                                             <div class="not-print">
-                                                <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
-                                                    <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -2px;">
-                                                </a>
+                                                @if(!isRole('owner') && !isRole('regular' && !isRole('contact')))
+                                                    <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
+                                                        <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -2px;">
+                                                    </a>
+                                                @endif
 
                                                 @if($row->file_url)
                                                     @include('components.table.file-modal', [

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ContactsRepositoryInterface, UsersRepositoryInterface};
-use Illuminate\Http\Request;
-use App\Models\Property;
 use App\Helpers\UserHelper;
+use App\Models\Property;
+use App\Repositories\ContactsRepositoryInterface;
+use App\Repositories\UsersRepositoryInterface;
+use Illuminate\Http\Request;
 
 class PropertyContactsController extends Controller
 {
@@ -24,13 +25,15 @@ class PropertyContactsController extends Controller
     {
         $contacts =
             $property
-            ->contacts()->whereHas('profile', function ($property) {
-                $property
-                    ->where('profiles.contact_type', '!=', 'home-owner');
-            })
+            ->contacts()
+            // ->whereHas('profile', function ($property) {
+            //     $property
+            //         ->where('profiles.contact_type', '!=', 'home-owner');
+            // })
             ->paginate();
 
         $owner = $property->user;
+
         return view('property-contacts.index')
             ->with('owner', $owner)
             ->with('contacts', $contacts)
@@ -55,6 +58,7 @@ class PropertyContactsController extends Controller
     {
         $property->contacts()->sync($request->contacts_ids);
         $request->session()->flash('success', __('Contacts Updated'));
+
         return redirect(route('property-contacts', $property->id));
     }
 }

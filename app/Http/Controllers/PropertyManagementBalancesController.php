@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\PMHelper;
+use App\Helpers\UserHelper;
 use App\Models\PropertyManagement;
 use App\Models\User;
 use App\Notifications\DetailsBalance;
@@ -27,7 +28,9 @@ class PropertyManagementBalancesController extends Controller
     {
         $search = trim($request->s);
         $config = ['paginate' => false];
+
         $config = [
+            'filterByContactId' => UserHelper::getCurrentUserID(),
             'filterByCity' => $request->city,
             'filterByOwner' => isRole('owner'),
         ];

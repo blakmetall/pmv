@@ -2,15 +2,15 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use App\Repositories\CleaningServicesRepositoryInterface;
+use App\Helpers\LanguageHelper;
+use App\Helpers\UserHelper;
+use App\Helpers\WorkgroupHelper;
 use App\Models\CleaningService;
 use App\Models\HumanResource;
 use App\Models\Property;
 use App\Validations\CleaningServicesValidations;
-use App\Helpers\UserHelper;
-use App\Helpers\WorkgroupHelper;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 {
@@ -28,9 +28,10 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
         $shouldFilterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : false;
+        $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         if ($search) {
-            $query = CleaningService::where('description', 'like', "%" . $search . "%");
+            $query = CleaningService::where('description', 'like', '%'.$search.'%');
         } else {
             $query = CleaningService::query();
         }
@@ -52,6 +53,15 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             });
         }
 
+        if ($contactID) {
+            $lang = LanguageHelper::current();
+            $query->orWhereHas('property', function ($q) use ($contactID) {
+                $q->whereHas('contacts', function ($q) use ($contactID) {
+                    $q->where('properties_has_contacts.user_id', $contactID);
+                });
+            })->where('language_id', $lang->id);
+        }
+
         if ($shouldPaginate) {
             $result = $query->paginate(config('constants.pagination.per-page'));
         } else {
@@ -64,12 +74,14 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
@@ -125,7 +137,6 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
             }
         }
 
-
         return $cleaning_service;
     }
 
@@ -135,7 +146,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $cleaning_service = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$cleaning_service) {
-            throw new ModelNotFoundException("Cleaning Service not found");
+            throw new ModelNotFoundException('Cleaning Service not found');
         }
 
         return $cleaning_service;
@@ -160,6 +171,6 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
 
     public function blueprint()
     {
-        return new CleaningService;
+        return new CleaningService();
     }
 }

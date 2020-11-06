@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Property;
-use App\Repositories\PropertiesRepositoryInterface;
-use App\Repositories\UsersRepositoryInterface;
-use App\Repositories\CitiesRepositoryInterface;
-use App\Repositories\ZonesRepositoryInterface;
-use App\Repositories\BuildingsRepositoryInterface;
-use App\Repositories\OfficesRepositoryInterface;
-use App\Repositories\CleaningOptionsRepositoryInterface;
-use App\Repositories\PropertyTypesRepositoryInterface;
-use App\Repositories\HumanResourcesRepositoryInterface;
-use App\Repositories\AmenitiesRepositoryInterface;
+use App\Helpers\ReportExcelHelper;
 use App\Helpers\RoleHelper;
 use App\Helpers\UserHelper;
-use App\Helpers\ReportExcelHelper;
+use App\Models\Property;
+use App\Repositories\AmenitiesRepositoryInterface;
+use App\Repositories\BuildingsRepositoryInterface;
+use App\Repositories\CitiesRepositoryInterface;
+use App\Repositories\CleaningOptionsRepositoryInterface;
+use App\Repositories\HumanResourcesRepositoryInterface;
+use App\Repositories\OfficesRepositoryInterface;
+use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\PropertyTypesRepositoryInterface;
+use App\Repositories\UsersRepositoryInterface;
+use App\Repositories\ZonesRepositoryInterface;
+use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
 {
@@ -67,7 +67,6 @@ class PropertiesController extends Controller
         }
 
         $config['filterByContactId'] = UserHelper::getCurrentUserID();
-
         $config['filterByOffline'] = (bool) $request->filterOffline;
         $config['filterByDisabled'] = (bool) $request->filterDisabled;
 
@@ -162,6 +161,7 @@ class PropertiesController extends Controller
     public function getBonus(Request $request)
     {
         $property = Property::where('id', $request->id)->first();
+
         return response()->json($property->cleaning_sunday_bonus);
     }
 

@@ -114,10 +114,11 @@ class UsersRepository implements UsersRepositoryInterface
         if ($is_new) {
             if ($request->is_contact) {
                 $getUser = User::where('email', $request->email)->get();
+
                 if ($getUser->count()) {
                     $updateOwners = true;
                     $user = $getUser[0];
-                    $ownersIds = $user->profile->owners_ids;
+                    $ownersIds = $user->profile ? $user->profile->owners_ids : [];
                 } else {
                     $updateOwners = false;
                     $ownersIds = [];

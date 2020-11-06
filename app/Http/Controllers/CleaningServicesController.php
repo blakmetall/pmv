@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helpers\UserHelper;
+use App\Models\CleaningService;
 use App\Repositories\CleaningServicesRepositoryInterface;
 use App\Repositories\CleaningServicesStatusRepositoryInterface;
 use App\Repositories\HumanResourcesRepositoryInterface;
 use App\Repositories\PropertiesRepositoryInterface;
-use App\Models\CleaningService;
-use App\Models\CleaningServiceStatus;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class CleaningServicesController extends Controller
 {
@@ -24,7 +24,7 @@ class CleaningServicesController extends Controller
         HumanResourcesRepositoryInterface $humanResourcesRepository,
         PropertiesRepositoryInterface $propertiesRepository
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->propertiesRepository = $propertiesRepository;
         $this->humanResourcesRepository = $humanResourcesRepository;
         $this->cleaningServicesStatusRepository = $cleaningServicesStatusRepository;
@@ -34,7 +34,8 @@ class CleaningServicesController extends Controller
     {
         $search = trim($request->s);
 
-        $config = [];
+        $config = ['filterByContactId' => UserHelper::getCurrentUserID()];
+
         if (isRole('owner')) {
             $config = ['filterByOwner' => true];
         } else {
@@ -136,11 +137,11 @@ class CleaningServicesController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect(route('cleaning-services'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
-
 
         return redirect()->back();
     }
@@ -150,6 +151,7 @@ class CleaningServicesController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect()->back();
         }
 
@@ -166,8 +168,8 @@ class CleaningServicesController extends Controller
                 'month' => date('m', strtotime('now')),
             ];
 
-            $appendUrl = '?' . http_build_query($urlParams);
-            $redirectUrl = route('cleaning-services.monthly-batch') . $appendUrl;
+            $appendUrl = '?'.http_build_query($urlParams);
+            $redirectUrl = route('cleaning-services.monthly-batch').$appendUrl;
 
             return redirect($redirectUrl);
         }

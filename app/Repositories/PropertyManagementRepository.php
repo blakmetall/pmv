@@ -2,12 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Helpers\LanguageHelper;
+use App\Models\PropertyManagement;
+use App\Validations\PropertyManagementValidations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Helpers\LanguageHelper;
-use App\Repositories\PropertyManagementRepositoryInterface;
-use App\Models\{Property, PropertyManagement};
-use App\Validations\PropertyManagementValidations;
 
 class PropertyManagementRepository implements PropertyManagementRepositoryInterface
 {
@@ -29,12 +28,13 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
             $query->where(function ($query) use ($search) {
-                $query->where('start_date', 'like', '%' . $search . '%');
-                $query->orWhere('end_date', 'like', '%' . $search . '%');
+                $query->where('start_date', 'like', '%'.$search.'%');
+                $query->orWhere('end_date', 'like', '%'.$search.'%');
             });
         } else {
             $query = PropertyManagement::query();
@@ -43,7 +43,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
         if ($filterByCity) {
             $query->whereHas('property', function ($q) use ($filterByCity) {
-                $q->where('city_id', 'like', '%' . $filterByCity . '%');
+                $q->where('city_id', 'like', '%'.$filterByCity.'%');
             });
         }
 
@@ -52,7 +52,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
                 $q->where('user_id', \Auth::id());
             });
         }
-
 
         if ($hasPropertyID) {
             $query->where('property_id', $config['propertyID']);
@@ -66,8 +65,16 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query->orderBy('name', 'asc');
 
             if ($search) {
-                $query->orWhere('properties_translations.name', 'like', '%' . $search . '%');
+                $query->orWhere('properties_translations.name', 'like', '%'.$search.'%');
             }
+        }
+
+        if ($contactID) {
+            $query->orWhereHas('property', function ($q) use ($contactID) {
+                $q->whereHas('contacts', function ($q) use ($contactID) {
+                    $q->where('properties_has_contacts.user_id', $contactID);
+                });
+            })->where('language_id', $lang->id);
         }
 
         if ($unfinishedOnly) {
@@ -86,12 +93,14 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
@@ -121,7 +130,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $pm = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$pm) {
-            throw new ModelNotFoundException("PropertyManagement not found");
+            throw new ModelNotFoundException('PropertyManagement not found');
         }
 
         return $pm;
@@ -143,7 +152,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $pm = $this->model->find($id);
 
         if ($pm) {
-
             // validate empty usage in transactions
             if ($pm->transactions()->count()) {
                 return false;
@@ -155,6 +163,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function blueprint()
     {
-        return new PropertyManagement;
+        return new PropertyManagement();
     }
 }
