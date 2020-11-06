@@ -151,9 +151,19 @@ class UsersRepository implements UsersRepositoryInterface
         }
 
         // roles assignation
+        $prev_roles_ids = [];
+        if ($request->attach_prev_roles) {
+            if ($user->roles && count($user->roles)) {
+                foreach ($user->roles as $r) {
+                    $prev_roles_ids[] = $r->id;
+                }
+            }
+        }
+
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
             $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
             $roles_to_assign = [];
+
             foreach ($request->roles_ids as $role_id) {
                 $hasValidRole = in_array($role_id, $validRolesIds);
                 if ($hasValidRole) {
@@ -166,8 +176,13 @@ class UsersRepository implements UsersRepositoryInterface
                 $roles_to_assign[] = 1;
             }
 
+            // add extra role contact to the role list
             if ($request->is_contact) {
                 $roles_to_assign[] = 14;
+            }
+
+            if ($request->attach_prev_roles) {
+                $roles_to_assign = array_unique(array_merge($roles_to_assign, $prev_roles_ids));
             }
 
             $user->roles()->sync($roles_to_assign);

@@ -2,15 +2,14 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
 use App\Models\Role;
-use App\Helpers\LanguageHelper;
+use App\Models\User;
 use Config;
 
 class RoleHelper
 {
     /**
-     * Get the current user role configured in profile
+     * Get the current user role configured in profile.
      *
      * @return Illuminate\Database\Eloquent\Model object or false
      */
@@ -27,7 +26,7 @@ class RoleHelper
     }
 
     /**
-     * Sets the active role base on role_id
+     * Sets the active role base on role_id.
      */
     public static function setActive($id)
     {
@@ -39,9 +38,9 @@ class RoleHelper
     }
 
     /**
-     * Get the user roles available
+     * Get the user roles available.
      *
-     * @return Array of Illuminate\Database\Eloquent\Model of type RoleTranslation
+     * @return array of Illuminate\Database\Eloquent\Model of type RoleTranslation
      */
     public static function available($user_id = false)
     {
@@ -66,7 +65,7 @@ class RoleHelper
 
     public static function is($roleSlug)
     {
-        $compareRoleId = config('constants.roles.' . $roleSlug);
+        $compareRoleId = config('constants.roles.'.$roleSlug);
 
         $current = self::current();
 
@@ -89,7 +88,7 @@ class RoleHelper
     }
 
     /**
-     * Checks if role is allowed for a speficic section, subsection and section listing
+     * Checks if role is allowed for a speficic section, subsection and section listing.
      *
      * @return bool
      */
@@ -105,7 +104,7 @@ class RoleHelper
     }
 
     /**
-     * @return Array List of url sections with their subsections
+     * @return array List of url sections with their subsections
      *               and their allowed roles ids per section
      */
     public static function getAllowedSections()
@@ -186,7 +185,7 @@ class RoleHelper
             'bookings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -274,7 +273,7 @@ class RoleHelper
             'properties' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -330,6 +329,7 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'owner',
+                    'contact',
                 ]),
                 'new-transaction' => self::transformSluggedRolesToIds([
                     'super',
@@ -362,7 +362,8 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
-                    'owner'
+                    'owner',
+                    'contact',
                 ]),
                 'transactions' => self::transformSluggedRolesToIds([
                     'super',
@@ -399,6 +400,7 @@ class RoleHelper
                     'administrative-assistant',
                     'concierge',
                     'owner',
+                    'contact',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -411,6 +413,7 @@ class RoleHelper
                     'administrative-assistant',
                     'concierge',
                     'owner',
+                    'contact',
                 ]),
                 'monthly-batch' => self::transformSluggedRolesToIds([
                     'super',
@@ -454,7 +457,7 @@ class RoleHelper
             'human-resources' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -493,7 +496,7 @@ class RoleHelper
             'reporting' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -511,7 +514,7 @@ class RoleHelper
             'settings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -521,35 +524,35 @@ class RoleHelper
                 ]),
                 'users' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'workgroups' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'roles' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'cities' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'zones' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'buildings' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'amenities' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'transaction-types' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin'
+                    'admin',
                 ]),
                 'cleaning-options' => self::transformSluggedRolesToIds([
                     'super',
@@ -567,16 +570,16 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                 ]),
-            ]
+            ],
         ];
 
         return $sections;
     }
 
     /**
-     * $roles_slug_list Array of role slugs
+     * $roles_slug_list Array of role slugs.
      *
-     * @return Array List of roles ids
+     * @return array List of roles ids
      */
     public static function transformSluggedRolesToIds($roles_slug_list)
     {

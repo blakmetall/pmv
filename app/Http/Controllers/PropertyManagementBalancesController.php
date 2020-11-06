@@ -32,8 +32,9 @@ class PropertyManagementBalancesController extends Controller
         $config = [
             'filterByContactId' => UserHelper::getCurrentUserID(),
             'filterByCity' => $request->city,
-            'filterByOwner' => isRole('owner'),
+            'filterByOwner' => isRole('owner') || isRole('contact'),
         ];
+
         $pm_items = $this->propertyManagementRepository->all($search, $config);
         $cities = $this->citiesRepository->all('', '');
 

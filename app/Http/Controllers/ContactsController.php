@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ContactsHelper;
+use App\Models\Profile;
+use App\Models\User;
 use App\Repositories\{UsersRepositoryInterface};
 use Illuminate\Http\Request;
-use App\Models\{User, Profile};
-use App\Helpers\ContactsHelper;
 
 class ContactsController extends Controller
 {
@@ -88,6 +89,7 @@ class ContactsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+
         return redirect(route('contacts.edit', [$id]));
     }
 
@@ -96,10 +98,12 @@ class ContactsController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect(route('contacts'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+
         return redirect()->back();
     }
 }

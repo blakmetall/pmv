@@ -163,6 +163,15 @@
             'default' => $row->is_enabled,
         ])
 
+         <!-- attach prev roles control -->
+         @include('components.form.input', [
+            'group' => 'contact',
+            'name' => 'attach_prev_roles',
+            'required' => true,
+            'value' => true,
+            'hidden' => true
+        ])
+
     </div>
 </div>
 

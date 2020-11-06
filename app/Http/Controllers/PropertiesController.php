@@ -62,7 +62,7 @@ class PropertiesController extends Controller
         $config = ['filterByWorkgroup' => true];
 
         // review this code
-        if (RoleHelper::is('owner') || RoleHelper::is('regular')) {
+        if (RoleHelper::is('owner') || RoleHelper::is('regular') || RoleHelper::is('contact')) {
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
 

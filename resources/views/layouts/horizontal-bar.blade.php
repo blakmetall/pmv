@@ -70,7 +70,7 @@
                                     <label class="toggle" for="dropdownMenuProperties">
                                         {{  __('Property Management') }}
                                     </label>
-                                    @if(isRole('owner'))
+                                    @if(isRole('owner') || isRole('contact'))
                                         <a href="#">
                                     @else
                                         <a href="{{ route('property-management.general') }}">
