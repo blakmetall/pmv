@@ -194,7 +194,11 @@ class UsersRepository implements UsersRepositoryInterface
                 $user->profile = new Profile();
                 $user->profile->user_id = $user->id;
                 if ($request->is_contact) {
-                    $user->profile->config_role_id = 14;
+                    if ($user->profile->config_role_id) {
+                        $user->profile->config_role_id = $user->profile->config_role_id;
+                    } else {
+                        $user->profile->config_role_id = 14;
+                    }
                 } else {
                     $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
                 }
@@ -202,7 +206,6 @@ class UsersRepository implements UsersRepositoryInterface
             }
 
             // if (isRole('owner')) {
-            // Se necesita esclarecer si el dueño puede o no ver a todos los contactos
             if (is_array($ownersIds) && !in_array(UserHelper::getCurrentUserID(), $ownersIds)) {
                 $ownersIds[] = UserHelper::getCurrentUserID();
             }
