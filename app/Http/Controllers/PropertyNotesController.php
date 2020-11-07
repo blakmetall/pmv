@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ PropertyNotesRepositoryInterface };
+use App\Repositories\{PropertyNotesRepositoryInterface};
 use Illuminate\Http\Request;
-use App\Models\{ Property, PropertyNote };
+use App\Models\{Property, PropertyNote};
 
 class PropertyNotesController extends Controller
 {
@@ -20,7 +20,7 @@ class PropertyNotesController extends Controller
         $search = trim($request->s);
 
         $config = [];
-        if(isRole('owner')) {
+        if (isRole('owner') || isRole('contact')) {
             $config = ['auditedOnly' => true];
         }
 
@@ -69,12 +69,12 @@ class PropertyNotesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-notes.edit', [$property->id, $id]) );
+        return redirect(route('property-notes.edit', [$property->id, $id]));
     }
 
     public function destroy(Request $request, Property $property, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('property-notes', [$property->id]));

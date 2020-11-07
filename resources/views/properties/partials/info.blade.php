@@ -31,7 +31,8 @@
                         <div class="col-sm-6 col-md-7 text-left text-md-right app-property-info-icons">
 
                             <!-- property view -->
-                            @if( !isRole('owner') )
+                            <!-- Por que un dueño no puede ver los detalles de su propiedad? -->
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     role="button"
                                     href="{{ route('properties.show', $property->id) }}"
@@ -43,7 +44,7 @@
                             @endif
 
                             <!-- property images -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     role="button"
                                     href="{{ route('property-images', $property->id) }}"
@@ -67,7 +68,7 @@
                             @endif
 
                             <!-- property rates -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     role="button"
                                     href="{{ route('property-rates', $property->id) }}" 
@@ -79,7 +80,7 @@
                             @endif
 
                             <!-- property policies -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     href="{{ route('maintenance') }}" 
                                     class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
@@ -90,7 +91,7 @@
                             @endif
 
                             <!-- property contacts -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     role="button"
                                     href="{{ route('property-contacts', $property->id) }}" 
@@ -102,7 +103,7 @@
                             @endif
 
                             <!-- property notes -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     role="button"
                                     href="{{ route('property-notes', $property->id) }}" 
@@ -123,7 +124,7 @@
                             </a>
 
                             <!-- property preview -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     href="{{ route('maintenance') }}"
                                     class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
@@ -134,7 +135,7 @@
                             @endif
 
                             <!-- property management -->
-                            @if( !isRole('owner') )
+                            @if( !isRole('owner') && !isRole('contact'))
                                 <a 
                                     role="button"
                                     href="{{ route('property-management', $property->id) }}" 

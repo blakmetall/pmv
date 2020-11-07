@@ -46,7 +46,7 @@
 
                                 <!-- balances -->
                                 <td>
-                                    @if( !isRole('owner') )
+                                    @if( !isRole('owner') && !isRole('contact'))
                                         <a href="{{ route('property-management-balances.email', $pm->id) }}"
                                             alt="{{ __('Send Email') }}"
                                             class="text-primary mr-2">

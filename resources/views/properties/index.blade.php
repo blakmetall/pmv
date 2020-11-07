@@ -4,7 +4,7 @@
 
     @php 
         $actions = [];
-        if(!isRole('owner')) {
+        if(!isRole('owner') && !isRole('contact')) {
             $actions = [
                 [
                     'label' => __('New'),

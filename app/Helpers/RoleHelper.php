@@ -65,7 +65,7 @@ class RoleHelper
 
     public static function is($roleSlug)
     {
-        $compareRoleId = config('constants.roles.'.$roleSlug);
+        $compareRoleId = config('constants.roles.' . $roleSlug);
 
         $current = self::current();
 

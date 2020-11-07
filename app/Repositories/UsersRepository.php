@@ -31,7 +31,7 @@ class UsersRepository implements UsersRepositoryInterface
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
 
         if ($search) {
-            $query = User::where('email', 'like', '%'.$search.'%')
+            $query = User::where('email', 'like', '%' . $search . '%')
                 ->orWhereHas('profile', function ($query) use ($search) {
                     $query
                         ->where('profiles.firstname', 'like', $search)
@@ -49,14 +49,14 @@ class UsersRepository implements UsersRepositoryInterface
         if ($ownersOnly) {
             $query->whereHas('roles', function ($q) {
                 $table = (new Role())->_getTable();
-                $q->whereIn($table.'.id', [config('constants.roles.owner')]);
+                $q->whereIn($table . '.id', [config('constants.roles.owner')]);
             });
         }
 
         if ($agentsOnly) {
             $query->whereHas('roles', function ($q) {
                 $table = (new Role())->_getTable();
-                $q->whereIn($table.'.id', [config('constants.roles.rentals-agent')]);
+                $q->whereIn($table . '.id', [config('constants.roles.rentals-agent')]);
             });
         }
 
@@ -65,7 +65,7 @@ class UsersRepository implements UsersRepositoryInterface
         if ($contactsOnly) {
             $query->whereHas('roles', function ($q) {
                 $table = (new Role())->_getTable();
-                $q->whereIn($table.'.id', [config('constants.roles.contact')]);
+                $q->whereIn($table . '.id', [config('constants.roles.contact')]);
             });
 
             $query->where('is_enabled', 1);
@@ -193,11 +193,16 @@ class UsersRepository implements UsersRepositoryInterface
             if (!$user->profile) {
                 $user->profile = new Profile();
                 $user->profile->user_id = $user->id;
-                $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
+                if ($request->is_contact) {
+                    $user->profile->config_role_id = 14;
+                } else {
+                    $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
+                }
                 $user->profile->config_language = 'es'; // default language on create
             }
 
             // if (isRole('owner')) {
+            // Se necesita esclarecer si el dueño puede o no ver a todos los contactos
             if (is_array($ownersIds) && !in_array(UserHelper::getCurrentUserID(), $ownersIds)) {
                 $ownersIds[] = UserHelper::getCurrentUserID();
             }

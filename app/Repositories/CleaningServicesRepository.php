@@ -31,7 +31,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         if ($search) {
-            $query = CleaningService::where('description', 'like', '%'.$search.'%');
+            $query = CleaningService::where('description', 'like', '%' . $search . '%');
         } else {
             $query = CleaningService::query();
         }
@@ -54,12 +54,11 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         }
 
         if ($contactID) {
-            $lang = LanguageHelper::current();
             $query->orWhereHas('property', function ($q) use ($contactID) {
                 $q->whereHas('contacts', function ($q) use ($contactID) {
                     $q->where('properties_has_contacts.user_id', $contactID);
                 });
-            })->where('language_id', $lang->id);
+            });
         }
 
         if ($shouldPaginate) {

@@ -15,7 +15,7 @@
                             <th scope="col">#</th>
                             <th scope="col">&nbsp;</th>
 
-                            @if(isRole('owner'))
+                            @if(isRole('owner') || isRole('contact'))
                                 <th scope="col">{{ __('Property') }}</th>
                             @endif
 
@@ -41,7 +41,7 @@
                                     </th>
 
                                     <!-- thumbnail -->
-                                    @if(isRole('owner'))
+                                    @if(isRole('owner') || isRole('contact'))
                                         <th>
                                             @if ($row->property->hasDefaultImage())
                                                 @php
@@ -97,7 +97,7 @@
 
                                     <td>
                                         @if ($row->property->user)
-                                            @if(!isRole('owner'))
+                                            @if(!isRole('owner') && !isRole('contact'))
                                                 <a href="{{ route('users.show', [$row->property->user->id]) }}">
                                                     {{ $row->property->user->profile->full_name }}
                                                 </a>
@@ -118,7 +118,7 @@
                                         </a>
 
                                         <!-- property images -->
-                                        @if( !isRole('owner') )
+                                        @if( !isRole('owner') && !isRole('contact'))
                                             <a
                                                 href="{{ route('property-images', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
@@ -142,7 +142,7 @@
                                         @endif
 
                                         <!-- property rates -->
-                                        @if( !isRole('owner') )
+                                        @if( !isRole('owner') && !isRole('contact'))
                                             <a
                                                 href="{{ route('property-rates', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
@@ -162,7 +162,7 @@
                                         </a>
 
                                         <!-- property notes -->
-                                        @if( !isRole('owner') )
+                                        @if( !isRole('owner') && !isRole('contact'))
                                             <a
                                                 href="{{ route('property-notes', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
@@ -184,7 +184,7 @@
                                         -->
 
                                         <!-- property preview -->
-                                        @if( !isRole('owner') )
+                                        @if( !isRole('owner') && !isRole('contact'))
                                             <a
                                                 href="{{ route('maintenance') }}"
                                                 class="text-primary app-icon-link"
@@ -195,7 +195,7 @@
                                         @endif
 
                                         <!-- property management -->
-                                        @if( !isRole('owner') )
+                                        @if( !isRole('owner') && !isRole('contact'))
                                             <a
                                                 href="{{ route('property-management', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
@@ -215,8 +215,8 @@
                                             'editRoute' => 'properties.edit',
                                             'deleteRoute' => 'properties.destroy',
                                             'skipShow' => true,
-                                            'skipEdit' => isRole('owner'),
-                                            'skipDelete' => isRole('owner')
+                                            'skipEdit' => isRole('owner') || isRole('contact'),
+                                            'skipDelete' => isRole('owner') || isRole('contact')
                                         ])
                                     </td>
 

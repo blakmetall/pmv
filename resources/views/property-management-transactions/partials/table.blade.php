@@ -11,7 +11,7 @@
     }
 
     $tableClass = $usePendingAuditPresentation ? 'app-transaction-pending-audit-list' : 'app-transaction-list';
-    if(isRole('owner')) {
+    if(isRole('owner') || isRole('contact')) {
         $tableClass = 'app-transaction-owner-list';
     }
     $pendingTableClass = $tableClass . '-pending';
@@ -75,7 +75,7 @@
                         <thead>
                             @if($shouldShowBalanceColumn)
                                 <tr>
-                                    <?php $colspanMonth = !isRole('owner') ? 9 : 7; ?>
+                                    <?php $colspanMonth = !isRole('owner') && !isRole('contact') ? 9 : 7; ?>
                                     <th colspan="{{ $colspanMonth }}">
                                         @if(isset($_GET['month']) && $_GET['year'])
                                             {{ $months[(int)$_GET['month']] }}
@@ -84,7 +84,7 @@
                                         @endif
                                     </th>
 
-                                    <?php $colspanYear = !isRole('owner') ? 4 : 3; ?>
+                                    <?php $colspanYear = !isRole('owner') && !isRole('contact') ? 4 : 3; ?>
                                     <th colspan="{{ $colspanYear }}">
                                         {{ __('Previous Balance') }}: &nbsp;&nbsp;
 
@@ -108,7 +108,7 @@
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
 
-                                @if(!isRole('owner'))
+                                @if(!isRole('owner') && !isRole('contact'))
                                     <th scope="col">
                                         <div class="not-print transaction-col-checkbox">&nbsp;</div>
                                     </th>
@@ -120,7 +120,7 @@
 
                                 <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
 
-                                @if(!isRole('owner'))
+                                @if(!isRole('owner') && !isRole('contact'))
                                     <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
                                 @endif
 
@@ -133,7 +133,7 @@
                                     <th scope="col" class="transaction-col-balance">{{ __('Balance') }}</th>
                                 @endif
 
-                                @if(!isRole('owner'))
+                                @if(!isRole('owner') && !isRole('contact'))
                                     <th scope="col" class="transaction-col-created">{{ __('Created') }}</th>
                                     <th scope="col" class="transaction-col-updated">{{ __('Updated') }}</th>
                                 @else
@@ -141,7 +141,7 @@
                                     <th>&nbsp;</th>
                                 @endif
 
-                                @if(!isRole('owner'))
+                                @if(!isRole('owner') && !isRole('contact'))
                                     <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
                                 @endif
 
@@ -179,7 +179,7 @@
                                         </th>
 
                                         <!-- checkbox -->
-                                        @if(!isRole('owner'))
+                                        @if(!isRole('owner') && !isRole('contact'))
                                             <td>
                                                 <div class="not-print">
                                                 &nbsp;
@@ -205,7 +205,7 @@
                                                     ])
                                                 @endif
 
-                                                @if(!isRole('owner'))
+                                                @if(!isRole('owner') && !isRole('contact'))
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                                     @if(!$usePendingAuditPresentation)
@@ -225,7 +225,7 @@
                                         </td>
 
                                         <!-- property -->
-                                        @if(!isRole('owner'))
+                                        @if(!isRole('owner') && !isRole('contact'))
                                             <td>
                                                 @if($row->propertyManagement->property->hasTranslation())
                                                     <a href="{{ route('properties.show', [$row->propertyManagement->property->id]) }}">
@@ -292,7 +292,7 @@
                                         @endif
 
                                         <!-- created/updated cols -->
-                                        @if(!isRole('owner'))
+                                        @if(!isRole('owner') && !isRole('contact'))
                                             @include('components.table.created-updated', [
                                             'created_at' => $row->created_at,
                                             'updated_at' => $row->updated_at,
@@ -305,7 +305,7 @@
                                         @endif
 
                                         <!-- audited cols -->
-                                        @if(!isRole('owner'))
+                                        @if(!isRole('owner') && !isRole('contact'))
                                             @include('components.table.created-updated', [
                                             'audited_at' => $row->audit_date,
                                             'auditedBy' => $row->auditedBy,
@@ -320,7 +320,7 @@
                             <!-- table totals -->
                             @if(!$hideTotalsRow)
                                 <tr>
-                                    @if(isRole('owner'))
+                                    @if(isRole('owner') || isRole('contact'))
                                         <td colspan="5">&nbsp;</td>
                                     @else
                                         <td colspan="7">&nbsp;</td>
@@ -359,7 +359,7 @@
                         <thead>
                             @if($shouldShowBalanceColumn)
                                 <tr>
-                                    <?php $colspanMonth = !isRole('owner') ? 9 : 7; ?>
+                                    <?php $colspanMonth = !isRole('owner') && !isRole('contact') ? 9 : 7; ?>
                                     <th colspan="{{ $colspanMonth }}">
                                         @if(isset($_GET['month']) && $_GET['year'])
                                             {{ $months[(int)$_GET['month']] }}
@@ -368,7 +368,7 @@
                                         @endif
                                     </th>
 
-                                    <?php $colspanYear = !isRole('owner') ? 4 : 3; ?>
+                                    <?php $colspanYear = !isRole('owner') && !isRole('contact') ? 4 : 3; ?>
                                     <th colspan="{{ $colspanYear }}">
                                         {{ __('Previous Balance') }}: &nbsp;&nbsp;
 
@@ -411,7 +411,7 @@
     }
 ?>
 
-@if(!isRole('owner'))
+@if(!isRole('owner') && !isRole('contact'))
 
     <!-- pending transactions -->
     <div class="card">
@@ -563,7 +563,7 @@
                                                     'fileSlug' => $row->file_slug,
                                                 ])
 
-                                                @if(!isRole('owner'))
+                                                @if(!isRole('owner') && !isRole('contact'))
                                                     @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                                     @if(!$usePendingAuditPresentation)

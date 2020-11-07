@@ -34,10 +34,10 @@ class CleaningServicesController extends Controller
     {
         $search = trim($request->s);
 
-        $config = ['filterByContactId' => UserHelper::getCurrentUserID()];
-
         if (isRole('owner')) {
             $config = ['filterByOwner' => true];
+        } else if (isRole('contact')) {
+            $config = ['filterByContactId' => UserHelper::getCurrentUserID()];
         } else {
             $config = ['filterByWorkgroup' => true];
         }
@@ -168,8 +168,8 @@ class CleaningServicesController extends Controller
                 'month' => date('m', strtotime('now')),
             ];
 
-            $appendUrl = '?'.http_build_query($urlParams);
-            $redirectUrl = route('cleaning-services.monthly-batch').$appendUrl;
+            $appendUrl = '?' . http_build_query($urlParams);
+            $redirectUrl = route('cleaning-services.monthly-batch') . $appendUrl;
 
             return redirect($redirectUrl);
         }

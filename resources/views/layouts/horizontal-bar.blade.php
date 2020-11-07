@@ -21,6 +21,7 @@
                                         {{  __('Properties') }}
                                     </a>
 
+                                    <!-- Por que un dueño no podria ver sus propiedades? -->
                                     @if (!isRole('owner'))
                                         <!-- dropdown menu -->
                                         <input type="checkbox" id="dropdownMenuBooking">
@@ -250,7 +251,7 @@
                                             </li>
                                         @endif
 
-                                        @if(!isRole('owner'))
+                                        @if(!isRole('owner') && !isRole('contact'))
                                             @if ($_current_role->isAllowed('cleaning-services', 'monthly-batch'))
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('cleaning-services.monthly-batch') }}">
@@ -327,7 +328,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Settings') }}
                                     </label>
-                                    @if(isRole('owner'))
+                                    @if(isRole('owner') || isRole('contact'))
                                         <a href="#">
                                     @else
                                         <a href="{{ route('settings') }}">
