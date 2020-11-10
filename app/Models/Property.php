@@ -12,7 +12,6 @@ class Property extends Model
     protected $table = 'properties';
     public $timestamps = true;
     protected $fillable = [
-        'user_id',
         'state_id',
         'city_id',
         'zone_id',
@@ -80,6 +79,11 @@ class Property extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'properties_has_users');
     }
 
     public function type()

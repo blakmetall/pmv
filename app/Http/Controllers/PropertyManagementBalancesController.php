@@ -77,9 +77,12 @@ class PropertyManagementBalancesController extends Controller
         $data['pendingAudit'] = $balance['pendingAudit'];
         $data['estimatedBalance'] = $balance['estimatedBalance'];
 
-        $user = User::find($pm->property->user_id);
-
-        $user->notify(new DetailsBalance((object) $data));
+        if ($pm->property->users->isNotEmpty()) {
+            foreach ($pm->property->users as $getUser) {
+                $getUser = User::find($getUser->id);
+                $getUser->notify(new DetailsBalance((object) $data));
+            }
+        }
 
         $request->session()->flash('success', __('Email sended successfully'));
 

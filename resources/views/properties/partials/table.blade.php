@@ -96,14 +96,24 @@
                                     </td>
 
                                     <td>
-                                        @if ($row->property->user)
+                                        @if ($row->property->users->isNotEmpty())
+                                            @foreach ($row->property->users as $user)
+                                                @if(!isRole('owner') && !isRole('contact'))
+                                                    <a href="{{ route('users.show', [$user->id]) }}">
+                                                        {{ $user->profile->full_name }}<br>
+                                                    </a>
+                                                @else
+                                                    {{ $user->profile->full_name }}<br>
+                                                @endif
+                                            @endforeach
+                                        @else
                                             @if(!isRole('owner') && !isRole('contact'))
-                                                <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                                    <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                                        {{ $row->property->user->profile->full_name }}
+                                                    </a>
+                                                @else
                                                     {{ $row->property->user->profile->full_name }}
-                                                </a>
-                                            @else
-                                                {{ $row->property->user->profile->full_name }}
-                                            @endif
+                                                @endif
                                         @endif
                                     </td>
 

@@ -33,8 +33,8 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
             $query->where(function ($query) use ($search) {
-                $query->where('start_date', 'like', '%'.$search.'%');
-                $query->orWhere('end_date', 'like', '%'.$search.'%');
+                $query->where('start_date', 'like', '%' . $search . '%');
+                $query->orWhere('end_date', 'like', '%' . $search . '%');
             });
         } else {
             $query = PropertyManagement::query();
@@ -43,14 +43,16 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
         if ($filterByCity) {
             $query->whereHas('property', function ($q) use ($filterByCity) {
-                $q->where('city_id', 'like', '%'.$filterByCity.'%');
+                $q->where('city_id', 'like', '%' . $filterByCity . '%');
             });
         }
 
         if ($filterByOwner) {
             $query->whereHas('property', function ($q) {
-                $q->where('user_id', \Auth::id());
-            });
+                $q->whereHas('users', function ($q) {
+                    $q->where('properties_has_users.user_id', \Auth::id());
+                });
+            })->where('language_id', $lang->id);
         }
 
         if ($hasPropertyID) {
@@ -65,14 +67,14 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $query->orderBy('name', 'asc');
 
             if ($search) {
-                $query->orWhere('properties_translations.name', 'like', '%'.$search.'%');
+                $query->orWhere('properties_translations.name', 'like', '%' . $search . '%');
             }
         }
 
         if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($contactID) {
-                $q->whereHas('contacts', function ($q) use ($contactID) {
-                    $q->where('properties_has_contacts.user_id', $contactID);
+            $query->orWhereHas('property', function ($q) use ($config) {
+                $q->whereHas('contacts', function ($q) use ($config) {
+                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
                 });
             })->where('language_id', $lang->id);
         }

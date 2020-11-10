@@ -54,9 +54,9 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         }
 
         if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($contactID) {
-                $q->whereHas('contacts', function ($q) use ($contactID) {
-                    $q->where('properties_has_contacts.user_id', $contactID);
+            $query->orWhereHas('property', function ($q) use ($config) {
+                $q->whereHas('contacts', function ($q) use ($config) {
+                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
                 });
             });
         }

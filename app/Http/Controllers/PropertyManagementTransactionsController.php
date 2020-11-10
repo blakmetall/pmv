@@ -49,8 +49,8 @@ class PropertyManagementTransactionsController extends Controller
                 'month' => date('m', strtotime('now')),
             ];
 
-            $appendUrl = '?'.http_build_query($urlParams);
-            $redirectUrl = route('property-management-transactions', [$pm->id]).$appendUrl;
+            $appendUrl = '?' . http_build_query($urlParams);
+            $redirectUrl = route('property-management-transactions', [$pm->id]) . $appendUrl;
 
             $hasSuccess = $request->session()->get('success');
             if ($hasSuccess) {
@@ -384,7 +384,7 @@ class PropertyManagementTransactionsController extends Controller
                     ]);
 
                     if (!$validator->fails()) {
-                        $fileRequestPath = 'bulk.'.$index.'.transaction_file';
+                        $fileRequestPath = 'bulk.' . $index . '.transaction_file';
 
                         $transaction = $this->repository->blueprint();
                         $transaction->fill($transactionData);
@@ -420,9 +420,14 @@ class PropertyManagementTransactionsController extends Controller
 
     public function email(Request $request, PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
-        $user = User::find($pm->property->user_id);
 
-        $user->notify(new DetailsTransaction($transaction));
+        if ($pm->property->users->isNotEmpty()) {
+            foreach ($pm->property->users as $getUser) {
+                $getUser = User::find($getUser->id);
+                $getUser->notify(new DetailsTransaction($transaction));
+            }
+        }
+
 
         $request->session()->flash('success', __('Email sended successfully'));
 

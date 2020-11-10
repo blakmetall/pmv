@@ -63,8 +63,10 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         if ($shouldFilterByUserId) {
             $query->whereHas('property', function ($q) use ($config) {
-                $q->where('properties.user_id', $config['filterByUserId']);
-            });
+                $q->whereHas('users', function ($q) use ($config) {
+                    $q->where('properties_has_users.user_id', $config['filterByUserId']);
+                });
+            })->where('language_id', $lang->id);
         }
 
         if ($shouldFilterByEnabled) {
@@ -86,9 +88,9 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         }
 
         if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($contactID) {
-                $q->whereHas('contacts', function ($q) use ($contactID) {
-                    $q->where('properties_has_contacts.user_id', $contactID);
+            $query->orWhereHas('property', function ($q) use ($config) {
+                $q->whereHas('contacts', function ($q) use ($config) {
+                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
                 });
             })->where('language_id', $lang->id);
         }
@@ -151,6 +153,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         // amenities assignation
         $property->amenities()->sync($request->amenities_ids);
+        $property->users()->sync($request->users_ids);
 
         return $property;
     }
