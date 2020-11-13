@@ -40,6 +40,30 @@ class RatesHelper
         $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
         $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
+        $rates = $property->rates;
+
+        $rates_property = [
+            'nightly' => 0,
+            'weekly'  => 0,
+            'monthly' => 0
+        ];
+        foreach ($rates as $rate) {
+            $rate_start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
+            $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
+            $search_arrival_date = $arrival_date->between($rate_start_date, $rate_end_date);
+            $search_departure_date = $departure_date->between($rate_start_date, $rate_end_date);
+            if ($search_arrival_date) {
+                $rates_property['nightly'] += $rate->nightly;
+                $rates_property['weekly'] += $rate->weekly;
+                $rates_property['monthly'] += $rate->monthly;
+            };
+            if ($search_departure_date) {
+                $rates_property['nightly'] += $rate->nightly;
+                $rates_property['weekly'] += $rate->weekly;
+                $rates_property['monthly'] += $rate->monthly;
+            };
+        }
+
         // 1.- con el día a comparar:
 
         // 2.- obtener la tarifa aplicable de acuerdo al día a comparar (utilizando las fechas de la tarifa y la fecha del día)
@@ -60,6 +84,6 @@ class RatesHelper
         // 5.3.- costó por noche de acuerdo al costo por mes/(los días promedio que hay en un mes) = 30.4167
         // 5.4.- si las tarifas están vacías o se regresa un costo por noche de cero significará que no se puede reservar por alguna razón lo que deberá invalidar el registro del booking
 
-        return 200; // price 200 per night -- dummy
+        return $rates_property['nightly']; // price 200 per night -- dummy
     }
 }
