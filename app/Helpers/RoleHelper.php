@@ -197,6 +197,7 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'concierge',
+                    'owner',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -208,6 +209,7 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'concierge',
+                    'owner',
                 ]),
                 'property' => self::transformSluggedRolesToIds([
                     'super',
@@ -219,6 +221,7 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'concierge',
+                    'owner',
                 ]),
                 'owner' => self::transformSluggedRolesToIds([
                     'owner',

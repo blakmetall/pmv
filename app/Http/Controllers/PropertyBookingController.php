@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{PropertyBooking, Property, User};
+use App\Models\PropertyBooking;
+use App\Models\Property;
+use App\Models\User;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
@@ -243,7 +245,7 @@ class PropertyBookingController extends Controller
                 }
                 if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
-                } else if (in_array($day, $endDays)) {
+                } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';
                 } else {
                     $classDay = '';
@@ -262,7 +264,6 @@ class PropertyBookingController extends Controller
                         $calendar .= '</tr><tr>';
                     }
                 } else {
-
                     if ($last_weekday != 6) {
                         $calendar .= '<td colspan="' . (6 - $last_weekday) . '">&nbsp;</td>';
                     }
@@ -384,7 +385,6 @@ class PropertyBookingController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($this->repository->canDelete($id)) {
-
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
 
@@ -402,7 +402,7 @@ class PropertyBookingController extends Controller
         $config = [
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
-            'filterByUserId' => UserHelper::getCurrentUserID()
+            'filterByUserId' => isRole('owner') ? UserHelper::getCurrentUserID() : false,
         ];
         $properties = $this->propertiesRepository->all('', $config);
 
