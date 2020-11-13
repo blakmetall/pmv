@@ -2,12 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Helpers\LanguageHelper;
+use App\Models\PropertyManagement;
+use App\Validations\PropertyManagementValidations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Helpers\LanguageHelper;
-use App\Repositories\PropertyManagementRepositoryInterface;
-use App\Models\{Property, PropertyManagement};
-use App\Validations\PropertyManagementValidations;
 
 class PropertyManagementRepository implements PropertyManagementRepositoryInterface
 {
@@ -29,6 +28,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
@@ -49,10 +49,11 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
         if ($filterByOwner) {
             $query->whereHas('property', function ($q) {
-                $q->where('user_id', \Auth::id());
-            });
+                $q->whereHas('users', function ($q) {
+                    $q->where('properties_has_users.user_id', \Auth::id());
+                });
+            })->where('language_id', $lang->id);
         }
-
 
         if ($hasPropertyID) {
             $query->where('property_id', $config['propertyID']);
@@ -68,6 +69,14 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             if ($search) {
                 $query->orWhere('properties_translations.name', 'like', '%' . $search . '%');
             }
+        }
+
+        if ($contactID) {
+            $query->orWhereHas('property', function ($q) use ($config) {
+                $q->whereHas('contacts', function ($q) use ($config) {
+                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
+                });
+            })->where('language_id', $lang->id);
         }
 
         if ($unfinishedOnly) {
@@ -86,12 +95,14 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
@@ -121,7 +132,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $pm = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$pm) {
-            throw new ModelNotFoundException("PropertyManagement not found");
+            throw new ModelNotFoundException('PropertyManagement not found');
         }
 
         return $pm;
@@ -143,7 +154,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $pm = $this->model->find($id);
 
         if ($pm) {
-
             // validate empty usage in transactions
             if ($pm->transactions()->count()) {
                 return false;
@@ -155,6 +165,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
     public function blueprint()
     {
-        return new PropertyManagement;
+        return new PropertyManagement();
     }
 }

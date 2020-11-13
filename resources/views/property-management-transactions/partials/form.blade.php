@@ -12,8 +12,9 @@
 </fieldset>
 
 @php
+    $skipEdit   = isRole('owner') || isRole('contact') ? true : false;
     $skipCancel = isset($withModal) ? true : false;
-    $skipDelete = isset($withModal) || isRole('owner') ? true : false;
+    $skipDelete = isset($withModal) || isRole('owner') || isRole('contact') ? true : false;
 @endphp
 
 <!-- form actions -->
@@ -24,7 +25,7 @@
 'cancel_route' => 'property-management-transactions',
 'delete_route' => 'property-management-transactions.destroy',
 'routeParams' => [$pm->id],
-'skipEdit' => isRole('owner'),
+'skipEdit' => $skipEdit,
 'skipDelete' => $skipDelete,
 'skipCancel' => $skipCancel,
 ])

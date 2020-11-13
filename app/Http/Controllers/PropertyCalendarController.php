@@ -20,7 +20,8 @@ class PropertyCalendarController extends Controller
         $search = trim($request->s);
 
         $config = [];
-        if (isRole('owner')) {
+
+        if (isRole('owner') || isRole('contact')) {
             $config = ['auditedOnly' => true];
         }
 

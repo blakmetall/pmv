@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-header">{{ $label }} </div>
     <div class="card-body">
-        
+
         <!-- pagination is loeaded here -->
         @include('partials.pagination', ['rows' => $rows])
 
@@ -15,7 +15,7 @@
                             <th scope="col">#</th>
                             <th scope="col">&nbsp;</th>
 
-                            @if(isRole('owner'))
+                            @if(isRole('owner') || isRole('contact'))
                                 <th scope="col">{{ __('Property') }}</th>
                             @endif
 
@@ -41,7 +41,7 @@
                                     </th>
 
                                     <!-- thumbnail -->
-                                    @if(isRole('owner'))
+                                    @if(isRole('owner') || isRole('contact'))
                                         <th>
                                             @if ($row->property->hasDefaultImage())
                                                 @php
@@ -63,6 +63,14 @@
                                     <!-- property name -->
                                     <td>
                                         {{ $row->name }}
+
+                                        @php
+                                            $activePM = $row->property->getActivePM();
+                                        @endphp
+
+                                        @if($activePM !== false && isset($activePM->id))
+                                            - <a href="<?= route('property-management-transactions', [$activePM->id])?>" class="text-success">PM</a>
+                                        @endif
                                     </td>
 
                                     <td>
@@ -88,21 +96,31 @@
                                     </td>
 
                                     <td>
-                                        @if ($row->property->user)
-                                            @if(!isRole('owner'))
-                                                <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                        @if ($row->property->users->isNotEmpty())
+                                            @foreach ($row->property->users as $user)
+                                                @if(!isRole('owner') && !isRole('contact'))
+                                                    <a href="{{ route('users.show', [$user->id]) }}">
+                                                        {{ $user->profile->full_name }}<br>
+                                                    </a>
+                                                @else
+                                                    {{ $user->profile->full_name }}<br>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            @if(!isRole('owner') && !isRole('contact'))
+                                                    <a href="{{ route('users.show', [$row->property->user->id]) }}">
+                                                        {{ $row->property->user->profile->full_name }}
+                                                    </a>
+                                                @else
                                                     {{ $row->property->user->profile->full_name }}
-                                                </a>
-                                            @else
-                                                {{ $row->property->user->profile->full_name }}
-                                            @endif
+                                                @endif
                                         @endif
                                     </td>
 
                                     <td>
                                         <!-- property view -->
-                                        <a 
-                                            href="{{ route('properties.show', $row->property->id) }}" 
+                                        <a
+                                            href="{{ route('properties.show', $row->property->id) }}"
                                             class="text-primary app-icon-link"
                                             title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
@@ -110,8 +128,8 @@
                                         </a>
 
                                         <!-- property images -->
-                                        @if( !isRole('owner') )
-                                            <a 
+                                        @if( !isRole('owner') && !isRole('contact'))
+                                            <a
                                                 href="{{ route('property-images', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Images') }}"
@@ -122,10 +140,11 @@
 
                                         <!-- bookings from specific to property -->
                                         @if(!isProduction())
-                                            <a 
+                                            <a
                                                 {{-- comenté la url temporalmente para poner que no funcione el link de momento --}}
-                                                {{-- href="{{ route('property-bookings.by-property', $row->property->id) }}"  --}}
-                                                href="{{ route('maintenance') }}" 
+                                                {{-- ---- href="{{ route('property-bookings.by-property', $row->property->id) }}"  --}}
+                                                {{-- ---- href="{{ route('bookings.by-property', $row->property->id) }}"  --}}
+                                                href="{{ route('maintenance') }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Reservations') }}"
                                                 alt="{{ __('Reservations') }}">
@@ -134,9 +153,9 @@
                                         @endif
 
                                         <!-- property rates -->
-                                        @if( !isRole('owner') )
-                                            <a 
-                                                href="{{ route('property-rates', $row->property->id) }}" 
+                                        @if( !isRole('owner') && !isRole('contact'))
+                                            <a
+                                                href="{{ route('property-rates', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Rates') }}"
                                                 alt="{{ __('Rates') }}">
@@ -145,8 +164,8 @@
                                         @endif
 
                                         <!-- property contacts -->
-                                        <a 
-                                            href="{{ route('property-contacts', $row->property->id) }}" 
+                                        <a
+                                            href="{{ route('property-contacts', $row->property->id) }}"
                                             class="text-primary app-icon-link"
                                             title="{{ __('Contacts') }}"
                                             alt="{{ __('Contacts') }}">
@@ -154,9 +173,9 @@
                                         </a>
 
                                         <!-- property notes -->
-                                        @if( !isRole('owner') )
-                                            <a 
-                                                href="{{ route('property-notes', $row->property->id) }}" 
+                                        @if( !isRole('owner') && !isRole('contact'))
+                                            <a
+                                                href="{{ route('property-notes', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Notes') }}"
                                                 alt="{{ __('Notes') }}">
@@ -165,17 +184,19 @@
                                         @endif
 
                                         <!-- property calendar -->
-                                        <a 
-                                            href="{{ route('property-calendar', $row->property->id) }}" 
+                                        <!--
+                                        <a
+                                            href="{{ route('property-calendar', $row->property->id) }}"
                                             class="text-primary app-icon-link"
                                             title="{{ __('Calendar') }}"
                                             alt="{{ __('Calendar') }}">
                                             <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
                                         </a>
+                                        -->
 
                                         <!-- property preview -->
-                                        @if( !isRole('owner') )
-                                            <a 
+                                        @if( !isRole('owner') && !isRole('contact'))
+                                            <a
                                                 href="{{ route('maintenance') }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Preview') }}"
@@ -183,11 +204,11 @@
                                                 <i class="nav-icon i-Right font-weight-bold"></i>
                                             </a>
                                         @endif
-                                        
+
                                         <!-- property management -->
-                                        @if( !isRole('owner') )
-                                            <a 
-                                                href="{{ route('property-management', $row->property->id) }}" 
+                                        @if( !isRole('owner') && !isRole('contact'))
+                                            <a
+                                                href="{{ route('property-management', $row->property->id) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Property Management') }}"
                                                 alt="{{ __('Property Management') }}">
@@ -205,8 +226,8 @@
                                             'editRoute' => 'properties.edit',
                                             'deleteRoute' => 'properties.destroy',
                                             'skipShow' => true,
-                                            'skipEdit' => isRole('owner'),
-                                            'skipDelete' => isRole('owner')
+                                            'skipEdit' => isRole('owner') || isRole('contact'),
+                                            'skipDelete' => isRole('owner') || isRole('contact')
                                         ])
                                     </td>
 

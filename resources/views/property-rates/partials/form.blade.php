@@ -19,6 +19,6 @@
     'cancel_route' => 'property-rates',
     'delete_route' => 'property-rates.destroy',
     'routeParams' => [$property->id],
-    'skipEdit' => isRole('owner'),
-    'skipDelete' => isRole('owner'),
+    'skipEdit' => isRole('owner') || isRole('contact'),
+    'skipDelete' => isRole('owner') || isRole('contact'),
 ])

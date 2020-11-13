@@ -16,7 +16,7 @@ class PropertiesValidations extends Validation
             'es.description' => 'required',
             'es.cancellation_policies' => 'required',
 
-            'user_id' => 'required',
+            'users_ids' => 'required',
             'city_id' => 'required',
             'zone_id' => 'required',
             'property_type_id' => 'required',

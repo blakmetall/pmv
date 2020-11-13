@@ -12,7 +12,6 @@ class Property extends Model
     protected $table = 'properties';
     public $timestamps = true;
     protected $fillable = [
-        'user_id',
         'state_id',
         'city_id',
         'zone_id',
@@ -83,6 +82,11 @@ class Property extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'properties_has_users');
+    }
+
     public function type()
     {
         return $this->belongsTo('App\Models\PropertyType', 'property_type_id');
@@ -149,7 +153,7 @@ class Property extends Model
 
     public function contacts()
     {
-        return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
+        return $this->belongsToMany('App\Models\User', 'properties_has_contacts');
     }
 
     public function bookings()
@@ -174,6 +178,6 @@ class Property extends Model
 
     public function getActivePM()
     {
-        return $this->management()->where('is_finished', 0)->first();
+        return $this->management()->whereNotNull('is_finished')->first();
     }
 }

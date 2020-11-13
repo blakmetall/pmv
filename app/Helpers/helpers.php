@@ -96,10 +96,20 @@ if (!function_exists('prepareSelectValuesFromRows')) {
         if ($shouldLoopForValues) {
             $valueRef = isset($config['valueRef']) ? $config['valueRef'] : 'id'; // default id
             $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
+            $depthRef = isset($config['depthRef']) ? $config['depthRef'] : false; // default name
+
+            if ($depthRef) {
+                $optionLabelDepth = explode(',', $labelRef);
+            }
 
             foreach ($items as $item) {
+                if ($depthRef) {
+                    $label = $item->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
+                } else {
+                    $label = $item->{$labelRef};
+                }
                 $values[] = [
-                    'label' => isset($item->{$labelRef}) ? $item->{$labelRef} : '',
+                    'label' => isset($label) ? $label : '',
                     'value' => isset($item->{$valueRef}) ? $item->{$valueRef} : '',
                 ];
             }

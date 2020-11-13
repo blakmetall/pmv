@@ -16,6 +16,7 @@
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
                         <th scope="col">{{ __('Roles') }}</th>
+                        <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -65,6 +66,15 @@
                                     @endforeach
                                 </td>
 
+                                <!-- owner -->
+                                <td>
+                                    @if(!empty($row->profile->owners()))
+                                        @foreach ($row->profile->owners() as $owner)
+                                            {{ $owner->profile->full_name }}
+                                        @endforeach
+                                    @endif
+                                </td>
+
                                 <!-- created/updated cols -->
                                 @include('components.table.created-updated', [
                                     'created_at' => $row->created_at,
@@ -73,8 +83,9 @@
 
                                 <!-- actions -->
                                 <td>
-                                    @include('components.table.actions', [
+                                    @include('components.table.actions-email', [
                                         'params' => [$row->id],
+                                        'emailRoute' => 'users.email',
                                         'showRoute' => 'users.show',
                                         'editRoute' => 'users.edit',
                                         'deleteRoute' => 'users.destroy',

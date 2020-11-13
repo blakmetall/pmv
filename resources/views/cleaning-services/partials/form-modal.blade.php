@@ -15,6 +15,7 @@
 </fieldset>
 
 @php
+    $skipEdit   = isRole('owner') || isRole('contact') ? true : false;
     $skipCancel = isset($withModal) ? true : false;
     $skipDelete = false;
     $isModal = true;
@@ -27,7 +28,7 @@
     'edit_route' => 'cleaning-services.edit',
     'cancel_route' => 'cleaning-services',
     'delete_route' => 'cleaning-services.destroy-ajax',
-    'skipEdit' => isRole('owner'),
+    'skipEdit' => $skipEdit,
     'skipDelete' => $skipDelete,
     'skipCancel' => $skipCancel,
     'isModal' => $isModal,

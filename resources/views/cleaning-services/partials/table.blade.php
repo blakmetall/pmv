@@ -84,12 +84,12 @@
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
-                                        'params' => [$row->id],
-                                        'showRoute' => 'cleaning-services.show',
-                                        'editRoute' => 'cleaning-services.edit',
+                                        'params'      => [$row->id],
+                                        'showRoute'   => 'cleaning-services.show',
+                                        'editRoute'   => 'cleaning-services.edit',
                                         'deleteRoute' => 'cleaning-services.destroy',
-                                        'skipEdit' => isRole('owner'),
-                                        'skipDelete' => isRole('owner'),
+                                        'skipEdit'    => isRole('owner') || isRole('contact'),
+                                        'skipDelete'  => isRole('owner') || isRole('contact'),
                                     ])
                                 </td>
 

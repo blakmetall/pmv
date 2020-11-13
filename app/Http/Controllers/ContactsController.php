@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ContactsRepositoryInterface};
-use Illuminate\Http\Request;
-use App\Models\Contact;
 use App\Helpers\ContactsHelper;
+use App\Models\Profile;
+use App\Models\User;
+use App\Repositories\{UsersRepositoryInterface};
+use Illuminate\Http\Request;
 
 class ContactsController extends Controller
 {
     private $repository;
 
-    public function __construct(ContactsRepositoryInterface $repository)
+    public function __construct(UsersRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -19,7 +20,9 @@ class ContactsController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $contacts = $this->repository->all($search);
+        $config = ['contactsOnly' => true];
+
+        $contacts = $this->repository->all($search, $config);
 
         return view('contacts.index')
             ->with('contacts', $contacts)
@@ -29,6 +32,7 @@ class ContactsController extends Controller
     public function create()
     {
         $contact = $this->repository->blueprint();
+        $contact->profile = new Profile();
         $types = ContactsHelper::getTypes();
 
         return view('contacts.create')
@@ -49,7 +53,7 @@ class ContactsController extends Controller
         return redirect(route('contacts.edit', [$contact->id]));
     }
 
-    public function show(Contact $contact)
+    public function show(User $contact)
     {
         $contact = $this->repository->find($contact);
         $types = ContactsHelper::getTypes();
@@ -59,7 +63,7 @@ class ContactsController extends Controller
             ->with('types', $types);
     }
 
-    public function edit(Contact $contact)
+    public function edit(User $contact)
     {
         $contact = $this->repository->find($contact);
         $types = ContactsHelper::getTypes();
@@ -72,6 +76,7 @@ class ContactsController extends Controller
     public function createAjax()
     {
         $contact = $this->repository->blueprint();
+        $contact->profile = new Profile();
         $types = ContactsHelper::getTypes();
 
         return view('contacts.create-ajax')
@@ -84,6 +89,7 @@ class ContactsController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+
         return redirect(route('contacts.edit', [$id]));
     }
 
@@ -92,10 +98,12 @@ class ContactsController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect(route('contacts'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+
         return redirect()->back();
     }
 }

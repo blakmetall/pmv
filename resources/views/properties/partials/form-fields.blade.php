@@ -9,16 +9,15 @@
             <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
         @endif
 
-        <!-- user_id --->
-        @include('components.form.select', [
+        <!-- users_id --->
+        @include('components.form.fast-select', [
             'group' => 'property',
             'label' => __('Owner'),
-            'name' => 'user_id',
+            'multiple' => true,
+            'name' => 'users_ids',
             'required' => true,
-            'value' => $row->user_id,
-            'options' => $users,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'profile,full_name',
+            'options' => prepareSelectValuesFromRows($users, ['valueRef' => 'id', 'depthRef' => true, 'labelRef' => 'profile,full_name']),
+            'default' => prepareSelectDefaultValues($row->users, ['valueRef' => 'id'])
         ])
 
         <!-- office_id -->

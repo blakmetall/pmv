@@ -2,12 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Helpers\UserHelper;
+use App\Models\Profile;
+use App\Models\Role;
+use App\Models\User;
+use App\Validations\UsersValidations;
 use Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Repositories\UsersRepositoryInterface;
-use App\Models\{Profile, Role, User};
-use App\Validations\UsersValidations;
 
 class UsersRepository implements UsersRepositoryInterface
 {
@@ -25,9 +27,11 @@ class UsersRepository implements UsersRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $ownersOnly = isset($config['ownersOnly']) ? $config['ownersOnly'] : false;
         $agentsOnly = isset($config['agentsOnly']) ? $config['agentsOnly'] : false;
+        $contactsOnly = isset($config['contactsOnly']) ? $config['contactsOnly'] : false;
+        $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
 
         if ($search) {
-            $query = User::where('email', 'like', "%" . $search . "%")
+            $query = User::where('email', 'like', '%' . $search . '%')
                 ->orWhereHas('profile', function ($query) use ($search) {
                     $query
                         ->where('profiles.firstname', 'like', $search)
@@ -44,17 +48,37 @@ class UsersRepository implements UsersRepositoryInterface
 
         if ($ownersOnly) {
             $query->whereHas('roles', function ($q) {
-                $table = (new Role)->_getTable();
+                $table = (new Role())->_getTable();
                 $q->whereIn($table . '.id', [config('constants.roles.owner')]);
             });
         }
 
         if ($agentsOnly) {
             $query->whereHas('roles', function ($q) {
-                $table = (new Role)->_getTable();
+                $table = (new Role())->_getTable();
                 $q->whereIn($table . '.id', [config('constants.roles.rentals-agent')]);
             });
         }
+
+        //Aqui INICIAN los filtros de los contactos
+
+        if ($contactsOnly) {
+            $query->whereHas('roles', function ($q) {
+                $table = (new Role())->_getTable();
+                $q->whereIn($table . '.id', [config('constants.roles.contact')]);
+            });
+
+            $query->where('is_enabled', 1);
+
+            // Este es el filtro original cuando se remova el provicional en la busqueda
+            // if ($shouldFilterByUserId) {
+            //     $query->whereHas('profile', function ($q) use ($shouldFilterByUserId) {
+            //         $q->whereIn('profiles.owners_ids', [$shouldFilterByUserId]);
+            //     });
+            // }
+        }
+
+        //Aqui TERMINAN los filtros de los contactos
 
         $query
             ->with('profile')
@@ -72,44 +96,74 @@ class UsersRepository implements UsersRepositoryInterface
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
     public function save(Request $request, $id = '')
     {
         $is_new = !$id;
-
+        $updateOwners = false;
         if ($is_new) {
-            $user = $this->blueprint();
+            if ($request->is_contact) {
+                $getUser = User::where('email', $request->email)->get();
+
+                if ($getUser->count()) {
+                    $updateOwners = true;
+                    $user = $getUser[0];
+                    $ownersIds = $user->profile ? $user->profile->owners_ids : [];
+                } else {
+                    $updateOwners = false;
+                    $ownersIds = [];
+                    $user = $this->blueprint();
+                }
+            } else {
+                $ownersIds = [];
+                $user = $this->blueprint();
+            }
         } else {
             $user = $this->find($id);
+            $ownersIds = $user->owners_ids;
         }
 
-        $checkboxesConfig = ['is_enabled' => 0];
-        $requestData = array_merge($checkboxesConfig, $request->all());
+        if (!$updateOwners) {
+            $checkboxesConfig = ['is_enabled' => 0];
+            $requestData = array_merge($checkboxesConfig, $request->all());
 
-        $user->fill($requestData);
+            $user->fill($requestData);
 
-        // passsword
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
+            // passsword
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            // workgroups assignation
+            $user->workgroups()->sync($request->workgroups_ids);
         }
-
-        $user->save();
-
-        // workgroups assignation
-        $user->workgroups()->sync($request->workgroups_ids);
 
         // roles assignation
+        $prev_roles_ids = [];
+        if ($request->attach_prev_roles) {
+            if ($user->roles && count($user->roles)) {
+                foreach ($user->roles as $r) {
+                    $prev_roles_ids[] = $r->id;
+                }
+            }
+        }
+
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
-            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
             $roles_to_assign = [];
+
             foreach ($request->roles_ids as $role_id) {
                 $hasValidRole = in_array($role_id, $validRolesIds);
                 if ($hasValidRole) {
@@ -122,21 +176,45 @@ class UsersRepository implements UsersRepositoryInterface
                 $roles_to_assign[] = 1;
             }
 
+            // add extra role contact to the role list
+            if ($request->is_contact) {
+                $roles_to_assign[] = 14;
+            }
+
+            if ($request->attach_prev_roles) {
+                $roles_to_assign = array_unique(array_merge($roles_to_assign, $prev_roles_ids));
+            }
+
             $user->roles()->sync($roles_to_assign);
         }
 
         // profile data
         if ($user->id) {
             if (!$user->profile) {
-                $user->profile = new Profile;
+                $user->profile = new Profile();
                 $user->profile->user_id = $user->id;
-                $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
+                if ($request->is_contact) {
+                    if ($user->profile->config_role_id) {
+                        $user->profile->config_role_id = $user->profile->config_role_id;
+                    } else {
+                        $user->profile->config_role_id = 14;
+                    }
+                } else {
+                    $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
+                }
                 $user->profile->config_language = 'es'; // default language on create
             }
+
+            // if (isRole('owner')) {
+            if (is_array($ownersIds) && !in_array(UserHelper::getCurrentUserID(), $ownersIds)) {
+                $ownersIds[] = UserHelper::getCurrentUserID();
+            }
+            // }
 
             $checkboxesConfig = ['config_agent_is_enabled' => 0];
             $profileData = array_merge($checkboxesConfig, $request->profile);
 
+            $user->profile->owners_ids = $ownersIds;
             $user->profile->fill($profileData);
             $user->profile->save();
         }
@@ -150,7 +228,7 @@ class UsersRepository implements UsersRepositoryInterface
         $user = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if (!$user) {
-            throw new ModelNotFoundException("User not found");
+            throw new ModelNotFoundException('User not found');
         }
 
         return $user;
@@ -192,11 +270,11 @@ class UsersRepository implements UsersRepositoryInterface
             }
         }
 
-        return ($id > 1); // to not delete super admin
+        return $id > 1; // to not delete super admin
     }
 
     public function blueprint()
     {
-        return new User;
+        return new User();
     }
 }

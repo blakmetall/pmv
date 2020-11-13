@@ -16,7 +16,6 @@
         $default = [];
     }
 
-
     $options = isset($options) && count($options) ? $options : [];
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;

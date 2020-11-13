@@ -45,6 +45,9 @@ $(function() {
         initTooltip();
 
         initCleaningMonthlyBatchEvents();
+
+        initBalancesFinishedHandler();
+        initBulkTransactionsHandler();
     }
 
     function printTable(table, title) {
@@ -260,4 +263,60 @@ $(function() {
         });
     }
     changeProperty();
+
+
+    function initBalancesFinishedHandler() {
+        var trigger = $("#show_finished_balances");
+
+        var toggle = () => {
+            var status = trigger.data('status');
+            var isOpened = status === 'open';
+
+            if(isOpened) {
+                $(".tr-finished-balance").hide();
+                trigger.data('status', 'closed');
+                var showText = trigger.data('show-text');
+                trigger.text(showText);
+            }else{
+                $(".tr-finished-balance").show();
+                trigger.data('status', 'open');
+                var hideText = trigger.data('hide-text');
+                trigger.text(hideText);
+            }
+        }
+
+        toggle();
+
+        trigger.on('click', function(e) {
+            e.preventDefault();
+            toggle();
+        });
+    }
+
+    function initBulkTransactionsHandler() {
+        $("#bulk-transaction-name").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-name").val(value);
+        });
+
+        $("#bulk-transaction-type").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-type").val(value);
+        });
+
+        $("#bulk-transaction-from-date").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-from-date").val(value);
+        });
+
+        $("#bulk-transaction-to-date").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-to-date").val(value);
+        });
+
+        $("#bulk-transaction-post-date").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-post-date").val(value);
+        });
+    }
 });

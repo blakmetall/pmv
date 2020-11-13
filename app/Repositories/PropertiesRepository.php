@@ -25,10 +25,11 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
-        $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
-        $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
-        $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
+        $shouldFilterByEnabled  = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
+        $shouldFilterByUserId   = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldFilterByOffline  = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
         $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
+        $contactID              = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -62,8 +63,10 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         if ($shouldFilterByUserId) {
             $query->whereHas('property', function ($q) use ($config) {
-                $q->where('properties.user_id', $config['filterByUserId']);
-            });
+                $q->whereHas('users', function ($q) use ($config) {
+                    $q->where('properties_has_users.user_id', $config['filterByUserId']);
+                });
+            })->where('language_id', $lang->id);
         }
 
         if ($shouldFilterByEnabled) {
@@ -82,6 +85,14 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('properties.is_enabled', '!=', 1);
             });
+        }
+
+        if ($contactID) {
+            $query->orWhereHas('property', function ($q) use ($config) {
+                $q->whereHas('contacts', function ($q) use ($config) {
+                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
+                });
+            })->where('language_id', $lang->id);
         }
 
         if ($shouldPaginate) {
@@ -142,6 +153,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         // amenities assignation
         $property->amenities()->sync($request->amenities_ids);
+        $property->users()->sync($request->users_ids);
 
         return $property;
     }

@@ -29,6 +29,22 @@
 
                     @if(count($rows))
                         @foreach($rows as $row)
+                            {{-- Filtro provisional para que solo muestre usuarios de tipo contacto --}}
+                            @foreach($row->roles as $role)
+                                @php
+                                    if($role->id == 14){
+                                        $isContact = true;
+                                    }else{
+                                        $isContact = false;
+                                    }
+                                @endphp
+                            @endforeach
+                            @php
+                                if(!$isContact){
+                                    continue;
+                                }
+                            @endphp
+                            {{-- Termina filtro provisional para que solo muestre usuarios de tipo contacto --}}
                             <tr>
                                 <!-- id -->
                                 <th scope="row">
@@ -36,32 +52,32 @@
                                 </th>
 
                                 <!-- full_name -->
-                                <td>{{ $row->full_name }} </td>
+                                <td>{{ $row->profile->full_name }} </td>
 
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
                                 <!-- contact -->
                                 <td>
-                                    {!! preparePhoneContacts([$row->phone, $row->mobile]) !!}
+                                    {!! preparePhoneContacts([$row->profile->phone, $row->profile->mobile]) !!}
                                 </td>
 
                                 <!-- emergency_phone -->
-                                <td>{{ $row->emergency_phone }}</td>
+                                <td>{{ $row->profile->emergency_phone }}</td>
 
                                 <!-- contact_type -->
-                                <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
+                                <td>{{ getContactTypeBySlug($row->profile->contact_type) }}</td>
 
                                 <!-- owner -->
                                 <td>
-                                    @if($row->owner)
-                                        {{ $row->owner->profile->full_name }}
-                                    @endif
+                                    @foreach ($row->profile->owners() as $owner)
+                                        {{ $owner->profile->full_name }}
+                                    @endforeach
                                 </td>
 
-                                <!-- is_active -->
+                                <!-- is_enabled -->
                                 <td>
-                                    {!! getStatusIcon($row->is_active) !!}
+                                    {!! getStatusIcon($row->is_enabled) !!}
                                 </td>
 
                                 <!-- created/updated cols -->

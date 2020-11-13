@@ -660,6 +660,10 @@
     }
 }
 
+.tr-finished-balance {
+    background: #efefef !important;
+}
+
 /* alan estilos */
 .card-header-print {
     display: flex;
@@ -679,6 +683,11 @@
 .btn-print:focus {
     color: #fff;
     text-decoration: none;
+}
+
+.btn-print-bulk {
+    font-size: 15px;
+    margin-left: 15px;
 }
 
 .btn-add-service {
