@@ -184,7 +184,6 @@
                                         @endif
 
                                         <!-- property calendar -->
-                                        <!--
                                         <a
                                             href="{{ route('property-calendar', $row->property->id) }}"
                                             class="text-primary app-icon-link"
@@ -192,7 +191,7 @@
                                             alt="{{ __('Calendar') }}">
                                             <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
                                         </a>
-                                        -->
+
 
                                         <!-- property preview -->
                                         @if( !isRole('owner') && !isRole('contact'))
