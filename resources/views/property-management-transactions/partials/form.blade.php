@@ -12,9 +12,9 @@
 </fieldset>
 
 @php
-    $skipEdit   = isRole('owner') || isRole('contact') ? true : false;
+    $skipEdit   = isRole('owner') ? true : false;
     $skipCancel = isset($withModal) ? true : false;
-    $skipDelete = isset($withModal) || isRole('owner') || isRole('contact') ? true : false;
+    $skipDelete = isset($withModal) || isRole('owner') ? true : false;
 @endphp
 
 <!-- form actions -->

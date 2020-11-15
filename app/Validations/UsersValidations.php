@@ -28,11 +28,6 @@ class UsersValidations extends Validation
         $customValidationMessages = [];
 
         $shouldUseDefaultValidations = true;
-        if ($request->is_contact) {
-            $ruleUnique = '';
-        } else {
-            $ruleUnique = Rule::unique('users');
-        }
 
         switch ($validateEvent) {
             case 'create':
@@ -40,7 +35,7 @@ class UsersValidations extends Validation
                     'email' => [
                         'required',
                         'email',
-                        $ruleUnique
+                        Rule::unique('users')
                     ],
                     'password' => 'required|confirmed|min:6',
                 ];

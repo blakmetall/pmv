@@ -88,8 +88,8 @@
                                         'showRoute'   => 'cleaning-services.show',
                                         'editRoute'   => 'cleaning-services.edit',
                                         'deleteRoute' => 'cleaning-services.destroy',
-                                        'skipEdit'    => isRole('owner') || isRole('contact'),
-                                        'skipDelete'  => isRole('owner') || isRole('contact'),
+                                        'skipEdit'    => isRole('owner'),
+                                        'skipDelete'  => isRole('owner'),
                                     ])
                                 </td>
 

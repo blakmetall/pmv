@@ -22,7 +22,7 @@
 
     <div class="header-part-right">
 
-        @if(!isRole('owner') && !isRole('contact') && $_current_role->isAllowed('dashboard', 'general-search'))
+        @if(!isRole('owner') && $_current_role->isAllowed('dashboard', 'general-search'))
             <div class="dropdown d-none d-md-block pr-3">
                 <div class="form-group">
                     <form action="{{ route('dashboard.general-search') }}" method="GET">

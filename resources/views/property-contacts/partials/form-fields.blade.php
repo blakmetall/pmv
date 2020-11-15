@@ -17,7 +17,7 @@
             'label' => __('Contacts'),
             'multiple' => true,
             'name' => 'contacts_ids',
-            'options' => prepareSelectValuesFromRows($contacts, ['valueRef' => 'id', 'depthRef' => true, 'labelRef' => 'profile,full_name']),
+            'options' => prepareSelectValuesFromRows($contacts, ['labelRef' => 'full_name']),
             'default' => prepareSelectDefaultValues($row->contacts, ['valueRef' => 'id']),
         ])
 

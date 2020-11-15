@@ -39,11 +39,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Property');
     }
 
-    public function propertiesContacts()
-    {
-        return $this->belongsToMany('App\Models\Property', 'properties_has_contacts');
-    }
-
     public function bookings()
     {
         return $this->hasMany('App\Models\Booking');

@@ -22,7 +22,7 @@
                                     </a>
 
                                     <!-- Por que un dueño no podria ver sus propiedades? -->
-                                    @if (!isRole('owner') && !isRole('contact'))
+                                    @if (!isRole('owner'))
                                         <!-- dropdown menu -->
                                         <input type="checkbox" id="dropdownMenuBooking">
                                         <ul>
@@ -66,7 +66,7 @@
                                     <label class="toggle" for="dropdownMenuProperties">
                                         {{  __('Property Management') }}
                                     </label>
-                                    @if(isRole('owner') || isRole('contact'))
+                                    @if(isRole('owner'))
                                         <a href="#">
                                     @else
                                         <a href="{{ route('property-management.general') }}">
@@ -232,7 +232,7 @@
                                             </li>
                                         @endif
 
-                                        @if(!isRole('owner') && !isRole('contact'))
+                                        @if(!isRole('owner'))
                                             @if ($_current_role->isAllowed('cleaning-services', 'monthly-batch'))
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('cleaning-services.monthly-batch') }}">
@@ -309,7 +309,7 @@
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Settings') }}
                                     </label>
-                                    @if(isRole('owner') || isRole('contact'))
+                                    @if(isRole('owner'))
                                         <a href="#">
                                     @else
                                         <a href="{{ route('settings') }}">

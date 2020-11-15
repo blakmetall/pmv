@@ -38,7 +38,7 @@
                             <!-- address -->
                             <td>{{ $owner->profile->street }}, {{ $owner->profile->zip }}, {{ $owner->profile->city }}, {{ $owner->profile->state }}, {{ $owner->profile->country }}</td>
 
-                            <!-- is_active -->
+                            <!-- is_enabled -->
                             <td>
                                 {!! getStatusIcon($owner->is_enabled) !!}
                             </td>
@@ -77,29 +77,29 @@
                         @foreach($rows as $row)
                             <tr>
                                 <!-- full_name -->
-                                <td>{{ $row->profile->full_name }}</td>
+                                <td>{{ $row->full_name }}</td>
 
                                 <!-- email -->
                                 <td>{{ $row->email }}</td>
 
                                 <!-- phone -->
-                                <td>{{ $row->profile->phone }}</td>
+                                <td>{{ $row->phone }}</td>
 
                                 <!-- mobile -->
-                                <td>{{ $row->profile->mobile }}</td>
+                                <td>{{ $row->mobile }}</td>
 
                                 <!-- mobile -->
-                                <td>{{ $row->profile->emergency_phone }}</td>
+                                <td>{{ $row->emergency_phone }}</td>
 
                                 <!-- address -->
-                                <td>{{ $row->profile->street }}, {{ $row->profile->zip }}, {{ $row->profile->city }}, {{ $row->profile->state }}, {{ $row->profile->country }}</td>
+                                <td>{{ $row->address }}</td>
 
                                 <!-- contact_type -->
-                                <td>{{ getContactTypeBySlug($row->profile->contact_type) }}</td>
+                                <td>{{ getContactTypeBySlug($row->contact_type) }}</td>
 
-                                <!-- is_enabled -->
+                                <!-- is_active -->
                                 <td>
-                                    {!! getStatusIcon($row->is_enabled) !!}
+                                    {!! getStatusIcon($row->is_active) !!}
                                 </td>
 
                             </tr>

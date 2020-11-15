@@ -153,7 +153,7 @@ class Property extends Model
 
     public function contacts()
     {
-        return $this->belongsToMany('App\Models\User', 'properties_has_contacts');
+        return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
     }
 
     public function bookings()

@@ -28,7 +28,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
-        $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
@@ -69,14 +68,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             if ($search) {
                 $query->orWhere('properties_translations.name', 'like', '%' . $search . '%');
             }
-        }
-
-        if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($config) {
-                $q->whereHas('contacts', function ($q) use ($config) {
-                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
-                });
-            })->where('language_id', $lang->id);
         }
 
         if ($unfinishedOnly) {

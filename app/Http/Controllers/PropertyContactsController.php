@@ -5,19 +5,13 @@ namespace App\Http\Controllers;
 use App\Helpers\UserHelper;
 use App\Models\Property;
 use App\Repositories\ContactsRepositoryInterface;
-use App\Repositories\UsersRepositoryInterface;
 use Illuminate\Http\Request;
 
 class PropertyContactsController extends Controller
 {
-    private $repository;
     private $contactsRepository;
 
-    public function __construct(
-        ContactsRepositoryInterface $contactsRepository,
-        UsersRepositoryInterface $repository
-    ) {
-        $this->repository = $repository;
+    public function __construct(ContactsRepositoryInterface $contactsRepository) {
         $this->contactsRepository = $contactsRepository;
     }
 
@@ -26,10 +20,9 @@ class PropertyContactsController extends Controller
         $contacts =
             $property
             ->contacts()
-            // ->whereHas('profile', function ($property) {
-            //     $property
-            //         ->where('profiles.contact_type', '!=', 'home-owner');
-            // })
+            ->orderBy('firstname', 'asc')
+            ->orderBy('lastname', 'asc')
+            ->where('contact_type', '!=', 'home-owner')
             ->paginate();
 
         $owner = $property->user;
@@ -43,11 +36,8 @@ class PropertyContactsController extends Controller
 
     public function create(Property $property)
     {
-        $config = ['contactsOnly' => true];
-        // if (RoleHelper::is('owner') || RoleHelper::is('regular')) {
-        $config['filterByUserId'] = UserHelper::getCurrentUserID();
-        // }
-        $contacts = $this->repository->all('', $config);
+        $config = ['activeOnly' => true];
+        $contacts = $this->contactsRepository->all('', $config);
 
         return view('property-contacts.create')
             ->with('contacts', $contacts)

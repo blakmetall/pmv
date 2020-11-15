@@ -28,8 +28,7 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
         $shouldFilterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : false;
-        $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
-
+        
         if ($search) {
             $query = CleaningService::where('description', 'like', '%' . $search . '%');
         } else {
@@ -50,14 +49,6 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         if ($shouldFilterByOwner && isRole('owner')) {
             $query->whereHas('property', function ($query) {
                 $query->where('properties.user_id', UserHelper::getCurrentUserID());
-            });
-        }
-
-        if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($config) {
-                $q->whereHas('contacts', function ($q) use ($config) {
-                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
-                });
             });
         }
 

@@ -29,7 +29,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByUserId   = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
         $shouldFilterByOffline  = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
         $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
-        $contactID              = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -85,14 +84,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('properties.is_enabled', '!=', 1);
             });
-        }
-
-        if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($config) {
-                $q->whereHas('contacts', function ($q) use ($config) {
-                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
-                });
-            })->where('language_id', $lang->id);
         }
 
         if ($shouldPaginate) {

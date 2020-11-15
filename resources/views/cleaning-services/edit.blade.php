@@ -10,7 +10,7 @@
             ],
         ];
 
-        if(!isRole('owner') && !isRole('contact')) {
+        if(!isRole('owner')) {
             $actions = array_merge($actions, [
                 [
                     'label' => __('New'),

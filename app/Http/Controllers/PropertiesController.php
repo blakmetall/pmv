@@ -66,10 +66,6 @@ class PropertiesController extends Controller
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
 
-        if (RoleHelper::is('contact')) {
-            $config['filterByContactId'] = UserHelper::getCurrentUserID();
-        }
-
         $config['filterByOffline'] = (bool) $request->filterOffline;
         $config['filterByDisabled'] = (bool) $request->filterDisabled;
 
