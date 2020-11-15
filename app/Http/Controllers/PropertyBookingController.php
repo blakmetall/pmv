@@ -327,7 +327,7 @@ class PropertyBookingController extends Controller
             }
         }
         if ($bookingExist) {
-            $request->session()->flash('success', __('A Booking actually have same date successfully'));
+            $request->session()->flash('error', __('A Booking actually have same date successfully'));
             return redirect()->back();
         } else {
             $booking = $this->repository->create($request);
@@ -373,7 +373,7 @@ class PropertyBookingController extends Controller
             }
         }
         if ($bookingExist) {
-            $request->session()->flash('success', __('A Booking actually have same date successfully'));
+            $request->session()->flash('error', __('A Booking actually have same date successfully'));
             return redirect()->back();
         } else {
             $this->repository->update($request, $id);
