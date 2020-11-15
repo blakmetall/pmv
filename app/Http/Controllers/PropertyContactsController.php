@@ -11,7 +11,8 @@ class PropertyContactsController extends Controller
 {
     private $contactsRepository;
 
-    public function __construct(ContactsRepositoryInterface $contactsRepository) {
+    public function __construct(ContactsRepositoryInterface $contactsRepository)
+    {
         $this->contactsRepository = $contactsRepository;
     }
 
@@ -25,10 +26,10 @@ class PropertyContactsController extends Controller
             ->where('contact_type', '!=', 'home-owner')
             ->paginate();
 
-        $owner = $property->user;
+        $owners = $property->users;
 
         return view('property-contacts.index')
-            ->with('owner', $owner)
+            ->with('owners', $owners)
             ->with('contacts', $contacts)
             ->with('property', $property)
             ->with('search', '');

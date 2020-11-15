@@ -18,32 +18,34 @@
 
                 </thead>
                 <tbody>
-                    @if($owner)
-                        <tr>
-                            <!-- full_name -->
-                            <td>{{ $owner->profile->full_name }}</td>
+                    @if($owners->isNotEmpty())
+                        @foreach ($owners as $owner)     
+                            <tr>
+                                <!-- full_name -->
+                                <td>{{ $owner->profile->full_name }}</td>
 
-                            <!-- email -->
-                            <td>{{ $owner->email }}</td>
+                                <!-- email -->
+                                <td>{{ $owner->email }}</td>
 
-                            <!-- phone -->
-                            <td>{{ $owner->profile->phone }}</td>
+                                <!-- phone -->
+                                <td>{{ $owner->profile->phone }}</td>
 
-                            <!-- mobile -->
-                            <td>{{ $owner->profile->mobile }}</td>
+                                <!-- mobile -->
+                                <td>{{ $owner->profile->mobile }}</td>
 
-                            <!-- mobile -->
-                            <td>{{ $owner->profile->emergency_phone }}</td>
+                                <!-- mobile -->
+                                <td>{{ $owner->profile->emergency_phone }}</td>
 
-                            <!-- address -->
-                            <td>{{ $owner->profile->street }}, {{ $owner->profile->zip }}, {{ $owner->profile->city }}, {{ $owner->profile->state }}, {{ $owner->profile->country }}</td>
+                                <!-- address -->
+                                <td>{{ $owner->profile->street }}, {{ $owner->profile->zip }}, {{ $owner->profile->city }}, {{ $owner->profile->state }}, {{ $owner->profile->country }}</td>
 
-                            <!-- is_enabled -->
-                            <td>
-                                {!! getStatusIcon($owner->is_enabled) !!}
-                            </td>
+                                <!-- is_enabled -->
+                                <td>
+                                    {!! getStatusIcon($owner->is_enabled) !!}
+                                </td>
 
-                        </tr>
+                            </tr>
+                        @endforeach
                     @endif
 
                 </tbody>
