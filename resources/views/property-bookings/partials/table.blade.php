@@ -20,7 +20,7 @@
                         <th scope="col">{{ __('Travel Dates') }}</th>
                         <th scope="col">{{ __('Nightly Rate') }}</th>
                         <th scope="col">{{ __('Total') }}</th>
-                        <th scope="col">{{ __('Confirmed') }}</th>
+                        <th scope="col">{{ __('Register By') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -54,9 +54,9 @@
                                 <!-- total_stay -->
                                 <td>{{ priceFormat($row->total) }}</td>
 
-                                <!-- is_confirmed -->
+                                <!-- register_by -->
                                 <td>
-                                    {!! getStatusIcon($row->is_confirmed) !!}
+                                    {{ $row->register_by }}
                                 </td>
 
                                 <!-- created/updated cols -->
@@ -66,7 +66,7 @@
                                     'trimTime' => true,
                                 ])
 
-                                    <!-- actions -->
+                                <!-- actions -->
                                 <td>
                                     @if($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
                                         @include('components.table.actions-bookings', [

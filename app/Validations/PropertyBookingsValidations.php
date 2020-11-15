@@ -15,7 +15,6 @@ class PropertyBookingsValidations extends Validation
             'arrival_date'      => 'required',
             'departure_date'    => 'required',
             'adults'            => 'required',
-            'damage_deposit_id' => 'required',
         ]);
     }
 

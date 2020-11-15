@@ -102,7 +102,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
         $data = [
             'user_id' => $user->id,
-            'is_confirmed' => 0,
+            'is_confirmed' => 1,
             'is_paid' => 0,
             'is_refundable' => 0,
             'is_cancelled' => 0,
@@ -118,7 +118,12 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $property = Property::find($booking->property_id);
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
-            $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
+            if ($booking->damage_deposit_id) {
+                $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
+                $damageDeposit = $damage_deposit->price;
+            } else {
+                $damageDeposit = 0;
+            }
 
             $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
             $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
@@ -154,7 +159,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $booking->nights = $nights;
             $booking->price_per_night = $price_per_night;
             $booking->subtotal_nights = $subtotal_nights;
-            $booking->subtotal_damage_deposit = $damage_deposit->price;
+            $booking->subtotal_damage_deposit = $damageDeposit;
             $booking->total = $subtotal_nights;
 
             // $booking->total =  $subtotal_nights + $damage_deposit->price;

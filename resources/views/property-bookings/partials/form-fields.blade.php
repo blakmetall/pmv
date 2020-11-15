@@ -30,69 +30,71 @@
             'value' => $row->lastname,
         ])
 
-        <!-- country -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Country'),
-            'name' => 'country',
-            'value' => $row->country,
-        ])
+        @if(!isRole('owner'))
+            <!-- country -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Country'),
+                'name' => 'country',
+                'value' => $row->country,
+            ])
 
-        <!-- state -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('State'),
-            'name' => 'state',
-            'value' => $row->state,
-        ])
+            <!-- state -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('State'),
+                'name' => 'state',
+                'value' => $row->state,
+            ])
 
-        <!-- city -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('City'),
-            'name' => 'city',
-            'value' => $row->city,
-        ])
+            <!-- city -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('City'),
+                'name' => 'city',
+                'value' => $row->city,
+            ])
 
-        <!-- street -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Street'),
-            'name' => 'street',
-            'value' => $row->street,
-        ])
+            <!-- street -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Street'),
+                'name' => 'street',
+                'value' => $row->street,
+            ])
 
-        <!-- zip -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Zip'),
-            'name' => 'zip',
-            'value' => $row->zip,
-        ])
+            <!-- zip -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Zip'),
+                'name' => 'zip',
+                'value' => $row->zip,
+            ])
 
-        <!-- phone -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Phone'),
-            'name' => 'phone',
-            'value' => $row->phone
-        ])        
+            <!-- phone -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Phone'),
+                'name' => 'phone',
+                'value' => $row->phone
+            ])        
 
-        <!-- mobile -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Mobile'),
-            'name' => 'mobile',
-            'value' => $row->mobile
-        ])
+            <!-- mobile -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Mobile'),
+                'name' => 'mobile',
+                'value' => $row->mobile
+            ])
 
-        <!-- comments -->
-        @include('components.form.textarea', [
-            'group' => 'booking',
-            'label' => __('Comments'),
-            'name' => 'comments',
-            'value' => $row->comments
-        ])
+            <!-- comments -->
+            @include('components.form.textarea', [
+                'group' => 'booking',
+                'label' => __('Comments'),
+                'name' => 'comments',
+                'value' => $row->comments
+            ])
+        @endif
 
     </div>
 </div>
@@ -104,13 +106,15 @@
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('ARRIVAL') }}</span>
 
-        <!-- arrival_airline -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Arrival Airline'),
-            'name' => 'arrival_airline',
-            'value' => $row->arrival_airline
-        ])
+        @if(!isRole('owner'))
+            <!-- arrival_airline -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Arrival Airline'),
+                'name' => 'arrival_airline',
+                'value' => $row->arrival_airline
+            ])
+        @endif
 
         <!-- arrival_date -->
         @include('components.form.datepicker', [
@@ -122,38 +126,40 @@
             'maxDaysLimitFromNow' => 4000,
         ])
 
-        <!-- arrival_flight_number -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Arrival Flight Number'),
-            'name' => 'arrival_flight_number',
-            'value' => $row->arrival_flight_number
-        ])
+        @if(!isRole('owner'))
+            <!-- arrival_flight_number -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Arrival Flight Number'),
+                'name' => 'arrival_flight_number',
+                'value' => $row->arrival_flight_number
+            ])
 
-        <!-- arrival_time -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Arrival Time'),
-            'name' => 'arrival_time',
-            'value' => $row->arrival_time
-        ])
+            <!-- arrival_time -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Arrival Time'),
+                'name' => 'arrival_time',
+                'value' => $row->arrival_time
+            ])
 
-        <!-- check_in -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Check-in'),
-            'name' => 'check_in',
-            'value' => $row->check_in
-        ])
+            <!-- check_in -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Check-in'),
+                'name' => 'check_in',
+                'value' => $row->check_in
+            ])
 
-        <!-- arrival_transportation -->
-        @include('components.form.checkbox', [
-            'group' => 'booking',
-            'label' => __('Transportation'),
-            'name' => 'arrival_transportation',
-            'value' => 1,
-            'default' => $row->arrival_transportation,
-        ])
+            <!-- arrival_transportation -->
+            @include('components.form.checkbox', [
+                'group' => 'booking',
+                'label' => __('Transportation'),
+                'name' => 'arrival_transportation',
+                'value' => 1,
+                'default' => $row->arrival_transportation,
+            ])
+        @endif
     </div>
 </div>
 
@@ -164,13 +170,15 @@
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('DEPARTURE') }}</span>
 
-        <!-- departure_airline -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Departure Airline'),
-            'name' => 'departure_airline',
-            'value' => $row->departure_airline
-        ])
+        @if(!isRole('owner'))
+            <!-- departure_airline -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Departure Airline'),
+                'name' => 'departure_airline',
+                'value' => $row->departure_airline
+            ])
+        @endif
 
         <!-- departure_date -->
         @include('components.form.datepicker', [
@@ -182,38 +190,40 @@
             'maxDaysLimitFromNow' => 4000,
         ])
 
-        <!-- departure_flight_number -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Departure Flight Number'),
-            'name' => 'departure_flight_number',
-            'value' => $row->departure_flight_number
-        ])
+        @if(!isRole('owner'))
+            <!-- departure_flight_number -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Departure Flight Number'),
+                'name' => 'departure_flight_number',
+                'value' => $row->departure_flight_number
+            ])
 
-        <!-- departure_time -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Departure Time'),
-            'name' => 'departure_time',
-            'value' => $row->departure_time
-        ])
+            <!-- departure_time -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Departure Time'),
+                'name' => 'departure_time',
+                'value' => $row->departure_time
+            ])
 
-        <!-- check_out -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Check-out'),
-            'name' => 'check_out',
-            'value' => $row->check_out
-        ])
+            <!-- check_out -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Check-out'),
+                'name' => 'check_out',
+                'value' => $row->check_out
+            ])
 
-        <!-- departure_transportation -->
-        @include('components.form.checkbox', [
-            'group' => 'booking',
-            'label' => __('Transportation'),
-            'name' => 'departure_transportation',
-            'value' => 1,
-            'default' => $row->departure_transportation,
-        ])
+            <!-- departure_transportation -->
+            @include('components.form.checkbox', [
+                'group' => 'booking',
+                'label' => __('Transportation'),
+                'name' => 'departure_transportation',
+                'value' => 1,
+                'default' => $row->departure_transportation,
+            ])
+        @endif
     </div>
 </div>
 
@@ -240,66 +250,76 @@
             'name' => 'kids',
             'value' => $row->kids,
         ])
-
-        <!-- damage_deposit_id -->
-        @include('components.form.select', [
+        <!-- register_by -->
+        {{-- @include('components.form.select', [
             'group' => 'booking',
-            'label' => __('Damage Deposit'),
-            'name' => 'damage_deposit_id',
-            'required' => true,
-            'value' => $row->damage_deposit_id,
-            'options' => $damageDeposits,
-            'optionValueRef' => 'damage_deposit_id',
+            'label' => __('Register By'),
+            'name' => 'register_by',
+            'value' => $row->register_by,
+            'options' => $registers,
+            'optionValueRef' => 'register_by',
             'optionLabelRef' => 'description',
-        ])
-
-        <!-- is_confirmed -->
-        @include('components.form.checkbox', [
-            'group' => 'booking',
-            'label' => __('Confirmed'),
-            'name' => 'is_confirmed',
-            'value' => 1,
-            'default' => $row->is_confirmed,
-        ])
-
-        @if($row->is_confirmed)
-            <!-- is_refundable -->
-            @include('components.form.checkbox', [
+        ]) --}}
+        <select
+            name="register_by"
+            class="form-control">
+            <option value="">{{ __('Select') }}</option>
+            @foreach ($registers as $register)
+                <option value="{{ $register }}">{{ $register }}</option>
+            @endforeach
+        </select>
+        @if(!isRole('owner'))
+            <!-- damage_deposit_id -->
+            @include('components.form.select', [
                 'group' => 'booking',
-                'label' => __('Refundable'),
-                'name' => 'is_refundable',
-                'value' => 1,
-                'default' => $row->is_refundable,
+                'label' => __('Damage Deposit'),
+                'name' => 'damage_deposit_id',
+                'value' => $row->damage_deposit_id,
+                'options' => $damageDeposits,
+                'optionValueRef' => 'damage_deposit_id',
+                'optionLabelRef' => 'description',
             ])
 
-            <!-- is_cancelled -->
-            @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Cancelled'),
-                'name' => 'is_cancelled',
-                'value' => 1,
-                'default' => $row->is_cancelled,
-            ])
+            
 
-            <!-- is_paid -->
-            @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Paid'),
-                'name' => 'is_paid',
-                'value' => 1,
-                'default' => $row->is_paid,
-            ])
+            @if($row->is_confirmed)
+                <!-- is_refundable -->
+                @include('components.form.checkbox', [
+                    'group' => 'booking',
+                    'label' => __('Refundable'),
+                    'name' => 'is_refundable',
+                    'value' => 1,
+                    'default' => $row->is_refundable,
+                ])
 
-            <!-- is_finished -->
-            @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Finished'),
-                'name' => 'is_finished',
-                'value' => 1,
-                'default' => $row->is_finished,
-            ])
+                <!-- is_cancelled -->
+                @include('components.form.checkbox', [
+                    'group' => 'booking',
+                    'label' => __('Cancelled'),
+                    'name' => 'is_cancelled',
+                    'value' => 1,
+                    'default' => $row->is_cancelled,
+                ])
+
+                <!-- is_paid -->
+                @include('components.form.checkbox', [
+                    'group' => 'booking',
+                    'label' => __('Paid'),
+                    'name' => 'is_paid',
+                    'value' => 1,
+                    'default' => $row->is_paid,
+                ])
+
+                <!-- is_finished -->
+                @include('components.form.checkbox', [
+                    'group' => 'booking',
+                    'label' => __('Finished'),
+                    'name' => 'is_finished',
+                    'value' => 1,
+                    'default' => $row->is_finished,
+                ])
+            @endif
         @endif
-
     </div>
 </div>
 

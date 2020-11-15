@@ -56,6 +56,7 @@ class PropertyBooking extends Model
         'is_property_damaged',
         'audit_refund_datetime',
         'audit_refund_user_id',
+        'register_by',
         'is_confirmed',
         'is_cancelled',
         'is_paid',

@@ -307,10 +307,15 @@ class PropertyBookingController extends Controller
     {
         $booking = $this->repository->blueprint();
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        $registers = [
+            'Admin',
+            'Owner'
+        ];
 
         return view('property-bookings.create')
             ->with('booking', $booking)
             ->with('property', $property)
+            ->with('registers', $registers)
             ->with('damageDeposits', $damageDeposits);
     }
 
@@ -341,10 +346,15 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        $registers = [
+            'Admin',
+            'Owner'
+        ];
 
         return view('property-bookings.show')
             ->with('booking', $booking)
             ->with('property', $property)
+            ->with('registers', $registers)
             ->with('damageDeposits', $damageDeposits);
     }
 
@@ -353,10 +363,15 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        $registers = [
+            'Admin',
+            'Owner'
+        ];
 
         return view('property-bookings.edit')
             ->with('booking', $booking)
             ->with('property', $property)
+            ->with('registers', $registers)
             ->with('damageDeposits', $damageDeposits);
     }
 
