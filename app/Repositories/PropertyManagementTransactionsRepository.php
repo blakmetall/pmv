@@ -170,6 +170,9 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $amount = 0;
         $description = '';
         foreach ($cleaningServices as $cleaningService) {
+            if (!$cleaningService->is_finished) {
+                return false;
+            }
             $amount += $cleaningService->total_cost;
             $description .=
                 "#" . strval($cleaningService->id) . ' - ' .
