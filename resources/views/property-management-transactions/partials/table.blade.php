@@ -41,12 +41,17 @@
 <div class="mb-5"></div>
 
 <?php
+    $totalCount = 0;
     $hasTransactions = false;
     foreach($rows as $index => $row) {
         if($row->auditedBy) {
             $hasTransactions = true;
             break;
         }
+    }
+
+    if(count($rows) > 0){
+        $totalCount = count($rows);
     }
 
     $urlParams = '?' . http_build_query($_GET);
@@ -58,7 +63,7 @@
     <div class="card">
         <div class="card-header card-header-print">
             <div>
-                {{ $label }}
+                {{ $label }} - ( {{ $totalCount }} )
             </div>
             @if($hasTransactions)
                 <a href="#" class="btn-print" data-table="table-print-transactions" data-title="{{ __('Transactions') }}">
@@ -107,6 +112,7 @@
 
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
+                                <th scope="col" class="transaction-col-id">ID</th>
 
                                 @if(!isRole('owner'))
                                     <th scope="col">
@@ -417,7 +423,7 @@
     <div class="card">
         <div class="card-header card-header-print">
             <div>
-                {{ __('Pending Transactions') }}
+                {{ __('Pending Transactions') }} - ( {{ $totalCount }} )
             </div>
             @if($hasPendingAudits)
                 <a href="#" class="btn-print" data-table="table-print-pending" data-title="{{ __('Pending Transactions') }}">
@@ -434,6 +440,7 @@
 
                             <tr>
                                 <th scope="col" class="transaction-col-id">#</th>
+                                <th scope="col" class="transaction-col-id">ID</th>
                                 <th scope="col" class="transaction-col-checkbox">
                                     <div class="not-print form-group form-check">
                                         <input type="checkbox" class="form-check-input app-checkbox-actions-header">
@@ -541,6 +548,11 @@
                                     ?>
 
                                     <tr>
+                                        <!-- index -->
+                                        <th scope="row">
+                                            {{ $index+1 }}
+                                        </th>
+
                                         <!-- id -->
                                         <th scope="row">
                                             {{ $row->id }}
@@ -692,14 +704,14 @@
                             @if(!$hideTotalsRow)
                                 @if($usePendingAuditPresentation)
                                     <tr>
-                                        <td colspan="6">&nbsp;</td>
+                                        <td colspan="7">&nbsp;</td>
                                         <td class="text-right">Total:</td>
                                         <th class="text-primary">{{ priceFormat($totalPendingAudits) }}</th>
                                         <td colspan="3">&nbsp;</td>
                                     </tr>
                                 @else
                                     <tr>
-                                        <td colspan="7">&nbsp;</td>
+                                        <td colspan="8">&nbsp;</td>
                                         <th class="text-primary">{{ priceFormat($creditCount) }}</th>
                                         <th class="text-primary">{{ priceFormat($chargeCount) }}</th>
 

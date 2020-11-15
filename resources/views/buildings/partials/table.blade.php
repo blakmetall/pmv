@@ -15,6 +15,7 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Description') }}</th>
                         <th scope="col">{{ __('Properties') }}</th>
@@ -25,8 +26,13 @@
                 <tbody>
 
                     @if(count($rows))
-                        @foreach($rows as $row)
+                        @foreach($rows as $i => $row)
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i+1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $row->id }}

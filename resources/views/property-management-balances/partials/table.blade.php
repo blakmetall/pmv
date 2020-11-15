@@ -24,6 +24,7 @@
                 <thead>
 
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">ID</th>
                         <th scope="col">&nbsp;</th>
                         <th scope="col">{{ __('Property') }}</th>
@@ -37,8 +38,13 @@
                 <tbody>
 
                     @if(count($pm_items))
-                        @foreach($pm_items as $pm)
+                        @foreach($pm_items as $i => $pm)
                             <tr class="<?=$pm->is_finished ? 'tr-finished-balance':''?>">
+                                <!-- index -->
+                                <td>
+                                    {{ $i+1 }}
+                                </td>
+
                                 <!-- property ID -->
                                 <td>
                                     <b>{{ $pm->property->id }}</b>
@@ -104,10 +110,10 @@
                         @endforeach
                     @endif
 
-                    <tr><th colspan="7">&nbsp;</th></tr>
+                    <tr><th colspan="8">&nbsp;</th></tr>
 
                     <tr>
-                        <th scope="col" colspan="4">&nbsp;</th>
+                        <th scope="col" colspan="5">&nbsp;</th>
                         <th scope="col">
                             {{ priceFormat($totalBalances['balances']) }}
                         </th>

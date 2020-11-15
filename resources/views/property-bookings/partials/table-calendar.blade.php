@@ -20,6 +20,7 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Guest') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Travel Dates') }}</th>
@@ -35,8 +36,13 @@
                 <tbody>
 
                     @if(count($bookings))
-                        @foreach($bookings as $booking)
+                        @foreach($bookings as $i => $booking)
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i+1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $booking->id }}

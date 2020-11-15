@@ -12,6 +12,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col" colspan="14" style="text-align:center">{{ __('Day') }}</th>
                         <th scope="col">{{ __('Bedrooms') }}</th>
@@ -30,6 +31,11 @@
                                 $days        = getDatesFromRange($fromDate, $endDate, 'd-M-y');
                             @endphp
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $index+1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $property->id }}
