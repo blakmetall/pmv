@@ -59,7 +59,7 @@
                 {{ __('Print') }}
             </a></h5>
 
-            
+
             <ul>
                 @foreach($successfullTransactions as $transaction)
                     <li>
@@ -385,7 +385,7 @@
 
                                     <!-- amount -->
                                     <td>
-                                        <input type="number" class="form-control form-control-sm app-bulk-input" name="bulk[{{ $loopIndex }}][amount]">
+                                        <input type="text" class="form-control form-control-sm app-bulk-input" name="bulk[{{ $loopIndex }}][amount]">
                                     </td>
 
                                     <!-- notes -->
