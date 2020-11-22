@@ -280,8 +280,6 @@
                 'optionLabelRef' => 'description',
             ])
 
-            
-
             @if($row->is_confirmed)
                 <!-- is_refundable -->
                 @include('components.form.checkbox', [

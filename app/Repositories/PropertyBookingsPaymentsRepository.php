@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
-use App\Models\{Property, PropertyBookingPayment, DamageDeposit};
+use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Models\{Property, PropertyBookingPayment, DamageDeposit, PropertyManagementTransaction};
 use App\Validations\PropertyBookingsPaymentsValidations;
 
 class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepositoryInterface
@@ -83,7 +84,25 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
             $payment->audit_datetime = null;
         }
 
-        $payment->save();
+        if ($payment->save()) {
+            $property = Property::find($request->property_id);
+            if ($property->management()->count()) {
+                foreach ($property->management as $pm) {
+                    if (!$pm->is_finished) {
+                        if ($request->credit_amount) {
+                            $transaction = new PropertyManagementTransaction();
+                            $transaction->property_management_id = $pm->id;
+                            $transaction->transaction_type_id = 18;
+                            $transaction->amount = $request->credit_amount;
+                            $transaction->post_date = $request->post_date;
+                            $transaction->operation_type = 2;
+                            $transaction->description = $request->credit_notes;
+                            $transaction->save();
+                        }
+                    }
+                }
+            }
+        }
 
         return $payment;
     }

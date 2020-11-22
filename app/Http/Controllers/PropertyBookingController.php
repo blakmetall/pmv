@@ -11,6 +11,7 @@ use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
 use App\Helpers\UserHelper;
+use App\Models\PropertyManagementTransaction;
 use Carbon\Carbon;
 
 class PropertyBookingController extends Controller
@@ -363,6 +364,14 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        $transactions = [];
+        if ($property->management()->count()) {
+            foreach ($property->management as $pm) {
+                if (!$pm->is_finished) {
+                    $transactions = PropertyManagementTransaction::where('property_management_id', $pm->id)->where('transaction_type_id', 18)->get();
+                }
+            }
+        }
         $registers = [
             'Admin',
             'Owner'
@@ -372,6 +381,7 @@ class PropertyBookingController extends Controller
             ->with('booking', $booking)
             ->with('property', $property)
             ->with('registers', $registers)
+            ->with('transactions', $transactions)
             ->with('damageDeposits', $damageDeposits);
     }
 

@@ -3,23 +3,11 @@
 @section('heading-content')
 
     @php
-        foreach ($property->management as $pm) {
-            if (!$pm->is_finished) {
-                $url = route('property-management-transactions.create', $pm->id);
-                break;
-            }
-        }
-
         if($booking->is_confirmed){
             $actions = [
                 [
                     'label' => __('Add Payment'),
                     'url' => route('property-booking-payments.create', $booking->id),
-                    'icon' => 'i-Add',
-                ],
-                [
-                    'label' => __('Add PM Credit'),
-                    'url' => $url,
                     'icon' => 'i-Add',
                 ]
             ];
@@ -48,10 +36,21 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
+
+
 @endsection
 
 @section('main-content')
     <div class="container app-container-sm">
+        @if(!isRole('owner'))
+            @if(!empty($transactions))
+                <!-- load table transactions -->
+                @include('property-bookings.partials.table-transactions', [
+                    'label' => __('TRANSACTIONS'),
+                    'transactions' => $transactions
+                ])
+            @endif
+        @endif
         <form action="{{ route('property-bookings.update', [$booking->id]) }}" method="post">
             @csrf
             @include('property-bookings.partials.form', [

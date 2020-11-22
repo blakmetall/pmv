@@ -3,6 +3,15 @@
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('INFORMATION') }}</span>
 
+        <!-- property_id -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Property'),
+            'name' => 'property_id',
+            'hidden' => 'true',
+            'value' => $booking->property->id
+        ])
+        
         <!-- booking_id -->
         @include('components.form.input', [
             'group' => 'payment',
@@ -111,6 +120,69 @@
             'value' => $row->comments
         ])
 
+    </div>
+</div>
+
+<!-- separator -->
+<div class="mb-4"></div>
+
+<div class="card">
+    <div class="card-body">
+        <span class="badge badge-primary r-badge mb-4">{{ __('PM Credit') }}</span>
+
+        <!-- credit_amount -->
+        @include('components.form.input', [
+            'group' => 'credit',
+            'label' => __('Credit Amount'),
+            'name' => 'credit_amount',
+            'value' => $row->credit_amount,
+            'instruction' => __('Enter the amount in MXN pesos to credit the property.')
+        ])
+
+        <!-- credit_notes -->
+        @include('components.form.textarea', [
+            'group' => 'credit',
+            'label' => __('Notes'),
+            'name' => 'credit_notes',
+            'value' => __('Booking') .' #'.$booking->id
+        ])
+    </div>
+</div>
+
+<!-- separator -->
+<div class="mb-4"></div>
+
+<div class="card">
+    <div class="card-body">
+        <span class="badge badge-primary r-badge mb-4">{{ __('Email Notifications') }}</span>
+
+        <!-- guest_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Guest'),
+            'name' => 'guest',
+        ])
+
+        <!-- office_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Office'),
+            'name' => 'office',
+        ])
+
+        <!-- concierge_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Concierge'),
+            'name' => 'concierge',
+        ])
+
+        <!-- home_owner_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Home Owner'),
+            'name' => 'home_owner',
+        ])
     </div>
 </div>
 
