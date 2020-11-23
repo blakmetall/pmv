@@ -60,6 +60,8 @@ Route::group(['middleware' => ['web']], function () {
                     Route::post('store', 'PropertyBookingPaymentsController@store')->name('property-booking-payments.store');
                     Route::get('show/{id}', 'PropertyBookingPaymentsController@show')->name('property-booking-payments.show');
                     Route::get('edit/{id}', 'PropertyBookingPaymentsController@edit')->name('property-booking-payments.edit');
+                    Route::get('email/{id}', 'PropertyBookingPaymentsController@email')->name('property-booking-payments.email');
+                    Route::post('send-email/{id}', 'PropertyBookingPaymentsController@sendEmail')->name('property-booking-payments.send-email');
                     Route::post('update/{id}', 'PropertyBookingPaymentsController@update')->name('property-booking-payments.update');
                     Route::get('destroy/{id}', 'PropertyBookingPaymentsController@destroy')->name('property-booking-payments.destroy');
                 });

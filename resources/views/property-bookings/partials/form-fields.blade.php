@@ -30,6 +30,15 @@
             'value' => $row->lastname,
         ])
 
+        <!-- email -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Email'),
+            'name' => 'email',
+            'required' => true,
+            'value' => $row->email,
+        ])
+
         @if(!isRole('owner'))
             <!-- country -->
             @include('components.form.input', [
@@ -318,6 +327,47 @@
                 ])
             @endif
         @endif
+    </div>
+</div>
+
+<!-- separator -->
+<div class="mb-4"></div>
+
+<div class="card">
+    <div class="card-body">
+        <span class="badge badge-primary r-badge mb-4">{{ __('EMAIL NOTIFICATIONS') }}</span>
+
+        <!-- guest_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Guest'),
+            'name' => 'guest',
+            'value' => 1,
+        ])
+        
+        <!-- office_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Office'),
+            'name' => 'office',
+            'value' => 1,
+        ])
+
+        <!-- concierge_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Concierge'),
+            'name' => 'concierge',
+            'value' => 1,
+        ])
+
+        <!-- home_owner_notification -->
+        @include('components.form.checkbox', [
+            'group' => 'notification',
+            'label' => __('Home Owner'),
+            'name' => 'home_owner',
+            'value' => 1,
+        ])
     </div>
 </div>
 

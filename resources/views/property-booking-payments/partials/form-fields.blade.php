@@ -154,35 +154,16 @@
 
 <div class="card">
     <div class="card-body">
-        <span class="badge badge-primary r-badge mb-4">{{ __('Email Notifications') }}</span>
+        <span class="badge badge-primary r-badge mb-4">{{ __('Notifications') }}</span>
 
-        <!-- guest_notification -->
+        <!-- email_notification -->
         @include('components.form.checkbox', [
             'group' => 'notification',
-            'label' => __('Guest'),
-            'name' => 'guest',
+            'label' => __('Email Notifications'),
+            'name' => 'email_notification',
+            'value' => 1,
         ])
 
-        <!-- office_notification -->
-        @include('components.form.checkbox', [
-            'group' => 'notification',
-            'label' => __('Office'),
-            'name' => 'office',
-        ])
-
-        <!-- concierge_notification -->
-        @include('components.form.checkbox', [
-            'group' => 'notification',
-            'label' => __('Concierge'),
-            'name' => 'concierge',
-        ])
-
-        <!-- home_owner_notification -->
-        @include('components.form.checkbox', [
-            'group' => 'notification',
-            'label' => __('Home Owner'),
-            'name' => 'home_owner',
-        ])
     </div>
 </div>
 

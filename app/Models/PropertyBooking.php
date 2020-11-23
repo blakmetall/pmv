@@ -21,6 +21,7 @@ class PropertyBooking extends Model
         'user_agent_id',
         'firstname',
         'lastname',
+        'email',
         'country',
         'state',
         'city',
@@ -101,5 +102,11 @@ class PropertyBooking extends Model
     public function damageDeposit()
     {
         return $this->belongsTo('App\Models\DamageDeposit');
+    }
+
+    // mutator: full_name 
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
     }
 }

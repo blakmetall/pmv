@@ -43,7 +43,7 @@
 @section('main-content')
     <div class="container app-container-sm">
         @if(!isRole('owner'))
-            @if(!empty($transactions))
+            @if(!$transactions)
                 <!-- load table transactions -->
                 @include('property-bookings.partials.table-transactions', [
                     'label' => __('TRANSACTIONS'),

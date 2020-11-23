@@ -52,7 +52,54 @@ class PropertyBookingPaymentsController extends Controller
         $payment = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
-        return redirect(route('property-booking-payments.edit', [$payment->id]));
+        if ($request->email_notification) {
+            return redirect(route('property-booking-payments.email', [$payment->id]));
+        } else {
+            return redirect(route('property-booking-payments.edit', [$payment->id]));
+        }
+    }
+
+    public function email($id)
+    {
+        $payment = $this->repository->find($id);
+        $booking = $this->bookingsRepository->find($payment->booking_id);
+        $property = $booking->property;
+        $serialOwners = [];
+        foreach ($property->users as $owner) {
+            $serialOwners[] = $owner->email;
+        }
+        $owners = implode(',', $serialOwners);
+
+        return view('property-booking-payments.email')
+            ->with('payment', $payment)
+            ->with('booking', $booking)
+            ->with('owners', $owners)
+            ->with('property', $property);
+    }
+
+    public function sendEmail(Request $request, PropertyBooking $booking)
+    {
+        $guests = explode(',', $request->guests_recipients);
+        if ($guests) {
+            foreach ($guests as $guest) {
+                $this->notification($booking, $guest);
+            }
+        }
+
+        $owners = explode(',', $request->owners_recipients);
+        if ($owners) {
+            foreach ($owners as $owner) {
+                $this->notification($booking, $owner);
+            }
+        }
+        $this->notification($recipients, $booking);
+        return redirect(route('property-bookings.edit', [$booking->id]));
+    }
+
+    private function notification($recipients, $booking)
+    {
+        Notification::route('mail', $request->guest_email)
+            ->notify(new DetailsPayment($booking));
     }
 
     public function show($id)
@@ -88,7 +135,11 @@ class PropertyBookingPaymentsController extends Controller
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
 
-        return redirect(route('property-booking-payments.edit', [$id]));
+        if ($request->email_notification) {
+            return redirect(route('property-booking-payments.email', [$id]));
+        } else {
+            return redirect(route('property-booking-payments.edit', [$id]));
+        }
     }
 
     public function destroy(Request $request, $id)

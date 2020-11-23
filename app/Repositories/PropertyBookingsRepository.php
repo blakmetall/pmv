@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Notification;
+use App\Notifications\DetailsBooking;
 use App\Helpers\LanguageHelper;
 use App\Helpers\RatesHelper;
 use App\Models\DamageDeposit;
@@ -115,6 +117,25 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $booking->fill($requestData);
 
         if ($booking->save()) {
+            if ($request->guest) {
+                $this->email($booking, $booking->email);
+            }
+
+            if ($request->office) {
+                $this->email($booking, $booking->email);
+            }
+
+            if ($request->concierge) {
+                $this->email($booking, $booking->email);
+            }
+
+            if ($request->home_owner) {
+                $owners = $booking->property->users;
+                foreach ($owners as $owner) {
+                    $this->email($booking, $owner->email);
+                }
+            }
+
             $property = Property::find($booking->property_id);
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
@@ -171,6 +192,12 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         }
 
         return $booking;
+    }
+
+    private function email($booking, $email)
+    {
+        Notification::route('mail', $email)
+            ->notify(new DetailsBooking($booking));
     }
 
     public function find($id_or_obj)
