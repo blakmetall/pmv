@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\Role;
+use App\Helpers\LanguageHelper;
 use App\Repositories\RolesRepositoryInterface;
 use App\Repositories\UsersRepositoryInterface;
 use App\Repositories\WorkgroupsRepositoryInterface;
@@ -29,10 +31,19 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         $search = trim($request->s);
-        $users = $this->repository->all($search);
+        $config = ['role' => $request->role];
+        $users = $this->repository->all($search, $config);
+        $allRoles = Role::all();
+        $lang = LanguageHelper::current();
+        $roles = [];
+        foreach ($allRoles as $index => $role) {
+            $roles[$index]['id'] = $role->translations()->where('language_id', $lang->id)->first()->role_id;
+            $roles[$index]['name'] = $role->translations()->where('language_id', $lang->id)->first()->name;
+        }
 
         return view('users.index')
             ->with('users', $users)
+            ->with('roles', $roles)
             ->with('search', $search);
     }
 
