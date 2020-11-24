@@ -424,16 +424,51 @@ class PropertyManagementTransactionsController extends Controller
         return redirect()->back();
     }
 
+    public function confirmEmail(Request $request)
+    {
+        $transaction = PropertyManagementTransaction::find($request->source);
+        $pm = $transaction->propertyManagement;
+        if ($pm->property->users->isNotEmpty()) {
+            foreach ($pm->property->users as $getUser) {
+                $getUser = User::find($getUser->id);
+            }
+        }
+
+        $period = $transaction->period_start_date . ' - ' . $transaction->period_end_date;
+        $operationType = $transaction->operation_type == config('constants.operation_types.charge') ? __('Charge') : __('Credit');
+
+        $msg  = '';
+        if ($getUser) {
+            $msg .= 'Hello ' . $getUser->profile->full_name . '<br><br>';
+            $msg .= 'Transaction' . ': ' . $transaction->id . '<br>';
+            $msg .= 'Post Date' . ': <strong>' . $transaction->post_date . '</strong><br>';
+            $msg .= 'Description' . ':' . $transaction->description . '<br>';
+            $msg .= 'Period' . ': <strong>' . $period . '</strong><br>';
+            $msg .= 'Operation' . ': <strong>' . $transaction->type->translate()->name . '</strong><br>';
+            $msg .= 'Operation Type' . ': <strong>' . $operationType . '</strong><br>';
+            $msg .= 'Amount' . ': <strong>' . priceFormat($transaction->amount) . '</strong><br>';
+            $msg .= '<hr>';
+            $msg .= 'Hola ' . $getUser->profile->full_name . '<br><br>';
+            $msg .= 'Transacción' . ': ' . $transaction->id . '<br>';
+            $msg .= 'Fecha' . ': <strong>' . $transaction->post_date . '</strong><br>';
+            $msg .= 'Descripción' . ':' . $transaction->description . '<br>';
+            $msg .= 'Periodo' . ': <strong>' . $period . '</strong><br>';
+            $msg .= 'Operación' . ': <strong>' . $transaction->type->translate()->name . '</strong><br>';
+            $msg .= 'Tipo de operación' . ': <strong>' . $operationType . '</strong><br>';
+            $msg .= 'Cantidad' . ': <strong>' . priceFormat($transaction->amount) . '</strong><br>';
+        }
+
+        return $msg;
+    }
+
     public function email(Request $request, PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
-
         if ($pm->property->users->isNotEmpty()) {
             foreach ($pm->property->users as $getUser) {
                 $getUser = User::find($getUser->id);
                 $getUser->notify(new DetailsTransaction($transaction));
             }
         }
-
 
         $request->session()->flash('success', __('Email sended successfully'));
 

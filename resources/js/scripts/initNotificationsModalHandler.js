@@ -8,15 +8,16 @@ export function initNotificationsModalHandler() {
         var url = container.data("url");
 
         modal.on("show.bs.modal", function(e) {
-            var pm = $(e.relatedTarget).data("pm");
+            var source = $(e.relatedTarget).data("source");
             var route = $(e.relatedTarget).data("route");
+            var txtButton = $(e.relatedTarget).data("text-button");
             $.ajax({
                 url: url,
                 type: "GET",
-                data:{"pm": pm}
+                data:{"source": source}
             }).done(function(html) {
                 container.html(html);
-                container.append('<a href="'+route+'" class="btn btn-primary m-1">Send</a>')
+                container.append('<a href="'+route+'" class="btn btn-primary m-1">'+txtButton+'</a>')
             });
         });
     });

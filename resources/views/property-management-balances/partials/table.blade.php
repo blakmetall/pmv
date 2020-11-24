@@ -61,7 +61,7 @@
                                             class="text-primary mr-2">
                                             <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                         </a> --}}
-                                        <a href="#" data-toggle="modal" data-pm="{{ $pm->id }}" data-target="#{{$modalID }}" data-route="{{ route('property-management-balances.email', $pm->id) }}" class="text-primary mr-2">
+                                        <a href="#" data-toggle="modal" data-source="{{ $pm->id }}" data-target="#{{$modalID }}" data-text-button="{{ __('Send') }}" data-route="{{ route('property-management-balances.email', $pm->id) }}" class="text-primary mr-2">
                                             <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                         </a>
                                     @endif

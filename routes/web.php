@@ -212,6 +212,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
 
             // single property management
+            Route::get('confirm-email', 'PropertyManagementTransactionsController@confirmEmail')->name('property-management-transactions.confirm-email');
             Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
 
                 // single property management transactions

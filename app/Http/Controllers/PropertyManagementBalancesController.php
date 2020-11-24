@@ -68,7 +68,7 @@ class PropertyManagementBalancesController extends Controller
 
     public function confirmEmail(Request $request)
     {
-        $pm = PropertyManagement::find($request->pm);
+        $pm = PropertyManagement::find($request->source);
         $balance = PMHelper::getBalance($pm->id);
         $property = $pm->property->translate()->name;
         $data = [];
@@ -89,6 +89,12 @@ class PropertyManagementBalancesController extends Controller
             $msg .= 'Here are the details of your current balance<br>';
             $msg .= 'Date' . ': ' . getCurrentDateTime() . '<br>';
             $msg .= 'Property' . ': <strong>' . $data['property'] . '</strong><br>';
+            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . '</strong>';
+            $msg .= '<hr>';
+            $msg .= 'Hola ' . $getUser->profile->full_name . '<br><br>';
+            $msg .= 'Aquí están los detalles de su balance actual<br>';
+            $msg .= 'Fecha' . ': ' . getCurrentDateTime() . '<br>';
+            $msg .= 'Propiedad' . ': <strong>' . $data['property'] . '</strong><br>';
             $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . '</strong><br><br>';
         }
 

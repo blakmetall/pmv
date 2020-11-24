@@ -105,3 +105,7 @@
     font-size: 30px;
     margin: 0px 10px;
 }
+
+.app-modal-notification .app-table-file-modal-dialog {
+    max-width: 400px;
+}

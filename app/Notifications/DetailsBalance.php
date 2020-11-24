@@ -42,17 +42,22 @@ class DetailsBalance extends Notification
      */
     public function toMail($notifiable)
     {
-        $greeting = sprintf('Hello %s!', $notifiable->profile->full_name);
 
         return (new MailMessage())
-            ->subject(__('Balance').' - '.$this->data->property)
-            ->greeting($greeting)
-            ->line(__('Here are the details of your current balance'))
-            ->line(__('Date').': '.getCurrentDateTime())
-            ->line(new HtmlString(__('Property').': '.'<strong>'.$this->data->property.'</strong>'))
-            ->line(new HtmlString(__('Balance').': '.'<strong>'.priceFormat($this->data->balance).'</strong>'));
+            ->subject('Balance' . ' - ' . $this->data->property)
+            ->greeting(sprintf('Hello %s!', $notifiable->profile->full_name))
+            ->line('Here are the details of your current balance')
+            ->line('Date' . ': ' . getCurrentDateTime())
+            ->line(new HtmlString('Property' . ': ' . '<strong>' . $this->data->property . '</strong>'))
+            ->line(new HtmlString('Balance' . ': ' . '<strong>' . priceFormat($this->data->balance) . '</strong>'))
+            ->line('------------------------------------------------')
+            ->greeting(sprintf('Hola %s!', $notifiable->profile->full_name))
+            ->line('Aquí están los detalles de su balance actual')
+            ->line('Fecha' . ': ' . getCurrentDateTime())
+            ->line(new HtmlString('Propiedad' . ': ' . '<strong>' . $this->data->property . '</strong>'))
+            ->line(new HtmlString('Balance' . ': ' . '<strong>' . priceFormat($this->data->balance) . '</strong>'));
         // ->line(__('Pending Audit').': '.$this->data->pendingAudit)
-            // ->line(__('Estimated Balance').': '.priceFormat($this->data->estimatedBalance));
+        // ->line(__('Estimated Balance').': '.priceFormat($this->data->estimatedBalance));
     }
 
     /**
@@ -64,7 +69,6 @@ class DetailsBalance extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-        ];
+        return [];
     }
 }

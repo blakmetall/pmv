@@ -36,6 +36,8 @@
         11 => __('November'),
         12 => __('December'),
     ];
+
+    $modalID = 'transaction-notification-' . strtotime('now') . rand(1,99999);
 ?>
 
 <div class="mb-5"></div>
@@ -73,14 +75,14 @@
             @endif
         </div>
         <div class="card-body pt-4">
-
+            @include('property-management-transactions.partials.modal-notification')
             @if($hasTransactions)
                 <div id="table-print-transactions" class="table-responsive">
                     <table class="table table-striped {{ $tableClass }}" data-show-print="true">
                         <thead>
                             @if($shouldShowBalanceColumn)
                                 <tr>
-                                    <?php $colspanMonth = !isRole('owner') ? 9 : 7; ?>
+                                    <?php $colspanMonth = (!isRole('owner') && !isRole('regular')) ? 10 : 8; ?>
                                     <th colspan="{{ $colspanMonth }}">
                                         @if(isset($_GET['month']) && $_GET['year'])
                                             {{ $months[(int)$_GET['month']] }}
@@ -89,7 +91,7 @@
                                         @endif
                                     </th>
 
-                                    <?php $colspanYear = !isRole('owner') ? 4 : 3; ?>
+                                    <?php $colspanYear = (!isRole('owner') && !isRole('regular')) ? 5 : 4; ?>
                                     <th colspan="{{ $colspanYear }}">
                                         {{ __('Previous Balance') }}: &nbsp;&nbsp;
 
@@ -179,6 +181,11 @@
                                     ?>
 
                                     <tr>
+                                        <!-- index -->
+                                        <th scope="row">
+                                            {{ $index+1 }}
+                                        </th>
+
                                         <!-- id -->
                                         <th scope="row">
                                             {{ $row->id }}
@@ -197,8 +204,11 @@
                                         <td>
                                             <div class="not-print">
                                                 @if(!isRole('owner') && !isRole('regular'))
-                                                    <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
+                                                    {{-- <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
                                                         <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -2px;">
+                                                    </a> --}}
+                                                    <a href="#" data-toggle="modal" data-source="{{ $row->id }}" data-target="#{{ $modalID }}" data-text-button="{{ __('Send') }}" data-route="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="text-primary mr-2">
+                                                        <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                                     </a>
                                                 @endif
 
