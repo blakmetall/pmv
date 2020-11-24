@@ -12,6 +12,7 @@ import { initTimepickerComponents } from "./scripts/initTimepickerComponents.js"
 import { initTransactionModalHandler } from "./scripts/initTransactionModalHandler.js";
 import { initContactModalHandler } from "./scripts/initContactModalHandler.js";
 import { initCleaningServicesModalHandler } from "./scripts/initCleaningServicesModalHandler.js";
+import { initNotificationsModalHandler } from "./scripts/initNotificationsModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 
 $(function() {
@@ -42,6 +43,7 @@ $(function() {
         initTransactionModalHandler();
         initContactModalHandler();
         initCleaningServicesModalHandler();
+        initNotificationsModalHandler();
         initTooltip();
 
         initCleaningMonthlyBatchEvents();

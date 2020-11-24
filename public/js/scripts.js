@@ -120,7 +120,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./scripts/initTransactionModalHandler.js */ "./resources/js/scripts/initTransactionModalHandler.js");
 /* harmony import */ var _scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initContactModalHandler.js */ "./resources/js/scripts/initContactModalHandler.js");
 /* harmony import */ var _scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./scripts/initCleaningServicesModalHandler.js */ "./resources/js/scripts/initCleaningServicesModalHandler.js");
-/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+/* harmony import */ var _scripts_initNotificationsModalHandler_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./scripts/initNotificationsModalHandler.js */ "./resources/js/scripts/initNotificationsModalHandler.js");
+/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+
 
 
 
@@ -161,7 +163,8 @@ $(function () {
     Object(_scripts_initTransactionModalHandler_js__WEBPACK_IMPORTED_MODULE_11__["initTransactionModalHandler"])();
     Object(_scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__["initContactModalHandler"])();
     Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__["initCleaningServicesModalHandler"])();
-    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_14__["initTooltip"])();
+    Object(_scripts_initNotificationsModalHandler_js__WEBPACK_IMPORTED_MODULE_14__["initNotificationsModalHandler"])();
+    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_15__["initTooltip"])();
     initCleaningMonthlyBatchEvents();
     initBalancesFinishedHandler();
     initBulkTransactionsHandler();
@@ -985,6 +988,42 @@ function initMapInputComponents() {
   }
 
   waitForGoogleAndInit();
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/initNotificationsModalHandler.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/scripts/initNotificationsModalHandler.js ***!
+  \***************************************************************/
+/*! exports provided: initNotificationsModalHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initNotificationsModalHandler", function() { return initNotificationsModalHandler; });
+function initNotificationsModalHandler() {
+  var modals = $(".app-modal-notification");
+  modals.each(function () {
+    var id = $(this).attr("id");
+    var modal = $("#" + id);
+    var container = $(this).find(".app-modal-notification-container");
+    var url = container.data("url");
+    modal.on("show.bs.modal", function (e) {
+      var pm = $(e.relatedTarget).data("pm");
+      var route = $(e.relatedTarget).data("route");
+      $.ajax({
+        url: url,
+        type: "GET",
+        data: {
+          "pm": pm
+        }
+      }).done(function (html) {
+        container.html(html);
+        container.append('<a href="' + route + '" class="btn btn-primary m-1">Send</a>');
+      });
+    });
+  });
 }
 
 /***/ }),

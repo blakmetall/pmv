@@ -66,6 +66,35 @@ class PropertyManagementBalancesController extends Controller
             ->with('totalBalances', $totalBalances);
     }
 
+    public function confirmEmail(Request $request)
+    {
+        $pm = PropertyManagement::find($request->pm);
+        $balance = PMHelper::getBalance($pm->id);
+        $property = $pm->property->translate()->name;
+        $data = [];
+        $data['property'] = $property;
+        $data['balance'] = $balance['balance'];
+        $data['pendingAudit'] = $balance['pendingAudit'];
+        $data['estimatedBalance'] = $balance['estimatedBalance'];
+        $getUser = false;
+        if ($pm->property->users->isNotEmpty()) {
+            foreach ($pm->property->users as $getUser) {
+                $getUser = User::find($getUser->id);
+            }
+        }
+
+        $msg  = '';
+        if ($getUser) {
+            $msg .= 'Hello ' . $getUser->profile->full_name . '<br><br>';
+            $msg .= 'Here are the details of your current balance<br>';
+            $msg .= 'Date' . ': ' . getCurrentDateTime() . '<br>';
+            $msg .= 'Property' . ': <strong>' . $data['property'] . '</strong><br>';
+            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . '</strong><br><br>';
+        }
+
+        return $msg;
+    }
+
     public function email(Request $request, PropertyManagement $pm)
     {
         $balance = PMHelper::getBalance($pm->id);

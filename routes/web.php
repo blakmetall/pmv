@@ -187,6 +187,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['prefix' => 'balances', 'middleware' => 'role-permission:property-management,balances'], function () {
                 Route::get('', 'PropertyManagementBalancesController@general')->name('property-management-balances.general');
 
+                Route::get('confirm-email', 'PropertyManagementBalancesController@confirmEmail')->name('property-management-balances.confirm-email');
+
                 Route::get('email/{pm}', 'PropertyManagementBalancesController@email')->name('property-management-balances.email');
             });
 

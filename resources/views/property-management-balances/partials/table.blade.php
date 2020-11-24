@@ -1,3 +1,6 @@
+@php
+    $modalID = 'pm-notification-' . strtotime('now') . rand(1,99999);
+@endphp
 <div class="mb-5"></div>
 <div class="card">
     <div class="card-header">
@@ -18,7 +21,7 @@
         </div>
     </div>
     <div class="card-body pt-5">
-
+        @include('property-management-balances.partials.modal-notification')
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -53,9 +56,12 @@
                                 <!-- balances -->
                                 <td>
                                     @if( !isRole('owner'))
-                                        <a href="{{ route('property-management-balances.email', $pm->id) }}"
+                                        {{-- <a href="{{ route('property-management-balances.email', $pm->id) }}"
                                             alt="{{ __('Send Email') }}"
                                             class="text-primary mr-2">
+                                            <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
+                                        </a> --}}
+                                        <a href="#" data-toggle="modal" data-pm="{{ $pm->id }}" data-target="#{{$modalID }}" data-route="{{ route('property-management-balances.email', $pm->id) }}" class="text-primary mr-2">
                                             <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                         </a>
                                     @endif
