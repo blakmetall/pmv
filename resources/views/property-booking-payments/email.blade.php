@@ -29,7 +29,7 @@
 
 @section('main-content')
     <div class="container app-container-sm">
-        <form action="{{ route('property-booking-payments.send-email', [$payment->id]) }}" method="post">
+        <form action="{{ route('property-booking-payments.send-email', [$booking->id]) }}" method="post">
             @csrf
             @include('property-booking-payments.partials.form-email', [
                 'row' => $payment,

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\PropertyBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -16,9 +17,10 @@ class DetailsPayment extends Notification
      *
      * @return void
      */
-    public function __construct($payment)
+    public function __construct($content, PropertyBooking $booking)
     {
-        $this->payment = $payment;
+        $this->booking = $booking;
+        $this->content = $content;
     }
 
     /**
@@ -45,7 +47,7 @@ class DetailsPayment extends Notification
         return (new MailMessage())
             ->subject(__('Details of Booking') . ': ' . $this->booking->id)
             ->greeting(__('Hello'))
-            ->line(new HtmlString(__('Property') . ': ' . '<strong>'));
+            ->line(new HtmlString($this->content));
     }
 
     /**

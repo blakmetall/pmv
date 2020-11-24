@@ -3,7 +3,7 @@
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
-    $lang = isset($lang) ? $lang : '';
+    $lang = LanguageHelper::current();
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
@@ -14,13 +14,13 @@
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-    $requestName = prepareFormRequestName($name, $parentName, $lang);    
-    $inputName = prepareFormInputName($name, $parentName, $lang);
+    $requestName = prepareFormRequestName($name, $parentName, '');    
+    $inputName = prepareFormInputName($name, $parentName, '');
 
     $disabledProp = ($disabled) ? 'disabled' : '';
     $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
-
+    
     $property      = $booking->property->translations()->where('language_id', $lang->id)->first();
     $adults        = ($booking->adults) ? $booking->adults : 0;
     $kids          = ($booking->kids) ? $booking->kids : 0;

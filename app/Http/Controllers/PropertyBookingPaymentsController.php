@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Notification;
+use App\Notifications\DetailsPayment;
 use Illuminate\Http\Request;
 use App\Models\{PropertyBooking};
 use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
@@ -80,26 +82,26 @@ class PropertyBookingPaymentsController extends Controller
     public function sendEmail(Request $request, PropertyBooking $booking)
     {
         $guests = explode(',', $request->guests_recipients);
+        $content = $request->guest_email_content;
         if ($guests) {
             foreach ($guests as $guest) {
-                $this->notification($booking, $guest);
+                $this->notification($booking, $content, $guest);
             }
         }
 
         $owners = explode(',', $request->owners_recipients);
         if ($owners) {
             foreach ($owners as $owner) {
-                $this->notification($booking, $owner);
+                $this->notification($booking, $content, $owner);
             }
         }
-        $this->notification($recipients, $booking);
         return redirect(route('property-bookings.edit', [$booking->id]));
     }
 
-    private function notification($recipients, $booking)
+    private function notification($booking, $content, $email)
     {
-        Notification::route('mail', $request->guest_email)
-            ->notify(new DetailsPayment($booking));
+        Notification::route('mail', $email)
+            ->notify(new DetailsPayment($content, $booking));
     }
 
     public function show($id)

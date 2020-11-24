@@ -3,7 +3,6 @@
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
-    $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
@@ -14,8 +13,8 @@
 
     $id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-    $requestName = prepareFormRequestName($name, $parentName, $lang);    
-    $inputName = prepareFormInputName($name, $parentName, $lang);
+    $requestName = prepareFormRequestName($name, $parentName, '');    
+    $inputName = prepareFormInputName($name, $parentName, '');
 
     $disabledProp = ($disabled) ? 'disabled' : '';
     $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
@@ -50,45 +49,7 @@
             id="{{ $id }}"
             style="{{ $resizeStyle }}"
             {{ $disabledProp }}
-            >Hello 
-
-This is to let you know we made a wire transfer to your bank account in the amount of $ MXN pesos, this is a payment for the reservation detailed below:
-
-----------------------------------------
-TRAVEL DETAILS
-----------------------------------------
-PROPERTY:  
-CONFIRMATION:  0
-RESERVATION NAME:  
-DATES:   -  | 0 Night(s)
-RATE:  Avg. Nightly $0 USD | Total for the Stay $0 USD
-OCCUPANTS:  0 Adult | 0 Child
-PAYMENT BREAKDOWN: $ USD - $ USD (commission) = $ USD @  = $ MXN pesos
-
-If you have any questions, please let us know.
-
-Thank you.
-
-**********************************************************************
-		  
-Hola 
-
-El presente email es para informarle que le hemos hecho una transferencia bancaria por la cantidad de $ MXN pesos, este pago es por la reservación detallada abajo:
-
-----------------------------------------
-DETALLES DE RESERVACIÓN
-----------------------------------------
-PROPIEDAD:  
-CONFIRMACIÓN:  0
-NOMBRE DE LA RESERVACIÓN:  
-FECHAS:   -  | 0 Noche(s)
-TARIFA:  Prom. Noche $0 USD | Total de la Estancia $0 USD
-OCUPANTES:  0 Adultos | 0 Niños
-DESGLOSE DEL PAGO: $ USD - $ USD (comisión) = $ USD @  = $ MXN pesos
-
-Si tiene alguna pregunta no dude en comunicarse con nosotros.
-
-Gracias.
+            >Hello&#13;&#10;&#13;&#10;This is to let you know we made a wire transfer to your bank account in the amount of $ MXN pesos, this is a payment for the reservation detailed below:&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;TRAVEL DETAILS&#13;&#10;----------------------------------------&#13;&#10;&#13;&#10;PROPERTY: {{ $property->name }}&#13;&#10;RESERVATION NAME: {{ $booking->full_name }}&#13;&#10;DATES: {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Night(s)&#13;&#10;RATE: Avg. Nightly {{ $pricePerNight }} USD | Total for the Stay {{ $totalStay }} USD&#13;&#10;OCCUPANTS: {{ $adults }} Adults | {{ $kids }} Child&#13;&#10;PAYMENT BREAKDOWN: $ USD - $ USD (commission) = $ USD @  = $ MXN pesos&#13;&#10;&#13;&#10;If you have any questions, please let us know.&#13;&#10;&#13;&#10;Thank you.&#13;&#10;&#13;&#10;**********************************************************************&#13;&#10;&#13;&#10;Hola&#13;&#10;&#13;&#10;El presente email es para informarle que le hemos hecho una transferencia bancaria por la cantidad de $ MXN pesos, este pago es por la reservación detallada abajo:&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;DETALLES DE RESERVACIÓN&#13;&#10;----------------------------------------&#13;&#10;&#13;&#10;PROPIEDAD: {{ $property->name }}&#13;&#10;NOMBRE DE LA RESERVACIÓN: {{ $booking->full_name }}&#13;&#10;FECHAS: {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Noche(s)&#13;&#10;TARIFA: Prom. Noche {{ $pricePerNight }} USD | Total de la Estancia {{ $totalStay }} USD&#13;&#10;OCUPANTES: {{ $adults }} Adultos | {{ $kids }} Niños&#13;&#10;DESGLOSE DEL PAGO: $ USD - $ USD (comisión) = $ USD @  = $ MXN pesos&#13;&#10;&#13;&#10;Si tiene alguna pregunta no dude en comunicarse con nosotros.&#13;&#10;&#13;&#10;Gracias.
         </textarea>
 
         @if ($instruction)
