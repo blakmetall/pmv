@@ -23,12 +23,10 @@ export function initCalendarModalHandler() {
                 $('.modal-next').attr("data-year", data.next);
                 setTimeout(function(){
                     $('.modal-prev, .modal-next').on('click', function(e){
-                        console.log(e.currentTarget.attributes[2].value);
                         var dataNew = {
                             'id': e.currentTarget.attributes[1].value,
                             'year' : e.currentTarget.attributes[2].value,
                         };
-                        console.log(dataNew);
                         $.ajax({
                             url: url,
                             type: "GET",

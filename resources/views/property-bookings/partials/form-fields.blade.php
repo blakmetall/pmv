@@ -1,8 +1,7 @@
 @php
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
     $currentYear = (isset($_GET['year'])?$_GET['year']:'');
-    $lang = LanguageHelper::current();
-    $propertyTranslation = $property->translations()->where('language_id', $lang->id)->first();
+    $propertyTranslation = $property->translations()->where('language_id', LanguageHelper::current()->id)->first();
 @endphp
 <!-- fields form -->
 <div class="card">
@@ -273,23 +272,14 @@
             'value' => $row->kids,
         ])
         <!-- register_by -->
-        {{-- @include('components.form.select', [
+        @include('components.form.select-simple', [
             'group' => 'booking',
             'label' => __('Register By'),
             'name' => 'register_by',
             'value' => $row->register_by,
             'options' => $registers,
-            'optionValueRef' => 'register_by',
-            'optionLabelRef' => 'description',
-        ]) --}}
-        <select
-            name="register_by"
-            class="form-control">
-            <option value="">{{ __('Select') }}</option>
-            @foreach ($registers as $register)
-                <option value="{{ $register }}">{{ $register }}</option>
-            @endforeach
-        </select>
+            'optionValueRef' => 'name',
+        ])
         @if(!isRole('owner'))
             <!-- damage_deposit_id -->
             @include('components.form.select', [

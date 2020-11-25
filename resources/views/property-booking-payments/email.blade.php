@@ -1,6 +1,3 @@
-@php
-    $lang = LanguageHelper::current();
-@endphp
 @extends('layouts.horizontal-master')
 
 @section('heading-content')

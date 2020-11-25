@@ -3,7 +3,7 @@
     $label = isset($label) ? $label : '';
     $name = isset($name) ? $name : '';
     $parentName = isset($parentName) ? $parentName : '';
-    $lang = LanguageHelper::current();
+    $lang = isset($lang) ? $lang : '';
     $required = isset($required) ? $required : false;
     $disabled = isset($disabled) ? $disabled : false;
     $value = isset($value) ? $value : '';
@@ -21,7 +21,7 @@
     $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
     $hiddenStyle = ($hidden) ? 'display: none;' : '';
     
-    $property      = $booking->property->translations()->where('language_id', $lang->id)->first();
+    $property      = $booking->property->translations()->where('language_id', LanguageHelper::current()->id)->first();
     $adults        = ($booking->adults) ? $booking->adults : 0;
     $kids          = ($booking->kids) ? $booking->kids : 0;
     $pricePerNight = ($booking->price_per_night) ? priceFormat($booking->price_per_night) : 0;

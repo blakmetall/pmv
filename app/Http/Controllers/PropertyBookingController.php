@@ -308,9 +308,12 @@ class PropertyBookingController extends Controller
     {
         $booking = $this->repository->blueprint();
         $damageDeposits = $this->damagesDepositsRepository->all('');
-        $registers = [
-            'Admin',
-            'Owner'
+        $registers = [];
+        $registers[] = [
+            'name' => 'Owner',
+        ];
+        $registers[] = [
+            'name' => 'Admin',
         ];
 
         return view('property-bookings.create')
