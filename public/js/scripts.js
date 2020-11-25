@@ -121,7 +121,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initContactModalHandler.js */ "./resources/js/scripts/initContactModalHandler.js");
 /* harmony import */ var _scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./scripts/initCleaningServicesModalHandler.js */ "./resources/js/scripts/initCleaningServicesModalHandler.js");
 /* harmony import */ var _scripts_initNotificationsModalHandler_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./scripts/initNotificationsModalHandler.js */ "./resources/js/scripts/initNotificationsModalHandler.js");
-/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+/* harmony import */ var _scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./scripts/initCalendarModalHandler.js */ "./resources/js/scripts/initCalendarModalHandler.js");
+/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+
 
 
 
@@ -164,7 +166,8 @@ $(function () {
     Object(_scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__["initContactModalHandler"])();
     Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__["initCleaningServicesModalHandler"])();
     Object(_scripts_initNotificationsModalHandler_js__WEBPACK_IMPORTED_MODULE_14__["initNotificationsModalHandler"])();
-    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_15__["initTooltip"])();
+    Object(_scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_15__["initCalendarModalHandler"])();
+    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_16__["initTooltip"])();
     initCleaningMonthlyBatchEvents();
     initBalancesFinishedHandler();
     initBulkTransactionsHandler();
@@ -625,6 +628,68 @@ function initCalendar() {
       end: new Date(year, month, date + 8, 22, 0),
       status: true
     }]
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/initCalendarModalHandler.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/scripts/initCalendarModalHandler.js ***!
+  \**********************************************************/
+/*! exports provided: initCalendarModalHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initCalendarModalHandler", function() { return initCalendarModalHandler; });
+function initCalendarModalHandler() {
+  var modals = $(".app-modal-calendar");
+  modals.each(function () {
+    var id = $(this).attr("id");
+    var modal = $("#" + id);
+    var container = $(this).find(".app-modal-calendar-container");
+    var url = container.data("url");
+    modal.on("show.bs.modal", function (e) {
+      var data = {
+        'id': $(e.relatedTarget).data("source"),
+        'year': $(e.relatedTarget).data("year")
+      };
+      $.ajax({
+        url: url,
+        type: "GET",
+        data: {
+          "source": data
+        }
+      }).done(function (data) {
+        container.html(data.calendar);
+        $('.modal-prev').attr("data-year", data.prev);
+        $('.modal-current').html(data.current);
+        $('.modal-next').attr("data-year", data.next);
+        setTimeout(function () {
+          $('.modal-prev, .modal-next').on('click', function (e) {
+            console.log(e.currentTarget.attributes[2].value);
+            var dataNew = {
+              'id': e.currentTarget.attributes[1].value,
+              'year': e.currentTarget.attributes[2].value
+            };
+            console.log(dataNew);
+            $.ajax({
+              url: url,
+              type: "GET",
+              data: {
+                "source": dataNew
+              }
+            }).done(function (data) {
+              $('.modal-prev').attr("data-year", data.prev);
+              $('.modal-current').html(data.current);
+              $('.modal-next').attr("data-year", data.next);
+              container.html(data.calendar);
+            });
+          });
+        }, 500);
+      });
+    });
   });
 }
 

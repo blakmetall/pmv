@@ -1,3 +1,9 @@
+@php
+    $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
+    $currentYear = (isset($_GET['year'])?$_GET['year']:'');
+    $lang = LanguageHelper::current();
+    $propertyTranslation = $property->translations()->where('language_id', $lang->id)->first();
+@endphp
 <!-- fields form -->
 <div class="card">
     <div class="card-body">
@@ -110,10 +116,14 @@
 
 <!-- separator -->
 <div class="mb-4"></div>
+@include('property-bookings.partials.modal-calendar')
 
 <div class="card">
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('ARRIVAL') }}</span>
+        <a href="#" data-toggle="modal" data-source="{{ $property->id }}" data-year="{{ $currentYear }}" data-target="#{{$modalID }}" class="badge badge-primary ml-2 r-badge" style="padding: 5px; float: right">
+            <i class="nav-icon i-Calendar-4 font-weight-bold"></i> {{ __('VIEW AVAILABILITY') }}
+        </a>
 
         @if(!isRole('owner'))
             <!-- arrival_airline -->
@@ -178,6 +188,9 @@
 <div class="card">
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('DEPARTURE') }}</span>
+        <a href="#" data-toggle="modal" data-source="{{ $property->id }}" data-year="{{ $currentYear }}" data-target="#{{$modalID }}" class="badge badge-primary ml-2 r-badge" style="padding: 5px; float: right">
+            <i class="nav-icon i-Calendar-4 font-weight-bold"></i> {{ __('VIEW AVAILABILITY') }}
+        </a>
 
         @if(!isRole('owner'))
             <!-- departure_airline -->

@@ -13,6 +13,7 @@ import { initTransactionModalHandler } from "./scripts/initTransactionModalHandl
 import { initContactModalHandler } from "./scripts/initContactModalHandler.js";
 import { initCleaningServicesModalHandler } from "./scripts/initCleaningServicesModalHandler.js";
 import { initNotificationsModalHandler } from "./scripts/initNotificationsModalHandler.js";
+import { initCalendarModalHandler } from "./scripts/initCalendarModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 
 $(function() {
@@ -44,6 +45,7 @@ $(function() {
         initContactModalHandler();
         initCleaningServicesModalHandler();
         initNotificationsModalHandler();
+        initCalendarModalHandler();
         initTooltip();
 
         initCleaningMonthlyBatchEvents();
@@ -320,5 +322,5 @@ $(function() {
             var value = $(this).val();
             $(".bulk-transaction-post-date").val(value);
         });
-    }
+    }  
 });

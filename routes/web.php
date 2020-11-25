@@ -105,6 +105,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
                 Route::post('update/{id}', 'PropertiesController@update')->name('properties.update');
                 Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
+                Route::get('modal', 'PropertyBookingController@calendarModal')->name('property-calendar.calendar-modal');
 
                 // property internal routes
                 Route::group(['prefix' => '{property}'], function () {
