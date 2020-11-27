@@ -135,7 +135,6 @@ class PropertyBookingPaymentsController extends Controller
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
-        $request->session()->flash('success', __('Record updated successfully'));
 
         if ($request->email_notification) {
             return redirect(route('property-booking-payments.email', [$id]));

@@ -3,6 +3,64 @@
     $currentYear = (isset($_GET['year'])?$_GET['year']:'');
     $propertyTranslation = $property->translations()->where('language_id', LanguageHelper::current()->id)->first();
 @endphp
+@if($row->firstname)
+    @php
+        $total    = $row->total;
+        $payments = $row->payments;
+        $reduced  = 0;
+        foreach ($payments as $payment) {
+            $reduced += $payment->amount;
+        }
+        $balance = $total - $reduced;
+
+    @endphp
+    <div class="card">
+        <div class="card-body">
+            <span class="badge badge-primary r-badge mb-4">{{ __('BALANCE') }}</span>
+
+            <div class="form-group row" style="">
+                <label class="col-sm-2 col-form-label">
+                    {{ __('Insurance / Deposit') }}
+                </label>
+
+                <div class="col-sm-10">
+                    {{ priceFormat($row->subtotal_damage_deposit) }} USD
+                </div>
+            </div>
+            <div class="form-group row" style="">
+                <label class="col-sm-2 col-form-label">
+                    {{ __('Total Stay') }}
+                </label>
+
+                <div class="col-sm-10">
+                    {{ priceFormat($row->subtotal_nights) }} USD
+                </div>
+            </div>
+            <div class="form-group row" style="">
+                <label class="col-sm-2 col-form-label">
+                    {{ __('Total Booking') }}
+                </label>
+
+                <div class="col-sm-10">
+                    {{ priceFormat($row->total) }} USD
+                </div>
+            </div>
+            <div class="form-group row" style="">
+                <label class="col-sm-2 col-form-label">
+                    {{ __('Balance due') }}
+                </label>
+
+                <div class="col-sm-10" style="color:red">
+                    {{ priceFormat($balance) }} USD
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+<!-- separator -->
+<div class="mb-4"></div>
+
 <!-- fields form -->
 <div class="card">
     <div class="card-body">

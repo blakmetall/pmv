@@ -23,6 +23,10 @@
                 'url' => route('property-bookings.by-property', [$property->id]),
                 'label' => __('Bookings'),
             ],
+            [
+                'url' => route('property-booking-payments', [$booking->id]),
+                'label' => __('Payments'),
+            ],
         ],
     ])
 

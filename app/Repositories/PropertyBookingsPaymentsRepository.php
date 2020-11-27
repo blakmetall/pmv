@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
-use App\Models\{Property, PropertyBookingPayment, DamageDeposit, PropertyManagementTransaction};
+use App\Models\{Property, PropertyBookingPayment, DamageDeposit, PropertyBooking, PropertyManagementTransaction};
 use App\Validations\PropertyBookingsPaymentsValidations;
 
 class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepositoryInterface
@@ -55,11 +55,32 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
     {
         $is_new = !$id;
         $user = auth()->user();
+        $property = Property::find($request->property_id);
+        $booking = PropertyBooking::find($request->booking_id);
 
         if ($is_new) {
             $payment = $this->blueprint();
+            $edit = false;
         } else {
             $payment = $this->find($id);
+            $edit = true;
+        }
+
+        $total    = $booking->total;
+        $payments = $booking->payments;
+        $reduced  = 0;
+        foreach ($payments as $pay) {
+            if ($edit && $pay->id == $id) {
+                $payReduced = $request->amount;
+            } else {
+                $payReduced = $pay->amount;
+            }
+            $reduced += $payReduced;
+        }
+        $balance = $total - $reduced;
+        if ($balance < 0) {
+            $request->session()->flash('error', __('The current payment exceed the total balance due'));
+            return $payment;
         }
 
         $data = [
@@ -85,7 +106,6 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
         }
 
         if ($payment->save()) {
-            $property = Property::find($request->property_id);
             if ($property->management()->count()) {
                 foreach ($property->management as $pm) {
                     if (!$pm->is_finished) {
@@ -103,7 +123,7 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
                 }
             }
         }
-
+        $request->session()->flash('success', __('Record updated successfully'));
         return $payment;
     }
 

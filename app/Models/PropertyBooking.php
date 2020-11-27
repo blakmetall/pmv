@@ -96,7 +96,7 @@ class PropertyBooking extends Model
 
     public function payments()
     {
-        return $this->hasMany('App\Models\PropertyBookingPayment');
+        return $this->hasMany('App\Models\PropertyBookingPayment', 'booking_id');
     }
 
     public function damageDeposit()
