@@ -89,13 +89,13 @@ class PropertyManagementBalancesController extends Controller
             $msg .= 'Here are the details of your current balance<br>';
             $msg .= 'Date' . ': ' . getCurrentDateTime() . '<br>';
             $msg .= 'Property' . ': <strong>' . $data['property'] . '</strong><br>';
-            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . '</strong>';
+            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . ' USD</strong>';
             $msg .= '<hr>';
             $msg .= 'Hola ' . $getUser->profile->full_name . '<br><br>';
             $msg .= 'Aquí están los detalles de su balance actual<br>';
             $msg .= 'Fecha' . ': ' . getCurrentDateTime() . '<br>';
             $msg .= 'Propiedad' . ': <strong>' . $data['property'] . '</strong><br>';
-            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . '</strong><br><br>';
+            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . ' USD</strong><br><br>';
         }
 
         return $msg;

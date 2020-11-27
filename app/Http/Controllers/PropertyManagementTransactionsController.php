@@ -465,7 +465,7 @@ class PropertyManagementTransactionsController extends Controller
             $msg .= 'Period' . ': <strong>' . $period . '</strong><br>';
             $msg .= 'Operation' . ': <strong>' . $transaction->type->translate()->name . '</strong><br>';
             $msg .= 'Operation Type' . ': <strong>' . $operationType . '</strong><br>';
-            $msg .= 'Amount' . ': <strong>' . priceFormat($transaction->amount) . '</strong><br>';
+            $msg .= 'Amount' . ': <strong>' . priceFormat($transaction->amount) . ' USD</strong><br>';
             $msg .= '<hr>';
             $msg .= 'Hola ' . $getUser->profile->full_name . '<br><br>';
             $msg .= 'Transacción' . ': ' . $transaction->id . '<br>';
@@ -474,7 +474,7 @@ class PropertyManagementTransactionsController extends Controller
             $msg .= 'Periodo' . ': <strong>' . $period . '</strong><br>';
             $msg .= 'Operación' . ': <strong>' . $transaction->type->translate()->name . '</strong><br>';
             $msg .= 'Tipo de operación' . ': <strong>' . $operationType . '</strong><br>';
-            $msg .= 'Cantidad' . ': <strong>' . priceFormat($transaction->amount) . '</strong><br>';
+            $msg .= 'Cantidad' . ': <strong>' . priceFormat($transaction->amount) . ' USD</strong><br>';
         }
 
         return $msg;
