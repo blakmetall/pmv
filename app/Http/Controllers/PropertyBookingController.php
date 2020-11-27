@@ -191,7 +191,7 @@ class PropertyBookingController extends Controller
         $count_cols = 0;
         $cols_needed = 3;
 
-        $bookings       = $this->repository->all('', ['propertyID' => $property->id]);
+        $bookings       = $this->repository->all('', ['propertyID' => $property->id, 'filterByNotCancelled' => 1]);
         $bookingDaysArr = [];
         $firstDays      = [];
         $endDays        = [];
@@ -331,7 +331,7 @@ class PropertyBookingController extends Controller
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $prevYear = Carbon::create($currYear)->subYear()->year;
         $nextYear = Carbon::create($currYear)->addYear()->year;
-        $bookings = $this->repository->all('', ['propertyID' => $propertyID, 'currentYear' => $currYear]);
+        $bookings = $this->repository->all('', ['propertyID' => $propertyID, 'currentYear' => $currYear, 'filterByNotCancelled' => 1]);
         $count_cols = 0;
         $cols_needed = 3;
 

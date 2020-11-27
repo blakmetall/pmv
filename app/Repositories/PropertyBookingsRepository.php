@@ -28,10 +28,11 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
     {
         $lang = LanguageHelper::current();
 
-        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $hasPropertyID  = isset($config['propertyID']) ? $config['propertyID'] : '';
-        $filterByOwner  = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
-        $currentYear    = isset($config['currentYear']) ? $config['currentYear'] : '';
+        $shouldPaginate       = isset($config['paginate']) ? $config['paginate'] : true;
+        $hasPropertyID        = isset($config['propertyID']) ? $config['propertyID'] : '';
+        $filterByOwner        = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
+        $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
 
         if (isset($search['from_date'])) {
             $query = PropertyBooking::query();
@@ -67,6 +68,11 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         if ($currentYear) {
             $query->whereYear('arrival_date', $currentYear);
         }
+
+        if ($filterByNotCancelled) {
+            $query->where('is_cancelled', 0);
+        }
+
 
         if ($shouldPaginate) {
             $result = $query->paginate(9999);
