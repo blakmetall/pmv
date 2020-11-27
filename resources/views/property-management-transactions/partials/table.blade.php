@@ -52,6 +52,16 @@
         }
     }
 
+    $auditTransactions = 0;
+    $pendingTransactions = 0;
+    foreach($rows as $index => $row) {
+        if($row->auditedBy) {
+            $auditTransactions++;
+        }else{
+            $pendingTransactions++;
+        }
+    }
+
     if(count($rows) > 0){
         $totalCount = count($rows);
     }
@@ -65,7 +75,7 @@
     <div class="card">
         <div class="card-header card-header-print">
             <div>
-                {{ $label }} - ( {{ $totalCount }} )
+                {{ $label }} - ( {{ $auditTransactions }} )
             </div>
             @if($hasTransactions)
                 <a href="#" class="btn-print" data-table="table-print-transactions" data-title="{{ __('Transactions') }}">
@@ -164,7 +174,7 @@
                             ?>
 
                             @if(count($rows))
-                                @foreach($rows as $row)
+                                @foreach($rows as $rindex => $row)
 
                                     <?php
                                         if (!$row->auditedBy) { continue; }
@@ -183,7 +193,7 @@
                                     <tr>
                                         <!-- index -->
                                         <th scope="row">
-                                            {{ $index+1 }}
+                                            {{ $rindex+1 }}
                                         </th>
 
                                         <!-- id -->
@@ -433,7 +443,7 @@
     <div class="card">
         <div class="card-header card-header-print">
             <div>
-                {{ __('Pending Transactions') }} - ( {{ $totalCount }} )
+                {{ __('Pending Transactions') }} - ( {{ $pendingTransactions }} )
             </div>
             @if($hasPendingAudits)
                 <a href="#" class="btn-print" data-table="table-print-pending" data-title="{{ __('Pending Transactions') }}">
@@ -537,11 +547,12 @@
                                 $creditCount = 0;
                                 $chargeCount = 0;
                                 $totalPendingAudits = 0;
+                                $aindex = 1;
                             @endphp
 
                             @if(count($rows))
 
-                                @foreach($rows as $index => $row)
+                                @foreach($rows as $row)
 
                                     <?php
                                         if ($row->auditedBy) { continue; }
@@ -560,7 +571,7 @@
                                     <tr>
                                         <!-- index -->
                                         <th scope="row">
-                                            {{ $index+1 }}
+                                            {{ $aindex++ }}
                                         </th>
 
                                         <!-- id -->

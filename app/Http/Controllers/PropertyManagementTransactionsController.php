@@ -43,6 +43,7 @@ class PropertyManagementTransactionsController extends Controller
 
     public function index(Request $request, PropertyManagement $pm)
     {
+        Session::flash('backUrl', $request->fullUrl());
         if (!$request->year && !$request->month) { // prepare year and month for first call
             $urlParams = [
                 'year' => date('Y', strtotime('now')),
@@ -59,6 +60,7 @@ class PropertyManagementTransactionsController extends Controller
 
             return redirect($redirectUrl);
         }
+
 
         $search = trim($request->s);
 
@@ -144,6 +146,9 @@ class PropertyManagementTransactionsController extends Controller
 
     public function create(PropertyManagement $pm)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $transaction = $this->repository->blueprint();
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
@@ -157,10 +162,13 @@ class PropertyManagementTransactionsController extends Controller
 
     public function store(Request $request, PropertyManagement $pm)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
-        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
+        return ($url = Session::get('backUrl')) ? redirect($url) : redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
     public function show(PropertyManagement $pm, PropertyManagementTransaction $transaction)
@@ -178,6 +186,9 @@ class PropertyManagementTransactionsController extends Controller
 
     public function edit(PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
@@ -205,6 +216,9 @@ class PropertyManagementTransactionsController extends Controller
 
     public function update(Request $request, PropertyManagement $pm, $id)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
 
@@ -213,11 +227,16 @@ class PropertyManagementTransactionsController extends Controller
             return redirect()->back();
         }
 
-        return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
+        return ($url = Session::get('backUrl')) ? redirect($url) : redirect(route('property-management-transactions', [$pm->id]));
+
+        // return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
     }
 
     public function destroy(Request $request, PropertyManagement $pm, $id)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
