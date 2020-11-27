@@ -164,6 +164,12 @@
                         {{ $_profile->lastname }}
                     </div>
 
+                    @if(isRole('super') || isRole('admin'))
+                        <a class="dropdown-item" href="{{ route('login') }}">
+                            {{ __('Login as') }}
+                        </a>
+                    @endif
+
                     <a class="dropdown-item" href="{{ route('account') }}">
                         {{ __('Account') }}
                     </a>
