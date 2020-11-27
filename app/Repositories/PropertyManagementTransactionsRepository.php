@@ -42,9 +42,10 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $orderByDirectionFilter = isset($config['orderDirection']) ? $config['orderDirection'] : '';
 
         if ($search) {
+            $search = str_replace(',', '', $search);
             $query = PropertyManagementTransaction::where(function ($q) use ($search) {
                 $q->where('id', $search);
-                $q->orWhere('amount', 'like', '%' . $search . '%');
+                $q->orWhere('amount', $search);
                 $q->orWhere('post_date', $search);
                 $q->orWhere('period_start_date', $search);
                 $q->orWhere('period_end_date', $search);
