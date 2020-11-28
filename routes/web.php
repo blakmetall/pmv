@@ -455,4 +455,8 @@ Route::group(['middleware' => ['web']], function () {
 
     // public routes here
     Route::get('', '_Public\PagesController@home')->name('public.home');
+    Route::get('make-payment/{booking?}', '_Public\PagesController@searchBooking')->name('public.search-booking');
+    Route::post('find-booking', '_Public\PagesController@findBooking')->name('public.find-booking');
+    Route::get('results-bookings/{booking}', '_Public\PagesController@resultsBookings')->name('public.results-bookings');
+    Route::get('thank-you', '_Public\PagesController@thankYou')->name('public.thank-you');
 });

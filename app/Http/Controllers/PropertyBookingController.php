@@ -467,9 +467,13 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');
-        $registers = [
-            'Admin',
-            'Owner'
+
+        $registers = [];
+        $registers[] = [
+            'name' => 'Owner',
+        ];
+        $registers[] = [
+            'name' => 'Admin',
         ];
 
         return view('property-bookings.show')
@@ -492,9 +496,13 @@ class PropertyBookingController extends Controller
                 }
             }
         }
-        $registers = [
-            'Admin',
-            'Owner'
+
+        $registers = [];
+        $registers[] = [
+            'name' => 'Owner',
+        ];
+        $registers[] = [
+            'name' => 'Admin',
         ];
 
         return view('property-bookings.edit')

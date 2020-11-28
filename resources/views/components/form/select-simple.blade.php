@@ -45,11 +45,11 @@
             @endif
             @foreach($options as $option)
                 @php
-                    $selected = old($requestName, $value) == $option ? 'selected' : '';
+                    $selected = old($requestName, $value) == $option['name'] ? 'selected' : '';
                 @endphp
 
-                <option value="{{ $option }}" {{ $selected }}>
-                    {{ $option }}
+                <option value="{{ $option['name'] }}" {{ $selected }}>
+                    {{ $option['name'] }}
                 </option>
             @endforeach
 
