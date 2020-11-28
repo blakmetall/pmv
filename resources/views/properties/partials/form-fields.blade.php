@@ -208,6 +208,17 @@
             'default' => $row->is_online,
         ])
 
+        @if(isRole('super'))
+            <!-- is_special -->
+            @include('components.form.checkbox', [
+                'group' => 'property',
+                'label' => __('Special'),
+                'name' => 'is_special',
+                'value' => 1,
+                'default' => $row->is_special,
+            ])
+        @endif
+
         <!-- amenities -->
         @include('components.form.fast-select', [
             'group' => 'property',

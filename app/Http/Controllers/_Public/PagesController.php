@@ -60,4 +60,9 @@ class PagesController extends Controller
             ->with('mid', $mid)
             ->with('paid', $paid);
     }
+
+    public function thankYou()
+    {
+        return view('public.pages.search-booking');
+    }
 }

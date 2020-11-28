@@ -23,6 +23,7 @@ class Property extends Model
         'is_featured',
         'is_enabled',
         'is_online',
+        'is_special',
         'rental_commission',
         'maid_fee',
         'cleaning_staff_ids',

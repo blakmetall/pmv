@@ -115,6 +115,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             'is_featured' => 0,
             'is_enabled' => 0,
             'is_online' => 0,
+            'is_special' => 0,
             'has_parking' => 0,
         ];
         $requestData = array_merge($checkboxesConfig, $request->all());

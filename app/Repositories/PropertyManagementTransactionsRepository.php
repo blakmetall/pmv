@@ -57,6 +57,15 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $query = PropertyManagementTransaction::query();
             if ($hasPropertyManagementID) {
                 $query->where('property_management_id', $config['property_management_id']);
+            } else {
+                //FILTRO PARA ELIMINAR LA PROPIEDAD DE PMV DE LOS BALANCES GENERALES
+                $query->whereHas('propertyManagement', function ($q) {
+                    $q->whereHas('property', function ($q2) {
+                        $q2->where('properties.is_special', '!=', 1);
+                        $q2->orWhereNull('properties.is_special');
+                    });
+                });
+                //TERMINA FILTRO PARA ELIMINAR LA PROPIEDAD DE PMV DE LOS BALANCES GENERALES
             }
 
             if ($shouldFilterByPendingAudits) {
