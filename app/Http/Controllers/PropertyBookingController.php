@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Models\PropertyBooking;
 use App\Models\Property;
@@ -208,6 +209,12 @@ class PropertyBookingController extends Controller
         $calendar .= '<td align="left" valign="top">';
         $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
 
+        if (LanguageHelper::getLocale() == 'en') {
+            setlocale(LC_ALL, 'en_EN');
+        } else {
+            setlocale(LC_ALL, 'es_ES');
+        }
+
         for ($i = 0; $i < 12; $i++) {
             $count_cols++;
             $cm = mktime(0, 0, 0, 1 + $i, 1, $currYear); //get curr month time string
@@ -216,18 +223,26 @@ class PropertyBookingController extends Controller
             $first_weekday = date('w', $first_weekday_unix);
             $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
             $last_weekday = date('w', $last_weekday_unix);
+            $monthLabel = Carbon::parse($cm);
+            if (LanguageHelper::getLocale() == 'en') {
+                setlocale(LC_ALL, 'en_EN');
+                $month = $monthLabel->format('F');
+            } else {
+                setlocale(LC_ALL, 'es_MX', 'es', 'ES', 'es_MX.utf8');
+                $month = $monthLabel->formatLocalized('%B');
+            }
 
             $calendar .= '<tr>';
-            $calendar .= '<th colspan="7" align="center" valign="top">' . date('F', $cm) . ' ' . $currYear . '</th>';
+            $calendar .= '<th colspan="7" align="center" valign="top">' .  ucfirst($month) . ' ' . $currYear . '</th>';
             $calendar .= '</tr>';
             $calendar .= '<tr>
-                <th>Su</th>
-                <th>Mo</th>
-                <th>Tu</th>
-                <th>We</th>
-                <th>Th</th>
-                <th>Fr</th>
-                <th>Sa</th>
+                <th>' . __('Su') . '</th>
+                <th>' . __('Mo') . '</th>
+                <th>' . __('Tu') . '</th>
+                <th>' . __('We') . '</th>
+                <th>' . __('Th') . '</th>
+                <th>' . __('Fr') . '</th>
+                <th>' . __('Sa') . '</th>
             </tr>';
             $calendar .= '<tr>';
             if ($first_weekday != 0) {
@@ -359,9 +374,17 @@ class PropertyBookingController extends Controller
             $first_weekday = date('w', $first_weekday_unix);
             $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
             $last_weekday = date('w', $last_weekday_unix);
+            $monthLabel = Carbon::parse($cm);
+            if (LanguageHelper::getLocale() == 'en') {
+                setlocale(LC_ALL, 'en_EN');
+                $month = $monthLabel->format('F');
+            } else {
+                setlocale(LC_ALL, 'es_MX', 'es', 'ES', 'es_MX.utf8');
+                $month = $monthLabel->formatLocalized('%B');
+            }
 
             $calendar .= '<tr>';
-            $calendar .= '<th colspan="7" align="center" valign="top">' . date('F', $cm) . ' ' . $currYear . '</th>';
+            $calendar .= '<th colspan="7" align="center" valign="top">' . ucfirst($month) . ' ' . $currYear . '</th>';
             $calendar .= '</tr>';
             $calendar .= '<tr>
                 <th>Su</th>

@@ -102,7 +102,8 @@
                     </table>
                     @if(!$paid)
                         <div style="font-size: 12px;">
-                            If the information above is correct please select the amount to pay and use the button below to make your reservation payment through PayPal, you will be taken to a secured page to process your credit card transaction. If you wish to pay by phone please call our office toll free number; we take Visa, MasterCard and American Express cards:<br><br>
+                            {{ __('Information Payment') }}
+                            <br><br>
                             <ul>
                                 <li>Puerto Vallarta: 1-800-881-8176</li>
                                 <li>Mazatlán: 1-888-688-1577</li>
@@ -132,9 +133,9 @@
                                         <option value="{{ $total }}">{{ priceFormat($total) }} USD ({{ __('FULL PAYMENT') }})</option>
                                         <option value="{{ $mid }}">{{ priceFormat($mid) }} USD (50%)</option>
                                     </select>
-                                    <label class="control-label element-invisible" for="edit-amount">{{ __('Select amount') }}<span class="form-required" title="This field is required.">*</span></label>
+                                    <label class="control-label element-invisible" for="edit-amount">{{ __('Select Amount') }}<span class="form-required" title="This field is required.">*</span></label>
                                 </div>
-                                <button type="submit" id="edit-next" name="op" value="Make Payment" class="btn btn-primary m-1">{{ __('Make Payment') }}</button>
+                                <button type="submit" id="edit-next" name="op" value="{{ __('Make Payment') }}" class="btn btn-primary m-1">{{ __('Make Payment') }}</button>
                                 <a href="{{ route('public.search-booking') }}" class="btn btn-primary m-1" role="button">
                                     {{ __('Find Another Reservation') }}
                                 </a>

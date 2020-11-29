@@ -44,9 +44,9 @@ class DetailsBooking extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject(__('Details of Booking') . ': ' . $this->booking->id)
-            ->greeting(__('Hello'))
-            ->line(new HtmlString(__('Property') . ': ' . '<strong>'));
+            ->subject('Details of Booking' . ': ' . $this->booking->id)
+            ->greeting('Hello')
+            ->line(new HtmlString('Property' . ': ' . '<strong>'));
     }
 
     /**
