@@ -55,6 +55,18 @@
             'value' => $row->emergency_phone
         ])
 
+        <!-- contact_type -->
+        @include('components.form.select', [
+            'group' => 'contractor',
+            'label' => __('Contact Type'),
+            'name' => 'contact_type',
+            'required' => true,
+            'value' => $row->contact_type,
+            'options' => $types,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'label',
+        ])
+
         <!-- address -->
         @include('components.form.textarea', [
             'group' => 'contact',

@@ -121,18 +121,27 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $requestData = array_merge($data, $request->all());
 
         $booking->fill($requestData);
-
         if ($booking->save()) {
+
+            $contacts = $booking->property->contacts;
+            foreach ($contacts as $contact) {
+                if ($contact->contact_type == 'property-manager') {
+                    $concierge = $contact->email;
+                }
+            }
+
             if ($request->guest) {
                 $this->email($booking, $booking->email);
             }
 
             if ($request->office) {
-                $this->email($booking, $booking->email);
+                $this->email($booking, $booking->property->office->email);
             }
 
-            if ($request->concierge) {
-                $this->email($booking, $booking->email);
+            if ($concierge) {
+                if ($request->concierge) {
+                    $this->email($booking, $concierge);
+                }
             }
 
             if ($request->home_owner) {

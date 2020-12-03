@@ -45,7 +45,7 @@ class DetailsPayment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject('Details of Booking' . ': ' . $this->booking->id)
+            ->subject('Details of Payment of Booking' . ': ' . $this->booking->id)
             ->greeting('Hello')
             ->line(new HtmlString($this->content));
     }
