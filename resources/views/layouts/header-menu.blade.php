@@ -1,8 +1,8 @@
 @php
-    $_current_lang = LanguageHelper::current();
-    $_current_role = RoleHelper::current();
-    $_available_roles = RoleHelper::available();
-    $_profile = auth()->user()->profile;
+$_current_lang = LanguageHelper::current();
+$_current_role = RoleHelper::current();
+$_available_roles = RoleHelper::available();
+$_profile = auth()->user()->profile;
 @endphp
 
 <div class="main-header">
@@ -22,30 +22,34 @@
 
     <div class="header-part-right">
 
-        @if(!isRole('owner') && $_current_role->isAllowed('dashboard', 'general-search'))
+        @if (!isRole('owner') && $_current_role->isAllowed('dashboard', 'general-search'))
             <div class="dropdown d-none d-md-block pr-3">
                 <div class="form-group">
                     <form action="{{ route('dashboard.general-search') }}" method="GET">
                         <div class="d-flex align-items-center app-top-search">
                             @php
-                                $topSearchValue = isset($_GET['topSearch']) ? $_GET['topSearch'] : '';     
+                            $topSearchValue = isset($_GET['topSearch']) ? $_GET['topSearch'] : '';
                             @endphp
-                            <input name="topSearch" value="{{ old('topSearch', $topSearchValue) }}" type="text" class="form-control form-control-sm mr-3">
+                            <input name="topSearch" value="{{ old('topSearch', $topSearchValue) }}" type="text"
+                                class="form-control form-control-sm mr-3">
                             <select name="topFilter" class="form-control form-control-sm mr-3">
                                 <option value="">{{ __('Select') }}</option>
 
                                 @php
-                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties' ? 'selected' : '';
+                                $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties' ? 'selected'
+                                : '';
                                 @endphp
                                 <option value="properties" {{ $selected }}>{{ __('Properties') }}</option>
 
                                 @php
-                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'bookings' ? 'selected' : '';
+                                $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'bookings' ? 'selected' :
+                                '';
                                 @endphp
                                 <option value="bookings" {{ $selected }}>{{ __('Bookings') }}</option>
 
                                 @php
-                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'transactions' ? 'selected' : '';
+                                $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'transactions' ?
+                                'selected' : '';
                                 @endphp
                                 <option value="transactions" {{ $selected }}>{{ __('Transactions') }}</option>
                             </select>
@@ -55,10 +59,10 @@
                         </div>
                     </form>
                 </div>
-            </div> 
+            </div>
         @endif
 
-        @if(!isProduction())
+        @if (!isProduction())
             <!-- Notification -->
             <div class="dropdown">
                 <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown"
@@ -98,10 +102,10 @@
         <!-- Language switch -->
         <div class="dropdown">
             <i class="i-Globe header-icon" role="button" id="languageSwitcherBtn" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false"></i>
+                aria-haspopup="true" aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageSwitcherBtn">
                 <div class="dropdown-header">
-                    <i class="i-Globe mr-1"></i> 
+                    <i class="i-Globe mr-1"></i>
                     {{ __('LANGUAGE') }}
                 </div>
 
@@ -113,7 +117,7 @@
                     @endif
                 </a>
                 <a class="dropdown-item" href="{{ route('language.update', ['en']) }}">
-                    @if($_current_lang->id === 1)
+                    @if ($_current_lang->id === 1)
                         <b>{{ __('English') }}</b>
                     @else
                         {{ __('English') }}
@@ -126,17 +130,17 @@
         <!-- Role switch -->
         <div class="dropdown">
             <i class="i-Two-Windows header-icon" role="button" id="roleSwitcherButton" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false"></i>
+                aria-haspopup="true" aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="roleSwitcherButton">
                 <div class="dropdown-header">
-                    <i class="i-Eye-Visible mr-1"></i> 
+                    <i class="i-Eye-Visible mr-1"></i>
                     {{ __('VIEW AS') }}
                 </div>
-                
+
                 @foreach ($_available_roles as $role)
-                    <a class="dropdown-item" href="{{ route('roles.set-active', [$role->role_id])}}">
+                    <a class="dropdown-item" href="{{ route('roles.set-active', [$role->role_id]) }}">
                         @if ($_current_role->id == $role->role_id)
-                            <b>{{  $role->name }}</b>
+                            <b>{{ $role->name }}</b>
                         @else
                             {{ $role->name }}
                         @endif
@@ -154,8 +158,8 @@
         <div class="dropdown">
             <div class="user col align-self-end">
 
-                <i class="i-Administrator header-icon" role="button" 
-                    id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                <i class="i-Administrator header-icon" role="button" id="userDropdown" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"></i>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <div class="dropdown-header text-uppercase">
@@ -164,7 +168,7 @@
                         {{ $_profile->lastname }}
                     </div>
 
-                    @if(isRole('super') || isRole('admin'))
+                    @if (isRole('super') || isRole('admin'))
                         <a class="dropdown-item" href="{{ route('login') }}">
                             {{ __('Login as') }}
                         </a>
@@ -175,12 +179,12 @@
                     </a>
 
                     <a class="dropdown-item" href="{{ route('profile') }}">
-                        {{  __('Profile') }}
+                        {{ __('Profile') }}
                     </a>
 
                     <!-- logout -->
                     <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         {{ __('Sign Out') }}
                     </a> <!-- test -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -190,7 +194,7 @@
                     <hr class="mt-1 mb-1">
 
                     <a class="dropdown-item app-header-return-to-site-dropdown" href="{{ route('public.home') }}">
-                        {{  __('Return to public site') }}
+                        {{ __('Return to public site') }}
                     </a>
 
                 </div>

@@ -453,10 +453,15 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
-    // public routes here
-    Route::get('', '_Public\PagesController@home')->name('public.home');
-    Route::get('make-payment/{booking?}', '_Public\PagesController@searchBooking')->name('public.search-booking');
-    Route::post('find-booking', '_Public\PagesController@findBooking')->name('public.find-booking');
-    Route::get('results-bookings/{booking}', '_Public\PagesController@resultsBookings')->name('public.results-bookings');
-    Route::get('thank-you', '_Public\PagesController@thankYou')->name('public.thank-you');
+    //********* PUBLIC ROUTES *********//
+    // Home
+    Route::get('', '_Public\HomeController@index')->name('public.home');
+    
+    // Vacation Services
+    Route::get('vacation-services', '_Public\VacationServicesController@index')->name('public.vacation-services');
+
+    Route::get('make-payment/{booking?}', '_Public\HomeController@searchBooking')->name('public.search-booking');
+    Route::post('find-booking', '_Public\HomeController@findBooking')->name('public.find-booking');
+    Route::get('results-bookings/{booking}', '_Public\HomeController@resultsBookings')->name('public.results-bookings');
+    Route::get('thank-you', '_Public\HomeController@thankYou')->name('public.thank-you');
 });

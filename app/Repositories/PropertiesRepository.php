@@ -25,10 +25,12 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
-        $shouldFilterByEnabled  = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
-        $shouldFilterByUserId   = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
-        $shouldFilterByOffline  = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
-        $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
+        $shouldFilterByEnabled   = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
+        $shouldFilterByUserId    = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldFilterByOffline   = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
+        $shouldFilterByDisabled  = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
+        $shouldFilterByFeatured  = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
+        $shouldFilterByNews      = isset($config['filterByNews']) ? $config['filterByNews'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -48,10 +50,19 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
         }
 
-        $query
-            ->where('language_id', $lang->id)
-            ->with('property')
-            ->orderBy('name', 'asc');
+        
+        if($shouldFilterByNews){
+            $query
+                ->where('language_id', $lang->id)
+                ->with('property')
+                ->join('properties', 'properties.id', '=', 'property_id')
+                ->orderBy('properties.created_at', 'desc');
+        }else{
+            $query
+                ->where('language_id', $lang->id)
+                ->with('property')
+                ->orderBy('name', 'asc');
+        }
 
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function ($q) {
@@ -66,6 +77,12 @@ class PropertiesRepository implements PropertiesRepositoryInterface
                     $q->where('properties_has_users.user_id', $config['filterByUserId']);
                 });
             })->where('language_id', $lang->id);
+        }
+
+        if ($shouldFilterByFeatured) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->where('properties.is_featured', 1);
+            });
         }
 
         if ($shouldFilterByEnabled) {

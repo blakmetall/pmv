@@ -55,3 +55,47 @@ mix.combine(
     ],
     "public/assets/js/common-bundle-script.js"
 );
+
+// public styles mix
+mix.combine(
+    [
+        "public/assets/public/css/all.css",
+        "public/assets/public/css/system.base.css",
+        "public/assets/public/css/jquery.ui.core.min.css",
+        "public/assets/public/css/jquery.ui.theme.min.css",
+        "public/assets/public/css/jquery.ui.datepicker.min.css",
+        "public/assets/public/css/field.css",
+        "public/assets/public/css/node.css",
+        "public/assets/public/css/views.css",
+        "public/assets/public/css/back_to_top.css",
+        "public/assets/public/css/ctools.css",
+        "public/assets/public/css/panels.css",
+        "public/assets/public/css/locale.css",
+        "public/assets/public/css/onecol.css",
+        "public/assets/public/css/threecol_33_34_33_stacked.css",
+        "public/assets/public/css/bookings.css",
+        "public/assets/public/css/bootstrap.css",
+        "public/assets/public/css/drupal-bootstrap-flatly.css",
+        "public/assets/public/css/style.css",
+        "public/assets/public/css/clic.css",
+    ],
+    "public/assets/public/css/public.css"
+);
+
+
+// vendor scripts mix
+mix.combine(
+    [
+        "public/assets/public/js/jquery.min.js",
+        "public/assets/public/js/jquery.once.js",
+        "public/assets/public/js/jquery.ui.core.min.js",
+        "public/assets/public/js/jquery.ui.effect.min.js",
+        "public/assets/public/js/jquery.ui.datepicker.min.js",
+        "public/assets/public/js/locale.datepicker.js",
+        "public/assets/public/js/bootstrap.js",
+        "public/assets/public/js/widgets.js",
+        "public/assets/public/js/scripts.js",
+        "public/assets/public/js/clic.js",
+    ],
+    "public/assets/public/js/public.js"
+);

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Property;
+
 if (!function_exists('prepareFormInputName')) {
     function prepareFormInputName($name, $parentName, $lang)
     {
@@ -304,6 +306,47 @@ if (!function_exists('arrayFlatten')) {
                 $result = array_merge($result, array($key => $value));
             }
         }
+        return $result;
+    }
+}
+
+if (!function_exists('getLowerRate')) {
+    function getLowerRate($id)
+    {
+        $property = Property::find($id);
+        $rates = [];
+        foreach($property->rates as $rate){
+            $rates[] = $rate->nightly;
+        }
+        
+        $result = min($rates);
+
+        return $result;
+    }
+}
+
+if (!function_exists('getSubString')) {
+    function getSubString($text, $length = 50){
+        $text = trim($text);
+        if(strlen($text) > $length){
+            $text = substr($text, 0, $length);
+            $text = substr($text, 0, strrpos($text, ' '));
+            $text .= '...';
+        }
+        return $text;
+    }
+}
+
+if (!function_exists('getFeaturedImage')) {
+    function getFeaturedImage($id){
+        $property = Property::find($id);
+
+        if(count($property->images) > 0){
+            $result = $property->images[0]->file_url;
+        }else{
+            $result = null;
+        }
+
         return $result;
     }
 }

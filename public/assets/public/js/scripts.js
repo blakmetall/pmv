@@ -1,0 +1,211 @@
+// JavaScript Document
+(function($){
+	
+	$(document).ready(function(){
+		
+		$('.paypal-dialog').click(function(e) {
+		  e.preventDefault();
+		  $('#paypalDialog').modal({
+			  backdrop: 'static',
+			  keyboard: false
+			});
+		});	
+		
+		$('.btn-loading').on('click', function() {
+			var $this = $(this);
+		  $this.button('loading');
+			setTimeout(function() {
+			   $this.button('reset');
+		   }, 8000);
+		});		
+		
+		$('#toggle-search').click(function(evt){
+			evt.preventDefault();		
+			$('#block-avail-search-avail-search-block').toggle('slow', function(){
+				
+				var hide_txt = 'Hide Search Form';
+				var edit_txt = 'Edit Search';				
+				
+				if ($('#toggle-search').hasClass('show-search')) {
+					 $('#toggle-search').removeClass('show-search').addClass('hide-search');
+					 $('#toggle-search').text(hide_txt);
+					 $('#toggle-search').attr('title',hide_txt);
+				}
+				else {
+					 $('#toggle-search').removeClass('hide-search').addClass('show-search');
+					 $('#toggle-search').text(edit_txt);
+					 $('#toggle-search').attr('title',edit_txt);
+				}
+				/*
+				if ($('#toggle-search').hasClass('hide-search')) {
+					 $('#toggle-search').removeClass('hide-search').addClass('show-search');
+					 $('#toggle-search').text(edit_txt);
+					 $('#toggle-search').attr('title',edit_txt);
+				}
+				else {
+					 $('#toggle-search').removeClass('show-search').addClass('hide-search');
+					 $('#toggle-search').text(hide_txt);
+					 $('#toggle-search').attr('title',hide_txt);
+				}
+				*/				
+			});
+		});		
+		
+		$('#edit-ptype').change(function(){
+		  $('#ptype-alt').val($('#edit-ptype option:selected').text());
+		});
+		
+		$('#edit-city').change(function(){
+		  $('#city-alt').val($('#edit-city option:selected').text());
+		});	
+		
+		$('#edit-location').change(function(){
+		  $('#location-alt').val($('#edit-location option:selected').text());
+		});	
+		
+		$('#edit-building').change(function(){
+		  $('#building-alt').val($('#edit-building option:selected').text());
+		});	
+		
+		/* execute before any options have been set */
+		if($('#edit-city').val() == 1){
+			$('#edit-location').removeClass('hide').addClass('show');
+		}else{
+			$('#edit-location').removeClass('show').addClass('hide');	
+		}
+		
+		/* execute when an option has been selected */
+		$('#edit-city').change(function(){
+			if($(this).val() == 1){
+				if($('#edit-location').hasClass('hide')){
+					$('#edit-location').removeClass('hide').addClass('show');
+				}
+			}else{
+				$('#edit-location').removeClass('show').addClass('hide');	
+			}
+		});
+		
+		$(function(){
+			
+			var type = $('#edit-ptype').val();
+			var type_txt = $('#edit-ptype option:selected').text();
+			var city = $('#edit-city').val();
+			var city_txt = $('#edit-city option:selected').text();
+			var location = $('#location').val();
+			var location_txt = $('#edit-location option:selected').text();			
+			var bedrooms = $('#edit-bedrooms').val();
+			var arrival = $('#edit-arrival').val();
+			var departure = $('#edit-departure').val();
+			//var nights = $('#nights').val();
+			var adults = $('#edit-adults').val();
+			var children = $('#edit-children').val();
+			
+			txt = '';
+			
+			if(city){
+			
+				txt = city_txt + ' / ';
+				
+			}
+			
+			if(location){
+				txt += location_txt + ' / ';
+			}
+			
+			if(type){
+				txt += type_txt + ' / ';
+			}
+			
+			if((arrival) && (departure)){			
+			
+				txt += 'Travel dates' + ': ' + arrival + ' - ' + departure + ' / ';
+				
+			}
+			
+			if(bedrooms){
+				txt += 'Bedrooms' + ': ' + bedrooms + ' / ';
+			}
+			
+			if(adults){
+				
+				txt += 'Adults' + ': ' + adults + ' / ';
+
+				if(children){
+					child = children;
+				}else{
+					child = 0;
+				}
+							
+				txt += 'Children' + ': ' + child;
+				
+			}
+			
+			if(txt){
+			
+				$('.search-params-breadcrumbs').html(txt);
+				
+			}
+			
+		});
+		
+	});
+
+
+	/*
+
+	var viewport = get_viewport();
+	$(window).resize(function(){
+		viewport = get_viewport();
+	});
+
+	function get_viewport(){
+		var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		return {w: w, h: h};
+	}
+
+	function prepare_home_search() {
+		var tr1 = $("#avail-search-form table tr:eq(0)");
+		var tr2 = $("#avail-search-form table tr:eq(1)");
+
+		// replace inputs
+		tr1.find('td:eq(0)').append(tr2.find('td:eq(0) > div').clone());
+		tr1.find('td:eq(1)').append(tr2.find('td:eq(1) > div').clone());
+		tr1.find('td:eq(2)').append(tr2.find('td:eq(2) > div').clone());
+		tr1.find('td:eq(3)').append(tr2.find('td:eq(3) > div').clone());
+
+		// remove old values
+		tr2.find('td:eq(3)').remove();
+		tr2.find('td:eq(2)').remove();
+		tr2.find('td:eq(1)').remove();
+		tr2.find('td:eq(0)').remove();
+
+		// re-initialize datepicker
+		var cloned_datepicker = tr1.find('td:eq(2) > div:eq(1)');
+		var input = cloned_datepicker.find('input');
+		input.removeClass('hasDatepicker');
+		console.log(input);
+
+		input.datepicker({
+			dateFormat: 'D dd/M/yy',
+			altFormat: 'yy-mm-dd',
+			altField: '#departure-alt',
+			changeMonth: true,
+			changeYear: true,
+			numberOfMonths: 2,
+			minDate: '+2d',
+			onClose: function( selectedDate ) {
+				$('#edit-arrival').datepicker('option', 'maxDate', selectedDate );
+			}
+		});
+	}
+
+	// handlers
+	setTimeout(function(){
+		prepare_home_search();
+	}, 500);
+
+	*/
+
+
+})(jQuery)
