@@ -1,5 +1,5 @@
 @php
-    $lang = LanguageHelper::current();
+$lang = LanguageHelper::current();
 @endphp
 <div class="mb-5"></div>
 <div class="card">
@@ -25,12 +25,12 @@
                 </thead>
                 <tbody>
 
-                    @if(count($rows))
-                        @foreach($rows as $i => $row)
+                    @if (count($rows))
+                        @foreach ($rows as $i => $row)
                             <tr>
                                 <!-- index -->
                                 <th scope="row">
-                                    {{ $i+1 }}
+                                    {{ $i + 1 }}
                                 </th>
 
                                 <!-- id -->
@@ -46,21 +46,19 @@
 
                                 <!-- properties -->
                                 <td>
-                                    @foreach($row->properties as $property)
-                                        @php
-                                            $propertyTranslation = $property->translations()->where('language_id', $lang->id)->first();
-                                        @endphp 
-                                        <a href="{{ route('properties.show', $property->id) }}">{{ $propertyTranslation->name }}</a>
+                                    @foreach ($row->properties as $property)
+                                        <a
+                                            href="{{ route('properties.show', $property->id) }}">{{ $property->translate()->name }}</a>
                                     @endforeach
                                 </td>
 
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
-                                        'params' => [$row->id],
-                                        'showRoute' => 'buildings.show',
-                                        'editRoute' => 'buildings.edit',
-                                        'deleteRoute' => 'buildings.destroy',
+                                    'params' => [$row->id],
+                                    'showRoute' => 'buildings.show',
+                                    'editRoute' => 'buildings.edit',
+                                    'deleteRoute' => 'buildings.destroy',
                                     ])
                                 </td>
 

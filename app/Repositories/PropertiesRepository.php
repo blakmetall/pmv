@@ -155,9 +155,15 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         }
 
         $property->en->fill($request->en);
+        if(!$request->en['slug']){
+            $property->en->slug = generateSlug($request->en['name']);
+        }
         $property->en->save();
 
         $property->es->fill($request->es);
+        if(!$request->es['slug']){
+            $property->es->slug = generateSlug($request->es['name']);
+        }
         $property->es->save();
 
         // amenities assignation

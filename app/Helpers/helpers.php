@@ -318,9 +318,35 @@ if (!function_exists('getLowerRate')) {
         foreach($property->rates as $rate){
             $rates[] = $rate->nightly;
         }
-        
-        $result = min($rates);
 
+        if(count($rates) > 0){
+            $result = min($rates);
+        }else{
+            $result = 0;
+        }
+        
+
+        return $result;
+    }
+}
+
+if (!function_exists('getZone')) {
+    function getZone($id)
+    {
+        $property = Property::find($id);
+        $result = $property->zone->translate()->name;
+        $result = generateSlug($result);
+        
+        return $result;
+    }
+}
+
+if (!function_exists('generateSlug')) {
+    function generateSlug($string)
+    {
+        $result = strtolower($string);
+        $result = str_replace(' ', '-', $result);
+        
         return $result;
     }
 }

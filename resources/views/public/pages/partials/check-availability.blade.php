@@ -1,4 +1,5 @@
-<form action="{{ $searchUrl }}" method="post" id="avail-search-form" accept-charset="UTF-8">
+<form action="{{ route('public.check-availability') }}" method="post" id="avail-search-form" accept-charset="UTF-8">
+    @csrf
     <div>
         <table>
             <tr>

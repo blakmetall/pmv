@@ -26,7 +26,7 @@ class VacationServicesController extends Controller
 
     public function searchBooking()
     {
-        return view('public.pages.search-booking');
+        return view('public.pages.vacation-services.make-payment');
     }
 
     public function findBooking(Request $request)
@@ -34,9 +34,9 @@ class VacationServicesController extends Controller
         $booking = PropertyBooking::find($request->booking_id);
         if (!$booking) {
             $request->session()->flash('error', __('Not Bookings Found'));
-            return view('public.pages.search-booking');
+            return redirect(route('public.vacation-services.make-payment'));
         }
-        return redirect(route('public.results-bookings', [$booking->id]));
+        return redirect(route('public.vacation-services.make-payment-verify', [$booking->id]));
     }
 
     public function resultsBookings(Request $request, PropertyBooking $booking)
@@ -44,8 +44,10 @@ class VacationServicesController extends Controller
         $total    = $booking->total;
         $payments = $booking->payments;
         $reduced  = 0;
-        foreach ($payments as $pay) {
-            $reduced += $pay->amount;
+        if($payments){
+            foreach ($payments as $pay) {
+                $reduced += $pay->amount;
+            }
         }
         $balance = $total - $reduced;
         $secure = 45;
@@ -59,7 +61,7 @@ class VacationServicesController extends Controller
         $property = $booking->property->translations()->where('language_id', LanguageHelper::current()->id)->first();
         $total = $booking->total + $secure;
         $mid = $total / 2;
-        return view('public.pages.results-booking')
+        return view('public.pages.vacation-services.make-payment-verify')
             ->with('booking', $booking)
             ->with('property', $property)
             ->with('total', $total)
@@ -69,6 +71,21 @@ class VacationServicesController extends Controller
 
     public function thankYou()
     {
-        return view('public.pages.search-booking');
+        return view('public.pages.vacation-services.make-payment');
+    }
+
+    public function paymentMethods()
+    {
+        return view('public.pages.vacation-services.payment-methods');
+    }
+
+    public function rentalAgreement()
+    {
+        return view('public.pages.vacation-services.rental-agreement');
+    }
+
+    public function damageInsurance()
+    {
+        return view('public.pages.vacation-services.accidental-rental-damage-insurance');
     }
 }

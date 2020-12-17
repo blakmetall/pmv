@@ -2,10 +2,6 @@
 
 @section('main-content')
 
-    @php
-    $searchUrl = '/';
-    @endphp
-
     <div class="content-top-container">
         <section class="content-top container">
             <div class="region region-content-top">

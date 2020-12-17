@@ -12,6 +12,11 @@
     <!-- app name -->
     <title>{{ config('app.name', 'Palmera Vacations Admin') }}</title>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+        rel="stylesheet">
+
     {{-- public css --}}
     <link rel="stylesheet" href="{{ asset('assets/public/css/public.css') }}">
 
