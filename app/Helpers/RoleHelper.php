@@ -508,6 +508,24 @@ class RoleHelper
                     'administrative-assistant',
                 ]),
             ],
+            'pages' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+            ],
             'settings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
@@ -532,6 +550,10 @@ class RoleHelper
                     'admin',
                 ]),
                 'cities' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'offices' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
                 ]),

@@ -1,26 +1,26 @@
 @php
-    $group = isset($group) ? $group : strtotime('now');
-    $label = isset($label) ? $label : '';
-    $name = isset($name) ? $name : '';
-    $parentName = isset($parentName) ? $parentName : '';
-    $lang = isset($lang) ? $lang : '';
-    $required = isset($required) ? $required : false;
-    $disabled = isset($disabled) ? $disabled : false;
-    $value = isset($value) ? $value : '';
-    $rows = isset($rows) && is_numeric($rows) ? (int) $rows : 3;
-    $resize = isset($resize) ? $resize : false;
-    $hidden = isset($hidden) ? (bool) $hidden : false;
-    $instruction = isset($instruction) ? $instruction : false;
+$group = isset($group) ? $group : strtotime('now');
+$label = isset($label) ? $label : '';
+$name = isset($name) ? $name : '';
+$parentName = isset($parentName) ? $parentName : '';
+$lang = isset($lang) ? $lang : '';
+$required = isset($required) ? $required : false;
+$disabled = isset($disabled) ? $disabled : false;
+$value = isset($value) ? $value : '';
+$rows = isset($rows) && is_numeric($rows) ? (int) $rows : 3;
+$resize = isset($resize) ? $resize : false;
+$hidden = isset($hidden) ? (bool) $hidden : false;
+$instruction = isset($instruction) ? $instruction : false;
 
-    $id = 'field_' . $group . '_' . $name . '_' . $lang;
+$id = 'field_' . $group . '_' . $name . '_' . $lang;
 
-    $requestName = prepareFormRequestName($name, $parentName, $lang);    
-    $inputName = prepareFormInputName($name, $parentName, $lang);
+$requestName = prepareFormRequestName($name, $parentName, $lang);
+$inputName = prepareFormInputName($name, $parentName, $lang);
 
-    $disabledProp = ($disabled) ? 'disabled' : '';
-    $resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
-    $hiddenStyle = ($hidden) ? 'display: none;' : '';
-    
+$disabledProp = ($disabled) ? 'disabled' : '';
+$resizeStyle = ($resize) ? 'resize: vertical;' : 'resize: none;';
+$hiddenStyle = ($hidden) ? 'display: none;' : '';
+
 @endphp
 
 
@@ -34,14 +34,8 @@
     </label>
 
     <div class="col-sm-10">
-        <textarea 
-            name="{{ $inputName }}"
-            class="form-control" 
-            rows="{{ $rows }}"
-            id="{{ $id }}"
-            style="{{ $resizeStyle }}"
-            {{ $disabledProp }}
-            >{{ old($requestName, $value) }}</textarea>
+        <textarea name="{{ $inputName }}" class="form-control ckeditor" rows="{{ $rows }}" id="{{ $id }}"
+            style="{{ $resizeStyle }}" {{ $disabledProp }}>{{ old($requestName, $value) }}</textarea>
 
         @if ($instruction)
             <small>{{ $instruction }}</small>

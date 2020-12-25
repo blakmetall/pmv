@@ -29,7 +29,6 @@ function prepare_home_search() {
     var cloned_datepicker = tr1.find('td:eq(2) > div:eq(1)');
     var input = cloned_datepicker.find('input');
     input.removeClass('hasDatepicker');
-    console.log(input);
 
     input.datepicker({
         dateFormat: 'D dd/M/yy',

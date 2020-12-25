@@ -291,6 +291,39 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('', 'ReportingController@index')->name('reporting');
         });
 
+        // pages
+        Route::group(['prefix' => 'pages', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'PagesController@index')->name('pages');
+            Route::get('create', 'PagesController@create')->name('pages.create');
+            Route::post('store', 'PagesController@store')->name('pages.store');
+            Route::get('show/{page}', 'PagesController@show')->name('pages.show');
+            Route::get('edit/{page}', 'PagesController@edit')->name('pages.edit');
+            Route::post('update/{id}', 'PagesController@update')->name('pages.update');
+            Route::get('destroy/{id}', 'PagesController@destroy')->name('pages.destroy');
+        });
+
+        // payment methods
+        Route::group(['prefix' => 'payment-methods', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'PaymentMethodsController@index')->name('payment-methods');
+            Route::get('create', 'PaymentMethodsController@create')->name('payment-methods.create');
+            Route::post('store', 'PaymentMethodsController@store')->name('payment-methods.store');
+            Route::get('show/{paymentMethod}', 'PaymentMethodsController@show')->name('payment-methods.show');
+            Route::get('edit/{paymentMethod}', 'PaymentMethodsController@edit')->name('payment-methods.edit');
+            Route::post('update/{id}', 'PaymentMethodsController@update')->name('payment-methods.update');
+            Route::get('destroy/{id}', 'PaymentMethodsController@destroy')->name('payment-methods.destroy');
+        });
+
+        // testimonials
+        Route::group(['prefix' => 'testimonials', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'TestimonialsController@index')->name('testimonials');
+            Route::get('create', 'TestimonialsController@create')->name('testimonials.create');
+            Route::post('store', 'TestimonialsController@store')->name('testimonials.store');
+            Route::get('show/{testimonial}', 'TestimonialsController@show')->name('testimonials.show');
+            Route::get('edit/{testimonial}', 'TestimonialsController@edit')->name('testimonials.edit');
+            Route::post('update/{id}', 'TestimonialsController@update')->name('testimonials.update');
+            Route::get('destroy/{id}', 'TestimonialsController@destroy')->name('testimonials.destroy');
+        });
+
         // settings
         Route::group(['prefix' => 'settings'], function () {
             Route::get('', 'SettingsController@index')->name('settings');
@@ -356,6 +389,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
                 Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
                 Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
+            });
+
+            // offices
+            Route::group(['prefix' => 'offices', 'middleware' => 'role-permission:settings,offices'], function () {
+                Route::get('', 'OfficesController@index')->name('offices');
+                Route::get('create', 'OfficesController@create')->name('offices.create');
+                Route::post('store', 'OfficesController@store')->name('offices.store');
+                Route::get('show/{office}', 'OfficesController@show')->name('offices.show');
+                Route::get('edit/{office}', 'OfficesController@edit')->name('offices.edit');
+                Route::post('update/{id}', 'OfficesController@update')->name('offices.update');
+                Route::get('destroy/{id}', 'OfficesController@destroy')->name('offices.destroy');
             });
 
             // zones
@@ -455,7 +499,7 @@ Route::group(['middleware' => ['web']], function () {
 
     //********* PUBLIC ROUTES *********//
     // General
-    Route::get('{zone}/{slug}', '_Public\PropertyController@propertyDetail')->name('public.property-detail');
+    Route::get('property/{zone}/{slug}', '_Public\PropertyController@propertyDetail')->name('public.property-detail');
     Route::post('check-availability', '_Public\PropertyController@checkAvailability')->name('public.check-availability');
     Route::get('availability-results', '_Public\PropertyController@availabilityResults')->name('public.availability-results');
 
@@ -485,6 +529,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('nuevo-vallarta-history', '_Public\AboutController@nuevoVallarta')->name('public.about.nuevo-vallarta-history');
     Route::get('mazatlan-history', '_Public\AboutController@mazatlanVallarta')->name('public.about.mazatlan-history');
     Route::get('testimonials', '_Public\AboutController@testimonials')->name('public.about.testimonials');
+    Route::get('testimonial/{id}', '_Public\AboutController@testimonialDetail')->name('public.about.testimonial');
     Route::get('privacy-policy', '_Public\AboutController@privacyPolicy')->name('public.about.privacy-policy');
     Route::get('terms-of-use', '_Public\AboutController@termsOfUse')->name('public.about.terms-of-use');
     Route::get('real-estate-business-directory', '_Public\AboutController@realEstateBusinessDirectory')->name('public.about.real-estate-business-directory');

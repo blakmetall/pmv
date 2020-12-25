@@ -331,7 +331,7 @@
             'value' => $row->interior_number,
         ])
 
-        <!-- address -->
+        <!-- zip -->
         @include('components.form.input', [
             'group' => 'property',
             'label' => __('Zip'),

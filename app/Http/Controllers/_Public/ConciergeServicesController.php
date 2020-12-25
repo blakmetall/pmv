@@ -5,27 +5,31 @@ namespace App\Http\Controllers\_Public;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\PropertyBooking;
-use App\Repositories\PropertiesRepositoryInterface;
+use App\Models\Page;
+use App\Repositories\PagesRepositoryInterface;
 
 class ConciergeServicesController extends Controller
 {
 
-    private $propertiesRepository;
+    private $repository;
 
     public function __construct(
-        PropertiesRepositoryInterface $propertiesRepository
+        PagesRepositoryInterface $repository
     ) {
-        $this->propertiesRepository = $propertiesRepository;
+        $this->repository = $repository;
     }
 
     public function index(Request $request)
     {
-        return view('public.pages.concierge-services.index');
+        $id = getPage('concierge-services');
+        $page = $this->repository->find($id);
+        return view('public.pages.concierge-services.index')->with('page', $page);
     }
 
     public function helpfulInformation()
     {
-        return view('public.pages.concierge-services.helpful-information');
+        $id = getPage('helpful-information');
+        $page = $this->repository->find($id);
+        return view('public.pages.concierge-services.helpful-information')->with('page', $page);
     }
 }

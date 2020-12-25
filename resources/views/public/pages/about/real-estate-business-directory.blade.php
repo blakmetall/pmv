@@ -5,7 +5,7 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = __('REAL ESTATE BUSINESS DIRECTORY');
+    $title = $page->translate()->title;
     @endphp
 
     @include('public.pages.partials.main-content-start')

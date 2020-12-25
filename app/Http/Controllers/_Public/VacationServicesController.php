@@ -5,23 +5,30 @@ namespace App\Http\Controllers\_Public;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\PropertyBooking;
-use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\PagesRepositoryInterface;
+use App\Repositories\PaymentMethodsRepositoryInterface;
 
 class VacationServicesController extends Controller
 {
 
-    private $propertiesRepository;
+    private $repository;
+    private $paymentMethodsRepository;
 
     public function __construct(
-        PropertiesRepositoryInterface $propertiesRepository
+        PagesRepositoryInterface $repository,
+        PaymentMethodsRepositoryInterface $paymentMethodsRepository
     ) {
-        $this->propertiesRepository = $propertiesRepository;
+        $this->repository = $repository;
+        $this->paymentMethodsRepository = $paymentMethodsRepository;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        return view('public.pages.vacation-services.index');
+        $id = getPage('vacation-services');
+        $page = $this->repository->find($id);
+        return view('public.pages.vacation-services.index')->with('page', $page);
     }
 
     public function searchBooking()
@@ -76,16 +83,26 @@ class VacationServicesController extends Controller
 
     public function paymentMethods()
     {
-        return view('public.pages.vacation-services.payment-methods');
+        $id = getPage('payment-methods');
+        $page = $this->repository->find($id);
+        $config = ['paginate' => false];
+        $paymentMethods = $this->paymentMethodsRepository->all('', $config);
+        return view('public.pages.vacation-services.payment-methods')
+            ->with('page', $page)
+            ->with('paymentMethods', $paymentMethods);
     }
 
     public function rentalAgreement()
     {
-        return view('public.pages.vacation-services.rental-agreement');
+        $id = getPage('rental-agreement');
+        $page = $this->repository->find($id);
+        return view('public.pages.vacation-services.rental-agreement')->with('page', $page);
     }
 
     public function damageInsurance()
     {
-        return view('public.pages.vacation-services.accidental-rental-damage-insurance');
+        $id = getPage('accidental-rental-damage-insurance');
+        $page = $this->repository->find($id);
+        return view('public.pages.vacation-services.accidental-rental-damage-insurance')->with('page', $page);
     }
 }

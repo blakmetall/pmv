@@ -31,7 +31,7 @@
 
 </head>
 
-<body class="html front not-logged-in no-sidebars page-home i18n-en">
+<body class="html front not-logged-in no-sidebars i18n-en">
     @include('public.pages.partials.header')
 
 

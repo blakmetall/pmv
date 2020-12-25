@@ -13,7 +13,9 @@
     <title>{{ config('app.name', 'Palmera Vacations Admin') }}</title>
 
     <!-- fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
 
     <!-- css before theme -->
     @yield('before-css')
@@ -101,9 +103,11 @@
     <script src="{{ asset('assets/js/sidebar-horizontal.script.js') }}"></script>
 
     {{-- scripts for goole map --}}
-    {{-- Desactivado por mientras por que da error por el dominio --}}
+    {{-- Desactivado por mientras por que da error por el dominio
+    --}}
     @if (isProduction())
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer>
+        </script>
     @endif
 
     {{-- app js --}}

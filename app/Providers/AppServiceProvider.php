@@ -203,5 +203,20 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\PropertyBookingsPaymentsRepositoryInterface::class,
             \App\Repositories\PropertyBookingsPaymentsRepository::class
         );
+
+        $this->app->bind(
+            \App\Repositories\PagesRepositoryInterface::class,
+            \App\Repositories\PagesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\PaymentMethodsRepositoryInterface::class,
+            \App\Repositories\PaymentMethodsRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\TestimonialsRepositoryInterface::class,
+            \App\Repositories\TestimonialsRepository::class
+        );
     }
 }

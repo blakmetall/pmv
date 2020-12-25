@@ -245,6 +245,7 @@
     "Occupants": "Ocupantes",
     "October": "Octubre",
     "Office": "Oficina",
+    "Offices": "Oficinas",
     "Oh no": "Ay no",
     "Online": "En línea",
     "Once a week": "Semanalmente",
@@ -267,6 +268,9 @@
     "Period End Date": "Fecha de finalización del periodo",
     "Period Start Date": "Fecha de inicio del periodo",
     "Phone": "Teléfono",
+    "Phone Local": "Teléfono Local",
+    "Phone US & CAN": "Teléfono US & CAN",
+    "Phone Free": "Llame gratis",
     "Phones": "Teléfonos",
     "Please click the button below to verify your email address.": "Por favor, haga clic en el botón de abajo para verificar su dirección de correo electrónico.",
     "Please verify all information is accurate before submitting the form, if after the submission you need to make changes you will have to do this on the Pending Audits page.": "Verifique que toda la información sea precisa antes de enviar el formulario, si después del envío necesita hacer cambios, deberá hacerlo en la página de Auditorías pendientes.",
@@ -434,5 +438,7 @@
     "$45.00 USD per property plan (Covers up to: $1,500.00 USD)": "$45.00 USD por plan de propiedad (Cubre hasta: $1,500.00 USD)",
 
 
-    "READ MORE": "READ MORE"
+    "READ MORE": "LEER MÁS",
+    "Learn More": "Saber Más",
+    "Leave Message": "Enviar Mensaje"
 }

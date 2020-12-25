@@ -25,7 +25,6 @@ $label = isset($label) ? $label : '';
         'label' => __('Slug'),
         'name' => 'slug',
         'lang' => $lang,
-        'required' => true,
         'value' => $row->{$lang}->slug
         ])
 

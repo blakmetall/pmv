@@ -180,6 +180,37 @@ $(function() {
             }
         });
     });
+    
+    // SHOW/HIDE Inputs from template
+    $("select[name='template']").change(function () {
+        let currentTemplate = $(this).val();
+        $('.dynamic-fields').hide();
+        selectTemplate(currentTemplate);
+    });
+
+    selectTemplate($("select[name='template']").val());
+
+    function selectTemplate(currentTemplate){
+        switch (currentTemplate) {
+            case 'Payment Methods':
+                $('#fields-payment-methods').show();
+                break;
+            case 'Accidental Rental Damage Insurance (ARDI)':
+                $('#fields-accidental').show();
+                break;
+            case 'Nuevo Vallarta':
+                $('#fields-nuevo-vallarta').show();
+                break;
+            case 'Testimonials':
+                $('#fields-testimonials').show();
+                break;
+            case 'Real Estate Business Directory':
+                $('#fields-real-estate').show();
+                break;
+            default:
+                break;
+        }
+    }
 
     /////////////////////////////
     /////////////////////////////
@@ -322,5 +353,5 @@ $(function() {
             var value = $(this).val();
             $(".bulk-transaction-post-date").val(value);
         });
-    }  
+    } 
 });

@@ -5,7 +5,7 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = __('CONTACT US');
+    $title = $page->translate()->title;
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -15,12 +15,11 @@
             <div>
                 <div class="panel-pane pane-custom pane-1">
                     <div class="pane-content">
-                        <p>Do you have a comment or question about our services? Please contact the appropriated office at
-                            the numbers listed below or send us a message using the contact form on this page.</p>
+                        {!! $page->translate()->description !!}
                         <h2><i class="fa fa-comments"></i> Get in touch</h2>
                     </div>
                 </div>
-                <div class="panel-separator"></div>
+                <br>
                 <div class="panel-pane pane-contact">
                     <div class="pane-content">
                         <form class="user-info-from-cookie contact-form user-info-from-cookie-processed" action="/contact"
@@ -88,36 +87,28 @@
                         </form>
                     </div>
                 </div>
-                <div class="panel-separator"></div>
                 <div class="panel-pane pane-custom pane-2">
                     <div class="pane-content">
                         <div class="hr-tagline"><span>Our Locations</span></div>
                     </div>
                 </div>
-                <div class="panel-separator"></div>
                 <div class="panel-pane pane-custom pane-3">
                     <div class="pane-content">
                         <div class="row">
-                            <div class="col-xs-6">
-                                <p>Rodolfo Gómez 118<br>
-                                    Puerto Vallarta, Jalisco, México 48380<br>
-                                    <span>Local:</span> +52 (322) 223-0101<br>
-                                    <span>US &amp; CAN:</span> (323) 250-7721<br>
-                                    <span>Call toll free:</span> 1-800-881-8176<br>
-                                    <span>E-mail:</span> <a href="mailto:vallarta@palmeravacations.com"
-                                        title="Contact our Puerto Vallarta office">vallarta@palmeravacations.com</a>
-                                </p>
-                            </div>
-                            <div class="col-xs-6">
-                                <p>Ave. Playa Gaviotas 409 Local 27<br>
-                                    Mazatlán, Sinaloa, México 82110<br>
-                                    <span>Local:</span> +52 (669) 913-5188<br>
-                                    <span>US &amp; CAN:</span> (714) 988-7903<br>
-                                    <span>Call toll free:</span> 1-888-688-1577<br>
-                                    <span>E-mail:</span> <a href="mailto:mazatlan@palmeravacations.com"
-                                        title="Contact our Mazatlán office">mazatlan@palmeravacations.com</a>
-                                </p>
-                            </div>
+                            @foreach ($offices as $office)
+                                <div class="col-xs-6">
+                                    {!! $office->address !!}<br />
+                                    <span>{{ __('Phone Local') }}:</span> {{ $office->phone }}<br>
+                                    @if ($office->phone_us_can)
+                                        <span>{{ __('Phone US & CAN') }}:</span> {{ $office->phone_us_can }}<br>
+                                    @endif
+                                    @if ($office->phone_free)
+                                        <span>{{ __('Phone Free') }}:</span> {{ $office->phone_free }}<br>
+                                    @endif
+                                    <span>{{ __('Email') }}:</span> <a
+                                        href="mailto:{{ $office->email }}">{{ $office->email }}</a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -125,18 +116,14 @@
                 <div class="panel-pane pane-custom pane-4">
                     <div class="pane-content">
                         <div class="row">
-                            <div class="col-xs-6">
-                                <h4>Location Map</h4>
-                                <iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0"
-                                    marginwidth="0"
-                                    src="http://maps.google.com/maps/ms?msa=0&amp;msid=215828438168196305246.0004ab57c7a8020adb702&amp;ie=UTF8&amp;t=m&amp;ll=20.600731,-105.239239&amp;spn=0.016068,0.030813&amp;z=14&amp;output=embed"></iframe>
-                            </div>
-                            <div class="col-xs-6">
-                                <h4>Location Map</h4>
-                                <iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0"
-                                    marginwidth="0"
-                                    src="http://maps.google.com/maps/ms?msa=0&amp;msid=215828438168196305246.0004bb128d73e82c8369b&amp;ie=UTF8&amp;t=m&amp;ll=23.243081,-106.45031&amp;spn=0.031546,0.061626&amp;z=13&amp;output=embed"></iframe>
-                            </div>
+                            @foreach ($offices as $office)
+                                <div class="col-xs-6">
+                                    <h4>Location Map</h4>
+                                    <iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0"
+                                        marginwidth="0"
+                                        src="http://maps.google.com/maps/ms?msa=0&amp;msid=215828438168196305246.0004ab57c7a8020adb702&amp;ie=UTF8&amp;t=m&amp;ll={{ $office->gmaps_lat }},{{ $office->gmaps_lon }}&amp;spn=0.016068,0.030813&amp;z=14&amp;output=embed"></iframe>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

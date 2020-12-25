@@ -237,6 +237,7 @@
     "Occupants": "Occupants",
     "October": "October",
     "Office": "Office",
+    "Offices": "Offices",
     "Online": "Online",
     "Once a week": "Once a week",
     "Once a month": "Once a month",
@@ -258,6 +259,9 @@
     "Period Start Date": "Period Start Date",
     "Period End Date": "Period End Date",
     "Phone": "Phone",
+    "Phone Local": "Local",
+    "Phone US & CAN": "US & CAN",
+    "Phone Free": "Call toll free",
     "Phones": "Phones",
     "Please verify all information is accurate before submitting the form, if after the submission you need to make changes you will have to do this on the Pending Audits page.": "Please verify all information is accurate before submitting the form, if after the submission you need to make changes you will have to do this on the Pending Audits page.",
     "Post Date": "Post Date",
@@ -409,5 +413,7 @@
     "$45.00 USD per property plan (Covers up to: $1,500.00 USD)": "$45.00 USD per property plan (Covers up to: $1,500.00 USD)",
 
 
-    "READ MORE": "READ MORE"
+    "READ MORE": "READ MORE",
+    "Learn More": "Learn More",
+    "Leave Message": "Leave Message"
 }
