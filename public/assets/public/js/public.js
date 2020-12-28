@@ -2566,41 +2566,23 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			});
 		});		
 		
-		$('#edit-ptype').change(function(){
-		  $('#ptype-alt').val($('#edit-ptype option:selected').text());
-		});
-		
-		$('#edit-city').change(function(){
-		  $('#city-alt').val($('#edit-city option:selected').text());
-		});	
-		
-		$('#edit-location').change(function(){
-		  $('#location-alt').val($('#edit-location option:selected').text());
-		});	
-		
-		$('#edit-building').change(function(){
-		  $('#building-alt').val($('#edit-building option:selected').text());
-		});	
-		
-		/* execute before any options have been set */
-		if($('#edit-city').val() == 1){
-			$('#edit-location').removeClass('hide').addClass('show');
-		}else{
-			$('#edit-location').removeClass('show').addClass('hide');	
-		}
-		
-		/* execute when an option has been selected */
-		$('#edit-city').change(function(){
-			if($(this).val() == 1){
-				if($('#edit-location').hasClass('hide')){
-					$('#edit-location').removeClass('hide').addClass('show');
-				}
-			}else{
-				$('#edit-location').removeClass('show').addClass('hide');	
-			}
-		});
 		
 		$(function(){
+
+			$("select[name='city']").change(function () {
+				$("select[name='zone']").empty();
+				$("select[name='zone']").append("<option value=''>"+$(this).data('txt-select')+"...</option>");
+				$.getJSON("/system/settings/zones/list/" + $(this).val(), function (data) {
+					if(data.data.length > 0){
+						$("select[name='zone']").show();
+						$.each(data.data, function (key, value) {
+							$("select[name='zone']").append("<option value=" + value.zone_id + ">" + value.name + "</option>");
+						});
+					}else{
+						$("select[name='zone']").hide();
+					}
+				});
+			});
 			
 			var type = $('#edit-ptype').val();
 			var type_txt = $('#edit-ptype option:selected').text();

@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
+use App\Models\PropertyTypeTranslation;
 
 if (!function_exists('prepareFormInputName')) {
     function prepareFormInputName($name, $parentName, $lang)
@@ -331,12 +333,28 @@ if (!function_exists('getLowerRate')) {
     }
 }
 
+if (!function_exists('getCity')) {
+    function getCity($id)
+    {
+        $city = City::find($id);
+        if($city){
+            $result = $city->name;
+        }else{
+            $result = '';
+        }
+        
+        return $result;
+    }
+}
+
 if (!function_exists('getZone')) {
-    function getZone($id)
+    function getZone($id, $slug = true)
     {
         $property = Property::find($id);
         $result = $property->zone->translate()->name;
-        $result = generateSlug($result);
+        if($slug){
+            $result = generateSlug($result);
+        }
         
         return $result;
     }
@@ -572,5 +590,26 @@ if (!function_exists('getOffices')) {
         $offices = Office::all();
 
         return $offices;
+    }
+}
+
+// Functions for form check availability public
+if (!function_exists('getPropertyTypes')) {
+    function getPropertyTypes(){
+        $lang = LanguageHelper::current();
+        $result = PropertyTypeTranslation::query()
+                ->where('language_id', $lang->id)
+                ->with('propertyType')
+                ->orderBy('name', 'asc')->get();
+        return $result;
+    }
+}
+
+if (!function_exists('getCities')) {
+    function getCities()
+    {
+        $result = City::all();
+
+        return $result;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AppModel;
+use App\Helpers\LanguageHelper;
 
 class Zone extends Model {
 
@@ -33,5 +34,14 @@ class Zone extends Model {
 
     public function properties() {
         return $this->hasMany('App\Models\Property');
+    }
+
+    public function getLabel() {
+        $lang = LanguageHelper::current();
+        $zone = $this->translations()->where('language_id', $lang->id)->first();
+        if($zone) {
+            return $zone->name;
+        }
+        return '';
     }
 }

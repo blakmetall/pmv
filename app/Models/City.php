@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AppModel;
+use App\Helpers\LanguageHelper;
 
 class City extends Model {
 
