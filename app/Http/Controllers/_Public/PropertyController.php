@@ -7,17 +7,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\PropertyTranslation;
 use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\ZonesRepositoryInterface;
 use Carbon\Carbon;
 
 class PropertyController extends Controller
 {
 
     private $propertiesRepository;
+    private $zonesRepository;
 
     public function __construct(
-        PropertiesRepositoryInterface $propertiesRepository
+        PropertiesRepositoryInterface $propertiesRepository,
+        ZonesRepositoryInterface $zonesRepository
     ) {
         $this->propertiesRepository = $propertiesRepository;
+        $this->zonesRepository = $zonesRepository;
     }
 
     public function availabilityResults(Request $request)
@@ -80,5 +84,12 @@ class PropertyController extends Controller
     {
         return view('public.pages.properties.property-detail')
             ->with('property', $property);
+    }
+
+    public function zones($city)
+    {
+        $zones = $this->zonesRepository->all('', [], $city);
+
+        return $zones;
     }
 }

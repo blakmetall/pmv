@@ -1,6 +1,12 @@
 @php
 $propertyTypes = getPropertyTypes();
 $cities = getCities();
+$getPropertyType = (isset($_GET['property_type'])) ? $_GET['property_type'] : '';
+$getCity = (isset($_GET['city'])) ? $_GET['city'] : '';
+$getZone = (isset($_GET['zone'])) ? $_GET['zone'] : '';
+$getAdults = (isset($_GET['adults'])) ? $_GET['adults'] : '';
+$getChilds = (isset($_GET['children'])) ? $_GET['children'] : '';
+$getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
 @endphp
 <form action="{{ route('public.availability-results') }}" id="avail-search-form" accept-charset="UTF-8">
     <div>
@@ -12,7 +18,10 @@ $cities = getCities();
                         <select class="form-control form-select" name="property_type">
                             <option value="">Any Type...</option>
                             @foreach ($propertyTypes as $propertyType)
-                                <option value="{{ $propertyType->property_type_id }}">{{ $propertyType->name }}</option>
+                                <option value="{{ $propertyType->property_type_id }}"
+                                    {{ $propertyType->property_type_id == $getPropertyType ? 'selected' : '' }}>
+                                    {{ $propertyType->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -24,7 +33,9 @@ $cities = getCities();
                             data-txt-select="{{ __('Any Location') }}">
                             <option value="">City</option>
                             @foreach ($cities as $city)
-                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                <option value="{{ $city->id }}" {{ $city->id == $getCity ? 'selected' : '' }}>
+                                    {{ $city->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -48,7 +59,7 @@ $cities = getCities();
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-male"></i></span>
                             <input placeholder="Adults" title="Adults" class="form-control form-text" type="text"
-                                name="adults" value="" size="60" maxlength="128" />
+                                name="adults" size="60" maxlength="128" value="{{ $getAdults }}" />
                         </div>
                     </div>
                 </td>
@@ -59,7 +70,7 @@ $cities = getCities();
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-bed"></i></span>
                             <input placeholder="Bedrooms" title="Bedrooms" class="form-control form-text" type="text"
-                                name="bedrooms" value="" size="60" maxlength="128" />
+                                name="bedrooms" size="60" maxlength="128" value="{{ $getBeds }}" />
                         </div>
                     </div>
                 </td>
@@ -83,7 +94,7 @@ $cities = getCities();
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-child"></i></span>
                             <input placeholder="Children" title="Children" class="form-control form-text" type="text"
-                                name="children" value="" size="60" maxlength="128" />
+                                name="children" size="60" maxlength="128" value="{{ $getChilds }}" />
                         </div>
                     </div>
                 </td>

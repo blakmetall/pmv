@@ -2569,20 +2569,12 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 		
 		$(function(){
 
+			var txtCity = $("select[name='city']").data('txt-select');
 			$("select[name='city']").change(function () {
-				$("select[name='zone']").empty();
-				$("select[name='zone']").append("<option value=''>"+$(this).data('txt-select')+"...</option>");
-				$.getJSON("/system/settings/zones/list/" + $(this).val(), function (data) {
-					if(data.data.length > 0){
-						$("select[name='zone']").show();
-						$.each(data.data, function (key, value) {
-							$("select[name='zone']").append("<option value=" + value.zone_id + ">" + value.name + "</option>");
-						});
-					}else{
-						$("select[name='zone']").hide();
-					}
-				});
+				getZones(txtCity, $(this));
 			});
+
+			getZones(txtCity, $("select[name='city'] option:selected"));
 			
 			var type = $('#edit-ptype').val();
 			var type_txt = $('#edit-ptype option:selected').text();
@@ -2647,6 +2639,21 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 		
 	});
 
+
+	function getZones(txtCity, city){
+		$("select[name='zone']").empty();
+		$("select[name='zone']").append("<option value=''>"+txtCity+"...</option>");
+		$.getJSON("/property/zones/" + $(city).val(), function (data) {
+			if(data.data.length > 0){
+				$("select[name='zone']").show();
+				$.each(data.data, function (key, value) {
+					$("select[name='zone']").append("<option value=" + value.zone_id + ">" + value.name + "</option>");
+				});
+			}else{
+				$("select[name='zone']").hide();
+			}
+		});
+	}
 
 	/*
 
