@@ -30,6 +30,7 @@ class PropertyController extends Controller
         $query = PropertyTranslation::query();
         $pax = $request->adults + $request->children;
         $search = [
+            'title' => ($request->property_name)?$request->property_name:false,
             'type' => ($request->property_type)?$request->property_type:false,
             'city' => ($request->city)?$request->city:false,
             'zone' => ($request->zone)?$request->zone:false,
@@ -39,6 +40,7 @@ class PropertyController extends Controller
             'bedrooms' => ($request->bedrooms)?$request->bedrooms:0,
         ];
         $query->where(function ($query) use ($lang, $search) {
+            $query->where('name', $search['title']);
             $query->whereHas('property', function ($query) use ($search) {
                 if($search['type']){
                     $query->where('property_type_id', $search['type']);
@@ -67,7 +69,7 @@ class PropertyController extends Controller
                 }
             }
         }
-        if (!$properties) {
+        if ($properties->total() == 0) {
             $request->session()->flash('error', __('Not Records Found'));
             return redirect()->back();
         }
