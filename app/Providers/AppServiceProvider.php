@@ -218,5 +218,15 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\TestimonialsRepositoryInterface::class,
             \App\Repositories\TestimonialsRepository::class
         );
+
+        $this->app->bind(
+            \App\Repositories\AgenciesRepositoryInterface::class,
+            \App\Repositories\AgenciesRepository::class
+        );
+
+        $this->app->bind(
+            \App\Repositories\LgbtsRepositoryInterface::class,
+            \App\Repositories\LgbtsRepository::class
+        );
     }
 }

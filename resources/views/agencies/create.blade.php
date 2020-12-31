@@ -6,13 +6,13 @@
     'label' => __('New'),
     'breadcrumbs' => [
     [
-    'url' => route('payment-methods'),
-    'label' => __('Payment Methods'),
+    'url' => route('agencies'),
+    'label' => __('Agencies'),
     ],
     ],
     'actions' => [
     [
-    'url' => route('payment-methods'),
+    'url' => route('agencies'),
     'icon' => 'i-Receipt-4',
     ],
     ]
@@ -27,11 +27,11 @@
 
 
     <div class="container app-container-sm">
-        <form action="{{ route('payment-methods.store') }}" method="post">
+        <form action="{{ route('agencies.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
-            @include('payment-methods.partials.form', [
-            'row' => $paymentMethod,
+            @include('agencies.partials.form', [
+            'row' => $agency,
             ])
         </form>
     </div>

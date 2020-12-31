@@ -324,6 +324,28 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('destroy/{id}', 'TestimonialsController@destroy')->name('testimonials.destroy');
         });
 
+        // agencies
+        Route::group(['prefix' => 'agencies', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'AgenciesController@index')->name('agencies');
+            Route::get('create', 'AgenciesController@create')->name('agencies.create');
+            Route::post('store', 'AgenciesController@store')->name('agencies.store');
+            Route::get('show/{agency}', 'AgenciesController@show')->name('agencies.show');
+            Route::get('edit/{agency}', 'AgenciesController@edit')->name('agencies.edit');
+            Route::post('update/{id}', 'AgenciesController@update')->name('agencies.update');
+            Route::get('destroy/{id}', 'AgenciesController@destroy')->name('agencies.destroy');
+        });
+
+        // lgbts
+        Route::group(['prefix' => 'lgbts', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'LgbtsController@index')->name('lgbts');
+            Route::get('create', 'LgbtsController@create')->name('lgbts.create');
+            Route::post('store', 'LgbtsController@store')->name('lgbts.store');
+            Route::get('show/{lgbt}', 'LgbtsController@show')->name('lgbts.show');
+            Route::get('edit/{lgbt}', 'LgbtsController@edit')->name('lgbts.edit');
+            Route::post('update/{id}', 'LgbtsController@update')->name('lgbts.update');
+            Route::get('destroy/{id}', 'LgbtsController@destroy')->name('lgbts.destroy');
+        });
+
         // settings
         Route::group(['prefix' => 'settings'], function () {
             Route::get('', 'SettingsController@index')->name('settings');
@@ -533,7 +555,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('privacy-policy', '_Public\AboutController@privacyPolicy')->name('public.about.privacy-policy');
     Route::get('terms-of-use', '_Public\AboutController@termsOfUse')->name('public.about.terms-of-use');
     Route::get('real-estate-business-directory', '_Public\AboutController@realEstateBusinessDirectory')->name('public.about.real-estate-business-directory');
+    Route::get('real-estate-business-directory/{id}', '_Public\AboutController@agencyDetail')->name('public.about.real-estate-business-directory-detail');
     Route::get('lgbt-business-directory', '_Public\AboutController@lgbtBusinessDirectory')->name('public.about.lgbt-business-directory');
+    Route::get('lgbt-business-directory/{id}', '_Public\AboutController@lgbtDetail')->name('public.about.lgbt-business-directory-detail');
 
     // Contact
     Route::get('contact', '_Public\ContactController@index')->name('public.contact');

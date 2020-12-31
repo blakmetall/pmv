@@ -340,6 +340,16 @@ $_current_role = RoleHelper::current();
                                                     <span class="item-name">{{ __('Testimonials') }}</span>
                                                 </a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('agencies') }}">
+                                                    <span class="item-name">{{ __('Agencies') }}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('lgbts') }}">
+                                                    <span class="item-name">{{ __('LGBT') }}</span>
+                                                </a>
+                                            </li>
                                         @endif
                                     </ul>
                                 </div>

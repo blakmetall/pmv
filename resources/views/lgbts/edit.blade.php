@@ -3,18 +3,23 @@
 @section('heading-content')
 
     @include('components.heading', [
-    'label' => __('New'),
+    'label' => __('Edit'),
     'breadcrumbs' => [
     [
-    'url' => route('payment-methods'),
-    'label' => __('Payment Methods'),
+    'url' => route('lgbts'),
+    'label' => __('LGBT'),
     ],
     ],
     'actions' => [
     [
-    'url' => route('payment-methods'),
+    'url' => route('lgbts'),
     'icon' => 'i-Receipt-4',
     ],
+    [
+    'label' => __('New'),
+    'url' => route('lgbts.create'),
+    'icon' => 'i-Add',
+    ]
     ]
     ])
 
@@ -25,13 +30,12 @@
 
 @section('main-content')
 
-
     <div class="container app-container-sm">
-        <form action="{{ route('payment-methods.store') }}" method="post">
+        <form action="{{ route('lgbts.update', [$lgbt->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
 
-            @include('payment-methods.partials.form', [
-            'row' => $paymentMethod,
+            @include('lgbts.partials.form', [
+            'row' => $lgbt,
             ])
         </form>
     </div>

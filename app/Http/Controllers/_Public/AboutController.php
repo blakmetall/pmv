@@ -7,20 +7,31 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Testimonial;
+use App\Models\Agency;
+use App\Models\Lgbt;
 use App\Repositories\PagesRepositoryInterface;
 use App\Repositories\TestimonialsRepositoryInterface;
+use App\Repositories\AgenciesRepositoryInterface;
+use App\Repositories\LgbtsRepositoryInterface;
 
 class AboutController extends Controller
 {
 
     private $repository;
+    private $testimonialsRepository;
+    private $agenciesRepository;
+    private $lgbtsRepository;
 
     public function __construct(
         PagesRepositoryInterface $repository,
-        TestimonialsRepositoryInterface $testimonialsRepository
+        TestimonialsRepositoryInterface $testimonialsRepository,
+        AgenciesRepositoryInterface $agenciesRepository,
+        LgbtsRepositoryInterface $lgbtsRepository
     ) {
         $this->repository = $repository;
         $this->testimonialsRepository = $testimonialsRepository;
+        $this->agenciesRepository = $agenciesRepository;
+        $this->lgbtsRepository = $lgbtsRepository;
     }
 
     public function index(Request $request)
@@ -87,13 +98,33 @@ class AboutController extends Controller
     {
         $id = getPage('real-estate-business-directory');
         $page = $this->repository->find($id);
-        return view('public.pages.about.real-estate-business-directory')->with('page', $page);
+        $agencies = $this->agenciesRepository->all('', '');
+        return view('public.pages.about.real-estate-business-directory')
+            ->with('page', $page)
+            ->with('agencies', $agencies);
+    }
+
+    public function agencyDetail(Agency $id)
+    {
+        $agency = $this->agenciesRepository->find($id);
+        return view('public.pages.about.agency-detail')
+            ->with('agency', $agency);
     }
 
     public function lgbtBusinessDirectory(Request $request)
     {
         $id = getPage('lgbt-business-directory');
         $page = $this->repository->find($id);
-        return view('public.pages.about.lgbt-business-directory')->with('page', $page);
+        $lgbts = $this->lgbtsRepository->all('', '');
+        return view('public.pages.about.lgbt-business-directory')
+            ->with('page', $page)
+            ->with('lgbts', $lgbts);
+    }
+
+    public function lgbtDetail(Lgbt $id)
+    {
+        $lgbt = $this->lgbtsRepository->find($id);
+        return view('public.pages.about.lgbt-detail')
+            ->with('lgbt', $lgbt);
     }
 }

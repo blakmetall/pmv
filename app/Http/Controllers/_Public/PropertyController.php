@@ -5,6 +5,7 @@ namespace App\Http\Controllers\_Public;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Property;
 use App\Models\PropertyTranslation;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\ZonesRepositoryInterface;
@@ -23,7 +24,7 @@ class PropertyController extends Controller
         $this->propertiesRepository = $propertiesRepository;
         $this->zonesRepository = $zonesRepository;
     }
-
+    
     public function availabilityResults(Request $request)
     {
         $lang = LanguageHelper::current();
@@ -73,8 +74,8 @@ class PropertyController extends Controller
             $request->session()->flash('error', __('Not Records Found'));
             return redirect()->back();
         }
-        $config = ['filterByNews' => true];
 
+        $config = ['filterByNews' => true, 'paginate' => false];
         $propertiesNews = $this->propertiesRepository->all('', $config);
         return view('public.pages.properties.availability-results')
             ->with('properties', $properties)
@@ -84,6 +85,7 @@ class PropertyController extends Controller
 
     public function propertyDetail(Property $property)
     {
+        dd('asas');
         return view('public.pages.properties.property-detail')
             ->with('property', $property);
     }

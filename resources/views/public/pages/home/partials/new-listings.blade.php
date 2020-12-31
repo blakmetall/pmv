@@ -3,6 +3,9 @@
     <div class="pane-content">
         <div class="row new-listings">
             @foreach ($propertiesNews as $index => $propertyNews)
+                @php
+                $zone = getZone($propertyNews->property_id);
+                @endphp
                 @if ($index == 4)
                     @php
                     break;
@@ -16,8 +19,8 @@
                         <div class="col-xs-8">
                             <h5>{{ $propertyNews->name }}</h5>
                             <p>{{ getSubString($propertyNews->description, 200) }}</p>
-                            <p><a href="/north-hotel-zone/hale-hoomaha" title="{{ __('READ MORE') }}"
-                                    class="read-more">{{ __('READ MORE') }}</a></p>
+                            <p><a href="{{ route('public.property-detail', [$zone, $propertyNews->slug]) }}"
+                                    title="{{ __('READ MORE') }}" class="read-more">{{ __('READ MORE') }}</a></p>
                         </div>
                     </div>
                 </div>
