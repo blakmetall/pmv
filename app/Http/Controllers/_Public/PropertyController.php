@@ -83,11 +83,23 @@ class PropertyController extends Controller
     }
 
 
-    public function propertyDetail(Property $property)
+    public function propertyDetail($zone, $slug)
     {
-        dd('asas');
+        $config = ['filterBySlug' => $slug, 'paginate' => false];
+        $property = $this->propertiesRepository->all('', $config)[0];
+        $prw = [];
+        $prw['id'] = $property->property_id;
+        $prw['name'] = $property->name;
+        $prw['baths'] = $property->property->baths;
+        $prw['beds'] = $property->property->bedrooms;
+        $prw['pax'] = $property->property->pax;
+        $prw['route'] = 'property/'.$zone.'/'.$slug;
+        $prw['image'] = getFeaturedImage($property->property_id);
+        $prw['rate'] = getLowerRate($property->property_id);
+        $prw = json_encode($prw);
         return view('public.pages.properties.property-detail')
-            ->with('property', $property);
+            ->with('property', $property)
+            ->with('prw', $prw);
     }
 
     public function zones($city)

@@ -141,8 +141,8 @@ $offices = getOffices();
                                     <div class="copy text-center">
                                         <p>&copy; 2011 - 2020 Palmera Vacations - Property Rentals in Puerto Vallarta,
                                             Nuevo Vallarta, Riviera Nayarit & Mazatlán, México!</p>
-                                        <p><a href="/privacy-policy" title="Privacy Policy">Privacy Policy</a> - <a
-                                                href="/terms-of-use" title="Terms of Use">Terms of Use</a></p>
+                                        <p><a href="{{ route('public.about.privacy-policy') }}" title="Privacy Policy">Privacy Policy</a> - <a
+                                                href="{{ route('public.about.terms-of-use') }}" title="Terms of Use">Terms of Use</a></p>
                                     </div>
                                 </div>
                             </div>

@@ -31,6 +31,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByDisabled  = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
         $shouldFilterByFeatured  = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
         $shouldFilterByNews      = isset($config['filterByNews']) ? $config['filterByNews'] : false;
+        $shouldFilterBySlug      = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -78,6 +79,13 @@ class PropertiesRepository implements PropertiesRepositoryInterface
                 });
             })->where('language_id', $lang->id);
         }
+
+        if ($shouldFilterBySlug) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->where('slug', $config['filterBySlug']);
+            })->where('language_id', $lang->id);
+        }
+
 
         if ($shouldFilterByFeatured) {
             $query->whereHas('property', function ($q) use ($config) {

@@ -10,12 +10,12 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = __('V177 - 503');
+    $title = $property->name;
     @endphp
 
     @include('public.pages.partials.main-content-start')
 
-    <div id="property-details">
+    {{-- <div id="property-details">
         <div id="property-gallery-info">
             <div class="cssload-thecube" style="display: none;">
                 <div class="cssload-cube cssload-c1"></div>
@@ -584,10 +584,20 @@
                 src="https://www.google.com/maps/d/u/1/embed?mid=1R4iiei3X-lalmkRHWsf4VFKe6yrqS8DS"
                 width="&amp;z=15&quot;100%&quot;" height="370"></iframe>
         </div>
-    </div>
+    </div> --}}
 
     @include('public.pages.partials.main-content-end')
 
     @include('public.pages.partials.footer')
+
+@endsection
+
+<script>
+    var property = JSON.parse('<?= $prw ?>');
+
+</script>
+@section('bottom-js')
+
+    <script src="{{ asset('assets/public/js/property-detail.js') }}"></script>
 
 @endsection

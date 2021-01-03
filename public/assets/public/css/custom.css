@@ -15,3 +15,7 @@
 .panel-2col-stacked .panel-col-last .inside{
     margin: 0 0 1em .5em;
 }
+
+.hide-recent-views{
+    display: none;
+}

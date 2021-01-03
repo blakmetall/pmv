@@ -57,7 +57,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-4 text-center">
-                                <div class="b-rate ">$350 USD</div>
+                                <div class="b-rate ">${{ getLowerRate($property->property_id) }} USD</div>
                                 <div class="b-caption">avg. night</div>
                             </div>
                             <div class="col-xs-8">
