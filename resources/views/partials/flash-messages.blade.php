@@ -9,7 +9,7 @@
 @if (Session::has('error'))
     <div class="app-container app-centered">
         <div class="alert alert-danger app-alert-danger mb-4" role="alert">
-            {{ Session::get('error') }}
+            {!! Session::get('error') !!}
         </div>
     </div>
 @endif

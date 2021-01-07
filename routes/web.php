@@ -561,4 +561,5 @@ Route::group(['middleware' => ['web']], function () {
 
     // Contact
     Route::get('contact', '_Public\ContactController@index')->name('public.contact');
+    Route::post('contact/send-email', '_Public\ContactController@sendEmail')->name('public.contact.send-email');
 });

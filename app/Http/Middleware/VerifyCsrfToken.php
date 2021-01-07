@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'zones/list/*'
+        'zones/list/*',
+        'contact/send-email'
     ];
 }
