@@ -1,5 +1,5 @@
 @php
-    $lang = LanguageHelper::current();
+$lang = LanguageHelper::current();
 @endphp
 <div class="mb-5"></div>
 <div class="card">
@@ -30,14 +30,14 @@
                 </thead>
                 <tbody>
 
-                    @if(count($rows))
-                        @foreach($rows as $i => $row)
+                    @if (count($rows))
+                        @foreach ($rows as $i => $row)
                             <tr>
                                 <!-- index -->
                                 <th scope="row">
-                                    {{ $i+1 }}
+                                    {{ $i + 1 }}
                                 </th>
-                                
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $row->id }}
@@ -49,10 +49,13 @@
                                 </td>
 
                                 <!-- property -->
-                                <td>{{ $row->property->translations()->where('language_id', $lang->id)->first()->name }} </td>
+                                <td>{{ $row->property->translations()->where('language_id', $lang->id)->first()->name }}
+                                </td>
 
                                 <!-- travel_dates -->
-                                <td>{{ $row->arrival_date }} - {{ $row->departure_date }}<br>{{ $row->nights }} {{ __('Nights') }}</td>
+                                <td>{{ $row->arrival_date }} - {{ $row->departure_date }}<br>{{ $row->nights }}
+                                    {{ __('Nights') }}
+                                </td>
 
                                 <!-- nightly_rate -->
                                 <td>{{ priceFormat($row->price_per_night) }}</td>
@@ -67,21 +70,45 @@
 
                                 <!-- created/updated cols -->
                                 @include('components.table.created-updated', [
-                                    'created_at' => $row->created_at,
-                                    'updated_at' => $row->updated_at,
-                                    'trimTime' => true,
+                                'created_at' => $row->created_at,
+                                'updated_at' => $row->updated_at,
+                                'trimTime' => true,
                                 ])
 
                                 <!-- actions -->
                                 <td>
-                                    @if($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
-                                        @include('components.table.actions-bookings', [
+                                    @if ($row->property->users->isNotEmpty())
+                                        @php
+                                        $propertyUser = false;
+                                        @endphp
+
+                                        @foreach ($row->property->users as $user)
+                                            @if ($user->id == \UserHelper::getCurrentUserID())
+                                                @php
+                                                $propertyUser = true;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+
+                                        @if ($propertyUser || isRole('super') || isRole('admin'))
+                                            @include('components.table.actions-bookings', [
                                             'params' => [$row->id],
                                             'paymentsRoute' => 'property-booking-payments',
                                             'showRoute' => 'property-bookings.show',
                                             'editRoute' => 'property-bookings.edit',
                                             'deleteRoute' => 'property-bookings.destroy',
-                                        ])
+                                            ])
+                                        @endif
+                                    @else
+                                        @if ($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
+                                            @include('components.table.actions-bookings', [
+                                            'params' => [$row->id],
+                                            'paymentsRoute' => 'property-booking-payments',
+                                            'showRoute' => 'property-bookings.show',
+                                            'editRoute' => 'property-bookings.edit',
+                                            'deleteRoute' => 'property-bookings.destroy',
+                                            ])
+                                        @endif
                                     @endif
                                 </td>
 

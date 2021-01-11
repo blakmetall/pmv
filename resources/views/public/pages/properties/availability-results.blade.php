@@ -11,6 +11,9 @@
 
     @php
     $title = __('AVAILABILITY RESULTS');
+    $nightsDate = \RatesHelper::getTotalBookingDays($_GET['arrival'], $_GET['departure']);
+    $datesProperty = getSearchDate(false, $_GET['arrival'], $_GET['departure']);
+    $bothDates = $datesProperty['currentDate'].' - '.$datesProperty['nextDate'];
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -18,6 +21,11 @@
     <div id="availability-results">
         <div class="well well-sm text-right">Showing 1 to 1 of {{ $properties->total() }} results</div>
         @foreach ($properties as $property)
+            @php
+            $total = \RatesHelper::getNightsSubtotalCost($property->property, $_GET['arrival'], $_GET['departure']);
+            $availabilityProperty = getAvailabilityProperty($property->property_id, $_GET['arrival'], $_GET['departure']);
+            $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $_GET['arrival'], $_GET['departure']);
+            @endphp
             <div class="result-row">
                 <h5>{{ $property->name }}</h5>
                 <div class="sub-title">{{ $property->property->type->getLabel() }} /
@@ -26,7 +34,7 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="200">
-                        <div class="rate-info">${{ getLowerRate($property->property_id) }} <span>/ night</span></div>
+                        <div class="rate-info">${{ $nightlyRate }} <span>/ night</span></div>
                     </div>
                     <div class="col-xs-8">
                         <div class="description">
@@ -55,34 +63,43 @@
                                 <div class="text-right savings-tag"></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-4 text-center">
-                                <div class="b-rate ">${{ getLowerRate($property->property_id) }} USD</div>
-                                <div class="b-caption">avg. night</div>
-                            </div>
-                            <div class="col-xs-8">
-                                <div class="total-stay text-right">Total stay: <span>$2,450 USD</span><br>Wednesday
-                                    23/December/2020 - Wednesday 30/December/2020 ( 7 nights )</div>
-                                <div class="text-right">
-                                    <form id="bookit-618-form" action="reservations" method="post"><input type="hidden"
-                                            name="pid" value="618"><input type="submit" name="submit" value="Book it!"
-                                            title="Book this property" class="btn btn-warning"></form>
+                        @if ($availabilityProperty == 'all')
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <div class="b-rate ">
+                                        ${{ $nightlyRate }}
+                                        USD</div>
+                                    <div class="b-caption">avg. night</div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="total-stay text-right">Total stay: <span>${{ number_format($total) }}
+                                            USD</span><br>{{ $bothDates }}
+                                        (
+                                        {{ $nightsDate }} nights )
+                                    </div>
+                                    <div class="text-right">
+                                        <form id="bookit-618-form" action="reservations" method="post"><input type="hidden"
+                                                name="pid" value="618"><input type="submit" name="submit" value="Book it!"
+                                                title="Book this property" class="btn btn-warning"></form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="alert alert-warning text-center"> One or more nights are not available for dates
-                            <strong>Wednesday 23/December/2020 - Wednesday 30/December/2020</strong>,<br> please check the
-                            <a href="http://palmeravacations.com/_availability_calendar.php?id=898"
-                                title="Availability Calendar" target="_blank">Availability Calendar</a> and edit your
-                            search.
-                        </div>
-                        <div class="alert alert-danger text-center"> Not available for dates: <strong>Saturday
-                                12/December/2020
-                                - Saturday 19/December/2020</strong>,<br> please check the <a
-                                href="http://palmeravacations.com/_availability_calendar.php?id=749"
-                                title="Availability Calendar" target="_blank">Availability Calendar</a> and edit your
-                            search.
-                        </div>
+                        @elseif($availabilityProperty == 'some')
+                            <div class="alert alert-warning text-center"> One or more nights are not available for dates
+                                <strong>{{ $bothDates }}</strong>,<br>
+                                please check the
+                                <a href="http://palmeravacations.com/_availability_calendar.php?id=898"
+                                    title="Availability Calendar" target="_blank">Availability Calendar</a> and edit your
+                                search.
+                            </div>
+                        @elseif($availabilityProperty == 'none')
+                            <div class="alert alert-danger text-center"> Not available for dates:
+                                <strong>{{ $bothDates }}</strong>,<br>
+                                please check the <a href="http://palmeravacations.com/_availability_calendar.php?id=749"
+                                    title="Availability Calendar" target="_blank">Availability Calendar</a> and edit your
+                                search.
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

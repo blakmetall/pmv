@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+use App\Helpers\RatesHelper;
+
 use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
@@ -609,6 +612,50 @@ if (!function_exists('getCities')) {
     function getCities()
     {
         $result = City::all();
+
+        return $result;
+    }
+}
+
+if (!function_exists('getSearchDate')) {
+    function getSearchDate($format, $arrival, $depature)
+    {
+        $arrivalDate = ($arrival)?$arrival:'now';
+        $departureDate = ($depature)?$depature :'now + 7 days';
+        $result = [];
+        $result['currentDate'] = ($format)?date('Y-m-d', strtotime($arrivalDate)):date('l d/F/y', strtotime($arrivalDate));
+        $result['nextDate'] = ($format)?date('Y-m-d', strtotime($departureDate)):date('l d/F/y', strtotime($departureDate));
+
+        return $result;
+    }
+}
+
+if (!function_exists('getAvailabilityProperty')) {
+    function getAvailabilityProperty($id, $fromDate, $toDate)
+    {
+        $property = Property::find($id);
+
+        $bookings       = $property->bookings;
+        $bookingDaysArr = [];
+        foreach ($bookings as $booking) {
+            $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
+        }
+        $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
+        $days = getDatesFromRange($fromDate, $toDate, 'd-M-y');
+        $daysOccupied = 0;
+        foreach ($days as $day){
+            if(in_array($day, $bookingDays)){
+                $daysOccupied++;
+            }
+        }
+
+        if($daysOccupied > 0 && $daysOccupied < count($days)){
+            $result = 'some';
+        }else if($daysOccupied == count($days)){
+            $result = 'none';
+        }else{
+            $result = 'all';
+        }
 
         return $result;
     }

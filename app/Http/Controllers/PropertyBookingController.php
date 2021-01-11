@@ -467,14 +467,21 @@ class PropertyBookingController extends Controller
     {
         $bookings = Property::find($request->property_id)->bookings;
         $bookingExist = false;
+        $bookingDaysArr = [];
+
         foreach ($bookings as $booking) {
-            if (($request->arrival_date > $booking->arrival_date) && ($request->arrival_date < $booking->departure_date)) {
-                $bookingExist = true;
-            }
-            if (($request->departure_date > $booking->arrival_date) && ($request->departure_date < $booking->departure_date)) {
+            $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
+        }
+
+        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
+        $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
+
+        foreach ($days as $day){
+            if(in_array($day, $bookingDays)){
                 $bookingExist = true;
             }
         }
+        
         if ($bookingExist) {
             $request->session()->flash('error', __('A Booking actually have same date successfully'));
             return redirect()->back();
@@ -540,14 +547,23 @@ class PropertyBookingController extends Controller
     {
         $bookings = Property::find($request->property_id)->bookings;
         $bookingExist = false;
+        $bookingDaysArr = [];
+
         foreach ($bookings as $booking) {
-            if (($request->arrival_date > $booking->arrival_date) && ($request->arrival_date < $booking->departure_date) && ($booking->id != $id)) {
-                $bookingExist = true;
+            if($booking->id != $id){
+                $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             }
-            if (($request->departure_date > $booking->arrival_date) && ($request->departure_date < $booking->departure_date) && ($booking->id != $id)) {
+        }
+
+        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
+        $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
+
+        foreach ($days as $day){
+            if(in_array($day, $bookingDays)){
                 $bookingExist = true;
             }
         }
+        
         if ($bookingExist) {
             $request->session()->flash('error', __('A Booking actually have same date successfully'));
             return redirect()->back();

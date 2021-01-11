@@ -124,6 +124,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         if ($booking->save()) {
 
             $contacts = $booking->property->contacts;
+            $concierge = false;
             foreach ($contacts as $contact) {
                 if ($contact->contact_type == 'property-manager') {
                     $concierge = $contact->email;

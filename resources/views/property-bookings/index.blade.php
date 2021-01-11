@@ -1,41 +1,78 @@
 @extends('layouts.horizontal-master')
 
 @php
-    $fromDate = (isset($_GET['from_date'])) ? $_GET['from_date'] : '';
-    $toDate = (isset($_GET['to_date'])) ? $_GET['to_date'] : '';
-    $searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
+$fromDate = (isset($_GET['from_date'])) ? $_GET['from_date'] : '';
+$toDate = (isset($_GET['to_date'])) ? $_GET['to_date'] : '';
+$searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
 @endphp
 
 @section('heading-content')
-    @php
-        if(isset($property)){
-            if($property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin')){
+    @if (isset($property))
+        @if ($property->users->isNotEmpty())
+            @php
+            $propertyUser = false;
+            @endphp
+            @foreach ($property->users as $user)
+                @if ($user->id == \UserHelper::getCurrentUserID())
+                    @php
+                    $propertyUser = true;
+                    @endphp
+                @endif
+            @endforeach
+            @if ($propertyUser || isRole('super') || isRole('admin'))
+                @php
                 $actions = [
-                    [
-                        'label' => __('Add Booking'),
-                        'url' => route('property-bookings.create', $property->id),
-                        'icon' => 'i-Add',
-                    ]
+                [
+                'label' => __('Add Booking'),
+                'url' => route('property-bookings.create', $property->id),
+                'icon' => 'i-Add',
+                ]
                 ];
-            }else{
+                @endphp
+            @else
+                @php
                 $actions = [];
-            }
-        }else{
-            $actions = [];
-        }
-    @endphp
+                @endphp
+            @endif
+        @else
+            @if ($property->user->id || isRole('super') || isRole('admin'))
+                @php
+                $actions = [
+                [
+                'label' => __('Add Booking'),
+                'url' => route('property-bookings.create', $property->id),
+                'icon' => 'i-Add',
+                ]
+                ];
+                @endphp
+            @else
+                @php
+                $actions = [];
+                @endphp
+            @endif
+        @endif
+
+    @endif
 
     @include('components.heading', [
-        'label' => __('Bookings'),
-        'actions' => $actions
+    'label' => __('Bookings'),
+    'actions' => $actions
+    ])
+
+    <!-- separator -->
+    <div class="mb-4"></div>
+    @include('properties.partials.info', [
+    'propertyID' => $property->id,
+    'property' => $property
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
 
     @include('components.search-arrivals-departures', [
-        'url' => route('property-bookings')
+    'url' => route('property-bookings')
     ])
+
 
 @endsection
 
@@ -43,8 +80,8 @@
 
     <!-- here the data is loaded -->
     @include('property-bookings.partials.table', [
-        'label' => __('Bookings'),
-        'rows' => $bookings
+    'label' => __('Bookings'),
+    'rows' => $bookings
     ])
 
 @endsection

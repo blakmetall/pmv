@@ -1,18 +1,20 @@
 @php
-    $lang = LanguageHelper::current();
+$lang = LanguageHelper::current();
 @endphp
 <div class="mb-5"></div>
 <div class="card">
     <div class="card-header">
         <div class="btns-container">
-            <a href="{{ route('property-calendar', [$property->id, $prevYear]) }}" class="btn btn-dark">{{ __('Prev Year') }}</a>
+            <a href="{{ route('property-calendar', [$property->id, $prevYear]) }}"
+                class="btn btn-dark">{{ __('Prev Year') }}</a>
             <span>{{ $currYear }}</span>
-            <a href="{{ route('property-calendar', [$property->id, $nextYear]) }}" class="btn btn-dark">{{ __('Next Year') }}</a>
+            <a href="{{ route('property-calendar', [$property->id, $nextYear]) }}"
+                class="btn btn-dark">{{ __('Next Year') }}</a>
         </div>
     </div>
     <div class="card-body">
         <div class="calendar-container">
-		    {!! $calendar !!}
+            {!! $calendar !!}
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -35,12 +37,12 @@
                 </thead>
                 <tbody>
 
-                    @if(count($bookings))
-                        @foreach($bookings as $i => $booking)
+                    @if (count($bookings))
+                        @foreach ($bookings as $i => $booking)
                             <tr>
                                 <!-- index -->
                                 <th scope="row">
-                                    {{ $i+1 }}
+                                    {{ $i + 1 }}
                                 </th>
 
                                 <!-- id -->
@@ -54,10 +56,12 @@
                                 </td>
 
                                 <!-- property -->
-                                <td>{{ $booking->property->translations()->where('language_id', $lang->id)->first()->name }} </td>
+                                <td>{{ $booking->property->translations()->where('language_id', $lang->id)->first()->name }}
+                                </td>
 
                                 <!-- travel_dates -->
-                                <td>{{ $booking->arrival_date }} - {{ $booking->departure_date }}<br>{{ $booking->nights }} {{ __('Nights') }}</td>
+                                <td>{{ $booking->arrival_date }} -
+                                    {{ $booking->departure_date }}<br>{{ $booking->nights }} {{ __('Nights') }}</td>
 
                                 <!-- nightly_rate -->
                                 <td>{{ priceFormat($booking->price_per_night) }}</td>
@@ -72,21 +76,45 @@
 
                                 <!-- created/updated cols -->
                                 @include('components.table.created-updated', [
-                                    'created_at' => $booking->created_at,
-                                    'updated_at' => $booking->updated_at,
-                                    'trimTime' => true,
+                                'created_at' => $booking->created_at,
+                                'updated_at' => $booking->updated_at,
+                                'trimTime' => true,
                                 ])
 
-                                    <!-- actions -->
+                                <!-- actions -->
                                 <td>
-                                    @if($booking->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
-                                        @include('components.table.actions-bookings', [
+                                    @if ($booking->property->users->isNotEmpty())
+                                        @php
+                                        $propertyUser = false;
+                                        @endphp
+
+                                        @foreach ($booking->property->users as $user)
+                                            @if ($user->id == \UserHelper::getCurrentUserID())
+                                                @php
+                                                $propertyUser = true;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+
+                                        @if ($propertyUser || isRole('super') || isRole('admin'))
+                                            @include('components.table.actions-bookings', [
                                             'params' => [$booking->id],
                                             'paymentsRoute' => 'property-booking-payments',
                                             'showRoute' => 'property-bookings.show',
                                             'editRoute' => 'property-bookings.edit',
                                             'deleteRoute' => 'property-bookings.destroy',
-                                        ])
+                                            ])
+                                        @endif
+                                    @else
+                                        @if ($booking->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
+                                            @include('components.table.actions-bookings', [
+                                            'params' => [$booking->id],
+                                            'paymentsRoute' => 'property-booking-payments',
+                                            'showRoute' => 'property-bookings.show',
+                                            'editRoute' => 'property-bookings.edit',
+                                            'deleteRoute' => 'property-bookings.destroy',
+                                            ])
+                                        @endif
                                     @endif
                                 </td>
 

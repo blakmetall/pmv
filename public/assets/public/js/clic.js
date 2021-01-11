@@ -63,6 +63,8 @@ setTimeout(function(){
         $('#edit-departure').datepicker('option', 'minDate', selectedDate );
         }
     });
+
+    $("#edit-arrival").trigger("click");
     
     $('#edit-departure').datepicker({
         dateFormat: 'D dd/M/yy',

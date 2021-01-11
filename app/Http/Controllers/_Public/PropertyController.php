@@ -10,6 +10,7 @@ use App\Models\PropertyTranslation;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\ZonesRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
 {
@@ -27,9 +28,25 @@ class PropertyController extends Controller
     
     public function availabilityResults(Request $request)
     {
+        $rules = [];
+        $messages = [];
+
+        $rules['adults']   = 'required|numeric';
+        $rules['bedrooms'] = 'required|numeric';
+
+        $messages['adults.required']   = __('Required adults');
+        $messages['adults.numeric']     = __('Required number');
+        $messages['bedrooms.required'] = __('Required bedrooms');
+        $messages['bedrooms.numeric']   = __('Required number');
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        
         $lang = LanguageHelper::current();
         $query = PropertyTranslation::query();
         $pax = $request->adults + $request->children;
+        $petsFriendly = ($request->pet_friendly)?65:0;
+        $adultsOnly = ($request->adults_only)?50:0;
+        $bechFront = ($request->beach_front)?14:0;
         $search = [
             'title' => ($request->property_name)?$request->property_name:false,
             'type' => ($request->property_type)?$request->property_type:false,
@@ -39,10 +56,13 @@ class PropertyController extends Controller
             'departure' => $request->departure,
             'pax' => $pax,
             'bedrooms' => ($request->bedrooms)?$request->bedrooms:0,
+            'pet_friendly' => $petsFriendly,
+            'adults_only' => $adultsOnly,
+            'beach_front' => $bechFront,
         ];
         $query->where(function ($query) use ($lang, $search) {
-            $query->where('name', $search['title']);
-            $query->whereHas('property', function ($query) use ($search) {
+            // $query->where('name', $search['title']);
+            $query->whereHas('property', function ($query) use ($lang, $search) {
                 if($search['type']){
                     $query->where('property_type_id', $search['type']);
                 }
@@ -54,29 +74,54 @@ class PropertyController extends Controller
                 }
                 $query->where('bedrooms', '>=', $search['bedrooms']);
                 $query->where('pax', '>=', $search['pax']);
+                // if($search['pet_friendly'] || $search['adults_only'] || $search['beach_front']){
+                //     $query->whereHas('amenities', function ($query) use ($search) {
+                //         if($search['pet_friendly']){
+                //             $query->where('amenities.id', $search['pet_friendly']);
+                //         }
+                //         if($search['adults_only']){
+                //             $query->where('amenities.id', $search['adults_only']);
+                //         }
+                //         if($search['beach_front']){
+                //             $query->where('amenities.id', $search['beach_front']);
+                //         }
+                //     });
+                // }
             })->where('language_id', $lang->id);
         });
         $properties = $query->paginate(3);
-        foreach($properties as $index => $property){
-            if($property->property->bookings){
-                foreach($property->property->bookings as $booking){
-                    $startDate = Carbon::createFromFormat('Y-m-d', $booking->arrival_date);
-                    $endDate = Carbon::createFromFormat('Y-m-d', $booking->departure_date);
-                    $checkArrival = $startDate->between($search['arrival'], $search['departure']);
-                    $checkDeparture = $endDate->between($search['arrival'], $search['departure']);
-                    if($checkArrival || $checkDeparture){
-                        unset($properties[$index]);
-                    }
-                }
-            }
-        }
+        // foreach($properties as $index => $property){
+        //     if($property->property->bookings){
+        //         foreach($property->property->bookings as $booking){
+        //             $startDate = Carbon::createFromFormat('Y-m-d', $booking->arrival_date);
+        //             $endDate = Carbon::createFromFormat('Y-m-d', $booking->departure_date);
+        //             $checkArrival = $startDate->between($search['arrival'], $search['departure']);
+        //             $checkDeparture = $endDate->between($search['arrival'], $search['departure']);
+        //             if($checkArrival || $checkDeparture){
+        //                 unset($properties[$index]);
+        //             }
+        //         }
+        //     }
+        // }
         if ($properties->total() == 0) {
             $request->session()->flash('error', __('Not Records Found'));
-            return redirect()->back();
+            // if(!$request->is_home){
+            //     return redirect()->back();
+            // }
         }
 
+        
         $config = ['filterByNews' => true, 'paginate' => false];
         $propertiesNews = $this->propertiesRepository->all('', $config);
+
+        if ($validator->fails()) {
+            $errors = '';
+            foreach($validator->errors()->get('*') as $error){
+                $errors .= $error[0].'<br>';
+            }
+            $request->session()->flash('error', $errors);
+        }
+
         return view('public.pages.properties.availability-results')
             ->with('properties', $properties)
             ->with('propertiesNews', $propertiesNews);

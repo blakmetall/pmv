@@ -3,12 +3,18 @@ $propertyTypes = getPropertyTypes();
 $cities = getCities();
 $getPropertyType = (isset($_GET['property_type'])) ? $_GET['property_type'] : '';
 $getCity = (isset($_GET['city'])) ? $_GET['city'] : '';
-$getZone = (isset($_GET['zone'])) ? $_GET['zone'] : '';
+$getZone = (isset($_GET['zone'])) ? $_GET['zone'] : 0;
 $getAdults = (isset($_GET['adults'])) ? $_GET['adults'] : '';
 $getChilds = (isset($_GET['children'])) ? $_GET['children'] : '';
 $getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
+$isHome = Request::is('/');
+$arrival = (isset($_GET['arrival'])) ? $_GET['arrival'] : null;
+$departure = (isset($_GET['departure'])) ? $_GET['departure'] : null;
+$dates = getSearchDate(false, $arrival, $departure);
+$datesInitial = getSearchDate(true, $arrival, $departure);
 @endphp
 <form action="{{ route('public.availability-results') }}" id="avail-search-form" accept-charset="UTF-8">
+    <input type="hidden" value="{{ $isHome }}" name="is_home">
     <div>
         <table>
             <tr>
@@ -49,7 +55,7 @@ $getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
                             </span>
                             <input class="text-center form-control form-text" readonly="readonly"
                                 placeholder="Check-in-date" type="text" id="edit-arrival"
-                                value="Saturday 12/December/2020" size="60" maxlength="128" />
+                                value="{{ $dates['currentDate'] }}" size="60" maxlength="128" />
                         </div>
                     </div>
                 </td>
@@ -76,7 +82,8 @@ $getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
                 </td>
                 <td class="col-xs-3">
                     <div class="form-item form-item-location form-type-select form-group">
-                        <select class="form-control form-select" name="zone" id="zone" style="display: none">
+                        <select class="form-control form-select" name="zone" id="zone" style="display: none"
+                            data-zone="{{ $getZone }}">
                         </select>
                     </div>
                 </td>
@@ -86,7 +93,7 @@ $getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
                                     class="glyphicon glyphicon-calendar"></span></span><input
                                 class="text-center form-control form-text" readonly="readonly"
                                 placeholder="Check-out-date" type="text" id="edit-departure"
-                                value="Saturday 19/December/2020" size="60" maxlength="128" /></div>
+                                value="{{ $dates['nextDate'] }}" size="60" maxlength="128" /></div>
                     </div>
                 </td>
                 <td class="col-xs-3">
@@ -110,24 +117,25 @@ $getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
                     <tr>
                         <td class="col-xs-4">
                             <div class="form-item form-item-pet-friendly form-type-checkbox checkbox">
-                                <label class="control-label" for="edit-pet-friendly">
-                                    <input type="checkbox" name="pet_friendly" value="1"
+                                <label class="control-label" for="pet_friendly">
+                                    <input type="checkbox" id="pet_friendly" name="pet_friendly"
                                         class="form-checkbox" />PetFriendly
                                 </label>
                             </div>
                         </td>
                         <td class="col-xs-4">
                             <div class="form-item form-item-adults-only form-type-checkbox checkbox">
-                                <label class="control-label" for="edit-adults-only">
-                                    <input type="checkbox" name="adults_only" value="1" class="form-checkbox" />Adults
+                                <label class="control-label" for="adults_only">
+                                    <input type="checkbox" id="adults_only" name="adults_only"
+                                        class="form-checkbox" />Adults
                                     Only
                                 </label>
                             </div>
                         </td>
                         <td class="col-xs-4">
                             <div class="form-item form-item-beach-front form-type-checkbox checkbox">
-                                <label class="control-label" for="edit-beach-front">
-                                    <input type="checkbox" id="edit-beach-front" name="beach_front" value="1"
+                                <label class="control-label" for="beach_front">
+                                    <input type="checkbox" id="beach_front" name="beach_front"
                                         class="form-checkbox" />Beach / Water front
                                 </label>
                             </div>
@@ -136,8 +144,8 @@ $getBeds = (isset($_GET['bedrooms'])) ? $_GET['bedrooms'] : '';
                 </table>
             </div>
         </fieldset>
-        <input id="arrival-alt" type="hidden" name="arrival" value="" />
-        <input id="departure-alt" type="hidden" name="departure" value="" />
+        <input id="arrival-alt" type="hidden" name="arrival" value="{{ $datesInitial['currentDate'] }}" />
+        <input id="departure-alt" type="hidden" name="departure" value="{{ $datesInitial['nextDate'] }}" />
         <div class="form-actions form-wrapper form-group" id="edit-actions--2">
             <button title="Check Availability" class="btn btn-success btn-loading form-submit"
                 data-loading-text="&lt;i class=&quot;fa fa-spinner fa-spin&quot;&gt;&lt;/i&gt; ... loading"

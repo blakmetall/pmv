@@ -2577,30 +2577,32 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			if ($("select[name='city'] ").val() != "") {
 				getZones(txtCity, $("select[name='city'] option:selected"));
 			}
+
+			var type = $("select[name='property_type']").val();
+			var type_txt = $("select[name='property_type'] option:selected").text();
+
+			var city = $("select[name='city']").val();
+			var city_txt = $("select[name='city'] option:selected").text();
+
+			var zone = $("select[name='zone']").val();
+			var zone_txt = $("select[name='zone'] option:selected").text();
+		
+			var bedrooms = $("input[name='bedrooms']").val();
 			
-			var type = $('#edit-ptype').val();
-			var type_txt = $('#edit-ptype option:selected').text();
-			var city = $('#edit-city').val();
-			var city_txt = $('#edit-city option:selected').text();
-			var location = $('#location').val();
-			var location_txt = $('#edit-location option:selected').text();			
-			var bedrooms = $('#edit-bedrooms').val();
 			var arrival = $('#edit-arrival').val();
 			var departure = $('#edit-departure').val();
-			//var nights = $('#nights').val();
-			var adults = $('#edit-adults').val();
-			var children = $('#edit-children').val();
+
+			var adults = $("input[name='adults']").val();
+			var children = $("input[name='children']").val();
 			
 			txt = '';
 			
 			if(city){
-			
-				txt = city_txt + ' / ';
-				
+				txt += city_txt + ' / ';
 			}
 			
-			if(location){
-				txt += location_txt + ' / ';
+			if(zone){
+				txt += zone_txt;
 			}
 			
 			if(type){
@@ -2608,9 +2610,7 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			}
 			
 			if((arrival) && (departure)){			
-			
 				txt += 'Travel dates' + ': ' + arrival + ' - ' + departure + ' / ';
-				
 			}
 			
 			if(bedrooms){
@@ -2618,7 +2618,6 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			}
 			
 			if(adults){
-				
 				txt += 'Adults' + ': ' + adults + ' / ';
 
 				if(children){
@@ -2626,15 +2625,12 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 				}else{
 					child = 0;
 				}
-							
+		
 				txt += 'Children' + ': ' + child;
-				
 			}
 			
 			if(txt){
-			
 				$('.search-params-breadcrumbs').html(txt);
-				
 			}
 			
 		});
@@ -2649,7 +2645,8 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			if(data.data.length > 0){
 				$("select[name='zone']").show();
 				$.each(data.data, function (key, value) {
-					$("select[name='zone']").append("<option value=" + value.zone_id + ">" + value.name + "</option>");
+					var selected = (value.zone_id == $('#zone').data('zone'))?'selected':'';
+					$("select[name='zone']").append("<option "+ selected +" value=" + value.zone_id + ">" + value.name + "</option>");
 				});
 			}else{
 				$("select[name='zone']").hide();
@@ -2810,6 +2807,8 @@ setTimeout(function(){
         $('#edit-departure').datepicker('option', 'minDate', selectedDate );
         }
     });
+
+    $("#edit-arrival").trigger("click");
     
     $('#edit-departure').datepicker({
         dateFormat: 'D dd/M/yy',

@@ -61,9 +61,10 @@ $offices = getOffices();
                                                         alt="Secured by PayPal" class="paypal-logo-img" /></a>
                                             </div>
                                             <div class="col-xs-6">
-                                                <script type="text/javascript"
+
+                                                {{-- seal <script type="text/javascript"
                                                     src="https://sealserver.trustwave.com/seal.js?code=e2e61c21b4e648f4877e8815667a47f7">
-                                                </script>
+                                                </script> --}}
                                             </div>
                                         </div>
 
@@ -141,8 +142,10 @@ $offices = getOffices();
                                     <div class="copy text-center">
                                         <p>&copy; 2011 - 2020 Palmera Vacations - Property Rentals in Puerto Vallarta,
                                             Nuevo Vallarta, Riviera Nayarit & Mazatlán, México!</p>
-                                        <p><a href="{{ route('public.about.privacy-policy') }}" title="Privacy Policy">Privacy Policy</a> - <a
-                                                href="{{ route('public.about.terms-of-use') }}" title="Terms of Use">Terms of Use</a></p>
+                                        <p><a href="{{ route('public.about.privacy-policy') }}"
+                                                title="Privacy Policy">Privacy Policy</a> - <a
+                                                href="{{ route('public.about.terms-of-use') }}"
+                                                title="Terms of Use">Terms of Use</a></p>
                                     </div>
                                 </div>
                             </div>
