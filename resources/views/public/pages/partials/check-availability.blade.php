@@ -1,6 +1,7 @@
 @php
 $propertyTypes = getPropertyTypes();
 $cities = getCities();
+//VERIFICAR SI NECESITAS ESTOS POR QUE LOS DEBES PASAR POR LOCALSTORAGE TAMBIEN
 $getPropertyType = (isset($_GET['property_type'])) ? $_GET['property_type'] : '';
 $getCity = (isset($_GET['city'])) ? $_GET['city'] : '';
 $getZone = (isset($_GET['zone'])) ? $_GET['zone'] : 0;

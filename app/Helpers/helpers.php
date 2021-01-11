@@ -660,3 +660,15 @@ if (!function_exists('getAvailabilityProperty')) {
         return $result;
     }
 }
+
+// if (!function_exists('getNightsDate')) {
+//     function getNightsDate($fromDate, $toDate)
+//     {
+//         $arrival = new DateTime($fromDate);
+//         $departure = new DateTime($toDate);
+//         $interval = $arrival->diff($departure);
+//         $result = $interval->format('%a');
+
+//         return $result;
+//     }
+// }

@@ -1,12 +1,14 @@
 <aside class="col-sm-3" role="complementary">
     <div class="region region-sidebar-second">
-        <section id="block-block-2" class="block block-block clearfix">
-            <div class="text-right">
-                <a href="{{ route('public.availability-results') }}" title="Return to the Search Results">
-                    <i class="fas fa-chevron-circle-left"></i> Return to the Search Results
-                </a>
-            </div>
-        </section>
+        @if (Request::path() != 'availability-results')
+            <section id="block-block-2" class="block block-block clearfix">
+                <div class="text-right">
+                    <a href="#" title="Return to the Search Results" id="return-availability-results">
+                        <i class="fas fa-chevron-circle-left"></i> Return to the Search Results
+                    </a>
+                </div>
+            </section>
+        @endif
         <section id="block-recent-views-recent-views-block" class="block block-recent-views clearfix">
 
             <h2 class="block-title">Recent Views</h2>

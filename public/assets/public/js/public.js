@@ -2589,49 +2589,87 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 		
 			var bedrooms = $("input[name='bedrooms']").val();
 			
-			var arrival = $('#edit-arrival').val();
-			var departure = $('#edit-departure').val();
+			var arrival = $("input[name='arrival']").val();
+			var arrivalTxt = $('#edit-arrival').val();
+
+			var departure = $("input[name='departure']").val();
+			var departureTxt = $('#edit-departure').val();
 
 			var adults = $("input[name='adults']").val();
 			var children = $("input[name='children']").val();
-			
-			txt = '';
-			
-			if(city){
-				txt += city_txt + ' / ';
-			}
-			
-			if(zone){
-				txt += zone_txt;
-			}
-			
-			if(type){
-				txt += type_txt + ' / ';
-			}
-			
-			if((arrival) && (departure)){			
-				txt += 'Travel dates' + ': ' + arrival + ' - ' + departure + ' / ';
-			}
-			
-			if(bedrooms){
-				txt += 'Bedrooms' + ': ' + bedrooms + ' / ';
-			}
-			
-			if(adults){
-				txt += 'Adults' + ': ' + adults + ' / ';
 
-				if(children){
-					child = children;
-				}else{
-					child = 0;
+			
+			$("#avail-search-form").submit(function(){
+				var petFriendly = ($("input[name='pet_friendly']").is(":checked"))?true:false;
+				var adultsOnly  = ($("input[name='adults_only']").is(":checked"))?true:false;
+				var beachFront  = ($("input[name='beach_front']").is(":checked"))?true:false;
+				localStorage.removeItem("breadcrumbs");
+				localStorage.removeItem("search-form");
+				var inputsForm = {
+					type: type,
+					city: city,
+					zone: zone,
+					bedrooms: bedrooms,
+					arrival: arrival,
+					arrivalTxt: arrivalTxt,
+					departure: departure,
+					departureTxt: departureTxt,
+					adults: adults,
+					children: children,
+					petFriendly: petFriendly,
+					adultsOnly: adultsOnly,
+					beachFront: beachFront,
+				};
+
+				localStorage.setItem("search-form", JSON.stringify(inputsForm));
+			});
+
+			$("#return-availability-results").click(function(){
+				$("#avail-search-form").submit();
+			});
+
+			var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
+
+			if(!breadcrumbs){
+				txt = '';
+				
+				if(city){
+					txt += city_txt + ' / ';
 				}
-		
-				txt += 'Children' + ': ' + child;
+				
+				if(zone){
+					txt += zone_txt;
+				}
+				
+				if(type){
+					txt += type_txt + ' / ';
+				}
+				
+				if((arrivalTxt) && (departureTxt)){			
+					txt += 'Travel dates' + ': ' + arrivalTxt + ' - ' + departureTxt + ' / ';
+				}
+				
+				if(bedrooms){
+					txt += 'Bedrooms' + ': ' + bedrooms + ' / ';
+				}
+				
+				if(adults){
+					txt += 'Adults' + ': ' + adults + ' / ';
+	
+					if(children){
+						child = children;
+					}else{
+						child = 0;
+					}
+			
+					txt += 'Children' + ': ' + child;
+				}
+				
+				localStorage.setItem('breadcrumbs', txt);
 			}
 			
-			if(txt){
-				$('.search-params-breadcrumbs').html(txt);
-			}
+			$('.search-params-breadcrumbs').html(localStorage.getItem('breadcrumbs'));
+
 			
 		});
 		
