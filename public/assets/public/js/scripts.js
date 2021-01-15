@@ -54,42 +54,73 @@
 		
 		$(function(){
 
+			var getInputsSearch = localStorage.getItem('search-form') || '';
+			
 			var txtCity = $("select[name='city']").data('txt-select');
 			$("select[name='city']").change(function () {
 				getZones(txtCity, $(this));
 			});
-
-			if ($("select[name='city'] ").val() != "") {
-				getZones(txtCity, $("select[name='city'] option:selected"));
+			
+			if(getInputsSearch){
+				getInputsSearch = JSON.parse(getInputsSearch);
+				$("select[name='property_type']").val(getInputsSearch.type);
+				$("select[name='city']").val(getInputsSearch.city);
+				$("select[name='zone']").val(getInputsSearch.zone);
+				$("input[name='bedrooms']").val(getInputsSearch.bedrooms);
+				$("input[name='arrival']").val(getInputsSearch.arrival);
+				$('#edit-arrival').val(getInputsSearch.arrivalTxt);
+				$("input[name='departure']").val(getInputsSearch.departure);
+				$('#edit-departure').val(getInputsSearch.departureTxt);
+				$("input[name='adults']").val(getInputsSearch.adults);
+				$("input[name='children']").val(getInputsSearch.children);
+				
+				$("#zone").attr('data-zone', getInputsSearch.zone);
+				
+				if(getInputsSearch.petFriendly){
+					$("input[name='pet_friendly']").prop('checked', true);
+				}
+				if(getInputsSearch.adultsOnly){
+					$("input[name='adults_only']").prop('checked', true);
+				}
+				if(getInputsSearch.beachFront){
+					$("input[name='beach_front']").prop('checked', true);
+				}
+				
+				if ($("select[name='city'] ").val() != "") {
+					getZones(txtCity, $("select[name='city'] option:selected"));
+				}
+			}else{
+				if ($("select[name='city'] ").val() != "") {
+					getZones(txtCity, $("select[name='city'] option:selected"));
+				}
 			}
-
-			var type = $("select[name='property_type']").val();
-			var type_txt = $("select[name='property_type'] option:selected").text();
-
-			var city = $("select[name='city']").val();
-			var city_txt = $("select[name='city'] option:selected").text();
-
-			var zone = $("select[name='zone']").val();
-			var zone_txt = $("select[name='zone'] option:selected").text();
-		
-			var bedrooms = $("input[name='bedrooms']").val();
 			
-			var arrival = $("input[name='arrival']").val();
-			var arrivalTxt = $('#edit-arrival').val();
-
-			var departure = $("input[name='departure']").val();
-			var departureTxt = $('#edit-departure').val();
-
-			var adults = $("input[name='adults']").val();
-			var children = $("input[name='children']").val();
-
-			
-			$("#avail-search-form").submit(function(){
+			$("#avail-search-form").submit(function(e){
 				var petFriendly = ($("input[name='pet_friendly']").is(":checked"))?true:false;
 				var adultsOnly  = ($("input[name='adults_only']").is(":checked"))?true:false;
 				var beachFront  = ($("input[name='beach_front']").is(":checked"))?true:false;
 				localStorage.removeItem("breadcrumbs");
 				localStorage.removeItem("search-form");
+				type = $("select[name='property_type']").val();
+				type_txt = $("select[name='property_type'] option:selected").text();
+
+				city = $("select[name='city']").val();
+				city_txt = $("select[name='city'] option:selected").text();
+
+				zone = $("select[name='zone']").val();
+				zone_txt = $("select[name='zone'] option:selected").text();
+			
+				bedrooms = $("input[name='bedrooms']").val();
+				
+				arrival = $("input[name='arrival']").val();
+				arrivalTxt = $('#edit-arrival').val();
+
+				departure = $("input[name='departure']").val();
+				departureTxt = $('#edit-departure').val();
+
+				adults = $("input[name='adults']").val();
+				children = $("input[name='children']").val();
+
 				var inputsForm = {
 					type: type,
 					city: city,
@@ -105,7 +136,6 @@
 					adultsOnly: adultsOnly,
 					beachFront: beachFront,
 				};
-
 				localStorage.setItem("search-form", JSON.stringify(inputsForm));
 			});
 
@@ -113,49 +143,70 @@
 				$("#avail-search-form").submit();
 			});
 
-			var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
-
-			if(!breadcrumbs){
-				txt = '';
+			setTimeout(function(){
+				var type = $("select[name='property_type']").val();
+				var type_txt = $("select[name='property_type'] option:selected").text();
 				
-				if(city){
-					txt += city_txt + ' / ';
-				}
+				var city = $("select[name='city']").val();
+				var city_txt = $("select[name='city'] option:selected").text();
 				
-				if(zone){
-					txt += zone_txt;
-				}
+				var zone = $("select[name='zone']").val();
+				var zone_txt = $("select[name='zone'] option:selected").text();
 				
-				if(type){
-					txt += type_txt + ' / ';
-				}
+				var bedrooms = $("input[name='bedrooms']").val();
 				
-				if((arrivalTxt) && (departureTxt)){			
-					txt += 'Travel dates' + ': ' + arrivalTxt + ' - ' + departureTxt + ' / ';
-				}
+				var arrival = $("input[name='arrival']").val();
+				var arrivalTxt = $('#edit-arrival').val();
 				
-				if(bedrooms){
-					txt += 'Bedrooms' + ': ' + bedrooms + ' / ';
-				}
+				var departure = $("input[name='departure']").val();
+				var departureTxt = $('#edit-departure').val();
 				
-				if(adults){
-					txt += 'Adults' + ': ' + adults + ' / ';
+				var adults = $("input[name='adults']").val();
+				var children = $("input[name='children']").val();
+				
+				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
 	
-					if(children){
-						child = children;
-					}else{
-						child = 0;
+				if(!breadcrumbs){
+					txt = '';
+					
+					if(city){
+						txt += city_txt + ' / ';
 					}
-			
-					txt += 'Children' + ': ' + child;
+					
+					if(zone){
+						txt += zone_txt + ' / ';
+					}
+					
+					if(type){
+						txt += type_txt + ' / ';
+					}
+					
+					if((arrivalTxt) && (departureTxt)){			
+						txt += 'Travel dates' + ': ' + arrivalTxt + ' - ' + departureTxt + ' / ';
+					}
+					
+					if(bedrooms){
+						txt += 'Bedrooms' + ': ' + bedrooms + ' / ';
+					}
+					
+					if(adults){
+						txt += 'Adults' + ': ' + adults + ' / ';
+		
+						if(children){
+							child = children;
+						}else{
+							child = 0;
+						}
+				
+						txt += 'Children' + ': ' + child;
+					}
+					
+					localStorage.setItem('breadcrumbs', txt);
 				}
 				
-				localStorage.setItem('breadcrumbs', txt);
-			}
-			
-			$('.search-params-breadcrumbs').html(localStorage.getItem('breadcrumbs'));
+				$('.search-params-breadcrumbs').html(localStorage.getItem('breadcrumbs'));
+			}, 500);
 
-			
 		});
 		
 	});
