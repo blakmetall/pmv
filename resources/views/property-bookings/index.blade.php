@@ -51,19 +51,15 @@ $searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
                 @endphp
             @endif
         @endif
-
+    @else
+        @php
+        $actions = [];
+        @endphp
     @endif
 
     @include('components.heading', [
     'label' => __('Bookings'),
     'actions' => $actions
-    ])
-
-    <!-- separator -->
-    <div class="mb-4"></div>
-    @include('properties.partials.info', [
-    'propertyID' => $property->id,
-    'property' => $property
     ])
 
     <!-- separator -->

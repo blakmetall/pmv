@@ -14,13 +14,19 @@
     $nightsDate = \RatesHelper::getTotalBookingDays($_GET['arrival'], $_GET['departure']);
     $datesProperty = getSearchDate(false, $_GET['arrival'], $_GET['departure']);
     $bothDates = $datesProperty['currentDate'].' - '.$datesProperty['nextDate'];
+    $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
     @endphp
 
     @include('public.pages.partials.main-content-start')
 
+
     <div id="availability-results">
-        <div class="well well-sm text-right">Showing 1 to 1 of {{ $properties->total() }} results</div>
+        <div class="well well-sm text-right">Showing {{ $properties->firstItem() }} to {{ $properties->lastItem() }} of
+            {{ $properties->total() }}
+            results
+        </div>
         @foreach ($properties as $property)
+            @include('public.pages.partials.modal')
             @php
             $total = \RatesHelper::getNightsSubtotalCost($property->property, $_GET['arrival'], $_GET['departure']);
             $availabilityProperty = getAvailabilityProperty($property->property_id, $_GET['arrival'], $_GET['departure']);
@@ -88,16 +94,19 @@
                             <div class="alert alert-warning text-center"> One or more nights are not available for dates
                                 <strong>{{ $bothDates }}</strong>,<br>
                                 please check the
-                                <a href="http://palmeravacations.com/_availability_calendar.php?id=898"
-                                    title="Availability Calendar" target="_blank">Availability Calendar</a> and edit your
-                                search.
+                                <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}" data-year=""
+                                    data-target="#{{ $modalID }}" title="Availability Calendar">
+                                    Availability Calendar
+                                </a> and edit your search.
                             </div>
                         @elseif($availabilityProperty == 'none')
                             <div class="alert alert-danger text-center"> Not available for dates:
                                 <strong>{{ $bothDates }}</strong>,<br>
-                                please check the <a href="http://palmeravacations.com/_availability_calendar.php?id=749"
-                                    title="Availability Calendar" target="_blank">Availability Calendar</a> and edit your
-                                search.
+                                please check the <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}"
+                                    data-year="" data-target="#{{ $modalID }}" title="Availability Calendar"
+                                    class="btn-calendar">
+                                    Availability Calendar
+                                </a> and edit your search.
                             </div>
                         @endif
                     </div>

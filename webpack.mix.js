@@ -78,6 +78,7 @@ mix.combine(
         "public/assets/public/css/drupal-bootstrap-flatly.css",
         "public/assets/public/css/style.css",
         "public/assets/public/css/clic.css",
+        "public/assets/public/css/calendar.css",
     ],
     "public/assets/public/css/public.css"
 );
