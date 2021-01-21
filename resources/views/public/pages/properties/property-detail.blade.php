@@ -11,11 +11,12 @@
 
     @php
     $title = $property->name;
+    // $availabilityProperty = getAvailabilityProperty($property->property_id, $_GET['arrival'], $_GET['departure']);
     @endphp
 
     @include('public.pages.partials.main-content-start')
 
-    {{-- <div id="property-details">
+    <div id="property-details">
         <div id="property-gallery-info">
             <div class="cssload-thecube" style="display: none;">
                 <div class="cssload-cube cssload-c1"></div>
@@ -28,29 +29,18 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li style="width: 848px; margin-right: 0px; float: left; display: block;" class="flex-active-slide">
-                            <img src="/images/property-images/1193/original/img-u94mExsV-1604445401.jpg" draggable="false">
+                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
                         </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-LP877Tc6-1604445403.jpg" draggable="false">
-                        </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-gEmWD7uS-1604445402.jpg" draggable="false">
-                        </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-I6U36Rn4-1604445402.jpg" draggable="false">
-                        </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-te3w0io9-1604445402.jpg" draggable="false">
-                        </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-WESZBqse-1604445403.jpg" draggable="false">
-                        </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-idUGHTOC-1604445404.jpg" draggable="false">
-                        </li>
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;"><img
-                                src="/images/property-images/1193/original/img-mG72t1C7-1604445404.jpg" draggable="false">
-                        </li>
+                        @foreach ($property->property->images as $index => $image)
+                            @if ($index == 0)
+                                @php
+                                continue;
+                                @endphp
+                            @endif
+                            <li style="width: 848px; margin-right: 0px; float: left; display: block;">
+                                <img src="{{ $image->file_url }}" draggable="false">
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <ul class="flex-direction-nav">
@@ -63,35 +53,46 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li style="width: 140px; margin-right: 5px; float: left; display: block;" class="flex-active-slide">
-                            <img src="/images/property-images/1193/thumbs/img-u94mExsV-1604445401.jpg" draggable="false">
+                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
                         </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-LP877Tc6-1604445403.jpg" draggable="false">
-                        </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-gEmWD7uS-1604445402.jpg" draggable="false">
-                        </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-I6U36Rn4-1604445402.jpg" draggable="false">
-                        </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-te3w0io9-1604445402.jpg" draggable="false">
-                        </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-WESZBqse-1604445403.jpg" draggable="false">
-                        </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-idUGHTOC-1604445404.jpg" draggable="false">
-                        </li>
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;"><img
-                                src="/images/property-images/1193/thumbs/img-mG72t1C7-1604445404.jpg" draggable="false">
-                        </li>
+                        @foreach ($property->property->images as $index => $image)
+                            @if ($index == 0)
+                                @php
+                                continue;
+                                @endphp
+                            @endif
+                            <li style="width: 140px; margin-right: 5px; float: left; display: block;">
+                                <img src="{{ $image->file_url }}" draggable="false">
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <ul class="flex-direction-nav">
                     <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
                     <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
                 </ul>
+            </div>
+        </div>
+        <div id="property-rate-info">
+            <div class="alert alert-success text-center"> Available for dates <strong>Sat 23/Jan/2021 - Sun 31/Jan/2021 ( 8
+                    nights )</strong> </div>
+            <div class="row" id="availability-results">
+                <div class="col-xs-4 text-center">
+                    <div class="b-rate ">$100 USD</div>
+                    <div class="b-caption">avg. night</div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="text-right savings-tag"></div>
+                    <div class="total-stay text-right">Total stay: <span>$800 USD</span><br>Sat 23/Jan/2021 - Sun
+                        31/Jan/2021 ( 8 nights )</div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="text-right">
+                        <form id="bookit-1161-form" action="/reservations" method="post"><input type="hidden" name="pid"
+                                value="1161"><input type="submit" name="submit" value="Book it!" title="Book this property"
+                                class="btn btn-warning"></form>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="property-rate-info">
@@ -141,8 +142,8 @@
                                         name="children_sing" value="" size="60" maxlength="128">
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-right"><button title="Check Availability"
-                                    class="btn btn-success btn-loading form-submit"
+                            <div class="col-xs-2 text-right">
+                                <button title="Check Availability" class="btn btn-success btn-loading form-submit"
                                     data-loading-text="<i class=&quot;fa fa-spinner fa-spin&quot;></i>" type="submit"
                                     id="edit-submit" name="op" value="<i class=&quot;fas fa-search&quot;></i>"><i
                                         class="fas fa-search"></i></button>
@@ -163,106 +164,45 @@
             <div class="row">
                 <div class="col-xs-6">
                     <h4 class="sub-section">Property Type</h4>
-                    <p>Condo</p>
+                    <p>{{ $property->property->type->getLabel() }}</p>
                 </div>
                 <div class="col-xs-6">
                     <h4 class="sub-section">Location</h4>
-                    <p>Puerto Vallarta / Old Town/Zona Romántica / V177</p>
+                    <p>{{ getCity($property->property->city_id) }} / {{ $property->property->zone->getLabel() }} /
+                        {{ $property->property->building->name }}
+                    </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
                     <h4 class="sub-section">Bedrooms / Bathrooms</h4>
-                    <p>1 / 1</p>
+                    <p>{{ $property->property->bedrooms }} / {{ (int) $property->property->baths }}</p>
                 </div>
                 <div class="col-xs-6">
                     <h4 class="sub-section">Maid Service</h4>
-                    <p>Once a week</p>
+                    <p>{{ $property->property->cleaningOption->getLabel() }}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
                     <h4 class="sub-section">Occupancy</h4>
-                    <p><span class="max-pax">2</span> guests max. (including children under 12 and babies)</p>
+                    <p><span class="max-pax">{{ $property->property->pax }}</span> guests max. (including children under 12
+                        and babies)</p>
                 </div>
-                <div class="col-xs-6">
+                {{-- <div class="col-xs-6">
                     <h4 class="sub-section">Bedding</h4>
                     <p>King bed: 1<br></p>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div id="property-description-info">
-            <h2 class="section-title">Highlights</h2>Palmera Vacations is glad to present V177 - 503 studio, located in the
-            heart of Puerto Vallarta, just one short block from the most popular beach in town. This Beautifully Furnished
-            Condominium offers all the amenities you would expect in a Luxury Hotel while at the same time you can live like
-            a local. Enjoy the privacy and comfort that this condominium provides while being smack dab in the middle of
-            Puerto Vallarta’s most desired location.<br>
-            <br>
-            Ambiance and amenities are in abundance in this romantic vacation getaway.<br>
-            <br>
-            Enjoy your morning coffee or an evening cocktail on the roof top common area that sports a beautiful heated
-            infinity pool, jacuzzi, dinning and socializing areas all complete with a 360 View of the Ocean, City and
-            Mountains. If that sounds a little too laid back for your active life, get a real workout in the Well-Equipped
-            Rooftop Gym.<br>
-            <br>
-            When you’re ready to hit the streets, you’ll find that this condominium is conveniently located just a short and
-            easy walk to dozens of fine Restaurants, Sidewalk Coffee Shops, Night Life, Shopping and only one block from the
-            famous ‘Playa Los Muertos’ Beach. Zona Romantica offers limitless opportunities to explore, dine, relax and join
-            in the fun.<br>
-            <br>
-            Dec 01, 2020 to April 30, 2021 Monthly Rate: $3,500 USD **Minimum 3 Months** Plus Electricity <br>
-            May 01, 2021 to Nov 30, 2021 Monthly Rate: $2,600 USD **Minimum 3 Months** Plus Electricity <br>
+            <h2 class="section-title">Highlights</h2>
+            {!! nl2br($property->description) !!}
         </div>
         <div id="property-features-info">
             <h2 class="section-title">Features and Amenities</h2>
             <div class="row">
-                <div class="col-xs-3">
-                    <ul class="list">
-                        <li>24 hour building security</li>
-                        <li>Air Conditioning</li>
-                        <li>Alarm Clock</li>
-                        <li>Balcony</li>
-                        <li>Beach Towels</li>
-                        <li>Blender</li>
-                        <li>Cable</li>
-                        <li>Ceiling Fans</li>
-                    </ul>
-                </div>
-                <div class="col-xs-3">
-                    <ul class="list">
-                        <li>City View</li>
-                        <li>Coffee Maker</li>
-                        <li>Dryer</li>
-                        <li>Elevator</li>
-                        <li>Exercise Room</li>
-                        <li>Furnished</li>
-                        <li>Hair Dryer</li>
-                        <li>Heated Pool</li>
-                    </ul>
-                </div>
-                <div class="col-xs-3">
-                    <ul class="list">
-                        <li>Kids Allowed</li>
-                        <li>Linens</li>
-                        <li>Microwave</li>
-                        <li>Mountain View</li>
-                        <li>No Smoking</li>
-                        <li>Pets Not Allowed</li>
-                        <li>Pool</li>
-                        <li>Purified Water System</li>
-                    </ul>
-                </div>
-                <div class="col-xs-3">
-                    <ul class="list">
-                        <li>Refrigerator</li>
-                        <li>Satellite TV</li>
-                        <li>Toaster</li>
-                        <li>Towels</li>
-                        <li>TV</li>
-                        <li>Wifi in Common Areas</li>
-                        <li>Wireless Internet</li>
-                    </ul>
-                </div>
+                {!! generateColumns($property->property->amenities, 8) !!}
             </div>
         </div>
         <div id="property-rates-info">
@@ -278,97 +218,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1/Nov/2020 to 19/Dec/2020</td>
-                        <td class="text-center">$150.00</td>
-                        <td class="text-center">$910.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr>
-                        <td>20/Dec/2020 to 3/Jan/2021</td>
-                        <td class="text-center">$250.00</td>
-                        <td class="text-center">$1,470.00</td>
-                        <td class="text-center">--</td>
-                        <td>7 nights</td>
-                    </tr>
-                    <tr>
-                        <td>4/Jan/2021 to 31/Jan/2021</td>
-                        <td class="text-center">$180.00</td>
-                        <td class="text-center">$1,050.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr>
-                        <td>1/Feb/2021 to 28/Feb/2021</td>
-                        <td class="text-center">$180.00</td>
-                        <td class="text-center">$1,190.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr>
-                        <td>1/Mar/2021 to 27/Mar/2021</td>
-                        <td class="text-center">$150.00</td>
-                        <td class="text-center">$910.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>28/Mar/2021 to 3/Apr/2021</td>
-                        <td class="text-center">$250.00</td>
-                        <td class="text-center">$1,540.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>4/Apr/2021 to 30/Apr/2021</td>
-                        <td class="text-center">$120.00</td>
-                        <td class="text-center">$700.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>1/May/2021 to 10/Jul/2021</td>
-                        <td class="text-center">$100.00</td>
-                        <td class="text-center">$665.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>11/Jul/2021 to 10/Aug/2021</td>
-                        <td class="text-center">$120.00</td>
-                        <td class="text-center">$805.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>11/Aug/2021 to 28/Sep/2021</td>
-                        <td class="text-center">$100.00</td>
-                        <td class="text-center">$630.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>29/Oct/2021 to 31/Oct/2021</td>
-                        <td class="text-center">$150.00</td>
-                        <td class="text-center">$980.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>1/Nov/2021 to 19/Dec/2021</td>
-                        <td class="text-center">$150.00</td>
-                        <td class="text-center">$910.00</td>
-                        <td class="text-center">--</td>
-                        <td>3 nights</td>
-                    </tr>
-                    <tr class="toggle-table-rates">
-                        <td>20/Dec/2021 to 3/Jan/2022</td>
-                        <td class="text-center">$250.00</td>
-                        <td class="text-center">$1,470.00</td>
-                        <td class="text-center">--</td>
-                        <td>7 nights</td>
-                    </tr>
+                    @foreach ($property->property->rates as $rate)
+                        @php
+                        $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
+                        $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
+                        @endphp
+                        <tr>
+                            <td>{{ $startDate }} to {{ $endDate }}</td>
+                            <td>{{ priceFormat($rate->nightly) }}</td>
+                            <td>{{ priceFormat($rate->weekly) }}</td>
+                            <td>{{ priceFormat($rate->monthly) }}</td>
+                            <td>{{ $rate->min_stay }} nights</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             <div class="row rates-footer">
@@ -584,7 +446,7 @@
                 src="https://www.google.com/maps/d/u/1/embed?mid=1R4iiei3X-lalmkRHWsf4VFKe6yrqS8DS"
                 width="&amp;z=15&quot;100%&quot;" height="370"></iframe>
         </div>
-    </div> --}}
+    </div>
 
     @include('public.pages.partials.main-content-end')
 

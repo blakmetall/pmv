@@ -125,7 +125,7 @@ class Property extends Model
 
     public function cleaningOption()
     {
-        return $this->hasOne('App\Models\CleaningOption', 'id');
+        return $this->belongsTo('App\Models\CleaningOption', 'cleaning_option_id');
     }
 
     public function management()

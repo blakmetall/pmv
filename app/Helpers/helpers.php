@@ -661,6 +661,29 @@ if (!function_exists('getAvailabilityProperty')) {
     }
 }
 
+if (!function_exists('generateColumns')) {
+    function generateColumns($array, $number)
+    {
+        $count = 1;
+        $html = "";
+        foreach ($array as $item){
+            if ($count % $number == 1){
+                $html .= "<div class='col-xs-3'><ul class='list'>";          
+            }
+            $html .= "<li>".$item->getLabel()."</li>";
+            if ($count % $number == 0) {
+                $html .= "</div></ul>";
+            }
+            $count++;
+        }
+        if ($count % $number != 1) {
+            $html .= "</div></ul>";
+        }
+
+        return $html;
+    }
+}
+
 // if (!function_exists('getNightsDate')) {
 //     function getNightsDate($fromDate, $toDate)
 //     {

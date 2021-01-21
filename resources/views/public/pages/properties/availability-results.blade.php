@@ -50,7 +50,7 @@
                             <div class="text-center">Bedrooms<br> {{ $property->property->bedrooms }}</div>
                         </div>
                         <div class="col-xs-4 opt2"> <i class="fa fa-shower"></i>
-                            <div class="text-center">Bathrooms<br> {{ $property->property->baths }}</div>
+                            <div class="text-center">Bathrooms<br> {{ (int) $property->property->baths }}</div>
                         </div>
                         @if ($property->property->pax)
                             <div class="col-xs-4 opt3"> <i class="fa fa-users"></i>
