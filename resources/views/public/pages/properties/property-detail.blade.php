@@ -2,6 +2,7 @@
 
 @section('page-css')
     {{-- property details css --}}
+    <link rel="stylesheet" href="{{ asset('assets/public/css/flexslider.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/public/css/property-details.css') }}">
 @endsection
 
@@ -11,10 +12,22 @@
 
     @php
     $title = $property->name;
-    // $availabilityProperty = getAvailabilityProperty($property->property_id, $_GET['arrival'], $_GET['departure']);
+    $datesProperty = explode(",", $_COOKIE['datesProperty']);
+    $arrival = $datesProperty[0];
+    $arrivalTxt = $datesProperty[1];
+    $departure = $datesProperty[2];
+    $departureTxt = $datesProperty[3];
+    $bothDates = $arrivalTxt.' - '.$departureTxt;
+    $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
+    $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
+    $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
+    $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
+    $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
     @endphp
 
     @include('public.pages.partials.main-content-start')
+
+    @include('public.pages.partials.modal')
 
     <div id="property-details">
         <div id="property-gallery-info">
@@ -25,82 +38,98 @@
                 <div class="cssload-cube cssload-c3"></div>
             </div>
             <div id="slider" class="flexslider flexslider-loading">
-                <div class="flex-viewport" style="overflow: hidden; position: relative; height: 344px;">
-                    <ul class="slides"
-                        style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-                        <li style="width: 848px; margin-right: 0px; float: left; display: block;" class="flex-active-slide">
-                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
+                <ul class="slides" style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                    <li class="flex-active-slide">
+                        <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
+                    </li>
+                    @foreach ($property->property->images as $index => $image)
+                        @if ($index == 0)
+                            @php
+                            continue;
+                            @endphp
+                        @endif
+                        <li>
+                            <img src="{{ $image->file_url }}" draggable="false">
                         </li>
-                        @foreach ($property->property->images as $index => $image)
-                            @if ($index == 0)
-                                @php
-                                continue;
-                                @endphp
-                            @endif
-                            <li style="width: 848px; margin-right: 0px; float: left; display: block;">
-                                <img src="{{ $image->file_url }}" draggable="false">
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                    @endforeach
+                </ul>
                 <ul class="flex-direction-nav">
                     <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
                     <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
                 </ul>
             </div>
             <div id="carousel" class="flexslider">
-                <div class="flex-viewport" style="overflow: hidden; position: relative; height: 100px;">
-                    <ul class="slides"
-                        style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-                        <li style="width: 140px; margin-right: 5px; float: left; display: block;" class="flex-active-slide">
-                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
+                <ul class="slides" style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                    <li class="flex-active-slide">
+                        <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
+                    </li>
+                    @foreach ($property->property->images as $index => $image)
+                        @if ($index == 0)
+                            @php
+                            continue;
+                            @endphp
+                        @endif
+                        <li>
+                            <img src="{{ $image->file_url }}" draggable="false">
                         </li>
-                        @foreach ($property->property->images as $index => $image)
-                            @if ($index == 0)
-                                @php
-                                continue;
-                                @endphp
-                            @endif
-                            <li style="width: 140px; margin-right: 5px; float: left; display: block;">
-                                <img src="{{ $image->file_url }}" draggable="false">
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                    @endforeach
+                </ul>
                 <ul class="flex-direction-nav">
                     <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
                     <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
                 </ul>
             </div>
         </div>
-        <div id="property-rate-info">
-            <div class="alert alert-success text-center"> Available for dates <strong>Sat 23/Jan/2021 - Sun 31/Jan/2021 ( 8
-                    nights )</strong> </div>
-            <div class="row" id="availability-results">
-                <div class="col-xs-4 text-center">
-                    <div class="b-rate ">$100 USD</div>
-                    <div class="b-caption">avg. night</div>
+        @if ($availabilityProperty == 'all')
+            <div id="property-rate-info">
+                <div class="alert alert-success text-center">
+                    Available for dates <strong>{{ $bothDates }} ( {{ $nightsDate }} nights )</strong>
                 </div>
-                <div class="col-xs-5">
-                    <div class="text-right savings-tag"></div>
-                    <div class="total-stay text-right">Total stay: <span>$800 USD</span><br>Sat 23/Jan/2021 - Sun
-                        31/Jan/2021 ( 8 nights )</div>
-                </div>
-                <div class="col-xs-3">
-                    <div class="text-right">
-                        <form id="bookit-1161-form" action="/reservations" method="post"><input type="hidden" name="pid"
-                                value="1161"><input type="submit" name="submit" value="Book it!" title="Book this property"
-                                class="btn btn-warning"></form>
+                <div class="row" id="availability-results">
+                    <div class="col-xs-4 text-center">
+                        <div class="b-rate ">${{ $nightlyRate }} USD</div>
+                        <div class="b-caption">avg. night</div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right savings-tag"></div>
+                        <div class="total-stay text-right">Total stay: <span>${{ number_format($total) }}
+                                USD</span><br>{{ $bothDates }} (
+                            {{ $nightsDate }} nights
+                            )
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="text-right">
+                            <form id="bookit-1161-form" action="/reservations" method="post">
+                                <input type="hidden" name="pid" value="1161">
+                                <input type="submit" name="submit" value="Book it!" title="Book this property"
+                                    class="btn btn-warning">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="property-rate-info">
-            <div class="alert alert-danger text-center"> Not available for dates: <strong>Saturday 12/December/2020 -
-                    Saturday 19/December/2020</strong>,<br> please check the <a
-                    href="http://palmeravacations.com/_availability_calendar.php?id=1193" title="Availability Calendar"
-                    target="_blank">Availability Calendar</a> and edit your search. </div>
-        </div>
+        @elseif($availabilityProperty == 'some')
+            <div id="property-rate-info">
+                <div class="alert alert-warning text-center"> One or more nights are not available for dates
+                    <strong>{{ $bothDates }}</strong>,<br>
+                    please check the
+                    <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}" data-year=""
+                        data-target="#{{ $modalID }}" title="Availability Calendar" class="btn-calendar">
+                        Availability Calendar
+                    </a> and edit your search.
+                </div>
+            </div>
+        @elseif($availabilityProperty == 'none')
+            <div id="property-rate-info">
+                <div class="alert alert-danger text-center"> Not available for dates: <strong>{{ $bothDates }}</strong>,<br>
+                    please check the
+                    <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}" data-year=""
+                        data-target="#{{ $modalID }}" title="Availability Calendar" class="btn-calendar">
+                        Availability Calendar
+                    </a> and edit your search.
+                </div>
+        @endif
         <form action="/old-town-zona-romantica/v177-503" method="post" id="property-details-form" accept-charset="UTF-8">
             <div>
                 <fieldset class="bg-success collapsible panel panel-default form-wrapper collapse-processed"
@@ -218,12 +247,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($property->property->rates as $rate)
+                    @foreach ($property->property->rates as $i => $rate)
                         @php
                         $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
                         $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
                         @endphp
-                        <tr>
+                        <tr class="{{ $i > 4 ? 'toggle-table-rates' : '' }}">
                             <td>{{ $startDate }} to {{ $endDate }}</td>
                             <td>{{ priceFormat($rate->nightly) }}</td>
                             <td>{{ priceFormat($rate->weekly) }}</td>
@@ -235,8 +264,13 @@
             </table>
             <div class="row rates-footer">
                 <div class="col-xs-9"><small><i>* All rates in USD tax included.</i></small></div>
-                <div class="col-xs-3 text-right"><small><a href="# " id="toggle-rates" title="more rates"
-                            class="show-rates">more rates</a></small></div>
+                @if (count($property->property->rates) > 5)
+                    <div class="col-xs-3 text-right">
+                        <small>
+                            <a href="# " id="toggle-rates" title="more rates" class="show-rates">more rates</a>
+                        </small>
+                    </div>
+                @endif
             </div>
         </div>
         <div id="property-calendar-info">
@@ -437,9 +471,13 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right cal-more-dates"><a
-                    href="http://www.palmeravacations.com/_availability_calendar.php?id=1193" title="More Dates"
-                    target="_blank" class="btn btn-warning">More Dates</a></div>
+            <div class="text-right cal-more-dates">
+                <a href="#" class="btn btn-warning btn-calendar" data-toggle="modal"
+                    data-source="{{ $property->property_id }}" data-year="" data-target="#{{ $modalID }}"
+                    title="More Dates">
+                    More Dates
+                </a>
+            </div>
         </div>
         <div id="property-map-info">
             <h2 class="section-title">Location Map</h2><iframe
@@ -460,6 +498,7 @@
 </script>
 @section('bottom-js')
 
+    <script src="{{ asset('assets/public/js/jquery.flexslider.js') }}"></script>
     <script src="{{ asset('assets/public/js/property-detail.js') }}"></script>
 
 @endsection

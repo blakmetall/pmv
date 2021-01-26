@@ -132,7 +132,7 @@ class PropertyController extends Controller
     }
 
 
-    public function propertyDetail($zone, $slug)
+    public function propertyDetail(Request $request, $zone, $slug)
     {
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];

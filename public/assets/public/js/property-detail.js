@@ -23,7 +23,49 @@
             addItemRw(property, rw);
         }
 
+        // toggle more rates
+        $('#toggle-rates').click(function(evt){
+            evt.preventDefault();		
+            $('.toggle-table-rates').toggle();
+            
+            var hide_txt = 'less rates';
+            var edit_txt = 'more rates';				
+                                    
+            if ($('#toggle-rates').hasClass('show-rates')) {
+                 $('#toggle-rates').removeClass('show-rates').addClass('hide-rates');
+                 $('#toggle-rates').text(hide_txt);
+                 $('#toggle-rates').attr('title', hide_txt);
+            }
+            else {
+                 $('#toggle-rates').removeClass('hide-rates').addClass('show-rates');
+                 $('#toggle-rates').text(edit_txt);
+                 $('#toggle-rates').attr('title', edit_txt);
+            }
+            
+        });
     });
+
+
+    // Slider
+    $(window).load(function() {
+        $('#carousel').flexslider({
+          animation: "slide",
+          controlNav: false,
+          animationLoop: false,
+          slideshow: false,
+          itemWidth: 140,
+          itemMargin: 5,
+          asNavFor: '#slider'
+        });
+       
+        $('#slider').flexslider({
+          animation: "slide",
+          controlNav: false,
+          animationLoop: false,
+          slideshow: false,
+          sync: "#carousel"
+        });
+      });
 
     function addItemRw(property, rw){
         var data = {

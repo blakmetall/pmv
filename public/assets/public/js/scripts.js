@@ -144,6 +144,10 @@
 					adultsOnly: adultsOnly,
 					beachFront: beachFront,
 				};
+
+				// Save session for use in property details
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt);
+
 				localStorage.setItem("search-form", JSON.stringify(inputsForm));
 			});
 
@@ -171,6 +175,8 @@
 				
 				var adults = $("input[name='adults']").val();
 				var children = $("input[name='children']").val();
+
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt);
 				
 				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
 	
@@ -218,6 +224,12 @@
 		});
 		
 	});
+
+	function setDatesProperty(arrival, arrivalTxt, departure, departureTxt){
+		// Save session for use in property details
+		var datesProperty = [arrival, arrivalTxt, departure, departureTxt];
+		document.cookie = `datesProperty=${datesProperty};path=/`;
+	}
 
 
 	function getZones(txtCity, city){

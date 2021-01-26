@@ -2659,6 +2659,10 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 					adultsOnly: adultsOnly,
 					beachFront: beachFront,
 				};
+
+				// Save session for use in property details
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt);
+
 				localStorage.setItem("search-form", JSON.stringify(inputsForm));
 			});
 
@@ -2686,6 +2690,8 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 				
 				var adults = $("input[name='adults']").val();
 				var children = $("input[name='children']").val();
+
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt);
 				
 				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
 	
@@ -2733,6 +2739,12 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 		});
 		
 	});
+
+	function setDatesProperty(arrival, arrivalTxt, departure, departureTxt){
+		// Save session for use in property details
+		var datesProperty = [arrival, arrivalTxt, departure, departureTxt];
+		document.cookie = `datesProperty=${datesProperty};path=/`;
+	}
 
 
 	function getZones(txtCity, city){

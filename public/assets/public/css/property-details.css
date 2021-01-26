@@ -89,7 +89,7 @@
 	background-color: #D99694;	
 }
 
-.cal-month td.cal-arrival-only {
+/* .cal-month td.cal-arrival-only {
 	background:#C3D69B url(../images/bgn-2.png) 50% 50% no-repeat;
 }
 
@@ -99,7 +99,7 @@
 
 .cal-month td.cal-arrival-departure { 
 	background:#C3D69B url(../images/bgn-1.png) 50% 50% no-repeat;
-}
+} */
 
 #property-map-info iframe {
 	width: 100%;

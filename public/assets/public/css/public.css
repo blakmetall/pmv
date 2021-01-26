@@ -14533,11 +14533,14 @@ table {
 .calendar-container th, .calendar-container td {
     text-align: center;
     border: 2px solid #fff;
+    font: 14px/22px Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
 
 .current-day {
     position: relative;
     z-index: 2;
+    font-weight: normal;
 }
 
 .arrival-only, .departure-only {
@@ -14674,4 +14677,8 @@ table {
 .booked-square{
     padding: 3px 10px;
     background-color: #D99694;
+}
+
+.modal h5{
+    color: #2D6C9C;
 }
