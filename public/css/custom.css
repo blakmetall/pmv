@@ -109,3 +109,21 @@
 .app-modal-notification .app-table-file-modal-dialog {
     max-width: 400px;
 }
+
+.all-dates{
+    display: none;
+    padding: 10px;
+    background-color: #e72929;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.some-dates{
+    display: none;
+    padding: 10px;
+    background-color: #e72929;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

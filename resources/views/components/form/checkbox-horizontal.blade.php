@@ -22,23 +22,19 @@ $hiddenStyle = ($hidden) ? 'display: none;' : '';
 @endphp
 
 <!-- name -->
-<div class="form-group row" style="{{ $hiddenStyle }}">
-    <label for="{{ $id }}" class="col-sm-2 col-form-label">
+<div class="form-group" style="display: flex">
+    <label for="{{ $id }}" style="margin-right: 10px">
         {{ $label }}
     </label>
+    <label class="checkbox checkbox-primary">
+        <input type="checkbox" value="{{ $value }}" name="{{ $inputName }}" id="{{ $id }}" {{ $checkedProp }}
+            {{ $disabledProp }} />
+        <span class="checkmark app-checkmark" style="top: 0"></span>
+    </label>
 
-    <div class="col-sm-10">
-
-        <label class="checkbox checkbox-primary mb-2">
-            <input type="checkbox" value="{{ $value }}" name="{{ $inputName }}" id="{{ $id }}" {{ $checkedProp }}
-                {{ $disabledProp }} />
-            <span class="checkmark app-checkmark"></span>
-        </label>
-
-        @if ($errors->has($requestName))
-            <div class="app-form-input-error">
-                {{ $errors->first($requestName) }}
-            </div>
-        @endif
-    </div>
+    @if ($errors->has($requestName))
+        <div class="app-form-input-error">
+            {{ $errors->first($requestName) }}
+        </div>
+    @endif
 </div>

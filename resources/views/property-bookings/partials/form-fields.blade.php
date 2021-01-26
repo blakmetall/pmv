@@ -399,37 +399,40 @@ $currentYear = (isset($_GET['year'])?$_GET['year']:'');
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('EMAIL NOTIFICATIONS') }}</span>
 
-        <!-- guest_notification -->
-        @include('components.form.checkbox', [
-        'group' => 'notification',
-        'label' => __('Guest'),
-        'name' => 'guest',
-        'value' => 1,
-        ])
+        <div style="display: flex">
+            <!-- guest_notification -->
+            @include('components.form.checkbox-horizontal', [
+            'group' => 'notification',
+            'label' => __('Guest'),
+            'name' => 'guest',
+            'value' => 1,
+            ])
 
-        <!-- office_notification -->
-        @include('components.form.checkbox', [
-        'group' => 'notification',
-        'label' => __('Office'),
-        'name' => 'office',
-        'value' => 1,
-        ])
+            <!-- office_notification -->
+            @include('components.form.checkbox-horizontal', [
+            'group' => 'notification',
+            'label' => __('Office'),
+            'name' => 'office',
+            'value' => 1,
+            ])
 
-        <!-- concierge_notification -->
-        @include('components.form.checkbox', [
-        'group' => 'notification',
-        'label' => __('Concierge'),
-        'name' => 'concierge',
-        'value' => 1,
-        ])
+            <!-- concierge_notification -->
+            @include('components.form.checkbox-horizontal', [
+            'group' => 'notification',
+            'label' => __('Concierge'),
+            'name' => 'concierge',
+            'value' => 1,
+            ])
 
-        <!-- home_owner_notification -->
-        @include('components.form.checkbox', [
-        'group' => 'notification',
-        'label' => __('Home Owner'),
-        'name' => 'home_owner',
-        'value' => 1,
-        ])
+            <!-- home_owner_notification -->
+            @include('components.form.checkbox-horizontal', [
+            'group' => 'notification',
+            'label' => __('Home Owner'),
+            'name' => 'home_owner',
+            'value' => 1,
+            ])
+        </div>
+
     </div>
 </div>
 

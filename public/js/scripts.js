@@ -953,24 +953,58 @@ function initFastSelectComponents(className) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initGetPmPropertySelectionEvent", function() { return initGetPmPropertySelectionEvent; });
+/* harmony import */ var _initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./initDatepickerComponents.js */ "./resources/js/scripts/initDatepickerComponents.js");
+
 function initGetPmPropertySelectionEvent(id, container, dataUrl) {
   var selectionModal = $(id);
   var selectionContainer = $(container);
   var url = selectionContainer.data('url');
   selectionModal.on('show.bs.modal', function (e) {
     $.get(url, function (html) {
-      selectionContainer.html(html);
-    });
-  });
-  $(document).on('change', container, function () {
-    var select = $(".app-pm-property-select-wrapper select");
-    var generationUrl = $(".app-pm-property-select-wrapper").data(dataUrl);
-    var propertyID = select.val();
+      selectionContainer.html(html).promise().done(function () {
+        Object(_initDatepickerComponents_js__WEBPACK_IMPORTED_MODULE_0__["initDatepickerComponents"])();
+        $("#form-check-availability").on('submit', function (e) {
+          e.preventDefault();
+          var action = $(this).attr("action");
+          var req = $(this).serializeArray();
+          $.ajax({
+            headers: {
+              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            },
+            type: "POST",
+            url: action,
+            dataType: "json",
+            data: req
+          }).done(function (data) {
+            var dataHtml = "\n                            <div>".concat(data.name, "</div>\n                            <div>").concat(data.type, "</div>\n                            <div>").concat(data.address, "</div>\n                            <a href=\"#\" data-toggle=\"modal\" data-source=\"").concat(data.id, "\" data-year=\"\"\n                                data-target=\"#modal-availability-").concat(data.id, "\" class=\"btn-calendar\">\n                                Availability Calendar\n                            </a> and edit your search.\n                        ");
 
-    if (propertyID) {
-      document.location = generationUrl + '/' + propertyID;
-    }
-  });
+            if (data.afirmation == 'all') {
+              $('.all-dates').hide();
+              $('.some-dates').hide();
+              $('#details-property').show();
+              $('#details-property').html(dataHtml);
+            } else if (data.afirmation == 'some') {
+              $('.all-dates').hide();
+              $('.some-dates span').html("".concat(data.arrival, " - ").concat(data.departure));
+              $('.some-dates').show();
+            } else {
+              $('.some-dates').hide();
+              $('.all-dates span').html("".concat(data.arrival, " - ").concat(data.departure));
+              $('.all-dates').show();
+            }
+          });
+        });
+      });
+    });
+  }); // $(document).on('change', container, function() {
+  //     let select = $(".app-pm-property-select-wrapper select");
+  //     let generationUrl = $(".app-pm-property-select-wrapper").data(dataUrl);
+  //     let propertyID = select.val();
+  //     if(propertyID) {
+  //         let propertyUrl = generationUrl + '/' + propertyID;
+  //         // document.location = generationUrl + '/' + propertyID;
+  //     }
+  // });
 }
 
 /***/ }),
@@ -1111,6 +1145,7 @@ function initNotificationsModalHandler() {
       var source = $(e.relatedTarget).data("source");
       var route = $(e.relatedTarget).data("route");
       var txtButton = $(e.relatedTarget).data("text-button");
+      var txtCustomMsg = $(e.relatedTarget).data("text-custom-msg");
       $.ajax({
         url: url,
         type: "GET",
@@ -1119,7 +1154,7 @@ function initNotificationsModalHandler() {
         }
       }).done(function (html) {
         container.html(html);
-        container.append('<a href="' + route + '" class="btn btn-primary m-1">' + txtButton + '</a>');
+        container.append("<form action=\"".concat(route, "\">\n                <br>\n                <label for=\"custom_msg\" style=\"display:block;\">").concat(txtCustomMsg, "</label>\n                <textarea name=\"custom_msg\" id=\"custom_msg\" rows=\"5\" style=\"width:100%\"></textarea>\n                <button type=\"submit\" class=\"btn btn-primary m-1\">").concat(txtButton, "</button>\n                </form>"));
       });
     });
   });

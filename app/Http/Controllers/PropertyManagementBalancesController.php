@@ -89,13 +89,13 @@ class PropertyManagementBalancesController extends Controller
             $msg .= 'Here are the details of your current balance<br>';
             $msg .= 'Date' . ': ' . getCurrentDateTime() . '<br>';
             $msg .= 'Property' . ': <strong>' . $data['property'] . '</strong><br>';
-            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . ' USD</strong>';
+            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . ' MXN</strong>';
             $msg .= '<hr>';
             $msg .= 'Hola ' . $getUser->profile->full_name . '<br><br>';
             $msg .= 'Aquí están los detalles de su balance actual<br>';
             $msg .= 'Fecha' . ': ' . getCurrentDateTime() . '<br>';
             $msg .= 'Propiedad' . ': <strong>' . $data['property'] . '</strong><br>';
-            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . ' USD</strong><br><br>';
+            $msg .= 'Balance' . ': <strong>' . priceFormat($data['balance']) . ' MXN</strong><br><br>';
         }
 
         return $msg;
@@ -110,7 +110,9 @@ class PropertyManagementBalancesController extends Controller
         $data['balance'] = $balance['balance'];
         $data['pendingAudit'] = $balance['pendingAudit'];
         $data['estimatedBalance'] = $balance['estimatedBalance'];
-
+        $data['customMsg'] = $request->custom_msg;
+        
+        dd($data);
         if ($pm->property->users->isNotEmpty()) {
             foreach ($pm->property->users as $getUser) {
                 $getUser = User::find($getUser->id);

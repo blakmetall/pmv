@@ -217,7 +217,7 @@
                                                     {{-- <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
                                                         <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -2px;">
                                                     </a> --}}
-                                                    <a href="#" data-toggle="modal" data-source="{{ $row->id }}" data-target="#{{ $modalID }}" data-text-button="{{ __('Send') }}" data-route="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="text-primary mr-2">
+                                                    <a href="#" data-toggle="modal" data-source="{{ $row->id }}" data-target="#{{ $modalID }}" data-text-button="{{ __('Send') }}" data-text-custom-msg="{{ __('Additional Msg') }}" data-route="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="text-primary mr-2">
                                                         <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                                     </a>
                                                 @endif

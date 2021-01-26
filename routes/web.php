@@ -70,6 +70,7 @@ Route::group(['middleware' => ['web']], function () {
             // property selection partial for creating new booking
             Route::get('property-selection', 'PropertyBookingController@getPropertySelection')->name('property-bookings.get-property-selection');
             Route::get('generate-booking-url/{property?}', 'PropertyBookingController@generateBookingUrl')->name('property-bookings.generate-booking-url');
+            Route::post('check-availability', 'PropertyBookingController@checkAvailability')->name('property-bookings.check-availability');
 
             // bookings by property
             Route::group(['middleware' => 'role-permission:property-bookings,property'], function () {

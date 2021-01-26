@@ -71,7 +71,7 @@ class DetailsBooking extends Notification
             ->line('------------------------------------------------')
             ->line('RESERVATION NAME: <strong>' . $this->booking->full_name . '</strong>')
             ->line('DATES: <strong>' . $this->booking->arrival_date . ' - ' . $this->booking->departure_date . '</strong>')
-            ->line('RATE: <strong>Avg. Night' . priceFormat($this->booking->price_per_night) . 'USD | Total stay ' . priceFormat($this->booking->subtotal_nights) . 'USD</strong>')
+            ->line('RATE: <strong>Avg. Night' . priceFormat($this->booking->price_per_night) . 'MXN | Total stay ' . priceFormat($this->booking->subtotal_nights) . 'MXN</strong>')
             ->line('------------------------------------------------')
             ->line('PROPERTY DETAILS')
             ->line('------------------------------------------------')
@@ -85,10 +85,10 @@ class DetailsBooking extends Notification
             ->line('------------------------------------------------')
             ->line('PAYMENTS')
             ->line('------------------------------------------------')
-            ->line('TOTAL FOR THE STAY: <strong>' . priceFormat($this->booking->subtotal_nights) . 'USD</strong>')
-            ->line('DAMAGE INSURANCE: <strong>' . priceFormat($damageDeposit) . 'USD</strong>')
-            ->line('PAYMENTS: <strong>' . priceFormat($reduced) . 'USD</strong>')
-            ->line('TOTAL DUE: <strong>' . priceFormat($balance) . 'USD</strong>')
+            ->line('TOTAL FOR THE STAY: <strong>' . priceFormat($this->booking->subtotal_nights) . 'MXN</strong>')
+            ->line('DAMAGE INSURANCE: <strong>' . priceFormat($damageDeposit) . 'MXN</strong>')
+            ->line('PAYMENTS: <strong>' . priceFormat($reduced) . 'MXN</strong>')
+            ->line('TOTAL DUE: <strong>' . priceFormat($balance) . 'MXN</strong>')
             ->line('------------------------------------------------')
             ->greeting(sprintf('Hola'))
             ->line('Esta es una copia de una reservación:')
@@ -100,7 +100,7 @@ class DetailsBooking extends Notification
             ->line('------------------------------------------------')
             ->line('NOMBRE DE LA RESERVA: <strong>' . $this->booking->full_name . '</strong>')
             ->line('FECHAS: <strong>' . $this->booking->arrival_date . ' - ' . $this->booking->departure_date . '</strong>')
-            ->line('TARIFA: <strong>Prom. Noche' . priceFormat($this->booking->price_per_night) . 'USD | Estancia total ' . priceFormat($this->booking->subtotal_nights) . 'USD</strong>')
+            ->line('TARIFA: <strong>Prom. Noche' . priceFormat($this->booking->price_per_night) . 'MXN | Estancia total ' . priceFormat($this->booking->subtotal_nights) . 'MXN</strong>')
             ->line('------------------------------------------------')
             ->line('DETALLES DE LA PROPIEDAD')
             ->line('------------------------------------------------')
@@ -114,10 +114,10 @@ class DetailsBooking extends Notification
             ->line('------------------------------------------------')
             ->line('PAGOS')
             ->line('------------------------------------------------')
-            ->line('TOTAL PARA LA ESTANCIA: <strong>' . priceFormat($this->booking->subtotal_nights) . 'USD</strong>')
-            ->line('SEGURO DE DAÑOS: <strong>' . priceFormat($damageDeposit) . 'USD</strong>')
-            ->line('PAGOS: <strong>' . priceFormat($reduced) . 'USD</strong>')
-            ->line('DEUDA TOTAL: <strong>' . priceFormat($balance) . 'USD</strong>');
+            ->line('TOTAL PARA LA ESTANCIA: <strong>' . priceFormat($this->booking->subtotal_nights) . 'MXN</strong>')
+            ->line('SEGURO DE DAÑOS: <strong>' . priceFormat($damageDeposit) . 'MXN</strong>')
+            ->line('PAGOS: <strong>' . priceFormat($reduced) . 'MXN</strong>')
+            ->line('DEUDA TOTAL: <strong>' . priceFormat($balance) . 'MXN</strong>');
     }
 
 

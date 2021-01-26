@@ -6,6 +6,7 @@ use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Models\PropertyBooking;
 use App\Models\Property;
+use App\Models\PropertyTranslation;
 use App\Models\User;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
@@ -605,5 +606,26 @@ class PropertyBookingController extends Controller
     public function generateBookingUrl(Property $property)
     {
         return redirect(route('property-bookings.create', $property->id));
+    }
+
+    //check availability from property
+    public function checkAvailability(Request $request)
+    {
+        $lang = LanguageHelper::current();
+        $arrival = $request->arrival_date;
+        $departure = $request->departure_date;
+        $property_id = $request->property_id;
+        $property = PropertyTranslation::where("property_id", $property_id)->where('language_id', $lang->id)->get()[0];
+        $availabilityProperty = getAvailabilityProperty($property_id, $arrival, $departure);
+        $data = [];
+        $data['afirmation'] = $availabilityProperty;
+        $data['name'] = $property->name;
+        $data['id'] = $property_id;
+        $data['type'] = $property->property->type->getLabel();
+        $data['address'] = getCity($property->property->city_id).' / '.$property->property->zone->getLabel();
+        $data['arrival'] = $arrival;
+        $data['departure'] = $departure;
+
+        return $data;
     }
 }
