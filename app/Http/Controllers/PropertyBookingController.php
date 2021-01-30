@@ -13,6 +13,7 @@ use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
 use App\Helpers\UserHelper;
+use App\Helpers\RatesHelper;
 use App\Models\PropertyManagementTransaction;
 use Carbon\Carbon;
 
@@ -612,19 +613,34 @@ class PropertyBookingController extends Controller
     public function checkAvailability(Request $request)
     {
         $lang = LanguageHelper::current();
+        $year = Carbon::parse(strtotime($request->arrival_date))->year;
         $arrival = $request->arrival_date;
         $departure = $request->departure_date;
         $property_id = $request->property_id;
         $property = PropertyTranslation::where("property_id", $property_id)->where('language_id', $lang->id)->get()[0];
+        $minStay = getMinStay($property_id);
         $availabilityProperty = getAvailabilityProperty($property_id, $arrival, $departure);
+        $nightlyRate = RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
+        $nights = RatesHelper::getTotalBookingDays($arrival, $departure);
+        $total = RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
         $data = [];
         $data['afirmation'] = $availabilityProperty;
         $data['name'] = $property->name;
         $data['id'] = $property_id;
         $data['type'] = $property->property->type->getLabel();
+        $data['beds'] = $property->property->bedrooms;
+        $data['baths'] = $property->property->baths;
+        $data['pax'] = $property->property->pax;
+        $data['nightlyRate'] = priceFormat($nightlyRate). ' '.__('avg. night');
+        $data['nights'] = $nights;
+        $data['total'] = priceFormat($total);
+        $data['cleaning'] = $property->property->cleaningOption->getLabel();
         $data['address'] = getCity($property->property->city_id).' / '.$property->property->zone->getLabel();
         $data['arrival'] = $arrival;
         $data['departure'] = $departure;
+        $data['year'] = $year;
+        $data['minStay'] = $minStay;
+        $data['route'] = route('property-bookings.create', $property_id);
 
         return $data;
     }

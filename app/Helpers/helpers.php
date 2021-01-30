@@ -661,6 +661,24 @@ if (!function_exists('getAvailabilityProperty')) {
     }
 }
 
+if (!function_exists('getMinStay')) {
+    function getMinStay($id)
+    {
+        $property = Property::find($id);
+
+        $rates = $property->rates;
+        $minStayArray = [];
+        foreach ($rates as $rate) {
+            $minStayArray[] = $rate->min_stay;
+        }
+        $minStay = min(array_values(array_unique(arrayFlatten($minStayArray))));
+        
+        $result = $minStay;
+
+        return $result;
+    }
+}
+
 if (!function_exists('generateColumns')) {
     function generateColumns($array, $number)
     {

@@ -25,14 +25,86 @@ export function initGetPmPropertySelectionEvent(id, container, dataUrl) {
                         dataType: "json",
                         data: req
                     }).done(function(data) {
+                        $("#modal-availability-modal .btns-container a").attr('data-source', data.id);
+                        $("#modal-availability-modal .modal-title").html(data.name);
                         let dataHtml = `
-                            <div>${data.name}</div>
-                            <div>${data.type}</div>
-                            <div>${data.address}</div>
-                            <a href="#" data-toggle="modal" data-source="${data.id}" data-year=""
-                                data-target="#modal-availability-${data.id}" class="btn-calendar">
+                        <div class="table-responsive" style="margin-top: 20px">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th scope="col">Property</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Bedrooms</th>
+                                    <th scope="col">Baths</th>
+                                    <th scope="col">Max Occ.</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        ${data.name}
+                                    </td>
+
+                                    <td>
+                                        ${data.address}
+                                    </td>
+
+                                    <td>
+                                        ${data.type}
+                                    </td>
+
+                                    <td>
+                                        ${data.beds}
+                                    </td>
+
+                                    <td>
+                                        ${data.baths}
+                                    </td>
+
+                                    <td>
+                                        ${data.pax}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Cleaning Frecuency</th>
+                                    <th scope="col">Nights</th>
+                                    <th scope="col">Min Stay</th>
+                                    <th scope="col">Nightly Rate</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        ${data.cleaning}
+                                    </td>
+
+                                    <td>
+                                        ${data.nights}
+                                    </td>
+                                    
+                                    <td>
+                                        ${data.minStay}
+                                    </td>
+
+                                    <td>
+                                        ${data.nightlyRate}
+                                    </td>
+
+                                    <td>
+                                        ${data.total}
+                                    </td>
+
+                                    <td>
+                                    
+                                    </td>
+                                </tr>
+                            </table>
+                            <a href="${data.route}" class="btn btn-primary m-1">
+                                Book Property
+                            </a>
+                            <a href="#" data-toggle="modal" data-source="${data.id}" data-year="${data.year}"
+                                data-target="#modal-availability-modal" class="btn-calendar btn btn-primary m-1">
                                 Availability Calendar
-                            </a> and edit your search.
+                            </a>
+                        </div>
                         ` ;
                         if(data.afirmation == 'all'){
                             $('.all-dates').hide();
@@ -41,11 +113,23 @@ export function initGetPmPropertySelectionEvent(id, container, dataUrl) {
                             $('#details-property').html(dataHtml);
                         }else if(data.afirmation == 'some'){
                             $('.all-dates').hide();
-                            $('.some-dates span').html(`${data.arrival} - ${data.departure}`);
+                            $('#details-property').hide();
+                            $('#details-property').html('');
+                            $('.some-dates span').html(`${data.arrival} - ${data.departure} 
+                                - <a href="#" data-toggle="modal" data-source="${data.id}" data-year="${data.year}"
+                                data-target="#modal-availability-modal" class="btn-calendar">
+                                Availability Calendar
+                            </a>`);
                             $('.some-dates').show();
                         }else{
                             $('.some-dates').hide();
-                            $('.all-dates span').html(`${data.arrival} - ${data.departure}`);
+                            $('#details-property').hide();
+                            $('#details-property').html('');
+                            $('.all-dates span').html(`${data.arrival} - ${data.departure}
+                                - <a href="#" data-toggle="modal" data-source="${data.id}" data-year="${data.year}"
+                                data-target="#modal-availability-modal" class="btn-calendar">
+                                Availability Calendar
+                            </a>`);
                             $('.all-dates').show();
                         }
                     });

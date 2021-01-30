@@ -122,8 +122,36 @@
 .some-dates{
     display: none;
     padding: 10px;
-    background-color: #e72929;
+    background-color: #f39c12;
     color: #fff;
     margin-bottom: 10px;
     border-radius: 5px;
+}
+
+.some-dates .btn-calendar{
+    color: #fff;
+    text-decoration: underline;
+}
+
+#app-property-bookings-selection-modal {
+    z-index: 1051 !important;
+}
+
+#modal-availability-modal {
+    z-index: 1052 !important;
+}
+
+.legends{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.available-square{
+    padding: 3px 10px;
+    background-color: #C3D69B;
+}
+
+.booked-square{
+    padding: 3px 10px;
+    background-color: #D99694;
 }
