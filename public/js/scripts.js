@@ -416,7 +416,25 @@ $(function () {
   $('input[name="arrival_date"]').val(arrivalDateAvailability);
   $('input[name="arrival_date_submit"]').val(arrivalDateAvailability);
   $('input[name="departure_date"]').val(departureDateAvailability);
-  $('input[name="departure_date_submit"]').val(departureDateAvailability);
+  $('input[name="departure_date_submit"]').val(departureDateAvailability); // submit form balance property management transactions when year change
+
+  $('.select-year').on('change', function () {
+    $('#search-balance').submit();
+  }); // form validation cleaning service
+
+  function cleaningServiceValidation(formValidation, errorFields, inputDate, inputDateSubmit, textareaDescription, inputMaidFee, inputSundayBonus) {
+    if ($(inputDate).val() === '' || $(inputDateSubmit).val() === '' || $(textareaDescription).html() === '' || $(inputMaidFee).val() === '' || $(inputSundayBonus).val() === '') {
+      $(errorFields).show();
+      setTimeout(function () {
+        $(errorFields).hide();
+      }, 5000);
+      console.log('ccccc');
+    } else {
+      $(errorFields).hide();
+      console.log('asasasa');
+      $(formValidation).submit();
+    }
+  }
 });
 
 /***/ }),
@@ -819,6 +837,23 @@ function initCleaningServicesModalHandler() {
             $("#maid_fee_base span").html(maidFee);
             $("#field_cleaning-service_date_").val(propertyDate);
           }, 500);
+          $('#form-cleaning-service').submit(function (e) {
+            var errorFields = '#error-fields';
+            var inputDate = $(this).find('input[name="date"]');
+            var textareaDescription = $(this).find('textarea[name="description"]');
+            var inputMaidFee = $(this).find('input[name="maid_fee"]');
+            var inputSundayBonus = $(this).find('input[name="sunday_bonus"]');
+
+            if (!$(inputDate).val() || !$(textareaDescription).val() || !$(inputMaidFee).val() || !$(inputSundayBonus).val()) {
+              $(errorFields).show();
+              setTimeout(function () {
+                $(errorFields).hide();
+              }, 5000);
+              return false;
+            } else {
+              $(errorFields).hide();
+            }
+          });
         });
       });
     });

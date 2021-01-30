@@ -363,4 +363,29 @@ $(function() {
     $('input[name="arrival_date_submit"]').val(arrivalDateAvailability);
     $('input[name="departure_date"]').val(departureDateAvailability);
     $('input[name="departure_date_submit"]').val(departureDateAvailability);
+
+    // submit form balance property management transactions when year change
+    $('.select-year').on('change', function(){
+        $('#search-balance').submit();
+    });
+
+    // form validation cleaning service
+    function cleaningServiceValidation(formValidation, errorFields, inputDate, inputDateSubmit, textareaDescription, inputMaidFee, inputSundayBonus){
+        if(
+            $(inputDate).val() === '' || 
+            $(inputDateSubmit).val() === '' || 
+            $(textareaDescription).html() === '' ||
+            $(inputMaidFee).val() === '' ||
+            $(inputSundayBonus).val() === ''){
+            $(errorFields).show();
+            setTimeout(function(){
+                $(errorFields).hide();
+            }, 5000);
+            console.log('ccccc');
+        }else{
+            $(errorFields).hide();
+            console.log('asasasa');
+            $(formValidation).submit();
+        }
+    }
 });
