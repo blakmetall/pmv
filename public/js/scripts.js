@@ -407,7 +407,16 @@ $(function () {
       var value = $(this).val();
       $(".bulk-transaction-post-date").val(value);
     });
-  }
+  } // get dates availability
+
+
+  var getDateAvailability = JSON.parse(localStorage.getItem('dates-availability')) || [];
+  var arrivalDateAvailability = getDateAvailability.length !== 0 ? getDateAvailability[0] : '';
+  var departureDateAvailability = getDateAvailability.length !== 0 ? getDateAvailability[1] : '';
+  $('input[name="arrival_date"]').val(arrivalDateAvailability);
+  $('input[name="arrival_date_submit"]').val(arrivalDateAvailability);
+  $('input[name="departure_date"]').val(departureDateAvailability);
+  $('input[name="departure_date_submit"]').val(departureDateAvailability);
 });
 
 /***/ }),
@@ -978,6 +987,10 @@ function initGetPmPropertySelectionEvent(id, container, dataUrl) {
           }).done(function (data) {
             $("#modal-availability-modal .btns-container a").attr('data-source', data.id);
             $("#modal-availability-modal .modal-title").html(data.name);
+            var datesAvailability = [];
+            datesAvailability.push(data.arrival);
+            datesAvailability.push(data.departure);
+            localStorage.setItem('dates-availability', JSON.stringify(datesAvailability));
             var dataHtml = "\n                        <div class=\"table-responsive\" style=\"margin-top: 20px\">\n                            <table class=\"table table-striped\">\n                                <tr>\n                                    <th scope=\"col\">Property</th>\n                                    <th scope=\"col\">Address</th>\n                                    <th scope=\"col\">Type</th>\n                                    <th scope=\"col\">Bedrooms</th>\n                                    <th scope=\"col\">Baths</th>\n                                    <th scope=\"col\">Max Occ.</th>\n                                </tr>\n                                <tr>\n                                    <td>\n                                        ".concat(data.name, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.address, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.type, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.beds, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.baths, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.pax, "\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <th scope=\"col\">Cleaning Frecuency</th>\n                                    <th scope=\"col\">Nights</th>\n                                    <th scope=\"col\">Min Stay</th>\n                                    <th scope=\"col\">Nightly Rate</th>\n                                    <th scope=\"col\">Total</th>\n                                    <th scope=\"col\"></th>\n                                </tr>\n                                <tr>\n                                    <td>\n                                        ").concat(data.cleaning, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.nights, "\n                                    </td>\n                                    \n                                    <td>\n                                        ").concat(data.minStay, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.nightlyRate, "\n                                    </td>\n\n                                    <td>\n                                        ").concat(data.total, "\n                                    </td>\n\n                                    <td>\n                                    \n                                    </td>\n                                </tr>\n                            </table>\n                            <a href=\"").concat(data.route, "\" class=\"btn btn-primary m-1\">\n                                Book Property\n                            </a>\n                            <a href=\"#\" data-toggle=\"modal\" data-source=\"").concat(data.id, "\" data-year=\"").concat(data.year, "\"\n                                data-target=\"#modal-availability-modal\" class=\"btn-calendar btn btn-primary m-1\">\n                                Availability Calendar\n                            </a>\n                        </div>\n                        ");
 
             if (data.afirmation == 'all') {

@@ -27,6 +27,10 @@ export function initGetPmPropertySelectionEvent(id, container, dataUrl) {
                     }).done(function(data) {
                         $("#modal-availability-modal .btns-container a").attr('data-source', data.id);
                         $("#modal-availability-modal .modal-title").html(data.name);
+                        let datesAvailability = [];
+                        datesAvailability.push(data.arrival);
+                        datesAvailability.push(data.departure);
+                        localStorage.setItem('dates-availability', JSON.stringify(datesAvailability));
                         let dataHtml = `
                         <div class="table-responsive" style="margin-top: 20px">
                             <table class="table table-striped">

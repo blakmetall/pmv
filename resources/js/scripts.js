@@ -353,5 +353,14 @@ $(function() {
             var value = $(this).val();
             $(".bulk-transaction-post-date").val(value);
         });
-    } 
+    }
+
+    // get dates availability
+    let getDateAvailability = JSON.parse(localStorage.getItem('dates-availability')) || [];
+    let arrivalDateAvailability = (getDateAvailability.length !== 0)?getDateAvailability[0]:'';
+    let departureDateAvailability = (getDateAvailability.length !== 0)?getDateAvailability[1]:'';
+    $('input[name="arrival_date"]').val(arrivalDateAvailability);
+    $('input[name="arrival_date_submit"]').val(arrivalDateAvailability);
+    $('input[name="departure_date"]').val(departureDateAvailability);
+    $('input[name="departure_date_submit"]').val(departureDateAvailability);
 });
