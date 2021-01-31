@@ -34,19 +34,25 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
         $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
 
-        if (isset($search['from_date'])) {
+        if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
             $query = PropertyBooking::query();
             $query->where(function ($query) use ($search) {
-                $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+                if($search['from_date'] != '' || $search['to_date'] != ''){
+                    $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+                }
+                if($search['register_by'] != ''){
+                    $query->where('register_by', $search['register_by']);
+                }
             });
-            $query->whereHas('property', function ($q) use ($search) {
-                $q->where('city_id', 'like', '%' . $search['location'] . '%');
-            });
+            if($search['location'] != ''){
+                $query->whereHas('property', function ($q) use ($search) {
+                    $q->where('city_id', 'like', '%' . $search['location'] . '%');
+                });
+            }
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
         }
-
 
         if ($filterByOwner) {
             $query->whereHas('property', function ($q) {

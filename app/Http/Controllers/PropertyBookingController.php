@@ -42,14 +42,27 @@ class PropertyBookingController extends Controller
             'from_date' => $request->from_date,
             'to_date' => $request->to_date,
             'location' => $request->location,
+            'register_by' => $request->register_by,
         ];
 
         $bookings = $this->repository->all($search);
         $locations = $this->citiesRepository->all('');
+        $searchedRegister = isset($request->register_by) ? $request->register_by : '';
+
+        $registers = [];
+        $registers[] = [
+            'name' => 'Owner',
+        ];
+        $registers[] = [
+            'name' => 'Admin',
+        ];
 
         return view('property-bookings.index')
             ->with('bookings', $bookings)
             ->with('locations', $locations)
+            ->with('registers', $registers)
+            ->with('searchedRegister', $searchedRegister)
+            ->with('propertyId', null)
             ->with('search', $search);
     }
 
@@ -162,13 +175,32 @@ class PropertyBookingController extends Controller
 
     public function propertyBookings(Request $request, Property $property)
     {
-        $search = trim($request->s);
+        // $search = trim($request->s);
+        $search = [
+            'from_date' => $request->from_date,
+            'to_date' => $request->to_date,
+            'location' => $request->location,
+            'register_by' => $request->register_by,
+        ];
         $bookings = $this->repository->all($search, ['propertyID' => $property->id]);
         $locations = $this->citiesRepository->all('');
+        $searchedRegister = isset($request->register_by) ? $request->register_by : '';
+
+        $registers = [];
+        $registers[] = [
+            'name' => 'Owner',
+        ];
+        $registers[] = [
+            'name' => 'Admin',
+        ];
+
         return view('property-bookings.index')
             ->with('bookings', $bookings)
             ->with('property', $property)
             ->with('locations', $locations)
+            ->with('registers', $registers)
+            ->with('searchedRegister', $searchedRegister)
+            ->with('propertyId', $property->id)
             ->with('search', $search);
     }
 
