@@ -51,7 +51,8 @@ mix.combine(
         "public/assets/js/vendor/jquery.timepicker.min.js",
         "public/assets/js/vendor/pickadate/legacy.js",
         "public/assets/js/vendor/pickadate/picker.js",
-        "public/assets/js/vendor/pickadate/picker.date.js"
+        "public/assets/js/vendor/pickadate/picker.date.js",
+        "public/assets/js/vendor/index.umd.min.js",
     ],
     "public/assets/js/common-bundle-script.js"
 );

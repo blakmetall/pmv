@@ -159,3 +159,9 @@
 #error-fields{
     display: none;
 }
+
+#text-canvas{
+    position: fixed;
+    opacity: 0;
+    z-index: -99999;
+}

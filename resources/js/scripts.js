@@ -369,23 +369,55 @@ $(function() {
         $('#search-balance').submit();
     });
 
-    // form validation cleaning service
-    function cleaningServiceValidation(formValidation, errorFields, inputDate, inputDateSubmit, textareaDescription, inputMaidFee, inputSundayBonus){
-        if(
-            $(inputDate).val() === '' || 
-            $(inputDateSubmit).val() === '' || 
-            $(textareaDescription).html() === '' ||
-            $(inputMaidFee).val() === '' ||
-            $(inputSundayBonus).val() === ''){
-            $(errorFields).show();
-            setTimeout(function(){
-                $(errorFields).hide();
-            }, 5000);
-            console.log('ccccc');
-        }else{
-            $(errorFields).hide();
-            console.log('asasasa');
-            $(formValidation).submit();
-        }
-    }
+    // fill textarea canvas
+    const oldText = $("#text-canvas").val();
+    $("#text-canvas").append($('#field_notification_guest_email_content_').val());
+    $("#text-canvas").css({
+        'height': calcHeight($("#text-canvas").val()) + "px"
+    });
+    $('#field_notification_guest_email_content_').on('change', function(){
+        $("#text-canvas").empty();
+        $("#text-canvas").append(oldText);
+        $("#text-canvas").append($(this).val());
+        $("#text-canvas").css({
+            'height': calcHeight($("#text-canvas").val()) + "px"
+        });
+    });
+
+    // email generate image
+    $('#send_email').on('submit', function(e){
+        e.preventDefault();
+        var htmlCanvas = document.getElementById("text-canvas");
+        var urlCanvas = $(this).attr('data-img');
+        var paymentId = $(this).attr('data-payment');
+
+        nodeToDataURL({
+            targetNode: htmlCanvas
+        })
+        .then((url) => {
+            var dataCanvas = {
+                'id': paymentId,
+                'image' : url,
+            };
+            $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                    "content"
+                )
+            },
+            type: "POST",
+            url: urlCanvas,
+            dataType: "json",
+            data:{"source": dataCanvas}
+            });
+        })
+        return false;
+    });
+
+    function calcHeight(value) {
+        let numberOfLineBreaks = (value.match(/\n/g) || []).length;
+        // min-height + lines x line-height + padding + border
+        let newHeight = 20 + numberOfLineBreaks * 25 + 12 + 2;
+        return newHeight;
+      }
 });

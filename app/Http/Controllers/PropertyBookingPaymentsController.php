@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Image;
+use Storage;
 use Notification;
+use Intervention\Image\ImageManager;
 use App\Notifications\DetailsPayment;
 use Illuminate\Http\Request;
-use App\Models\{PropertyBooking};
+use App\Models\{PropertyBooking, PropertyBookingPayment};
 use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\TransactionSourcesRepositoryInterface;
@@ -53,12 +56,13 @@ class PropertyBookingPaymentsController extends Controller
     {
         $payment = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-
+        
         if ($request->email_notification) {
             return redirect(route('property-booking-payments.email', [$payment->id]));
         } else {
             return redirect(route('property-booking-payments.edit', [$payment->id]));
         }
+
     }
 
     public function email($id)
@@ -102,6 +106,26 @@ class PropertyBookingPaymentsController extends Controller
     {
         Notification::route('mail', $email)
             ->notify(new DetailsPayment($content, $booking));
+    }
+
+    public function generateImagePayment(Request $request)
+    {
+        $folder = 'payments';
+        $id = $request->source['id'];
+        $img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->source['image']));
+        $slug      = \Illuminate\Support\Str::slug('payment'.$id, '-');
+        $timedFileName = $slug . '-' . strtotime('now') ;
+        $fileName = $timedFileName . '.' . 'png';
+        $getFilePath = $folder . '/' . $fileName;
+        Storage::disk('public')->makeDirectory($folder);
+        $filePath = public_path() . '/storage/' . $folder . '/' . $fileName;
+        Image::make($img)->save($filePath);
+
+        $payment = PropertyBookingPayment::find($id);
+        $payment->file_url = Storage::url($getFilePath);
+        $payment->save(); 
+
+        return;
     }
 
     public function show($id)

@@ -79,13 +79,13 @@ $lang = LanguageHelper::current();
                                 <td>
                                     @if ($row->property->users->isNotEmpty())
                                         @php
-                                        $propertyUser = false;
+                                            $propertyUser = false;
                                         @endphp
 
                                         @foreach ($row->property->users as $user)
                                             @if ($user->id == \UserHelper::getCurrentUserID())
                                                 @php
-                                                $propertyUser = true;
+                                                    $propertyUser = true;
                                                 @endphp
                                             @endif
                                         @endforeach
