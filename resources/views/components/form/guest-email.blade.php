@@ -32,11 +32,9 @@ $totalStay = $booking->subtotal_nights ? priceFormat($booking->subtotal_nights) 
 $damageDeposit = $booking->subtotal_damage_deposit ? $booking->subtotal_damage_deposit : 0;
 $getTotal = $booking->total ? $booking->total : 0;
 $total = priceFormat($damageDeposit + $getTotal);
-$txtCanvas = "Hola como estan \nEste mensaje ha sido enviado por \n";
 
 @endphp
 
-<textarea id="text-canvas" class="form-control">{{ $txtCanvas }}</textarea>
 <div class="form-group row" style="{{ $hiddenStyle }}">
     <label for="{{ $id }}" class="col-sm-2 col-form-label">
         {{ $label }}

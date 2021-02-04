@@ -423,26 +423,27 @@ $(function () {
   }); // fill textarea canvas
 
   var oldText = $("#text-canvas").val();
-  $("#text-canvas").append($('#field_notification_guest_email_content_').val());
-  $("#text-canvas").css({
-    'height': calcHeight($("#text-canvas").val()) + "px"
-  });
-  $('#field_notification_guest_email_content_').on('change', function () {
+  var svgx = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  var firstText = nl2br($('#field_notification_owners_email_content_').val());
+  $("#text-canvas").append(firstText); // $("#text-canvas").css({
+  //     'height': calcHeight($("#text-canvas").val()) + "px"
+  // });
+
+  $('#field_notification_owners_email_content_').on('change', function () {
     $("#text-canvas").empty();
     $("#text-canvas").append(oldText);
-    $("#text-canvas").append($(this).val());
-    $("#text-canvas").css({
-      'height': calcHeight($("#text-canvas").val()) + "px"
-    });
+    $("#text-canvas").append(nl2br($(this).val())); // $("#text-canvas").css({
+    //     'height': calcHeight($("#text-canvas").val()) + "px"
+    // });
   }); // email generate image
 
   $('#send_email').on('submit', function (e) {
-    e.preventDefault();
     var htmlCanvas = document.getElementById("text-canvas");
     var urlCanvas = $(this).attr('data-img');
     var paymentId = $(this).attr('data-payment');
     nodeToDataURL({
-      targetNode: htmlCanvas
+      targetNode: htmlCanvas,
+      customStyle: '#text-canvas {box-sizing: border-box; font-family: "Lato", sans-serif; font-weight: 400; letter-spacing: 0.3px; background-color:#ffffff; padding: 20px 30px; height: 100% !important; width:100% !important;}'
     }).then(function (url) {
       var dataCanvas = {
         'id': paymentId,
@@ -460,7 +461,6 @@ $(function () {
         }
       });
     });
-    return false;
   });
 
   function calcHeight(value) {
@@ -468,6 +468,11 @@ $(function () {
 
     var newHeight = 20 + numberOfLineBreaks * 25 + 12 + 2;
     return newHeight;
+  }
+
+  function nl2br(str, is_xhtml) {
+    var breakTag = is_xhtml || typeof is_xhtml === 'undefined' ? '<br/>' : '<br>';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
   }
 });
 
