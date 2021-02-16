@@ -13,6 +13,7 @@ import { initTransactionModalHandler } from "./scripts/initTransactionModalHandl
 import { initContactModalHandler } from "./scripts/initContactModalHandler.js";
 import { initCleaningServicesModalHandler } from "./scripts/initCleaningServicesModalHandler.js";
 import { initNotificationsModalHandler } from "./scripts/initNotificationsModalHandler.js";
+import { initDeleteImageModalHandler } from "./scripts/initDeleteImageModalHandler.js";
 import { initCalendarModalHandler } from "./scripts/initCalendarModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 
@@ -45,6 +46,7 @@ $(function() {
         initContactModalHandler();
         initCleaningServicesModalHandler();
         initNotificationsModalHandler();
+        initDeleteImageModalHandler();
         initCalendarModalHandler();
         initTooltip();
 

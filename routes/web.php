@@ -214,6 +214,11 @@ Route::group(['middleware' => ['web']], function () {
             // delete transaction batch
             Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
 
+            // confirm delete image transaction
+            Route::get('confirm-delete-image-transaction', 'PropertyManagementTransactionsController@confirmDeleteImage')->name('property-management-transactions.confirm-delete-image');
+            // delete image transaction
+            Route::get('delete-image-transaction/{transaction}', 'PropertyManagementTransactionsController@deleteImage')->name('property-management-transactions.delete-image');
+
             // single property management
             Route::get('confirm-email', 'PropertyManagementTransactionsController@confirmEmail')->name('property-management-transactions.confirm-email');
             Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {

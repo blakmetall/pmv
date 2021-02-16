@@ -493,4 +493,28 @@ class PropertyManagementTransactionsController extends Controller
 
         return redirect()->back();
     }
+
+    public function confirmDeleteImage(Request $request){
+        return '';
+    }
+
+    public function deleteImage($transaction){
+        $transaction = PropertyManagementTransaction::find($transaction);
+        if($transaction){
+            $deleteFile = ImagesHelper::deleteFile($transaction->file_path);
+            ImagesHelper::deleteThumbnails($transaction->file_path);
+        }else{
+            $deleteFile = false;
+        }
+        if($deleteFile){
+            $transaction->file_slug = null;
+            $transaction->file_extension = null;
+            $transaction->file_original_name = null;
+            $transaction->file_name = null;
+            $transaction->file_path = null;
+            $transaction->file_url = null;
+            $transaction->save();
+        }
+        return redirect()->back();
+    }
 }

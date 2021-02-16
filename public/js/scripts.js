@@ -121,8 +121,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./scripts/initContactModalHandler.js */ "./resources/js/scripts/initContactModalHandler.js");
 /* harmony import */ var _scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./scripts/initCleaningServicesModalHandler.js */ "./resources/js/scripts/initCleaningServicesModalHandler.js");
 /* harmony import */ var _scripts_initNotificationsModalHandler_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./scripts/initNotificationsModalHandler.js */ "./resources/js/scripts/initNotificationsModalHandler.js");
-/* harmony import */ var _scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./scripts/initCalendarModalHandler.js */ "./resources/js/scripts/initCalendarModalHandler.js");
-/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+/* harmony import */ var _scripts_initDeleteImageModalHandler_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./scripts/initDeleteImageModalHandler.js */ "./resources/js/scripts/initDeleteImageModalHandler.js");
+/* harmony import */ var _scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./scripts/initCalendarModalHandler.js */ "./resources/js/scripts/initCalendarModalHandler.js");
+/* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+
 
 
 
@@ -166,8 +168,9 @@ $(function () {
     Object(_scripts_initContactModalHandler_js__WEBPACK_IMPORTED_MODULE_12__["initContactModalHandler"])();
     Object(_scripts_initCleaningServicesModalHandler_js__WEBPACK_IMPORTED_MODULE_13__["initCleaningServicesModalHandler"])();
     Object(_scripts_initNotificationsModalHandler_js__WEBPACK_IMPORTED_MODULE_14__["initNotificationsModalHandler"])();
-    Object(_scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_15__["initCalendarModalHandler"])();
-    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_16__["initTooltip"])();
+    Object(_scripts_initDeleteImageModalHandler_js__WEBPACK_IMPORTED_MODULE_15__["initDeleteImageModalHandler"])();
+    Object(_scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_16__["initCalendarModalHandler"])();
+    Object(_scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_17__["initTooltip"])();
     initCleaningMonthlyBatchEvents();
     initBalancesFinishedHandler();
     initBulkTransactionsHandler();
@@ -999,6 +1002,44 @@ function initDatepickerComponents() {
       var propertyID = $("#field_cleaning-service_property_id_").val() || false;
       Object(_getBonus_js__WEBPACK_IMPORTED_MODULE_0__["getBonus"])(propertyID, date);
     }), _$$pickadate));
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/initDeleteImageModalHandler.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/scripts/initDeleteImageModalHandler.js ***!
+  \*************************************************************/
+/*! exports provided: initDeleteImageModalHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initDeleteImageModalHandler", function() { return initDeleteImageModalHandler; });
+function initDeleteImageModalHandler() {
+  var modals = $(".app-modal-delete-image");
+  modals.each(function () {
+    var id = $(this).attr("id");
+    var modal = $("#" + id);
+    var container = $(this).find(".app-modal-delete-image-container");
+    var url = container.data("url");
+    modal.on("show.bs.modal", function (e) {
+      var source = $(e.relatedTarget).data("source");
+      var route = $(e.relatedTarget).data("route");
+      var txtButton = $(e.relatedTarget).data("text-button");
+      var cancelButton = $(e.relatedTarget).data("cancel-button");
+      $.ajax({
+        url: url,
+        type: "GET",
+        data: {
+          "source": source
+        }
+      }).done(function (html) {
+        container.html(html);
+        container.append("<form action=\"".concat(route, "\">\n                <br>\n                <button type=\"button\" class=\"btn btn-primary m-1\" data-dismiss=\"modal\">").concat(cancelButton, "</button>\n                <button type=\"submit\" class=\"btn btn-danger m-1\">").concat(txtButton, "</button>\n                </form>"));
+      });
+    });
   });
 }
 

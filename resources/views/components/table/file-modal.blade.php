@@ -1,37 +1,37 @@
 <?php
-    $fileName = isset($fileName) ? $fileName : '';
-    $filePath = isset($filePath) ? $filePath : false;
-    $fileUrl = isset($fileUrl) ? $fileUrl : false;
-    $fileSlug = isset($fileSlug) ? $fileSlug : false;
-    $imgUrl = isset($imgUrl) ? $imgUrl : false;
-    $imgSize = isset($imgSize) ? $imgSize : '';
+$fileName = isset($fileName) ? $fileName : '';
+$filePath = isset($filePath) ? $filePath : false;
+$fileUrl = isset($fileUrl) ? $fileUrl : false;
+$fileSlug = isset($fileSlug) ? $fileSlug : false;
+$imgUrl = isset($imgUrl) ? $imgUrl : false;
+$imgSize = isset($imgSize) ? $imgSize : '';
 
-    if($fileSlug) {
-        $modalID = 'table-modal-' . $fileSlug . rand(1, 999999999);
-    } else {
-        $modalID = 'table-modal-' . rand(1, 999999999);
-    }
+if ($fileSlug) {
+$modalID = 'table-modal-' . $fileSlug . rand(1, 999999999);
+} else {
+$modalID = 'table-modal-' . rand(1, 999999999);
+}
 
-    $useImg = !! $imgUrl;
+$useImg = !!$imgUrl;
 ?>
 
 <!-- table image or icon -->
-<a <?=$fileUrl !== false ? 'href="#"':''?> class="d-inline-block text-primary app-icon-link ml-0 mr-1" title="{{ __('File') }}" alt="{{ __('File') }}" data-toggle="modal" data-target="#{{ $modalID }}">
-    @if($fileUrl !== false)
+<a <?= $fileUrl !== false ? 'href="#"' : '' ?> class="d-inline-block text-primary app-icon-link ml-0 mr-1" title="{{ __('File') }}" alt="{{ __('File') }}" data-toggle="modal" data-target="#{{ $modalID }}">
+    @if ($fileUrl !== false)
         <img src="/images/search-on.gif" alt="" style="width: 15px;">
-    @else
+@else
         <img src="/images/search-off.gif" alt="" style="width: 15px;">
     @endif
 </a>
 
-<?php if($fileUrl !== false):?>
+<?php if ($fileUrl !== false): ?>
 
     <!-- file modal -->
     <div class="modal fade" id="{{ $modalID }}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog app-table-file-modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    @if($fileName !== '')
+                    @if ($fileName !== '')
                         <h5 class="modal-title" id="{{ $modalID }}">
                             {{ $fileName }}
                         </h5>
@@ -42,7 +42,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if($fileUrl)
+                    @if ($fileUrl)
                         <img src="{{ asset(getUrlPath($fileUrl)) }}" alt="" class="w-100">
                     @endif
                 </div>
@@ -55,4 +55,5 @@
         </div>
     </div>
 
-<?php endif; ?>
+<?php endif;
+?>

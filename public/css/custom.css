@@ -172,3 +172,20 @@
     padding: 60px 30px; 
     height: auto;
 }
+
+.app-modal-delete-image .modal-content{
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.app-modal-delete-image .modal-title{
+    text-align: center;
+    width: 100%;
+}
+
+.btn-delete-file{
+    padding: 4px 0px 1px 2px;
+    color: #f00 !important;
+    margin-right: 5px;
+}
