@@ -532,6 +532,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('property/{zone}/{slug}', '_Public\PropertyController@propertyDetail')->name('public.property-detail');
     Route::get('availability-results', '_Public\PropertyController@availabilityResults')->name('public.availability-results');
     Route::get('modal-availability', '_Public\PropertyController@availabilityModal')->name('public.availability-modal');
+    Route::get('first-availability', '_Public\PropertyController@firstsAvailability')->name('public.first-availability');
 
     // Home
     Route::get('', '_Public\HomeController@index')->name('public.home');

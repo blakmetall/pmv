@@ -43,3 +43,11 @@
     text-decoration: underline;
     color: #FFF;
 }
+
+.first-calendar table{
+    width: 100%;
+}
+
+.first-calendar th, .first-calendar td{
+    padding: 6px;
+}

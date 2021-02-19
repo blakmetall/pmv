@@ -12,17 +12,17 @@
 
     @php
     $title = $property->name;
-    $datesProperty = explode(",", $_COOKIE['datesProperty']);
+    $datesProperty = explode(',', $_COOKIE['datesProperty']);
     $arrival = $datesProperty[0];
     $arrivalTxt = $datesProperty[1];
     $departure = $datesProperty[2];
     $departureTxt = $datesProperty[3];
-    $bothDates = $arrivalTxt.' - '.$departureTxt;
+    $bothDates = $arrivalTxt . ' - ' . $departureTxt;
     $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
     $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
-    $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
+    $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -45,7 +45,7 @@
                     @foreach ($property->property->images as $index => $image)
                         @if ($index == 0)
                             @php
-                            continue;
+                                continue;
                             @endphp
                         @endif
                         <li>
@@ -66,7 +66,7 @@
                     @foreach ($property->property->images as $index => $image)
                         @if ($index == 0)
                             @php
-                            continue;
+                                continue;
                             @endphp
                         @endif
                         <li>
@@ -122,7 +122,8 @@
             </div>
         @elseif($availabilityProperty == 'none')
             <div id="property-rate-info">
-                <div class="alert alert-danger text-center"> Not available for dates: <strong>{{ $bothDates }}</strong>,<br>
+                <div class="alert alert-danger text-center"> Not available for dates:
+                    <strong>{{ $bothDates }}</strong>,<br>
                     please check the
                     <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}" data-year=""
                         data-target="#{{ $modalID }}" title="Availability Calendar" class="btn-calendar">
@@ -215,7 +216,8 @@
             <div class="row">
                 <div class="col-xs-6">
                     <h4 class="sub-section">Occupancy</h4>
-                    <p><span class="max-pax">{{ $property->property->pax }}</span> guests max. (including children under 12
+                    <p><span class="max-pax">{{ $property->property->pax }}</span> guests max. (including children under
+                        12
                         and babies)</p>
                 </div>
                 {{-- <div class="col-xs-6">
@@ -249,8 +251,8 @@
                 <tbody>
                     @foreach ($property->property->rates as $i => $rate)
                         @php
-                        $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
-                        $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
+                            $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
+                            $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
                         @endphp
                         <tr class="{{ $i > 4 ? 'toggle-table-rates' : '' }}">
                             <td>{{ $startDate }} to {{ $endDate }}</td>
@@ -275,201 +277,7 @@
         </div>
         <div id="property-calendar-info">
             <h2 class="section-title">Availability Calendar</h2>
-            <div class="row">
-                <div class="col-xs-4">
-                    <div class="cal-month">
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th colspan="7">December 2020</th>
-                                </tr>
-                                <tr>
-                                    <th width="15%">Sun</th>
-                                    <th width="14%">Mon</th>
-                                    <th width="14%">Tue</th>
-                                    <th width="14%">Wed</th>
-                                    <th width="14%">Thu</th>
-                                    <th width="14%">Fri</th>
-                                    <th width="15%">Sat</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                    <td class="cal-occupied">1</td>
-                                    <td class="cal-occupied">2</td>
-                                    <td class="cal-occupied">3</td>
-                                    <td class="cal-occupied">4</td>
-                                    <td class="cal-occupied">5</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-occupied">6</td>
-                                    <td class="cal-occupied">7</td>
-                                    <td class="cal-occupied">8</td>
-                                    <td class="cal-occupied">9</td>
-                                    <td class="cal-occupied">10</td>
-                                    <td class="cal-occupied">11</td>
-                                    <td class="cal-occupied">12</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-occupied">13</td>
-                                    <td class="cal-occupied">14</td>
-                                    <td class="cal-occupied">15</td>
-                                    <td class="cal-occupied">16</td>
-                                    <td class="cal-occupied">17</td>
-                                    <td class="cal-occupied">18</td>
-                                    <td class="cal-occupied">19</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-occupied">20</td>
-                                    <td class="cal-occupied">21</td>
-                                    <td class="cal-occupied">22</td>
-                                    <td class="cal-occupied">23</td>
-                                    <td class="cal-occupied">24</td>
-                                    <td class="cal-occupied">25</td>
-                                    <td class="cal-occupied">26</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-occupied">27</td>
-                                    <td class="cal-occupied">28</td>
-                                    <td class="cal-occupied">29</td>
-                                    <td class="cal-occupied">30</td>
-                                    <td class="cal-occupied">31</td>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="cal-month">
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th colspan="7">January 2021</th>
-                                </tr>
-                                <tr>
-                                    <th width="15%">Sun</th>
-                                    <th width="14%">Mon</th>
-                                    <th width="14%">Tue</th>
-                                    <th width="14%">Wed</th>
-                                    <th width="14%">Thu</th>
-                                    <th width="14%">Fri</th>
-                                    <th width="15%">Sat</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="5">&nbsp;</td>
-                                    <td class="cal-occupied">1</td>
-                                    <td class="cal-occupied">2</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-occupied">3</td>
-                                    <td class="cal-departure-only">4</td>
-                                    <td class="cal-vacant">5</td>
-                                    <td class="cal-vacant">6</td>
-                                    <td class="cal-vacant">7</td>
-                                    <td class="cal-vacant">8</td>
-                                    <td class="cal-vacant">9</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">10</td>
-                                    <td class="cal-vacant">11</td>
-                                    <td class="cal-vacant">12</td>
-                                    <td class="cal-vacant">13</td>
-                                    <td class="cal-vacant">14</td>
-                                    <td class="cal-vacant">15</td>
-                                    <td class="cal-vacant">16</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">17</td>
-                                    <td class="cal-vacant">18</td>
-                                    <td class="cal-vacant">19</td>
-                                    <td class="cal-vacant">20</td>
-                                    <td class="cal-vacant">21</td>
-                                    <td class="cal-vacant">22</td>
-                                    <td class="cal-vacant">23</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">24</td>
-                                    <td class="cal-vacant">25</td>
-                                    <td class="cal-vacant">26</td>
-                                    <td class="cal-vacant">27</td>
-                                    <td class="cal-vacant">28</td>
-                                    <td class="cal-vacant">29</td>
-                                    <td class="cal-vacant">30</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">31</td>
-                                    <td colspan="6">&nbsp;</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="cal-month">
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th colspan="7">February 2021</th>
-                                </tr>
-                                <tr>
-                                    <th width="15%">Sun</th>
-                                    <th width="14%">Mon</th>
-                                    <th width="14%">Tue</th>
-                                    <th width="14%">Wed</th>
-                                    <th width="14%">Thu</th>
-                                    <th width="14%">Fri</th>
-                                    <th width="15%">Sat</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="1">&nbsp;</td>
-                                    <td class="cal-vacant">1</td>
-                                    <td class="cal-vacant">2</td>
-                                    <td class="cal-vacant">3</td>
-                                    <td class="cal-vacant">4</td>
-                                    <td class="cal-vacant">5</td>
-                                    <td class="cal-vacant">6</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">7</td>
-                                    <td class="cal-vacant">8</td>
-                                    <td class="cal-vacant">9</td>
-                                    <td class="cal-vacant">10</td>
-                                    <td class="cal-vacant">11</td>
-                                    <td class="cal-vacant">12</td>
-                                    <td class="cal-vacant">13</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">14</td>
-                                    <td class="cal-vacant">15</td>
-                                    <td class="cal-vacant">16</td>
-                                    <td class="cal-vacant">17</td>
-                                    <td class="cal-vacant">18</td>
-                                    <td class="cal-vacant">19</td>
-                                    <td class="cal-vacant">20</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">21</td>
-                                    <td class="cal-vacant">22</td>
-                                    <td class="cal-vacant">23</td>
-                                    <td class="cal-vacant">24</td>
-                                    <td class="cal-vacant">25</td>
-                                    <td class="cal-vacant">26</td>
-                                    <td class="cal-vacant">27</td>
-                                </tr>
-                                <tr>
-                                    <td class="cal-vacant">28</td>
-                                    <td colspan="6">&nbsp;</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="cal-month first-calendar" data-url="{{ route('public.first-availability') }}">
             </div>
             <div class="text-right cal-more-dates">
                 <a href="#" class="btn btn-warning btn-calendar" data-toggle="modal"

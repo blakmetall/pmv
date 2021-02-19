@@ -277,6 +277,27 @@
 		);
 	});
 
+	// First Months of Availability
+	if ( $(".first-calendar").length){
+		setTimeout(function(){
+			var dataFirstAvailability = {
+				'id': $('.btn-calendar').data("source"),
+				'year' : $('.btn-calendar').data("year"),
+			};
+		
+			var containerFirstAvailability = $(".first-calendar");
+			var url = containerFirstAvailability.data("url");
+		
+			$.ajax({
+				url: url,
+				type: "GET",
+				data:{"source": dataFirstAvailability}
+			}).done(function(data) {
+				containerFirstAvailability.html(data.calendar);
+			});
+		}, 500);
+	}
+
 	var modals = $(".app-modal-calendar");
 
     modals.each(function() {

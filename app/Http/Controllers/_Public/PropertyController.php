@@ -146,6 +146,7 @@ class PropertyController extends Controller
         $prw['image'] = getFeaturedImage($property->property_id);
         $prw['rate'] = getLowerRate($property->property_id);
         $prw = json_encode($prw);
+
         return view('public.pages.properties.property-detail')
             ->with('property', $property)
             ->with('prw', $prw);
@@ -158,120 +159,29 @@ class PropertyController extends Controller
         return $zones;
     }
 
+    public function firstsAvailability(Request $request){
+        $year = $request->source['year'];
+    
+        $currYear = isset($year) ? $year : Carbon::now()->year;
+
+        $calendar = generateCalendar($year, 3, $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]));
+
+        $data = [
+            'calendar' => $calendar,
+        ];
+
+        return $data;
+    }
+
     public function availabilityModal(Request $request)
     {
-        $propertyID = $request->source['id'];
         $year = $request->source['year'];
-
+    
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $prevYear = Carbon::create($currYear)->subYear()->year;
         $nextYear = Carbon::create($currYear)->addYear()->year;
-        $bookings = $this->propertiyBookingsRepository->all('', ['propertyID' => $propertyID, 'currentYear' => $currYear, 'filterByNotCancelled' => 1]);
-        $count_cols = 0;
-        $cols_needed = 3;
 
-        $bookingDaysArr = [];
-        $firstDays      = [];
-        $endDays        = [];
-        foreach ($bookings as $booking) {
-            $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-            $bookingDaysSE    = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-            $firstDays[]      = reset($bookingDaysSE);
-            $endDays[]        = end($bookingDaysSE);
-        }
-        $bookingDays = arrayFlatten($bookingDaysArr);
-
-        $calendar  = '<table align="center" border="0" cellpadding="0" cellspacing="5">';
-        $calendar .= '<tr>';
-        $calendar .= '<td align="left" valign="top">';
-        $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
-
-        for ($i = 0; $i < 12; $i++) {
-            $count_cols++;
-            $cm = mktime(0, 0, 0, 1 + $i, 1, $currYear); //get curr month time string
-            $days_month = date("t", $cm); //calculate number of days in month
-            $first_weekday_unix = mktime(0, 0, 0, date('n', $cm), 1, date('Y', $cm));
-            $first_weekday = date('w', $first_weekday_unix);
-            $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
-            $last_weekday = date('w', $last_weekday_unix);
-            $monthLabel = Carbon::parse($cm);
-            if (LanguageHelper::getLocale() == 'en') {
-                setlocale(LC_ALL, 'en_EN');
-                $month = $monthLabel->format('F');
-            } else {
-                setlocale(LC_ALL, 'es_MX', 'es', 'ES', 'es_MX.utf8');
-                $month = $monthLabel->formatLocalized('%B');
-            }
-
-            $calendar .= '<tr>';
-            $calendar .= '<th colspan="7" align="center" valign="top">' . ucfirst($month) . ' ' . $currYear . '</th>';
-            $calendar .= '</tr>';
-            $calendar .= '<tr>
-                <th>Su</th>
-                <th>Mo</th>
-                <th>Tu</th>
-                <th>We</th>
-                <th>Th</th>
-                <th>Fr</th>
-                <th>Sa</th>
-            </tr>';
-            $calendar .= '<tr>';
-            if ($first_weekday != 0) {
-                $calendar .= '<td colspan="' . $first_weekday . '">&nbsp;</td>';
-            }
-            $count_fields = $first_weekday;
-            for ($d = 1; $d <= $days_month; $d++) {
-                $addzero = ($d < 10) ? '0' . $d : $d;
-                $formatYear = isset($year) ? $year : Carbon::now()->year;
-                $formatYear = substr($formatYear, 2);
-                $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
-                if (in_array($day, $bookingDays)) {
-                    $occupied = true;
-                } else {
-                    $occupied = false;
-                }
-                if (in_array($day, $firstDays)) {
-                    $classDay = 'arrival-only';
-                } elseif (in_array($day, $endDays)) {
-                    $classDay = 'departure-only';
-                } else {
-                    $classDay = '';
-                }
-
-                $colorClass = ($occupied) ? '#D99694' : '#C3D69B';
-
-                $calendar .= '<td class="' . $classDay . '" style="background-color:' . $colorClass . '">';
-                $calendar .= '<span class="current-day">' . $d . '</span>';
-                $calendar .= '</td>';
-
-                $count_fields++;
-
-                if ($d != $days_month) {
-                    if (($count_fields % 7) == 0) {
-                        $calendar .= '</tr><tr>';
-                    }
-                } else {
-                    if ($last_weekday != 6) {
-                        $calendar .= '<td colspan="' . (6 - $last_weekday) . '">&nbsp;</td>';
-                    }
-
-                    $calendar .= '</tr>';
-                }
-            }
-            $calendar .= '</table>';
-            $calendar .= '</td>';
-            if ($count_cols != 12) {
-                if (($count_cols % $cols_needed) == 0) {
-                    $calendar .= '</tr><tr>';
-                }
-
-                $calendar .= '<td align="left" valign="top">';
-                $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
-            } else {
-                $calendar .= '</tr>';
-            }
-        }
-        $calendar .= '</table>';
+        $calendar = generateCalendar($year, 12, $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]));
 
         $data = [
             'calendar' => $calendar,
