@@ -147,8 +147,33 @@ class PropertyController extends Controller
         $prw['rate'] = getLowerRate($property->property_id);
         $prw = json_encode($prw);
 
+        if($request->arrival_alt_sing && $request->departure_alt_sing){
+            $pax = $request->adults_sing + $request->children_sing;
+            if($pax > $property->property->pax){
+                $request->session()->flash('error', __('The number of people exceeds the maximum occupancy for the property'));
+            }
+            $arrivalDeparture = [
+                'adults' => $request->adults_sing,
+                'children' => $request->children_sing,
+                'arrival' => $request->arrival_alt_sing,
+                'arrivalTxt' => $request->arrival_sing,
+                'departure' => $request->departure_alt_sing,
+                'departureTxt' => $request->departure_sing,
+            ];
+        }else{
+            $arrivalDeparture = [
+                'adults' => null,
+                'children' => null,
+                'arrival' => null,
+                'arrivalTxt' => null,
+                'departure' => null,
+                'departureTxt' => null
+            ];
+        }
+
         return view('public.pages.properties.property-detail')
             ->with('property', $property)
+            ->with('arrivalDeparture', $arrivalDeparture)
             ->with('prw', $prw);
     }
 
@@ -191,5 +216,16 @@ class PropertyController extends Controller
         ];
 
         return $data;
+    }
+
+    public function reservations($id){
+        $lang = LanguageHelper::current()->code;
+        $slug = $this->propertiesRepository->find($id)->$lang->slug;
+        $config = ['filterBySlug' => $slug, 'paginate' => false];
+        $property = $this->propertiesRepository->all('', $config)[0];
+        $prw = 'remover despues';
+        return view('public.pages.properties.property-booking')
+            ->with('prw', $prw)
+            ->with('property', $property);
     }
 }

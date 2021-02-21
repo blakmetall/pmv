@@ -13,16 +13,37 @@
     @php
     $title = $property->name;
     $datesProperty = explode(',', $_COOKIE['datesProperty']);
-    $arrival = $datesProperty[0];
-    $arrivalTxt = $datesProperty[1];
-    $departure = $datesProperty[2];
-    $departureTxt = $datesProperty[3];
-    $bothDates = $arrivalTxt . ' - ' . $departureTxt;
-    $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
+    if (isset($_GET) && isset($_GET['arrival_alt_sing']) && isset($_GET['departure_alt_sing'])) {
+        $arrival = $_GET['arrival_alt_sing'];
+        $arrivalTxt = $_GET['arrival_sing'];
+        $departure = $_GET['departure_alt_sing'];
+        $departureTxt = $_GET['departure_sing'];
+        $adults = $_GET['adults_sing'];
+        $children = $_GET['children_sing'];
+        $searchAvailability = [
+            'arrival' => $arrival,
+            'arrivalTxt' => $arrivalTxt,
+            'departure' => $departure,
+            'departureTxt' => $departureTxt,
+            'adults' => $adults,
+            'children' => $children,
+        ];
+    } else {
+        $arrival = $datesProperty[0];
+        $arrivalTxt = $datesProperty[1];
+        $departure = $datesProperty[2];
+        $departureTxt = $datesProperty[3];
+        $searchAvailability = [];
+    }
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
+    $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
     $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
+    $bothDates = $arrivalTxt . ' - ' . $departureTxt;
+    $searchAvailability = json_encode($searchAvailability);
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
+    $latitude = $property->property->gmaps_lat;
+    $longitude = $property->property->gmaps_lon;
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -31,7 +52,7 @@
 
     <div id="property-details">
         <div id="property-gallery-info">
-            <div class="cssload-thecube" style="display: none;">
+            <div class="cssload-thecube">
                 <div class="cssload-cube cssload-c1"></div>
                 <div class="cssload-cube cssload-c2"></div>
                 <div class="cssload-cube cssload-c4"></div>
@@ -100,11 +121,8 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="text-right">
-                            <form id="bookit-1161-form" action="/reservations" method="post">
-                                <input type="hidden" name="pid" value="1161">
-                                <input type="submit" name="submit" value="Book it!" title="Book this property"
-                                    class="btn btn-warning">
-                            </form>
+                            <a href="{{ route('public.reservations', $property->property_id) }}"
+                                class="btn btn-warning">Book it!</a>
                         </div>
                     </div>
                 </div>
@@ -131,7 +149,9 @@
                     </a> and edit your search.
                 </div>
         @endif
-        <form action="/old-town-zona-romantica/v177-503" method="post" id="property-details-form" accept-charset="UTF-8">
+        <form
+            action="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}"
+            id="property-details-form" accept-charset="UTF-8">
             <div>
                 <fieldset class="bg-success collapsible panel panel-default form-wrapper collapse-processed"
                     id="edit-details-form">
@@ -145,24 +165,24 @@
                             <div class="col-xs-3">
                                 <div class="form-item form-item-arrival-sing form-type-textfield form-group"> <label
                                         class="control-label" for="edit-arrival-sing">Check-in-date</label>
-                                    <input class="text-center form-control form-text hasDatepicker" readonly="readonly"
-                                        type="text" id="edit-arrival-sing" name="arrival_sing"
-                                        value="Saturday 12/December/2020" size="60" maxlength="128">
+                                    <input class="text-center form-control form-text" readonly="readonly" type="text"
+                                        id="edit-arrival-sing" name="arrival_sing"
+                                        value="{{ $arrivalDeparture['arrivalTxt'] }}" size="60" maxlength="128">
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-item form-item-departure-sing form-type-textfield form-group"> <label
                                         class="control-label" for="edit-departure-sing">Check-out-date</label>
-                                    <input class="text-center form-control form-text hasDatepicker" readonly="readonly"
-                                        type="text" id="edit-departure-sing" name="departure_sing"
-                                        value="Saturday 19/December/2020" size="60" maxlength="128">
+                                    <input class="text-center form-control form-text" readonly="readonly" type="text"
+                                        id="edit-departure-sing" name="departure_sing"
+                                        value="{{ $arrivalDeparture['departureTxt'] }}" size="60" maxlength="128">
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 <div class="form-item form-item-adults-sing form-type-textfield form-group"> <label
                                         class="control-label" for="edit-adults-sing">Adults</label>
                                     <input class="form-control form-text" type="text" id="edit-adults-sing"
-                                        name="adults_sing" value="3434" size="60" maxlength="128">
+                                        name="adults_sing" value="" size="60" maxlength="128">
                                 </div>
                             </div>
                             <div class="col-xs-2">
@@ -175,18 +195,15 @@
                             <div class="col-xs-2 text-right">
                                 <button title="Check Availability" class="btn btn-success btn-loading form-submit"
                                     data-loading-text="<i class=&quot;fa fa-spinner fa-spin&quot;></i>" type="submit"
-                                    id="edit-submit" name="op" value="<i class=&quot;fas fa-search&quot;></i>"><i
+                                    id="edit-submit" value="<i class=&quot;fas fa-search&quot;></i>"><i
                                         class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
                     <span class="summary"></span>
                 </fieldset>
-                <input id="arrival-alt-sing" type="hidden" name="arrival_alt_sing" value="2020-12-12">
-                <input id="departure-alt-sing" type="hidden" name="departure_alt_sing" value="2020-12-19">
-                <input id="max-pax" type="hidden" name="max_pax" value="2">
-                <input type="hidden" name="form_build_id" value="form-PxAclmvDeMRn5FkIDzm-C4uCw5XgJqv345M5ggIJqXo">
-                <input type="hidden" name="form_id" value="property_details_form">
+                <input id="arrival-alt-sing" type="hidden" name="arrival_alt_sing" value="">
+                <input id="departure-alt-sing" type="hidden" name="departure_alt_sing" value="">
             </div>
         </form>
         <div id="property-details-info">
@@ -287,10 +304,10 @@
                 </a>
             </div>
         </div>
-        <div id="property-map-info">
-            <h2 class="section-title">Location Map</h2><iframe
-                src="https://www.google.com/maps/d/u/1/embed?mid=1R4iiei3X-lalmkRHWsf4VFKe6yrqS8DS"
-                width="&amp;z=15&quot;100%&quot;" height="370"></iframe>
+        <div id="property-map-info" class="app-map-wrapper">
+            <h2 class="section-title">Location Map</h2>
+            <div id="{{ $property->property_id }}" class="app-google-map" data-lat="{{ $latitude }}"
+                data-lng="{{ $longitude }}" data-map-id="{{ $property->property_id }}"></div>
         </div>
     </div>
 
@@ -300,12 +317,15 @@
 
 @endsection
 
-<script>
-    var property = JSON.parse('<?= $prw ?>');
-
-</script>
 @section('bottom-js')
+    <script>
+        var property = JSON.parse('<?= $prw ?>');
+        var propertyAvailability = JSON.parse('<?= $searchAvailability ?>');
 
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmvl4FUJzyTt-JWxurpF7Tx0f-5kK2MJs" async defer>
+    </script>
+    <script src="{{ asset('assets/public/js/gmaps.js') }}"></script>
     <script src="{{ asset('assets/public/js/jquery.flexslider.js') }}"></script>
     <script src="{{ asset('assets/public/js/property-detail.js') }}"></script>
 

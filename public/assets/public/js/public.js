@@ -2997,4 +2997,32 @@ setTimeout(function(){
         }
     });
 
+    $('#edit-arrival-sing').datepicker({
+        dateFormat: 'D dd/M/yy',
+        altFormat: 'yy-mm-dd',
+        altField: '#arrival-alt-sing',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 2,
+        minDate: '+1d',
+        onClose: function( selectedDate ) {
+        $('#edit-departure-sing').datepicker('option', 'minDate', selectedDate );
+        }
+    });
+
+    $("#edit-arrival-sing").trigger("click");
+    
+    $('#edit-departure-sing').datepicker({
+        dateFormat: 'D dd/M/yy',
+        altFormat: 'yy-mm-dd',
+        altField: '#departure-alt-sing',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 2,
+        minDate: '+2d',
+        onClose: function( selectedDate ) {
+        $('#edit-arrival-sing').datepicker('option', 'maxDate', selectedDate );
+        }
+    });
+
 })(jQuery);

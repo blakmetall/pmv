@@ -63,7 +63,10 @@
           controlNav: false,
           animationLoop: false,
           slideshow: false,
-          sync: "#carousel"
+          sync: "#carousel",
+          start: function(slider){
+            $('.cssload-thecube').css("display","none");
+          }
         });
       });
 
@@ -81,5 +84,26 @@
         
         rw.push(data);
         localStorage.setItem('rw', JSON.stringify(rw));
+    }
+
+    //Dates for mini check availability - Property Detail
+    var getInputsSearch = localStorage.getItem('search-form') || '';
+    if(getInputsSearch){
+        if (propertyAvailability.length === 0) {
+            getInputsSearch = JSON.parse(getInputsSearch);
+            $('#arrival-alt-sing').val(getInputsSearch.arrival);
+            $('#edit-arrival-sing').val(getInputsSearch.arrivalTxt);
+            $('#departure-alt-sing').val(getInputsSearch.departure);
+            $('#edit-departure-sing').val(getInputsSearch.departureTxt);
+            $('#edit-adults-sing').val(getInputsSearch.adults);
+            $('#edit-children-sing').val(getInputsSearch.children);
+        }else{
+            $('#arrival-alt-sing').val(propertyAvailability.arrival);
+            $('#edit-arrival-sing').val(propertyAvailability.arrivalTxt);
+            $('#departure-alt-sing').val(propertyAvailability.departure);
+            $('#edit-departure-sing').val(propertyAvailability.departureTxt);
+            $('#edit-adults-sing').val(propertyAvailability.adults);
+            $('#edit-children-sing').val(propertyAvailability.children);
+        }
     }
 })(jQuery)

@@ -57,7 +57,8 @@
                                         <option value="1" {{ old('category') == 1 ? 'selected' : '' }}>
                                             {{ __('Accounting') }}
                                         </option>
-                                        <option value="2" {{ old('category') == 2 ? 'selected' : '' }}>{{ __('Concierge') }}
+                                        <option value="2" {{ old('category') == 2 ? 'selected' : '' }}>
+                                            {{ __('Concierge') }}
                                         </option>
                                         <option value="3" {{ old('category') == 3 ? 'selected' : '' }}>
                                             {{ __('Property Management') }}
@@ -131,9 +132,9 @@
                         <div class="row">
                             @foreach ($offices as $office)
                                 @php
-                                $id = 'field_' . $office->gmaps_lat;
-                                $latitude = $office->gmaps_lat;
-                                $longitude = $office->gmaps_lon;
+                                    $id = 'field_' . $office->gmaps_lat;
+                                    $latitude = $office->gmaps_lat;
+                                    $longitude = $office->gmaps_lon;
                                 @endphp
                                 <div class="col-xs-6 app-map-wrapper">
                                     <h4>Location Map</h4>
@@ -157,5 +158,6 @@
 @section('bottom-js')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmvl4FUJzyTt-JWxurpF7Tx0f-5kK2MJs" async defer>
     </script>
+    <script src="{{ asset('assets/public/js/gmaps.js') }}"></script>
     <script src="{{ asset('assets/public/js/contact.js') }}"></script>
 @endsection
