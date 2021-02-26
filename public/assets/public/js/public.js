@@ -2661,7 +2661,7 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 				};
 
 				// Save session for use in property details
-				setDatesProperty(arrival, arrivalTxt, departure, departureTxt);
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
 
 				localStorage.setItem("search-form", JSON.stringify(inputsForm));
 			});
@@ -2691,7 +2691,7 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 				var adults = $("input[name='adults']").val();
 				var children = $("input[name='children']").val();
 
-				setDatesProperty(arrival, arrivalTxt, departure, departureTxt);
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
 				
 				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
 	
@@ -2740,9 +2740,9 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 		
 	});
 
-	function setDatesProperty(arrival, arrivalTxt, departure, departureTxt){
+	function setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children){
 		// Save session for use in property details
-		var datesProperty = [arrival, arrivalTxt, departure, departureTxt];
+		var datesProperty = [arrival, arrivalTxt, departure, departureTxt, adults, children];
 		document.cookie = `datesProperty=${datesProperty};path=/`;
 	}
 

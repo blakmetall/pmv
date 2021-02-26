@@ -84,9 +84,8 @@
                                         {{ $nightsDate }} nights )
                                     </div>
                                     <div class="text-right">
-                                        <form id="bookit-618-form" action="reservations" method="post"><input type="hidden"
-                                                name="pid" value="618"><input type="submit" name="submit" value="Book it!"
-                                                title="Book this property" class="btn btn-warning"></form>
+                                        <a href="{{ route('public.reservations', $property->property_id) }}"
+                                            class="btn btn-warning">Book it!</a>
                                     </div>
                                 </div>
                             </div>

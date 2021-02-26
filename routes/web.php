@@ -534,6 +534,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('modal-availability', '_Public\PropertyController@availabilityModal')->name('public.availability-modal');
     Route::get('first-availability', '_Public\PropertyController@firstsAvailability')->name('public.first-availability');
     Route::get('reservations/{id}', '_Public\PropertyController@reservations')->name('public.reservations');
+    Route::post('make-reservation', '_Public\PropertyController@makeReservation')->name('public.make-reservation');
+    Route::get('thank-you/{booking}', '_Public\PropertyController@thankYou')->name('public.thank-you');
 
     // Home
     Route::get('', '_Public\HomeController@index')->name('public.home');

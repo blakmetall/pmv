@@ -159,5 +159,5 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmvl4FUJzyTt-JWxurpF7Tx0f-5kK2MJs" async defer>
     </script>
     <script src="{{ asset('assets/public/js/gmaps.js') }}"></script>
-    <script src="{{ asset('assets/public/js/contact.js') }}"></script>
+    <script src="{{ asset('assets/public/js/captchaImage.js') }}"></script>
 @endsection

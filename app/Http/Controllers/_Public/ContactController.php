@@ -87,7 +87,7 @@ class ContactController extends Controller
                 $data['subject'] = $request->subject;
                 $data['category'] = $category;
                 $data['message'] = $request->message;
-                // $this->email($data, $email);
+                $this->email($data, $email);
                 $request->session()->flash('success', __('Message sended'));
             }else{
                 $errors = '';

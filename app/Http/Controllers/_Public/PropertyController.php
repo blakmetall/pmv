@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\_Public;
 
+use App\Notifications\DetailsBookingPublic;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\PropertyBooking;
+use App\Models\DamageDeposit;
 use App\Models\PropertyTranslation;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\ZonesRepositoryInterface;
+use App\Repositories\DamageDepositsRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,15 +23,18 @@ class PropertyController extends Controller
     private $propertiesRepository;
     private $propertiyBookingsRepository;
     private $zonesRepository;
+    private $damagesDepositsRepository;
 
     public function __construct(
         PropertiesRepositoryInterface $propertiesRepository,
         PropertyBookingsRepositoryInterface $propertiyBookingsRepository,
-        ZonesRepositoryInterface $zonesRepository
+        ZonesRepositoryInterface $zonesRepository,
+        DamageDepositsRepositoryInterface $damagesDepositsRepository
     ) {
         $this->propertiesRepository = $propertiesRepository;
         $this->propertiyBookingsRepository = $propertiyBookingsRepository;
         $this->zonesRepository = $zonesRepository;
+        $this->damagesDepositsRepository = $damagesDepositsRepository;
     }
     
     public function availabilityResults(Request $request)
@@ -219,13 +226,369 @@ class PropertyController extends Controller
     }
 
     public function reservations($id){
+        $captcha = rand(100000, 999999);
         $lang = LanguageHelper::current()->code;
         $slug = $this->propertiesRepository->find($id)->$lang->slug;
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
-        $prw = 'remover despues';
+        $damageDeposits = $this->damagesDepositsRepository->all('');
+        $countries = [
+            "Afghanistan",
+            "Albania",
+            "Algeria",
+            "American Samoa",
+            "Andorra",
+            "Angola",
+            "Anguilla",
+            "Antarctica",
+            "Antigua and Barbuda",
+            "Argentina",
+            "Armenia",
+            "Aruba",
+            "Australia",
+            "Austria",
+            "Azerbaijan",
+            "Bahamas",
+            "Bahrain",
+            "Bangladesh",
+            "Barbados",
+            "Belarus",
+            "Belgium",
+            "Belize",
+            "Benin",
+            "Bermuda",
+            "Bhutan",
+            "Bolivia",
+            "Bosnia and Herzegovina",
+            "Botswana",
+            "Bouvet Island",
+            "Brazil",
+            "British Indian Ocean Territory",
+            "Brunei",
+            "Bulgaria",
+            "Burkina Faso",
+            "Burundi",
+            "Cambodia",
+            "Cameroon",
+            "Canada",
+            "Cape Verde",
+            "Cayman Islands",
+            "Central African Republic",
+            "Chad",
+            "Chile",
+            "China",
+            "Christmas Island",
+            "Cocos (Keeling) Islands",
+            "Colombia",
+            "Comoros",
+            "Congo",
+            "Cook Islands",
+            "Costa Rica",
+            "Cote d'Ivoire (Ivory Coast)",
+            "Croatia",
+            "Cuba",
+            "Cyprus",
+            "Czech Republic",
+            "Denmark",
+            "Djibouti",
+            "Dominica",
+            "Dominican Republic",
+            "East Timor",
+            "Ecuador",
+            "Egypt",
+            "El Salvador",
+            "Equatorial Guinea",
+            "Eritrea",
+            "Estonia",
+            "Ethiopia",
+            "Falkland Islands",
+            "Faroe Islands",
+            "Fiji Islands",
+            "Finland",
+            "France",
+            "French Guiana",
+            "French Polynesia",
+            "French Southern Territories",
+            "Gabon",
+            "Gambia",
+            "Georgia",
+            "Germany",
+            "Ghana",
+            "Gibraltar",
+            "Greece",
+            "Greenland",
+            "Grenada",
+            "Guadeloupe",
+            "Guam",
+            "Guatemala",
+            "Guinea",
+            "Guinea-Bissau",
+            "Guyana",
+            "Haiti",
+            "Heard Island/McDonald Islands",
+            "Honduras",
+            "Hong Kong",
+            "Hungary",
+            "Iceland",
+            "India",
+            "Indonesia",
+            "Iran",
+            "Iraq",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Jamaica",
+            "Japan",
+            "Jordan",
+            "Kazakhstan",
+            "Kenya",
+            "Kiribati",
+            "Korea, North",
+            "Korea, South",
+            "Kuwait",
+            "Kyrgyzstan",
+            "Lao Peoples Democratic Republic",
+            "Latvia",
+            "Lebanon",
+            "Lesotho",
+            "Liberia",
+            "Libyan Arab Jamahiriya",
+            "Liechtenstein",
+            "Lithuania",
+            "Luxembourg",
+            "Macau",
+            "Macedonia",
+            "Madagascar",
+            "Malawi",
+            "Malaysia",
+            "Maldives",
+            "Mali",
+            "Malta",
+            "Marshall Islands",
+            "Martinique",
+            "Mauritania",
+            "Mauritius",
+            "Mayotte",
+            "Mexico",
+            "Micronesia",
+            "Moldova",
+            "Monaco",
+            "Mongolia",
+            "Morocco",
+            "Mozambique",
+            "Myanmar",
+            "Namibia",
+            "Nauru",
+            "Nepal",
+            "Netherlands",
+            "Netherlands Antilles",
+            "New Caledonia",
+            "New Zealand",
+            "Nicaragua",
+            "Niger",
+            "Nigeria",
+            "Niue",
+            "Norfolk Island",
+            "Northern Mariana Islands",
+            "Norway",
+            "Oman",
+            "Pakistan",
+            "Palau",
+            "Palestinian Territory",
+            "Panama",
+            "Papua New Guinea",
+            "Paraguay",
+            "Peru",
+            "Philippines",
+            "Pitcairn Island",
+            "Poland",
+            "Portugal",
+            "Puerto Rico",
+            "Qatar",
+            "Republic of Congo",
+            "Reunion",
+            "Romania",
+            "Russia",
+            "Rwanda",
+            "Saint Helena",
+            "Saint Kitts and Nevis",
+            "Saint Lucia",
+            "Samoa",
+            "San Marino",
+            "Sao Tome and Principe",
+            "Saudi Arabia",
+            "Senegal",
+            "Serbia and Montenegro",
+            "Seychelles",
+            "Sierra Leone",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "Solomon Islands",
+            "Somalia",
+            "South Africa",
+            "South Georgia/Sandwich Islands",
+            "Spain",
+            "Sri Lanka",
+            "St. Pierre and Miquelon",
+            "St. Vincent and Grenadines",
+            "Sudan",
+            "Suriname",
+            "Svalbard and Jan Mayen",
+            "Swaziland",
+            "Sweden",
+            "Switzerland",
+            "Syrian Arab Republic",
+            "Taiwan",
+            "Tajikistan",
+            "Tanzania",
+            "Thailand",
+            "Togo",
+            "Tokelau",
+            "Tonga",
+            "Trinidad and Tobago",
+            "Tunisia",
+            "Turkey",
+            "Turkmenistan",
+            "Turks and Caicos Islands",
+            "Tuvalu",
+            "U.S. Minor Outlying Islands",
+            "Uganda",
+            "Ukraine",
+            "United Arab Emirates",
+            "United Kingdom",
+            "United States",
+            "Uruguay",
+            "Uzbekistan",
+            "Vanuatu",
+            "Vatican City",
+            "Venezuela",
+            "Vietnam",
+            "Virgin Islands, British",
+            "Virgin Islands, U.S.",
+            "Wallis and Futuna Islands",
+            "Western Sahara",
+            "Yemen",
+            "Zambia",
+            "Zimbabwe",
+        ];
         return view('public.pages.properties.property-booking')
-            ->with('prw', $prw)
-            ->with('property', $property);
+            ->with('captcha', $captcha)
+            ->with('property', $property)
+            ->with('countries', $countries)
+            ->with('damageDeposits', $damageDeposits);
+    }
+
+    public function makeReservation(Request $request){
+        $rules = [];
+        $messages = [];
+
+        $rules['firstname']          = 'required';
+        $rules['lastname']           = 'required';
+        $rules['email']              = 'required|email';
+        $rules['email_confirmation'] = 'required|email|same:email';
+        $rules['phone']              = 'required';
+        $rules['street']             = 'required';
+        $rules['city']               = 'required';
+        $rules['state']              = 'required';
+        $rules['zip']                = 'required';
+        $rules['damage_deposit_id']  = 'required';
+        $rules['agreement']          = 'accepted';
+
+        $messages['firstname.required']         = 'La formulación es obligatoria';
+        $messages['lastname.required']          = 'El ancho es obligatorio';
+        $messages['email.required']             = 'El calibre es obligatorio';
+        $messages['email.email']                = 'El calibre es obligatorio';
+        $messages['email_confirmation.same']    = 'El calibre es obligatorio';
+        $messages['phone.required']             = 'La longitud es obligatoria';
+        $messages['street.required']            = 'La longitud debe ser numerica';
+        $messages['city.required']              = 'La longitud debe ser numerica';
+        $messages['state.required']             = 'La longitud debe ser numerica';
+        $messages['zip.required']               = 'La longitud debe ser numerica';
+        $messages['damage_deposit_id.required'] = 'La longitud debe ser numerica';
+        $messages['agreement.accepted']         = 'Debes aceptar';
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($request->code_catpcha != $request->captcha_response){
+            $request->session()->flash('error', __('Code image wrong'));
+        }else{
+            if (!$validator->fails()) {
+                $booking = new PropertyBooking;
+                if ($booking->damage_deposit_id) {
+                    $damage_deposit = DamageDeposit::find($request->damage_deposit_id);
+                    $damageDeposit = $damage_deposit->price;
+                } else {
+                    $damageDeposit = 0;
+                }
+                $booking->property_id             = $request->property_id;
+                $booking->firstname               = $request->firstname;
+                $booking->lastname                = $request->lastname;
+                $booking->email                   = $request->email;
+                $booking->country                 = $request->country;
+                $booking->state                   = $request->state;
+                $booking->city                    = $request->city;
+                $booking->street                  = $request->street;
+                $booking->zip                     = $request->zip;
+                $booking->phone                   = $request->phone;
+                $booking->mobile                  = $request->mobile;
+                $booking->comments                = $request->comments;
+                $booking->arrival_airline         = $request->arrival_airline;
+                $booking->arrival_date            = $request->arrival_date;
+                $booking->arrival_flight_number   = $request->arrival_flight_number;
+                $booking->arrival_time            = $request->arrival_time;
+                $booking->departure_airline       = $request->departure_airline;
+                $booking->departure_date          = $request->departure_date;
+                $booking->departure_flight_number = $request->departure_flight_number;
+                $booking->departure_time          = $request->departure_time;
+                $booking->price_per_night         = $request->price_per_night;
+                $booking->nights                  = $request->nights;
+                $booking->subtotal_nights         = $request->subtotal_nights;
+                $booking->subtotal_damage_deposit = $damageDeposit;
+                $booking->damage_deposit_id       = $request->damage_deposit_id;
+                $booking->total                   = $request->subtotal_nights + $damageDeposit;
+                $booking->adults                  = $request->adults;
+                $booking->kids                    = $request->children;
+                $booking->register_by             = 'Client';
+                if($booking->save()){
+                    $emails = [
+                        $request->email,
+                        'vallarta@palmeravacations.com',
+                        'pmd@palmeravacations.com',
+                        'maidsupervisor@palmeramail.com',
+                        'reservations@palmeravacations.com',
+                        'concierge@palmeravacations.com',
+                        'fallito67@gmail.com',
+                    ];
+                    $this->email($booking, $emails);
+                    return redirect(route('public.thank-you', $booking))->withInput();
+                }else{
+                    $request->session()->flash('error', 'Somehthing wrong happen');
+                }
+            }else{
+                $errors = '';
+                foreach($validator->errors()->get('*') as $error){
+                $errors .= $error[0].'<br>';
+                }
+                $request->session()->flash('error', $errors);
+            }
+        }
+        return redirect()->back()->withInput();
+    }
+
+    public function thankYou(Request $request, $booking)
+    {
+        $request->session()->flash('success', 'Reservation successful sended');
+        $booking = PropertyBooking::find($booking);
+        return view('public.pages.properties.thank-you')
+                ->with('booking', $booking);
+    }
+
+    private function email($booking, $emails)
+    {
+        foreach($emails as $email){
+            Notification::route('mail', $email)
+                ->notify(new DetailsBookingPublic($booking));
+        }
     }
 }

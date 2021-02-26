@@ -89,7 +89,23 @@
     //Dates for mini check availability - Property Detail
     var getInputsSearch = localStorage.getItem('search-form') || '';
     if(getInputsSearch){
-        if (propertyAvailability.length === 0) {
+        if (propertyAvailability.length !== 0) {
+            $('#arrival-alt-sing').val(propertyAvailability.arrival);
+            $('#edit-arrival-sing').val(propertyAvailability.arrivalTxt);
+            $('#departure-alt-sing').val(propertyAvailability.departure);
+            $('#edit-departure-sing').val(propertyAvailability.departureTxt);
+            $('#edit-adults-sing').val(propertyAvailability.adults);
+            $('#edit-children-sing').val(propertyAvailability.children);
+            var singleSearchForm = [
+                propertyAvailability.arrival,
+                propertyAvailability.arrivalTxt,
+                propertyAvailability.departure,
+                propertyAvailability.departureTxt,
+                propertyAvailability.adults,
+                propertyAvailability.children,
+            ];
+		    document.cookie = `singleProperty=${singleSearchForm};path=/`;
+        }else{
             getInputsSearch = JSON.parse(getInputsSearch);
             $('#arrival-alt-sing').val(getInputsSearch.arrival);
             $('#edit-arrival-sing').val(getInputsSearch.arrivalTxt);
@@ -97,13 +113,8 @@
             $('#edit-departure-sing').val(getInputsSearch.departureTxt);
             $('#edit-adults-sing').val(getInputsSearch.adults);
             $('#edit-children-sing').val(getInputsSearch.children);
-        }else{
-            $('#arrival-alt-sing').val(propertyAvailability.arrival);
-            $('#edit-arrival-sing').val(propertyAvailability.arrivalTxt);
-            $('#departure-alt-sing').val(propertyAvailability.departure);
-            $('#edit-departure-sing').val(propertyAvailability.departureTxt);
-            $('#edit-adults-sing').val(propertyAvailability.adults);
-            $('#edit-children-sing').val(propertyAvailability.children);
+            var singleSearchForm = [];
+            document.cookie = `singleProperty=${singleSearchForm};path=/`;
         }
     }
 })(jQuery)
