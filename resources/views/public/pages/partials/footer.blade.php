@@ -11,7 +11,7 @@ $offices = getOffices();
                             <div class="inside">
                                 <div class="panel-pane pane-block pane-mailchimp-mailchimp-block">
                                     <h2 class="pane-title">
-                                        Sign Up For Updates </h2>
+                                        {{ __('Sign Up For Updates') }} </h2>
                                     <div class="pane-content">
                                         <form id="mc-embedded-subscribe-form" class="validate" target="_blank"
                                             action="http://palmeravacations.us2.list-manage.com/subscribe/post?u=3b1884317120ae49fbec5270e&amp;amp;id=706130937c"
@@ -23,7 +23,7 @@ $offices = getOffices();
                                                         value="" size="60" maxlength="128" />
                                                 </div><button id="mc-embedded-subscribe"
                                                     class="btn btn-warning form-submit" type="submit" name="op"
-                                                    value="Subscribe">Subscribe</button>
+                                                    value="{{ __('Subscribe') }}">{{ __('Subscribe') }}</button>
                                                 <input type="hidden" name="form_build_id"
                                                     value="form-_t0wDP3KPWKwt709AUPC1z7T0VAvo5IVBOoGHB_csgI" />
                                                 <input type="hidden" name="form_id" value="mailchimp_form" />
@@ -35,17 +35,18 @@ $offices = getOffices();
                                 <div class="panel-pane pane-custom pane-6 follow-links-container">
 
                                     <h2 class="pane-title">
-                                        Keep in Touch </h2>
+                                        {{ __('Keep in Touch') }} </h2>
                                     <div class="pane-content">
                                         <div class="follow-links">
                                             <a href="https://facebook.com/PalmeraVacations"
-                                                title="Follow us on Facebook" class="follow-link" target="_blank"><i
-                                                    class="fab fa-facebook-f"></i></a> <a
-                                                href="https://twitter.com/PalmeraV" title="Follow us on Twitter"
-                                                class="follow-link" target="_blank"><i class="fab fa-twitter"></i></a>
+                                                title="{{ __('Follow us on Facebook') }}" class="follow-link"
+                                                target="_blank"><i class="fab fa-facebook-f"></i></a> <a
+                                                href="https://twitter.com/PalmeraV"
+                                                title="{{ __('Follow us on Twitter') }}" class="follow-link"
+                                                target="_blank"><i class="fab fa-twitter"></i></a>
                                             <a href="https://www.instagram.com/palmeravacations/"
-                                                title="Follow us on Instragram" class="follow-link" target="_blank"><i
-                                                    class="fab fa-instagram"></i></a>
+                                                title="{{ __('Follow us on Instagram') }}" class="follow-link"
+                                                target="_blank"><i class="fab fa-instagram"></i></a>
                                         </div>
                                     </div>
 
@@ -56,9 +57,10 @@ $offices = getOffices();
                                     <div class="pane-content">
                                         <div class="row seals">
                                             <div class="col-xs-6">
-                                                <a href="/%23" title="Secured by PayPal" class="paypal-dialog"><img
-                                                        src="https://www.paypalobjects.com/webstatic/mktg/logo/bdg_secured_by_pp_2line.png"
-                                                        alt="Secured by PayPal" class="paypal-logo-img" /></a>
+                                                <div title="{{ __('Secured by PayPal') }}" class="paypal-dialog">
+                                                    <img src="https://www.paypalobjects.com/webstatic/mktg/logo/bdg_secured_by_pp_2line.png"
+                                                        alt="{{ __('Secured by PayPal') }}" class="paypal-logo-img" />
+                                                </div>
                                             </div>
                                             <div class="col-xs-6">
 
@@ -75,18 +77,21 @@ $offices = getOffices();
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-hidden="true">&times;</button>
-                                                        <h4 class="modal-title">What is <em>PayPal</em>?</h4>
+                                                        <h4 class="modal-title">{{ __('What is') }} <em>PayPal</em>?
+                                                        </h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <ul class="list">
-                                                            <li>It is a payment method of easy, quick, and sure.</li>
-                                                            <li>Can make payment with credit and debit card.</li>
-                                                            <li>Register with PayPal your financial data only once. No
-                                                                need to repeat this step in subsequent purchases.</li>
-                                                            <li>More than 100 million people in the world use Paypal.
+                                                            <li>{{ __('It is a payment method of easy, quick, and sure.') }}
                                                             </li>
-                                                            <li>PayPal protects your information. Do not share your
-                                                                financial data.</li>
+                                                            <li>{{ __('Can make payment with credit and debit card.') }}
+                                                            </li>
+                                                            <li>{{ __('Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases.') }}
+                                                            </li>
+                                                            <li>{{ __('More than 100 million people in the world use Paypal.') }}
+                                                            </li>
+                                                            <li>{{ __('PayPal protects your information. Do not share your financial data.') }}
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -102,7 +107,7 @@ $offices = getOffices();
                                 <div class="panel-pane pane-custom pane-8 offices-container">
 
                                     <h2 class="pane-title">
-                                        Find Us </h2>
+                                        {{ __('Find Us') }}</h2>
 
                                     <div class="pane-content">
                                         <div class="offices">
@@ -110,8 +115,8 @@ $offices = getOffices();
                                                 <div class="office-item">
                                                     {{ $office->name }}<br />
                                                     {!! $office->address !!}<br />
-                                                    <span>Telephone:</span> {{ $office->phone }}<br />
-                                                    <span>E-mail:</span> <a
+                                                    <span>{{ __('Telephone') }}:</span> {{ $office->phone }}<br />
+                                                    <span>{{ __('E-mail') }}:</span> <a
                                                         href="mailto:{{ $office->email }}">{{ $office->email }}</a><br /><br />
                                                 </div>
                                             @endforeach
@@ -128,7 +133,7 @@ $offices = getOffices();
                                         <a href="https://twitter.com/PalmeraV" class="twitter-timeline"
                                             data-widget-id="530209480605052929" data-theme="dark" width="370"
                                             height="450" data-chrome="noborders transparent"
-                                            data-aria-polite="polite">Tweets by PalmeraV</a>
+                                            data-aria-polite="polite">{{ __('Tweets by PalmeraV') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -140,12 +145,11 @@ $offices = getOffices();
                             <div class="panel-pane pane-custom pane-5">
                                 <div class="pane-content">
                                     <div class="copy text-center">
-                                        <p>&copy; 2011 - 2020 Palmera Vacations - Property Rentals in Puerto Vallarta,
-                                            Nuevo Vallarta, Riviera Nayarit & Mazatlán, México!</p>
+                                        <p>&copy; {{ __('Copy') }}</p>
                                         <p><a href="{{ route('public.about.privacy-policy') }}"
-                                                title="Privacy Policy">Privacy Policy</a> - <a
-                                                href="{{ route('public.about.terms-of-use') }}"
-                                                title="Terms of Use">Terms of Use</a></p>
+                                                title="{{ __('Privacy Policy') }}">{{ __('Privacy Policy') }}</a>
+                                            - <a href="{{ route('public.about.terms-of-use') }}"
+                                                title="{{ __('Terms of Use') }}">{{ __('Terms of Use') }}</a></p>
                                     </div>
                                 </div>
                             </div>

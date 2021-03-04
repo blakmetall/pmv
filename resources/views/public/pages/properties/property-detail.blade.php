@@ -51,102 +51,109 @@
     @include('public.pages.partials.modal')
 
     <div id="property-details">
-        <div id="property-gallery-info">
-            <div class="cssload-thecube">
-                <div class="cssload-cube cssload-c1"></div>
-                <div class="cssload-cube cssload-c2"></div>
-                <div class="cssload-cube cssload-c4"></div>
-                <div class="cssload-cube cssload-c3"></div>
-            </div>
-            <div id="slider" class="flexslider flexslider-loading">
-                <ul class="slides" style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-                    <li class="flex-active-slide">
-                        <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
-                    </li>
-                    @foreach ($property->property->images as $index => $image)
-                        @if ($index == 0)
-                            @php
-                                continue;
-                            @endphp
-                        @endif
-                        <li>
-                            <img src="{{ $image->file_url }}" draggable="false">
+        @if ($property->property->images()->exists())
+            <div id="property-gallery-info">
+                <div class="cssload-thecube">
+                    <div class="cssload-cube cssload-c1"></div>
+                    <div class="cssload-cube cssload-c2"></div>
+                    <div class="cssload-cube cssload-c4"></div>
+                    <div class="cssload-cube cssload-c3"></div>
+                </div>
+                <div id="slider" class="flexslider flexslider-loading">
+                    <ul class="slides"
+                        style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                        <li class="flex-active-slide">
+                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
                         </li>
-                    @endforeach
-                </ul>
-                <ul class="flex-direction-nav">
-                    <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
-                    <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
-                </ul>
-            </div>
-            <div id="carousel" class="flexslider">
-                <ul class="slides" style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-                    <li class="flex-active-slide">
-                        <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
-                    </li>
-                    @foreach ($property->property->images as $index => $image)
-                        @if ($index == 0)
-                            @php
-                                continue;
-                            @endphp
-                        @endif
-                        <li>
-                            <img src="{{ $image->file_url }}" draggable="false">
+                        @foreach ($property->property->images as $index => $image)
+                            @if ($index == 0)
+                                @php
+                                    continue;
+                                @endphp
+                            @endif
+                            <li>
+                                <img src="{{ $image->file_url }}" draggable="false">
+                            </li>
+                        @endforeach
+                    </ul>
+                    <ul class="flex-direction-nav">
+                        <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
+                        <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
+                    </ul>
+                </div>
+                <div id="carousel" class="flexslider">
+                    <ul class="slides"
+                        style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                        <li class="flex-active-slide">
+                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
                         </li>
-                    @endforeach
-                </ul>
-                <ul class="flex-direction-nav">
-                    <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
-                    <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
-                </ul>
+                        @foreach ($property->property->images as $index => $image)
+                            @if ($index == 0)
+                                @php
+                                    continue;
+                                @endphp
+                            @endif
+                            <li>
+                                <img src="{{ $image->file_url }}" draggable="false">
+                            </li>
+                        @endforeach
+                    </ul>
+                    <ul class="flex-direction-nav">
+                        <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
+                        <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        @endif
         @if ($availabilityProperty == 'all')
             <div id="property-rate-info">
                 <div class="alert alert-success text-center">
-                    Available for dates <strong>{{ $bothDates }} ( {{ $nightsDate }} nights )</strong>
+                    {{ __('Available for dates') }} <strong>{{ $bothDates }} ( {{ $nightsDate }}
+                        {{ __('Nights') }}
+                        )</strong>
                 </div>
                 <div class="row" id="availability-results">
                     <div class="col-xs-4 text-center">
                         <div class="b-rate ">${{ $nightlyRate }} USD</div>
-                        <div class="b-caption">avg. night</div>
+                        <div class="b-caption">{{ __('Avg. night') }}</div>
                     </div>
                     <div class="col-xs-5">
                         <div class="text-right savings-tag"></div>
-                        <div class="total-stay text-right">Total stay: <span>${{ number_format($total) }}
+                        <div class="total-stay text-right">{{ __('Total Stay') }}: <span>${{ number_format($total) }}
                                 USD</span><br>{{ $bothDates }} (
-                            {{ $nightsDate }} nights
+                            {{ $nightsDate }} {{ __('Nights') }}
                             )
                         </div>
                     </div>
                     <div class="col-xs-3">
                         <div class="text-right">
                             <a href="{{ route('public.reservations', $property->property_id) }}"
-                                class="btn btn-warning">Book it!</a>
+                                class="btn btn-warning">{{ __('Book it!') }}</a>
                         </div>
                     </div>
                 </div>
             </div>
         @elseif($availabilityProperty == 'some')
             <div id="property-rate-info">
-                <div class="alert alert-warning text-center"> One or more nights are not available for dates
-                    <strong>{{ $bothDates }}</strong>,<br>
-                    please check the
+                <div class="alert alert-warning text-center"> {{ __('One or more nights are not available for dates') }}
+                    <strong>{{ $bothDates }}</strong>,<br> {{ __('Please check the') }}
                     <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}" data-year=""
-                        data-target="#{{ $modalID }}" title="Availability Calendar" class="btn-calendar">
-                        Availability Calendar
-                    </a> and edit your search.
+                        data-target="#{{ $modalID }}" title="{{ __('Availability Calendar') }}"
+                        class="btn-calendar">
+                        {{ __('Availability Calendar') }}
+                    </a> {{ __('And edit your search.') }}
                 </div>
             </div>
         @elseif($availabilityProperty == 'none')
             <div id="property-rate-info">
-                <div class="alert alert-danger text-center"> Not available for dates:
+                <div class="alert alert-danger text-center"> {{ __('Not available for dates:') }}
                     <strong>{{ $bothDates }}</strong>,<br>
-                    please check the
+                    {{ __('Please check the') }}
                     <a href="#" data-toggle="modal" data-source="{{ $property->property_id }}" data-year=""
-                        data-target="#{{ $modalID }}" title="Availability Calendar" class="btn-calendar">
-                        Availability Calendar
-                    </a> and edit your search.
+                        data-target="#{{ $modalID }}" title="{{ __('Availability Calendar') }}"
+                        class="btn-calendar">
+                        {{ __('Availability Calendar') }}
+                    </a> {{ __('And edit your search.') }}
                 </div>
         @endif
         <form
@@ -157,14 +164,14 @@
                     id="edit-details-form">
                     <legend class="panel-heading">
                         <a href="#edit-details-form-body" class="panel-title fieldset-legend collapsed"
-                            data-toggle="collapse"><span class="fieldset-legend-prefix element-invisible">Hide</span>Check
-                            Availability</a>
+                            data-toggle="collapse"><span
+                                class="fieldset-legend-prefix element-invisible">{{ __('Hide') }}</span>{{ __('Check Availability') }}</a>
                     </legend>
                     <div class="panel-body panel-collapse collapse fade collapsed" id="edit-details-form-body">
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-item form-item-arrival-sing form-type-textfield form-group"> <label
-                                        class="control-label" for="edit-arrival-sing">Check-in-date</label>
+                                        class="control-label" for="edit-arrival-sing">{{ __('Check in date') }}</label>
                                     <input class="text-center form-control form-text" readonly="readonly" type="text"
                                         id="edit-arrival-sing" name="arrival_sing"
                                         value="{{ $arrivalDeparture['arrivalTxt'] }}" size="60" maxlength="128">
@@ -172,7 +179,8 @@
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-item form-item-departure-sing form-type-textfield form-group"> <label
-                                        class="control-label" for="edit-departure-sing">Check-out-date</label>
+                                        class="control-label"
+                                        for="edit-departure-sing">{{ __('Check out date') }}</label>
                                     <input class="text-center form-control form-text" readonly="readonly" type="text"
                                         id="edit-departure-sing" name="departure_sing"
                                         value="{{ $arrivalDeparture['departureTxt'] }}" size="60" maxlength="128">
@@ -180,20 +188,21 @@
                             </div>
                             <div class="col-xs-2">
                                 <div class="form-item form-item-adults-sing form-type-textfield form-group"> <label
-                                        class="control-label" for="edit-adults-sing">Adults</label>
+                                        class="control-label" for="edit-adults-sing">{{ __('Adults') }}</label>
                                     <input class="form-control form-text" type="text" id="edit-adults-sing"
                                         name="adults_sing" value="" size="60" maxlength="128">
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 <div class="form-item form-item-children-sing form-type-textfield form-group"> <label
-                                        class="control-label" for="edit-children-sing">Children</label>
+                                        class="control-label" for="edit-children-sing">{{ __('Children') }}</label>
                                     <input class="form-control form-text" type="text" id="edit-children-sing"
                                         name="children_sing" value="" size="60" maxlength="128">
                                 </div>
                             </div>
                             <div class="col-xs-2 text-right">
-                                <button title="Check Availability" class="btn btn-success btn-loading form-submit"
+                                <button title="{{ __('Check Availability') }}"
+                                    class="btn btn-success btn-loading form-submit"
                                     data-loading-text="<i class=&quot;fa fa-spinner fa-spin&quot;></i>" type="submit"
                                     id="edit-submit" value="<i class=&quot;fas fa-search&quot;></i>"><i
                                         class="fas fa-search"></i></button>
@@ -207,35 +216,36 @@
             </div>
         </form>
         <div id="property-details-info">
-            <h2 class="section-title">Property Details</h2>
+            <h2 class="section-title">{{ __('Property Details') }}</h2>
             <div class="row">
                 <div class="col-xs-6">
-                    <h4 class="sub-section">Property Type</h4>
+                    <h4 class="sub-section">{{ __('Property Type') }}</h4>
                     <p>{{ $property->property->type->getLabel() }}</p>
                 </div>
                 <div class="col-xs-6">
-                    <h4 class="sub-section">Location</h4>
+                    <h4 class="sub-section">{{ __('Location') }}</h4>
                     <p>{{ getCity($property->property->city_id) }} / {{ $property->property->zone->getLabel() }} /
-                        {{ $property->property->building->name }}
+                        @if ($property->property->building()->exists())
+                            {{ $property->property->building->name }}
+                        @endif
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <h4 class="sub-section">Bedrooms / Bathrooms</h4>
+                    <h4 class="sub-section">{{ __('Bedrooms') }} / {{ __('Bathrooms') }}</h4>
                     <p>{{ $property->property->bedrooms }} / {{ (int) $property->property->baths }}</p>
                 </div>
                 <div class="col-xs-6">
-                    <h4 class="sub-section">Maid Service</h4>
+                    <h4 class="sub-section">{{ __('Maid Service') }}</h4>
                     <p>{{ $property->property->cleaningOption->getLabel() }}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <h4 class="sub-section">Occupancy</h4>
-                    <p><span class="max-pax">{{ $property->property->pax }}</span> guests max. (including children under
-                        12
-                        and babies)</p>
+                    <h4 class="sub-section">{{ __('Occupancy') }}</h4>
+                    <p><span class="max-pax">{{ $property->property->pax }}</span>
+                        {{ __('Guests max. (including children under 12 and babies)') }}</p>
                 </div>
                 {{-- <div class="col-xs-6">
                     <h4 class="sub-section">Bedding</h4>
@@ -244,25 +254,25 @@
             </div>
         </div>
         <div id="property-description-info">
-            <h2 class="section-title">Highlights</h2>
+            <h2 class="section-title">{{ __('Highlights') }}</h2>
             {!! nl2br($property->description) !!}
         </div>
         <div id="property-features-info">
-            <h2 class="section-title">Features and Amenities</h2>
+            <h2 class="section-title">{{ __('Features and Amenities') }}</h2>
             <div class="row">
                 {!! generateColumns($property->property->amenities, 8) !!}
             </div>
         </div>
         <div id="property-rates-info">
-            <h2 class="section-title">Rates</h2>
+            <h2 class="section-title">{{ __('Rates') }}</h2>
             <table class="table table-striped table-hover property-rates">
                 <thead>
                     <tr>
-                        <th class="col-xs-4">Period</th>
-                        <th class="col-xs-2">Nightly</th>
-                        <th class="col-xs-2">Weekly</th>
-                        <th class="col-xs-2">Monthly</th>
-                        <th class="col-xs-2">Min. Stay</th>
+                        <th class="col-xs-4">{{ __('Period') }}</th>
+                        <th class="col-xs-2">{{ __('Nightly') }}</th>
+                        <th class="col-xs-2">{{ __('Weekly') }}</th>
+                        <th class="col-xs-2">{{ __('Monthly') }}</th>
+                        <th class="col-xs-2">{{ __('Min. Stay') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -276,36 +286,38 @@
                             <td>{{ priceFormat($rate->nightly) }}</td>
                             <td>{{ priceFormat($rate->weekly) }}</td>
                             <td>{{ priceFormat($rate->monthly) }}</td>
-                            <td>{{ $rate->min_stay }} nights</td>
+                            <td>{{ $rate->min_stay }} {{ __('Nights') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="row rates-footer">
-                <div class="col-xs-9"><small><i>* All rates in USD tax included.</i></small></div>
+                <div class="col-xs-9"><small><i>* {{ __('All rates in USD tax included.') }}</i></small></div>
                 @if (count($property->property->rates) > 5)
                     <div class="col-xs-3 text-right">
                         <small>
-                            <a href="# " id="toggle-rates" title="more rates" class="show-rates">more rates</a>
+                            <a href="# " id="toggle-rates" title="{{ __('More rates') }}"
+                                data-more-rates="{{ __('More rates') }}" data-less-rates="{{ __('Less rates') }}"
+                                class="show-rates">{{ __('More rates') }}</a>
                         </small>
                     </div>
                 @endif
             </div>
         </div>
         <div id="property-calendar-info">
-            <h2 class="section-title">Availability Calendar</h2>
+            <h2 class="section-title">{{ __('Availability Calendar') }}</h2>
             <div class="cal-month first-calendar" data-url="{{ route('public.first-availability') }}">
             </div>
             <div class="text-right cal-more-dates">
                 <a href="#" class="btn btn-warning btn-calendar" data-toggle="modal"
                     data-source="{{ $property->property_id }}" data-year="" data-target="#{{ $modalID }}"
-                    title="More Dates">
-                    More Dates
+                    title="{{ __('More Dates') }}">
+                    {{ __('More Dates') }}
                 </a>
             </div>
         </div>
         <div id="property-map-info" class="app-map-wrapper">
-            <h2 class="section-title">Location Map</h2>
+            <h2 class="section-title">{{ __('Location Map') }}</h2>
             <div id="{{ $property->property_id }}" class="app-google-map" data-lat="{{ $latitude }}"
                 data-lng="{{ $longitude }}" data-map-id="{{ $property->property_id }}"></div>
         </div>

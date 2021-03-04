@@ -15,8 +15,8 @@
                                     <div class="panel-pane pane-custom pane-4">
                                         <div class="pane-content">
                                             <div class="home-info">
-                                                <div class="title">the destination of your dreams</div>
-                                                <br><span class="sub">is just a click away</span>
+                                                <div class="title">{{ __('The destination of your dreams') }}</div>
+                                                <br><span class="sub">{{ __('Is just a click away') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@
             <div class="row">
                 <section class="col-sm-12">
                     <a id="main-content"></a>
-                    <h1 class="page-header">Welcome to Palmera Vacations!</h1>
+                    <h1 class="page-header">{{ __('Welcome to Palmera Vacations!') }}</h1>
                     <div class="region region-content">
                         <section id="block-system-main" class="block block-system clearfix">
                             <div class="panel-display panel-1col clearfix">

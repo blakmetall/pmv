@@ -10,7 +10,7 @@ class LanguageController extends Controller
     /**
      * Sets the active language for the user in the database
      */
-    public function update(Request $request, $locale = 'en') 
+    public function update(Request $request, $locale = 'en', $property = false) 
     {
         if (LanguageHelper::hasValidLocale($locale)) {
             $user = auth()->user();

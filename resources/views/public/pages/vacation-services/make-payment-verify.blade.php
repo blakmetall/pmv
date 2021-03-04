@@ -55,7 +55,7 @@
                         <div class="col-sm-9">
                             {{ $booking->arrival_date }} - {{ $booking->departure_date }}
                             ({{ $booking->nights }}) @ {{ priceFormat($booking->price_per_night) }} USD
-                            {{ __('avg. night') }}
+                            {{ __('Avg. night') }}
                         </div>
                     </div>
                     @if (!$paid)
@@ -107,15 +107,13 @@
             accept-charset="UTF-8">
             <div>
                 <input type="hidden" name="cmd" value="_xclick">
-                {{-- QUITAR ESTO CUANDO YA VAYA A FUNCIONAR
-                --}}
-                {{-- <input type="hidden" name="business" value="4VTZ68GP74YXU">
-                --}}
+                {{-- QUITAR ESTO CUANDO YA VAYA A FUNCIONAR --}}
+                {{-- <input type="hidden" name="business" value="4VTZ68GP74YXU"> --}}
                 <input type="hidden" name="charset" value="utf-8">
                 <input type="hidden" name="return" value="{{ route('public.vacation-services.thank-you') }}">
                 <input type="hidden" name="currency_code" value="USD">
                 <input type="hidden" name="item_name"
-                    value="{{ $property->name }} {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Night(s)">
+                    value="{{ $property->name }} {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} {{ __('Nights') }}">
                 <input type="hidden" name="cbt" value="{{ __('CLICK HERE TO COMPLETE YOUR ORDER!') }}">
                 <input type="hidden" name="lc" value="US">
                 <input type="hidden" name="no_shipping" value="1">
@@ -133,9 +131,9 @@
                         <option value="{{ $mid }}">{{ priceFormat($mid) }} USD (50%)</option>
                     </select>
                     <label class="control-label element-invisible" for="edit-amount">{{ __('Select Amount') }}<span
-                            class="form-required" title="This field is required.">*</span></label>
+                            class="form-required" title="{{ __('This field is required.') }}">*</span></label>
                 </div>
-                <button type="submit" id="edit-next" name="op" value="{{ __('Make Payment') }}"
+                <button type="submit" id="edit-next" value="{{ __('Make Payment') }}"
                     class="btn btn-default form-submit">{{ __('Make Payment') }}</button>
                 <a href="{{ route('public.vacation-services.make-payment') }}" class="btn btn-default form-submit"
                     role="button">

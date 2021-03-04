@@ -27,9 +27,9 @@
                         </div>
                     </div>
                     <div class="legends">
-                        <span class="available-square"></span>&nbsp;Available
+                        <span class="available-square"></span>&nbsp;{{ __('Available') }}
                         &nbsp;&nbsp;&nbsp;
-                        <span class="booked-square"></span>&nbsp;Booked
+                        <span class="booked-square"></span>&nbsp;{{ __('Booked') }}
                     </div>
                     <div class="card-body">
                         <div class="calendar-container">

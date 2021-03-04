@@ -7,7 +7,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // language
     Route::group(['prefix' => 'language'], function () {
-        Route::get('update/{locale}', 'LanguageController@update')->name('language.update');
+        Route::get('update/{locale}/{property?}', 'LanguageController@update')->name('language.update');
     });
 
     // error pages

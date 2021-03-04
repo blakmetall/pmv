@@ -1,14 +1,14 @@
 <div class="panel-pane pane-block pane-new-listings-new-listings-block">
-    <h2 class="pane-title">New listings</h2>
+    <h2 class="pane-title">{{ __('New listings') }}</h2>
     <div class="pane-content">
         <div class="row new-listings">
             @foreach ($propertiesNews as $index => $propertyNews)
                 @php
-                $zone = getZone($propertyNews->property_id);
+                    $zone = getZone($propertyNews->property_id);
                 @endphp
                 @if ($index == 4)
                     @php
-                    break;
+                        break;
                     @endphp
                 @endif
                 <div class="col-xs-6 first-row">

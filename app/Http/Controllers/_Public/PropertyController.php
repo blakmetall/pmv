@@ -495,18 +495,18 @@ class PropertyController extends Controller
         $rules['damage_deposit_id']  = 'required';
         $rules['agreement']          = 'accepted';
 
-        $messages['firstname.required']         = 'La formulación es obligatoria';
-        $messages['lastname.required']          = 'El ancho es obligatorio';
-        $messages['email.required']             = 'El calibre es obligatorio';
-        $messages['email.email']                = 'El calibre es obligatorio';
-        $messages['email_confirmation.same']    = 'El calibre es obligatorio';
-        $messages['phone.required']             = 'La longitud es obligatoria';
-        $messages['street.required']            = 'La longitud debe ser numerica';
-        $messages['city.required']              = 'La longitud debe ser numerica';
-        $messages['state.required']             = 'La longitud debe ser numerica';
-        $messages['zip.required']               = 'La longitud debe ser numerica';
-        $messages['damage_deposit_id.required'] = 'La longitud debe ser numerica';
-        $messages['agreement.accepted']         = 'Debes aceptar';
+        $messages['firstname.required']         = __('Required firstname');
+        $messages['lastname.required']          = __('Required lastname');
+        $messages['email.required']             = __('Required email');
+        $messages['email.email']                = __('Bad Format email');
+        $messages['email_confirmation.same']    = __('Required email confirmation');
+        $messages['phone.required']             = __('Required phone');
+        $messages['street.required']            = __('Required street');
+        $messages['city.required']              = __('Required city');
+        $messages['state.required']             = __('Required state');
+        $messages['zip.required']               = __('Required zip');
+        $messages['damage_deposit_id.required'] = __('Required damage');
+        $messages['agreement.accepted']         = __('You must accept the terms');
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -563,7 +563,7 @@ class PropertyController extends Controller
                     $this->email($booking, $emails);
                     return redirect(route('public.thank-you', $booking))->withInput();
                 }else{
-                    $request->session()->flash('error', 'Somehthing wrong happen');
+                    $request->session()->flash('error', __('Something wrong happen'));
                 }
             }else{
                 $errors = '';
@@ -578,7 +578,7 @@ class PropertyController extends Controller
 
     public function thankYou(Request $request, $booking)
     {
-        $request->session()->flash('success', 'Reservation successful sended');
+        $request->session()->flash('success', __('Reservation successful sended'));
         $booking = PropertyBooking::find($booking);
         return view('public.pages.properties.thank-you')
                 ->with('booking', $booking);

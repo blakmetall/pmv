@@ -19,8 +19,7 @@
                 'label' => __('ID Booking'),
                 'name' => 'booking_id',
                 'required' => true,
-                'instruction' => __('Let us find your reservation first, please enter your confirmation number
-                below.'),
+                'instruction' => __('Let us find your reservation first, please enter your confirmation number below.'),
                 ])
             </div>
             <button type="submit" class="btn btn-default form-submit" value="{{ __('Find Reservation') }}">

@@ -21,7 +21,7 @@
                 <div class="panel-pane pane-custom pane-1">
                     <div class="pane-content">
                         {!! $page->translate()->description !!}
-                        <h2><i class="fa fa-comments"></i> Get in touch</h2>
+                        <h2><i class="fa fa-comments"></i> {{ __('Get in touch') }}</h2>
                     </div>
                 </div>
                 <br>
@@ -32,28 +32,32 @@
                             accept-charset="UTF-8">
                             <div>
                                 <div class="form-item form-item-name form-type-textfield form-group">
-                                    <label class="control-label" for="edit-name">Your name <span class="form-required"
-                                            title="This field is required.">*</span></label>
+                                    <label class="control-label" for="edit-name">{{ __('Your name') }} <span
+                                            class="form-required"
+                                            title="{{ __('This field is required.') }}">*</span></label>
                                     <input class="form-control form-text" type="text" id="edit-name" name="name"
                                         value="{{ old('name') }}" size="60" maxlength="255" required>
                                 </div>
                                 <div class="form-item form-item-mail form-type-textfield form-group"> <label
-                                        class="control-label" for="edit-mail">Your e-mail address <span
-                                            class="form-required" title="This field is required.">*</span></label>
+                                        class="control-label" for="edit-mail">{{ __('Your e-mail address') }} <span
+                                            class="form-required"
+                                            title="{{ __('This field is required.') }}">*</span></label>
                                     <input class="form-control form-text" type="text" id="edit-mail" name="mail"
                                         value="{{ old('mail') }}" size="60" maxlength="255" required>
                                 </div>
                                 <div class="form-item form-item-subject form-type-textfield form-group"> <label
-                                        class="control-label" for="edit-subject">Subject <span class="form-required"
-                                            title="This field is required.">*</span></label>
+                                        class="control-label" for="edit-subject">{{ __('Subject') }} <span
+                                            class="form-required"
+                                            title="{{ __('This field is required.') }}">*</span></label>
                                     <input class="form-control form-text" type="text" id="edit-subject" name="subject"
                                         value="{{ old('subject') }}" size="60" maxlength="255" required>
                                 </div>
                                 <div class="form-item form-item-cid form-type-select form-group"> <label
-                                        class="control-label" for="edit-cid">Category <span class="form-required"
-                                            title="This field is required.">*</span></label>
+                                        class="control-label" for="edit-cid">{{ __('Category') }} <span
+                                            class="form-required"
+                                            title="{{ __('This field is required.') }}">*</span></label>
                                     <select class="form-control form-select" id="edit-cid" name="category" required>
-                                        <option value="">- Please choose -</option>
+                                        <option value="">- {{ __('Please choose') }} -</option>
                                         <option value="1" {{ old('category') == 1 ? 'selected' : '' }}>
                                             {{ __('Accounting') }}
                                         </option>
@@ -72,8 +76,9 @@
                                     </select>
                                 </div>
                                 <div class="form-item form-item-message form-type-textarea form-group"> <label
-                                        class="control-label" for="edit-message">Message <span class="form-required"
-                                            title="This field is required.">*</span></label>
+                                        class="control-label" for="edit-message">{{ __('Message') }} <span
+                                            class="form-required"
+                                            title="{{ __('This field is required.') }}">*</span></label>
                                     <div class="form-textarea-wrapper resizable textarea-processed resizable-textarea">
                                         <textarea class="form-control form-textarea" id="edit-message" name="message"
                                             cols="60" rows="5" required>{{ old('message') }}</textarea>
@@ -86,16 +91,18 @@
                                     </div>
                                     <input type="hidden" value="{{ $captcha }}" name="code_catpcha">
                                     <div class="form-item form-item-captcha-response form-type-textfield form-group"> <label
-                                            class="control-label" for="edit-captcha-response">What code is in the image?
-                                            <span class="form-required" title="This field is required.">*</span></label>
+                                            class="control-label"
+                                            for="edit-captcha-response">{{ __('What code is in the image?') }} <span
+                                                class="form-required"
+                                                title="{{ __('This field is required.') }}">*</span></label>
                                         <input class="form-control form-text" name="captcha_response" size="15"
                                             maxlength="128" autocomplete="off"
-                                            placeholder="Enter the characters shown in the image.">
+                                            placeholder="{{ __('Enter the characters shown in the image.') }}">
                                     </div>
                                 </div>
                                 <div class="form-actions form-wrapper form-group" id="edit-actions">
-                                    <button type="submit" id="edit-submit" value="Send message"
-                                        class="btn btn-default form-submit">Send message</button>
+                                    <button type="submit" id="edit-submit" value="{{ __('Send message') }}"
+                                        class="btn btn-default form-submit">{{ __('Send message') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -103,7 +110,7 @@
                 </div>
                 <div class="panel-pane pane-custom pane-2">
                     <div class="pane-content">
-                        <div class="hr-tagline"><span>Our Locations</span></div>
+                        <div class="hr-tagline"><span>{{ __('Our Locations') }}</span></div>
                     </div>
                 </div>
                 <div class="panel-pane pane-custom pane-3">
@@ -137,7 +144,7 @@
                                     $longitude = $office->gmaps_lon;
                                 @endphp
                                 <div class="col-xs-6 app-map-wrapper">
-                                    <h4>Location Map</h4>
+                                    <h4>{{ __('Location Map') }}</h4>
                                     <div id="{{ $id }}" class="app-google-map" data-lat="{{ $latitude }}"
                                         data-lng="{{ $longitude }}" data-map-id="{{ $id }}"></div>
                                 </div>

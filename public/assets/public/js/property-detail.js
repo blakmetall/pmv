@@ -28,8 +28,8 @@
             evt.preventDefault();		
             $('.toggle-table-rates').toggle();
             
-            var hide_txt = 'less rates';
-            var edit_txt = 'more rates';				
+            var hide_txt = $(this).data('less-rates');
+            var edit_txt = $(this).data('more-rates');				
                                     
             if ($('#toggle-rates').hasClass('show-rates')) {
                  $('#toggle-rates').removeClass('show-rates').addClass('hide-rates');

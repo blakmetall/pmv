@@ -179,6 +179,8 @@
 				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
 				
 				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
+
+				var dataSearchForm = JSON.parse(JSON.stringify($('#navbar').data('all')));
 	
 				if(!breadcrumbs){
 					txt = '';
@@ -196,15 +198,15 @@
 					}
 					
 					if((arrivalTxt) && (departureTxt)){			
-						txt += 'Travel dates' + ': ' + arrivalTxt + ' - ' + departureTxt + ' / ';
+						txt += dataSearchForm['TravelDates'] + ': ' + arrivalTxt + ' - ' + departureTxt + ' / ';
 					}
 					
 					if(bedrooms){
-						txt += 'Bedrooms' + ': ' + bedrooms + ' / ';
+						txt += dataSearchForm['Bedrooms'] + ': ' + bedrooms + ' / ';
 					}
 					
 					if(adults){
-						txt += 'Adults' + ': ' + adults + ' / ';
+						txt += dataSearchForm['Adults'] + ': ' + adults + ' / ';
 		
 						if(children){
 							child = children;
@@ -212,7 +214,7 @@
 							child = 0;
 						}
 				
-						txt += 'Children' + ': ' + child;
+						txt += dataSearchForm['Children'] + ': ' + child;
 					}
 					
 					localStorage.setItem('breadcrumbs', txt);
@@ -257,17 +259,19 @@
 		$('#block-recent-views-recent-views-block').addClass('hide-recent-views');
 	}
 
+	var dataRecentView = JSON.parse(JSON.stringify($('#navbar').data('all')));
+
 	rw.reverse().map((data) => {
 		$('#recent-views').append(`<div class="row recent-views-row">
 				<div class="col-xs-4"> <img src="${data.image}" width="100%" height="65"> </div>
 				<div class="col-xs-8">
-					<h2 class="recent-views-title"><a href="${data.route}" title="View FULL details" class="full-details">${data.name}</a></h2>
-					<div class="avg-rate">$${data.rate} USD <small>/ avg. night</small></div>
+					<h2 class="recent-views-title"><a href="${data.route}" title="${dataRecentView['ViewFullDetails']}" class="full-details">${data.name}</a></h2>
+					<div class="avg-rate">$${data.rate} USD <small>/ ${dataRecentView['AvgNight']}</small></div>
 					<div class="recent-views-icons">
-						<div class="col-xs-4 text-center" title="Bedrooms"> <i class="fa fa-bed"></i>&nbsp;&nbsp;${data.beds}
+						<div class="col-xs-4 text-center" title="${dataRecentView['Bedrooms']}"> <i class="fa fa-bed"></i>&nbsp;&nbsp;${data.beds}
 						</div>
-						<div class="col-xs-4 text-center icons-middle" title="Bathrooms"> <i class="fa fa-shower"></i>&nbsp;&nbsp;${data.baths} </div>
-						<div class="col-xs-4 text-center" title="Max. Occupancy"> <i class="fa fa-users"></i>&nbsp;&nbsp;${data.pax} </div>
+						<div class="col-xs-4 text-center icons-middle" title="${dataRecentView['Bathrooms']}"> <i class="fa fa-shower"></i>&nbsp;&nbsp;${data.baths} </div>
+						<div class="col-xs-4 text-center" title="${dataRecentView['MaxOccupancy']}"> <i class="fa fa-users"></i>&nbsp;&nbsp;${data.pax} </div>
 					</div>
 				</div>
 				<div class="col-xs-12">
