@@ -1,5 +1,5 @@
 @php
-$modalID = 'pm-notification-' . strtotime('now') . rand(1,99999);
+$modalID = 'pm-notification-' . strtotime('now') . rand(1, 99999);
 @endphp
 <div class="mb-5"></div>
 <div class="card">
@@ -36,18 +36,20 @@ $modalID = 'pm-notification-' . strtotime('now') . rand(1,99999);
 
                 </thead>
                 <tbody>
-
                     @if (count($pm_items))
+                        @php
+                            $ipm = 1;
+                        @endphp
                         @foreach ($pm_items as $i => $pm)
                             <tr class="<?= $pm->is_finished ? 'tr-finished-balance' : '' ?>">
                                 <!-- index -->
                                 <td>
-                                    {{ $i + 1 }}
+                                    {{ $ipm }}
                                 </td>
 
-                                <!-- property ID -->
+                                <!-- pm ID -->
                                 <td>
-                                    <b>{{ $pm->property->id }}</b>
+                                    <b>{{ $pm->id }}</b>
                                 </td>
 
                                 <!-- balances -->
@@ -86,8 +88,8 @@ $modalID = 'pm-notification-' . strtotime('now') . rand(1,99999);
                 <!-- balance -->
                 <td>
                     @php
-                    $isUnderAverage = $pm->average_month > $pm->_balance['balance'];
-                    $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                        $isUnderAverage = $pm->average_month > $pm->_balance['balance'];
+                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
                     @endphp
 
                     <span class="{{ $underAverageClass }}">
@@ -101,8 +103,8 @@ $modalID = 'pm-notification-' . strtotime('now') . rand(1,99999);
                 <!-- estimated balance -->
                 <td>
                     @php
-                    $isUnderAverage = $pm->average_month > $pm->_balance['estimatedBalance'];
-                    $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                        $isUnderAverage = $pm->average_month > $pm->_balance['estimatedBalance'];
+                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
                     @endphp
 
                     <span class="{{ $underAverageClass }}">
@@ -111,6 +113,9 @@ $modalID = 'pm-notification-' . strtotime('now') . rand(1,99999);
                 </td>
 
                 </tr>
+                @php
+                    $ipm++;
+                @endphp
                 @endforeach
                 @endif
 

@@ -28,6 +28,8 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
+        $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
 
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
@@ -78,6 +80,16 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $result = $query->paginate(9999);
         } else {
             $result = $query->get();
+        }
+
+        if ($shouldFilterByYear && $shouldFilterByMonth) {
+            $dateString = $config['filterByYear'].'-'.$config['filterByMonth'];
+            foreach ($result as $index => $pm_item) {
+                $dates = getDatesFromRange($pm_item->start_date, $pm_item->end_date, 'Y-m');
+                if(!in_array($dateString, $dates)){
+                    unset($result[$index]);
+                }
+            }
         }
 
         return $result;

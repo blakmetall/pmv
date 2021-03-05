@@ -32,6 +32,8 @@ class PropertyManagementBalancesController extends Controller
         $config = [
             'filterByCity' => $request->city,
             'filterByOwner' => isRole('owner'),
+            'filterByYear' => $request->year,
+            'filterByMonth' => $request->month,
         ];
 
         $pm_items = $this->propertyManagementRepository->all($search, $config);
@@ -47,13 +49,13 @@ class PropertyManagementBalancesController extends Controller
             foreach ($pm_items as $index => $pm_item) {
                 $balance = PMHelper::getBalance($pm_item->id);
                 $pm_items[$index]->_balance = $balance;
-
+                
                 // para no tomar calculos de balances de propiedades con property management finalizados
                 // en el listado de balances general
                 if ($pm_item->is_finished) {
                     continue;
                 }
-
+                
                 $totalBalances['balances'] += $balance['balance'];
                 $totalBalances['pendingAudits'] += $balance['pendingAudit'];
                 $totalBalances['estimatedBalances'] += $balance['estimatedBalance'];
@@ -112,7 +114,6 @@ class PropertyManagementBalancesController extends Controller
         $data['estimatedBalance'] = $balance['estimatedBalance'];
         $data['customMsg'] = $request->custom_msg;
         
-        dd($data);
         if ($pm->property->users->isNotEmpty()) {
             foreach ($pm->property->users as $getUser) {
                 $getUser = User::find($getUser->id);

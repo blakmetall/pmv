@@ -11449,7 +11449,7 @@ a.text-dark:focus {
   width: auto;
   margin-right: 5px;
   padding: 0 7px 7px 0;
-  font-weight: 600;
+  font-weight: normal;
 }
 
 .app-months-list li .app-month-inactive {
