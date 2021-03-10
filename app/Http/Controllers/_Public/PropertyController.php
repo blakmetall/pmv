@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_Public;
 
+use Notification;
 use App\Notifications\DetailsBookingPublic;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
@@ -554,12 +555,15 @@ class PropertyController extends Controller
                     $emails = [
                         $request->email,
                         'vallarta@palmeravacations.com',
-                        'pmd@palmeravacations.com',
                         'maidsupervisor@palmeramail.com',
                         'reservations@palmeravacations.com',
                         'concierge@palmeravacations.com',
                         'fallito67@gmail.com',
                     ];
+                    
+                    if(Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)){
+                        $emails[] = 'pmd@palmeravacations.com';
+                    }
                     $this->email($booking, $emails);
                     return redirect(route('public.thank-you', $booking))->withInput();
                 }else{

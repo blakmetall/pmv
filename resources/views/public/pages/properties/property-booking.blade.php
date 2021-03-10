@@ -288,7 +288,7 @@
                         <div class="alert alert-info">
                             <div class="form-item form-item-agreement form-type-checkbox checkbox">
                                 <label class="control-label" for="agreement">
-                                    <input type="checkbox" name="agreement"
+                                    <input type="checkbox" name="agreement" id="agreement"
                                         {{ old('agreement') == 'on' ? 'checked' : '' }}
                                         class="form-checkbox">{{ __('Please read and agree to our') }} <a
                                         href="{{ route('public.vacation-services.rental-agreement') }}"

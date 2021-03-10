@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\HtmlString;
 
-class DetailsBooking extends Notification
+class DetailsBookingPublic extends Notification
 {
     use Queueable;
 
@@ -144,7 +144,7 @@ class DetailsBooking extends Notification
             ->line('vallarta@palmeravacations.com')
             ->line('Local:  +52 (322) 223-0101')
             ->line('US/Canada:  (323) 250-7721')
-            ->line('Libertad 349 - Puerto Vallarta - Jal. - México 48380')
+            ->line('Libertad 349 - Puerto Vallarta - Jal. - México 48380');
             
     }
 
