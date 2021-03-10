@@ -67,7 +67,7 @@
         <div class="position-relative">
             <span>{!! $created_at !!}</span>
     
-            @if ($hasCreator && !isRole('owner') && !isRole('contact')) 
+            @if ($hasCreator && !isRole('owner')) 
                 <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $creator->profile->full_name }}"
                     class="app-tooltip-person">
                     <i class="not-print material-icons">person</i>
@@ -85,7 +85,7 @@
         <div class="position-relative">
             <span>{!! $updated_at !!}</span>
 
-            @if ($hasEditor && !isRole('owner') && !isRole('contact')) 
+            @if ($hasEditor && !isRole('owner')) 
                 <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $editor->profile->full_name }}"
                     class="app-tooltip-person">
                     <i class="not-print material-icons">person</i>
@@ -103,7 +103,7 @@
         <div class="position-relative">
             <span>{!! $audited_at !!}</span>
 
-            @if (isset($auditedBy) && $auditedBy && !isRole('owner') && !isRole('contact')) 
+            @if (isset($auditedBy) && $auditedBy && !isRole('owner')) 
                 <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="{{ $auditedBy->profile->full_name }}"
                     class="app-tooltip-person">
                     <i class="not-print material-icons">person</i>

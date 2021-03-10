@@ -42,9 +42,10 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $orderByDirectionFilter = isset($config['orderDirection']) ? $config['orderDirection'] : '';
 
         if ($search) {
+            $search = str_replace(',', '', $search);
             $query = PropertyManagementTransaction::where(function ($q) use ($search) {
                 $q->where('id', $search);
-                $q->orWhere('amount', 'like', '%' . $search . '%');
+                $q->orWhere('amount', $search);
                 $q->orWhere('post_date', $search);
                 $q->orWhere('period_start_date', $search);
                 $q->orWhere('period_end_date', $search);
@@ -56,6 +57,15 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $query = PropertyManagementTransaction::query();
             if ($hasPropertyManagementID) {
                 $query->where('property_management_id', $config['property_management_id']);
+            } else {
+                //FILTRO PARA ELIMINAR LA PROPIEDAD DE PMV DE LOS BALANCES GENERALES
+                $query->whereHas('propertyManagement', function ($q) {
+                    $q->whereHas('property', function ($q2) {
+                        $q2->where('properties.is_special', '!=', 1);
+                        $q2->orWhereNull('properties.is_special');
+                    });
+                });
+                //TERMINA FILTRO PARA ELIMINAR LA PROPIEDAD DE PMV DE LOS BALANCES GENERALES
             }
 
             if ($shouldFilterByPendingAudits) {
@@ -170,6 +180,9 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         $amount = 0;
         $description = '';
         foreach ($cleaningServices as $cleaningService) {
+            if (!$cleaningService->is_finished) {
+                return false;
+            }
             $amount += $cleaningService->total_cost;
             $description .=
                 "#" . strval($cleaningService->id) . ' - ' .

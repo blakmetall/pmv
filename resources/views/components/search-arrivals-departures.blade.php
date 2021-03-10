@@ -9,7 +9,8 @@
                         <label for="from_date">
                             {{ __('From Date') }}*
                         </label>
-                        <input id="from_date" type="date" name="from_date" value="{{ $fromDate }}" class="form-control" required>
+                        <input id="from_date" type="date" name="from_date" value="{{ $fromDate }}"
+                            class="form-control" required>
                     </div>
 
                     <!-- to_date -->
@@ -17,7 +18,8 @@
                         <label for="to_date">
                             {{ __('To Date') }}*
                         </label>
-                        <input id="to_date" type="date" name="to_date" value="{{ $toDate }}" class="form-control" required>
+                        <input id="to_date" type="date" name="to_date" value="{{ $toDate }}" class="form-control"
+                            required>
                     </div>
 
                     <!-- location -->
@@ -27,8 +29,8 @@
                         </label>
                         <select name="location" class="form-control" required>
                             <option value="">{{ __('Select') }}</option>
-                            @if($locations)
-                                @foreach($locations as $location)
+                            @if ($locations)
+                                @foreach ($locations as $location)
                                     @php
                                         $selected = $searchedLocation == $location->id ? 'selected' : '';
                                     @endphp
@@ -49,7 +51,7 @@
                                 <i class="i-Magnifi-Glass1"></i>
                             </span>
                         </button>
-                        @if(isset($_GET['location']))
+                        @if (isset($_GET['location']))
                             <a href="{{ $url }}" class="btn btn-outline-dark btn-icon" role="button">
                                 <span class="ul-btn__icon">
                                     <i class="i-Restore-Window"></i>

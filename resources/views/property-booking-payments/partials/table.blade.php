@@ -1,5 +1,5 @@
 @php
-    $lang = LanguageHelper::current();
+$lang = LanguageHelper::current();
 @endphp
 <div class="mb-5"></div>
 <div class="card">
@@ -15,6 +15,8 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">{{ __('Voucher') }}</th>
                         <th scope="col">{{ __('Transaction Source') }}</th>
                         <th scope="col">{{ __('Amount') }}</th>
                         <th scope="col">{{ __('Exchange Rate') }}</th>
@@ -30,13 +32,30 @@
                 </thead>
                 <tbody>
 
-                    @if(count($rows))
-                        @foreach($rows as $row)
+                    @if (count($rows))
+                        @foreach ($rows as $i => $row)
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i + 1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $row->id }}
                                 </th>
+
+                                <!-- voucher -->
+                                <td>
+                                    @if ($row->file_url)
+                                        @include('components.table.file-modal', [
+                                        'fileName' => '',
+                                        'filePath' => '',
+                                        'fileUrl' => $row->file_url,
+                                        'fileSlug' => 'payment'.$row->id,
+                                        ])
+                                    @endif
+                                </td>
 
                                 <!-- transaction_source_id -->
                                 <td>
@@ -88,10 +107,10 @@
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
-                                        'params' => [$row->id],
-                                        'showRoute' => 'property-booking-payments.show',
-                                        'editRoute' => 'property-booking-payments.edit',
-                                        'deleteRoute' => 'property-booking-payments.destroy',
+                                    'params' => [$row->id],
+                                    'showRoute' => 'property-booking-payments.show',
+                                    'editRoute' => 'property-booking-payments.edit',
+                                    'deleteRoute' => 'property-booking-payments.destroy',
                                     ])
                                 </td>
 

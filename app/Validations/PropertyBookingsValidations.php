@@ -12,10 +12,10 @@ class PropertyBookingsValidations extends Validation
             'property_id'       => 'required',
             'firstname'         => 'required',
             'lastname'          => 'required',
+            'email'             => 'required|email',
             'arrival_date'      => 'required',
             'departure_date'    => 'required',
             'adults'            => 'required',
-            'damage_deposit_id' => 'required',
         ]);
     }
 

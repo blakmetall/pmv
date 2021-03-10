@@ -86,4 +86,5 @@ class RatesHelper
 
         return $rates_property['nightly']; // price 200 per night -- dummy
     }
+
 }

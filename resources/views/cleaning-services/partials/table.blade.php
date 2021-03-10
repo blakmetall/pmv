@@ -12,6 +12,7 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Staff') }}</th>
                         <th scope="col">{{ __('Date') }}</th>
@@ -30,8 +31,13 @@
                 <tbody>
 
                     @if(count($rows))
-                        @foreach($rows as $row)
+                        @foreach($rows as $i => $row)
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i+1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $row->id }}
@@ -88,8 +94,8 @@
                                         'showRoute'   => 'cleaning-services.show',
                                         'editRoute'   => 'cleaning-services.edit',
                                         'deleteRoute' => 'cleaning-services.destroy',
-                                        'skipEdit'    => isRole('owner') || isRole('contact'),
-                                        'skipDelete'  => isRole('owner') || isRole('contact'),
+                                        'skipEdit'    => isRole('owner'),
+                                        'skipDelete'  => isRole('owner'),
                                     ])
                                 </td>
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\AppModel;
+use App\Helpers\LanguageHelper;
 
 class Amenity extends Model {
 
@@ -26,5 +27,14 @@ class Amenity extends Model {
 
     public function properties() {
         return $this->belongsToMany('App\Models\Property', 'properties_has_amenities');
+    }
+
+    public function getLabel() {
+        $lang = LanguageHelper::current();
+        $amenity = $this->translations()->where('language_id', $lang->id)->first();
+        if($amenity) {
+            return $amenity->name;
+        }
+        return '';
     }
 }

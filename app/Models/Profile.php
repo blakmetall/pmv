@@ -26,26 +26,11 @@ class Profile extends Model
         'config_language',
         'config_agent_commission',
         'config_agent_is_enabled',
-        'contact_type',
     ];
-
-    protected $casts = ['owners_ids' => 'array'];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
-    }
-
-    public function owners()
-    {
-        $ownersIds = $this->owners_ids;
-        $owners = [];
-        if ($ownersIds) {
-            foreach ($ownersIds as $ownersId) {
-                $owners[] = User::find($ownersId);
-            }
-        }
-        return $owners;
     }
 
     // mutator: full_name 

@@ -23,6 +23,7 @@ class Property extends Model
         'is_featured',
         'is_enabled',
         'is_online',
+        'is_special',
         'rental_commission',
         'maid_fee',
         'cleaning_staff_ids',
@@ -124,7 +125,7 @@ class Property extends Model
 
     public function cleaningOption()
     {
-        return $this->hasOne('App\Models\CleaningOption', 'id');
+        return $this->belongsTo('App\Models\CleaningOption', 'cleaning_option_id');
     }
 
     public function management()
@@ -153,7 +154,7 @@ class Property extends Model
 
     public function contacts()
     {
-        return $this->belongsToMany('App\Models\User', 'properties_has_contacts');
+        return $this->belongsToMany('App\Models\Contact', 'properties_has_contacts');
     }
 
     public function bookings()

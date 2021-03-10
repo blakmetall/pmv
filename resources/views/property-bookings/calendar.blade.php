@@ -2,39 +2,45 @@
 
 @section('heading-content')
     @php
-        if(isset($property)){
-            if($property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin')){
-                $actions = [
-                    [
-                        'label' => __('Add Booking'),
-                        'url' => route('property-bookings.create', $property->id),
-                        'icon' => 'i-Add',
-                    ]
-                ];
-            }else{
-                $actions = [];
-            }
-        }else{
-            $actions = [];
-        }
+    if(isset($property)){
+    $propertyUser = false;
+    foreach ($property->users as $user) {
+    if($user->id == \UserHelper::getCurrentUserID()){
+    $propertyUser = true;
+    }
+    }
+    if($propertyUser || isRole('super') || isRole('admin')){
+    $actions = [
+    [
+    'label' => __('Add Booking'),
+    'url' => route('property-bookings.create', $property->id),
+    'icon' => 'i-Add',
+    ]
+    ];
+    }else{
+    $actions = [];
+    }
+    }else{
+    $actions = [];
+    }
     @endphp
 
     @include('components.heading', [
-        'label' => __('Availability Calendar'),
-        'breadcrumbs' => [
-            [
-                'url' => route('property-bookings.by-property', [$property->id]),
-                'label' => __('Bookings'),
-            ],
-        ],
-        'actions' => $actions
+    'label' => __('Availability Calendar'),
+    'breadcrumbs' => [
+    [
+    'url' => route('property-bookings.by-property', [$property->id]),
+    'label' => __('Bookings'),
+    ],
+    ],
+    'actions' => $actions
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
     @include('properties.partials.info', [
-        'propertyID' => $property->id,
-        'property' => $property
+    'propertyID' => $property->id,
+    'property' => $property
     ])
 
 
@@ -47,8 +53,8 @@
 
     <!-- here the data is loaded -->
     @include('property-bookings.partials.table-calendar', [
-        'label' => __('Bookings'),
-        'rows' => $bookings
+    'label' => __('Bookings'),
+    'rows' => $bookings
     ])
 
 @endsection

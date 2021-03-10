@@ -290,7 +290,6 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                     'regular',
-                    'contact',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -304,7 +303,6 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                     'regular',
-                    'contact',
                 ]),
                 'general-availability' => self::transformSluggedRolesToIds([
                     'super',
@@ -332,7 +330,6 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'owner',
-                    'contact',
                 ]),
                 'new-transaction' => self::transformSluggedRolesToIds([
                     'super',
@@ -366,7 +363,6 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'owner',
-                    'contact',
                 ]),
                 'transactions' => self::transformSluggedRolesToIds([
                     'super',
@@ -403,7 +399,6 @@ class RoleHelper
                     'administrative-assistant',
                     'concierge',
                     'owner',
-                    'contact',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -416,7 +411,6 @@ class RoleHelper
                     'administrative-assistant',
                     'concierge',
                     'owner',
-                    'contact',
                 ]),
                 'monthly-batch' => self::transformSluggedRolesToIds([
                     'super',
@@ -514,6 +508,24 @@ class RoleHelper
                     'administrative-assistant',
                 ]),
             ],
+            'pages' => [
+                '*' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+            ],
             'settings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
@@ -538,6 +550,10 @@ class RoleHelper
                     'admin',
                 ]),
                 'cities' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                ]),
+                'offices' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
                 ]),
@@ -600,7 +616,6 @@ class RoleHelper
             'owner' => 11,
             'regular' => 12,
             'human-resources' => 13,
-            'contact' => 14,
         ];
 
         $roles_ids = [];

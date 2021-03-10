@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Image;
+use Storage;
+use Notification;
+use Intervention\Image\ImageManager;
+use App\Notifications\DetailsPayment;
 use Illuminate\Http\Request;
-use App\Models\{PropertyBooking};
+use App\Models\{PropertyBooking, PropertyBookingPayment};
 use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\TransactionSourcesRepositoryInterface;
@@ -51,8 +56,76 @@ class PropertyBookingPaymentsController extends Controller
     {
         $payment = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+        
+        if ($request->email_notification) {
+            return redirect(route('property-booking-payments.email', [$payment->id]));
+        } else {
+            return redirect(route('property-booking-payments.edit', [$payment->id]));
+        }
 
-        return redirect(route('property-booking-payments.edit', [$payment->id]));
+    }
+
+    public function email($id)
+    {
+        $payment = $this->repository->find($id);
+        $booking = $this->bookingsRepository->find($payment->booking_id);
+        $property = $booking->property;
+        $serialOwners = [];
+        foreach ($property->users as $owner) {
+            $serialOwners[] = $owner->email;
+        }
+        $owners = implode(',', $serialOwners);
+
+        return view('property-booking-payments.email')
+            ->with('payment', $payment)
+            ->with('booking', $booking)
+            ->with('owners', $owners)
+            ->with('property', $property);
+    }
+
+    public function sendEmail(Request $request, PropertyBooking $booking)
+    {
+        $guests = explode(',', $request->guests_recipients);
+        $content = $request->guest_email_content;
+        if ($guests) {
+            foreach ($guests as $guest) {
+                $this->notification($booking, $content, $guest);
+            }
+        }
+
+        $owners = explode(',', $request->owners_recipients);
+        if ($owners) {
+            foreach ($owners as $owner) {
+                $this->notification($booking, $content, $owner);
+            }
+        }
+        return redirect(route('property-bookings.edit', [$booking->id]));
+    }
+
+    private function notification($booking, $content, $email)
+    {
+        Notification::route('mail', $email)
+            ->notify(new DetailsPayment($content, $booking));
+    }
+
+    public function generateImagePayment(Request $request)
+    {
+        $folder = 'payments';
+        $id = $request->source['id'];
+        $img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->source['image']));
+        $slug      = \Illuminate\Support\Str::slug('payment'.$id, '-');
+        $timedFileName = $slug . '-' . strtotime('now') ;
+        $fileName = $timedFileName . '.' . 'png';
+        $getFilePath = $folder . '/' . $fileName;
+        Storage::disk('public')->makeDirectory($folder);
+        $filePath = public_path() . '/storage/' . $folder . '/' . $fileName;
+        Image::make($img)->save($filePath);
+
+        $payment = PropertyBookingPayment::find($id);
+        $payment->file_url = Storage::url($getFilePath);
+        $payment->save(); 
+
+        return;
     }
 
     public function show($id)
@@ -86,9 +159,12 @@ class PropertyBookingPaymentsController extends Controller
     public function update(Request $request, $id)
     {
         $this->repository->update($request, $id);
-        $request->session()->flash('success', __('Record updated successfully'));
 
-        return redirect(route('property-booking-payments.edit', [$id]));
+        if ($request->email_notification) {
+            return redirect(route('property-booking-payments.email', [$id]));
+        } else {
+            return redirect(route('property-booking-payments.edit', [$id]));
+        }
     }
 
     public function destroy(Request $request, $id)

@@ -43,6 +43,7 @@ class PropertyManagementTransactionsController extends Controller
 
     public function index(Request $request, PropertyManagement $pm)
     {
+        Session::flash('backUrl', $request->fullUrl());
         if (!$request->year && !$request->month) { // prepare year and month for first call
             $urlParams = [
                 'year' => date('Y', strtotime('now')),
@@ -59,6 +60,7 @@ class PropertyManagementTransactionsController extends Controller
 
             return redirect($redirectUrl);
         }
+
 
         $search = trim($request->s);
 
@@ -144,6 +146,9 @@ class PropertyManagementTransactionsController extends Controller
 
     public function create(PropertyManagement $pm)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $transaction = $this->repository->blueprint();
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
@@ -157,10 +162,13 @@ class PropertyManagementTransactionsController extends Controller
 
     public function store(Request $request, PropertyManagement $pm)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
-        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
+        return ($url = Session::get('backUrl')) ? redirect($url) : redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
     }
 
     public function show(PropertyManagement $pm, PropertyManagementTransaction $transaction)
@@ -178,6 +186,9 @@ class PropertyManagementTransactionsController extends Controller
 
     public function edit(PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
@@ -205,6 +216,9 @@ class PropertyManagementTransactionsController extends Controller
 
     public function update(Request $request, PropertyManagement $pm, $id)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
 
@@ -213,11 +227,16 @@ class PropertyManagementTransactionsController extends Controller
             return redirect()->back();
         }
 
-        return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
+        return ($url = Session::get('backUrl')) ? redirect($url) : redirect(route('property-management-transactions', [$pm->id]));
+
+        // return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
     }
 
     public function destroy(Request $request, PropertyManagement $pm, $id)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
@@ -242,9 +261,15 @@ class PropertyManagementTransactionsController extends Controller
                 if (!$pm->is_finished) {
                     $transaction = $this->repository->saveMonthly($property, $pm->id);
 
-                    $request->session()->flash('success', __('Record created successfully'));
+                    if (!$transaction) {
+                        $request->session()->flash('error', __('All Cleaning Services must be finished'));
 
-                    return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
+                        return redirect()->back();
+                    } else {
+                        $request->session()->flash('success', __('Record created successfully'));
+
+                        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
+                    }
                 }
             }
         }
@@ -418,9 +443,45 @@ class PropertyManagementTransactionsController extends Controller
         return redirect()->back();
     }
 
+    public function confirmEmail(Request $request)
+    {
+        $transaction = PropertyManagementTransaction::find($request->source);
+        $pm = $transaction->propertyManagement;
+        if ($pm->property->users->isNotEmpty()) {
+            foreach ($pm->property->users as $getUser) {
+                $getUser = User::find($getUser->id);
+            }
+        }
+
+        $period = $transaction->period_start_date . ' - ' . $transaction->period_end_date;
+        $operationType = $transaction->operation_type == config('constants.operation_types.charge') ? __('Charge') : __('Credit');
+
+        $msg  = '';
+        if ($getUser) {
+            $msg .= 'Hello ' . $getUser->profile->full_name . '<br><br>';
+            $msg .= 'Transaction' . ': ' . $transaction->id . '<br>';
+            $msg .= 'Post Date' . ': <strong>' . $transaction->post_date . '</strong><br>';
+            $msg .= 'Description' . ':' . $transaction->description . '<br>';
+            $msg .= 'Period' . ': <strong>' . $period . '</strong><br>';
+            $msg .= 'Operation' . ': <strong>' . $transaction->type->translate()->name . '</strong><br>';
+            $msg .= 'Operation Type' . ': <strong>' . $operationType . '</strong><br>';
+            $msg .= 'Amount' . ': <strong>' . priceFormat($transaction->amount) . ' MXN</strong><br>';
+            $msg .= '<hr>';
+            $msg .= 'Hola ' . $getUser->profile->full_name . '<br><br>';
+            $msg .= 'Transacción' . ': ' . $transaction->id . '<br>';
+            $msg .= 'Fecha' . ': <strong>' . $transaction->post_date . '</strong><br>';
+            $msg .= 'Descripción' . ':' . $transaction->description . '<br>';
+            $msg .= 'Periodo' . ': <strong>' . $period . '</strong><br>';
+            $msg .= 'Operación' . ': <strong>' . $transaction->type->translate()->name . '</strong><br>';
+            $msg .= 'Tipo de operación' . ': <strong>' . $operationType . '</strong><br>';
+            $msg .= 'Cantidad' . ': <strong>' . priceFormat($transaction->amount) . ' MXN</strong><br>';
+        }
+
+        return $msg;
+    }
+
     public function email(Request $request, PropertyManagement $pm, PropertyManagementTransaction $transaction)
     {
-
         if ($pm->property->users->isNotEmpty()) {
             foreach ($pm->property->users as $getUser) {
                 $getUser = User::find($getUser->id);
@@ -428,9 +489,32 @@ class PropertyManagementTransactionsController extends Controller
             }
         }
 
-
         $request->session()->flash('success', __('Email sended successfully'));
 
+        return redirect()->back();
+    }
+
+    public function confirmDeleteImage(Request $request){
+        return '';
+    }
+
+    public function deleteImage($transaction){
+        $transaction = PropertyManagementTransaction::find($transaction);
+        if($transaction){
+            $deleteFile = ImagesHelper::deleteFile($transaction->file_path);
+            ImagesHelper::deleteThumbnails($transaction->file_path);
+        }else{
+            $deleteFile = false;
+        }
+        if($deleteFile){
+            $transaction->file_slug = null;
+            $transaction->file_extension = null;
+            $transaction->file_original_name = null;
+            $transaction->file_name = null;
+            $transaction->file_path = null;
+            $transaction->file_url = null;
+            $transaction->save();
+        }
         return redirect()->back();
     }
 }

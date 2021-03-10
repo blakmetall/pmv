@@ -105,3 +105,87 @@
     font-size: 30px;
     margin: 0px 10px;
 }
+
+.app-modal-notification .app-table-file-modal-dialog {
+    max-width: 400px;
+}
+
+.all-dates{
+    display: none;
+    padding: 10px;
+    background-color: #e72929;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.some-dates{
+    display: none;
+    padding: 10px;
+    background-color: #f39c12;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.some-dates .btn-calendar{
+    color: #fff;
+    text-decoration: underline;
+}
+
+#app-property-bookings-selection-modal {
+    z-index: 1051 !important;
+}
+
+#modal-availability-modal {
+    z-index: 1052 !important;
+}
+
+.legends{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.available-square{
+    padding: 3px 10px;
+    background-color: #C3D69B;
+}
+
+.booked-square{
+    padding: 3px 10px;
+    background-color: #D99694;
+}
+
+#error-fields{
+    display: none;
+}
+
+#text-canvas{
+    position: fixed;
+    opacity: 0;
+    z-index: -99999;
+    box-sizing: border-box; 
+    font-family: "Lato", sans-serif; 
+    font-weight: 400; 
+    letter-spacing: 0.3px;
+    background-color:#ffffff; 
+    padding: 60px 30px; 
+    height: auto;
+}
+
+.app-modal-delete-image .modal-content{
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.app-modal-delete-image .modal-title{
+    text-align: center;
+    width: 100%;
+}
+
+.btn-delete-file{
+    padding: 4px 0px 1px 2px;
+    color: #f00 !important;
+    margin-right: 5px;
+}

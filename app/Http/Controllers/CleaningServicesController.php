@@ -36,8 +36,6 @@ class CleaningServicesController extends Controller
 
         if (isRole('owner')) {
             $config = ['filterByOwner' => true];
-        } else if (isRole('contact')) {
-            $config = ['filterByContactId' => UserHelper::getCurrentUserID()];
         } else {
             $config = ['filterByWorkgroup' => true];
         }

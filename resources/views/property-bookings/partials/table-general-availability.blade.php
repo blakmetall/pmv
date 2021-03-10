@@ -1,5 +1,5 @@
 @php
-    $lang = LanguageHelper::current();
+$lang = LanguageHelper::current();
 @endphp
 <div class="mb-5"></div>
 <div class="card">
@@ -12,6 +12,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col" colspan="14" style="text-align:center">{{ __('Day') }}</th>
                         <th scope="col">{{ __('Bedrooms') }}</th>
@@ -23,13 +24,18 @@
                 </thead>
                 <tbody>
 
-                    @if(count($properties))
-                        @foreach($properties as $index => $property)
+                    @if (count($properties))
+                        @foreach ($properties as $index => $property)
                             @php
-                                $managed     = ($property->management)?__('YES'):__('NO');
-                                $days        = getDatesFromRange($fromDate, $endDate, 'd-M-y');
+                            $managed = ($property->management)?__('YES'):__('NO');
+                            $days = getDatesFromRange($fromDate, $endDate, 'd-M-y');
                             @endphp
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $index + 1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $property->id }}
@@ -37,16 +43,16 @@
 
                                 <!-- property -->
                                 <td>
-                                    {{ $property->translations()->where('language_id', $lang->id)->first()->name}} <br/>
-                                    {{ $property->type->translations()->where('language_id', $lang->id)->first()->name }} |
-                                    {{ $property->zone->translations()->where('language_id', $lang->id)->first()->name }} |
+                                    {{ $property->translate()->name }} <br />
+                                    {{ $property->type->translate()->name }} |
+                                    {{ $property->zone->translate()->name }} |
                                     {{ $property->zone->city->name }}
                                 </td>
 
                                 <!-- day -->
                                 @include('property-bookings.partials.days-availability', [
-                                    'days' => $days,
-                                    'property' => $property
+                                'days' => $days,
+                                'property' => $property
                                 ])
 
                                 <!-- bedrooms -->

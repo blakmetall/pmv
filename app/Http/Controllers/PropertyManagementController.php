@@ -12,6 +12,7 @@ use App\Models\{
     Property,
     PropertyManagement
 };
+use Session;
 
 class PropertyManagementController extends Controller
 {
@@ -144,6 +145,9 @@ class PropertyManagementController extends Controller
     // get the partial section to select property; used to create new transaction url
     public function getPropertySelection()
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         $config = [
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
@@ -156,6 +160,9 @@ class PropertyManagementController extends Controller
     // generates the url and redirects to create new transaction for specific property management
     public function generatePMTransactionUrl(Property $property)
     {
+        if (Session::has('backUrl')) {
+            Session::keep('backUrl');
+        }
         if ($property->management()->count()) {
             foreach ($property->management as $pm) {
                 if (!$pm->is_finished) {

@@ -15,7 +15,7 @@
 </fieldset>
 
 @php
-    $skipEdit   = isRole('owner') || isRole('contact') ? true : false;
+    $skipEdit   = isRole('owner') ? true : false;
     $skipCancel = isset($withModal) ? true : false;
     $skipDelete = false;
     $isModal = true;

@@ -13,7 +13,14 @@ class Office extends Model {
     public $timestamps = false;
     protected $fillable = [
         'state_id',
-        'name'
+        'name',
+        'email',
+        'phone',
+        'phone_us_can',
+        'phone_free',
+        'address',
+        'gmaps_lat',
+        'gmaps_lon',
     ];
 
     public function state() {

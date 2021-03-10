@@ -19,6 +19,6 @@
     'cancel_route' => 'property-notes',
     'delete_route' => 'property-notes.destroy',
     'routeParams' => [$property->id],
-    'skipEdit' => isRole('owner') || isRole('contact'),
-    'skipDelete' => isRole('owner') || isRole('contact'),
+    'skipEdit' => isRole('owner'),
+    'skipDelete' => isRole('owner'),
 ])

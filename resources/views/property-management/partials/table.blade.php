@@ -21,7 +21,7 @@
                         <th scope="col">{{ __('Start Date') }}</th>
                         <th scope="col">{{ __('Fee') }}</th>
 
-                        @if(!isRole('owner') && !isRole('contact'))
+                        @if(!isRole('owner'))
                             <th scope="col" width="15%">&nbsp;</th>
                         @endif
                     </tr>
@@ -80,7 +80,7 @@
                                 </td> --}}
 
                                 <!-- actions -->
-                                @if(!isRole('owner') && !isRole('contact'))
+                                @if(!isRole('owner'))
                                     <td>
                                         @include('components.table.actions', [
                                             'params' => [$row->property->id, $row->id],
@@ -133,7 +133,7 @@
                             <th scope="col">{{ __('Start Date') }}</th>
                             <th scope="col">{{ __('Fee') }}</th>
 
-                            @if(!isRole('owner') && !isRole('contact'))
+                            @if(!isRole('owner'))
                                 <th scope="col" width="15%">&nbsp;</th>
                             @endif
                         </tr>
@@ -192,7 +192,7 @@
                                     </td> --}}
 
                                     <!-- actions -->
-                                    @if(!isRole('owner') && !isRole('contact'))
+                                    @if(!isRole('owner'))
                                         <td>
                                             @include('components.table.actions', [
                                                 'params' => [$row->property->id, $row->id],

@@ -20,7 +20,7 @@ class PropertyNotesController extends Controller
         $search = trim($request->s);
 
         $config = [];
-        if (isRole('owner') || isRole('contact')) {
+        if (isRole('owner')) {
             $config = ['auditedOnly' => true];
         }
 

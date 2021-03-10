@@ -67,7 +67,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // 'timezone' => 'UTC',
+    'timezone' => 'America/Mexico_City',
 
     /*
     |--------------------------------------------------------------------------
@@ -237,7 +238,9 @@ return [
         'ContactsHelper' => App\Helpers\ContactsHelper::class,
         'ImagesHelper' => App\Helpers\ImagesHelper::class,
         'LanguageHelper' => App\Helpers\LanguageHelper::class,
+        'PMHelper' => App\Helpers\PMHelper::class,
         'PMTransationHelper' => App\Helpers\PMTransationHelper::class,
+        'RatesHelper' => App\Helpers\RatesHelper::class,
         'RoleHelper' => App\Helpers\RoleHelper::class,
         'ReportExcelHelper' => App\Helpers\ReportExcelHelper::class,
         'UserHelper' => App\Helpers\UserHelper::class,

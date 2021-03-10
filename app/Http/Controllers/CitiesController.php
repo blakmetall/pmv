@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CitiesRepositoryInterface;
-use App\Models\{ City, State };
+use App\Models\{City, State};
 
 class CitiesController extends Controller
-{  
-    private $repository; 
-    
-    public function __construct(CitiesRepositoryInterface $repository) 
+{
+    private $repository;
+
+    public function __construct(CitiesRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -19,7 +19,7 @@ class CitiesController extends Controller
     {
         $search = trim($request->s);
         $cities = $this->repository->all($search);
-        
+
         return view('cities.index')
             ->with('cities', $cities)
             ->with('search', $search);
@@ -44,7 +44,7 @@ class CitiesController extends Controller
 
     public function show(City $city)
     {
-        $city = $this->repository->find($city);        
+        $city = $this->repository->find($city);
         $states = State::orderBy('name', 'asc')->get();
 
         return view('cities.show')
@@ -71,7 +71,7 @@ class CitiesController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('cities'));

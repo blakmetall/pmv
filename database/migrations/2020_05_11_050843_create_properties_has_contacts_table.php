@@ -16,7 +16,7 @@ class CreatePropertiesHasContactsTable extends Migration
         Schema::create('properties_has_contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('property_id');
-            $table->integer('user_id');
+            $table->integer('contact_id');
         });
     }
 

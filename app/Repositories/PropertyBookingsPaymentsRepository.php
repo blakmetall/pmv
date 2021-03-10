@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
 use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
-use App\Models\{Property, PropertyBookingPayment, DamageDeposit};
+use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
+use App\Models\{Property, PropertyBookingPayment, DamageDeposit, PropertyBooking, PropertyManagementTransaction};
 use App\Validations\PropertyBookingsPaymentsValidations;
 
 class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepositoryInterface
@@ -54,11 +55,32 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
     {
         $is_new = !$id;
         $user = auth()->user();
+        $property = Property::find($request->property_id);
+        $booking = PropertyBooking::find($request->booking_id);
 
         if ($is_new) {
             $payment = $this->blueprint();
+            $edit = false;
         } else {
             $payment = $this->find($id);
+            $edit = true;
+        }
+
+        $total    = $booking->total;
+        $payments = $booking->payments;
+        $reduced  = 0;
+        foreach ($payments as $pay) {
+            if ($edit && $pay->id == $id) {
+                $payReduced = $request->amount;
+            } else {
+                $payReduced = $pay->amount;
+            }
+            $reduced += $payReduced;
+        }
+        $balance = $total - $reduced;
+        if ($balance < 0) {
+            $request->session()->flash('error', __('The current payment exceed the total balance due'));
+            return $payment;
         }
 
         $data = [
@@ -83,8 +105,25 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
             $payment->audit_datetime = null;
         }
 
-        $payment->save();
-
+        if ($payment->save()) {
+            if ($property->management()->count()) {
+                foreach ($property->management as $pm) {
+                    if (!$pm->is_finished) {
+                        if ($request->credit_amount) {
+                            $transaction = new PropertyManagementTransaction();
+                            $transaction->property_management_id = $pm->id;
+                            $transaction->transaction_type_id = 18;
+                            $transaction->amount = $request->credit_amount;
+                            $transaction->post_date = $request->post_date;
+                            $transaction->operation_type = 2;
+                            $transaction->description = $request->credit_notes;
+                            $transaction->save();
+                        }
+                    }
+                }
+            }
+        }
+        $request->session()->flash('success', __('Record updated successfully'));
         return $payment;
     }
 

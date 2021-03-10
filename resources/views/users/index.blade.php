@@ -16,7 +16,7 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
+    @include('users.partials.search-general', [
         'url' => route('users')
     ])
 

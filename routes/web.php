@@ -7,7 +7,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // language
     Route::group(['prefix' => 'language'], function () {
-        Route::get('update/{locale}', 'LanguageController@update')->name('language.update');
+        Route::get('update/{locale}/{property?}', 'LanguageController@update')->name('language.update');
     });
 
     // error pages
@@ -60,6 +60,9 @@ Route::group(['middleware' => ['web']], function () {
                     Route::post('store', 'PropertyBookingPaymentsController@store')->name('property-booking-payments.store');
                     Route::get('show/{id}', 'PropertyBookingPaymentsController@show')->name('property-booking-payments.show');
                     Route::get('edit/{id}', 'PropertyBookingPaymentsController@edit')->name('property-booking-payments.edit');
+                    Route::get('email/{id}', 'PropertyBookingPaymentsController@email')->name('property-booking-payments.email');
+                    Route::post('send-email/{booking}', 'PropertyBookingPaymentsController@sendEmail')->name('property-booking-payments.send-email');
+                    Route::post('generate-img', 'PropertyBookingPaymentsController@generateImagePayment')->name('property-booking-payments.generate-img');
                     Route::post('update/{id}', 'PropertyBookingPaymentsController@update')->name('property-booking-payments.update');
                     Route::get('destroy/{id}', 'PropertyBookingPaymentsController@destroy')->name('property-booking-payments.destroy');
                 });
@@ -68,6 +71,7 @@ Route::group(['middleware' => ['web']], function () {
             // property selection partial for creating new booking
             Route::get('property-selection', 'PropertyBookingController@getPropertySelection')->name('property-bookings.get-property-selection');
             Route::get('generate-booking-url/{property?}', 'PropertyBookingController@generateBookingUrl')->name('property-bookings.generate-booking-url');
+            Route::post('check-availability', 'PropertyBookingController@checkAvailability')->name('property-bookings.check-availability');
 
             // bookings by property
             Route::group(['middleware' => 'role-permission:property-bookings,property'], function () {
@@ -103,6 +107,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{property}', 'PropertiesController@edit')->name('properties.edit');
                 Route::post('update/{id}', 'PropertiesController@update')->name('properties.update');
                 Route::get('destroy/{id}', 'PropertiesController@destroy')->name('properties.destroy');
+                Route::get('modal', 'PropertyBookingController@calendarModal')->name('property-calendar.calendar-modal');
 
                 // property internal routes
                 Route::group(['prefix' => '{property}'], function () {
@@ -185,6 +190,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['prefix' => 'balances', 'middleware' => 'role-permission:property-management,balances'], function () {
                 Route::get('', 'PropertyManagementBalancesController@general')->name('property-management-balances.general');
 
+                Route::get('confirm-email', 'PropertyManagementBalancesController@confirmEmail')->name('property-management-balances.confirm-email');
+
                 Route::get('email/{pm}', 'PropertyManagementBalancesController@email')->name('property-management-balances.email');
             });
 
@@ -207,7 +214,13 @@ Route::group(['middleware' => ['web']], function () {
             // delete transaction batch
             Route::get('delete-batch/{batch?}', 'PropertyManagementTransactionsController@deleteBatch')->name('property-management-transactions.delete-batch');
 
+            // confirm delete image transaction
+            Route::get('confirm-delete-image-transaction', 'PropertyManagementTransactionsController@confirmDeleteImage')->name('property-management-transactions.confirm-delete-image');
+            // delete image transaction
+            Route::get('delete-image-transaction/{transaction}', 'PropertyManagementTransactionsController@deleteImage')->name('property-management-transactions.delete-image');
+
             // single property management
+            Route::get('confirm-email', 'PropertyManagementTransactionsController@confirmEmail')->name('property-management-transactions.confirm-email');
             Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
 
                 // single property management transactions
@@ -285,6 +298,61 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('', 'ReportingController@index')->name('reporting');
         });
 
+        // pages
+        Route::group(['prefix' => 'pages', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'PagesController@index')->name('pages');
+            Route::get('create', 'PagesController@create')->name('pages.create');
+            Route::post('store', 'PagesController@store')->name('pages.store');
+            Route::get('show/{page}', 'PagesController@show')->name('pages.show');
+            Route::get('edit/{page}', 'PagesController@edit')->name('pages.edit');
+            Route::post('update/{id}', 'PagesController@update')->name('pages.update');
+            Route::get('destroy/{id}', 'PagesController@destroy')->name('pages.destroy');
+        });
+
+        // payment methods
+        Route::group(['prefix' => 'payment-methods', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'PaymentMethodsController@index')->name('payment-methods');
+            Route::get('create', 'PaymentMethodsController@create')->name('payment-methods.create');
+            Route::post('store', 'PaymentMethodsController@store')->name('payment-methods.store');
+            Route::get('show/{paymentMethod}', 'PaymentMethodsController@show')->name('payment-methods.show');
+            Route::get('edit/{paymentMethod}', 'PaymentMethodsController@edit')->name('payment-methods.edit');
+            Route::post('update/{id}', 'PaymentMethodsController@update')->name('payment-methods.update');
+            Route::get('destroy/{id}', 'PaymentMethodsController@destroy')->name('payment-methods.destroy');
+        });
+
+        // testimonials
+        Route::group(['prefix' => 'testimonials', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'TestimonialsController@index')->name('testimonials');
+            Route::get('create', 'TestimonialsController@create')->name('testimonials.create');
+            Route::post('store', 'TestimonialsController@store')->name('testimonials.store');
+            Route::get('show/{testimonial}', 'TestimonialsController@show')->name('testimonials.show');
+            Route::get('edit/{testimonial}', 'TestimonialsController@edit')->name('testimonials.edit');
+            Route::post('update/{id}', 'TestimonialsController@update')->name('testimonials.update');
+            Route::get('destroy/{id}', 'TestimonialsController@destroy')->name('testimonials.destroy');
+        });
+
+        // agencies
+        Route::group(['prefix' => 'agencies', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'AgenciesController@index')->name('agencies');
+            Route::get('create', 'AgenciesController@create')->name('agencies.create');
+            Route::post('store', 'AgenciesController@store')->name('agencies.store');
+            Route::get('show/{agency}', 'AgenciesController@show')->name('agencies.show');
+            Route::get('edit/{agency}', 'AgenciesController@edit')->name('agencies.edit');
+            Route::post('update/{id}', 'AgenciesController@update')->name('agencies.update');
+            Route::get('destroy/{id}', 'AgenciesController@destroy')->name('agencies.destroy');
+        });
+
+        // lgbts
+        Route::group(['prefix' => 'lgbts', 'middleware' => 'role-permission:pages,index'], function () {
+            Route::get('', 'LgbtsController@index')->name('lgbts');
+            Route::get('create', 'LgbtsController@create')->name('lgbts.create');
+            Route::post('store', 'LgbtsController@store')->name('lgbts.store');
+            Route::get('show/{lgbt}', 'LgbtsController@show')->name('lgbts.show');
+            Route::get('edit/{lgbt}', 'LgbtsController@edit')->name('lgbts.edit');
+            Route::post('update/{id}', 'LgbtsController@update')->name('lgbts.update');
+            Route::get('destroy/{id}', 'LgbtsController@destroy')->name('lgbts.destroy');
+        });
+
         // settings
         Route::group(['prefix' => 'settings'], function () {
             Route::get('', 'SettingsController@index')->name('settings');
@@ -350,6 +418,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{city}', 'CitiesController@edit')->name('cities.edit');
                 Route::post('update/{id}', 'CitiesController@update')->name('cities.update');
                 Route::get('destroy/{id}', 'CitiesController@destroy')->name('cities.destroy');
+            });
+
+            // offices
+            Route::group(['prefix' => 'offices', 'middleware' => 'role-permission:settings,offices'], function () {
+                Route::get('', 'OfficesController@index')->name('offices');
+                Route::get('create', 'OfficesController@create')->name('offices.create');
+                Route::post('store', 'OfficesController@store')->name('offices.store');
+                Route::get('show/{office}', 'OfficesController@show')->name('offices.show');
+                Route::get('edit/{office}', 'OfficesController@edit')->name('offices.edit');
+                Route::post('update/{id}', 'OfficesController@update')->name('offices.update');
+                Route::get('destroy/{id}', 'OfficesController@destroy')->name('offices.destroy');
             });
 
             // zones
@@ -447,6 +526,52 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
-    // public routes here
-    Route::get('', '_Public\PagesController@home')->name('public.home');
+    //********* PUBLIC ROUTES *********//
+    // Properties
+    Route::get('property/zones/{city}', '_Public\PropertyController@zones')->name('public.zones.list');
+    Route::get('property/{zone}/{slug}', '_Public\PropertyController@propertyDetail')->name('public.property-detail');
+    Route::get('availability-results', '_Public\PropertyController@availabilityResults')->name('public.availability-results');
+    Route::get('modal-availability', '_Public\PropertyController@availabilityModal')->name('public.availability-modal');
+    Route::get('first-availability', '_Public\PropertyController@firstsAvailability')->name('public.first-availability');
+    Route::get('reservations/{id}', '_Public\PropertyController@reservations')->name('public.reservations');
+    Route::post('make-reservation', '_Public\PropertyController@makeReservation')->name('public.make-reservation');
+    Route::get('thank-you/{booking}', '_Public\PropertyController@thankYou')->name('public.thank-you');
+
+    // Home
+    Route::get('', '_Public\HomeController@index')->name('public.home');
+    
+    // Vacation Services
+    Route::get('vacation-services', '_Public\VacationServicesController@index')->name('public.vacation-services');
+    Route::get('make-payment/{booking?}', '_Public\VacationServicesController@searchBooking')->name('public.vacation-services.make-payment');
+    Route::post('find-booking', '_Public\VacationServicesController@findBooking')->name('public.vacation-services.find-booking');
+    Route::get('make-payment-verify/{booking}', '_Public\VacationServicesController@resultsBookings')->name('public.vacation-services.make-payment-verify');
+    Route::get('thank-you', '_Public\VacationServicesController@thankYou')->name('public.vacation-services.thank-you');
+    Route::get('payment-methods', '_Public\VacationServicesController@paymentMethods')->name('public.vacation-services.payment-methods');
+    Route::get('rental-agreement', '_Public\VacationServicesController@rentalAgreement')->name('public.vacation-services.rental-agreement');
+    Route::get('accidental-rental-damage-insurance', '_Public\VacationServicesController@damageInsurance')->name('public.vacation-services.accidental-rental-damage-insurance');
+
+    // Concierge Services
+    Route::get('concierge-services', '_Public\ConciergeServicesController@index')->name('public.concierge-services');
+    Route::get('helpful-information', '_Public\ConciergeServicesController@helpfulInformation')->name('public.concierge-services.helpful-information');
+
+    // Property Management
+    Route::get('property-management', '_Public\PropertyManagementController@index')->name('public.property-management');
+
+    // About
+    Route::get('about-palmera-vacations', '_Public\AboutController@index')->name('public.about');
+    Route::get('puerto-vallarta-history', '_Public\AboutController@puertoVallarta')->name('public.about.puerto-vallarta-history');
+    Route::get('nuevo-vallarta-history', '_Public\AboutController@nuevoVallarta')->name('public.about.nuevo-vallarta-history');
+    Route::get('mazatlan-history', '_Public\AboutController@mazatlanVallarta')->name('public.about.mazatlan-history');
+    Route::get('testimonials', '_Public\AboutController@testimonials')->name('public.about.testimonials');
+    Route::get('testimonial/{id}', '_Public\AboutController@testimonialDetail')->name('public.about.testimonial');
+    Route::get('privacy-policy', '_Public\AboutController@privacyPolicy')->name('public.about.privacy-policy');
+    Route::get('terms-of-use', '_Public\AboutController@termsOfUse')->name('public.about.terms-of-use');
+    Route::get('real-estate-business-directory', '_Public\AboutController@realEstateBusinessDirectory')->name('public.about.real-estate-business-directory');
+    Route::get('real-estate-business-directory/{id}', '_Public\AboutController@agencyDetail')->name('public.about.real-estate-business-directory-detail');
+    Route::get('lgbt-business-directory', '_Public\AboutController@lgbtBusinessDirectory')->name('public.about.lgbt-business-directory');
+    Route::get('lgbt-business-directory/{id}', '_Public\AboutController@lgbtDetail')->name('public.about.lgbt-business-directory-detail');
+
+    // Contact
+    Route::get('contact', '_Public\ContactController@index')->name('public.contact');
+    Route::post('contact/send-email', '_Public\ContactController@sendEmail')->name('public.contact.send-email');
 });

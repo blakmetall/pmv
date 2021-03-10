@@ -20,6 +20,7 @@
                     </tr>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Guest') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Arrival') }}</th>
@@ -33,7 +34,7 @@
                 <tbody>
 
                     @if(count($arrivals))
-                        @foreach($arrivals as $arrival)
+                        @foreach($arrivals as $i => $arrival)
                             @php
                                 $occupants = __('Occupants:').' '.$arrival->adults.' '.__('Adult(s)').' - '.$arrival->kids.' '.__('Child(ren)');
                                 $managed = ($arrival->property->management)?__('MANAGED'):'';
@@ -44,6 +45,11 @@
                                 $owner = $arrival->user->profile->full_name;
                             @endphp
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i+1 }}
+                                </th>
+                                
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $arrival->id }}
@@ -103,6 +109,7 @@
                     </tr>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Guest') }}</th>
                         <th scope="col">{{ __('Property') }}</th>
                         <th scope="col">{{ __('Departure') }}</th>
@@ -116,7 +123,7 @@
                 <tbody>
 
                     @if(count($departures))
-                        @foreach($departures as $departure)
+                        @foreach($departures as $i => $departure)
                             @php
                                 $occupants = __('Occupants:').' '.$departure->adults.' '.__('Adult(s)').' - '.$departure->kids.' '.__('Child(ren)');
                                 $managed = ($departure->property->management)?__('MANAGED'):'';
@@ -127,6 +134,11 @@
                                 $owner = $departure->user->profile->full_name;
                             @endphp
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i+1 }}
+                                </th>
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $departure->id }}

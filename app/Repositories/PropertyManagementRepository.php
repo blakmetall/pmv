@@ -28,7 +28,8 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
-        $contactID = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
+        $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
+        $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
 
         if ($search || $filterByCity) {
             $query = PropertyManagement::query();
@@ -71,14 +72,6 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             }
         }
 
-        if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($config) {
-                $q->whereHas('contacts', function ($q) use ($config) {
-                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
-                });
-            })->where('language_id', $lang->id);
-        }
-
         if ($unfinishedOnly) {
             $query->where('is_finished', 0);
         }
@@ -87,6 +80,16 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
             $result = $query->paginate(9999);
         } else {
             $result = $query->get();
+        }
+
+        if ($shouldFilterByYear && $shouldFilterByMonth) {
+            $dateString = $config['filterByYear'].'-'.$config['filterByMonth'];
+            foreach ($result as $index => $pm_item) {
+                $dates = getDatesFromRange($pm_item->start_date, $pm_item->end_date, 'Y-m');
+                if(!in_array($dateString, $dates)){
+                    unset($result[$index]);
+                }
+            }
         }
 
         return $result;

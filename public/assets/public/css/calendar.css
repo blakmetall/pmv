@@ -1,0 +1,223 @@
+.modal-title {
+    margin-bottom: 0 !important;
+    line-height: 1.6;
+    font-size: 15px !important;
+    border-bottom: none !important;
+    width: 90%;
+}
+
+.close {
+    float: right;
+    font-size: 22.5px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000000;
+    text-shadow: none;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+}
+
+.close {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.4;
+}
+
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.modal .close {
+    color: #2c3e50;
+}
+
+.modal-header .close {
+    margin-top: -2px;
+}
+
+.btn-dark{
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.btn-dark:hover {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.calendar-container th, .calendar-container td {
+    text-align: center;
+    border: 2px solid #fff;
+    font: 14px/22px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.current-day {
+    position: relative;
+    z-index: 2;
+    font-weight: normal;
+}
+
+.arrival-only, .departure-only {
+    position: relative;
+    background-color: #c3d69b !important;
+}
+
+.calendar-container .arrival-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    right: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 14px 9px 0;
+    border-color: transparent #d99694 transparent transparent;
+}
+
+.calendar-container .departure-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    left: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 0 9px 14px;
+    border-color: transparent transparent transparent #d99694;
+}
+
+.calendar-container {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.calendar-container table {
+    width: 100%;
+}
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: none !important;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header, .card-footer {
+    border-color: rgba(0, 0, 0, 0.03);
+}
+
+.card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btns-container span {
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0px 10px;
+}
+
+.legends{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.available-square{
+    padding: 3px 10px;
+    background-color: #C3D69B;
+}
+
+.booked-square{
+    padding: 3px 10px;
+    background-color: #D99694;
+}
+
+.modal h5{
+    color: #2D6C9C;
+}

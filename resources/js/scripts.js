@@ -12,6 +12,9 @@ import { initTimepickerComponents } from "./scripts/initTimepickerComponents.js"
 import { initTransactionModalHandler } from "./scripts/initTransactionModalHandler.js";
 import { initContactModalHandler } from "./scripts/initContactModalHandler.js";
 import { initCleaningServicesModalHandler } from "./scripts/initCleaningServicesModalHandler.js";
+import { initNotificationsModalHandler } from "./scripts/initNotificationsModalHandler.js";
+import { initDeleteImageModalHandler } from "./scripts/initDeleteImageModalHandler.js";
+import { initCalendarModalHandler } from "./scripts/initCalendarModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 
 $(function() {
@@ -42,6 +45,9 @@ $(function() {
         initTransactionModalHandler();
         initContactModalHandler();
         initCleaningServicesModalHandler();
+        initNotificationsModalHandler();
+        initDeleteImageModalHandler();
+        initCalendarModalHandler();
         initTooltip();
 
         initCleaningMonthlyBatchEvents();
@@ -176,6 +182,37 @@ $(function() {
             }
         });
     });
+    
+    // SHOW/HIDE Inputs from template
+    $("select[name='template']").change(function () {
+        let currentTemplate = $(this).val();
+        $('.dynamic-fields').hide();
+        selectTemplate(currentTemplate);
+    });
+
+    selectTemplate($("select[name='template']").val());
+
+    function selectTemplate(currentTemplate){
+        switch (currentTemplate) {
+            case 'Payment Methods':
+                $('#fields-payment-methods').show();
+                break;
+            case 'Accidental Rental Damage Insurance (ARDI)':
+                $('#fields-accidental').show();
+                break;
+            case 'Nuevo Vallarta':
+                $('#fields-nuevo-vallarta').show();
+                break;
+            case 'Testimonials':
+                $('#fields-testimonials').show();
+                break;
+            case 'Real Estate Business Directory':
+                $('#fields-real-estate').show();
+                break;
+            default:
+                break;
+        }
+    }
 
     /////////////////////////////
     /////////////////////////////
@@ -319,4 +356,77 @@ $(function() {
             $(".bulk-transaction-post-date").val(value);
         });
     }
+
+    // get dates availability
+    let getDateAvailability = JSON.parse(localStorage.getItem('dates-availability')) || [];
+    let arrivalDateAvailability = (getDateAvailability.length !== 0)?getDateAvailability[0]:'';
+    let departureDateAvailability = (getDateAvailability.length !== 0)?getDateAvailability[1]:'';
+    $('input[name="arrival_date"]').val(arrivalDateAvailability);
+    $('input[name="arrival_date_submit"]').val(arrivalDateAvailability);
+    $('input[name="departure_date"]').val(departureDateAvailability);
+    $('input[name="departure_date_submit"]').val(departureDateAvailability);
+
+    // submit form balance property management transactions when year change
+    $('.select-year').on('change', function(){
+        $('#search-balance').submit();
+    });
+
+    // fill textarea canvas
+    const oldText = $("#text-canvas").val();
+    const svgx = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+    const firstText = nl2br($('#field_notification_owners_email_content_').val());
+    $("#text-canvas").append(firstText);
+    // $("#text-canvas").css({
+    //     'height': calcHeight($("#text-canvas").val()) + "px"
+    // });
+    $('#field_notification_owners_email_content_').on('change', function(){
+        $("#text-canvas").empty();
+        $("#text-canvas").append(oldText);
+        $("#text-canvas").append(nl2br($(this).val()));
+        // $("#text-canvas").css({
+        //     'height': calcHeight($("#text-canvas").val()) + "px"
+        // });
+    });
+
+    // email generate image
+    $('#send_email').on('submit', function(e){
+        var htmlCanvas = document.getElementById("text-canvas");
+        var urlCanvas = $(this).attr('data-img');
+        var paymentId = $(this).attr('data-payment');
+
+        nodeToDataURL({
+            targetNode: htmlCanvas,
+            customStyle: '#text-canvas {box-sizing: border-box; font-family: "Lato", sans-serif; font-weight: 400; letter-spacing: 0.3px; background-color:#ffffff; padding: 20px 30px; height: 100% !important; width:100% !important;}'
+        })
+        .then((url) => {
+            var dataCanvas = {
+                'id': paymentId,
+                'image' : url,
+            };
+            $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                    "content"
+                )
+            },
+            type: "POST",
+            url: urlCanvas,
+            dataType: "json",
+            data:{"source": dataCanvas}
+            });
+        })
+    });
+
+    function calcHeight(value) {
+        let numberOfLineBreaks = (value.match(/\n/g) || []).length;
+        // min-height + lines x line-height + padding + border
+        let newHeight = 20 + numberOfLineBreaks * 25 + 12 + 2;
+        return newHeight;
+    }
+
+    function nl2br (str, is_xhtml) {     
+        var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';      
+        return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');  
+    }  
 });

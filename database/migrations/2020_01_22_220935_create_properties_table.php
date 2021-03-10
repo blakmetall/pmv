@@ -29,6 +29,7 @@ class CreatePropertiesTable extends Migration
             $table->tinyInteger('is_featured')->nullable()->default(0);
             $table->tinyInteger('is_enabled')->nullable()->default(0);
             $table->tinyInteger('is_online')->nullable()->default(0);
+            $table->tinyInteger('is_special')->nullable()->default(0);
             $table->decimal('rental_commission', 5, 2)->nullable();
             $table->decimal('maid_fee', 15, 2)->nullable();
             $table->smallInteger('bedrooms')->nullable();

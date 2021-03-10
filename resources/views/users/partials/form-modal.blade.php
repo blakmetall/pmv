@@ -33,7 +33,7 @@
     'edit_route' => 'users.edit',
     'cancel_route' => 'users',
     'delete_route' => 'users.destroy',
-    'skipEdit' => isRole('owner') || isRole('contact'),
+    'skipEdit' => isRole('owner'),
     'skipDelete' => $skipDelete,
     'skipCancel' => $skipCancel,
     'isModal' => $isModal,

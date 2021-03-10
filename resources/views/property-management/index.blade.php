@@ -5,7 +5,7 @@
     @php 
         $actions = [];
 
-        if(!isRole('owner') && !isRole('contact')) {
+        if(!isRole('owner')) {
             $actions = array_merge($actions, [
                 [
                     'label' => __('New'),
@@ -33,7 +33,7 @@
     <div class="mb-4"></div>
 
     @if (isset($pm))
-        @include('property-management.partials.search', [
+        @include('property-management.partials.search-general', [
             'url' => route('property-management', [$pm]),
             'pm' => $pm,
         ])

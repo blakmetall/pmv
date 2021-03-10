@@ -25,11 +25,13 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
-        $shouldFilterByEnabled  = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
-        $shouldFilterByUserId   = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
-        $shouldFilterByOffline  = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
-        $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
-        $contactID              = isset($config['filterByContactId']) ? $config['filterByContactId'] : false;
+        $shouldFilterByEnabled   = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
+        $shouldFilterByUserId    = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldFilterByOffline   = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
+        $shouldFilterByDisabled  = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
+        $shouldFilterByFeatured  = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
+        $shouldFilterByNews      = isset($config['filterByNews']) ? $config['filterByNews'] : false;
+        $shouldFilterBySlug      = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -49,10 +51,19 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
         }
 
-        $query
-            ->where('language_id', $lang->id)
-            ->with('property')
-            ->orderBy('name', 'asc');
+        
+        if($shouldFilterByNews){
+            $query
+                ->where('language_id', $lang->id)
+                ->with('property')
+                ->join('properties', 'properties.id', '=', 'property_id')
+                ->orderBy('properties.created_at', 'desc');
+        }else{
+            $query
+                ->where('language_id', $lang->id)
+                ->with('property')
+                ->orderBy('name', 'asc');
+        }
 
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function ($q) {
@@ -67,6 +78,19 @@ class PropertiesRepository implements PropertiesRepositoryInterface
                     $q->where('properties_has_users.user_id', $config['filterByUserId']);
                 });
             })->where('language_id', $lang->id);
+        }
+
+        if ($shouldFilterBySlug) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->where('slug', $config['filterBySlug']);
+            })->where('language_id', $lang->id);
+        }
+
+
+        if ($shouldFilterByFeatured) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->where('properties.is_featured', 1);
+            });
         }
 
         if ($shouldFilterByEnabled) {
@@ -85,14 +109,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('properties.is_enabled', '!=', 1);
             });
-        }
-
-        if ($contactID) {
-            $query->orWhereHas('property', function ($q) use ($config) {
-                $q->whereHas('contacts', function ($q) use ($config) {
-                    $q->where('properties_has_contacts.user_id', $config['filterByContactId']);
-                });
-            })->where('language_id', $lang->id);
         }
 
         if ($shouldPaginate) {
@@ -124,6 +140,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             'is_featured' => 0,
             'is_enabled' => 0,
             'is_online' => 0,
+            'is_special' => 0,
             'has_parking' => 0,
         ];
         $requestData = array_merge($checkboxesConfig, $request->all());
@@ -146,9 +163,15 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         }
 
         $property->en->fill($request->en);
+        if(!$request->en['slug']){
+            $property->en->slug = generateSlug($request->en['name']);
+        }
         $property->en->save();
 
         $property->es->fill($request->es);
+        if(!$request->es['slug']){
+            $property->es->slug = generateSlug($request->es['name']);
+        }
         $property->es->save();
 
         // amenities assignation

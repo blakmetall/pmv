@@ -12,11 +12,11 @@
 
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">{{ __('Email') }}</th>
                         <th scope="col">{{ __('Name') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
                         <th scope="col">{{ __('Roles') }}</th>
-                        <th scope="col">{{ __('Owner') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -26,8 +26,13 @@
                 <tbody>
 
                     @if(count($rows))
-                        @foreach($rows as $row)
+                        @foreach($rows as $i => $row)
                             <tr>
+                                <!-- index -->
+                                <th scope="row">
+                                    {{ $i+1 }}
+                                </th>
+                                
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $row->id }}
@@ -64,15 +69,6 @@
                                             </span>
                                         </div>
                                     @endforeach
-                                </td>
-
-                                <!-- owner -->
-                                <td>
-                                    @if(!empty($row->profile->owners()))
-                                        @foreach ($row->profile->owners() as $owner)
-                                            {{ $owner->profile->full_name }}
-                                        @endforeach
-                                    @endif
                                 </td>
 
                                 <!-- created/updated cols -->

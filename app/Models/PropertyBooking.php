@@ -21,6 +21,7 @@ class PropertyBooking extends Model
         'user_agent_id',
         'firstname',
         'lastname',
+        'email',
         'country',
         'state',
         'city',
@@ -56,6 +57,7 @@ class PropertyBooking extends Model
         'is_property_damaged',
         'audit_refund_datetime',
         'audit_refund_user_id',
+        'register_by',
         'is_confirmed',
         'is_cancelled',
         'is_paid',
@@ -94,11 +96,17 @@ class PropertyBooking extends Model
 
     public function payments()
     {
-        return $this->hasMany('App\Models\PropertyBookingPayment');
+        return $this->hasMany('App\Models\PropertyBookingPayment', 'booking_id');
     }
 
     public function damageDeposit()
     {
         return $this->belongsTo('App\Models\DamageDeposit');
+    }
+
+    // mutator: full_name 
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
     }
 }

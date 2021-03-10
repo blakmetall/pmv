@@ -86,6 +86,27 @@ export function initCleaningServicesModalHandler() {
                                 propertyDate
                             );
                         }, 500);
+
+                        $('#form-cleaning-service').submit( function(e){
+                            let errorFields = '#error-fields';
+                            let inputDate = $(this).find('input[name="date"]');
+                            let textareaDescription = $(this).find('textarea[name="description"]');
+                            let inputMaidFee = $(this).find('input[name="maid_fee"]');
+                            let inputSundayBonus = $(this).find('input[name="sunday_bonus"]');
+                            if(
+                                !$(inputDate).val() || 
+                                !$(textareaDescription).val() ||
+                                !$(inputMaidFee).val() ||
+                                !$(inputSundayBonus).val()){
+                                $(errorFields).show();
+                                setTimeout(function(){
+                                    $(errorFields).hide();
+                                }, 5000);
+                                return false;
+                            }else{
+                                $(errorFields).hide();
+                            }
+                        });
                     });
             });
         });

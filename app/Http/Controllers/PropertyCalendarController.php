@@ -21,7 +21,7 @@ class PropertyCalendarController extends Controller
 
         $config = [];
 
-        if (isRole('owner') || isRole('contact')) {
+        if (isRole('owner')) {
             $config = ['auditedOnly' => true];
         }
 

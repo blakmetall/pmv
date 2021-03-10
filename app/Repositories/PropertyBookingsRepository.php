@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Notification;
+use App\Notifications\DetailsBooking;
 use App\Helpers\LanguageHelper;
 use App\Helpers\RatesHelper;
 use App\Models\DamageDeposit;
@@ -26,24 +28,31 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
     {
         $lang = LanguageHelper::current();
 
-        $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
-        $hasPropertyID  = isset($config['propertyID']) ? $config['propertyID'] : '';
-        $filterByOwner  = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
-        $currentYear    = isset($config['currentYear']) ? $config['currentYear'] : '';
+        $shouldPaginate       = isset($config['paginate']) ? $config['paginate'] : true;
+        $hasPropertyID        = isset($config['propertyID']) ? $config['propertyID'] : '';
+        $filterByOwner        = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
+        $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
 
-        if (isset($search['from_date'])) {
+        if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
             $query = PropertyBooking::query();
             $query->where(function ($query) use ($search) {
-                $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+                if($search['from_date'] != '' || $search['to_date'] != ''){
+                    $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+                }
+                if($search['register_by'] != ''){
+                    $query->where('register_by', $search['register_by']);
+                }
             });
-            $query->whereHas('property', function ($q) use ($search) {
-                $q->where('city_id', 'like', '%' . $search['location'] . '%');
-            });
+            if($search['location'] != ''){
+                $query->whereHas('property', function ($q) use ($search) {
+                    $q->where('city_id', 'like', '%' . $search['location'] . '%');
+                });
+            }
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
         }
-
 
         if ($filterByOwner) {
             $query->whereHas('property', function ($q) {
@@ -65,6 +74,11 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         if ($currentYear) {
             $query->whereYear('arrival_date', $currentYear);
         }
+
+        if ($filterByNotCancelled) {
+            $query->where('is_cancelled', 0);
+        }
+
 
         if ($shouldPaginate) {
             $result = $query->paginate(9999);
@@ -102,7 +116,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
         $data = [
             'user_id' => $user->id,
-            'is_confirmed' => 0,
+            'is_confirmed' => 1,
             'is_paid' => 0,
             'is_refundable' => 0,
             'is_cancelled' => 0,
@@ -113,12 +127,46 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $requestData = array_merge($data, $request->all());
 
         $booking->fill($requestData);
-
         if ($booking->save()) {
+
+            $contacts = $booking->property->contacts;
+            $concierge = false;
+            foreach ($contacts as $contact) {
+                if ($contact->contact_type == 'property-manager') {
+                    $concierge = $contact->email;
+                }
+            }
+
+            if ($request->guest) {
+                $this->email($booking, $booking->email);
+            }
+
+            if ($request->office) {
+                $this->email($booking, $booking->property->office->email);
+            }
+
+            if ($concierge) {
+                if ($request->concierge) {
+                    $this->email($booking, $concierge);
+                }
+            }
+
+            if ($request->home_owner) {
+                $owners = $booking->property->users;
+                foreach ($owners as $owner) {
+                    $this->email($booking, $owner->email);
+                }
+            }
+
             $property = Property::find($booking->property_id);
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
-            $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
+            if ($booking->damage_deposit_id) {
+                $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
+                $damageDeposit = $damage_deposit->price;
+            } else {
+                $damageDeposit = 0;
+            }
 
             $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
             $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
@@ -154,7 +202,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $booking->nights = $nights;
             $booking->price_per_night = $price_per_night;
             $booking->subtotal_nights = $subtotal_nights;
-            $booking->subtotal_damage_deposit = $damage_deposit->price;
+            $booking->subtotal_damage_deposit = $damageDeposit;
             $booking->total = $subtotal_nights;
 
             // $booking->total =  $subtotal_nights + $damage_deposit->price;
@@ -166,6 +214,12 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         }
 
         return $booking;
+    }
+
+    private function email($booking, $email)
+    {
+        Notification::route('mail', $email)
+            ->notify(new DetailsBooking($booking));
     }
 
     public function find($id_or_obj)
