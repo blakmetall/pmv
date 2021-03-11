@@ -55,7 +55,7 @@
 
                                     <td>
                                         <!-- agency view -->
-                                        <a href="{{ route('agencies.show', $row->agency->id) }}"
+                                        <a href="{{ route('agencies.show', [$row->agency->id]) }}"
                                             class="text-primary app-icon-link" title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
                                             <i class="nav-icon i-Eye font-weight-bold"></i>

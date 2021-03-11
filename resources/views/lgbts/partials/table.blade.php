@@ -55,7 +55,7 @@
 
                                     <td>
                                         <!-- lgbt view -->
-                                        <a href="{{ route('lgbts.show', $row->lgbt->id) }}"
+                                        <a href="{{ route('lgbts.show', [$row->lgbt->id]) }}"
                                             class="text-primary app-icon-link" title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
                                             <i class="nav-icon i-Eye font-weight-bold"></i>

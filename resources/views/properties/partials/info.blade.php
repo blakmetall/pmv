@@ -12,7 +12,7 @@ $property = isset($property) ? $property : false;
                     <div class="col-sm-2 col-md-1 d-none d-sm-inline-block">
                         @if ($property->hasDefaultImage())
                             @php
-                            $propertyImg = $property->getDefaultImage();
+                                $propertyImg = $property->getDefaultImage();
                             @endphp
 
                             <a href="{{ route('properties.show', [$property->id]) }}">
@@ -33,7 +33,7 @@ $property = isset($property) ? $property : false;
                         <!-- property view -->
                         <!-- Por que un dueño no puede ver los detalles de su propiedad? -->
                         @if (!isRole('owner'))
-                            <a role="button" href="{{ route('properties.show', $property->id) }}"
+                            <a role="button" href="{{ route('properties.show', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0" title="{{ __('View') }}"
                                 alt="{{ __('View') }}">
                                 <i class="nav-icon i-Eye font-weight-bold"></i>
@@ -42,7 +42,7 @@ $property = isset($property) ? $property : false;
 
                         <!-- property images -->
                         @if (!isRole('owner'))
-                            <a role="button" href="{{ route('property-images', $property->id) }}"
+                            <a role="button" href="{{ route('property-images', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0" title="{{ __('Images') }}"
                                 alt="{{ __('Images') }}">
                                 <i class="nav-icon i-Old-Camera font-weight-bold"></i>
@@ -51,7 +51,7 @@ $property = isset($property) ? $property : false;
 
                         <!-- bookings from specific to property -->
                         @if (!isProduction())
-                            <a role="button" href="{{ route('property-bookings.by-property', $property->id) }}"
+                            <a role="button" href="{{ route('property-bookings.by-property', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Reservations') }}" alt="{{ __('Reservations') }}">
                                 <i class="nav-icon i-Calendar-2 font-weight-bold"></i>
@@ -60,7 +60,7 @@ $property = isset($property) ? $property : false;
 
                         <!-- property rates -->
                         @if (!isRole('owner'))
-                            <a role="button" href="{{ route('property-rates', $property->id) }}"
+                            <a role="button" href="{{ route('property-rates', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0" title="{{ __('Rates') }}"
                                 alt="{{ __('Rates') }}">
                                 <i class="nav-icon i-Money-2 font-weight-bold"></i>
@@ -70,24 +70,24 @@ $property = isset($property) ? $property : false;
                         <!-- property policies -->
                         @if (!isRole('owner'))
                             <a href="{{ route('maintenance') }}"
-                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0" title="{{ __('Policies') }}"
-                                alt="{{ __('Policies') }}">
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
+                                title="{{ __('Policies') }}" alt="{{ __('Policies') }}">
                                 <i class="nav-icon i-Files font-weight-bold"></i>
                             </a>
                         @endif
 
                         <!-- property contacts -->
                         @if (!isRole('owner'))
-                            <a role="button" href="{{ route('property-contacts', $property->id) }}"
-                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0" title="{{ __('Contacts') }}"
-                                alt="{{ __('Contacts') }}">
+                            <a role="button" href="{{ route('property-contacts', [$property->id]) }}"
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
+                                title="{{ __('Contacts') }}" alt="{{ __('Contacts') }}">
                                 <i class="nav-icon i-Administrator font-weight-bold"></i>
                             </a>
                         @endif
 
                         <!-- property notes -->
                         @if (!isRole('owner'))
-                            <a role="button" href="{{ route('property-notes', $property->id) }}"
+                            <a role="button" href="{{ route('property-notes', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0" title="{{ __('Notes') }}"
                                 alt="{{ __('Notes') }}">
                                 <i class="nav-icon i-Notepad font-weight-bold"></i>
@@ -95,7 +95,7 @@ $property = isset($property) ? $property : false;
                         @endif
 
                         <!-- property calendar -->
-                        <a href="{{ route('property-calendar', $property->id) }}"
+                        <a href="{{ route('property-calendar', [$property->id]) }}"
                             class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0" title="{{ __('Calendar') }}"
                             alt="{{ __('Calendar') }}">
                             <i class="nav-icon i-Calendar-4 font-weight-bold"></i>
@@ -104,15 +104,15 @@ $property = isset($property) ? $property : false;
                         <!-- property preview -->
                         @if (!isRole('owner'))
                             <a href="{{ route('maintenance') }}"
-                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0" title="{{ __('Preview') }}"
-                                alt="{{ __('Preview') }}">
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
+                                title="{{ __('Preview') }}" alt="{{ __('Preview') }}">
                                 <i class="nav-icon i-Right font-weight-bold"></i>
                             </a>
                         @endif
 
                         <!-- property management -->
                         @if (!isRole('owner'))
-                            <a role="button" href="{{ route('property-management', $property->id) }}"
+                            <a role="button" href="{{ route('property-management', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Property Management') }}" alt="{{ __('Property Management') }}">
                                 <i class="nav-icon i-Building font-weight-bold"></i>

@@ -18,8 +18,8 @@
 
                 <tbody>
 
-                    @if(count($rows))
-                        @foreach($rows as $row)
+                    @if (count($rows))
+                        @foreach ($rows as $row)
                             <tr>
 
                                 <!-- name -->
@@ -27,10 +27,8 @@
 
                                 <td>
                                     <!-- workgroup users -->
-                                    <a 
-                                        href="{{ route('workgroup-users', $row->id) }}" 
-                                        class="text-primary app-icon-link"
-                                        title="{{ __('Users') }}"
+                                    <a href="{{ route('workgroup-users', [$row->id]) }}"
+                                        class="text-primary app-icon-link" title="{{ __('Users') }}"
                                         alt="{{ __('Users') }}">
                                         <i class="nav-icon i-Administrator font-weight-bold"></i>
                                     </a>
@@ -39,10 +37,10 @@
                                 <!-- actions -->
                                 <td>
                                     @include('components.table.actions', [
-                                        'params' => [$row->id],
-                                        'showRoute' => 'workgroups.show',
-                                        'editRoute' => 'workgroups.edit',
-                                        'deleteRoute' => 'workgroups.destroy',
+                                    'params' => [$row->id],
+                                    'showRoute' => 'workgroups.show',
+                                    'editRoute' => 'workgroups.edit',
+                                    'deleteRoute' => 'workgroups.destroy',
                                     ])
                                 </td>
 

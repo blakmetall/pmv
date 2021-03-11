@@ -216,7 +216,7 @@ $urlParams = '?' . http_build_query($_GET);
                                         @endif
 
                                         <!-- edit and file -->
-                                        <td>
+                                        <td style="padding: 0.1rem;">
                                             <div class="not-print">
                                                 @if (!isRole('owner') && !isRole('regular'))
                                                     {{-- <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
@@ -238,19 +238,20 @@ $urlParams = '?' . http_build_query($_GET);
                                                     'fileName' => $row->file_original_name,
                                                     'filePath' => $row->file_path,
                                                     'fileUrl' => $row->file_url,
-                                                    'fileSlug' => $row->file_slug,
-                                                    'fileRemoveUrl' => route(''),
+                                                    'fileSlug' => $row->file_slug
                                                     ])
                                                 @endif
 
                                                 <!-- Delete image -->
                                                 @if ($row->file_url)
-                                                    <a href="#" data-toggle="modal" data-source="{{ $row->id }}"
+                                                    <a href="#" class="btn-delete-file" alt="{{ __('Delete File') }}"
+                                                        data-toggle="modal" data-source="{{ $row->id }}"
                                                         data-target="#{{ $modalID }}"
                                                         data-text-button="{{ __('Delete') }}"
-                                                        data-route="{{ route('property-management-transactions.delete-image', $row->id) }}"
-                                                        class="text-primary mr-2">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                        data-cancel-button="{{ __('Cancel') }}"
+                                                        data-route="{{ route('property-management-transactions.delete-image', [$row->id]) }}"
+                                                        class="text-primary mr-2" style="position:relative; top: 3px;">
+                                                        <i class="nav-icon i-Arrow-X-Right font-weight-bold"></i>
                                                     </a>
                                                 @endif
 
@@ -627,12 +628,14 @@ break;
                                         <!-- edit, file and delete -->
                                         <td style="padding: 0.1rem;">
                                             <div class="not-print">
-                                                @include('components.table.file-modal', [
-                                                'fileName' => $row->file_original_name,
-                                                'filePath' => $row->file_path,
-                                                'fileUrl' => $row->file_url,
-                                                'fileSlug' => $row->file_slug,
-                                                ])
+                                                @if ($row->file_url)
+                                                    @include('components.table.file-modal', [
+                                                    'fileName' => $row->file_original_name,
+                                                    'filePath' => $row->file_path,
+                                                    'fileUrl' => $row->file_url,
+                                                    'fileSlug' => $row->file_slug
+                                                    ])
+                                                @endif
 
                                                 <!-- Delete image -->
                                                 @if ($row->file_url)
@@ -641,7 +644,7 @@ break;
                                                         data-target="#{{ $modalID }}"
                                                         data-text-button="{{ __('Delete') }}"
                                                         data-cancel-button="{{ __('Cancel') }}"
-                                                        data-route="{{ route('property-management-transactions.delete-image', $row->id) }}"
+                                                        data-route="{{ route('property-management-transactions.delete-image', [$row->id]) }}"
                                                         class="text-primary mr-2" style="position:relative; top: 3px;">
                                                         <i class="nav-icon i-Arrow-X-Right font-weight-bold"></i>
                                                     </a>

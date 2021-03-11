@@ -42,7 +42,7 @@
 
                                     <td>
                                         <!-- page view -->
-                                        <a href="{{ route('pages.show', $row->page->id) }}"
+                                        <a href="{{ route('pages.show', [$row->page->id]) }}"
                                             class="text-primary app-icon-link" title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
                                             <i class="nav-icon i-Eye font-weight-bold"></i>

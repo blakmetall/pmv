@@ -42,7 +42,7 @@
 
                                     <td>
                                         <!-- testimonial view -->
-                                        <a href="{{ route('testimonials.show', $row->testimonial->id) }}"
+                                        <a href="{{ route('testimonials.show', [$row->testimonial->id]) }}"
                                             class="text-primary app-icon-link" title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
                                             <i class="nav-icon i-Eye font-weight-bold"></i>

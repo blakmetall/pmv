@@ -31,13 +31,12 @@
                                                             class="field-content">{{ $agency->title }}</strong>
                                                     </div>
                                                     <div class="views-field views-field-body">
-                                                        <div class="field-content">{!! getSubString($agency->description,
-                                                            150) !!}</div>
+                                                        <div class="field-content">{!! getSubString($agency->description, 150) !!}</div>
                                                     </div>
                                                     <div>
                                                         <span>
                                                             <a
-                                                                href="{{ route('public.about.real-estate-business-directory-detail', $agency->agency_id) }}">{{ __('READ MORE') }}
+                                                                href="{{ route('public.about.real-estate-business-directory-detail', [$agency->agency_id]) }}">{{ __('READ MORE') }}
                                                                 &gt;&gt;</a>
                                                         </span>
                                                     </div>

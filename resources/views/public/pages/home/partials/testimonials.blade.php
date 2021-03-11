@@ -9,15 +9,15 @@
                                 <tr>
                                     @foreach ($testimonials as $tindex => $testimonial)
                                         @php
-                                        if($tindex > 2){
-                                        break;
-                                        }
+                                            if ($tindex > 2) {
+                                                break;
+                                            }
                                         @endphp
                                         <td class="col-xs-4">
                                             <div class="views-field views-field-body">
                                                 <div class="field-content">
                                                     <a
-                                                        href="{{ route('public.about.testimonial', $testimonial->testimonial_id) }}">
+                                                        href="{{ route('public.about.testimonial', [$testimonial->testimonial_id]) }}">
                                                         {!! getSubstring($testimonial->description, 150) !!}
                                                     </a>
                                                 </div>

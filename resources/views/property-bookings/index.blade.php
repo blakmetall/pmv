@@ -4,7 +4,7 @@
 $fromDate = isset($_GET['from_date']) ? $_GET['from_date'] : '';
 $toDate = isset($_GET['to_date']) ? $_GET['to_date'] : '';
 $searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
-$url = isset($propertyId) ? route('property-bookings.by-property', $propertyId) : route('property-bookings');
+$url = isset($propertyId) ? route('property-bookings.by-property', [$propertyId]) : route('property-bookings');
 @endphp
 
 @section('heading-content')

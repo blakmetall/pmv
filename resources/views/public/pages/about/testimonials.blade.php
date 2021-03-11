@@ -26,7 +26,7 @@
                                                     <div class="views-field views-field-body">
                                                         <div class="field-content">
                                                             <a
-                                                                href="{{ route('public.about.testimonial', $testimonial->testimonial_id) }}">
+                                                                href="{{ route('public.about.testimonial', [$testimonial->testimonial_id]) }}">
                                                                 {!! $testimonial->description !!}
                                                             </a>
                                                         </div>
@@ -41,7 +41,8 @@
                                                     @endif
                                                     @if ($testimonial->occupation)
                                                         <div class="views-field views-field-field-company-location">
-                                                            <div class="field-content">{{ $testimonial->occupation }}</div>
+                                                            <div class="field-content">{{ $testimonial->occupation }}
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 </td>

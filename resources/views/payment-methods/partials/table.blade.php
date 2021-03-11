@@ -54,7 +54,7 @@
 
                                     <td>
                                         <!-- payment method view -->
-                                        <a href="{{ route('payment-methods.show', $row->paymentMethod->id) }}"
+                                        <a href="{{ route('payment-methods.show', [$row->paymentMethod->id]) }}"
                                             class="text-primary app-icon-link" title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
                                             <i class="nav-icon i-Eye font-weight-bold"></i>

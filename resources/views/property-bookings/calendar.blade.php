@@ -2,26 +2,26 @@
 
 @section('heading-content')
     @php
-    if(isset($property)){
-    $propertyUser = false;
-    foreach ($property->users as $user) {
-    if($user->id == \UserHelper::getCurrentUserID()){
-    $propertyUser = true;
-    }
-    }
-    if($propertyUser || isRole('super') || isRole('admin')){
-    $actions = [
-    [
-    'label' => __('Add Booking'),
-    'url' => route('property-bookings.create', $property->id),
-    'icon' => 'i-Add',
-    ]
-    ];
-    }else{
-    $actions = [];
-    }
-    }else{
-    $actions = [];
+    if (isset($property)) {
+        $propertyUser = false;
+        foreach ($property->users as $user) {
+            if ($user->id == \UserHelper::getCurrentUserID()) {
+                $propertyUser = true;
+            }
+        }
+        if ($propertyUser || isRole('super') || isRole('admin')) {
+            $actions = [
+                [
+                    'label' => __('Add Booking'),
+                    'url' => route('property-bookings.create', [$property->id]),
+                    'icon' => 'i-Add',
+                ],
+            ];
+        } else {
+            $actions = [];
+        }
+    } else {
+        $actions = [];
     }
     @endphp
 
