@@ -47,7 +47,8 @@ $_current_role = RoleHelper::current();
 
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('properties') }}?filterDisabled=1">
-                                                        <span class="item-name">{{ __('Properties Disabled') }}</span>
+                                                        <span
+                                                            class="item-name">{{ __('Properties Disabled') }}</span>
                                                     </a>
                                                 </li>
                                             @endif
@@ -108,7 +109,8 @@ $_current_role = RoleHelper::current();
 
                                         @if ($_current_role->isAllowed('property-management', 'balances'))
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('property-management-balances.general') }}">
+                                                <a class=""
+                                                    href="{{ route('property-management-balances.general') }}">
                                                     <span class="item-name">{{ __('Balances') }}</span>
                                                 </a>
                                             </li>
@@ -117,23 +119,24 @@ $_current_role = RoleHelper::current();
                                         @if ($_current_role->isAllowed('property-management', 'pending-audits'))
                                             <li class="nav-item">
                                                 @php
-                                                $routeParams = [
-                                                'filterByPendingAudits' => 1,
-                                                'office' => 2,
-                                                ];
+                                                    $routeParams = [
+                                                        'filterByPendingAudits' => 1,
+                                                        'office' => 2,
+                                                    ];
                                                 @endphp
                                                 <a class=""
                                                     href="{{ route('property-management-transactions.general', $routeParams) }}">
-                                                    <span class="item-name">{{ __('Pending Audits') }}: Mazatlan</span>
+                                                    <span class="item-name">{{ __('Pending Audits') }}:
+                                                        Mazatlan</span>
                                                 </a>
                                             </li>
 
                                             <li class="nav-item">
                                                 @php
-                                                $routeParams = [
-                                                'filterByPendingAudits' => 1,
-                                                'office' => 1,
-                                                ];
+                                                    $routeParams = [
+                                                        'filterByPendingAudits' => 1,
+                                                        'office' => 1,
+                                                    ];
                                                 @endphp
                                                 <a class=""
                                                     href="{{ route('property-management-transactions.general', $routeParams) }}">
@@ -173,7 +176,8 @@ $_current_role = RoleHelper::current();
                                             </li>
 
                                             <li class="nav-item">
-                                                <a class="" href="{{ route('property-bookings.arrivals-departures') }}">
+                                                <a class=""
+                                                    href="{{ route('property-bookings.arrivals-departures') }}">
                                                     <span class="item-name">{{ __('Arrivals & Departures') }}</span>
                                                 </a>
                                             </li>
@@ -242,7 +246,8 @@ $_current_role = RoleHelper::current();
                                         @if (!isRole('owner'))
                                             @if ($_current_role->isAllowed('cleaning-services', 'monthly-batch'))
                                                 <li class="nav-item">
-                                                    <a class="" href="{{ route('cleaning-services.monthly-batch') }}">
+                                                    <a class=""
+                                                        href="{{ route('cleaning-services.monthly-batch') }}">
                                                         <span class="item-name">{{ __('Monthly Batch') }}</span>
                                                     </a>
                                                 </li>
@@ -481,42 +486,42 @@ $_current_role = RoleHelper::current();
 
                     @if (!isProduction() && $_current_role->isAllowed('contractors', 'heading-menu'))
                         @php
-                        /* DISABLED TEMPORARILY
-                        <li>
-                            <div>
-                                <div>
-                                    <!-- label for menu and sidebar menu for responsive -->
-                                    <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Contractors') }}
-                                    </label>
-                                    <a href="{{ route('contractors') }}">
-                                        <i class="nav-icon mr-2 i-Engineering"></i>
-                                        {{ __('Contractors') }}
-                                    </a>
-
-                                    <!-- dropdown menu -->
-                                    <input type="checkbox" id="dropdownMenuBooking">
-                                    <ul>
-                                        @if ($_current_role->isAllowed('contractors', 'index'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('contractors') }}">
-                                                    <span class="item-name">{{ __('All') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        @if ($_current_role->isAllowed('contractors', 'services'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('contractors-services') }}">
-                                                    <span class="item-name">{{ __('Services') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        */
+                            /* DISABLED TEMPORARILY
+                                                    <li>
+                                                        <div>
+                                                            <div>
+                                                                <!-- label for menu and sidebar menu for responsive -->
+                                                                <label class="toggle" for="dropdownMenuBooking">
+                                                                    {{ __('Contractors') }}
+                                                                </label>
+                                                                <a href="{{ route('contractors') }}">
+                                                                    <i class="nav-icon mr-2 i-Engineering"></i>
+                                                                    {{ __('Contractors') }}
+                                                                </a>
+                            
+                                                                <!-- dropdown menu -->
+                                                                <input type="checkbox" id="dropdownMenuBooking">
+                                                                <ul>
+                                                                    @if ($_current_role->isAllowed('contractors', 'index'))
+                                                                        <li class="nav-item">
+                                                                            <a class="" href="{{ route('contractors') }}">
+                                                                                <span class="item-name">{{ __('All') }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    @endif
+                            
+                                                                    @if ($_current_role->isAllowed('contractors', 'services'))
+                                                                        <li class="nav-item">
+                                                                            <a class="" href="{{ route('contractors-services') }}">
+                                                                                <span class="item-name">{{ __('Services') }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    @endif
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    */
                         @endphp
                     @endif
 

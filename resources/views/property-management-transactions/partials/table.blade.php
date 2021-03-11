@@ -248,7 +248,7 @@ $urlParams = '?' . http_build_query($_GET);
                                                     <a href="#" data-toggle="modal" data-source="{{ $row->id }}"
                                                         data-target="#{{ $modalID }}"
                                                         data-text-button="{{ __('Delete') }}"
-                                                        data-route="{{ route('property-management-transactions.deleteImage', $row->id) }}"
+                                                        data-route="{{ route('property-management-transactions.delete-image', $row->id) }}"
                                                         class="text-primary mr-2">
                                                         <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                     </a>
@@ -625,7 +625,7 @@ break;
                                         </td>
 
                                         <!-- edit, file and delete -->
-                                        <td>
+                                        <td style="padding: 0.1rem;">
                                             <div class="not-print">
                                                 @include('components.table.file-modal', [
                                                 'fileName' => $row->file_original_name,
@@ -642,8 +642,8 @@ break;
                                                         data-text-button="{{ __('Delete') }}"
                                                         data-cancel-button="{{ __('Cancel') }}"
                                                         data-route="{{ route('property-management-transactions.delete-image', $row->id) }}"
-                                                        class="text-primary mr-2">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                        class="text-primary mr-2" style="position:relative; top: 3px;">
+                                                        <i class="nav-icon i-Arrow-X-Right font-weight-bold"></i>
                                                     </a>
                                                 @endif
 
