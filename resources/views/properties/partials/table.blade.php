@@ -51,7 +51,7 @@
                                         <th>
                                             @if ($row->property->hasDefaultImage())
                                                 @php
-                                                $propertyImg = $row->property->getDefaultImage();
+                                                    $propertyImg = $row->property->getDefaultImage();
                                                 @endphp
 
                                                 @include('components.table.file-modal', [
@@ -71,7 +71,7 @@
                                         {{ $row->name }}
 
                                         @php
-                                        $activePM = $row->property->getActivePM();
+                                            $activePM = $row->property->getActivePM();
                                         @endphp
 
                                         @if ($activePM !== false && isset($activePM->id))
@@ -94,11 +94,11 @@
                                     </td>
 
                                     <td>
-                                        {!!  getStatusIcon($row->property->is_enabled) !!}
+                                        {!! getStatusIcon($row->property->is_enabled) !!}
                                     </td>
 
                                     <td>
-                                        {!!  getStatusIcon($row->property->is_online) !!}
+                                        {!! getStatusIcon($row->property->is_online) !!}
                                     </td>
 
                                     <td>
@@ -108,16 +108,16 @@
                                                     <a href="{{ route('users.show', [$user->id]) }}">
                                                         {{ $user->profile->full_name }}<br>
                                                     </a>
-                                                @else
+                                            @else
                                                     {{ $user->profile->full_name }}<br>
                                                 @endif
                                             @endforeach
-                                        @else
+                                    @else
                                             @if (!isRole('owner'))
                                                 <a href="{{ route('users.show', [$row->property->user->id]) }}">
                                                     {{ $row->property->user->profile->full_name }}<br>
                                                 </a>
-                                            @else
+                                        @else
                                                 {{ $row->property->user->profile->full_name }}<br>
                                             @endif
                                         @endif
@@ -126,7 +126,7 @@
                                     <td>
                                         <!-- property view -->
                                         <a
-                                            href="{{ route('properties.show', $row->property->id) }}"
+                                            href="{{ route('properties.show', [$row->property->id]) }}"
                                             class="text-primary app-icon-link"
                                             title="{{ __('View') }}"
                                             alt="{{ __('View') }}">
@@ -136,7 +136,7 @@
                                         <!-- property images -->
                                         @if (!isRole('owner'))
                                             <a
-                                                href="{{ route('property-images', $row->property->id) }}"
+                                                href="{{ route('property-images', [$row->property->id]) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Images') }}"
                                                 alt="{{ __('Images') }}">
@@ -147,7 +147,7 @@
                                         <!-- bookings from specific to property -->
                                         @if (!isProduction())
                                             <a
-                                                href="{{ route('property-bookings.by-property', $row->property->id) }}"
+                                                href="{{ route('property-bookings.by-property', [$row->property->id]) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Reservations') }}"
                                                 alt="{{ __('Reservations') }}">
@@ -158,7 +158,7 @@
                                         <!-- property rates -->
                                         @if (!isRole('owner'))
                                             <a
-                                                href="{{ route('property-rates', $row->property->id) }}"
+                                                href="{{ route('property-rates', [$row->property->id]) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Rates') }}"
                                                 alt="{{ __('Rates') }}">
@@ -168,7 +168,7 @@
 
                                         <!-- property contacts -->
                                         <a
-                                            href="{{ route('property-contacts', $row->property->id) }}"
+                                            href="{{ route('property-contacts', [$row->property->id]) }}"
                                             class="text-primary app-icon-link"
                                             title="{{ __('Contacts') }}"
                                             alt="{{ __('Contacts') }}">
@@ -178,7 +178,7 @@
                                         <!-- property notes -->
                                         @if (!isRole('owner'))
                                             <a
-                                                href="{{ route('property-notes', $row->property->id) }}"
+                                                href="{{ route('property-notes', [$row->property->id]) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Notes') }}"
                                                 alt="{{ __('Notes') }}">
@@ -188,7 +188,7 @@
 
                                         <!-- property calendar -->
                                         <a
-                                            href="{{ route('property-calendar', $row->property->id) }}"
+                                            href="{{ route('property-calendar', [$row->property->id]) }}"
                                             class="text-primary app-icon-link"
                                             title="{{ __('Calendar') }}"
                                             alt="{{ __('Calendar') }}">
@@ -210,7 +210,7 @@
                                         <!-- property management -->
                                         @if (!isRole('owner'))
                                             <a
-                                                href="{{ route('property-management', $row->property->id) }}"
+                                                href="{{ route('property-management', [$row->property->id]) }}"
                                                 class="text-primary app-icon-link"
                                                 title="{{ __('Property Management') }}"
                                                 alt="{{ __('Property Management') }}">

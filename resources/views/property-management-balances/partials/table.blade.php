@@ -56,17 +56,17 @@ $modalID = 'pm-notification-' . strtotime('now') . rand(1, 99999);
                                 <td>
                                     @if (!isRole('owner'))
                                         {{-- <a href="
-                    {{ route('property-management-balances.email', $pm->id) }}" alt="{{ __('Send Email') }}"
+                    {{ route('property-management-balances.email', [$pm->id]) }}" alt="{{ __('Send Email') }}"
                     class="text-primary mr-2">
                     <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                 </a> --}}
                 <a href="#" data-toggle="modal" data-source="{{ $pm->id }}" data-target="#{{ $modalID }}"
                     data-text-button="{{ __('Send') }}" data-text-custom-msg="{{ __('Additional Msg') }}"
-                    data-route="{{ route('property-management-balances.email', $pm->id) }}" class="text-primary mr-2">
+                    data-route="{{ route('property-management-balances.email', [$pm->id]) }}" class="text-primary mr-2">
                     <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                 </a>
                 @endif
-                <a href="{{ route('property-management-transactions', $pm->id) }}" alt="{{ __('Transactions') }}"
+                <a href="{{ route('property-management-transactions', [$pm->id]) }}" alt="{{ __('Transactions') }}"
                     class="text-primary mr-2">
                     <i class="nav-icon i-Receipt-3 font-weight-bold"></i>
                 </a>

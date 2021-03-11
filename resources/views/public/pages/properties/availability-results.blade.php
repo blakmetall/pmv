@@ -88,7 +88,7 @@
                                         {{ $nightsDate }} {{ __('Nights') }} )
                                     </div>
                                     <div class="text-right">
-                                        <a href="{{ route('public.reservations', $property->property_id) }}"
+                                        <a href="{{ route('public.reservations', [$property->property_id]) }}"
                                             class="btn btn-warning">{{ __('Book it!') }}</a>
                                     </div>
                                 </div>

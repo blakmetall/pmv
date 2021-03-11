@@ -672,7 +672,7 @@ class PropertyBookingController extends Controller
         $data['departure'] = $departure;
         $data['year'] = $year;
         $data['minStay'] = $minStay;
-        $data['route'] = route('property-bookings.create', $property_id);
+        $data['route'] = route('property-bookings.create', [$property_id]);
 
         return $data;
     }
