@@ -143,13 +143,13 @@ export function initGetPmPropertySelectionEvent(id, container, dataUrl) {
     });
 
 
-    // $(document).on('change', container, function() {
-    //     let select = $(".app-pm-property-select-wrapper select");
-    //     let generationUrl = $(".app-pm-property-select-wrapper").data(dataUrl);
-    //     let propertyID = select.val();
-    //     if(propertyID) {
-    //         let propertyUrl = generationUrl + '/' + propertyID;
-    //         // document.location = generationUrl + '/' + propertyID;
-    //     }
-    // });
+    $(document).on('change', container, function() {
+        let select = $(".app-pm-property-select-wrapper select");
+        let generationUrl = $(".app-pm-property-select-wrapper").data(dataUrl);
+        let propertyID = select.val();
+        if(propertyID) {
+            let propertyUrl = generationUrl + '/' + propertyID;
+            document.location = propertyUrl;
+        }
+    });
 }
