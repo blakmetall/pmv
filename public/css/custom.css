@@ -1,0 +1,191 @@
+.maid_fee {
+    margin-top: 15px;
+    text-align: left;
+}
+
+#maid_fee_base {
+    font-size: 12px;
+    color: #a1a1a1;
+}
+
+.cleaning-td-property {
+    display: flex;
+}
+
+.square-clean {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #000;
+}
+
+.title-iconography {
+    margin-bottom: 20px;
+}
+
+.icons-frecuency {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-item {
+    display: flex;
+}
+
+.app-form-checkbox-label {
+    display: table;
+}
+
+#errors-modal {
+    display: none;
+    text-align: initial;
+    padding: 40px;
+    background-color: #ff5050;
+    color: #fff;
+}
+
+.calendar-container {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.calendar-container table {
+    width: 100%;
+}
+
+.calendar-container th,
+.calendar-container td {
+    text-align: center;
+    padding: 10px 0px;
+    border: 2px solid #fff;
+}
+
+.calendar-container .departure-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    left: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    border-color: transparent transparent transparent #d99694;
+}
+
+.calendar-container .arrival-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    right: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 20px 20px 0;
+    border-color: transparent #d99694 transparent transparent;
+}
+
+.month-calendar {
+    width: 100%;
+    padding: 10px;
+}
+
+.btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btns-container span {
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0px 10px;
+}
+
+.app-modal-notification .app-table-file-modal-dialog {
+    max-width: 400px;
+}
+
+.all-dates{
+    display: none;
+    padding: 10px;
+    background-color: #e72929;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.some-dates{
+    display: none;
+    padding: 10px;
+    background-color: #f39c12;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.some-dates .btn-calendar{
+    color: #fff;
+    text-decoration: underline;
+}
+
+#app-property-bookings-selection-modal {
+    z-index: 1051 !important;
+}
+
+#modal-availability-modal {
+    z-index: 1052 !important;
+}
+
+.legends{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.available-square{
+    padding: 3px 10px;
+    background-color: #C3D69B;
+}
+
+.booked-square{
+    padding: 3px 10px;
+    background-color: #D99694;
+}
+
+#error-fields{
+    display: none;
+}
+
+#text-canvas{
+    position: fixed;
+    opacity: 0;
+    z-index: -99999;
+    box-sizing: border-box; 
+    font-family: "Lato", sans-serif; 
+    font-weight: 400; 
+    letter-spacing: 0.3px;
+    background-color:#ffffff; 
+    padding: 60px 30px; 
+    height: auto;
+}
+
+.app-modal-delete-image .modal-content{
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.app-modal-delete-image .modal-title{
+    text-align: center;
+    width: 100%;
+}
+
+.btn-delete-file{
+    padding: 4px 0px 1px 2px;
+    color: #f00 !important;
+    margin-right: 5px;
+}
