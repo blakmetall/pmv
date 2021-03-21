@@ -1,8 +1,8 @@
 @php
-$_current_lang = LanguageHelper::current();
-$_current_role = RoleHelper::current();
-$_available_roles = RoleHelper::available();
-$_profile = auth()->user()->profile;
+    $_current_lang = LanguageHelper::current();
+    $_current_role = RoleHelper::current();
+    $_available_roles = RoleHelper::available();
+    $_profile = auth()->user()->profile;
 @endphp
 
 <div class="main-header">
@@ -28,7 +28,7 @@ $_profile = auth()->user()->profile;
                     <form action="{{ route('dashboard.general-search') }}" method="GET">
                         <div class="d-flex align-items-center app-top-search">
                             @php
-                            $topSearchValue = isset($_GET['topSearch']) ? $_GET['topSearch'] : '';
+                                $topSearchValue = isset($_GET['topSearch']) ? $_GET['topSearch'] : '';
                             @endphp
                             <input name="topSearch" value="{{ old('topSearch', $topSearchValue) }}" type="text"
                                 class="form-control form-control-sm mr-3">
@@ -36,20 +36,20 @@ $_profile = auth()->user()->profile;
                                 <option value="">{{ __('Select') }}</option>
 
                                 @php
-                                $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties' ? 'selected'
-                                : '';
+                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties' ? 'selected'
+                                    : '';
                                 @endphp
                                 <option value="properties" {{ $selected }}>{{ __('Properties') }}</option>
 
                                 @php
-                                $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'bookings' ? 'selected' :
-                                '';
+                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'bookings' ? 'selected' :
+                                    '';
                                 @endphp
                                 <option value="bookings" {{ $selected }}>{{ __('Bookings') }}</option>
 
                                 @php
-                                $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'transactions' ?
-                                'selected' : '';
+                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'transactions' ?
+                                    'selected' : '';
                                 @endphp
                                 <option value="transactions" {{ $selected }}>{{ __('Transactions') }}</option>
                             </select>
