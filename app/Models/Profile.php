@@ -26,6 +26,7 @@ class Profile extends Model
         'config_language',
         'config_agent_commission',
         'config_agent_is_enabled',
+        'config_role_id',
     ];
 
     public function user()

@@ -1,10 +1,13 @@
 @php
-    $lang = LanguageHelper::current();
+
+$lang = LanguageHelper::current();
 @endphp
 <div class="mb-5"></div>
 <div class="card">
     <div class="card-header">
-        <a href="#" class="float-right btn-print" data-table="table-print-bookings" data-title="{{ __('Arrivals & Departures') }}">
+
+        <a href="#" class="float-right btn-print" data-table="table-print-bookings"
+            data-title="{{ __('Arrivals & Departures') }}">
             <i class="nav-icon i-Billing"></i>
             {{ __('Print') }}
         </a>
@@ -15,7 +18,8 @@
                 <thead>
                     <tr>
                         <th colspan="8" class="title-th">
-                            {{ $label_arrivals.' '. __('Between').' '.$fromDate.' '.__('And').' '.$toDate.' '. __('At').' '.$currentLocation->name}}
+
+                            {{ $label_arrivals . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $currentLocation->name }}
                         </th>
                     </tr>
                     <tr>
@@ -33,23 +37,29 @@
                 </thead>
                 <tbody>
 
-                    @if(count($arrivals))
-                        @foreach($arrivals as $i => $arrival)
+
+                    @if (count($arrivals))
+                        @foreach ($arrivals as $i => $arrival)
                             @php
-                                $occupants = __('Occupants:').' '.$arrival->adults.' '.__('Adult(s)').' - '.$arrival->kids.' '.__('Child(ren)');
-                                $managed = ($arrival->property->management)?__('MANAGED'):'';
+                                $occupants = __('Occupants:') . ' ' . $arrival->adults . ' ' . __('Adult(s)') . ' - ' . $arrival->kids . ' ' . __('Child(ren)');
+                                $managed = $arrival->property->management ? __('MANAGED') : '';
                                 $flight = $arrival->arrival_airline . ' ' . $arrival->arrival_flight_number;
-                                $arrival_transportation = ($arrival->arrival_transportation)?__('YES'):__('NO');
-                                $transportation = __('Transportation'). '? ' . $arrival_transportation;
+                                $arrival_transportation = $arrival->arrival_transportation ? __('YES') : __('NO');
+                                $transportation = __('Transportation') . '? ' . $arrival_transportation;
                                 $booked = $arrival->created_at;
-                                $owner = $arrival->user->profile->full_name;
+                                if ($arrival->user()->exists()) {
+                                    $owner = $arrival->user->profile->full_name;
+                                } else {
+                                    $owner = 'Verify';
+                                }
                             @endphp
                             <tr>
                                 <!-- index -->
                                 <th scope="row">
-                                    {{ $i+1 }}
+
+                                    {{ $i + 1 }}
                                 </th>
-                                
+
                                 <!-- id -->
                                 <th scope="row">
                                     {{ $arrival->id }}
@@ -59,20 +69,29 @@
                                 <td>
                                     {{ $arrival->firstname }} {{ $arrival->lastname }}<br />
                                     {{ $occupants }}<br />
-                                    {{ $arrival->phone }}<br />
-                                    {{ $arrival->mobile }}<br />
-                                    <a href="mailto:{{ $arrival->email }}">{{ $arrival->email }}</a>
+
+                                    @if (!isRole('owner'))
+                                        {{ $arrival->phone }}<br />
+                                        {{ $arrival->mobile }}<br />
+                                        <a href="mailto:{{ $arrival->email }}">{{ $arrival->email }}</a>
+                                    @endif
                                 </td>
 
                                 <!-- property -->
                                 <td>
-                                {{ $arrival->property->translations()->where('language_id', $lang->id)->first()->name . ' ('.$arrival->property->id.')' }}<br />
-                                {{ $managed }}
+
+                                    {{ $arrival->property->translations()->where('language_id', $lang->id)->first()->name .
+    ' (' .
+    $arrival->property->id .
+    ')' }}<br />
+                                    {{ $managed }}
                                 </td>
 
                                 <!-- arrival -->
                                 <td>
-                                    <strong>{{ $arrival->arrival_date }}</strong> - {{ $arrival->departure_date }}<br />
+
+                                    <strong>{{ $arrival->arrival_date }}</strong> -
+                                    {{ $arrival->departure_date }}<br />
                                     {{ $arrival->nights }} {{ __('Nights') }}
                                 </td>
 
@@ -104,7 +123,8 @@
                 <thead>
                     <tr>
                         <th colspan="8" class="title-th">
-                            {{ $label_departures.' '. __('Between').' '.$fromDate.' '.__('And').' '.$toDate.' '. __('At').' '.$currentLocation->name}}
+
+                            {{ $label_departures . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $currentLocation->name }}
                         </th>
                     </tr>
                     <tr>
@@ -122,21 +142,23 @@
                 </thead>
                 <tbody>
 
-                    @if(count($departures))
-                        @foreach($departures as $i => $departure)
+
+                    @if (count($departures))
+                        @foreach ($departures as $i => $departure)
                             @php
-                                $occupants = __('Occupants:').' '.$departure->adults.' '.__('Adult(s)').' - '.$departure->kids.' '.__('Child(ren)');
-                                $managed = ($departure->property->management)?__('MANAGED'):'';
+                                $occupants = __('Occupants:') . ' ' . $departure->adults . ' ' . __('Adult(s)') . ' - ' . $departure->kids . ' ' . __('Child(ren)');
+                                $managed = $departure->property->management ? __('MANAGED') : '';
                                 $flight = $departure->departure_airline . ' ' . $departure->departure_flight_number;
-                                $departure_transportation = ($departure->departure_transportation)?__('YES'):__('NO');
-                                $transportation = __('Transportation'). '? ' . $departure_transportation;
+                                $departure_transportation = $departure->departure_transportation ? __('YES') : __('NO');
+                                $transportation = __('Transportation') . '? ' . $departure_transportation;
                                 $booked = $departure->created_at;
                                 $owner = $departure->user->profile->full_name;
                             @endphp
                             <tr>
                                 <!-- index -->
                                 <th scope="row">
-                                    {{ $i+1 }}
+
+                                    {{ $i + 1 }}
                                 </th>
 
                                 <!-- id -->
@@ -148,20 +170,29 @@
                                 <td>
                                     {{ $departure->firstname }} {{ $departure->lastname }}<br />
                                     {{ $occupants }}<br />
-                                    {{ $departure->phone }}<br />
-                                    {{ $departure->mobile }}<br />
-                                    <a href="mailto:{{ $departure->email }}">{{ $departure->email }}</a>
+
+                                    @if (!isRole('owner'))
+                                        {{ $departure->phone }}<br />
+                                        {{ $departure->mobile }}<br />
+                                        <a href="mailto:{{ $departure->email }}">{{ $departure->email }}</a>
+                                    @endif
                                 </td>
 
                                 <!-- property -->
                                 <td>
-                                {{ $departure->property->translations()->where('language_id', $lang->id)->first()->name . ' ('.$departure->property->id.')' }}<br />
-                                {{ $managed }}
+
+                                    {{ $departure->property->translations()->where('language_id', $lang->id)->first()->name .
+    ' (' .
+    $departure->property->id .
+    ')' }}<br />
+                                    {{ $managed }}
                                 </td>
 
                                 <!-- departure -->
                                 <td>
-                                    {{ $departure->arrival_date }} - <strong>{{ $departure->departure_date }}</strong><br />
+
+                                    {{ $departure->arrival_date }} -
+                                    <strong>{{ $departure->departure_date }}</strong><br />
                                     {{ $departure->nights }} {{ __('Nights') }}
                                 </td>
 

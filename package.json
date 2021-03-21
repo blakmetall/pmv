@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
-        "axios": "^0.19",
+        "axios": "^0.21",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "jquery": "^3.5",
@@ -27,6 +27,7 @@
         "minimist": "^1.2.5"
     },
     "dependencies": {
+        "npm-git-install": "^0.3.0",
         "prop-types": "^15.7.2",
         "react-bootstrap": "^1.0.0-beta.17",
         "styled-components": "^5.0.1"

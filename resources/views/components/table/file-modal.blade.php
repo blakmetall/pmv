@@ -6,6 +6,9 @@ $fileSlug = isset($fileSlug) ? $fileSlug : false;
 $imgUrl = isset($imgUrl) ? $imgUrl : false;
 $imgSize = isset($imgSize) ? $imgSize : '';
 
+$fileDeleteUrl = isset($fileDeleteUrl) ? $fileDeleteUrl : false;
+$routeParams = isset($routeParams) ? $routeParams : false;
+
 if ($fileSlug) {
 $modalID = 'table-modal-' . $fileSlug . rand(1, 999999999);
 } else {
@@ -47,6 +50,14 @@ $useImg = !!$imgUrl;
                     @endif
                 </div>
                 <div class="modal-footer">
+
+                    @if (!isRole('owner'))
+                        @if ($fileDeleteUrl && $routeParams)
+                            <form action="{{ route($fileDeleteUrl, $routeParams) }}">
+                                <button type="submit" class="btn btn-danger m-1">Delete</button>
+                            </form>
+                        @endif
+                    @endif
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         {{ __('Close') }}
                     </button>

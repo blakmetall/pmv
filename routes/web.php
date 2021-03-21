@@ -527,51 +527,55 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     //********* PUBLIC ROUTES *********//
-    // Properties
-    Route::get('property/zones/{city}', '_Public\PropertyController@zones')->name('public.zones.list');
-    Route::get('property/{zone}/{slug}', '_Public\PropertyController@propertyDetail')->name('public.property-detail');
-    Route::get('availability-results', '_Public\PropertyController@availabilityResults')->name('public.availability-results');
-    Route::get('modal-availability', '_Public\PropertyController@availabilityModal')->name('public.availability-modal');
-    Route::get('first-availability', '_Public\PropertyController@firstsAvailability')->name('public.first-availability');
-    Route::get('reservations/{id}', '_Public\PropertyController@reservations')->name('public.reservations');
-    Route::post('make-reservation', '_Public\PropertyController@makeReservation')->name('public.make-reservation');
-    Route::get('thank-you/{booking}', '_Public\PropertyController@thankYou')->name('public.thank-you');
 
-    // Home
+    // Home (Coming soon)
     Route::get('', '_Public\HomeController@index')->name('public.home');
-    
-    // Vacation Services
-    Route::get('vacation-services', '_Public\VacationServicesController@index')->name('public.vacation-services');
-    Route::get('make-payment/{booking?}', '_Public\VacationServicesController@searchBooking')->name('public.vacation-services.make-payment');
-    Route::post('find-booking', '_Public\VacationServicesController@findBooking')->name('public.vacation-services.find-booking');
-    Route::get('make-payment-verify/{booking}', '_Public\VacationServicesController@resultsBookings')->name('public.vacation-services.make-payment-verify');
-    Route::get('thank-you', '_Public\VacationServicesController@thankYou')->name('public.vacation-services.thank-you');
-    Route::get('payment-methods', '_Public\VacationServicesController@paymentMethods')->name('public.vacation-services.payment-methods');
-    Route::get('rental-agreement', '_Public\VacationServicesController@rentalAgreement')->name('public.vacation-services.rental-agreement');
-    Route::get('accidental-rental-damage-insurance', '_Public\VacationServicesController@damageInsurance')->name('public.vacation-services.accidental-rental-damage-insurance');
 
-    // Concierge Services
-    Route::get('concierge-services', '_Public\ConciergeServicesController@index')->name('public.concierge-services');
-    Route::get('helpful-information', '_Public\ConciergeServicesController@helpfulInformation')->name('public.concierge-services.helpful-information');
+    // auth middleware
+    Route::group(['prefix' => 'public', 'middleware' => 'auth'], function () {
+        // Properties
+        Route::get('property/zones/{city}', '_Public\PropertyController@zones')->name('public.zones.list');
+        Route::get('property/{zone}/{slug}', '_Public\PropertyController@propertyDetail')->name('public.property-detail');
+        Route::get('availability-results', '_Public\PropertyController@availabilityResults')->name('public.availability-results');
+        Route::get('modal-availability', '_Public\PropertyController@availabilityModal')->name('public.availability-modal');
+        Route::get('first-availability', '_Public\PropertyController@firstsAvailability')->name('public.first-availability');
+        Route::get('reservations/{id}', '_Public\PropertyController@reservations')->name('public.reservations');
+        Route::post('make-reservation', '_Public\PropertyController@makeReservation')->name('public.make-reservation');
+        Route::get('thank-you/{booking}', '_Public\PropertyController@thankYou')->name('public.thank-you');
+        
+        // Vacation Services
+        Route::get('vacation-services', '_Public\VacationServicesController@index')->name('public.vacation-services');
+        Route::get('make-payment/{booking?}', '_Public\VacationServicesController@searchBooking')->name('public.vacation-services.make-payment');
+        Route::post('find-booking', '_Public\VacationServicesController@findBooking')->name('public.vacation-services.find-booking');
+        Route::get('make-payment-verify/{booking}', '_Public\VacationServicesController@resultsBookings')->name('public.vacation-services.make-payment-verify');
+        Route::get('thank-you', '_Public\VacationServicesController@thankYou')->name('public.vacation-services.thank-you');
+        Route::get('payment-methods', '_Public\VacationServicesController@paymentMethods')->name('public.vacation-services.payment-methods');
+        Route::get('rental-agreement', '_Public\VacationServicesController@rentalAgreement')->name('public.vacation-services.rental-agreement');
+        Route::get('accidental-rental-damage-insurance', '_Public\VacationServicesController@damageInsurance')->name('public.vacation-services.accidental-rental-damage-insurance');
 
-    // Property Management
-    Route::get('property-management', '_Public\PropertyManagementController@index')->name('public.property-management');
+        // Concierge Services
+        Route::get('concierge-services', '_Public\ConciergeServicesController@index')->name('public.concierge-services');
+        Route::get('helpful-information', '_Public\ConciergeServicesController@helpfulInformation')->name('public.concierge-services.helpful-information');
 
-    // About
-    Route::get('about-palmera-vacations', '_Public\AboutController@index')->name('public.about');
-    Route::get('puerto-vallarta-history', '_Public\AboutController@puertoVallarta')->name('public.about.puerto-vallarta-history');
-    Route::get('nuevo-vallarta-history', '_Public\AboutController@nuevoVallarta')->name('public.about.nuevo-vallarta-history');
-    Route::get('mazatlan-history', '_Public\AboutController@mazatlanVallarta')->name('public.about.mazatlan-history');
-    Route::get('testimonials', '_Public\AboutController@testimonials')->name('public.about.testimonials');
-    Route::get('testimonial/{id}', '_Public\AboutController@testimonialDetail')->name('public.about.testimonial');
-    Route::get('privacy-policy', '_Public\AboutController@privacyPolicy')->name('public.about.privacy-policy');
-    Route::get('terms-of-use', '_Public\AboutController@termsOfUse')->name('public.about.terms-of-use');
-    Route::get('real-estate-business-directory', '_Public\AboutController@realEstateBusinessDirectory')->name('public.about.real-estate-business-directory');
-    Route::get('real-estate-business-directory/{id}', '_Public\AboutController@agencyDetail')->name('public.about.real-estate-business-directory-detail');
-    Route::get('lgbt-business-directory', '_Public\AboutController@lgbtBusinessDirectory')->name('public.about.lgbt-business-directory');
-    Route::get('lgbt-business-directory/{id}', '_Public\AboutController@lgbtDetail')->name('public.about.lgbt-business-directory-detail');
+        // Property Management
+        Route::get('property-management', '_Public\PropertyManagementController@index')->name('public.property-management');
 
-    // Contact
-    Route::get('contact', '_Public\ContactController@index')->name('public.contact');
-    Route::post('contact/send-email', '_Public\ContactController@sendEmail')->name('public.contact.send-email');
+        // About
+        Route::get('about-palmera-vacations', '_Public\AboutController@index')->name('public.about');
+        Route::get('puerto-vallarta-history', '_Public\AboutController@puertoVallarta')->name('public.about.puerto-vallarta-history');
+        Route::get('nuevo-vallarta-history', '_Public\AboutController@nuevoVallarta')->name('public.about.nuevo-vallarta-history');
+        Route::get('mazatlan-history', '_Public\AboutController@mazatlanVallarta')->name('public.about.mazatlan-history');
+        Route::get('testimonials', '_Public\AboutController@testimonials')->name('public.about.testimonials');
+        Route::get('testimonial/{id}', '_Public\AboutController@testimonialDetail')->name('public.about.testimonial');
+        Route::get('privacy-policy', '_Public\AboutController@privacyPolicy')->name('public.about.privacy-policy');
+        Route::get('terms-of-use', '_Public\AboutController@termsOfUse')->name('public.about.terms-of-use');
+        Route::get('real-estate-business-directory', '_Public\AboutController@realEstateBusinessDirectory')->name('public.about.real-estate-business-directory');
+        Route::get('real-estate-business-directory/{id}', '_Public\AboutController@agencyDetail')->name('public.about.real-estate-business-directory-detail');
+        Route::get('lgbt-business-directory', '_Public\AboutController@lgbtBusinessDirectory')->name('public.about.lgbt-business-directory');
+        Route::get('lgbt-business-directory/{id}', '_Public\AboutController@lgbtDetail')->name('public.about.lgbt-business-directory-detail');
+
+        // Contact
+        Route::get('contact', '_Public\ContactController@index')->name('public.contact');
+        Route::post('contact/send-email', '_Public\ContactController@sendEmail')->name('public.contact.send-email');
+    });
 });

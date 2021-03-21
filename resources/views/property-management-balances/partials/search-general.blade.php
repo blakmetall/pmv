@@ -33,23 +33,27 @@ $months = [
 
             <form action="" action="get">
                 <div class="row pt-3">
-                    <div class="col-sm-6 col-md-1">
-                        <select name="city" class="form-control">
-                            <option value="">-- {{ __('City') }}</option>
 
-                            @if ($cities)
-                                @foreach ($cities as $city)
-                                    @php
-                                        $selected = $searchedCity == $city->id ? 'selected' : '';
-                                    @endphp
+                    @if (!isRole('owner'))
+                        <div class="col-sm-6 col-md-1">
+                            <select name="city" class="form-control">
+                                <option value="">-- {{ __('City') }}</option>
 
-                                    <option value="{{ $city->id }}" {{ $selected }}>
-                                        {{ $city->name }}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
+                                @if ($cities)
+                                    @foreach ($cities as $city)
+                                        @php
+                                            $selected = $searchedCity == $city->id ? 'selected' : '';
+                                        @endphp
+
+                                        <option value="{{ $city->id }}" {{ $selected }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    @endif
+                    
                     <div class="col-md-1">
                         <select name="year" class="form-control select-year">
                             @for ($i = 0; $i < 60; $i++)

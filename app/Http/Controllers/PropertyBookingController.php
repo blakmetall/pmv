@@ -149,8 +149,11 @@ class PropertyBookingController extends Controller
         $query->where(function ($query) use ($search) {
             $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
         });
-        $query->whereHas('property', function ($q) use ($search) {
-            $q->where('city_id', 'like', '%' . $search['location'] . '%');
+        $query->whereHas('property', function ($qy) use ($search) {
+            $qy->where('city_id', 'like', '%' . $search['location'] . '%');
+            $qy->whereHas('users', function ($q) {
+                $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
+            });
         });
 
         $result = $query->get();
@@ -164,8 +167,11 @@ class PropertyBookingController extends Controller
         $query->where(function ($query) use ($search) {
             $query->whereBetween('departure_date', [$search['from_date'], $search['to_date']]);
         });
-        $query->whereHas('property', function ($q) use ($search) {
-            $q->where('city_id', 'like', '%' . $search['location'] . '%');
+        $query->whereHas('property', function ($qy) use ($search) {
+            $qy->where('city_id', 'like', '%' . $search['location'] . '%');
+            $qy->whereHas('users', function ($q) {
+                $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
+            });
         });
 
         $result = $query->get();
