@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="card-body">
-                    <h3>Coming soon...</h3>
+                    <h4>Coming soon</h4>
                 </div>
             </div>
         </div>
