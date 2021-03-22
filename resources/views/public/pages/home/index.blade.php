@@ -8,11 +8,18 @@
         
             <div class="card text-center">
                 <div class="card-header">
-                    Palmera Vacations
+                    <div class="row">
+                        <div class="col-md-6 text-left">
+                            Palmera Vacations
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @include('partials.language-switcher')
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <h4>Coming soon</h4>
+                <div class="mb-4 pt-3">
+                    <a href="/login">{{ __('Login') }}</a>
                 </div>
             </div>
         </div>
