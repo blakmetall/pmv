@@ -22,8 +22,11 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // https force
-        if (AppHelper::shouldApplyHttps()) {
-            URL::forceScheme('https');
+        if (isProduction() && AppHelper::shouldApplyHttps()) {
+            $this->app['request']->server->set('HTTPS', true);
+        }else {
+            //if local register your services you require for development
+            $this->app->register('Barryvdh\Debugbar\ServiceProvider');
         }
 
         // custom validations

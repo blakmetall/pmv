@@ -165,7 +165,7 @@
     opacity: 0;
     z-index: -99999;
     box-sizing: border-box; 
-    font-family: "Lato", sans-serif; 
+    font-family: "Open Sans", sans-serif; 
     font-weight: 400; 
     letter-spacing: 0.3px;
     background-color:#ffffff; 
@@ -188,4 +188,31 @@
     padding: 4px 0px 1px 2px;
     color: #f00 !important;
     margin-right: 5px;
+}
+
+.layout-horizontal-bar .main-header {
+    background: #f3f3f3;
+}
+
+.layout-horizontal-bar .header-topnav .topnav a {
+    font-size: 12px;
+    text-transform: capitalize;
+    font-weight: 500;
+    font-family: 'Open Sans';
+}
+
+.i-Administrator:before,
+.i-Full-Screen:before,
+.i-Two-Windows:before,
+.i-Globe:before {
+    color: #111;
+}
+
+.breadcrumb h1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.container.app-container .card .card-body {
+    padding: 0.75rem 1rem;
 }
