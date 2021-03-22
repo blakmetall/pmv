@@ -397,7 +397,7 @@ $(function() {
 
         nodeToDataURL({
             targetNode: htmlCanvas,
-            customStyle: '#text-canvas {box-sizing: border-box; font-family: "Lato", sans-serif; font-weight: 400; letter-spacing: 0.3px; background-color:#ffffff; padding: 20px 30px; height: 100% !important; width:100% !important;}'
+            customStyle: '#text-canvas {box-sizing: border-box; font-family: "Open Sans", sans-serif; font-weight: 400; letter-spacing: 0.3px; background-color:#ffffff; padding: 20px 30px; height: 100% !important; width:100% !important;}'
         })
         .then((url) => {
             var dataCanvas = {
