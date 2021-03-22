@@ -555,6 +555,8 @@ $_current_role = RoleHelper::current();
 
 </div>
 
+<div class="app-after-menu-box"></div>
+
 <!-- transaction bulk modal -->
 <div class="modal fade" id="app-pm-property-selection-modal" tabindex="-1" role="dialog"
     aria-labelledby="app-pm-property-selection-modal" aria-hidden="true">
