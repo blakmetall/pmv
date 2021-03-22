@@ -378,7 +378,14 @@
 }
 
 .app-container {
-    max-width: 1250px;
+    max-width: 983px;
+    margin-left: 0;
+    padding-left: 0;
+
+    .card {
+        border: 0;
+        box-shadow: none;
+    }
 }
 
 .app-container-sm {
@@ -992,3 +999,56 @@
 
 /********* end ***********/
 /*************************/
+
+/*************************/
+/******** main styles ****/
+
+.layout-horizontal-bar .header-topnav {
+    box-shadow: none;
+}
+
+.app-after-menu-box {
+    border-bottom: 2px solid black;
+    padding: 3px;
+    background: black;
+}
+
+.container.app-container .card .card-body {
+    padding: 0.75rem 1rem 0.75rem 0rem;
+}
+
+.container.app-container {
+    .breadcrumb.app-breadcrumb {
+        margin-left: -18px;
+    }
+
+    .card .card-body {
+        p {
+            margin-left: -14px;
+        }
+    }
+}
+
+.container.app-container-sm {
+    margin-left: -16px;
+}
+
+.container.app-container {
+    .card {
+        .card-body {
+            .row.row-xs {
+                justify-content: space-between;
+
+                .col-md-2.app-search-buttons {
+                    margin-right: -4px;
+                }
+            }
+
+            .col-md-10 {
+                margin-left: -16px;
+            }
+        }
+    }
+}
+/**** end main styles ****/
+/*********+++++***********/
