@@ -4,11 +4,6 @@ namespace App\Helpers;
 
 class AppHelper
 {
-    public static function shouldApplyHttps()
-    {
-        return hasSSL();
-    }
-
     public static function cleanString($string)
     {
         $utf8 = array(
