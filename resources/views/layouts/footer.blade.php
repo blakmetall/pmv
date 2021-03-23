@@ -6,7 +6,7 @@
             <div>
                 <p class="m-0">
                     &copy; {{ date('Y', strtotime('now')) }} {{ env('APP_NAME') }}. 
-                    {{ __('All rights reserved.') }}
+                    Palmera Vacations; {{ __('All rights reserved.') }}
                 </p>
             </div>
         </div>

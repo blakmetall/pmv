@@ -7,7 +7,7 @@
     ])
 
     <!-- separator -->
-    <div class="mb-4"></div>
+    <div class="mb-3"></div>
 
     @include('components.search', [
         'url' => route('human-resources.directory')
