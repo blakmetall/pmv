@@ -1,4 +1,5 @@
 @extends('layouts.horizontal-master')
+
 @php
     $url = isset($url) ? $url : '';
     $currentDate = date('Y-m-d', strtotime('now'));

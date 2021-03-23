@@ -70,13 +70,15 @@
         @if (!isProduction())
             <!-- Notification -->
             <div class="dropdown">
-                <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="badge badge-primary">
-                        {{ '3' }}
-                    </span>
-                    <i class="i-Bell text-muted header-icon"></i>
-                </div>
+                <?php /*
+                    <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <span class="badge badge-primary">
+                            {{ '3' }}
+                        </span>
+                        <i class="i-Bell text-muted header-icon"></i>
+                    </div>
+                */ ?>
 
                 <!-- Notification dropdown -->
                 <div class="dropdown-menu dropdown-menu-right notification-dropdown rtl-ps-none"

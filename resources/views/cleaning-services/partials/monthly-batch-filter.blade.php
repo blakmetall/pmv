@@ -28,75 +28,65 @@
 
 @endphp
 
-<div class="container app-container mb-5">
+<form action="{{ $url }}" action="get">
+    <div class="row pt-3">
+        <div class="col-md-2">
+            <select name="year" class="form-control" id="cleaning-option-batch-year-select">
+                @for($i = 0; $i < 60; $i++)
+                    @php
+                        $inputYear = $currentYear - $i;
+                        $selected = ($yearSearched == $inputYear) ? ' selected ' : '';
+                    @endphp
 
-    <div class="card">
-        <div class="card-body">
+                    <option value="{{ $inputYear }}" {{ $selected }}>
+                        {{ $inputYear }}
+                    </option>
+                @endfor
+            </select>
+            <input type="hidden" name="month" value="{{ $monthSearched }}">
+        </div>
+        <div class="col-md-10">
+            <ul class="app-months-list">
 
-            <form action="{{ $url }}" action="get">
-                <div class="row pt-3">
-                    <div class="col-md-2">
-                        <select name="year" class="form-control" id="cleaning-option-batch-year-select">
-                            @for($i = 0; $i < 60; $i++)
-                                @php
-                                    $inputYear = $currentYear - $i;
-                                    $selected = ($yearSearched == $inputYear) ? ' selected ' : '';
-                                @endphp
+                @foreach($months as $monthNumber => $month)
+                    <li>
+                        @php
 
-                                <option value="{{ $inputYear }}" {{ $selected }}>
-                                    {{ $inputYear }}
-                                </option>
-                            @endfor
-                        </select>
-                        <input type="hidden" name="month" value="{{ $monthSearched }}">
-                    </div>
-                    <div class="col-md-10">
-                        <ul class="app-months-list">
+                            $urlParams = [
+                                'year' => $yearSearched,
+                                'month' => $monthNumber,
+                            ];
+                            $monthUrl = $url . '?' . http_build_query($urlParams);
 
-                            @foreach($months as $monthNumber => $month)
-                                <li>
-                                    @php
+                            $monthColorClass = '';
+                            if($isYearInProgress) {
+                                if($monthNumber !== 1) {
+                                    // $monthColorClass = ' app-month-inactive ';
+                                }
 
-                                        $urlParams = [
-                                            'year' => $yearSearched,
-                                            'month' => $monthNumber,
-                                        ];
-                                        $monthUrl = $url . '?' . http_build_query($urlParams);
+                                if($monthNumber > 1 && $currentMonth >= $monthNumber) {
+                                    $monthColorClass = '';
+                                }
+                            }
 
-                                        $monthColorClass = '';
-                                        if($isYearInProgress) {
-                                            if($monthNumber !== 1) {
-                                                // $monthColorClass = ' app-month-inactive ';
-                                            }
+                            /*
+                            if(!monthHasPmTransactions($pm->id, $monthNumber, $yearSearched)) {
+                                $monthColorClass = ' app-month-inactive ';
+                            }
+                            */
 
-                                            if($monthNumber > 1 && $currentMonth >= $monthNumber) {
-                                                $monthColorClass = '';
-                                            }
-                                        }
-
-                                        /*
-                                        if(!monthHasPmTransactions($pm->id, $monthNumber, $yearSearched)) {
-                                            $monthColorClass = ' app-month-inactive ';
-                                        }
-                                        */
-
-                                        $selecteMonthClass = ($monthSearched == $monthNumber) ? ' app-month-selected ' : '';
+                            $selecteMonthClass = ($monthSearched == $monthNumber) ? ' app-month-selected ' : '';
 
 
-                                    @endphp
-                                    <a href="{{ $monthUrl }}" class="{{ $monthColorClass }} {{ $selecteMonthClass }}">
-                                        {{ $month }}
-                                    </a>
-                                </li>
-                            @endforeach
-                           
-                        </ul>
-                    </div>
-                </div>
-
-            </form>
-
+                        @endphp
+                        <a href="{{ $monthUrl }}" class="{{ $monthColorClass }} {{ $selecteMonthClass }}">
+                            {{ $month }}
+                        </a>
+                    </li>
+                @endforeach
+                
+            </ul>
         </div>
     </div>
 
-</div>
+</form>
