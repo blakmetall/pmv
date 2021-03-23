@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Helpers\AppHelper;
 use App\Models\City;
+use URL;
 use Validator;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,8 +22,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // https force
-        if (isProduction() && AppHelper::shouldApplyHttps()) {
-            $this->app['request']->server->set('HTTPS', true);
+        if (isProduction()) {
+            URL::forceScheme('https');
         }else {
             //if local register your services you require for development
             $this->app->register('Barryvdh\Debugbar\ServiceProvider');
