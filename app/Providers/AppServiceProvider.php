@@ -163,6 +163,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\RolesSectionsPermissionsRepositoryInterface::class,
+            \App\Repositories\RolesSectionsPermissionsRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\TransactionTypesRepositoryInterface::class,
             \App\Repositories\TransactionTypesRepository::class
         );

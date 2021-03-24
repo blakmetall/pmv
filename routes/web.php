@@ -405,6 +405,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['prefix' => 'roles'], function () {
                 Route::group(['middleware' => 'role-permission:settings,roles'], function () {
                     Route::get('', 'RolesController@index')->name('roles');
+                    Route::get('sections-permissions/{role}', 'RolesSectionsPermissionsController@index')->name('roles.sections-permissions');
                 });
                 Route::get('set-active/{id}', 'RolesController@setActive')->name('roles.set-active');
             });
