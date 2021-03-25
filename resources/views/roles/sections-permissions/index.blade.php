@@ -13,12 +13,12 @@
 @section('main-content')
 
     <div class="breadcrumb">
-        <h5>Role Name</h5>
+        <h5>{{ $role->translate()->name }}</h5>
     </div>
 
     @include('roles.sections-permissions.partials.table', [
         'label' => __('Roles'),
-        'rows' => $roles
+        'userSectionPermissions' => $userSectionPermissions,
     ])
 
 @endsection

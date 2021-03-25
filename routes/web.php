@@ -406,6 +406,7 @@ Route::group(['middleware' => ['web']], function () {
                 Route::group(['middleware' => 'role-permission:settings,roles'], function () {
                     Route::get('', 'RolesController@index')->name('roles');
                     Route::get('sections-permissions/{role}', 'RolesSectionsPermissionsController@index')->name('roles.sections-permissions');
+                    Route::post('sections-permissions/save', 'RolesSectionsPermissionsController@save')->name('roles.sections-permissions.save');
                 });
                 Route::get('set-active/{id}', 'RolesController@setActive')->name('roles.set-active');
             });
