@@ -151,9 +151,11 @@ class PropertyBookingController extends Controller
         });
         $query->whereHas('property', function ($qy) use ($search) {
             $qy->where('city_id', 'like', '%' . $search['location'] . '%');
-            $qy->whereHas('users', function ($q) {
-                $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
-            });
+            if(isRole('owner')){
+                $qy->whereHas('users', function ($q) {
+                    $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
+                });
+            }
         });
 
         $result = $query->get();
@@ -169,9 +171,11 @@ class PropertyBookingController extends Controller
         });
         $query->whereHas('property', function ($qy) use ($search) {
             $qy->where('city_id', 'like', '%' . $search['location'] . '%');
-            $qy->whereHas('users', function ($q) {
-                $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
-            });
+            if(isRole('owner')){
+                $qy->whereHas('users', function ($q) {
+                    $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
+                });
+            }
         });
 
         $result = $query->get();
