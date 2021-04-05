@@ -43,33 +43,36 @@ class RolesSectionsPermissionsController extends Controller
         unset($allowedSections['role_id']);
 
         // all allowable sections
-        $allowableSections = $this->get_sections();
+        $sections = $this->get_sections();
 
-        // save allowed sections
+        // save allowed sections (without deleting old assignments)
         if(count($allowedSections)) {
             foreach($allowedSections as $sectionAllowed => $value) {
                 $restrictionFound = RoleSectionPermission::
                     where('role_id', $role_id)
                     ->where('section_slug', $sectionAllowed)
-                    ->where('user_id', null);
+                    ->where('user_id', 0)
+                    ->get();
 
-                if($restrictionFound) {
-                    unset($allowableSections[$sectionAllowed]);
-                    $roleSectionPermission = new RoleSectionPermission;
-                    $roleSectionPermission->role_id = $role_id;
-                    $roleSectionPermission->section_slug = $sectionAllowed;
-                    $roleSectionPermission->user_id = null;
-                    $roleSectionPermission->save();
+                if($restrictionFound->count()) {
+                    unset($sections[$sectionAllowed]);
+                }else {
+                    unset($sections[$sectionAllowed]);
+                    $restrictionToSave = new RoleSectionPermission;
+                    $restrictionToSave->role_id = $role_id;
+                    $restrictionToSave->section_slug = $sectionAllowed;
+                    $restrictionToSave->user_id = 0;
+                    $restrictionToSave->save();
                 }
             }
         }
 
-        $nowAllowableSections = $allowableSections;
-
-        foreach($nowAllowableSections as $notAllowableSection => $name) {
+        // removes unallowed sections according to checkbox enabling
+        foreach($sections as $section => $name) {
             RoleSectionPermission::
-                where('section_slug', $notAllowableSection)
-                ->where('user_id', null)
+                where('role_id', $role_id)
+                ->where('section_slug', $section)
+                ->where('user_id', 0)
                 ->delete();
         }
 
