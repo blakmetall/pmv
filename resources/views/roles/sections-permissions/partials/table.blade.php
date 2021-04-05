@@ -26,7 +26,7 @@
                                 'label' => __('Habilitar'),
                                 'name' => $sectionSlug,
                                 'value' => 1,
-                                'default' => 0,
+                                'default' => (in_array($sectionSlug, $sluggedSectionPermissions) ) ? 1 : 0,
                             ])
                         </td>
                     </tr>

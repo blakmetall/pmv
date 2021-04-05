@@ -26,11 +26,25 @@ class RolesSectionsPermissionsController extends Controller
     public function index(Role $role)
     {        
         $user_id = Auth::id();
-        $userSectionPermissions = RoleSectionPermission::where('user_id', $user_id)->get();
+        $sectionPermissions = RoleSectionPermission::
+            where('role_id', $role->id)
+            ->where(function($q) {
+                $q->where('user_id', 0);
+                $q->orWhere('user_id', null);
+            })
+            ->get();
+
+        $sluggedSectionPermissions = [];
+        if($sectionPermissions->count()) {
+            foreach($sectionPermissions as $section) {
+                $sluggedSectionPermissions[] = $section->section_slug;
+            }
+        }
 
         return view('roles.sections-permissions.index')
             ->with('role', $role)
-            ->with('userSectionPermissions', $userSectionPermissions)
+            ->with('sectionPermissions', $sectionPermissions)
+            ->with('sluggedSectionPermissions', $sluggedSectionPermissions)
             ->with('sections', $this->get_sections());
     }
 

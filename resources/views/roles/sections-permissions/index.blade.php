@@ -18,7 +18,8 @@
 
     @include('roles.sections-permissions.partials.table', [
         'label' => __('Roles'),
-        'userSectionPermissions' => $userSectionPermissions,
+        'sectionPermissions' => $sectionPermissions,
+        'sluggedSectionPermissions' => $sluggedSectionPermissions,
         'role' => $role,
     ])
 
