@@ -1,6 +1,8 @@
 <form action="{{ route('roles.sections-permissions.save') }}" method="post">
     @csrf
 
+    <input type="hidden" name="role_id" value="{{ $role->id}}">
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>

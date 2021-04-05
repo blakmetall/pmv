@@ -19,6 +19,7 @@
     @include('roles.sections-permissions.partials.table', [
         'label' => __('Roles'),
         'userSectionPermissions' => $userSectionPermissions,
+        'role' => $role,
     ])
 
 @endsection

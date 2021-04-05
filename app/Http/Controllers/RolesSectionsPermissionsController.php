@@ -34,10 +34,46 @@ class RolesSectionsPermissionsController extends Controller
             ->with('sections', $this->get_sections());
     }
 
+    // saves the sections allowed according to a specific role
     public function save(Request $request)
     {
-        print_r($request->all());
-        exit;
+        $role_id = $request->role_id;
+        $allowedSections = $request->all();
+        unset($allowedSections['_token']);
+        unset($allowedSections['role_id']);
+
+        // all allowable sections
+        $allowableSections = $this->get_sections();
+
+        // save allowed sections
+        if(count($allowedSections)) {
+            foreach($allowedSections as $sectionAllowed => $value) {
+                $restrictionFound = RoleSectionPermission::
+                    where('role_id', $role_id)
+                    ->where('section_slug', $sectionAllowed)
+                    ->where('user_id', null);
+
+                if($restrictionFound) {
+                    unset($allowableSections[$sectionAllowed]);
+                    $roleSectionPermission = new RoleSectionPermission;
+                    $roleSectionPermission->role_id = $role_id;
+                    $roleSectionPermission->section_slug = $sectionAllowed;
+                    $roleSectionPermission->user_id = null;
+                    $roleSectionPermission->save();
+                }
+            }
+        }
+
+        $nowAllowableSections = $allowableSections;
+
+        foreach($nowAllowableSections as $notAllowableSection => $name) {
+            RoleSectionPermission::
+                where('section_slug', $notAllowableSection)
+                ->where('user_id', null)
+                ->delete();
+        }
+
+        return back();
     }
 
     private function get_sections() {
