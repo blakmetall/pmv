@@ -14,9 +14,10 @@ class CreateRolesSectionsPermissionsTable extends Migration
 
         Schema::create('roles_sections_permissions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->nullable();
+            $table->integer('role_id')->nullable();
             $table->string('section_slug', 191)->nullable();
             $table->string('section_name', 191)->nullable();
+            $table->integer('user_id')->nullable();
         });
     }
 
