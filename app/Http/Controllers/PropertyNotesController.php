@@ -23,6 +23,7 @@ class PropertyNotesController extends Controller
         if (isRole('owner')) {
             $config = ['auditedOnly' => true];
         }
+        $config = ['property_id' => $property->id];
 
         $notes = $this->repository->all($search, $config);
 

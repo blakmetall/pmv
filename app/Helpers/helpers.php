@@ -666,15 +666,20 @@ if (!function_exists('getMinStay')) {
     function getMinStay($id)
     {
         $property = Property::find($id);
-
         $rates = $property->rates;
-        $minStayArray = [];
-        foreach ($rates as $rate) {
-            $minStayArray[] = $rate->min_stay;
+
+        if(!$rates->isEmpty()){
+
+            $minStayArray = [];
+            foreach ($rates as $rate) {
+                $minStayArray[] = $rate->min_stay;
+            }
+            $minStay = min(array_values(array_unique(arrayFlatten($minStayArray))));
+            
+            $result = $minStay;
+        }else{
+            $result = 1;
         }
-        $minStay = min(array_values(array_unique(arrayFlatten($minStayArray))));
-        
-        $result = $minStay;
 
         return $result;
     }

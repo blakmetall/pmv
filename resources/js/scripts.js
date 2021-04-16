@@ -6,6 +6,7 @@ import { getBonus } from "./scripts/getBonus.js";
 import { initDatepickerComponents } from "./scripts/initDatepickerComponents.js";
 import { initFastSelectComponents } from "./scripts/initFastSelectComponents.js";
 import { initGetPmPropertySelectionEvent } from "./scripts/initGetPmPropertySelectionEvent.js";
+import { initCheckAvailabilityProperty } from "./scripts/initCheckAvailabilityProperty.js";
 import { initTransactionCheckboxHandler } from "./scripts/initTransactionCheckboxHandler.js";
 import { initMapInputComponents } from "./scripts/initMapInputComponents.js";
 import { initTimepickerComponents } from "./scripts/initTimepickerComponents.js";
@@ -37,8 +38,8 @@ $(function() {
         initCalendar();
         initDatepickerComponents();
         initFastSelectComponents();
-        initGetPmPropertySelectionEvent("#app-pm-property-selection-modal", "#app-pm-property-selection-container", "generate-pm-transaction-url");
-        initGetPmPropertySelectionEvent("#app-property-bookings-selection-modal", "#app-property-bookings-selection-container", "generate-booking-url");
+        initGetPmPropertySelectionEvent();
+        initCheckAvailabilityProperty();
         initTransactionCheckboxHandler();
         initMapInputComponents();
         initTimepickerComponents();
