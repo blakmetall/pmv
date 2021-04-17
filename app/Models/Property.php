@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\AppModel;
+use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
@@ -30,7 +30,6 @@ class Property extends Model
         'bedrooms',
         'bedding_JSON',
         'baths',
-        'sleeps',
         'floors',
         'pax',
         'has_parking',

@@ -40,8 +40,8 @@
             {{ $property->name }} <br>
             <span class="form-header-sub">{{ $property->property->type->getLabel() }} / {{ __('Bedrooms') }}
                 {{ $property->property->bedrooms }} / {{ __('Baths') }}
-                {{ $property->property->baths }} / {{ __('Sleeps') }}
-                {{ $property->property->sleeps }}</span>
+                {{ $property->property->baths }} / {{ __('Pax') }}
+                {{ $property->property->pax }}</span>
         </div>
         <form action="{{ route('public.make-reservation') }}" method="post" id="bookings-form" accept-charset="UTF-8">
             @csrf

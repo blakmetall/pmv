@@ -116,14 +116,6 @@
             'value' => $row->baths
         ])
 
-        <!-- sleeps -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Sleeps'),
-            'name' => 'sleeps',
-            'value' => $row->sleeps
-        ])
-
         <!-- floors -->
         @include('components.form.input', [
             'group' => 'property',
