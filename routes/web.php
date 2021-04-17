@@ -1,7 +1,6 @@
 <?php
 
 Route::group(['middleware' => ['web']], function () {
-
     // auth laravel routes
     Auth::routes(['register' => false]); // public register disabled for this app
 
@@ -22,8 +21,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('maintenance', 'DashboardController@maintenance')->name('maintenance');
 
         // dashboard
-        Route::get('', 'DashboardController@index');
-        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('', 'DashboardController@index')->middleware('section-permission');
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard')->middleware('section-permission:dashboard');
 
         // dashboard: general search
         Route::group(['middleware' => 'role-permission:dashboard,general-search'], function () {
@@ -37,7 +36,6 @@ Route::group(['middleware' => ['web']], function () {
 
         // bookings prefix
         Route::group(['prefix' => 'property-bookings'], function () {
-
             // all bookings
             Route::group(['middleware' => 'role-permission:property-bookings,index'], function () {
                 Route::get('', 'PropertyBookingController@index')->name('property-bookings');
@@ -52,7 +50,6 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             Route::group(['prefix' => 'property-booking-payments'], function () {
-
                 // all payments
                 Route::group(['middleware' => 'role-permission:property-bookings,index'], function () {
                     Route::get('/{booking}', 'PropertyBookingPaymentsController@index')->name('property-booking-payments');
@@ -96,7 +93,6 @@ Route::group(['middleware' => ['web']], function () {
 
         // properties prefix
         Route::group(['prefix' => 'properties'], function () {
-
             // properties
             Route::group(['middleware' => 'role-permission:properties,index'], function () {
                 Route::get('', 'PropertiesController@index')->name('properties');
@@ -111,7 +107,6 @@ Route::group(['middleware' => ['web']], function () {
 
                 // property internal routes
                 Route::group(['prefix' => '{property}'], function () {
-
                     // property: property notes
                     Route::group(['prefix' => 'notes'], function () {
                         Route::get('', 'PropertyNotesController@index')->name('property-notes');
@@ -176,7 +171,6 @@ Route::group(['middleware' => ['web']], function () {
 
         // all property managements prefix
         Route::group(['prefix' => 'property-management'], function () {
-
             // all property managements
             Route::group(['middleware' => 'role-permission:property-management,index'], function () {
                 Route::get('', 'PropertyManagementController@general')->name('property-management.general');
@@ -222,7 +216,6 @@ Route::group(['middleware' => ['web']], function () {
             // single property management
             Route::get('confirm-email', 'PropertyManagementTransactionsController@confirmEmail')->name('property-management-transactions.confirm-email');
             Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
-
                 // single property management transactions
                 Route::group(['prefix' => 'transactions'], function () {
                     Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
@@ -386,7 +379,6 @@ Route::group(['middleware' => ['web']], function () {
 
                     // single workgroup
                     Route::group(['prefix' => '{workgroup}'], function () {
-
                         // workgroup users
                         Route::group(['prefix' => 'users'], function () {
                             Route::get('', 'WorkgroupUsersController@index')->name('workgroup-users');
@@ -544,7 +536,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('reservations/{id}', '_Public\PropertyController@reservations')->name('public.reservations');
         Route::post('make-reservation', '_Public\PropertyController@makeReservation')->name('public.make-reservation');
         Route::get('thank-you/{booking}', '_Public\PropertyController@thankYou')->name('public.thank-you');
-        
+
         // Vacation Services
         Route::get('vacation-services', '_Public\VacationServicesController@index')->name('public.vacation-services');
         Route::get('make-payment/{booking?}', '_Public\VacationServicesController@searchBooking')->name('public.vacation-services.make-payment');

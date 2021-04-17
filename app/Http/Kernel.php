@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
 
         // custom middlewares
         'role-permission' => \App\Http\Middleware\RolePermission::class,
+        'section-permission' => \App\Http\Middleware\SectionPermission::class,
     ];
 
     /**

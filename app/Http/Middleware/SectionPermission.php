@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Helpers\RoleHelper;
 use Closure;
 
-class RolePermission
+class SectionPermission
 {
     /**
      * Handle an incoming request.
@@ -14,12 +14,14 @@ class RolePermission
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $section, $sub)
+    public function handle($request, Closure $next, $section)
     {
         $current_role = RoleHelper::current();
-        if ($current_role->isAllowed($section, $sub)) {
-            return $next($request);
-        }
+        $sectionPermission = \App\Models\SectionPermission::;
+
+        // if ($current_role->isAllowed($section, $sub)) {
+        //     return $next($request);
+        // }
 
         return redirect(route('error.forbidden'));
     }

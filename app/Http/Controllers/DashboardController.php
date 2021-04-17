@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Repositories\{PropertiesRepositoryInterface, PropertyManagementTransactionsRepositoryInterface};
 
 class DashboardController extends Controller
 {

@@ -113,7 +113,6 @@
     "Damage Insurance": "Seguro de daños",
     "Damage Deposit": "Deposito de daños",
     "Damage Deposits": "Depositos de daños",
-    "Dashboard": "Panel",
     "Date": "Fecha",
     "Daily": "Diario",
     "Day": "Día",
@@ -620,6 +619,8 @@
     "Less rates": "Menos tarifas",
     "Thank You": "Gracias",
 
+    "Dashboard": "Dashboard",
+    "Dashboard > General Search": "Dashboard > Búsqueda general",
     "Properties > All": "Propiedades > Listado",
     "Properties > Offline": "Propiedades > Offline",
     "Properties > New Listing": "Propiedades > Nuevo listado",
