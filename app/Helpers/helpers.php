@@ -597,12 +597,22 @@ if (!function_exists('getOffices')) {
                 'address'=> 'Libertad 349 <br>Puerto Vallarta, Jalisco, México 48300',
                 'phone'=> '+52 (322) 223-0101',
                 'email'=> 'vallarta@palmeravacations.com',
+                'phone_us_can' => '(323) 250-7721',
+                'phone_free' => '1-800-881-8176',
+                'gmaps_id' => 'puerto-vallarta',
+                'gmaps_lat' => '0',
+                'gmaps_lon' => '0',
             ],
             [
                 'name'=> 'Mazatlán',
                 'address'=> 'Ave. Playa Gaviotas 409 Local 27 <br>Mazatlán, Sinaloa, México 82110',
                 'phone'=> '+52 (669) 913-5188',
                 'email'=> 'mazatlan@palmeravacations.com',
+                'phone_us_can' => '(714) 988-7903',
+                'phone_free' => '1-888-688-1577',
+                'gmaps_id' => 'mazatlan',
+                'gmaps_lat' => '0',
+                'gmaps_lon' => '0',
             ],
         ];
     }

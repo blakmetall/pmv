@@ -118,16 +118,16 @@
                         <div class="row">
                             @foreach ($offices as $office)
                                 <div class="col-xs-6">
-                                    {!! $office->address !!}<br />
-                                    <span>{{ __('Phone Local') }}:</span> {{ $office->phone }}<br>
-                                    @if ($office->phone_us_can)
-                                        <span>{{ __('Phone US & CAN') }}:</span> {{ $office->phone_us_can }}<br>
+                                    {!! $office['address'] !!}<br />
+                                    <span>{{ __('Phone Local') }}:</span> {{ $office['phone'] }}<br>
+                                    @if ($office['phone_us_can'])
+                                        <span>{{ __('Phone US & CAN') }}:</span> {{ $office['phone_us_can'] }}<br>
                                     @endif
-                                    @if ($office->phone_free)
-                                        <span>{{ __('Phone Free') }}:</span> {{ $office->phone_free }}<br>
+                                    @if ($office['phone_free'])
+                                        <span>{{ __('Phone Free') }}:</span> {{ $office['phone_free'] }}<br>
                                     @endif
                                     <span>{{ __('Email') }}:</span> <a
-                                        href="mailto:{{ $office->email }}">{{ $office->email }}</a>
+                                        href="mailto:{{ $office['email'] }}">{{ $office['email'] }}</a>
                                 </div>
                             @endforeach
                         </div>
@@ -139,9 +139,9 @@
                         <div class="row">
                             @foreach ($offices as $office)
                                 @php
-                                    $id = 'field_' . $office->gmaps_lat;
-                                    $latitude = $office->gmaps_lat;
-                                    $longitude = $office->gmaps_lon;
+                                    $id = $office['gmaps_id'];
+                                    $latitude = $office['gmaps_lat'];
+                                    $longitude = $office['gmaps_lon'];
                                 @endphp
                                 <div class="col-xs-6 app-map-wrapper">
                                     <h4>{{ __('Location Map') }}</h4>
