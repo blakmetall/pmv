@@ -1,6 +1,6 @@
 <ul class="menu nav navbar-nav">
     <li class="first leaf active" id="fa-home">
-        <a href="{{ route('public.home') }}" title="{{ __('Home') }}" class="active"><span
+        <a href="{{ route('public.home-default') }}" title="{{ __('Home') }}" class="active"><span
                 class="fa fa-home"></span>{{ __('Home') }}</a>
     </li>
     <li class="expanded dropdown" id="fa-flag">
@@ -30,6 +30,7 @@
             </li>
         </ul>
     </li>
+
     <li class="expanded dropdown" id="fa-star">
         <a href="{{ route('public.concierge-services') }}" title="{{ __('Concierge Services') }}"
             class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-star"></span>
@@ -46,6 +47,7 @@
             </li>
         </ul>
     </li>
+
     <li class="expanded dropdown" id="fa-bell">
         <a href="{{ route('public.property-management') }}" title="{{ __('Property Management') }}"
             class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-bell"></span>
@@ -63,6 +65,7 @@
             </li>
         </ul>
     </li>
+
     <li class="expanded dropdown" id="fa-about">
         <a href="{{ route('public.about') }}" title="{{ __('About Palmera Vacations') }}" class="dropdown-toggle"
             data-toggle="dropdown"><span class="fa fa-heart"></span> {{ __('About') }} <span class="caret"></span>
@@ -106,6 +109,7 @@
             </li>
         </ul>
     </li>
+    
     <li class="last leaf" id="fa-user">
         <a href="{{ route('public.contact') }}" title="{{ __('Contact Us') }}"><span
                 class="fa fa-user"></span>{{ __('Contact Us') }}</a>

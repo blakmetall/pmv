@@ -10,32 +10,37 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = __('AVAILABILITY RESULTS');
-    $nightsDate = \RatesHelper::getTotalBookingDays($_GET['arrival'], $_GET['departure']);
-    $datesProperty = getSearchDate(false, $_GET['arrival'], $_GET['departure']);
-    $bothDates = $datesProperty['currentDate'] . ' - ' . $datesProperty['nextDate'];
-    $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
+        $title = __('AVAILABILITY RESULTS');
+        $nightsDate = \RatesHelper::getTotalBookingDays($_GET['arrival'], $_GET['departure']);
+        $datesProperty = getSearchDate(false, $_GET['arrival'], $_GET['departure']);
+        $bothDates = $datesProperty['currentDate'] . ' - ' . $datesProperty['nextDate'];
+        $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
     @endphp
 
     @include('public.pages.partials.main-content-start')
 
 
     <div id="availability-results">
-        <div class="well well-sm text-right">{{ __('Showing') }} {{ $properties->firstItem() }} {{ __('To') }}
+        <div class="well well-sm text-right">
+            {{ __('Showing') }} {{ $properties->firstItem() }} {{ __('To') }}
             {{ $properties->lastItem() }} {{ __('Of') }} {{ $properties->total() }} {{ __('Results') }}
         </div>
+
         @foreach ($properties as $property)
             @include('public.pages.partials.modal')
+
             @php
                 $total = \RatesHelper::getNightsSubtotalCost($property->property, $_GET['arrival'], $_GET['departure']);
                 $availabilityProperty = getAvailabilityProperty($property->property_id, $_GET['arrival'], $_GET['departure']);
                 $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $_GET['arrival'], $_GET['departure']);
             @endphp
+
             <div class="result-row">
                 <h5>{{ $property->name }}</h5>
                 <div class="sub-title">{{ $property->property->type->getLabel() }} /
                     {{ getCity($property->property->city_id) }} / {{ $property->property->zone->getLabel() }}
                 </div>
+
                 <div class="row">
                     <div class="col-xs-4">
                         <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="200">
@@ -45,20 +50,24 @@
                         <div class="description">
                             {{ getSubstring($property->description, 200) }}
                         </div>
+
                         <div class="col-xs-4 opt1"> <i class="fa fa-bed"></i>
                             <div class="text-center">{{ __('Bedrooms') }}<br> {{ $property->property->bedrooms }}
                             </div>
                         </div>
+
                         <div class="col-xs-4 opt2"> <i class="fa fa-shower"></i>
                             <div class="text-center">{{ __('Bathrooms') }}<br> {{ (int) $property->property->baths }}
                             </div>
                         </div>
+
                         @if ($property->property->pax)
                             <div class="col-xs-4 opt3"> <i class="fa fa-users"></i>
                                 <div class="text-center">{{ __('Max. Occupancy') }}<br> {{ $property->property->pax }}
                                 </div>
                             </div>
                         @endif
+
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="details-link">
@@ -72,6 +81,7 @@
                                 <div class="text-right savings-tag"></div>
                             </div>
                         </div>
+
                         @if ($availabilityProperty == 'all')
                             <div class="row">
                                 <div class="col-xs-4 text-center">
@@ -118,6 +128,7 @@
                 </div>
             </div>
         @endforeach
+        
         <!-- pagination is loeaded here -->
         <div class="text-center">
             @include('partials.pagination', ['rows' => $properties])

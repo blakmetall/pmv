@@ -591,9 +591,20 @@ if (!function_exists('getFeaturedImage')) {
 if (!function_exists('getOffices')) {
     function getOffices()
     {
-        $offices = Office::all();
-
-        return $offices;
+        return [
+            [
+                'name'=> 'Puerto Vallarta',
+                'address'=> 'Libertad 349 <br>Puerto Vallarta, Jalisco, México 48300',
+                'phone'=> '+52 (322) 223-0101',
+                'email'=> 'vallarta@palmeravacations.com',
+            ],
+            [
+                'name'=> 'Mazatlán',
+                'address'=> 'Ave. Playa Gaviotas 409 Local 27 <br>Mazatlán, Sinaloa, México 82110',
+                'phone'=> '+52 (669) 913-5188',
+                'email'=> 'mazatlan@palmeravacations.com',
+            ],
+        ];
     }
 }
 
