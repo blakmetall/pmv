@@ -2,6 +2,7 @@
     <section class="content-top container">
         <div class="region region-content-top">
             @include('public.pages.partials.quick-search')
+            
             <section id="block-search-breadcrumbs-search-breadcrumbs-block"
                 class="block block-search-breadcrumbs clearfix">
 

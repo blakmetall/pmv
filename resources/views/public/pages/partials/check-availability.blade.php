@@ -1,18 +1,19 @@
 @php
-$propertyTypes = getPropertyTypes();
-$cities = getCities();
-$getPropertyType = isset($_GET['property_type']) ? $_GET['property_type'] : '';
-$getCity = isset($_GET['city']) ? $_GET['city'] : '';
-$getZone = isset($_GET['zone']) ? $_GET['zone'] : 0;
-$getAdults = isset($_GET['adults']) ? $_GET['adults'] : '';
-$getChilds = isset($_GET['children']) ? $_GET['children'] : '';
-$getBeds = isset($_GET['bedrooms']) ? $_GET['bedrooms'] : '';
-$isHome = Request::is('/');
-$arrival = isset($_GET['arrival']) ? $_GET['arrival'] : null;
-$departure = isset($_GET['departure']) ? $_GET['departure'] : null;
-$dates = getSearchDate(false, $arrival, $departure);
-$datesInitial = getSearchDate(true, $arrival, $departure);
+    $propertyTypes = getPropertyTypes();
+    $cities = getCities();
+    $getPropertyType = isset($_GET['property_type']) ? $_GET['property_type'] : '';
+    $getCity = isset($_GET['city']) ? $_GET['city'] : '';
+    $getZone = isset($_GET['zone']) ? $_GET['zone'] : 0;
+    $getAdults = isset($_GET['adults']) ? $_GET['adults'] : '';
+    $getChilds = isset($_GET['children']) ? $_GET['children'] : '';
+    $getBeds = isset($_GET['bedrooms']) ? $_GET['bedrooms'] : '';
+    $isHome = Request::is('/');
+    $arrival = isset($_GET['arrival']) ? $_GET['arrival'] : null;
+    $departure = isset($_GET['departure']) ? $_GET['departure'] : null;
+    $dates = getSearchDate(false, $arrival, $departure);
+    $datesInitial = getSearchDate(true, $arrival, $departure);
 @endphp
+
 <form action="{{ route('public.availability-results') }}" id="avail-search-form" accept-charset="UTF-8">
     <input type="hidden" value="{{ $isHome }}" name="is_home">
     <div>

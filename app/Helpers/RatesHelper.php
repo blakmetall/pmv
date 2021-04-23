@@ -11,11 +11,16 @@ class RatesHelper
         $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
         $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
-        return $arrival_date->diffInDays($departure_date); // 10 days (dummy)
+        return $arrival_date->diffInDays($departure_date);
     }
 
     public static function getNightsSubtotalCost($property, $arrival_date_str, $departure_date_str)
     {
+        if(!$arrival_date_str || !$departure_date_str) {
+            $arrival_date_str = date('Y-m-d', strtotime('now'));
+            $departure_date_str = date('Y-m-d', strtotime('+7 days'));
+        }
+
         $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
         $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
@@ -37,6 +42,11 @@ class RatesHelper
 
     public static function getNightlyRate($property, $day_date, $arrival_date_str, $departure_date_str)
     {
+        if(!$arrival_date_str || !$departure_date_str) {
+            $arrival_date_str = date('Y-m-d', strtotime('now'));
+            $departure_date_str = date('Y-m-d', strtotime('+7 days'));
+        }
+
         $arrival_date = Carbon::createFromFormat('Y-m-d', $arrival_date_str);
         $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
@@ -50,8 +60,10 @@ class RatesHelper
         foreach ($rates as $rate) {
             $rate_start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
             $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
+
             $search_arrival_date = $arrival_date->between($rate_start_date, $rate_end_date);
             $search_departure_date = $departure_date->between($rate_start_date, $rate_end_date);
+
             if ($search_arrival_date) {
                 $rates_property['nightly'] += $rate->nightly;
                 $rates_property['weekly'] += $rate->weekly;
