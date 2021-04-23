@@ -1,6 +1,7 @@
 @php
 $offices = getOffices();
 @endphp
+
 <div class="footer-container">
     <footer class="footer container">
         <div class="region region-footer">
@@ -113,11 +114,11 @@ $offices = getOffices();
                                         <div class="offices">
                                             @foreach ($offices as $office)
                                                 <div class="office-item">
-                                                    {{ $office->name }}<br />
-                                                    {!! $office->address !!}<br />
-                                                    <span>{{ __('Telephone') }}:</span> {{ $office->phone }}<br />
+                                                    {{ $office['name'] }}<br />
+                                                    {!! $office['address'] !!}<br />
+                                                    <span>{{ __('Telephone') }}:</span> {{ $office['phone'] }}<br />
                                                     <span>{{ __('E-mail') }}:</span> <a
-                                                        href="mailto:{{ $office->email }}">{{ $office->email }}</a><br /><br />
+                                                        href="mailto:{{ $office['email'] }}">{{ $office['email'] }}</a><br /><br />
                                                 </div>
                                             @endforeach
                                         </div>

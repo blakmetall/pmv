@@ -51,57 +51,70 @@ class PropertyController extends Controller
         $messages['bedrooms.required'] = __('Required bedrooms');
         $messages['bedrooms.numeric']   = __('Required number');
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        if(!$request->property_name) {
+            $validator = Validator::make($request->all(), $rules, $messages);
+        }
+
         
         $lang = LanguageHelper::current();
-        $query = PropertyTranslation::query();
-        $pax = $request->adults + $request->children;
-        $petsFriendly = ($request->pet_friendly)?65:0;
-        $adultsOnly = ($request->adults_only)?50:0;
-        $bechFront = ($request->beach_front)?14:0;
-        $search = [
-            'title' => ($request->property_name)?$request->property_name:false,
-            'type' => ($request->property_type)?$request->property_type:false,
-            'city' => ($request->city)?$request->city:false,
-            'zone' => ($request->zone)?$request->zone:false,
-            'arrival' => $request->arrival,
-            'departure' => $request->departure,
-            'pax' => $pax,
-            'bedrooms' => ($request->bedrooms)?$request->bedrooms:0,
-            'pet_friendly' => $petsFriendly,
-            'adults_only' => $adultsOnly,
-            'beach_front' => $bechFront,
-        ];
-        $query->where(function ($query) use ($lang, $search) {
-            // $query->where('name', $search['title']);
-            $query->whereHas('property', function ($query) use ($lang, $search) {
-                if($search['type']){
-                    $query->where('property_type_id', $search['type']);
-                }
-                if($search['city']){
-                    $query->where('city_id', $search['city']);
-                }
-                if($search['zone']){
-                    $query->where('zone_id', $search['zone']);
-                }
-                $query->where('bedrooms', '>=', $search['bedrooms']);
-                $query->where('pax', '>=', $search['pax']);
-                // if($search['pet_friendly'] || $search['adults_only'] || $search['beach_front']){
-                //     $query->whereHas('amenities', function ($query) use ($search) {
-                //         if($search['pet_friendly']){
-                //             $query->where('amenities.id', $search['pet_friendly']);
-                //         }
-                //         if($search['adults_only']){
-                //             $query->where('amenities.id', $search['adults_only']);
-                //         }
-                //         if($search['beach_front']){
-                //             $query->where('amenities.id', $search['beach_front']);
-                //         }
-                //     });
-                // }
-            })->where('language_id', $lang->id);
-        });
-        $properties = $query->paginate(10);
+        // $query = PropertyTranslation::query();
+
+        $properties = $this->propertiesRepository->all($request->property_name, []);
+
+
+        // $pax = $request->adults + $request->children;
+        // $petsFriendly = ($request->pet_friendly) ? 65:0;
+        // $adultsOnly = ($request->adults_only) ? 50:0;
+        // $bechFront = ($request->beach_front) ? 14:0;
+
+        // $search = [
+        //     'title' => ($request->property_name)?$request->property_name:false,
+        //     'type' => ($request->property_type)?$request->property_type:false,
+        //     'city' => ($request->city)?$request->city:false,
+        //     'zone' => ($request->zone)?$request->zone:false,
+        //     'arrival' => $request->arrival ? $request->arrival : '',
+        //     'departure' => $request->departure ? $request->departure : '',
+        //     'pax' => $pax,
+        //     'bedrooms' => ($request->bedrooms) ? $request->bedrooms : 0,
+        //     'pet_friendly' => $petsFriendly,
+        //     'adults_only' => $adultsOnly,
+        //     'beach_front' => $bechFront,
+        // ];
+
+        // $query->where(function ($query) use ($lang, $search, $request) {
+        //     $query->where('name', $search['title']);
+
+            // if(!$request->property_name) {
+            //     $query->whereHas('property', function ($query) use ($lang, $search) {
+            //         if($search['type']){
+            //             $query->where('property_type_id', $search['type']);
+            //         }
+            //         if($search['city']){
+            //             $query->where('city_id', $search['city']);
+            //         }
+            //         if($search['zone']){
+            //             $query->where('zone_id', $search['zone']);
+            //         }
+            //         $query->where('bedrooms', '>=', $search['bedrooms']);
+            //         $query->where('pax', '>=', $search['pax']);
+            //         // if($search['pet_friendly'] || $search['adults_only'] || $search['beach_front']){
+            //         //     $query->whereHas('amenities', function ($query) use ($search) {
+            //         //         if($search['pet_friendly']){
+            //         //             $query->where('amenities.id', $search['pet_friendly']);
+            //         //         }
+        //     //         //         if($search['adults_only']){
+        //     //         //             $query->where('amenities.id', $search['adults_only']);
+        //     //         //         }
+        //     //         //         if($search['beach_front']){
+        //     //         //             $query->where('amenities.id', $search['beach_front']);
+        //     //         //         }
+        //     //         //     });
+        //     //         // }
+        //     //     })->where('language_id', $lang->id);
+        //     // }
+        // });
+
+        // $properties = $query->paginate(10);
         // foreach($properties as $index => $property){
         //     if($property->property->bookings){
         //         foreach($property->property->bookings as $booking){
@@ -122,21 +135,22 @@ class PropertyController extends Controller
             // }
         }
 
-        
         $config = ['filterByNews' => true, 'paginate' => false];
         $propertiesNews = $this->propertiesRepository->all('', $config);
 
-        if ($validator->fails()) {
-            $errors = '';
-            foreach($validator->errors()->get('*') as $error){
-                $errors .= $error[0].'<br>';
-            }
-            $request->session()->flash('error', $errors);
-        }
+        // if (!$request->property_name && $validator->fails()) {
+        //     $errors = '';
+        //     foreach($validator->errors()->get('*') as $error){
+        //         $errors .= $error[0].'<br>';
+        //     }
+        //     $request->session()->flash('error', $errors);
+        // }
 
         return view('public.pages.properties.availability-results')
             ->with('properties', $properties)
-            ->with('propertiesNews', $propertiesNews);
+            ->with('propertiesNews', $propertiesNews)
+            ->with('arrival', $request->arrival ? $request->arrival : date('Y-m-d', strtotime('now')))
+            ->with('departure', $request->departure ? $request->departure :  date('Y-m-d', strtotime('+7 days')));
     }
 
 

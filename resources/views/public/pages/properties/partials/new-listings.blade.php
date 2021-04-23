@@ -13,8 +13,10 @@
             <div class="col-xs-3"> <img src="{{ getFeaturedImage($propertyNews->property_id) }}" width="100%"
                     height="150" />
                 <h4>{{ $propertyNews->name }}</h4>
-                <div class="rate-info">{{ getLowerRate($propertyNews->property_id) }} USD <span>/
-                        {{ __('Night') }}</span></div>
+                <div class="rate-info">
+                    {{ getLowerRate($propertyNews->property_id) }} USD <span>/ {{ __('Night') }}</span>
+                </div>
+                
                 <p>{{ getSubString($propertyNews->description, 100) }}</p>
                 <p>
                     <i class="glyphicon glyphicon-play"></i> <a

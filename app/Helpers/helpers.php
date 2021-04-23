@@ -591,9 +591,30 @@ if (!function_exists('getFeaturedImage')) {
 if (!function_exists('getOffices')) {
     function getOffices()
     {
-        $offices = Office::all();
-
-        return $offices;
+        return [
+            [
+                'name'=> 'Puerto Vallarta',
+                'address'=> 'Libertad 349 <br>Puerto Vallarta, Jalisco, México 48300',
+                'phone'=> '+52 (322) 223-0101',
+                'email'=> 'vallarta@palmeravacations.com',
+                'phone_us_can' => '(323) 250-7721',
+                'phone_free' => '1-800-881-8176',
+                'gmaps_id' => 'puerto-vallarta',
+                'gmaps_lat' => '0',
+                'gmaps_lon' => '0',
+            ],
+            [
+                'name'=> 'Mazatlán',
+                'address'=> 'Ave. Playa Gaviotas 409 Local 27 <br>Mazatlán, Sinaloa, México 82110',
+                'phone'=> '+52 (669) 913-5188',
+                'email'=> 'mazatlan@palmeravacations.com',
+                'phone_us_can' => '(714) 988-7903',
+                'phone_free' => '1-888-688-1577',
+                'gmaps_id' => 'mazatlan',
+                'gmaps_lat' => '0',
+                'gmaps_lon' => '0',
+            ],
+        ];
     }
 }
 
@@ -621,8 +642,8 @@ if (!function_exists('getCities')) {
 if (!function_exists('getSearchDate')) {
     function getSearchDate($format, $arrival, $depature)
     {
-        $arrivalDate = ($arrival)?$arrival:'now';
-        $departureDate = ($depature)?$depature :'now + 7 days';
+        $arrivalDate = ($arrival) ? $arrival:'now';
+        $departureDate = ($depature) ? $depature :'now + 7 days';
         $result = [];
         $result['currentDate'] = ($format)?date('Y-m-d', strtotime($arrivalDate)):date('l d/F/y', strtotime($arrivalDate));
         $result['nextDate'] = ($format)?date('Y-m-d', strtotime($departureDate)):date('l d/F/y', strtotime($departureDate));
@@ -634,6 +655,11 @@ if (!function_exists('getSearchDate')) {
 if (!function_exists('getAvailabilityProperty')) {
     function getAvailabilityProperty($id, $fromDate, $toDate)
     {
+        if(!$fromDate || !$toDate) {
+            $fromDate = date('Y-m-d', strtotime('now'));
+            $toDate = date('Y-m-d', strtotime('+7 days'));
+        }
+
         $property = Property::find($id);
 
         $bookings       = $property->bookings;

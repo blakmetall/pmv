@@ -36,11 +36,10 @@
         <div class="auth-content">
 
             <div class="auth-about">
-                <a href="{{ route('public.home') }}">
+                <a href="{{ route('public.home-default') }}">
                     <img src="{{ asset('assets/images/logo-full.png') }}" alt="">
                 </a>
             </div>
-
 
             @yield('main-content')
 

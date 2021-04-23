@@ -23,6 +23,7 @@ class TestimonialsRepository implements TestimonialsRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldRandomize = isset($config['randomize']) ? $config['randomize'] : true;
 
         $lang = LanguageHelper::current();
 
@@ -37,8 +38,13 @@ class TestimonialsRepository implements TestimonialsRepositoryInterface
         $query
             ->where('language_id', $lang->id)
             ->with('testimonial')
-            ->join('testimonials', 'testimonials.id', '=', 'testimonial_id')
-            ->orderBy('testimonials.created_at', 'desc');
+            ->join('testimonials', 'testimonials.id', '=', 'testimonial_id');
+
+        if($shouldRandomize) {
+            $query->orderByRaw('RAND()');
+        }else {
+            $query->orderBy('testimonials.created_at', 'desc');
+        }
 
         if($shouldPaginate) {
             $result = $query->paginate( 6 );

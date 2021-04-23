@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Helpers\ImagesHelper;
+use App\Helpers\LanguageHelper;
+use App\Helpers\WorkgroupHelper;
+use App\Models\Property;
+use App\Models\PropertyTranslation;
+use App\Validations\PropertiesValidations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Helpers\LanguageHelper;
-use App\Models\{Property, PropertyTranslation};
-use App\Repositories\PropertiesRepositoryInterface;
-use App\Validations\PropertiesValidations;
-use App\Helpers\{ImagesHelper, WorkgroupHelper};
 
 class PropertiesRepository implements PropertiesRepositoryInterface
 {
@@ -24,14 +25,15 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByName = isset($config['filterByName']) ? $config['filterByName'] : false;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
-        $shouldFilterByEnabled   = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
-        $shouldFilterByUserId    = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
-        $shouldFilterByOffline   = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
-        $shouldFilterByDisabled  = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
-        $shouldFilterByFeatured  = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
-        $shouldFilterByNews      = isset($config['filterByNews']) ? $config['filterByNews'] : false;
-        $shouldFilterBySlug      = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
+        $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
+        $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
+        $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
+        $shouldFilterByFeatured = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
+        $shouldFilterByNews = isset($config['filterByNews']) ? $config['filterByNews'] : false;
+        $shouldFilterBySlug = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
 
         $lang = LanguageHelper::current();
 
@@ -39,10 +41,10 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
             $query->where(function ($query) use ($lang, $search) {
                 $query->where(function ($query) use ($lang, $search) {
-                    $query->where('name', 'like', "%" . $search . "%");
-                    $query->orWhere('description', 'like', "%" . $search . "%");
-                    $query->where('language_id', $lang->id);
+                    $query->where('name', 'like', '%'.$search.'%');
+                    $query->orWhere('description', 'like', '%'.$search.'%');
                 });
+
                 $query->orWhereHas('property', function ($query) use ($search) {
                     $query->where('id', $search);
                 });
@@ -51,24 +53,22 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
         }
 
-        
-        if($shouldFilterByNews){
+        if ($shouldFilterByNews) {
             $query
                 ->where('language_id', $lang->id)
                 ->with('property')
                 ->join('properties', 'properties.id', '=', 'property_id')
                 ->orderBy('properties.created_at', 'desc');
-        }else{
+        } else {
             $query
                 ->where('language_id', $lang->id)
-                ->with('property')
-                ->orderBy('name', 'asc');
+                ->with('property');
         }
 
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function ($q) {
-                $table = (new Property)->_getTable();
-                $q->whereIn($table . '.city_id', WorkgroupHelper::getAllowedCities());
+                $table = (new Property())->_getTable();
+                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
             });
         }
 
@@ -86,11 +86,11 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             })->where('language_id', $lang->id);
         }
 
-
         if ($shouldFilterByFeatured) {
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('properties.is_featured', 1);
             });
+            $query->orderByRaw('RAND()');
         }
 
         if ($shouldFilterByEnabled) {
@@ -111,10 +111,16 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             });
         }
 
-        if ($shouldPaginate) {
-            $result = $query->paginate(config('constants.pagination.per-page'));
+        if ($shouldFilterByFeatured) {
+            $result = $query->limit(4)->get();
         } else {
-            $result = $query->get();
+            $query->orderBy('name', 'asc');
+            
+            if ($shouldPaginate) {
+                $result = $query->paginate(config('constants.pagination.per-page'));
+            } else {
+                $result = $query->get();
+            }
         }
 
         return $result;
@@ -123,12 +129,14 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function create(Request $request)
     {
         $this->validation->validate('create', $request);
+
         return $this->save($request);
     }
 
     public function update(Request $request, $id)
     {
         $this->validation->validate('edit', $request, $id);
+
         return $this->save($request, $id);
     }
 
@@ -144,7 +152,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             'has_parking' => 0,
         ];
         $requestData = array_merge($checkboxesConfig, $request->all());
-
 
         if ($is_new) {
             $property = $this->blueprint();
@@ -163,13 +170,13 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         }
 
         $property->en->fill($request->en);
-        if(!$request->en['slug']){
+        if (!$request->en['slug']) {
             $property->en->slug = generateSlug($request->en['name']);
         }
         $property->en->save();
 
         $property->es->fill($request->es);
-        if(!$request->es['slug']){
+        if (!$request->es['slug']) {
             $property->es->slug = generateSlug($request->es['name']);
         }
         $property->es->save();
@@ -187,7 +194,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $property = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
 
         if ($property) {
-
             $property->en =
                 $property
                 ->translations()
@@ -202,7 +208,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         }
 
         if (!$property) {
-            throw new ModelNotFoundException("Property not found");
+            throw new ModelNotFoundException('Property not found');
         }
 
         return $property;
@@ -212,7 +218,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     {
         $property = $this->model->find($id);
         if ($property && $this->canDelete($id)) {
-
             $property->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
             $property->translations()->where('language_id', LanguageHelper::getId('es'))->delete();
 
@@ -262,9 +267,9 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
     public function blueprint()
     {
-        $property = new Property;
-        $property->en = new PropertyTranslation;
-        $property->es = new PropertyTranslation;
+        $property = new Property();
+        $property->en = new PropertyTranslation();
+        $property->es = new PropertyTranslation();
 
         return $property;
     }

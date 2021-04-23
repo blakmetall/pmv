@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\_Public;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\PagesRepositoryInterface;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\TestimonialsRepositoryInterface;
-use App\Repositories\PagesRepositoryInterface;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-
     private $propertiesRepository;
     private $testimoniaslRepository;
     private $pagesPepository;
@@ -25,20 +24,26 @@ class HomeController extends Controller
         $this->pagesPepository = $pagesPepository;
     }
 
-    public function index(Request $request)
+    public function comingSoon(Request $request)
     {
-        $config = ['filterByFeatured' => true];
+        return view('public.pages.home.coming-soon');
+    }
+
+    public function default(Request $request)
+    {
+        $config = ['filterByFeatured' => true, 'paginate' => false];
         $config2 = ['filterByNews' => true];
+        $config3 = ['randomize' => true];
 
         $propertiesFeatured = $this->propertiesRepository->all('', $config);
         $propertiesNews = $this->propertiesRepository->all('', $config2);
-        $testimonials = $this->testimoniaslRepository->all('', '');
+        $testimonials = $this->testimoniaslRepository->all('', $config3);
 
         $vsPage = $this->pagesPepository->find(getPage('vacation-services'));
         $pmPage = $this->pagesPepository->find(getPage('property-management'));
         $csPage = $this->pagesPepository->find(getPage('concierge-services'));
 
-        return view('public.pages.home.index')
+        return view('public.pages.home.default')
             ->with('propertiesFeatured', $propertiesFeatured)
             ->with('propertiesNews', $propertiesNews)
             ->with('testimonials', $testimonials)
