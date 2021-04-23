@@ -9,13 +9,10 @@
                 </div>
             </section>
         @endif
-        <section id="block-recent-views-recent-views-block" class="block block-recent-views clearfix">
-
+        {{-- <section id="block-recent-views-recent-views-block" class="block block-recent-views clearfix">
             <h2 class="block-title">{{ __('Recent Views') }}</h2>
-
-            <div id="recent-views">
-            </div>
-        </section>
+            <div id="recent-views"></div>
+        </section> --}}
         <section id="block-menu-menu-travel-resources" class="block block-menu clearfix">
             <h2 class="block-title">{{ __('Travel Resources') }}</h2>
             <ul class="menu nav">
