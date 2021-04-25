@@ -189,13 +189,13 @@ $_current_role = RoleHelper::current();
                                             </li>
                                         @endif
 
-                                        @if ($_current_role->isAllowed('property-bookings', 'agents'))
+                                        {{-- @if ($_current_role->isAllowed('property-bookings', 'agents'))
                                             <li class="nav-item">
                                                 <a class="" href="{{ route('agents') }}">
                                                     <span class="item-name">{{ __('Agents') }}</span>
                                                 </a>
                                             </li>
-                                        @endif
+                                        @endif --}}
 
                                         @if ($_current_role->isAllowed('property-bookings', 'commisions'))
                                             <li class="nav-item">

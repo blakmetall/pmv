@@ -191,6 +191,33 @@
             'default' => $row->is_enabled,
         ])
 
+        <!-- pet_friendly -->
+        @include('components.form.checkbox', [
+            'group' => 'property',
+            'label' => __('Pet Friendly'),
+            'name' => 'pet_friendly',
+            'value' => 1,
+            'default' => $row->pet_friendly,
+        ])
+
+        <!-- adults_only -->
+        @include('components.form.checkbox', [
+            'group' => 'property',
+            'label' => __('Adults Only'),
+            'name' => 'adults_only',
+            'value' => 1,
+            'default' => $row->adults_only,
+        ])
+
+        <!-- beachfront -->
+        @include('components.form.checkbox', [
+            'group' => 'property',
+            'label' => __('Beachfront'),
+            'name' => 'beachfront',
+            'value' => 1,
+            'default' => $row->beachfront,
+        ])
+
         <!-- is_online -->
         @include('components.form.checkbox', [
             'group' => 'property',
