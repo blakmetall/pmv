@@ -42,8 +42,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-4">
-                        <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="200">
+                    <div class="col-xs-4 mb-3">
+                        <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="350">
                         <div class="rate-info">${{ number_format($nightlyRate, 2) }} <span>/ {{ __('Night') }}</span></div>
                     </div>
 
@@ -76,12 +76,7 @@
 
                         <div class="row">
                             <div class="col-xs-6">
-                                <div class="details-link">
-                                    <i class="glyphicon glyphicon-play"></i>
-                                    <a href="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}"
-                                        title="{{ __('View FULL details') }}"
-                                        class="full-details">{{ __('View FULL details') }}</a>
-                                </div>
+                                &nbsp;
                             </div>
 
                             <div class="col-xs-6">
@@ -91,21 +86,23 @@
 
                         @if ($availabilityProperty == 'all')
                             <div class="row">
-                                <div class="col-xs-4 text-center">
-                                    <div class="b-rate ">${{ number_format($nightlyRate, 2) }} USD</div>
+                                <div class="col-md-5">
+                                    <div class="b-rate">${{ number_format($nightlyRate, 2) }} USD</div>
                                     <div class="b-caption">{{ __('Avg. night') }}</div>
                                 </div>
 
-                                <div class="col-xs-8">
-                                    <div class="total-stay text-right">{{ __('Total Stay') }}:
-                                        <span>${{ number_format($total, 2) }} USD</span><br>
-                                        {{ $bothDates }}
-                                        ({{ $nightsDate }} {{ __('Nights') }} ) 
+                                <div class="col-md-7">
+                                    <div class="text-right mb-3">
+                                        <a href="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}"
+                                            class="btn btn-warning">{{  __('View FULL details')  }}</a>
                                     </div>
-                                    <div class="text-right">
-                                        <a href="{{ route('public.reservations', [$property->property_id]) }}"
-                                            class="btn btn-warning">{{ __('Book it!') }}</a>
+
+                                    <div class="text-right mb-3">
+                                        <a href="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}" class="btn btn-primary">
+                                            {{  __('Booking price dates')  }}
+                                        </a>
                                     </div>
+
                                 </div>
                             </div>
                         @elseif($availabilityProperty == 'some')

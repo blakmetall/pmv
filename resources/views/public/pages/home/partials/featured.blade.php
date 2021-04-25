@@ -1,7 +1,7 @@
 <div class="panel-pane pane-block pane-featured-listings-featured-listings-block">
     <h2 class="pane-title">{{ __('Featured listings') }}</h2>
     <div class="pane-content">
-        <div class="featured-listings row">
+        <div class="featured-listings row-fluid">
             @foreach ($propertiesFeatured as $propertyFeatured)
                 @php
                     $zone = getZone($propertyFeatured->property_id);

@@ -14,7 +14,7 @@
     @endphp
     <header id="navbar" role="banner" class="navbar container navbar-default"
         data-all="{{ json_encode($dataTranslate) }}">
-        <div class="container">
+        <div class="container container-public">
             <div class="navbar-header">
                 <a class="logo navbar-btn pull-left" href="/" title="{{ __('Home') }}">
                     <img src="{{ asset('assets/public/images/logo.png') }}" alt="{{ __('Home') }}" />

@@ -19,6 +19,7 @@ mix.sass(
     "resources/gull/assets/styles/sass/themes/palmera-vacations.scss",
     "public/assets/styles/css/themes/palmera-vacations.min.css"
 );
+mix.sass("resources/sass/public.scss", "public/css/public.css");
 
 // vendor styles mix
 mix.combine(
