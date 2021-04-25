@@ -27,7 +27,6 @@ class PropertiesValidations extends Validation
             'maid_fee' => 'nullable|numeric',
             'bedrooms' => 'required|numeric',
             'baths' => 'required|numeric',
-            'sleeps' => 'nullable|integer',
             'floors' => 'nullable|integer',
             'lot_size_sqft' => 'nullable|numeric',
             'construction_size_sqft' => 'nullable|numeric',
