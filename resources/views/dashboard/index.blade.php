@@ -32,18 +32,4 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    <div class="container app-container">
-        <div class="card">
-            <div class="card-body">
-                <p>
-                    {{ __('Coming Soon') }}...
-                </p>
-            </div>
-        </div>
-    </div>
-
-@endsection
-
-@section('page-js')
-
 @endsection

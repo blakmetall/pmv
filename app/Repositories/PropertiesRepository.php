@@ -27,6 +27,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByName = isset($config['filterByName']) ? $config['filterByName'] : false;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
+        $shouldFilterByOnline = isset($config['filterOnline']) ? $config['filterOnline'] : false;
         $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
         $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
@@ -34,6 +35,10 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByFeatured = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
         $shouldFilterByNews = isset($config['filterByNews']) ? $config['filterByNews'] : false;
         $shouldFilterBySlug = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
+
+        $filterPetFriendly = isset($config['pet_friendly']) ? true : false;
+        $filterAdultsOnly = isset($config['adults_only']) ? true : false;
+        $filterBeachFront = isset($config['beach_front']) ? true : false;
 
         $lang = LanguageHelper::current();
 
@@ -84,6 +89,21 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('slug', $config['filterBySlug']);
             })->where('language_id', $lang->id);
+        }
+
+
+        if ($shouldFilterByOnline) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->where('properties.is_online', 1);
+            });
+        }
+
+        if ($filterPetFriendly && $filterAdultsOnly && $filterBeachFront) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->where('properties.pet_friendly', 1);
+                $q->orWhere('properties.adults_only', 1);
+                $q->orWhere('properties.beachfront', 1);
+            });
         }
 
         if ($shouldFilterByFeatured) {
@@ -149,6 +169,9 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             'is_enabled' => 0,
             'is_online' => 0,
             'is_special' => 0,
+            'pet_friendly' => 0,
+            'adults_only' => 0,
+            'beachfront' => 0,
             'has_parking' => 0,
         ];
         $requestData = array_merge($checkboxesConfig, $request->all());
