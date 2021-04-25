@@ -59,9 +59,9 @@ class PropertyController extends Controller
 
         $properties = $this->propertiesRepository->all($request->property_name, [
             'filterOnline' => true,
-            'pet_friendly' => $request->pet_friendly ? 65 : 0,
-            'adults_only' => $request->adults_only ? 50 : 0,
-            'beach_front' => $request->beach_front ? 14 : 0,
+            'pet_friendly' => $request->pet_friendly ? true : false,
+            'adults_only' => $request->adults_only ? true : false,
+            'beach_front' => $request->beach_front ? true : false,
         ]);
 
         if ($properties->total() == 0) {
