@@ -98,11 +98,19 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             });
         }
 
-        if ($filterPetFriendly && $filterAdultsOnly && $filterBeachFront) {
-            $query->whereHas('property', function ($q) use ($config) {
-                $q->where('properties.pet_friendly', 1);
-                $q->orWhere('properties.adults_only', 1);
-                $q->orWhere('properties.beachfront', 1);
+        if ($filterPetFriendly || $filterAdultsOnly || $filterBeachFront) {
+            $query->whereHas('property', function ($q) use ($filterPetFriendly, $filterAdultsOnly, $filterBeachFront ) {
+                if($filterPetFriendly) {
+                    $q->where('properties.pet_friendly', 1);
+                }
+
+                if($filterAdultsOnly) {
+                    $q->where('properties.adults_only', 1);
+                }
+
+                if($filterBeachFront) {
+                    $q->where('properties.beachfront', 1);
+                }
             });
         }
 
