@@ -22,6 +22,7 @@
 
     {{-- custom css --}}
     <link rel="stylesheet" href="{{ asset('assets/public/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public.css') }}">
 
     {{-- page specific css --}}
     @yield('page-css')

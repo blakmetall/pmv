@@ -51,36 +51,20 @@ class RatesHelper
         $departure_date = Carbon::createFromFormat('Y-m-d', $departure_date_str);
 
         $rates = $property->rates;
+        $nightly = 0;
 
-        $rates_property = [
-            'nightly' => 0,
-            'weekly'  => 0,
-            'monthly' => 0
-        ];
+        foreach($rates as $k => $rate) {
 
-        $average_cost = 0;
+            $start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
+            $end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
 
-        foreach ($rates as $rate) {
-            $rate_start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
-            $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
-
-            $search_arrival_date = $arrival_date->between($rate_start_date, $rate_end_date);
-            $search_departure_date = $departure_date->between($rate_start_date, $rate_end_date);
-
-            if ($search_arrival_date) {
-                $rates_property['nightly'] += $rate->nightly;
-                $rates_property['weekly'] += $rate->weekly;
-                $rates_property['monthly'] += $rate->monthly;
-            };
-
-            if ($search_departure_date) {
-                $rates_property['nightly'] += $rate->nightly;
-                $rates_property['weekly'] += $rate->weekly;
-                $rates_property['monthly'] += $rate->monthly;
-            };
+            if($arrival_date->between($start_date, $end_date)){
+                $nightly = $rate->nightly;
+            }
         }
 
-        return $rates_property['nightly'];
+
+        return $nightly;
     }
 
 }

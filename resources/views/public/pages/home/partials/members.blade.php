@@ -2,7 +2,7 @@
     <section class="footer-top container">
         <div class="region region-footer-top">
             <section id="block-block-1" class="block block-block clearfix">
-                <div class="row text-center">
+                <div class="row-fluid text-center">
                     <div class="col-xs-6">
                         <p>{{ __('Member of:') }}</p>
                         <a href="http://actlgbt.org/en/home/" title="ACT LGBT" target="_blank"><img

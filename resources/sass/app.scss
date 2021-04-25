@@ -11,5 +11,8 @@
  // bootstrap overrides
  @import 'styles-bootstrap';
 
+ // public overrides
+ @import 'public';
+
  // app styles
 @import 'styles';

@@ -1,7 +1,7 @@
 <div class="panel-pane pane-block pane-new-listings-new-listings-block">
     <h2 class="pane-title">{{ __('New listings') }}</h2>
     <div class="pane-content">
-        <div class="row new-listings">
+        <div class="row-fluid new-listings">
             @foreach ($propertiesNews as $index => $propertyNews)
                 @php
                     $zone = getZone($propertyNews->property_id);
@@ -13,8 +13,8 @@
                 @endif
                 <div class="col-xs-6 first-row">
                     <div class="row">
-                        <div class="col-xs-4">
-                            <img src="{{ getFeaturedImage($propertyNews->property_id) }}" width="100%" height="110" />
+                        <div class="col-xs-4 mb-3">
+                            <img src="{{ getFeaturedImage($propertyNews->property_id) }}" width="100%" height="250" />
                         </div>
                         <div class="col-xs-8">
                             <h5>{{ $propertyNews->name }}</h5>

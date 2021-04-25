@@ -1,7 +1,7 @@
 <section id="block-quick-search-quick-search-block" class="block block-quick-search clearfix">
     <form action="{{ route('public.availability-results') }}" id="quick-search-form" accept-charset="UTF-8">
         <div>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="col-xs-10">
                     <div class="form-item form-item-sk form-type-textfield form-group">
                         <input placeholder="{{ __('Quick search') }}" class="form-control form-text" type="text" id="edit-sk"

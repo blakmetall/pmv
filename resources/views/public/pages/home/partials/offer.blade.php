@@ -1,7 +1,7 @@
 <div class="panel-pane pane-custom pane-3">
     <h2 class="pane-title">{{ __('What We Offer') }}</h2>
     <div class="pane-content">
-        <div class="row offers-block">
+        <div class="row-fluid offers-block">
             <div class="col-xs-4">
                 <img src="{{ asset('assets/public/images/vr.jpg') }}" width="100%" />
                 <h5>{{ $vsPage->translate()->title }}</h5>
