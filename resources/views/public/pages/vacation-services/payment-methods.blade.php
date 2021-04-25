@@ -34,7 +34,10 @@
                                 }
                                 @endphp
 
+                                <div class="mb-5"></div>
+                                <div class="mb-5"></div>
                                 <div class="col-xs-4">
+
                                     <div class="prop">
                                         <div class="prop-container">
                                             <div class="fa" style="{{ $color }}">

@@ -117,7 +117,7 @@
                     <div class="pane-content">
                         <div class="row">
                             @foreach ($offices as $office)
-                                <div class="col-xs-6">
+                                <div class="col-xs-6 mb-4">
                                     {!! $office['address'] !!}<br />
                                     <span>{{ __('Phone Local') }}:</span> {{ $office['phone'] }}<br>
                                     @if ($office['phone_us_can'])

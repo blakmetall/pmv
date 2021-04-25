@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <div class="col-xs-4 mb-3">
-                        <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="350">
+                        <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="380">
                         <div class="rate-info">${{ number_format($nightlyRate, 2) }} <span>/ {{ __('Night') }}</span></div>
                     </div>
 
@@ -98,7 +98,7 @@
                                     </div>
 
                                     <div class="text-right mb-3">
-                                        <a href="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}" class="btn btn-primary">
+                                        <a href="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}#property-rates-info" class="btn btn-primary">
                                             {{  __('Booking price dates')  }}
                                         </a>
                                     </div>

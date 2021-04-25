@@ -1,4 +1,6 @@
+
 <aside class="col-sm-3" role="complementary">
+    <div class="mb-5 mb-sm-0"></div>
     <div class="region region-sidebar-second">
         @if (Request::path() != 'availability-results')
             <section id="block-block-2" class="block block-block clearfix">

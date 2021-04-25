@@ -181,7 +181,7 @@ ul.list li {
 	font-size: 18px;
 	color: #2D6C9C;
 	font-weight: 100;
-	padding: 33px 15px;
+	padding: 23px 15px;
 }
 
 .navbar-default .navbar-nav ul.dropdown-menu {
@@ -498,6 +498,7 @@ a.follow-link:hover {
 	background:url(../images/quote.png) 0 0 no-repeat;
 	padding-top: 20px;
 	padding-left: 20px;
+	background-size: 19px;
 }
 
 .field-type-text-with-summary p {
@@ -560,6 +561,7 @@ a.follow-link:hover {
 
 .view-testimonials-list .views-field-body {
 	background:url(../images/quote.png) 0 0 no-repeat;
+	background-size: 19px;
 	padding-top: 10px;
 	padding-left: 20px;	
 	min-height: 70px;

@@ -25,7 +25,7 @@
                     class="language-link {{ $_current_lang->id == 1 ? 'active' : '' }}"
                     xml:lang="en">{{ __('English') }}</a></li>
 
-            <li class="es last {{ $_current_lang->id == 2 ? 'active' : '' }}"><a
+            <li class="es last {{ $_current_lang->id == 2 ? 'active' : '' }} mr-3"><a
                     href="{{ route('language.update', ['es']) }}"
                     class="language-link {{ $_current_lang->id == 2 ? 'active' : '' }}"
                     xml:lang="es">{{ __('Spanish') }}</a></li>
