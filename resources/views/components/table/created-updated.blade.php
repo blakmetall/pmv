@@ -48,6 +48,7 @@
 
     if(isset($model) && is_object($model)) {
         $creator = $model->creator;
+
         if($creator) {
             $hasCreator = true;
         }
@@ -110,7 +111,6 @@
                 </a>
             @endif
         </div>
-
     </td>
 @endif
         

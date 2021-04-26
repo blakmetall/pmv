@@ -1,45 +1,45 @@
 <?php
 
-$skipAuditedTable = isset($skipAuditedTable) ? (bool) $skipAuditedTable : false;
-$useBalancePresentation = isset($useBalancePresentation) ? (bool) $useBalancePresentation : false;
-$usePendingAuditPresentation = isset($usePendingAuditPresentation) ? (bool) $usePendingAuditPresentation : false;
-$useGeneralSearchPresentation = isset($useGeneralSearchPresentation) ? (bool) $useGeneralSearchPresentation : false;
+    $skipAuditedTable = isset($skipAuditedTable) ? (bool) $skipAuditedTable : false;
+    $useBalancePresentation = isset($useBalancePresentation) ? (bool) $useBalancePresentation : false;
+    $usePendingAuditPresentation = isset($usePendingAuditPresentation) ? (bool) $usePendingAuditPresentation : false;
+    $useGeneralSearchPresentation = isset($useGeneralSearchPresentation) ? (bool) $useGeneralSearchPresentation : false;
 
-$balanceCount = 0;
-if (isset($currentBalance)) {
-$balanceCount = $currentBalance['estimatedBalance'];
-}
+    $balanceCount = 0;
+    if (isset($currentBalance)) {
+        $balanceCount = $currentBalance['estimatedBalance'];
+    }
 
-$tableClass = $usePendingAuditPresentation ? 'app-transaction-pending-audit-list' : 'app-transaction-list';
+    $tableClass = $usePendingAuditPresentation ? 'app-transaction-pending-audit-list' : 'app-transaction-list';
 
-if (isRole('owner')) {
-$tableClass = 'app-transaction-owner-list';
-}
+    if (isRole('owner')) {
+        $tableClass = 'app-transaction-owner-list';
+    }
 
-$pendingTableClass = $tableClass . '-pending';
+    $pendingTableClass = $tableClass . '-pending';
 
-$hideBalance = $useGeneralSearchPresentation;
-$hideTotalsRow = $useGeneralSearchPresentation;
+    $hideBalance = $useGeneralSearchPresentation;
+    $hideTotalsRow = $useGeneralSearchPresentation;
 
-$shouldShowBalanceColumn = !$usePendingAuditPresentation;
-$shouldShowBalanceColumn = $hideBalance ? false : $shouldShowBalanceColumn;
+    $shouldShowBalanceColumn = !$usePendingAuditPresentation;
+    $shouldShowBalanceColumn = $hideBalance ? false : $shouldShowBalanceColumn;
 
-$months = [
-1 => __('January'),
-2 => __('February'),
-3 => __('March'),
-4 => __('April'),
-5 => __('May'),
-6 => __('June'),
-7 => __('July'),
-8 => __('August'),
-9 => __('September'),
-10 => __('October'),
-11 => __('November'),
-12 => __('December'),
-];
+    $months = [
+        1 => __('January'),
+        2 => __('February'),
+        3 => __('March'),
+        4 => __('April'),
+        5 => __('May'),
+        6 => __('June'),
+        7 => __('July'),
+        8 => __('August'),
+        9 => __('September'),
+        10 => __('October'),
+        11 => __('November'),
+        12 => __('December'),
+    ];
 
-$modalID = 'transaction-notification-' . strtotime('now') . rand(1, 99999);
+    $modalID = 'transaction-notification-' . strtotime('now') . rand(1, 99999);
 ?>
 
 <div class="mb-5"></div>
@@ -47,36 +47,37 @@ $modalID = 'transaction-notification-' . strtotime('now') . rand(1, 99999);
 @include('property-management-transactions.partials.modal-delete-image')
 
 <?php
-$totalCount = 0;
-$hasTransactions = false;
+    $totalCount = 0;
+    $hasTransactions = false;
 
-foreach ($rows as $index => $row) {
-if ($row->auditedBy) {
-$hasTransactions = true;
-break;
-}
-}
+    foreach ($rows as $index => $row) {
+        if ($row->auditedBy) {
+            $hasTransactions = true;
+            break;
+        }
+    }
 
-$auditTransactions = 0;
-$pendingTransactions = 0;
+    $auditTransactions = 0;
+    $pendingTransactions = 0;
 
-foreach ($rows as $index => $row) {
-if ($row->auditedBy) {
-$auditTransactions++;
-} else {
-$pendingTransactions++;
-}
-}
+    foreach ($rows as $index => $row) {
+        if ($row->auditedBy) {
+            $auditTransactions++;
+        } else {
+            $pendingTransactions++;
+        }
+    }
 
-if (count($rows) > 0) {
-$totalCount = count($rows);
-}
+    if (count($rows) > 0) {
+        $totalCount = count($rows);
+    }
 
-$urlParams = '?' . http_build_query($_GET);
+    $urlParams = '?' . http_build_query($_GET);
+
 ?>
 
+<!-- section for audited property management transactions -->
 @if (!$skipAuditedTable)
-    <!-- audited transactions -->
     @if ($hasTransactions)
         <a href="#" class="btn-print" data-table="table-print-transactions" data-title="{{ __('Transactions') }}">
             <i class="nav-icon i-Billing"></i>
@@ -89,11 +90,12 @@ $urlParams = '?' . http_build_query($_GET);
 
     @if ($hasTransactions)
         <div id="table-print-transactions" class="table-responsive">
-            <table class="table table-striped {{ $tableClass }}" data-show-print="true">
+            <table class="table table-striped {{ $tableClass }}" data-show-print="true" style="padding-right: 20px;">
                 <thead>
                     @if ($shouldShowBalanceColumn)
                         <tr>
                             <?php $colspanMonth = !isRole('owner') && !isRole('regular') ? 10 : 8; ?>
+
                             <th colspan="{{ $colspanMonth }}">
                                 @if (isset($_GET['month']) && $_GET['year'])
                                     {{ $months[(int) $_GET['month']] }}
@@ -103,17 +105,18 @@ $urlParams = '?' . http_build_query($_GET);
                             </th>
 
                             <?php $colspanYear = !isRole('owner') && !isRole('regular') ? 5 : 4; ?>
+
                             <th colspan="{{ $colspanYear }}">
                                 {{ __('Previous Balance') }}: &nbsp;&nbsp;
 
                                 <?php
-                                $isUnderAverage = false;
+                                    $isUnderAverage = false;
 
-                                if (isset($rows[0]) && isset($rows[0]->propertyManagement)) {
-                                $isUnderAverage = $rows[0]->propertyManagement->average_month > $balanceCount;
-                                }
+                                    if (isset($rows[0]) && isset($rows[0]->propertyManagement)) {
+                                        $isUnderAverage = $rows[0]->propertyManagement->average_month > $balanceCount;
+                                    }
 
-                                $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                    $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
                                 ?>
 
                                 <span class="{{ $underAverageClass }}">
@@ -134,7 +137,7 @@ $urlParams = '?' . http_build_query($_GET);
                         @endif
 
                         <th scope="col" class="transaction-col-file" style="<?= !isRole('owner') ? 'width: 6%;' : 'width: 2%;' ?>">
-                            <div class="not-print" style="<?= !isRole('owner') ? 'min-width: 100px;' : '' ?>"></div>
+                            <div class="not-print" style="<?= !isRole('owner') ? 'min-width: 90px;' : '' ?>"></div>
                         </th>
 
                         <th scope="col" class="transaction-col-date">{{ __('Date') }}</th>
@@ -155,7 +158,7 @@ $urlParams = '?' . http_build_query($_GET);
                         @if (!isRole('owner'))
                             <th scope="col" class="transaction-col-created">{{ __('Created') }}</th>
                             <th scope="col" class="transaction-col-updated">{{ __('Updated') }}</th>
-                @else
+                        @else
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                         @endif
@@ -163,10 +166,9 @@ $urlParams = '?' . http_build_query($_GET);
                         @if (!isRole('owner'))
                             <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
                         @endif
-
                     </tr>
-
                 </thead>
+
                 <tbody>
 
                     <?php
@@ -178,19 +180,19 @@ $urlParams = '?' . http_build_query($_GET);
                         @foreach ($rows as $rindex => $row)
 
                             <?php
-                            if (!$row->auditedBy) {
-                                continue;
-                            }
+                                if (!$row->auditedBy) {
+                                    continue;
+                                }
 
-                            $increase = !!($row->operation_type === config('constants.operation_types.credit'));
+                                $increase = !!($row->operation_type === config('constants.operation_types.credit'));
 
-                            if ($increase) {
-                                $creditCount += $row->amount;
-                                $balanceCount += $row->amount;
-                            } else {
-                                $chargeCount += $row->amount;
-                                $balanceCount -= $row->amount;
-                            }
+                                if ($increase) {
+                                    $creditCount += $row->amount;
+                                    $balanceCount += $row->amount;
+                                } else {
+                                    $chargeCount += $row->amount;
+                                    $balanceCount -= $row->amount;
+                                }
                             ?>
 
                             <tr>
@@ -217,51 +219,33 @@ $urlParams = '?' . http_build_query($_GET);
                                 <td style="padding: 0.1rem;">
                                     <div class="not-print">
                                         @if (!isRole('owner') && !isRole('regular'))
-                                            {{-- <a href="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}" class="mr-2">
-                                                <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -2px;">
-                                            </a> --}}
+                                            <!-- email notification for property management transaction -->
                                             <a href="#" data-toggle="modal" data-source="{{ $row->id }}"
                                                 data-target="#{{ $modalID }}"
                                                 data-text-button="{{ __('Send') }}"
                                                 data-text-custom-msg="{{ __('Additional Msg') }}"
                                                 data-route="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}"
                                                 class="text-primary mr-2">
-                                                <img src="/images/email.svg" alt=""
-                                                    style="width: 17px; position: relative; top: -3px;">
+                                                <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
                                             </a>
                                         @endif
 
                                         @if ($row->file_url)
                                             @include('components.table.file-modal', [
-                                            'fileName' => $row->file_original_name,
-                                            'filePath' => $row->file_path,
-                                            'fileUrl' => $row->file_url,
+                                                'fileName' => $row->file_original_name,
+                                                'filePath' => $row->file_path,
+                                                'fileUrl' => $row->file_url,
 
-                                            'fileSlug' => $row->file_slug,
-                                            'fileDeleteUrl' => 'property-management-transactions.delete-image',
-                                            'routeParams' => $row->id,
+                                                'fileSlug' => $row->file_slug,
+                                                'fileDeleteUrl' => 'property-management-transactions.delete-image',
+                                                'routeParams' => $row->id,
                                             ])
                                         @endif
 
                                         <!-- Delete image -->
 
-                                        {{-- @if ($row->file_url)
-                                            <a href="#" class="btn-delete-file" alt="{{ __('Delete File') }}"
-                                                data-toggle="modal" data-source="{{ $row->id }}"
-                                                data-target="#{{ $modalID }}"
-                                                data-text-button="{{ __('Delete') }}"
-                                                data-cancel-button="{{ __('Cancel') }}"
-                                                data-route="{{ route('property-management-transactions.delete-image', [$row->id]) }}"
-
-                                                class="text-primary mr-2">
-                                                <img src="/images/search-delete.gif" alt=""
-                                                    style="width: 15px;">
-                                            </a>
-                                        @endif --}}
-
                                         @if (!isRole('owner'))
-                                            @include('property-management-transactions.partials.modal-edit',
-                                            ['pm' => $row->propertyManagement, 'transaction' => $row])
+                                            @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                             @if (!$usePendingAuditPresentation)
                                                 <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}"
@@ -322,7 +306,7 @@ $urlParams = '?' . http_build_query($_GET);
                                 <td>
                                     @if ($row->operation_type === config('constants.operation_types.credit'))
                                         {{ priceFormat($row->amount) }}
-                            @else
+                                    @else
                                         --
                                     @endif
                                 </td>
@@ -331,7 +315,7 @@ $urlParams = '?' . http_build_query($_GET);
                                 <td>
                                     @if ($row->operation_type === config('constants.operation_types.charge'))
                                         {{ priceFormat($row->amount) }}
-                            @else
+                                    @else
                                         --
                                     @endif
                                 </td>
@@ -340,8 +324,8 @@ $urlParams = '?' . http_build_query($_GET);
                                 @if ($shouldShowBalanceColumn)
                                     <td>
                                         <?php
-                                        $isUnderAverage = $row->propertyManagement->average_month > $balanceCount;
-                                        $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                            $isUnderAverage = $row->propertyManagement->average_month > $balanceCount;
+                                            $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
                                         ?>
 
                                         <span class="{{ $underAverageClass }}">
@@ -358,7 +342,7 @@ $urlParams = '?' . http_build_query($_GET);
                                     'trimTime' => true,
                                     'model' => $row,
                                     ])
-                        @else
+                                @else
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 @endif
@@ -366,9 +350,9 @@ $urlParams = '?' . http_build_query($_GET);
                                 <!-- audited cols -->
                                 @if (!isRole('owner'))
                                     @include('components.table.created-updated', [
-                                    'audited_at' => $row->audit_date,
-                                    'auditedBy' => $row->auditedBy,
-                                    'trimTime' => true,
+                                        'audited_at' => $row->audit_date,
+                                        'auditedBy' => $row->auditedBy,
+                                        'trimTime' => true,
                                     ])
                                 @endif
 
@@ -381,7 +365,7 @@ $urlParams = '?' . http_build_query($_GET);
                         <tr>
                             @if (isRole('owner'))
                                 <td colspan="6">&nbsp;</td>
-                    @else
+                            @else
                                 <td colspan="8">&nbsp;</td>
                             @endif
 
@@ -403,7 +387,7 @@ $urlParams = '?' . http_build_query($_GET);
 
                             @if ($useBalancePresentation)
                                 <td colspan="4">&nbsp;</td>
-                    @else
+                            @else
                                 <td colspan="3">&nbsp;</td>
                             @endif
                         </tr>
@@ -412,7 +396,7 @@ $urlParams = '?' . http_build_query($_GET);
                 </tbody>
             </table>
         </div>
-@else
+    @else
         <div id="table-print-transactions" class="table-responsive">
             <table class="table table-striped {{ $tableClass }}" data-show-print="true">
                 <thead>
@@ -428,17 +412,18 @@ $urlParams = '?' . http_build_query($_GET);
                             </th>
 
                             <?php $colspanYear = !isRole('owner') ? 4 : 3; ?>
+
                             <th colspan="{{ $colspanYear }}">
                                 {{ __('Previous Balance') }}: &nbsp;&nbsp;
 
                                 <?php
-                                $isUnderAverage = false;
+                                    $isUnderAverage = false;
 
-                                if (isset($pm)) {
-                                    $isUnderAverage = $pm->average_month > $balanceCount;
-                                }
+                                    if (isset($pm)) {
+                                        $isUnderAverage = $pm->average_month > $balanceCount;
+                                    }
 
-                                $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
+                                    $underAverageClass = $isUnderAverage ? 'app-price-red' : '';
                                 ?>
 
                                 <span class="{{ $underAverageClass }}">
@@ -457,18 +442,18 @@ $urlParams = '?' . http_build_query($_GET);
 
 
 <?php
-$hasPendingAudits = false;
+    $hasPendingAudits = false;
 
-foreach ($rows as $index => $row) {
-    if (!$row->auditedBy) {
-        $hasPendingAudits = true;
-        break;
+    foreach ($rows as $index => $row) {
+        if (!$row->auditedBy) {
+            $hasPendingAudits = true;
+            break;
+        }
     }
-}
 ?>
 
+<!-- section for pending property management transactions -->
 @if (!isRole('owner'))
-    <!-- pending transactions -->
     @if ($hasPendingAudits)
         <a href="#" class="btn-print" data-table="table-print-pending" data-title="{{ __('Pending Transactions') }}">
             <i class="nav-icon i-Billing"></i>
@@ -481,18 +466,20 @@ foreach ($rows as $index => $row) {
         <div id="table-print-pending" class="table-responsive app-checkbox-actions">
             <table class="table table-striped {{ $pendingTableClass }}">
                 <thead>
-
                     <tr>
                         <th scope="col" class="transaction-col-id">#</th>
                         <th scope="col" class="transaction-col-id">ID</th>
+                        
                         <th scope="col" class="transaction-col-checkbox">
                             <div class="not-print form-group form-check">
                                 <input type="checkbox" class="form-check-input app-checkbox-actions-header">
                             </div>
                         </th>
+
                         <th scope="col" class="transaction-col-file">
                             <div style="min-width: 70px;"></div>
                         </th>
+
                         <th scope="col" class="transaction-col-date">
                             {{ __('Date') }}
 
@@ -518,6 +505,7 @@ foreach ($rows as $index => $row) {
                                 </a>
                             @endif
                         </th>
+
                         <th scope="col" class="transaction-col-property">
                             {{ __('Property') }}
 
@@ -550,7 +538,7 @@ foreach ($rows as $index => $row) {
                         @if ($usePendingAuditPresentation)
                             <th scope="col" class="transaction-col-amount">{{ __('Amount') }}</th>
                             <th scope="col" class="transaction-col-type">{{ __('Type') }}</th>
-                @else
+                        @else
                             <th scope="col" class="transaction-col-credit">{{ __('Credit') }}</th>
                             <th scope="col" class="transaction-col-charge">{{ __('Charge') }}</th>
                         @endif
@@ -565,12 +553,10 @@ foreach ($rows as $index => $row) {
                         @if (!$usePendingAuditPresentation)
                             <th scope="col" class="transaction-col-audited">{{ __('Audited') }}</th>
                         @endif
-
                     </tr>
-
                 </thead>
-                <tbody>
 
+                <tbody>
                     @php
                         $creditCount = 0;
                         $chargeCount = 0;
@@ -579,23 +565,21 @@ foreach ($rows as $index => $row) {
                     @endphp
 
                     @if (count($rows))
-
                         @foreach ($rows as $row)
-
                             <?php
-                            if ($row->auditedBy) {
-                                continue;
-                            }
+                                if ($row->auditedBy) {
+                                    continue;
+                                }
 
-                            $increase = !!($row->operation_type === config('constants.operation_types.credit'));
+                                $increase = !!($row->operation_type === config('constants.operation_types.credit'));
 
-                            if ($increase) {
-                                $balanceCount += $row->amount;
-                                $creditCount += $row->amount;
-                            } else {
-                                $balanceCount -= $row->amount;
-                                $chargeCount += $row->amount;
-                            }
+                                if ($increase) {
+                                    $balanceCount += $row->amount;
+                                    $creditCount += $row->amount;
+                                } else {
+                                    $balanceCount -= $row->amount;
+                                    $chargeCount += $row->amount;
+                                }
                             ?>
 
                             <tr>
@@ -612,8 +596,7 @@ foreach ($rows as $index => $row) {
                                 <!-- checkbox -->
                                 <td>
                                     <div class="not-print form-group form-check">
-                                        <input type="checkbox" class="form-check-input app-checkbox-actions-item"
-                                            value="{{ $row->id }}">
+                                        <input type="checkbox" class="form-check-input app-checkbox-actions-item" value="{{ $row->id }}">
                                     </div>
                                 </td>
 
@@ -632,25 +615,8 @@ foreach ($rows as $index => $row) {
                                             ])
                                         @endif
 
-                                        <!-- Delete image -->
-
-                                        {{-- @if ($row->file_url)
-                                            <a href="#" class="btn-delete-file" alt="{{ __('Delete File') }}"
-                                                data-toggle="modal" data-source="{{ $row->id }}"
-                                                data-target="#{{ $modalID }}"
-                                                data-text-button="{{ __('Delete') }}"
-                                                data-cancel-button="{{ __('Cancel') }}"
-                                                data-route="{{ route('property-management-transactions.delete-image', [$row->id]) }}"
-
-                                                class="text-primary mr-2">
-                                                <img src="/images/search-delete.gif" alt=""
-                                                    style="width: 15px;">
-                                            </a>
-                                        @endif --}}
-
                                         @if (!isRole('owner'))
-                                            @include('property-management-transactions.partials.modal-edit', ['pm' =>
-                                            $row->propertyManagement, 'transaction' => $row])
+                                            @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                             @if (!$usePendingAuditPresentation)
                                                 <a href="{{ route('property-management-transactions.destroy', [$row->propertyManagement->id, $row->id]) }}{{ $urlParams }}"
@@ -684,8 +650,7 @@ foreach ($rows as $index => $row) {
                                             <div>
                                                 <a href="{{ route('property-management-transactions', [$row->propertyManagement->id]) }}"
                                                     class="text-primary">
-                                                    <i class="nav-icon i-Receipt-3 font-weight-bold"
-                                                        style="font-size: 11px;"></i>
+                                                    <i class="nav-icon i-Receipt-3 font-weight-bold" style="font-size: 11px;"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -727,12 +692,12 @@ foreach ($rows as $index => $row) {
                                     @php
                                         $totalPendingAudits += $row->amount;
                                     @endphp
-                        @else
+                                @else
                                     <!-- credit -->
                                     <td>
                                         @if ($row->operation_type === config('constants.operation_types.credit'))
                                             {{ priceFormat($row->amount) }}
-                                @else
+                                        @else
                                             --
                                         @endif
                                     </td>
@@ -741,7 +706,7 @@ foreach ($rows as $index => $row) {
                                     <td>
                                         @if ($row->operation_type === config('constants.operation_types.charge'))
                                             {{ priceFormat($row->amount) }}
-                                @else
+                                        @else
                                             --
                                         @endif
                                     </td>
@@ -760,13 +725,14 @@ foreach ($rows as $index => $row) {
                                         </span>
                                     </td>
                                 @endif
+
                                 <span class="not-print">
                                     <!-- created/updated cols -->
                                     @include('components.table.created-updated', [
-                                    'created_at' => $row->created_at,
-                                    'updated_at' => $row->updated_at,
-                                    'trimTime' => true,
-                                    'model' => $row,
+                                        'created_at' => $row->created_at,
+                                        'updated_at' => $row->updated_at,
+                                        'trimTime' => true,
+                                        'model' => $row,
                                     ])
                                 </span>
 
@@ -789,7 +755,7 @@ foreach ($rows as $index => $row) {
                                 <th class="text-primary">{{ priceFormat($totalPendingAudits) }}</th>
                                 <td colspan="3">&nbsp;</td>
                             </tr>
-                @else
+                        @else
                             <tr>
                                 <td colspan="8">&nbsp;</td>
                                 <th class="text-primary">{{ priceFormat($creditCount) }}</th>
@@ -810,13 +776,12 @@ foreach ($rows as $index => $row) {
 
                                 @if ($useBalancePresentation)
                                     <td colspan="4">&nbsp;</td>
-                        @else
+                                @else
                                     <td colspan="3">&nbsp;</td>
                                 @endif
                             </tr>
                         @endif
                     @endif
-
                 </tbody>
             </table>
 
@@ -834,7 +799,7 @@ foreach ($rows as $index => $row) {
                 </a>
             </div>
         </div>
-@else
+    @else
         {{ __('No transactions found.') }}
     @endif
 @endif
