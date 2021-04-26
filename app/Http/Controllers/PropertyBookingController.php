@@ -632,7 +632,7 @@ class PropertyBookingController extends Controller
         return redirect()->back();
     }
 
-    // get the partial section to select property; used to create new transaction url
+    // get the partial section to select property; used to create new booking url
     public function getPropertySelection()
     {
         $config = [

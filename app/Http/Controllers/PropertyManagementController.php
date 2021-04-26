@@ -152,7 +152,23 @@ class PropertyManagementController extends Controller
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
         ];
-        $properties = $this->propertiesRepository->all('', $config);
+
+        $tmpProperties = $this->propertiesRepository->all('', $config);
+        $properties = [];
+
+        // skip properties without property management enabled
+        if(count($tmpProperties)) {
+            foreach($tmpProperties as $p) {
+                if($p->property && $p->property->management()->count()) {
+                    foreach($p->property->management as $management) {
+                        if($management->is_finished !== 1) {
+                            $properties[] = $p;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         return view('property-management.get-property-selection')->with('properties', $properties);
     }
