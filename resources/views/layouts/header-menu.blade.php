@@ -200,7 +200,7 @@
 
                     <hr class="mt-1 mb-1">
 
-                    <a class="dropdown-item app-header-return-to-site-dropdown" href="{{ route('public.home-default') }}">
+                    <a class="dropdown-item app-header-return-to-site-dropdown" href="{{ route('public.home-default') }}" target="_blank">
                         {{ __('Return to public site') }}
                     </a>
 
