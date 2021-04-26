@@ -403,6 +403,7 @@
     "Zone": "Zone",
     "Zones": "Zones",
     "ZIP": "ZIP",
+
     "VL - Empty Clean": "VL - Empty Clean",
     "LL - Arrival": "LL - Arrival",
     "VS - Empty Dirty": "VS - Empty Dirty",
@@ -411,6 +412,15 @@
     "P - Pending": "P - Pending",
     "T - Finished": "T - Finished",
     "R - Refresh": "R - Refresh",
+    "Empty Clean": "Empty Clean",
+    "Arrival": "Arrival",
+    "Empty Dirty": "Empty Dirty",
+    "Ocuppied": "Ocuppied",
+    "Departure": "Departure",
+    "Pending": "Pending",
+    "Finished": "Finished",
+    "Refresh": "Refresh",
+
     "Su": "Su",
     "Mo": "Mo",
     "Tu": "Tu",

@@ -25,12 +25,32 @@
 
 .icons-frecuency {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
 }
 
-.icon-item {
+.icons-frecuency .icon-item {
+    margin-bottom: 5px;
     display: flex;
+    width: 100%;
+}
+
+.icons-frecuency .icon-item .square-clean {
+    border-radius: 50%;
+    border-color: #ccc;
+}
+.monthly-batch-iconography {
+    display:flex;
+}
+
+.monthly-batch-iconography .square-clean{
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border-color: #ccc;
+    flex-shrink: 0;
 }
 
 .app-form-checkbox-label {

@@ -44,28 +44,28 @@
 
     <div class="icons-frecuency">
         <div class="icon-item">
-            <div class="icon-desc"><?=__('VL - Empty Clean')?></div>
+            <div class="icon-desc"><b>VL</b> - <?=__('Empty Clean')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('LL - Arrival')?></div>
+            <div class="icon-desc"><b>LL</b> - <?=__('Arrival')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('VS - Empty Dirty')?></div>
+            <div class="icon-desc"><b>VS</b> - <?=__('Empty Dirty')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('O - Empty Clean')?></div>
+            <div class="icon-desc"><b>O</b> - <?=__('Empty Clean')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('SAL - Empty Clean')?></div>
+            <div class="icon-desc"><b>SAL</b> - <?=__('Empty Clean')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('P - Empty Clean')?></div>
+            <div class="icon-desc"><b>P</b> - <?=__('Empty Clean')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('T - Empty Clean')?></div>
+            <div class="icon-desc"><b>T</b> - <?=__('Empty Clean')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><?=__('R - Empty Clean')?></div>
+            <div class="icon-desc"><b>R</b> - <?=__('Empty Clean')?></div>
         </div>
     </div>
 </div>

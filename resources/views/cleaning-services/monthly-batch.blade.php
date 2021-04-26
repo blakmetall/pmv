@@ -80,7 +80,12 @@
                     @endphp
 
                     <tr class="hoverable">
-                        <td class="cleaning-td-property hover-action"><div class="square-clean" style="background-color:{{ $color }}"></div>{{ $item->name }}</td>
+                        <td class="cleaning-td-property hover-action">
+                            <div class="monthly-batch-iconography">
+                                <div class="square-clean" style="background-color:{{ $color }}"></div>
+                                <div>{{ $item->name }}</div>
+                            </div>
+                        </td>
                         <td class="cleaning-td-info">{{ count($monthlyCleaningServices) }}</td>
 
                         @for($i = 1; $i <= $daysInMonth; $i++)

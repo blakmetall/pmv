@@ -622,12 +622,17 @@
 
     .cleaning-th-days,
     .cleaning-td-days {
-        min-width: 90px;
+        min-width: 60px;
         text-align: center;
     }
 
     .cleaning-td-days {
         padding: 10px 5px;
+
+        a.btn-add-service {
+            background: #fcfcfc;
+            color: #333 !important;
+        }
     }
 
     .cleaning-td-property {
@@ -637,7 +642,7 @@
     .cleaning-td-content {
         a {
             display: inline-block;
-            width: 100%;
+            width: 60px;
             color: #888;
         }
 
@@ -722,7 +727,8 @@
 }
 
 .cleaning-td-service-open {
-    background-color: #d73636;
+    background-color: #d73636 !important;
+    color: #fff;
 }
 
 .cleaning-td-service-finished {

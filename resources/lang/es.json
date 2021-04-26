@@ -427,6 +427,7 @@
     "ZIP": "Código postal",
     "Zone": "Zona",
     "Zones": "Zonas",
+
     "VL - Empty Clean": "VL - Vacía Limpia",
     "LL - Arrival": "LL - Llegada",
     "VS - Empty Dirty": "VS - Vacía Sucia",
@@ -435,6 +436,15 @@
     "P - Pending": "P - Pendiente",
     "T - Finished": "T - Terminada",
     "R - Refresh": "R - Refrescar",
+    "Empty Clean": "Vacía Limpia",
+    "Arrival": "Llegada",
+    "Empty Dirty": "Vacía Sucia",
+    "Ocuppied": "Ocupada",
+    "Departure": "Salida",
+    "Pending": "Pendiente",
+    "Finished": "Terminada",
+    "Refresh": "Refrescar",
+
     "Su": "Do",
     "Mo": "Lu",
     "Tu": "Ma",
