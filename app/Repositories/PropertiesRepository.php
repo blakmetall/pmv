@@ -36,9 +36,9 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByNews = isset($config['filterByNews']) ? $config['filterByNews'] : false;
         $shouldFilterBySlug = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
 
-        $filterPetFriendly = isset($config['pet_friendly']) ? true : false;
-        $filterAdultsOnly = isset($config['adults_only']) ? true : false;
-        $filterBeachFront = isset($config['beach_front']) ? true : false;
+        $filterPetFriendly = isset($config['pet_friendly']) && $config['pet_friendly'] ? true : false;
+        $filterAdultsOnly = isset($config['adults_only']) && $config['adults_only'] ? true : false;
+        $filterBeachFront = isset($config['beachfront']) && $config['beachfront'] ? true : false;
 
         $lang = LanguageHelper::current();
 
@@ -98,19 +98,21 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             });
         }
 
-        if ($filterPetFriendly || $filterAdultsOnly || $filterBeachFront) {
-            $query->whereHas('property', function ($q) use ($filterPetFriendly, $filterAdultsOnly, $filterBeachFront ) {
-                if($filterPetFriendly) {
-                    $q->where('properties.pet_friendly', 1);
-                }
+        if ($filterPetFriendly) {
+            $query->whereHas('property', function ($q) {
+                $q->where('properties.pet_friendly', 1);
+            });
+        }
 
-                if($filterAdultsOnly) {
-                    $q->where('properties.adults_only', 1);
-                }
+        if ($filterAdultsOnly) {
+            $query->whereHas('property', function ($q) {
+                $q->where('properties.adults_only', 1);
+            });
+        }
 
-                if($filterBeachFront) {
-                    $q->where('properties.beachfront', 1);
-                }
+        if ($filterBeachFront) {
+            $query->whereHas('property', function ($q) {
+                $q->where('properties.beachfront', 1);
             });
         }
 
