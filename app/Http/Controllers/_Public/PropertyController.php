@@ -61,7 +61,7 @@ class PropertyController extends Controller
             'filterOnline' => true,
             'pet_friendly' => $request->pet_friendly ? true : false,
             'adults_only' => $request->adults_only ? true : false,
-            'beach_front' => $request->beach_front ? true : false,
+            'beachfront' => $request->beach_front ? true : false,
         ]);
 
         if ($properties->total() == 0) {
