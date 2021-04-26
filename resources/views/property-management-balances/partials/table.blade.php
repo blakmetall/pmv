@@ -46,11 +46,9 @@
                         <!-- balances -->
                         <td>
                             @if (!isRole('owner'))
-                                {{-- <a href="{{ route('property-management-balances.email', [$pm->id]) }}" alt="{{ __('Send Email') }}" class="text-primary mr-2">
-                                <   img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">
-                                </a> --}}
-
+                                <!-- sent transaction email -->
                                 <a href="#" data-toggle="modal" data-source="{{ $pm->id }}" data-target="#{{ $modalID }}"
+                                    data-cancel-button="{{ __('Cancel') }}"
                                     data-text-button="{{ __('Send') }}" data-text-custom-msg="{{ __('Additional Msg') }}"
                                     data-route="{{ route('property-management-balances.email', [$pm->id]) }}" class="text-primary mr-2">
                                         <img src="/images/email.svg" alt="" style="width: 17px; position: relative; top: -3px;">

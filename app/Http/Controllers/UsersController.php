@@ -187,7 +187,7 @@ class UsersController extends Controller
         $resetToken = Password::broker()->createToken($user);
         $user->sendPasswordResetNotification($resetToken);
 
-        $request->session()->flash('success', __('Email sended successfully'));
+        $request->session()->flash('success', __('Email sent successfully'));
 
         return redirect()->back();
     }

@@ -222,6 +222,7 @@
                                             <!-- email notification for property management transaction -->
                                             <a href="#" data-toggle="modal" data-source="{{ $row->id }}"
                                                 data-target="#{{ $modalID }}"
+                                                data-cancel-button="{{ __('Cancel') }}"
                                                 data-text-button="{{ __('Send') }}"
                                                 data-text-custom-msg="{{ __('Additional Msg') }}"
                                                 data-route="{{ route('property-management-transactions.email', [$row->propertyManagement->id, $row->id]) }}"
@@ -476,9 +477,7 @@
                             </div>
                         </th>
 
-                        <th scope="col" class="transaction-col-file">
-                            <div style="min-width: 70px;"></div>
-                        </th>
+                        <th scope="col" class="transaction-col-file" width="70px"></th>
 
                         <th scope="col" class="transaction-col-date">
                             {{ __('Date') }}
@@ -601,17 +600,17 @@
                                 </td>
 
                                 <!-- edit, file and delete -->
-                                <td style="padding: 0.1rem;">
-                                    <div class="not-print">
+                                <td style="padding: 0.1rem;" width="70px">
+                                    <div class="not-print pending-audits-div">
                                         @if ($row->file_url)
                                             @include('components.table.file-modal', [
-                                            'fileName' => $row->file_original_name,
-                                            'filePath' => $row->file_path,
-                                            'fileUrl' => $row->file_url,
+                                                'fileName' => $row->file_original_name,
+                                                'filePath' => $row->file_path,
+                                                'fileUrl' => $row->file_url,
 
-                                            'fileSlug' => $row->file_slug,
-                                            'fileDeleteUrl' => 'property-management-transactions.delete-image',
-                                            'routeParams' => $row->id,
+                                                'fileSlug' => $row->file_slug,
+                                                'fileDeleteUrl' => 'property-management-transactions.delete-image',
+                                                'routeParams' => $row->id,
                                             ])
                                         @endif
 

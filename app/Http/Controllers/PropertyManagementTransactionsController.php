@@ -489,7 +489,7 @@ class PropertyManagementTransactionsController extends Controller
             }
         }
 
-        $request->session()->flash('success', __('Email sended successfully'));
+        $request->session()->flash('success', __('Email sent successfully'));
 
         return redirect()->back();
     }

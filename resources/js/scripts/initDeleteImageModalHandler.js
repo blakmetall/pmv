@@ -12,17 +12,20 @@ export function initDeleteImageModalHandler() {
             var route = $(e.relatedTarget).data("route");
             var txtButton = $(e.relatedTarget).data("text-button");
             var cancelButton = $(e.relatedTarget).data("cancel-button");
+            
             $.ajax({
                 url: url,
                 type: "GET",
                 data:{"source": source}
             }).done(function(html) {
                 container.html(html);
-                container.append(`<form action="${route}">
-                <br>
-                <button type="button" class="btn btn-primary m-1" data-dismiss="modal">${cancelButton}</button>
-                <button type="submit" class="btn btn-danger m-1">${txtButton}</button>
-                </form>`);
+                container.append(
+                    `<form action="${route}">
+                        <br>
+                        <button type="button" class="btn btn-primary m-1" data-dismiss="modal">${cancelButton}</button>
+                        <button type="submit" class="btn btn-danger m-1">${txtButton}</button>
+                    </form>`
+                );
             });
         });
     });

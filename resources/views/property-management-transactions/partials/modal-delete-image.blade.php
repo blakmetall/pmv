@@ -3,7 +3,7 @@
     <div class="modal-dialog app-table-file-modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ __('Are you sure, you want delete image?') }}</h5>
+                <h5 class="modal-title">{{ __('Send property management transaction email?') }}</h5>
             </div>
             <div class="modal-body">
                 <div class="app-modal-delete-image-container"
