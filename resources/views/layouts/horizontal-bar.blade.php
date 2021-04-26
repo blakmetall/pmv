@@ -65,15 +65,15 @@ $_current_role = RoleHelper::current();
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuProperties">
-                                        {{ __('Property Management') }}
+                                        {{ __('Prop. Management') }}
                                     </label>
                                     @if (isRole('owner'))
                                         <a href="#">
-                                        @else
-                                            <a href="{{ route('property-management.general') }}">
+                                    @else
+                                        <a href="{{ route('property-management.general') }}">
                                     @endif
                                     <i class="nav-icon mr-2 i-Home1"></i>
-                                    {{ __('Property Management') }}
+                                    {{ __('Prop. Management') }}
                                     </a>
 
 
@@ -189,13 +189,15 @@ $_current_role = RoleHelper::current();
                                             </li>
                                         @endif
 
-                                        {{-- @if ($_current_role->isAllowed('property-bookings', 'agents'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('agents') }}">
-                                                    <span class="item-name">{{ __('Agents') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif --}}
+                                        {{-- Posiblemente para remover 
+                                            @if ($_current_role->isAllowed('property-bookings', 'agents'))
+                                                <li class="nav-item">
+                                                    <a class="" href="{{ route('agents') }}">
+                                                        <span class="item-name">{{ __('Agents') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif 
+                                        --}}
 
                                         @if ($_current_role->isAllowed('property-bookings', 'commisions'))
                                             <li class="nav-item">
@@ -225,11 +227,11 @@ $_current_role = RoleHelper::current();
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Cleaning Services') }}
+                                        {{ __('Cleanings') }}
                                     </label>
                                     <a href="{{ route('cleaning-services') }}">
                                         <i class="nav-icon mr-2 i-Green-House"></i>
-                                        {{ __('Cleaning Services') }}
+                                        {{ __('Cleanings') }}
                                     </a>
 
                                     <!-- dropdown menu -->
@@ -296,22 +298,24 @@ $_current_role = RoleHelper::current();
                         </li>
                     @endif
 
-                    @if ($_current_role->isAllowed('reporting', 'heading-menu'))
-                        <li>
-                            <div>
+                    {{-- Zona de reportes, a eliminar posiblemente 
+                        @if ($_current_role->isAllowed('reporting', 'heading-menu'))
+                            <li>
                                 <div>
-                                    <!-- label for menu and sidebar menu for responsive -->
-                                    <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Reporting') }}
-                                    </label>
-                                    <a href="{{ route('reporting') }}">
-                                        <i class="nav-icon mr-2 i-Newspaper"></i>
-                                        {{ __('Reporting') }}
-                                    </a>
+                                    <div>
+                                        <!-- label for menu and sidebar menu for responsive -->
+                                        <label class="toggle" for="dropdownMenuBooking">
+                                            {{ __('Reporting') }}
+                                        </label>
+                                        <a href="{{ route('reporting') }}">
+                                            <i class="nav-icon mr-2 i-Newspaper"></i>
+                                            {{ __('Reporting') }}
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    @endif
+                            </li>
+                        @endif 
+                    --}}
 
                     @if ($_current_role->isAllowed('pages', 'heading-menu'))
                         <li>
@@ -319,11 +323,11 @@ $_current_role = RoleHelper::current();
                                 <div>
                                     <!-- label for menu and sidebar menu for responsive -->
                                     <label class="toggle" for="dropdownMenuBooking">
-                                        {{ __('Public') }}
+                                        {{ __('Site') }}
                                     </label>
                                     <a href="#">
                                         <i class="nav-icon mr-2 i-Internet"></i>
-                                        {{ __('Public') }}
+                                        {{ __('Site') }}
                                     </a>
 
                                     <!-- dropdown menu -->
@@ -486,42 +490,42 @@ $_current_role = RoleHelper::current();
 
                     @if (!isProduction() && $_current_role->isAllowed('contractors', 'heading-menu'))
                         @php
-                            /* DISABLED TEMPORARILY
-                                                    <li>
-                                                        <div>
-                                                            <div>
-                                                                <!-- label for menu and sidebar menu for responsive -->
-                                                                <label class="toggle" for="dropdownMenuBooking">
-                                                                    {{ __('Contractors') }}
-                                                                </label>
-                                                                <a href="{{ route('contractors') }}">
-                                                                    <i class="nav-icon mr-2 i-Engineering"></i>
-                                                                    {{ __('Contractors') }}
-                                                                </a>
-                            
-                                                                <!-- dropdown menu -->
-                                                                <input type="checkbox" id="dropdownMenuBooking">
-                                                                <ul>
-                                                                    @if ($_current_role->isAllowed('contractors', 'index'))
-                                                                        <li class="nav-item">
-                                                                            <a class="" href="{{ route('contractors') }}">
-                                                                                <span class="item-name">{{ __('All') }}</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    @endif
-                            
-                                                                    @if ($_current_role->isAllowed('contractors', 'services'))
-                                                                        <li class="nav-item">
-                                                                            <a class="" href="{{ route('contractors-services') }}">
-                                                                                <span class="item-name">{{ __('Services') }}</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    @endif
-                                                                </ul>
-                                                            </div>
-                                                        </div>
+                            /* Posiblemente para remover
+                                <li>
+                                    <div>
+                                        <div>
+                                            <!-- label for menu and sidebar menu for responsive -->
+                                            <label class="toggle" for="dropdownMenuBooking">
+                                                {{ __('Contractors') }}
+                                            </label>
+                                            <a href="{{ route('contractors') }}">
+                                                <i class="nav-icon mr-2 i-Engineering"></i>
+                                                {{ __('Contractors') }}
+                                            </a>
+        
+                                            <!-- dropdown menu -->
+                                            <input type="checkbox" id="dropdownMenuBooking">
+                                            <ul>
+                                                @if ($_current_role->isAllowed('contractors', 'index'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('contractors') }}">
+                                                            <span class="item-name">{{ __('All') }}</span>
+                                                        </a>
                                                     </li>
-                                                    */
+                                                @endif
+        
+                                                @if ($_current_role->isAllowed('contractors', 'services'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('contractors-services') }}">
+                                                            <span class="item-name">{{ __('Services') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            */
                         @endphp
                     @endif
 
