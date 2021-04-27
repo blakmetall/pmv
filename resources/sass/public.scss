@@ -4990,5 +4990,16 @@
 }
 
 .container-public {
-  max-width: 1200px !important;
+  max-width: 100% !important;
+}
+
+#block-locale-language {
+  right: 32px !important;
+}
+
+.app-navbar-collapse {
+  .navbar-nav {
+    right: 12px;
+    position: relative;
+  }
 }

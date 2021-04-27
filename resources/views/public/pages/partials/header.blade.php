@@ -29,7 +29,7 @@
                 </button>
             </div>
 
-            <div class="navbar-collapse collapse" id="navbar-collapse">
+            <div class="navbar-collapse collapse app-navbar-collapse" id="navbar-collapse">
                 <nav role="navigation">
                     @include('public.pages.partials.menu')
                     @include('public.pages.partials.language-switcher')
