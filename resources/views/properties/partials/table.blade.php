@@ -140,7 +140,7 @@
                                 @endif
 
                                 <!-- bookings from specific to property -->
-                                @if (!isProduction())
+                                @if (!isRole('owner'))
                                     <a
                                         href="{{ route('property-bookings.by-property', [$row->property->id]) }}"
                                         class="text-primary app-icon-link"
@@ -192,9 +192,9 @@
 
 
                                 <!-- property preview -->
-                                @if (!isRole('owner'))
-                                    <a
-                                        href="{{ route('maintenance') }}"
+                                @if (!isRole('owner') && $row->property->is_online)
+                                <a role="button" 
+                                        href="{{ route('public.property-detail', [getZone($row->property->id), generateSlug($row->property->translate()->name)]) }}"
                                         class="text-primary app-icon-link"
                                         title="{{ __('Preview') }}"
                                         alt="{{ __('Preview') }}">

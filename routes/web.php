@@ -18,7 +18,7 @@ Route::group(['middleware' => ['web']], function () {
     // auth middleware
     Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
         //maintenance
-        Route::get('maintenance', 'DashboardController@maintenance')->name('maintenance');
+        // Route::get('maintenance', 'DashboardController@maintenance')->name('maintenance');
 
         // dashboard
         Route::get('', 'DashboardController@index');

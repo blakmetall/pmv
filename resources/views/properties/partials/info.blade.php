@@ -16,8 +16,11 @@ $property = isset($property) ? $property : false;
                             @endphp
 
                             <a href="{{ route('properties.show', [$property->id]) }}">
-                                <img src="{{ asset(getUrlPath($propertyImg->file_url, 'small-ls')) }}" alt=""
-                                    width="100">
+                                <img src="{{ asset(getUrlPath($propertyImg->file_url, 'small-ls')) }}" alt="" width="100">
+                            </a>
+                        @else
+                            <a href="{{ route('properties.show', [$property->id]) }}">
+                                <img src="/images/thumb-placeholder.jpg" alt="" width="100">
                             </a>
                         @endif
                     </div>
@@ -50,7 +53,7 @@ $property = isset($property) ? $property : false;
                         @endif
 
                         <!-- bookings from specific to property -->
-                        @if (!isProduction())
+                        @if (!isRole('owner'))
                             <a role="button" href="{{ route('property-bookings.by-property', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Reservations') }}" alt="{{ __('Reservations') }}">
@@ -67,14 +70,14 @@ $property = isset($property) ? $property : false;
                             </a>
                         @endif
 
-                        <!-- property policies -->
-                        @if (!isRole('owner'))
+                        <!-- Policies cancelar actividad -->
+                        {{-- @if (!isRole('owner'))
                             <a href="{{ route('maintenance') }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
                                 title="{{ __('Policies') }}" alt="{{ __('Policies') }}">
                                 <i class="nav-icon i-Files font-weight-bold"></i>
                             </a>
-                        @endif
+                        @endif --}}
 
                         <!-- property contacts -->
                         @if (!isRole('owner'))
@@ -102,8 +105,8 @@ $property = isset($property) ? $property : false;
                         </a>
 
                         <!-- property preview -->
-                        @if (!isRole('owner'))
-                            <a href="{{ route('maintenance') }}"
+                        @if (!isRole('owner') && $property->is_online)
+                            <a role="button" href="{{ route('public.property-detail', [getZone($property->id), generateSlug($property->translate()->name)]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
                                 title="{{ __('Preview') }}" alt="{{ __('Preview') }}">
                                 <i class="nav-icon i-Right font-weight-bold"></i>
