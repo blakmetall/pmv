@@ -103,43 +103,37 @@
                 <li>Mazatlán: 1-888-688-1577</li>
             </ul>
         </div>
-        <form #target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post" id="make-payment-form"
-            accept-charset="UTF-8">
-            <div>
-                <input type="hidden" name="cmd" value="_xclick">
-                {{-- QUITAR ESTO CUANDO YA VAYA A FUNCIONAR --}}
-                {{-- <input type="hidden" name="business" value="4VTZ68GP74YXU"> --}}
-                <input type="hidden" name="charset" value="utf-8">
-                <input type="hidden" name="return" value="{{ route('public.vacation-services.thank-you') }}">
-                <input type="hidden" name="currency_code" value="USD">
-                <input type="hidden" name="item_name"
-                    value="{{ $property->name }} {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} {{ __('Nights') }}">
-                <input type="hidden" name="cbt" value="{{ __('CLICK HERE TO COMPLETE YOUR ORDER!') }}">
-                <input type="hidden" name="lc" value="US">
-                <input type="hidden" name="no_shipping" value="1">
-                <input type="hidden" name="invoice" value="{{ $booking->id }}">
-                <input type="hidden" name="address1" value="{{ $booking->street }}">
-                <input type="hidden" name="address2">
-                <input type="hidden" name="city" value="{{ $booking->city }}">
-                <input type="hidden" name="first_name" value="{{ $booking->firstname }}">
-                <input type="hidden" name="last_name" value="{{ $booking->lastname }}">
-                <input type="hidden" name="zip" value="{{ $booking->zip }}">
-                <div class="form-item form-item-amount form-type-select form-group">
-                    <select class="form-control form-select required" id="edit-amount" name="amount">
-                        <option value="{{ $total }}">{{ priceFormat($total) }} USD
-                            ({{ __('FULL PAYMENT') }})</option>
-                        <option value="{{ $mid }}">{{ priceFormat($mid) }} USD (50%)</option>
-                    </select>
-                    <label class="control-label element-invisible" for="edit-amount">{{ __('Select Amount') }}<span
-                            class="form-required" title="{{ __('This field is required.') }}">*</span></label>
-                </div>
-                <button type="submit" id="edit-next" value="{{ __('Make Payment') }}"
-                    class="btn btn-default form-submit">{{ __('Make Payment') }}</button>
-                <a href="{{ route('public.vacation-services.make-payment') }}" class="btn btn-default form-submit"
-                    role="button">
-                    {{ __('Find Another Reservation') }}
-                </a>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <!-- Identify your business so that you can collect the payments. -->
+            <input type="hidden" name="business" value="accounting@palmeravacations.com">
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="no_shipping" value="1">
+            <input type="hidden" name="item_name" value="{{ $property->name }} {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} {{ __('Nights') }}">
+            <div class="form-item form-item-amount form-type-select form-group">
+                <select class="form-control form-select required" id="edit-amount" name="amount">
+                    <option value="{{ $total }}">{{ priceFormat($total) }} USD
+                        ({{ __('FULL PAYMENT') }})</option>
+                    <option value="{{ $mid }}">{{ priceFormat($mid) }} USD (50%)</option>
+                </select>
+                <label class="control-label element-invisible" for="edit-amount">{{ __('Select Amount') }}<span
+                        class="form-required" title="{{ __('This field is required.') }}">*</span></label>
             </div>
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="return" value="{{ route('public.vacation-services.thank-you') }}">
+            <input type="hidden" name="rm" value="2">
+            <input type="hidden" name="notify_url" value="{{ route('public.vacation-services.thank-you') }}">
+            <input type="hidden" name="cancel_return" value="{{ route('public.vacation-services.make-payment-verify', [$booking->id]) }}">
+            <input type="hidden" name="page_style" value="primary">
+            <input type="hidden" name="lc" value="US">
+            <input type="hidden" name="country" value="US">
+            <input type="hidden" name="lang" value="en">
+            <input type="hidden" name="type" value="false">
+            <button type="submit" id="edit-next" value="{{ __('Make Payment') }}"
+                    class="btn btn-default form-submit">{{ __('Make Payment') }}</button>
+            <a href="{{ route('public.vacation-services.make-payment') }}" class="btn btn-default form-submit"
+                role="button">
+                {{ __('Find Another Reservation') }}
+            </a>
         </form>
     @else
         <a href="{{ route('public.vacation-services.make-payment') }}" class="btn btn-default form-submit" role="button">
