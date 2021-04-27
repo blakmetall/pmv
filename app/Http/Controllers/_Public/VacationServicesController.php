@@ -64,6 +64,9 @@ class VacationServicesController extends Controller
             $paid = true;
         } else if ($balance > 0) {
             $paid = false;
+        }else if ($balance < 0) {
+            $request->session()->flash('success', __('Your reservations has credit'));
+            $paid = true;
         }
         $property = $booking->property->translations()->where('language_id', LanguageHelper::current()->id)->first();
         $total = $booking->total + $secure;

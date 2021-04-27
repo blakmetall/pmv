@@ -424,6 +424,7 @@
     "Your email address is not verified.": "Tu dirección de Email no está verificada.",
     "You can use the default settings to set all transactions to the same settings, you can later change individual transactions to a specific need.": "Puede usar la configuración predeterminada para configurar todas las transacciones con la misma configuración, luego puede cambiar las transacciones individuales a una necesidad específica.",
     "Your reservation has been PAID IN FULL!": "Your reservation has been PAID IN FULL!",
+    "Your reservations has credit": "Tu reservación tiene crédito a favor, contacte al soporte accounting@palmeravacations.com",
     "Zip": "Código postal",
     "ZIP": "Código postal",
     "Zone": "Zona",
@@ -454,7 +455,6 @@
     "Fr": "Vi",
     "Sa": "Sa",
     "$45.00 USD per property plan (Covers up to: $1,500.00 USD)": "$45.00 USD por plan de propiedad (Cubre hasta: $1,500.00 USD)",
-
 
     "READ MORE": "LEER MÁS",
     "Learn More": "Saber Más",
@@ -526,7 +526,7 @@
     "What is": "Qué es",
     "It is a payment method of easy, quick, and sure.": "Es un método de pago fácil, rápido y seguro.",
     "Can make payment with credit and debit card.": "Puede realizar el pago con tarjeta de crédito y débito.",
-    "Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases." : "Registre con PayPal sus datos financieros solo una vez. No es necesario repetir este paso en compras posteriores.",
+    "Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases.": "Registre con PayPal sus datos financieros solo una vez. No es necesario repetir este paso en compras posteriores.",
     "More than 100 million people in the world use Paypal.": "Más de 100 millones de personas en el mundo usan Paypal.",
     "PayPal protects your information. Do not share your financial data.": "PayPal protege su información. No comparta sus datos financieros.",
     "Find Us": "Encuéntranos",
