@@ -8,8 +8,9 @@
         <thead>
 
             <tr>
-                <th scope="col">{{ __('Name') }}</th>
+                <th scope="col">{{ __('Role') }}</th>
                 <th scope="col">{{ __('Users') }}</th>
+                <th scope="col">{{ __('Permissions') }}</th>
             </tr>
 
         </thead>
@@ -29,6 +30,12 @@
                             </a>
                         </td>
 
+                        <!-- roles permissions -->
+                        <td>
+                            <a href="{{ route('roles.sections-permissions', [$row->role->id]) }}">
+                                {{ __('Sections') }}
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             @endif

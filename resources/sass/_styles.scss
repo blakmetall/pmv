@@ -1067,6 +1067,22 @@
         }
     }
 }
+
+.breadcrumb{ 
+    h5 {
+        font-size: 15px;
+    }
+}
+
+.table-responsive {
+    .form-group {
+        .checkbox .checkmark, .radio .checkmark {
+            background-color: white;
+            margin-left: 0px;
+        }
+    }
+}
+
 /**** end main styles ****/
 /*********+++++***********/
 
