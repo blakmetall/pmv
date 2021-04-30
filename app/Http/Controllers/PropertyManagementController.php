@@ -165,9 +165,11 @@ class PropertyManagementController extends Controller
         if (Session::has('backUrl')) {
             Session::keep('backUrl');
         }
+
         $config = [
             'filterByWorkgroup' => true,
             'filterByEnabled' => true,
+            'paginate' => false
         ];
 
         $tmpProperties = $this->propertiesRepository->all('', $config);
