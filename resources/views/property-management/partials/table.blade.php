@@ -1,9 +1,10 @@
 @php
 
-$skipRepeated = isset($skipRepeated) ? (bool) $skipRepeated : true;
-$repeatedIDS = [];
+    $skipRepeated = isset($skipRepeated) ? (bool) $skipRepeated : true;
+    $repeatedIDS = [];
 
 @endphp
+
 <div class="mb-3"></div>
 
 <div class="d-inline">

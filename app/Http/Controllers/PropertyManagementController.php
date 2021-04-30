@@ -36,11 +36,28 @@ class PropertyManagementController extends Controller
         $config = ['propertyID' => $property->id, 'paginate' => false];
         $pm_items = $this->repository->all($search, $config);
         $cities = $this->citiesRepository->all('', $config);
+        $active = 0;
+        $finished = 0;
+        $total = 0;
+        
+        if ($pm_items->count()) {
+            $total = $pm_items->count();
+            foreach ($pm_items as $pm_item) {
+                if ($pm_item->is_finished) {
+                    $finished ++;
+                }else{
+                    $active ++;
+                }
+            }
+        }
 
         return view('property-management.index')
             ->with('pm_items', $pm_items)
             ->with('property', $property)
             ->with('cities', $cities)
+            ->with('active', $active)
+            ->with('finished', $finished)
+            ->with('total', $total)
             ->with('search', $search);
     }
 
