@@ -9,10 +9,10 @@ $repeatedIDS = [];
 <div class="d-inline">
     <?= __('Properties') ?> - ({{ $total }})
 </div>
-<div class="ml-3 d-inline">
+<div class="ml-3 d-inline text-success">
     <?= __('Active') ?> - ({{ $active }})
 </div>
-<div class="ml-3 d-inline">
+<div class="ml-3 d-inline text-danger">
     <?= __('Finished') ?> - ({{ $finished }})
 </div>
 
