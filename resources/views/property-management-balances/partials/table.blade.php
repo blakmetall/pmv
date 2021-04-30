@@ -4,7 +4,16 @@
 
 <a href="#" id="show_finished_balances" data-status="open" data-show-text="<?= __('Show finished') ?>" data-hide-text="<?= __('Hide finished') ?>" class="text-success">
     <?= __('Show finished') ?>
-</a>
+</a></strong>
+<div class="ml-3 d-inline">
+    <?= __('Properties') ?> - ({{ $total }})
+</div>
+<div class="ml-3 d-inline text-success">
+    <?= __('Active') ?> - ({{ $active }})
+</div>
+<div class="ml-3 d-inline text-danger">
+    <?= __('Finished') ?> - ({{ $finished }})
+</div>
 
 <div class="mb-2"></div>
 

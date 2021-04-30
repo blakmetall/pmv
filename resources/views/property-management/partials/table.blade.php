@@ -4,9 +4,20 @@ $skipRepeated = isset($skipRepeated) ? (bool) $skipRepeated : true;
 $repeatedIDS = [];
 
 @endphp
+<div class="mb-3"></div>
 
+<div class="d-inline">
+    <?= __('Properties') ?> - ({{ $total }})
+</div>
+<div class="ml-3 d-inline text-success">
+    <?= __('Active') ?> - ({{ $active }})
+</div>
+<div class="ml-3 d-inline text-danger">
+    <?= __('Finished') ?> - ({{ $finished }})
+</div>
+
+<div class="mb-2"></div>
 <!-- unfinished table -->
-<div class="mb-5"></div>
 
 <div class="table-responsive">
     <table class="table table-striped">
