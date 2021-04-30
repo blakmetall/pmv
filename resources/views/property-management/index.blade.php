@@ -48,7 +48,7 @@
         'label' => __('Property Management'),
         'rows' => $pm_items,
         'active' => $active,
-        'total' => $total
+        'total' => $total,
         'finished' => $finished,
     ])
 
