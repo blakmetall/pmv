@@ -415,12 +415,9 @@
     "T - Finished": "T - Finished",
     "R - Refresh": "R - Refresh",
     "Empty Clean": "Empty Clean",
-    "Arrival": "Arrival",
     "Empty Dirty": "Empty Dirty",
     "Ocuppied": "Ocuppied",
-    "Departure": "Departure",
     "Pending": "Pending",
-    "Finished": "Finished",
     "Refresh": "Refresh",
 
     "Su": "Su",
@@ -431,7 +428,6 @@
     "Fr": "Fr",
     "Sa": "Sa",
     "$45.00 USD per property plan (Covers up to: $1,500.00 USD)": "$45.00 USD per property plan (Covers up to: $1,500.00 USD)",
-
 
     "READ MORE": "READ MORE",
     "Learn More": "Learn More",
@@ -503,7 +499,7 @@
     "What is": "What is",
     "It is a payment method of easy, quick, and sure.": "It is a payment method of easy, quick, and sure.",
     "Can make payment with credit and debit card.": "Can make payment with credit and debit card.",
-    "Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases." : "Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases.",
+    "Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases.": "Register with PayPal your financial data only once. No need to repeat this step in subsequent purchases.",
     "More than 100 million people in the world use Paypal.": "More than 100 million people in the world use Paypal.",
     "PayPal protects your information. Do not share your financial data.": "PayPal protects your information. Do not share your financial data.",
     "Find Us": "Find Us",

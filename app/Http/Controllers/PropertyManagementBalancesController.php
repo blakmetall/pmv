@@ -28,6 +28,9 @@ class PropertyManagementBalancesController extends Controller
     {
         $search = trim($request->s);
         $config = ['paginate' => false];
+        $active = 0;
+        $finished = 0;
+        $total = 0;
 
         $config = [
             'filterByCity' => $request->city,
@@ -46,6 +49,7 @@ class PropertyManagementBalancesController extends Controller
         ];
 
         if ($pm_items->count()) {
+            $total = $pm_items->count();
             foreach ($pm_items as $index => $pm_item) {
                 $balance = PMHelper::getBalance($pm_item->id);
                 $pm_items[$index]->_balance = $balance;
@@ -53,7 +57,10 @@ class PropertyManagementBalancesController extends Controller
                 // para no tomar calculos de balances de propiedades con property management finalizados
                 // en el listado de balances general
                 if ($pm_item->is_finished) {
+                    $finished ++;
                     continue;
+                }else{
+                    $active ++;
                 }
                 
                 $totalBalances['balances'] += $balance['balance'];
@@ -65,6 +72,9 @@ class PropertyManagementBalancesController extends Controller
         return view('property-management-balances.general')
             ->with('pm_items', $pm_items)
             ->with('cities', $cities)
+            ->with('active', $active)
+            ->with('finished', $finished)
+            ->with('total', $total)
             ->with('totalBalances', $totalBalances);
     }
 
