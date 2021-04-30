@@ -600,8 +600,8 @@ if (!function_exists('getOffices')) {
                 'phone_us_can' => '(323) 250-7721',
                 'phone_free' => '1-800-881-8176',
                 'gmaps_id' => 'puerto-vallarta',
-                'gmaps_lat' => '0',
-                'gmaps_lon' => '0',
+                'gmaps_lat' => '20.606625',
+                'gmaps_lon' => '-105.234766',
             ],
             [
                 'name'=> 'Mazatlán',
@@ -611,8 +611,8 @@ if (!function_exists('getOffices')) {
                 'phone_us_can' => '(714) 988-7903',
                 'phone_free' => '1-888-688-1577',
                 'gmaps_id' => 'mazatlan',
-                'gmaps_lat' => '0',
-                'gmaps_lon' => '0',
+                'gmaps_lat' => '23.242779',
+                'gmaps_lon' => '-106.45258',
             ],
         ];
     }
