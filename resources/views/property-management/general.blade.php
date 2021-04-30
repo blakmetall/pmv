@@ -20,7 +20,10 @@
     <!-- here the data is loaded -->
     @include('property-management.partials.table', [
         'label' => __('Property Management'),
-        'rows' => $pm_items
+        'rows' => $pm_items,
+        'active' => $active,
+        'total' => $total
+        'finished' => $finished,
     ])
 
 @endsection
