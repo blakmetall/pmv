@@ -31,8 +31,8 @@ class HomeController extends Controller
 
     public function default(Request $request)
     {
-        $config = ['filterByFeatured' => true, 'paginate' => false];
-        $config2 = ['filterByNews' => true];
+        $config = ['filterByFeatured' => true, 'paginate' => false, 'filterOnline' => true, 'filterByEnabled' => true];
+        $config2 = ['filterByNews' => true, 'filterOnline' => true, 'filterByEnabled' => true];
         $config3 = ['randomize' => true];
 
         $propertiesFeatured = $this->propertiesRepository->all('', $config);
