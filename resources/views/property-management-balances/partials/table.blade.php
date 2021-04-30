@@ -6,13 +6,13 @@
     <?= __('Show finished') ?>
 </a></strong>
 <div class="ml-3 d-inline">
-    <?= __('Properties') ?> - ({{ $total }})
+    <?= __('Properties') ?>: {{ $total }}
 </div>
 <div class="ml-3 d-inline text-success">
-    <?= __('Active') ?> - ({{ $active }})
+    <?= __('Active') ?>: {{ $active }}
 </div>
 <div class="ml-3 d-inline text-danger">
-    <?= __('Finished') ?> - ({{ $finished }})
+    <?= __('Finished') ?>: {{ $finished }}
 </div>
 
 <div class="mb-2"></div>
