@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-xs-4 mb-3">
                         <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="380">
-                        <div class="rate-info">${{ number_format($nightlyRate, 2) }} <span>/ {{ __('Night') }}</span></div>
+                        <div class="rate-info">${{ getLowerRate($property->property_id) }} <span>/ {{ __('Night') }}</span></div>
                     </div>
 
                     <div class="col-xs-8">
@@ -87,7 +87,7 @@
                         @if ($availabilityProperty == 'all')
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="b-rate">${{ number_format($nightlyRate, 2) }} USD</div>
+                                    <div class="b-rate">${{ getLowerRate($property->property_id) }} USD</div>
                                     <div class="b-caption">{{ __('Avg. night') }}</div>
                                 </div>
 

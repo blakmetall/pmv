@@ -322,18 +322,24 @@ if (!function_exists('getLowerRate')) {
     {
         $property = Property::find($id);
         $rates = [];
-        foreach($property->rates as $rate){
-            $rates[] = $rate->nightly;
-        }
-
-        if(count($rates) > 0){
-            $result = min($rates);
-        }else{
-            $result = 0;
-        }
         
+        $nightly = 0;
 
-        return $result;
+        foreach($property->rates as $rate){
+            $now = new Carbon(date('Y-m-d', strtotime('now')));
+            $start_date = new Carbon($rate->start_date);
+            
+            if ($start_date->gte($now)) {
+                $nightly = $rate->nightly;
+                break;
+            }else {
+                continue;
+            }
+        }
+
+        return $nightly;
+
+        // return $result;
     }
 }
 

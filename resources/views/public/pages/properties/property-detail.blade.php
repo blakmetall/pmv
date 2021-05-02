@@ -37,7 +37,8 @@
     }
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
     $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
-    $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
+    // $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
+    $nightlyRate = getLowerRate($property->property_id);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
     $bothDates = $arrivalTxt . ' - ' . $departureTxt;
     $searchAvailability = json_encode($searchAvailability);
@@ -93,13 +94,16 @@
                                     continue;
                                 @endphp
                             @endif
+
                             <li>
                                 <img src="{{ $image->file_url }}" draggable="false">
                             </li>
                         @endforeach
                     </ul>
                     <ul class="flex-direction-nav">
-                        <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
+                        <li class="flex-nav-prev">
+                            <a class="flex-prev flex-disabled" href="#" tabindex="-1"></a>
+                        </li>
                         <li class="flex-nav-next"><a class="flex-next" href="#"></a></li>
                     </ul>
                 </div>
