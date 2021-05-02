@@ -145,8 +145,7 @@
                                 @endphp
                                 <div class="col-xs-6 app-map-wrapper">
                                     <h4>{{ __('Location Map') }}</h4>
-                                    <div id="{{ $id }}" class="app-google-map" data-lat="{{ $latitude }}"
-                                        data-lng="{{ $longitude }}" data-map-id="{{ $id }}"></div>
+                                    <div id="{{ $id }}" class="app-google-map" data-lat="{{ $latitude }}" data-lng="{{ $longitude }}" data-map-id="{{ $id }}"></div>
                                 </div>
                             @endforeach
                         </div>

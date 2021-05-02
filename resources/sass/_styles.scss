@@ -363,10 +363,26 @@
                 background: transparent;
             }
         }
+
+        .menu-toggle {
+            position: relative;
+            left: 15px;
+
+            > div {
+                width: 22px;
+                height: 3px;
+                background: #67737f;
+            }
+        }
     }
 
     .header-topnav {
         top: 66px;
+
+        @media (max-width: 767px) {
+            margin-top: 0;
+            border-right: 1px solid #e9ecee;
+        }
     }
 
     .main-content-wrap {
