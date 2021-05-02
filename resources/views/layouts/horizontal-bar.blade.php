@@ -16,7 +16,7 @@ $_current_role = RoleHelper::current();
                                     <label class="toggle" for="dropdownMenuProperties">
                                         {{ __('Properties') }}
                                     </label>
-                                    <a href="{{ route('properties') }}">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Home1"></i>
                                         {{ __('Properties') }}
                                     </a>
@@ -28,14 +28,14 @@ $_current_role = RoleHelper::current();
                                         <ul>
                                             @if ($_current_role->isAllowed('properties', 'index'))
                                                 <li class="nav-item">
-                                                    <a class="" href="{{ route('properties.create') }}">
-                                                        <span class="item-name">{{ __('New Listing') }}</span>
+                                                    <a class="" href="{{ route('properties') }}">
+                                                        <span class="item-name">{{ __('All') }}</span>
                                                     </a>
                                                 </li>
 
                                                 <li class="nav-item">
-                                                    <a class="" href="{{ route('properties') }}">
-                                                        <span class="item-name">{{ __('All') }}</span>
+                                                    <a class="" href="{{ route('properties.create') }}">
+                                                        <span class="item-name">{{ __('New Listing') }}</span>
                                                     </a>
                                                 </li>
 
@@ -67,20 +67,24 @@ $_current_role = RoleHelper::current();
                                     <label class="toggle" for="dropdownMenuProperties">
                                         {{ __('Prop. Management') }}
                                     </label>
-                                    @if (isRole('owner'))
-                                        <a href="#">
-                                    @else
-                                        <a href="{{ route('property-management.general') }}">
-                                    @endif
-                                    <i class="nav-icon mr-2 i-Home1"></i>
-                                    {{ __('Prop. Management') }}
+                                    
+                                    <a href="#">
+                                        <i class="nav-icon mr-2 i-Home1"></i>
+                                        {{ __('Prop. Management') }}
                                     </a>
-
 
 
                                     <!-- dropdown menu -->
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul class="menu-properties-dropdown">
+                                        @if ($_current_role->isAllowed('property-management', 'index'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('property-management.general') }}">
+                                                    <span class="item-name">{{ __('All') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
                                         @if ($_current_role->isAllowed('property-management', 'new-transaction'))
                                             <li class="nav-item">
                                                 <a class="" href="#" data-toggle="modal"
@@ -95,14 +99,6 @@ $_current_role = RoleHelper::current();
                                                 <a class=""
                                                     href="{{ route('property-management-transactions.create-bulk') }}">
                                                     <span class="item-name">{{ __('Transaction Bulk') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        @if ($_current_role->isAllowed('property-management', 'index'))
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('property-management.general') }}">
-                                                    <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
                                         @endif
@@ -159,7 +155,7 @@ $_current_role = RoleHelper::current();
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Reservations') }}
                                     </label>
-                                    <a href="{{ route('property-bookings') }}">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Calendar-4"></i>
                                         {{ __('Reservations') }}
                                     </a>
@@ -168,6 +164,12 @@ $_current_role = RoleHelper::current();
                                     <input type="checkbox" id="dropdownMenuBooking">
                                     <ul>
                                         @if ($_current_role->isAllowed('property-bookings', 'index'))
+                                            <li class="nav-item">
+                                                <a class="" href="{{ route('property-bookings') }}">
+                                                    <span class="item-name">{{ __('All') }}</span>
+                                                </a>
+                                            </li>
+
                                             <li class="nav-item">
                                                 <a class="" href="#" data-toggle="modal"
                                                     data-target="#app-property-bookings-selection-modal">
@@ -179,12 +181,6 @@ $_current_role = RoleHelper::current();
                                                 <a class=""
                                                     href="{{ route('property-bookings.arrivals-departures') }}">
                                                     <span class="item-name">{{ __('Arrivals & Departures') }}</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="nav-item">
-                                                <a class="" href="{{ route('property-bookings') }}">
-                                                    <span class="item-name">{{ __('All') }}</span>
                                                 </a>
                                             </li>
                                         @endif
@@ -229,7 +225,7 @@ $_current_role = RoleHelper::current();
                                     <label class="toggle" for="dropdownMenuBooking">
                                         {{ __('Cleanings') }}
                                     </label>
-                                    <a href="{{ route('cleaning-services') }}">
+                                    <a href="#">
                                         <i class="nav-icon mr-2 i-Green-House"></i>
                                         {{ __('Cleanings') }}
                                     </a>
