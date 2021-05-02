@@ -82,3 +82,13 @@ $theme-colors: (
 */
 
 @import "dark/dark";
+ 
+.app-footer { 
+    margin-top: 2rem;
+    background: #212121;
+    padding: 13px 30px 13px 30px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-size: 12px;
+    color: #fff;
+}

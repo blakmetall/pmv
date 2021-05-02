@@ -45,8 +45,9 @@ $lang = LanguageHelper::current();
                         <!-- properties -->
                         <td>
                             @foreach ($row->properties as $property)
-                                <a
-                                    href="{{ route('properties.show', $property->id) }}">{{ $property->translate()->name }}</a>
+                                <a href="{{ route('properties.show', $property->id) }}">
+                                    {{ $property->translate()->name }} ||
+                                </a>
                             @endforeach
                         </td>
 

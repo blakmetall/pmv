@@ -799,6 +799,6 @@
             </div>
         </div>
     @else
-        {{ __('No transactions found.') }}
+        {{ __('No pending transactions found.') }}
     @endif
 @endif

@@ -32,9 +32,7 @@
 
                         <!-- roles permissions -->
                         <td>
-                            <a href="{{ route('roles.sections-permissions', [$row->role->id]) }}">
-                                {{ __('Sections') }}
-                            </a>
+                            --
                         </td>
                     </tr>
                 @endforeach
