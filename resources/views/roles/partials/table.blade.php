@@ -18,6 +18,15 @@
 
             @if(count($rows))
                 @foreach($rows as $row)
+                <!-- skip super admin role -->
+                    @if($row->role->id == 1)
+                        @php continue; @endphp
+                    @endif
+                    <!-- skip regular role -->
+                    @if($row->role->id == 12)
+                        @php continue; @endphp
+                    @endif
+
                     <tr>
 
                         <!-- name -->
@@ -32,7 +41,13 @@
 
                         <!-- roles permissions -->
                         <td>
-                            --
+                            @if(isset($rolesAllowedSections[$row->role->id]))
+                                @foreach($rolesAllowedSections[$row->role->id] as $roleSection)
+                                    {{ $roleSection }} <br>
+                                @endforeach
+                            @else
+                                --
+                            @endif
                         </td>
                     </tr>
                 @endforeach

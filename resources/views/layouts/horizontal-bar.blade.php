@@ -16,10 +16,18 @@ $_current_role = RoleHelper::current();
                                     <label class="toggle" for="dropdownMenuProperties">
                                         {{ __('Properties') }}
                                     </label>
-                                    <a href="#">
-                                        <i class="nav-icon mr-2 i-Home1"></i>
-                                        {{ __('Properties') }}
-                                    </a>
+                                    
+                                    @if(isRole('owner'))
+                                        <a href="{{ route('properties', 'index') }}">
+                                            <i class="nav-icon mr-2 i-Home1"></i>
+                                            {{ __('Properties') }}
+                                        </a>
+                                    @else
+                                        <a href="#">
+                                            <i class="nav-icon mr-2 i-Home1"></i>
+                                            {{ __('Properties') }}
+                                        </a>
+                                    @endif
 
                                     <!-- Por que un dueño no podria ver sus propiedades? -->
                                     @if (!isRole('owner'))

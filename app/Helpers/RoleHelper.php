@@ -151,37 +151,6 @@ class RoleHelper
                     'concierge',
                 ]),
             ],
-            'calendar' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
-                'heading-menu' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'rentals',
-                    'rentals-agent',
-                    'rentals-agent',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'concierge',
-                ]),
-                'index' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'rentals',
-                    'rentals-agent',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'concierge',
-                ]),
-            ],
             'property-bookings' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
@@ -421,36 +390,6 @@ class RoleHelper
                     'administrative-assistant',
                 ]),
             ],
-            'contractors' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
-                'heading-menu' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'index' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'services' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-            ],
             'human-resources' => [
                 '*' => self::transformSluggedRolesToIds([
                     'super',
@@ -462,7 +401,6 @@ class RoleHelper
                     'human-resources',
                     'property-management',
                     'rentals',
-                    'rentals-agent',
                     'rentals-agent',
                     'operations-manager',
                     'operations-assistant',
@@ -482,30 +420,11 @@ class RoleHelper
                     'property-management',
                     'rentals',
                     'rentals-agent',
-                    'rentals-agent',
                     'operations-manager',
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
                     'concierge',
-                ]),
-            ],
-            'reporting' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
-                'heading-menu' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'index' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'accounting',
-                    'administrative-assistant',
                 ]),
             ],
             'pages' => [
@@ -540,7 +459,6 @@ class RoleHelper
                 'users' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'rentals-agent',
                 ]),
                 'workgroups' => self::transformSluggedRolesToIds([
                     'super',
