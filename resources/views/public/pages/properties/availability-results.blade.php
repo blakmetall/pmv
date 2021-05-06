@@ -74,7 +74,7 @@
                             </div>
                         @endif
 
-                        <div class="row">
+                        <div class="row" style="display: block">
                             <div class="col-xs-6">
                                 &nbsp;
                             </div>
@@ -85,7 +85,7 @@
                         </div>
 
                         @if ($availabilityProperty == 'all')
-                            <div class="row">
+                        <div class="row" style="display: block">
                                 <div class="col-md-5">
                                     <div class="b-rate">${{ getLowerRate($property->property_id) }} USD</div>
                                     <div class="b-caption">{{ __('Avg. night') }}</div>
