@@ -102,6 +102,15 @@ class PropertiesController extends Controller
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
+        $beddingOptions = [
+            'King Bed',
+            'Queen Bed',
+            'Double Bed',
+            'Single Bed',
+            'Pullout Bed',
+            'Futon',
+        ];
+
         return view('properties.create')
             ->with('property', $property)
             ->with('users', $users)
@@ -113,6 +122,7 @@ class PropertiesController extends Controller
             ->with('hr', $hr)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
+            ->with('beddingOptions', $beddingOptions)
             ->with('propertyTypes', $propertyTypes);
     }
 
@@ -143,6 +153,15 @@ class PropertiesController extends Controller
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
+        $beddingOptions = [
+            'King Bed',
+            'Queen Bed',
+            'Double Bed',
+            'Single Bed',
+            'Pullout Bed',
+            'Futon',
+        ];
+
         return view('properties.show')
             ->with('property', $property)
             ->with('users', $users)
@@ -154,6 +173,7 @@ class PropertiesController extends Controller
             ->with('hr', $hr)
             ->with('amenities', $amenities)
             ->with('cleaningOptions', $cleaningOptions)
+            ->with('beddingOptions', $beddingOptions)
             ->with('propertyTypes', $propertyTypes);
     }
 
@@ -186,6 +206,15 @@ class PropertiesController extends Controller
         $cleaningOptions = $this->cleaningOptionsRepository->all('', $config);
         $propertyTypes = $this->propertyTypesRepository->all('', $config);
 
+        $beddingOptions = [
+            'King Bed',
+            'Queen Bed',
+            'Double Bed',
+            'Single Bed',
+            'Pullout Bed',
+            'Futon',
+        ];
+
         return view('properties.edit')
             ->with('property', $property)
             ->with('users', $users)
@@ -197,6 +226,7 @@ class PropertiesController extends Controller
             ->with('amenities', $amenities)
             ->with('hr', $hr)
             ->with('cleaningOptions', $cleaningOptions)
+            ->with('beddingOptions', $beddingOptions)
             ->with('propertyTypes', $propertyTypes);
     }
 

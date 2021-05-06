@@ -55,6 +55,7 @@
 
             @include('properties.partials.form', [
                 'row' => $property,
+                'beddingOptions' => $beddingOptions,
             ])        
         </form>
     </div>

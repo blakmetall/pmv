@@ -255,6 +255,19 @@
 
         <hr>
 
+        @foreach($beddingOptions as $k => $beddingOption)
+            <!-- maid_fee -->
+            @include('components.form.input', [
+                'group' => 'property',
+                'type' => 'number',
+                'label' => __($beddingOption),
+                'name' => 'bedding_options[' . $beddingOption . ']',
+                'value' => isset($row->bedding[$beddingOption]) ? $row->bedding[$beddingOption] : '',
+            ])
+        @endforeach
+
+        <hr>
+
          <!-- cleaning_option_id -->
          @include('components.form.select', [
             'group' => 'property',

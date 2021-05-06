@@ -647,5 +647,13 @@
     "Settings > Transaction Types": "Settings > Transaction Types",
     "Settings > Cleaning Options": "Settings > Cleaning Options",
     "Settings > Damage Deposits": "Settings > Damage Deposits",
-    "Role Permissions": "Role Permissions"
+    "Role Permissions": "Role Permissions",
+
+    "Bedding": "Bedding",
+    "King Bed": "King Bed",
+    "Queen Bed": "Queen Bed",
+    "Double Bed": "Double Bed",
+    "Single Bed": "Single Bed",
+    "Pullout Bed": "Pullout Bed",
+    "Futon": "Futon"
 }

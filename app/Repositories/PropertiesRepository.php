@@ -214,6 +214,12 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         }
         $property->es->save();
 
+        // bedding options
+        if($request->bedding_options) {
+            $property->bedding = $request->bedding_options;
+            $property->save();
+        }
+
         // amenities assignation
         $property->amenities()->sync($request->amenities_ids);
         $property->users()->sync($request->users_ids);

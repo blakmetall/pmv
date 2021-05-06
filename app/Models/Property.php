@@ -54,6 +54,7 @@ class Property extends Model
 
     protected $casts = [
         'cleaning_staff_ids' => 'array',
+        'bedding' => 'array',
     ];
 
     public $en;

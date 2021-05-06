@@ -29,7 +29,8 @@
     <!-- load regular fields -->
     @include('properties.partials.form-fields', [
         'label' => __('SHARED'),
-        'row' => $row
+        'row' => $row,
+        'beddingOptions' => $beddingOptions,
     ])
 
 </fieldset>

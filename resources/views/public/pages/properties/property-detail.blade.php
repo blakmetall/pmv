@@ -251,10 +251,19 @@
                     <p><span class="max-pax">{{ $property->property->pax }}</span>
                         {{ __('Guests max. (including children under 12 and babies)') }}</p>
                 </div>
-                {{-- <div class="col-xs-6">
-                    <h4 class="sub-section">Bedding</h4>
-                    <p>King bed: 1<br></p>
-                </div> --}}
+
+                @if(is_array($property->property->bedding))
+                    <div class="col-xs-6">
+                        <h4 class="sub-section">{{ __('Bedding') }}</h4>
+                        <p>
+                            @foreach($property->property->bedding as $bedType => $beds)
+                                @if($beds > 0)
+                                    {{ $bedType }}: {{ $beds }} <br>
+                                @endif
+                            @endforeach
+                        </p>
+                    </div>
+                @endif
             </div>
         </div>
         <div id="property-description-info">

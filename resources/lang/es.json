@@ -671,5 +671,13 @@
     "Settings > Transaction Types": "Configuraciones > Tipos de transacción",
     "Settings > Cleaning Options": "Configuraciones > Opciones de limpieza",
     "Settings > Damage Deposits": "Configuraciones > Deposito para daños accidentales en el alquiler",
-    "Role Permissions": "Permisos de roles de usuario"
+    "Role Permissions": "Permisos de roles de usuario",
+
+    "Bedding": "Juego de Camas",
+    "King Bed": "King size",
+    "Queen Bed": "Queen size",
+    "Double Bed": "Cama doble",
+    "Single Bed": "Cama individual",
+    "Pullout Bed": "Sofá cama",
+    "Futon": "Futón"
 }
