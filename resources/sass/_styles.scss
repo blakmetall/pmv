@@ -1133,17 +1133,8 @@
 
 .table {
     thead {
-        background: #343b40;
-        color: white;
-    
-        tr {
-            th:first-child {
-                border-top-left-radius: 10px;
-            }
-            th:last-child {
-                border-top-right-radius: 10px;
-            }
-        }
+        background: #abbeef;
+        color: #333;
     
         th {
             padding-top: 10px;
@@ -1156,32 +1147,14 @@
 
     tbody {
         tr:nth-child(odd) {
-            background: #fff;
-            color: #444;
-
-            &:hover {
-                background: #fbfbfb;
-            }
-
-            th,
-            td {
-                font-size: 13px !important;
-            }
+            background: #e2e9f9;
+            color: #333;
         }
         
 
         tr:nth-child(even) {
-            background: #eff2f5;
-            color: #444;
-
-            &:hover {
-                background: #e5eef3;
-            }
-
-            th,
-            td {
-                font-size: 13px !important;
-            }
+            background: #d6dff7;
+            color: #333;
         }
     
         tr:last-child {
@@ -1203,6 +1176,22 @@
             font-size: 12px !important; 
         }
     }
+}
+
+.app-transaction-list-pending,
+.app-transaction-pending-audit-list-pending {
+    tbody {
+        tr:nth-child(odd) {
+            background: #fbd5b5;
+            color: #333;
+        }
+        
+
+        tr:nth-child(even) {
+            background: #fac08f;
+            color: #333;
+        }
+    }   
 }
 
 
