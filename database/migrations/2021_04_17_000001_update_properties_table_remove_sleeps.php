@@ -12,14 +12,16 @@ class UpdatePropertiesTableRemoveSleeps extends Migration
             return;
         }
 
-        Schema::create('properties', function (Blueprint $table) {
-            $table->dropColumn('sleeps');
-        });
+        if(Schema::hasColumn('properties', 'sleeps')) {
+            Schema::table('properties', function (Blueprint $table) {
+                $table->dropColumn('sleeps');
+            });
+        }
     }
 
     public function down()
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::table('properties', function (Blueprint $table) {
             $table->smallInteger('sleeps')->nullable()->after('baths');
         });
     }
