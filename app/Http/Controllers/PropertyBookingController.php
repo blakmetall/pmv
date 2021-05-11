@@ -531,7 +531,8 @@ class PropertyBookingController extends Controller
             return redirect()->back();
         } else {
             $booking = $this->repository->create($request);
-            $request->session()->flash('success', __('Record created successfully'));
+            $msg = __('Msg reservation') . ' #'.$booking->id.', '.__('Client wishes').' <a href="insertarlink">'.__('Click here').'</a> '.__('Confirmation recipents').'reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+            $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$booking->id]));
         }
     }

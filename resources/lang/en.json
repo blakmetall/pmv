@@ -649,7 +649,11 @@
     "Settings > Damage Deposits": "Settings > Damage Deposits",
     "Role Permissions": "Role Permissions",
 
-    "Bedding": "Bedding",
+    "Msg reservation": "The reservation has been confirmed with Confirmation",
+    "Client wishes": "If the client wishes to pay for the reservation at this time",
+    "Click here": "click here",
+    "Confirmation recipents": "A confirmation email has been sent to the following recipients:",
+
     "King Bed": "King Bed",
     "Queen Bed": "Queen Bed",
     "Double Bed": "Double Bed",
