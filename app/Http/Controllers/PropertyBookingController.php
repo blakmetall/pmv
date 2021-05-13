@@ -45,7 +45,13 @@ class PropertyBookingController extends Controller
             'register_by' => $request->register_by,
         ];
 
-        $bookings = $this->repository->all($search);
+        if (isRole('owner')) {
+            $config = ['filterByOwner' => true];
+        } else {
+            $config = [];
+        }
+
+        $bookings = $this->repository->all($search, $config);
         $locations = $this->citiesRepository->all('');
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';
 
