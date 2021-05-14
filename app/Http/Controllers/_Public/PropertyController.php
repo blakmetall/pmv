@@ -498,6 +498,8 @@ class PropertyController extends Controller
                         'reservations@palmeravacations.com',
                         'concierge@palmeravacations.com',
                         'fallito67@gmail.com',
+                        'info@palmeravacations.com',
+                        'contabilidad@palmeravacations.com',
                     ];
                     
                     if(Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)){

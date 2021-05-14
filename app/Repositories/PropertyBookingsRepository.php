@@ -129,35 +129,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $booking->fill($requestData);
         if ($booking->save()) {
 
-            $contacts = $booking->property->contacts;
-            $concierge = false;
-            foreach ($contacts as $contact) {
-                if ($contact->contact_type == 'property-manager') {
-                    $concierge = $contact->email;
-                }
-            }
-
-            if ($request->guest) {
-                $this->email($booking, $booking->email);
-            }
-
-            if ($request->office) {
-                $this->email($booking, $booking->property->office->email);
-            }
-
-            if ($concierge) {
-                if ($request->concierge) {
-                    $this->email($booking, $concierge);
-                }
-            }
-
-            if ($request->home_owner) {
-                $owners = $booking->property->users;
-                foreach ($owners as $owner) {
-                    $this->email($booking, $owner->email);
-                }
-            }
-
             $property = Property::find($booking->property_id);
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
@@ -170,7 +141,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
             $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
             $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
-
+            
             $price_per_night = $subtotal_nights / $nights;
 
             // audit
@@ -209,8 +180,40 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             // el deposito para daños creo no se debe poner en el total directamente por que el depósito se está manejando en dolares
             // considero que debe tener su propio control de pago (unos campos más tal vez)
             // -- -- no tengo propuestas de momento; pero por lo pronto unir el daño por depósito no funcionaría ;(
-
-            $booking->save();
+                
+            if($booking->save()){
+                $contacts = $booking->property->contacts;
+                $concierge = false;
+                foreach ($contacts as $contact) {
+                    if ($contact->contact_type == 'property-manager') {
+                        $concierge = $contact->email;
+                    }
+                }
+                if ($request->guest) {
+                    $this->email($booking, $booking->email);
+                }
+    
+                if ($request->office) {
+                    $this->email($booking, $booking->property->office->email);
+                }
+    
+                if ($concierge) {
+                    if ($request->concierge) {
+                        $this->email($booking, $concierge);
+                    }
+                }
+    
+                if ($request->home_owner) {
+                    $owners = $booking->property->users;
+                    foreach ($owners as $owner) {
+                        $this->email($booking, $owner->email);
+                    }
+                }
+    
+                $this->email($booking, 'reservaciones@palmeravacations.com');
+                $this->email($booking, 'info@palmeravacations.com');
+                $this->email($booking, 'contabilidad@palmeravacations.com');
+            }
         }
 
         return $booking;
