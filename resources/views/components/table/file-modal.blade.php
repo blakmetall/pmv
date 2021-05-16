@@ -44,9 +44,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-center">
                     @if ($fileUrl)
-                        <img src="{{ asset(getUrlPath($fileUrl)) }}" alt="" class="w-100">
+                        <img src="{{ asset(getUrlPath($fileUrl)) }}" alt="">
                     @endif
                 </div>
                 <div class="modal-footer">

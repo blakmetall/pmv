@@ -265,7 +265,7 @@
     "Payment": "Pago",
     "Payments": "Pagos",
     "Payment Type": "Tipo de Pago",
-    "Pax": "Pax",
+    "Pax": "Ocupantes",
     "Pending Audits": "Auditorias pendientes",
     "Pending Transactions": "Transacciones pendientes",
     "Period": "Periodo",
@@ -673,7 +673,11 @@
     "Settings > Damage Deposits": "Configuraciones > Deposito para daños accidentales en el alquiler",
     "Role Permissions": "Permisos de roles de usuario",
 
-    "Bedding": "Juego de Camas",
+    "Msg reservation": "La reservación ha sido confirmada con el ID",
+    "Client wishes": "Si el cliente desea pagar la reserva en este momento",
+    "Click here": "clic aquí",
+    "Confirmation recipents": "Se ha enviado un correo electrónico de confirmación a los siguientes destinatarios:",
+
     "King Bed": "King size",
     "Queen Bed": "Queen size",
     "Double Bed": "Cama doble",

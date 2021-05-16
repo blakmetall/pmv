@@ -724,7 +724,7 @@ if (!function_exists('generateColumns')) {
         $html = "";
         foreach ($array as $item){
             if ($count % $number == 1){
-                $html .= "<div class='col-xs-3'><ul class='list'>";          
+                $html .= "<div class='col-xs-3' style='width: 25%'><ul class='list'>";          
             }
             $html .= "<li>".$item->getLabel()."</li>";
             if ($count % $number == 0) {

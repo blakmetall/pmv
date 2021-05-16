@@ -272,7 +272,7 @@
         </div>
         <div id="property-features-info">
             <h2 class="section-title">{{ __('Features and Amenities') }}</h2>
-            <div class="row">
+            <div class="row" style="display: block">
                 {!! generateColumns($property->property->amenities, 8) !!}
             </div>
         </div>

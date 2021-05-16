@@ -62,7 +62,7 @@ class DetailsBooking extends Notification
 
         return (new MailMessage())
             ->subject('Details of Booking' . ' - ' . $this->booking->id)
-            ->greeting(sprintf('Hello Accounting'))
+            ->greeting(sprintf('Hello %s!', $this->booking->full_name))
             ->line('This is a copy of a booking:')
             ->line(new HtmlString('CONFIRMATION: <strong>' . $this->booking->id . '</strong>'))
             ->line(new HtmlString('STATUS: <strong>Booked<strong>'))
@@ -91,7 +91,7 @@ class DetailsBooking extends Notification
             ->line(new HtmlString('PAYMENTS: <strong>' . priceFormat($reduced) . ' USD</strong>'))
             ->line(new HtmlString('TOTAL DUE: <strong>' . priceFormat($balance) . ' USD</strong>'))
             ->line('------------------------------------------------')
-            ->greeting(sprintf('Hola'))
+            ->greeting(sprintf('Hola %s!', $this->booking->full_name))
             ->line('Esta es una copia de una reservación:')
             ->line(new HtmlString('CONFIRMACIÓN: <strong>' . $this->booking->id . '</strong>'))
             ->line(new HtmlString('ESTATUS: <strong>Booked<strong>'))
