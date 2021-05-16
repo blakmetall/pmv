@@ -1,17 +1,29 @@
 @php
-$modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
-$currentYear = (isset($_GET['year'])?$_GET['year']:'');
+    $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
+    $currentYear = (isset($_GET['year'])?$_GET['year']:'');
+
+    $tmpRegisters = $registers;
+    $registers = [];
+
+    foreach($tmpRegisters as $tmpRegister) {
+        if(isRole('owner') && $tmpRegister['name'] == 'Admin') {
+            continue;
+        }
+        $registers[] = $tmpRegister;
+    }
+
 @endphp
+
 @if ($row->firstname)
     @php
-    $total = $row->total;
-    $payments = $row->payments;
-    $reduced = 0;
-    foreach ($payments as $payment) {
-    $reduced += $payment->amount;
-    }
-    $balance = $total - $reduced;
+        $total = $row->total;
+        $payments = $row->payments;
+        $reduced = 0;
 
+        foreach ($payments as $payment) {
+            $reduced += $payment->amount;
+        }
+        $balance = $total - $reduced;
     @endphp
     <div class="card">
         <div class="card-body">
