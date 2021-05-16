@@ -16,7 +16,10 @@ class RolesController extends Controller
 
     public function index()
     {
-        $roles = $this->repository->all();
+        $roles = $this->repository->all('', [
+            'skipRentalsAgentRole' => true,
+            'skipRegularRole' => true,
+        ]);
 
         $rolesAllowedSections = [
             // accounting
@@ -99,16 +102,6 @@ class RolesController extends Controller
                 __('Human Resources > All'),
                 __('Human Resources > Directory'),
             ],
-            // external rentals agent
-            '5' => [
-                __('Dashboard'),
-                __('General Search'),
-                __('Properties'),
-                __('Bookings'),
-                __('Bookings > General Availability'),
-                __('Cleanings > All'),
-                __('Human Resources > Directory'),
-            ],
             // human resources
             '13' => [
                 __('Human Resources > All'),
@@ -158,7 +151,7 @@ class RolesController extends Controller
                 __('Cleanings > Monthly Batch'),
                 __('Human Resources > Directory'),
             ],
-            // rentals agent
+            // rentals
             '4' => [
                 __('Dashboard'),
                 __('General Search'),

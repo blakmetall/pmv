@@ -51,13 +51,6 @@ class UsersRepository implements UsersRepositoryInterface
             });
         }
 
-        if ($agentsOnly) {
-            $query->whereHas('roles', function ($q) {
-                $table = (new Role())->_getTable();
-                $q->whereIn($table . '.id', [config('constants.roles.rentals-agent')]);
-            });
-        }
-
         if ($role) {
             $query->whereHas('roles', function ($q) use ($role) {
                 $table = (new Role())->_getTable();

@@ -94,7 +94,7 @@
                 <thead>
                     @if ($shouldShowBalanceColumn)
                         <tr>
-                            <?php $colspanMonth = !isRole('owner') && !isRole('regular') ? 10 : 8; ?>
+                            <?php $colspanMonth = !isRole('owner') ? 10 : 8; ?>
 
                             <th colspan="{{ $colspanMonth }}">
                                 @if (isset($_GET['month']) && $_GET['year'])
@@ -104,7 +104,7 @@
                                 @endif
                             </th>
 
-                            <?php $colspanYear = !isRole('owner') && !isRole('regular') ? 5 : 4; ?>
+                            <?php $colspanYear = !isRole('owner') ? 5 : 4; ?>
 
                             <th colspan="{{ $colspanYear }}">
                                 {{ __('Previous Balance') }}: &nbsp;&nbsp;
@@ -218,7 +218,7 @@
                                 <!-- edit and file -->
                                 <td style="padding: 0.1rem;">
                                     <div class="not-print">
-                                        @if (!isRole('owner') && !isRole('regular'))
+                                        @if (!isRole('owner'))
                                             <!-- email notification for property management transaction -->
                                             <a href="#" data-toggle="modal" data-source="{{ $row->id }}"
                                                 data-target="#{{ $modalID }}"

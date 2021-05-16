@@ -18,15 +18,6 @@
 
             @if(count($rows))
                 @foreach($rows as $row)
-                <!-- skip super admin role -->
-                    @if($row->role->id == 1)
-                        @php continue; @endphp
-                    @endif
-                    <!-- skip regular role -->
-                    @if($row->role->id == 12)
-                        @php continue; @endphp
-                    @endif
-
                     <tr>
 
                         <!-- name -->

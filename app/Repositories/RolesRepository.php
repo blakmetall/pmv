@@ -23,6 +23,8 @@ class RolesRepository implements RolesRepositoryInterface
         $lang = LanguageHelper::current();
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $skipSuperAdmin = isset($config['skipSuperAdmin']) && $config['skipSuperAdmin'] === true;
+        $skipRentalsAgentRole = isset($config['skipRentalsAgentRole']) && $config['skipRentalsAgentRole'] === true;
+        $skipRegularRole = isset($config['skipRegularRole']) && $config['skipRegularRole'] === true;
 
         if ($search) {
             $query = 
@@ -34,6 +36,14 @@ class RolesRepository implements RolesRepositoryInterface
 
         if ($skipSuperAdmin) {
             $query->where('role_id', '!=', config('constants.roles.super'));
+        }
+
+        if ($skipRentalsAgentRole) {
+            $query->where('role_id', '!=', config('constants.roles.rentals-agent'));
+        }
+
+        if ($skipRentalsAgentRole) {
+            $query->where('role_id', '!=', config('constants.roles.regular'));
         }
         
         $query
