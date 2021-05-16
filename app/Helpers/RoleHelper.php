@@ -525,4 +525,301 @@ class RoleHelper
 
         return $roles_ids;
     }
+
+    /**
+     * $permission ['view', 'edit']; base code for permission section inside controller 
+     *
+     * @return bool true or false according to current role and permission action
+     */
+    public static function can( $roleSlug, $permission, $section, $subsection) {
+        $section = getSectionPermission($section, $subsection);
+
+        if($permission == 'view') {
+            if(isset($section[$roleSlug]) && in_array($permission, $section[$roleSlug])) {
+                return true;
+            }
+            
+            return false;
+        }
+
+        if($permission == 'edit') {
+            if(isset($section[$roleSlug]) && in_array($permission, $section[$roleSlug])) {
+                return true;
+            }
+            
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * función para comparar una sección con un slug y ver si tiene permiso para ver o editar
+     */
+    public static function getSectionPermission($section, $subsection, $roleSlug)
+    {
+        $sections = [
+            'dashboard' => [
+                'index' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                ]
+            ],
+            'property-bookings' => [
+                'property' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                    'owner' => ['view', 'edit'],
+                ],
+                'owner' => [
+                    'owner' => ['view', 'edit'],
+                ],
+                'requests' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'owner-requests' => [
+                    'owner' => ['view', 'edit'],
+                ],
+                'agents' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'commissions' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'general-availability' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                ],
+            ],
+            'properties' => [
+                'index' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'owner' => ['view', 'edit'],
+                ],
+                'general-availability' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+            ],
+            'property-management' => [
+                'new-transaction' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'transaction-bulk' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'index' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                ],
+                'balances' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'owner' => ['view', 'edit'],
+                ],
+                'transactions' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'pending-audits' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+            ],
+            'cleaning-services' => [
+                'heading-menu' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                    'owner' => ['view', 'edit'],
+                ],
+                'index' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                    'owner' => ['view', 'edit'],
+                ],
+                'monthly-batch' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+            ],
+            'human-resources' => [
+                'index' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'human-resources' => ['view', 'edit'],
+                ],
+                'directory' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'human-resources' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-manager' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                ],
+            ],
+            'pages' => [
+                'index' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+            ],
+            'settings' => [
+                'users' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'workgroups' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'roles' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'cities' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'offices' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'zones' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'buildings' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'amenities' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'transaction-types' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'cleaning-options' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                ],
+                'damage-deposits' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+                'contacts' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                ],
+            ],
+        ];
+
+        if(isset($sections[$section]) && isset($sections[$section][$subsection])) {
+            return $sections[$section][$subsection];
+        }
+
+        return [];
+    }
 }
