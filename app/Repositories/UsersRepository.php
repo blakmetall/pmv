@@ -123,7 +123,7 @@ class UsersRepository implements UsersRepositoryInterface
         }
 
         if ($request->roles_ids && is_array($request->roles_ids) && count($request->roles_ids)) {
-            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+            $validRolesIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
             $roles_to_assign = [];
 
             foreach ($request->roles_ids as $role_id) {
@@ -184,12 +184,13 @@ class UsersRepository implements UsersRepositoryInterface
     {
         $user = $this->model->find($id);
 
-        if ($user) {
+        if ($user && $user->profile) {
             $user->profile->delete();
-            $user->roles()->sync([]);
-            $user->workgroups()->sync([]);
-            $user->delete();
         }
+
+        $user->roles()->sync([]);
+        $user->workgroups()->sync([]);
+        $user->delete();
 
         return $user;
     }

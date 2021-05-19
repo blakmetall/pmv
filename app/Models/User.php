@@ -41,12 +41,12 @@ class User extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany('App\Models\Booking');
+        return $this->hasMany('App\Models\PropertyBooking');
     }
 
     public function agentBookings()
     {
-        return $this->hasMany('App\Models\Booking', 'user_agent_id');
+        return $this->hasMany('App\Models\PropertyBooking', 'user_agent_id');
     }
 
     public function bookingCommissions()
@@ -71,12 +71,12 @@ class User extends Authenticatable
 
     public function auditedBookings()
     {
-        return $this->hasMany('App\Models\Booking', 'audit_user_id');
+        return $this->hasMany('App\Models\PropertyBooking', 'audit_user_id');
     }
 
     public function auditedBookingRefunds()
     {
-        return $this->hasMany('App\Models\Booking', 'audit_refund_user_id');
+        return $this->hasMany('App\Models\PropertyBooking', 'audit_refund_user_id');
     }
 
     public function auditedPropertyManagementTransactions()

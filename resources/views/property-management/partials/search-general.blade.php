@@ -5,7 +5,7 @@
 @endphp
 
 <form action="" action="get">
-    <div class="row pt-3">
+    <div class="row pt-3 mb-4">
         <div class="col-md-6">
             <input 
                 class="form-control" 

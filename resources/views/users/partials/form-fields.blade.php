@@ -84,7 +84,7 @@
             'name' => 'firstname',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->firstname
+            'value' => ($row->profile) ? $row->profile->firstname : ''
         ])
 
         <!-- lastname -->
@@ -94,7 +94,7 @@
             'name' => 'lastname',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->lastname
+            'value' => ($row->profile) ? $row->profile->lastname : ''
         ])
 
         <!-- country -->
@@ -104,7 +104,7 @@
             'name' => 'country',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->country
+            'value' => ($row->profile) ? $row->profile->country : ''
         ])
 
         <!-- state -->
@@ -114,7 +114,7 @@
             'name' => 'state',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->state
+            'value' => ($row->profile) ? $row->profile->state : ''
         ])
 
         <!-- city -->
@@ -124,7 +124,7 @@
             'name' => 'city',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->city
+            'value' => ($row->profile) ? $row->profile->city : ''
         ])
 
         <!-- street -->
@@ -134,7 +134,7 @@
             'name' => 'street',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->street
+            'value' => ($row->profile) ? $row->profile->street : ''
         ])
 
         <!-- zip -->
@@ -144,7 +144,7 @@
             'name' => 'zip',
             'parentName' => 'profile',
             'required' => true,
-            'value' => $row->profile->zip
+            'value' => ($row->profile) ? $row->profile->zip : ''
         ])
 
         <!-- phone -->
@@ -153,7 +153,7 @@
             'label' => __('Phone'),
             'name' => 'phone',
             'parentName' => 'profile',
-            'value' => $row->profile->phone
+            'value' => ($row->profile) ? $row->profile->phone : ''
         ])        
 
         <!-- mobile -->
@@ -162,7 +162,7 @@
             'label' => __('Mobile'),
             'name' => 'mobile',
             'parentName' => 'profile',
-            'value' => $row->profile->mobile
+            'value' => ($row->profile) ? $row->profile->mobile : ''
         ])
 
         <hr>
@@ -174,7 +174,7 @@
             'name' => 'config_agent_is_enabled',
             'parentName' => 'profile',
             'value' => 1,
-            'default' => $row->profile->config_agent_is_enabled
+            'default' => ($row->profile) ? $row->profile->config_agent_is_enabled : ''
         ])
 
         <!-- commission -->
@@ -183,7 +183,7 @@
             'label' => __('Agent Commission') . ' %',
             'name' => 'config_agent_commission',
             'parentName' => 'profile',
-            'value' => $row->profile->config_agent_commission
+            'value' => ($row->profile) ? $row->profile->config_agent_commission : ''
         ])
 
         <hr>

@@ -16,6 +16,7 @@ return [
         'owner' => 11,
         'regular' => 12,
         'human-resources' => 13,
+        'cleanings' => 14,
     ],
 
     'pagination' => [

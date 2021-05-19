@@ -17,7 +17,7 @@ class BookingCommission extends Model {
     }
 
     public function booking() {
-        return $this->belongsTo('App\Models\Booking');
+        return $this->belongsTo('App\Models\PropertyBooking');
     }
 
     public function auditedBy() {
