@@ -64,7 +64,7 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li class="flex-active-slide">
-                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
+                            <img src="{{ getUrlPath($property->property->images[0]->file_url, 'large-ls') }}" draggable="false">
                         </li>
                         @foreach ($property->property->images as $index => $image)
                             @if ($index == 0)
@@ -73,7 +73,7 @@
                                 @endphp
                             @endif
                             <li>
-                                <img src="{{ $image->file_url }}" draggable="false">
+                                <img src="{{ getUrlPath($image->file_url, 'large-ls') }}" draggable="false">
                             </li>
                         @endforeach
                     </ul>
@@ -86,7 +86,7 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li class="flex-active-slide">
-                            <img src="{{ $property->property->images[0]->file_url }}" draggable="false">
+                            <img src="{{ getUrlPath($property->property->images[0]->file_url, 'small-ls') }}" draggable="false">
                         </li>
                         @foreach ($property->property->images as $index => $image)
                             @if ($index == 0)
@@ -96,7 +96,7 @@
                             @endif
 
                             <li>
-                                <img src="{{ $image->file_url }}" draggable="false">
+                                <img src="{{ getUrlPath($image->file_url, 'small-ls') }}" draggable="false">
                             </li>
                         @endforeach
                     </ul>
