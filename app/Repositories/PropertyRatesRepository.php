@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Repositories\PropertyRatesRepositoryInterface;
-use App\Models\{ Property, PropertyRate };
+use App\Models\{Property, PropertyRate};
 use App\Validations\PropertyRatesValidations;
 
 class PropertyRatesRepository implements PropertyRatesRepositoryInterface
@@ -25,27 +25,26 @@ class PropertyRatesRepository implements PropertyRatesRepositoryInterface
         $hasPropertyID = isset($config['property_id']) ? $config['property_id'] : '';
 
         if ($search) {
-            $query = 
-                PropertyRate::
-                    where('start_date', $search)
-                    ->orWhere('end_date', $search);
+            $query =
+                PropertyRate::where('start_date', $search)
+                ->orWhere('end_date', $search);
         } else {
             $query = PropertyRate::query();
         }
 
-        if($hasPropertyID) {
+        if ($hasPropertyID) {
             $query->where('property_id', $config['property_id']);
         }
 
         $query->with('property');
         $query->orderBy('start_date', 'asc');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -63,11 +62,11 @@ class PropertyRatesRepository implements PropertyRatesRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
-        if($is_new){
+        if ($is_new) {
             $rate = $this->blueprint();
-        }else{
+        } else {
             $rate = $this->find($id);
         }
 
@@ -92,7 +91,7 @@ class PropertyRatesRepository implements PropertyRatesRepositoryInterface
     public function delete($id)
     {
         $rate = $this->model->find($id);
-        
+
         if ($rate && $this->canDelete($id)) {
             $rate->delete();
         }
@@ -100,7 +99,7 @@ class PropertyRatesRepository implements PropertyRatesRepositoryInterface
         return $rate;
     }
 
-    public function canDelete($id) 
+    public function canDelete($id)
     {
         return true;
     }

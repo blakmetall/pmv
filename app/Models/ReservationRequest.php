@@ -29,7 +29,7 @@ class ReservationRequest extends Model {
     }
 
     public function booking() {
-        return $this->hasOne('App\Models\Booking');
+        return $this->hasOne('App\Models\PropertyBooking');
     }
 
 }

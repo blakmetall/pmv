@@ -35,6 +35,9 @@
         "react-bootstrap": "^1.0.0-beta.17",
         "ssri": ">=8.0.1",
         "styled-components": "^5.0.1"
+        "is-svg": ">=4.2.2",
+        "object-path": ">=0.11.5",
+        "postcss": ">=8.2.10"
     },
     "resolutions": {
         "minimist": "^1.2.5"

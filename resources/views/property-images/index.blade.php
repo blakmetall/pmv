@@ -31,7 +31,8 @@
     <!-- here the data is loaded -->
     @include('property-images.partials.table', [
         'label' => __('Images'),
-        'rows' => $images
+        'rows' => $images,
+        'property' => $property,
     ])
 
 @endsection

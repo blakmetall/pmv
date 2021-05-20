@@ -29,7 +29,7 @@ $months = [
 @endphp
 
 <form action="" action="get">
-    <div class="row pt-3">
+    <div class="row pt-3 mb-4">
 
         @if (!isRole('owner'))
             <div class="col-sm-6 col-md-1">

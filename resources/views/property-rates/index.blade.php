@@ -32,14 +32,9 @@
 
 @section('main-content')
 
-    <!-- here the data is loaded -->
-    {{-- @include('property-rates.partials.table', [
-        'label' => __('Rates'),
-        'rows' => $rates
-    ]) --}}
     @include('property-rates.partials.table', [
         'label' => __('Rates'),
-        'rows' => $property->rates()->paginate()
+        'rows' => $rates
     ])
 
 @endsection

@@ -8,6 +8,7 @@
     $textSearched = isset($_GET['s']) ? $_GET['s'] : '';
     $yearSearched = isset($_GET['year']) ? $_GET['year'] : $currentYear;
     $monthSearched = isset($_GET['month']) ? $_GET['month'] : $currentMonth;
+    $currentMaid = isset($_GET['maid']) ? $_GET['maid'] : '';
 
     $isYearInProgress = $currentYear === $yearSearched;
 
@@ -29,7 +30,20 @@
 @endphp
 
 <form action="{{ $url }}" action="get">
-    <div class="row pt-3">
+    <div class="row pt-3 mb-4">
+        <div class="col-md-2">
+            <select name="maid" class="form-control" id="cleaning-option-batch-staff-select">
+                <option value="">{{ __('Select Maid') }}</option>
+                @foreach($maids as $maid)
+                    @php
+                        $selected = ($maid->id == $currentMaid) ? ' selected ' : '';
+                    @endphp
+                    <option value="{{ $maid->id }}" {{ $selected }}>
+                        {{ $maid->firstname }} {{ $maid->lastname }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="col-md-2">
             <select name="year" class="form-control" id="cleaning-option-batch-year-select">
                 @for($i = 0; $i < 60; $i++)
@@ -45,7 +59,7 @@
             </select>
             <input type="hidden" name="month" value="{{ $monthSearched }}">
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8">
             <ul class="app-months-list">
 
                 @foreach($months as $monthNumber => $month)

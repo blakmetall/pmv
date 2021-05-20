@@ -17167,6 +17167,12 @@ a.text-dark:focus {
   color: #333;
 }
 
+.checkbox-table-delete {
+  position: relative;
+  top: -2px;
+  left: 12px;
+}
+
 /**** end app styles *****/
 
 /*********+++++***********/

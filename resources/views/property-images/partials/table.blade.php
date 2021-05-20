@@ -14,6 +14,14 @@
                 <th scope="col">{{ __('Property') }}</th>
                 <th scope="col">&nbsp;</th>
                 <th scope="col">&nbsp;</th>
+                <th scope="col">
+                    <input type="checkbox" class="delete-selectable-checkbox" />
+                    <a href="{{ route('property-images.destroy-all', [$property->id, '']) }}" 
+                        data-tpl-route="{{ route('property-images.destroy-all', [$property->id, '']) }}"
+                        class="checkbox-table-delete delete-selectable-action">
+                        {{ __('Delete') }}
+                    </a>
+                </th>
             </tr>
 
         </thead>
@@ -34,6 +42,10 @@
 
                         <!-- thumbnail -->
                         <th>
+                            <img src="{{ ImagesHelper::getUrlPath($row->file_url, 'small-ls') }}" style="max-width: 140px;"/>
+                            
+                            &nbsp;&nbsp;
+
                             @include('components.table.file-modal', [
                                 'fileName' => $row->file_original_name,
                                 'filePath' => $row->file_path,
@@ -71,6 +83,10 @@
                                 'editRoute' => 'property-images.edit',
                                 'deleteRoute' => 'property-images.destroy',
                             ])
+                        </td>
+
+                        <td>
+                            <input type="checkbox" value="{{ $row->id }}" class="delete-selectable-option" />
                         </td>
 
                     </tr>

@@ -28,8 +28,8 @@ class PropertiesValidations extends Validation
             'bedrooms' => 'required|numeric',
             'baths' => 'required|numeric',
             'floors' => 'nullable|integer',
-            'lot_size_sqft' => 'nullable|numeric',
-            'construction_size_sqft' => 'nullable|numeric',
+            'lot_size' => 'nullable',
+            'construction_size' => 'nullable',
         ]);
     }
 

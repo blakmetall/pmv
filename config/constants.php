@@ -6,8 +6,8 @@ return [
         'super' => 1,
         'admin' => 2,
         'property-management' => 3,
-        'rentals' => 4,
-        'rentals-agent' => 5,
+        'rentals-agent' => 4,
+        'rentals' => 5,
         'operations-manager' => 6,
         'operations-assistant' => 7,
         'accounting' => 8,
@@ -16,6 +16,7 @@ return [
         'owner' => 11,
         'regular' => 12,
         'human-resources' => 13,
+        'cleanings' => 14,
     ],
 
     'pagination' => [

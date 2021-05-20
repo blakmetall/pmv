@@ -21,7 +21,7 @@ if ($transationTypesOptionsIds !== false) {
     <input type="hidden" name="orderBy" value="{{ isset($_GET['orderBy']) ? $_GET['orderBy'] : '' }}">
     <input type="hidden" name="orderDirection" value="{{ isset($_GET['orderDirection']) ? $_GET['orderDirection'] : '' }}">
 
-    <div class="row pt-3">
+    <div class="row pt-3 mb-4">
         <div class="col-sm-6 col-md-2">
             <input class="form-control" placeholder="{{ __('Search...') }}" type="text" name="s"
                 value="{{ $textSearched }}" />

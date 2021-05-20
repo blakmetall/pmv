@@ -17,6 +17,7 @@ import { initNotificationsModalHandler } from "./scripts/initNotificationsModalH
 import { initDeleteImageModalHandler } from "./scripts/initDeleteImageModalHandler.js";
 import { initCalendarModalHandler } from "./scripts/initCalendarModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
+import { initDeleteSelectableCheckbox } from "./scripts/deleteSelectableCheckbox.js";
 
 $(function() {
     /////////////////////////////
@@ -55,6 +56,8 @@ $(function() {
 
         initBalancesFinishedHandler();
         initBulkTransactionsHandler();
+
+        initDeleteSelectableCheckbox();
     }
 
     function printTable(table, title) {
@@ -147,6 +150,12 @@ $(function() {
     });
 
     $("#cleaning-option-batch-year-select").change(function() {
+        $(this)
+            .closest("form")
+            .submit();
+    });
+
+    $("#cleaning-option-batch-staff-select").change(function() {
         $(this)
             .closest("form")
             .submit();

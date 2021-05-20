@@ -56,7 +56,7 @@ $months = [
                     </div>
                 </div>
 
-                <div class="row pt-3">
+                <div class="row pt-3 mb-4">
                     <div class="col-md-2">
                         <select name="year" class="form-control select-year">
                             @for ($i = 0; $i < 60; $i++)

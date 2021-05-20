@@ -30,7 +30,8 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         $shouldFilterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : false;
         
         if ($search) {
-            $query = CleaningService::where('description', 'like', '%' . $search . '%');
+            $query = CleaningService::where('description', 'like', '%' . $search . '%')
+                ->orWhere('id', $search);
         } else {
             $query = CleaningService::query();
         }

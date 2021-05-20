@@ -77,6 +77,25 @@ class PropertyImagesController extends Controller
         return redirect()->back();
     }
 
+    public function destroyAll(Request $request) {
+        if($request->ids) {
+            $imagesToDelete = explode('_', trim($request->ids, '_'));
+            
+            if(count($imagesToDelete)) {
+
+                foreach($imagesToDelete as $imgId) {
+                    if ( $this->repository->canDelete($imgId) ) {
+                        $this->repository->delete($imgId);
+                    }
+                }
+
+                $request->session()->flash('success', __('Records deleted successfully'));
+            }
+        }
+
+        return redirect()->back();
+    }
+
     public function orderUp( Property $property, PropertyImage $image) 
     {
         self::order($image, '<');

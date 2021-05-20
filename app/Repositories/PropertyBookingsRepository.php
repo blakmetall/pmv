@@ -30,6 +30,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
         $shouldPaginate       = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyID        = isset($config['propertyID']) ? $config['propertyID'] : '';
+        $filterById           = isset($config['filterById']) ? $config['filterById'] : false;
         $filterByOwner        = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
         $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
         $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
@@ -37,14 +38,14 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
             $query = PropertyBooking::query();
             $query->where(function ($query) use ($search) {
-                if($search['from_date'] != '' || $search['to_date'] != ''){
+                if ($search['from_date'] != '' || $search['to_date'] != '') {
                     $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
                 }
-                if($search['register_by'] != ''){
+                if ($search['register_by'] != '') {
                     $query->where('register_by', $search['register_by']);
                 }
             });
-            if($search['location'] != ''){
+            if ($search['location'] != '') {
                 $query->whereHas('property', function ($q) use ($search) {
                     $q->where('city_id', 'like', '%' . $search['location'] . '%');
                 });
@@ -52,6 +53,10 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
+        }
+
+        if ($filterById) {
+            $query->where('property_bookings.id', $filterById);
         }
 
         if ($filterByOwner) {
@@ -141,7 +146,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
             $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
             $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
-            
+
             $price_per_night = $subtotal_nights / $nights;
 
             // audit
@@ -180,8 +185,8 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             // el deposito para daños creo no se debe poner en el total directamente por que el depósito se está manejando en dolares
             // considero que debe tener su propio control de pago (unos campos más tal vez)
             // -- -- no tengo propuestas de momento; pero por lo pronto unir el daño por depósito no funcionaría ;(
-                
-            if($booking->save()){
+
+            if ($booking->save()) {
                 $contacts = $booking->property->contacts;
                 $concierge = false;
                 foreach ($contacts as $contact) {
@@ -190,36 +195,36 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                     }
                 }
                 if ($request->guest) {
-                    $this->email($booking, $booking->email);
+                    sendEmail($booking, $booking->email);
                 }
-    
+
                 if ($request->office) {
-                    $this->email($booking, $booking->property->office->email);
+                    sendEmail($booking, $booking->property->office->email);
                 }
-    
+
                 if ($concierge) {
                     if ($request->concierge) {
-                        $this->email($booking, $concierge);
+                        sendEmail($booking, $concierge);
                     }
                 }
-    
+
                 if ($request->home_owner) {
                     $owners = $booking->property->users;
                     foreach ($owners as $owner) {
-                        $this->email($booking, $owner->email);
+                        sendEmail($booking, $owner->email);
                     }
                 }
-    
-                $this->email($booking, 'reservaciones@palmeravacations.com');
-                $this->email($booking, 'info@palmeravacations.com');
-                $this->email($booking, 'contabilidad@palmeravacations.com');
+
+                sendEmail($booking, 'reservaciones@palmeravacations.com');
+                sendEmail($booking, 'info@palmeravacations.com');
+                sendEmail($booking, 'contabilidad@palmeravacations.com');
             }
         }
 
         return $booking;
     }
 
-    private function email($booking, $email)
+    public function email($booking, $email)
     {
         Notification::route('mail', $email)
             ->notify(new DetailsBooking($booking));

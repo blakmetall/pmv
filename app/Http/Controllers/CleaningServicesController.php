@@ -26,6 +26,7 @@ class CleaningServicesController extends Controller
     ) {
         $this->repository = $repository;
         $this->propertiesRepository = $propertiesRepository;
+        $this->propertiesRepository = $propertiesRepository;
         $this->humanResourcesRepository = $humanResourcesRepository;
         $this->cleaningServicesStatusRepository = $cleaningServicesStatusRepository;
     }
@@ -162,6 +163,7 @@ class CleaningServicesController extends Controller
     {
         if (!$request->year && !$request->month) { // prepare year and month for first call
             $urlParams = [
+                'maid' => '',
                 'year' => date('Y', strtotime('now')),
                 'month' => date('m', strtotime('now')),
             ];
@@ -172,12 +174,21 @@ class CleaningServicesController extends Controller
             return redirect($redirectUrl);
         }
 
+        if ($request->maid != '') {
+            $properties = $this->propertiesRepository->all('', ['paginate' => false, 'cleaningStaffId' => $request->maid]);
+        } else {
+            $properties = $this->propertiesRepository->all('', ['paginate' => false]);
+        }
+
         $currentMonth = Carbon::createFromDate($_GET['year'], $_GET['month'], 1, 'America/Mexico_City');
 
         $properties = $this->propertiesRepository->all('', ['paginate' => false, 'pm' => true]);
+      
+        $maids = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
 
         return view('cleaning-services.monthly-batch')
             ->with('properties', $properties)
+            ->with('maids', $maids)
             ->with('currentMonth', $currentMonth);
     }
 

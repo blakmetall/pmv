@@ -88,23 +88,25 @@
                                     @endif
                                 @endforeach
 
-                                @if ($propertyUser || isRole('super') || isRole('admin'))
+                                @if ($propertyUser || isRole('super') || isRole('admin') || isRole('rentals'))
                                     @include('components.table.actions-bookings', [
                                     'params' => [$row->id],
                                     'paymentsRoute' => 'property-booking-payments',
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
+                                    'skipDelete' => true
                                     ])
                                 @endif
                             @else
-                                @if ($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
+                                @if ($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin') || isRole('rentals'))
                                     @include('components.table.actions-bookings', [
                                     'params' => [$row->id],
                                     'paymentsRoute' => 'property-booking-payments',
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
+                                    'skipDelete' => true
                                     ])
                                 @endif
                             @endif

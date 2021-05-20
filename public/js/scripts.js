@@ -125,6 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scripts_initDeleteImageModalHandler_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./scripts/initDeleteImageModalHandler.js */ "./resources/js/scripts/initDeleteImageModalHandler.js");
 /* harmony import */ var _scripts_initCalendarModalHandler_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./scripts/initCalendarModalHandler.js */ "./resources/js/scripts/initCalendarModalHandler.js");
 /* harmony import */ var _scripts_initTooltip_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./scripts/initTooltip.js */ "./resources/js/scripts/initTooltip.js");
+/* harmony import */ var _scripts_deleteSelectableCheckbox_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./scripts/deleteSelectableCheckbox.js */ "./resources/js/scripts/deleteSelectableCheckbox.js");
 
 
 
@@ -176,6 +177,7 @@ $(function () {
     initCleaningMonthlyBatchEvents();
     initBalancesFinishedHandler();
     initBulkTransactionsHandler();
+    Object(_scripts_deleteSelectableCheckbox_js__WEBPACK_IMPORTED_MODULE_19__["initDeleteSelectableCheckbox"])();
   }
 
   function printTable(table, title) {
@@ -220,6 +222,11 @@ $(function () {
   $("#cleaning-option-batch-year-select").change(function () {
     $(this).closest("form").submit();
   });
+
+  $("#cleaning-option-batch-staff-select").change(function () {
+    $(this).closest("form").submit();
+  });
+
   var maidFee = $("#field_cleaning-service_maid_fee_").val();
   $("#field_property_status_ids_").change(function () {
     if ($.inArray("8", $(this).val()) != -1) {
@@ -483,6 +490,49 @@ $(function () {
 
 /***/ }),
 
+
+/***/ "./resources/js/scripts/deleteSelectableCheckbox.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/scripts/deleteSelectableCheckbox.js ***!
+  \**********************************************************/
+/*! exports provided: initDeleteSelectableCheckbox */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initDeleteSelectableCheckbox", function() { return initDeleteSelectableCheckbox; });
+function initDeleteSelectableCheckbox() {
+  $('.delete-selectable-checkbox').each(function () {
+    var checkbox = $(this);
+    var checkboxItems = $(this).closest('table').find('.delete-selectable-option');
+    var deleteAction = $(this).closest('table').find('.delete-selectable-action'); // change event on checkbox table
+
+    checkbox.on('change', function (e) {
+      if ($(this).is(':checked')) {
+        checkboxItems.each(function () {
+          $(this).prop('checked', true);
+        });
+      } else {
+        checkboxItems.each(function () {
+          $(this).prop('checked', false);
+        });
+      }
+    }); // delete trigger action
+
+    deleteAction.on('click', function (e) {
+      e.preventDefault();
+      var url = deleteAction.data('tpl-route') + '/';
+      checkboxItems.each(function () {
+        if ($(this).is(':checked')) {
+          url = url + '_' + $(this).val();
+        }
+      });
+      document.location = url;
+    });
+  });
+}
+
+/***/ }),
 /***/ "./resources/js/scripts/getBonus.js":
 /*!******************************************!*\
   !*** ./resources/js/scripts/getBonus.js ***!
@@ -769,6 +819,7 @@ function initCalendarModalHandler() {
         }
       }).done(function (data) {
         container.html(data.calendar);
+
         $('.modal-name').html(data.name);
         $('.modal-prev').attr("data-year", data.prev);
         $('.modal-current').html(data.current);
@@ -780,6 +831,7 @@ function initCalendarModalHandler() {
               'year': e.currentTarget.attributes[2].value
             };
             console.log(dataNew);
+
             $.ajax({
               url: url,
               type: "GET",

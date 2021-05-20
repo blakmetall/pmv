@@ -86,10 +86,10 @@ class DetailsBookingPublic extends Notification
             ->line('------------------------------------------------')
             ->line('PAYMENTS')
             ->line('------------------------------------------------')
-            ->line('TOTAL FOR THE STAY: <strong>' . priceFormat($this->booking->subtotal_nights) . 'USD</strong>')
-            ->line('DAMAGE INSURANCE: <strong>' . priceFormat($damageDeposit) . ' USD</strong>')
-            ->line('PAYMENTS: <strong>' . priceFormat($reduced) . 'USD</strong>')
-            ->line('TOTAL DUE: <strong>' . priceFormat($balance) . 'USD</strong> ON '. $currentDate)
+            ->line(new HtmlString('TOTAL FOR THE STAY: <strong>' . priceFormat($this->booking->subtotal_nights) . 'USD</strong>'))
+            ->line(new HtmlString('DAMAGE INSURANCE: <strong>' . priceFormat($damageDeposit) . ' USD</strong>'))
+            ->line(new HtmlString('PAYMENTS: <strong>' . priceFormat($reduced) . 'USD</strong>'))
+            ->line(new HtmlString('TOTAL DUE: <strong>' . priceFormat($balance) . 'USD</strong> ON ' . $currentDate))
             ->line('------------------------------------------------')
             ->line('Thank you for your reservation, we will verify availability and confirm to you within 1 business day, after the reservation has been confirmed we require payment to guarantee the reservation.')
             ->line('Initial Deposit: The initial deposit is due within 5 business days from the date of the booking accordingly to the following conditions.')
@@ -99,7 +99,7 @@ class DetailsBookingPublic extends Notification
             ->line('* Final payment is due 30 days before the arrival of your reservation arrival date is between January 4th. and November 19th.')
             ->line('* Final payment is due 60 days before the arrival of your reservation arrival date is between November 20th. and January 3rd.')
             ->line('Some properties have their own reservation and/or cancellation policies and this information is included in the "Property Policy" section of the reservation document. Whenever this is the case the policies stated in the "Property Policy" will take precedent over the above policy.')
-            ->line('This reservation document is hereby confirmed as a RESERVATION REQUEST ONLY and the reservation is not guaranteed or secured until payment has been received. You may review the Rental Agreement at any time at the following address <a href="http://www.palmeravacations.com/rental-agreement" target="_blank">http://www.palmeravacations.com/rental-agreement.</a>')
+            ->line(new HtmlString('This reservation document is hereby confirmed as a RESERVATION REQUEST ONLY and the reservation is not guaranteed or secured until payment has been received. You may review the Rental Agreement at any time at the following address <a href="http://www.palmeravacations.mx/rental-agreement" target="_blank">http://www.palmeravacations.mx/rental-agreement.</a>'))
             ->line('------------------------------------------------')
             ->greeting(sprintf('Hola'))
             ->line('Esta es una copia de una reservación:')
@@ -128,7 +128,7 @@ class DetailsBookingPublic extends Notification
             ->line(new HtmlString('TOTAL PARA LA ESTANCIA: <strong>' . priceFormat($this->booking->subtotal_nights) . ' USD</strong>'))
             ->line(new HtmlString('SEGURO DE DAÑOS: <strong>' . priceFormat($damageDeposit) . ' USD</strong>'))
             ->line(new HtmlString('PAGOS: <strong>' . priceFormat($reduced) . ' USD</strong>'))
-            ->line(new HtmlString('DEUDA TOTAL: <strong>' . priceFormat($balance) . ' USD</strong> A '. $currentDate))
+            ->line(new HtmlString('DEUDA TOTAL: <strong>' . priceFormat($balance) . ' USD</strong> A ' . $currentDate))
             ->line('------------------------------------------------')
             ->line('Gracias por su reserva, verificaremos la disponibilidad y le confirmaremos dentro de 1 día hábil, luego de que la reservación haya sido confirmada requerimos el pago para garantizar la reservación.')
             ->line('Depósito inicial: El depósito inicial se debe pagar dentro de los 5 días hábiles a partir de la fecha de la reserva de acuerdo con las siguientes condiciones.')
@@ -138,14 +138,13 @@ class DetailsBookingPublic extends Notification
             ->line('* El pago final debe realizarse 30 días antes de la fecha de llegada de su reserva, entre el 4 de enero. y 19 de noviembre.')
             ->line('* El pago final debe realizarse 60 días antes de la fecha de llegada de su reserva, entre el 20 de noviembre. y 3 de enero.')
             ->line('Algunas propiedades tienen sus propias políticas de reserva y / o cancelación y esta información se incluye en la sección "Política de la propiedad" del documento de reserva. Siempre que este sea el caso, las políticas establecidas en la "Política de propiedad" prevalecerán sobre la política anterior.')
-            ->line('Este documento de reserva se confirma como SOLICITUD DE RESERVA SOLAMENTE y la reserva no está garantizada ni asegurada hasta que se haya recibido el pago. Puede revisar el contrato de alquiler en cualquier momento en la siguiente dirección <a href="http://www.palmeravacations.com/rental-agreement" target="_blank">http://www.palmeravacations.com/rental-agreement.</a>')
+            ->line(new HtmlString('Este documento de reserva se confirma como SOLICITUD DE RESERVA SOLAMENTE y la reserva no está garantizada ni asegurada hasta que se haya recibido el pago. Puede revisar el contrato de alquiler en cualquier momento en la siguiente dirección <a href="http://www.palmeravacations.mx/rental-agreement" target="_blank">http://www.palmeravacations.mx/rental-agreement.</a>'))
             ->line('------------------------------------------------')
             ->line('Palmera Vacations')
             ->line('vallarta@palmeravacations.com')
             ->line('Local:  +52 (322) 223-0101')
             ->line('US/Canada:  (323) 250-7721')
             ->line('Libertad 349 - Puerto Vallarta - Jal. - México 48380');
-            
     }
 
 
