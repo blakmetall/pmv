@@ -145,7 +145,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 $(function () {
   /////////////////////////////
   /////////////////////////////
@@ -491,6 +490,7 @@ $(function () {
 
 /***/ }),
 
+
 /***/ "./resources/js/scripts/deleteSelectableCheckbox.js":
 /*!**********************************************************!*\
   !*** ./resources/js/scripts/deleteSelectableCheckbox.js ***!
@@ -533,7 +533,6 @@ function initDeleteSelectableCheckbox() {
 }
 
 /***/ }),
-
 /***/ "./resources/js/scripts/getBonus.js":
 /*!******************************************!*\
   !*** ./resources/js/scripts/getBonus.js ***!
@@ -820,6 +819,8 @@ function initCalendarModalHandler() {
         }
       }).done(function (data) {
         container.html(data.calendar);
+
+        $('.modal-name').html(data.name);
         $('.modal-prev').attr("data-year", data.prev);
         $('.modal-current').html(data.current);
         $('.modal-next').attr("data-year", data.next);
@@ -829,6 +830,8 @@ function initCalendarModalHandler() {
               'id': e.currentTarget.attributes[1].value,
               'year': e.currentTarget.attributes[2].value
             };
+            console.log(dataNew);
+
             $.ajax({
               url: url,
               type: "GET",

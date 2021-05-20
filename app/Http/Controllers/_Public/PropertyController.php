@@ -149,6 +149,10 @@ class PropertyController extends Controller
     public function availabilityModal(Request $request)
     {
         $year = $request->source['year'];
+      
+        $lang = LanguageHelper::current();
+      
+        $property = PropertyTranslation::where("property_id", $request->source['id'])->where('language_id', $lang->id)->get()[0];
 
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $prevYear = Carbon::create($currYear)->subYear()->year;
@@ -161,6 +165,7 @@ class PropertyController extends Controller
             'prev'     => $prevYear,
             'current'  => $currYear,
             'next'     => $nextYear,
+            'name'     => $property->name,
         ];
 
         return $data;
@@ -495,6 +500,7 @@ class PropertyController extends Controller
                 $booking->register_by             = 'Client';
                 if ($booking->save()) {
                     $owners = $booking->property->users;
+                  
                     $emails = [
                         $request->email,
                         'vallarta@palmeravacations.com',
@@ -506,7 +512,7 @@ class PropertyController extends Controller
                     ];
 
                     foreach ($owners as $owner) {
-                        $email[] = $owner->email;
+                        $emails[] = $owner->email;
                     }
 
                     if (Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)) {

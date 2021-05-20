@@ -25,6 +25,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByPM = isset($config['pm']) ? $config['pm'] : false;
         $shouldFilterByName = isset($config['filterByName']) ? $config['filterByName'] : false;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
         $shouldFilterByOnline = isset($config['filterOnline']) ? $config['filterOnline'] : false;
@@ -146,6 +147,12 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('properties.is_enabled', '!=', 1);
             });
+        }
+
+        if ($shouldFilterByPM) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->whereHas('management');
+            })->where('language_id', $lang->id);
         }
 
         if ($shouldFilterByFeatured) {

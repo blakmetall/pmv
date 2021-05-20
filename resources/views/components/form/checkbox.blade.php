@@ -32,7 +32,7 @@ $hiddenStyle = ($hidden) ? 'display: none;' : '';
         <label class="checkbox checkbox-primary mb-2">
             <input type="checkbox" value="{{ $value }}" name="{{ $inputName }}" id="{{ $id }}" {{ $checkedProp }}
                 {{ $disabledProp }} />
-            <span class="checkmark app-checkmark"></span>
+            <span class="checkmark app-checkmark" style="background-color: #bbb;"></span>
         </label>
 
         @if ($errors->has($requestName))
