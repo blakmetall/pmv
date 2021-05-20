@@ -3,8 +3,7 @@
 use Carbon\Carbon;
 use App\Helpers\RatesHelper;
 use App\Helpers\LanguageHelper;
-
-use Notification;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\DetailsBooking;
 use App\Models\City;
 use App\Models\Office;
