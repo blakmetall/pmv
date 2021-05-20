@@ -17,6 +17,7 @@
     'disabled' => $disabled,
     'edit_route' => 'property-bookings.edit',
     'cancel_route' => 'property-bookings',
+    'delete_route' => 'property-bookings.destroy',
     'routeParams' => [],
     'skipDelete' => isRole('owner'),
 ])

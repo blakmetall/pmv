@@ -52,6 +52,17 @@
             'rows' => $transactions,
             'useGeneralSearchPresentation' => true,
         ])
+
+        <div class="pt-4"></div>
+        <hr>
+    @endif
+
+    @if($showBookings)
+        <!-- properties table content -->
+        @include('property-bookings.partials.table', [
+            'label' => __('Bookings'),
+            'rows' => $bookings,
+        ])
     @endif
 
 @endsection

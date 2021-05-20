@@ -38,8 +38,8 @@ class CreatePropertiesTable extends Migration
             $table->smallInteger('sleeps')->nullable();
             $table->smallInteger('floors')->nullable();
             $table->tinyInteger('has_parking')->nullable();
-            $table->decimal('lot_size_sqft', 15, 2)->nullable();
-            $table->decimal('construction_size_sqft', 15, 2)->nullable();
+            $table->string('lot_size')->nullable();
+            $table->string('construction_size')->nullable();
             $table->string('phone', 30)->nullable();
             $table->text('address')->nullable();
             $table->string('gmaps_lat', 30)->nullable();

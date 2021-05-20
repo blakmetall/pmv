@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="col-xs-4 opt2"> <i class="fa fa-shower"></i>
-                            <div class="text-center">{{ __('Bathrooms') }}<br> {{ (int) $property->property->baths }}
+                            <div class="text-center">{{ __('Bathrooms') }}<br> {{ $property->property->baths }}
                             </div>
                         </div>
 

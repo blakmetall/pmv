@@ -106,7 +106,7 @@
 
                         <!-- comments -->
                         <td>
-                            {{ $arrival->comments }}
+                            {!! $arrival->comments !!}
                         </td>
                     </tr>
                 @endforeach
@@ -206,7 +206,7 @@
 
                         <!-- comments -->
                         <td>
-                            {{ $departure->comments }}
+                            {!! $departure->comments !!}
                         </td>
                     </tr>
                 @endforeach

@@ -46,8 +46,8 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
             $query->where(function ($query) use ($lang, $search) {
                 $query->where(function ($query) use ($lang, $search) {
-                    $query->where('name', 'like', '%'.$search.'%');
-                    $query->orWhere('description', 'like', '%'.$search.'%');
+                    $query->where('name', 'like', '%' . $search . '%');
+                    $query->orWhere('description', 'like', '%' . $search . '%');
                 });
 
                 $query->orWhereHas('property', function ($query) use ($search) {
@@ -73,7 +73,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function ($q) {
                 $table = (new Property())->_getTable();
-                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
+                $q->whereIn($table . '.city_id', WorkgroupHelper::getAllowedCities());
             });
         }
 
@@ -145,7 +145,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $result = $query->limit(4)->get();
         } else {
             $query->orderBy('name', 'asc');
-            
+
             if ($shouldPaginate) {
                 $result = $query->paginate(config('constants.pagination.per-page'));
             } else {
@@ -215,7 +215,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $property->es->save();
 
         // bedding options
-        if($request->bedding_options) {
+        if ($request->bedding_options) {
             $property->bedding = $request->bedding_options;
             $property->save();
         }

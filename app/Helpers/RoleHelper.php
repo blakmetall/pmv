@@ -489,6 +489,7 @@ class RoleHelper
                 'contacts' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
+                    'rentals',
                     'accounting',
                     'administrative-assistant',
                 ]),
@@ -509,8 +510,8 @@ class RoleHelper
             'super' => 1,
             'admin' => 2,
             'property-management' => 3,
-            'rentals' => 4,
-            // 'rentals-agent' => 5, (external rentals agent)
+            // 'rentals-agent' => 4, (external rentals agent)
+            'rentals' => 5,
             'operations-manager' => 6,
             'operations-assistant' => 7,
             'accounting' => 8,
@@ -540,22 +541,23 @@ class RoleHelper
      *
      * @return bool true or false according to current role and permission action
      */
-    public static function can( $roleSlug, $permission, $section, $subsection) {
+    public static function can($roleSlug, $permission, $section, $subsection)
+    {
         $section = getSectionPermission($section, $subsection);
 
-        if($permission == 'view') {
-            if(isset($section[$roleSlug]) && in_array($permission, $section[$roleSlug])) {
+        if ($permission == 'view') {
+            if (isset($section[$roleSlug]) && in_array($permission, $section[$roleSlug])) {
                 return true;
             }
-            
+
             return false;
         }
 
-        if($permission == 'edit') {
-            if(isset($section[$roleSlug]) && in_array($permission, $section[$roleSlug])) {
+        if ($permission == 'edit') {
+            if (isset($section[$roleSlug]) && in_array($permission, $section[$roleSlug])) {
                 return true;
             }
-            
+
             return false;
         }
 
@@ -825,7 +827,7 @@ class RoleHelper
             ],
         ];
 
-        if(isset($sections[$section]) && isset($sections[$section][$subsection])) {
+        if (isset($sections[$section]) && isset($sections[$section][$subsection])) {
             return $sections[$section][$subsection];
         }
 

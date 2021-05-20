@@ -25,14 +25,17 @@
 
                 </thead>
                 <tbody>
-
                         @foreach($rates as $rate)
+                            @php
+                                $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
+                                $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
+                            @endphp
                             <tr>
                                 <!-- start_date -->
-                                <td>{{ $rate->start_date }}</td>
+                                <td>{{ $startDate }}</td>
 
                                 <!-- end_date -->
-                                <td>{{ $rate->end_date }}</td>
+                                <td>{{ $endDate }}</td>
 
                                 <!-- nightly -->
                                 <td>{{ priceFormat($rate->nightly) }}</td>
