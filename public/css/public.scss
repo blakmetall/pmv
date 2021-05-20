@@ -1,0 +1,57 @@
+body {
+  font-family: "Open Sans";
+}
+
+.container-public {
+  max-width: 100% !important;
+}
+
+#block-locale-language {
+  right: 32px !important;
+}
+
+#block-locale-language .active {
+  font-weight: 500;
+}
+
+.app-navbar-collapse .navbar-nav {
+  right: 12px;
+  position: relative;
+}
+
+li#fa-home.active > a,
+li#fa-home > a:hover,
+li#fa-home > a:focus,
+li#fa-home > .active,
+li#fa-user.active > a,
+li#fa-user > a:hover,
+li#fa-user > a:focus,
+li#fa-user > .active,
+li#fa-bell.active > a,
+li#fa-bell.active > a:hover,
+li#fa-bell.active > a:focus,
+li#fa-bell > a:hover,
+li#fa-bell > a:focus,
+li#fa-bell > .active,
+li#fa-star.active > a,
+li#fa-star.active > a:hover,
+li#fa-star.active > a:focus,
+li#fa-star > a:hover,
+li#fa-star > a:focus,
+li#fa-star > .active,
+li#fa-about.active > a,
+li#fa-about.active > a:hover,
+li#fa-about.active > a:focus,
+li#fa-about > a:hover,
+li#fa-about > a:focus,
+li#fa-about > .active,
+li#fa-flag.active > a,
+li#fa-flag.active > a:hover,
+li#fa-flag.active > a:focus,
+li#fa-flag > a:hover,
+li#fa-flag > a:focus,
+li#fa-flag > .active {
+  color: #18bc9c;
+  background-color: transparent;
+}
+
