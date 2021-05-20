@@ -1,70 +1,64 @@
-@php
-    $label = isset($label) ? $label : '';
-@endphp
-
 <div class="card">
     <div class="card-body app-form-fields-container">
 
-        @if ($label)
-            <span class="badge badge-primary r-badge mb-4">{{ $label }}</span>
+        <span class="badge badge-primary r-badge mb-4" style="text-transform: uppercase">{{ __('Accomodations') }}</span>
+
+        <!-- is_featured -->
+        @include('components.form.checkbox', [
+            'group' => 'property',
+            'label' => __('Featured'),
+            'name' => 'is_featured',
+            'value' => 1,
+            'default' => $row->is_featured,
+        ])
+
+        <!-- is_enabled -->
+        @include('components.form.checkbox', [
+            'group' => 'property',
+            'label' => __('Enabled'),
+            'name' => 'is_enabled',
+            'value' => 1,
+            'default' => $row->is_enabled,
+        ])
+
+        <!-- is_online -->
+        @include('components.form.checkbox', [
+            'group' => 'property',
+            'label' => __('Online'),
+            'name' => 'is_online',
+            'value' => 1,
+            'default' => $row->is_online,
+        ])
+
+        @if(isRole('super'))
+            <!-- is_special -->
+            @include('components.form.checkbox', [
+                'group' => 'property',
+                'label' => __('Special'),
+                'name' => 'is_special',
+                'value' => 1,
+                'default' => $row->is_special,
+            ])
         @endif
 
-        <!-- users_id --->
-        @include('components.form.fast-select', [
-            'group' => 'property',
-            'label' => __('Owner'),
-            'multiple' => true,
-            'name' => 'users_ids',
-            'required' => true,
-            'options' => prepareSelectValuesFromRows($users, ['valueRef' => 'id', 'depthRef' => true, 'labelRef' => 'profile,full_name']),
-            'default' => prepareSelectDefaultValues($row->users, ['valueRef' => 'id'])
-        ])
-
-        <!-- office_id -->
+        <!-- property_type_id -->
         @include('components.form.select', [
             'group' => 'property',
-            'label' => __('Office'),
-            'name' => 'office_id',
-            'value' => $row->office_id,
-            'options' => $offices,
-            'optionValueRef' => 'id',
+            'label' => __('Property Type'),
+            'name' => 'property_type_id',
+            'required' => true,
+            'value' => $row->property_type_id,
+            'options' => $propertyTypes,
+            'optionValueRef' => 'property_type_id',
             'optionLabelRef' => 'name',
         ])
 
-        <!-- state_id -->
-        @include('components.form.select', [
+        <!-- rental_commission -->
+        @include('components.form.input', [
             'group' => 'property',
-            'label' => __('State'),
-            'name' => 'state_id',
-            'required' => true,
-            'value' => $row->state_id,
-            'options' => $states,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'name',
-        ])
-
-        <!-- city_id -->
-        @include('components.form.select', [
-            'group' => 'property',
-            'label' => __('City'),
-            'name' => 'city_id',
-            'required' => true,
-            'value' => $row->city_id,
-            'options' => $cities,
-            'optionValueRef' => 'id',
-            'optionLabelRef' => 'name',
-        ])
-
-        <!-- zone_id -->
-        @include('components.form.select', [
-            'group' => 'property',
-            'label' => __('Zone'),
-            'name' => 'zone_id',
-            'required' => true,
-            'value' => $row->zone_id,
-            'options' => $zones,
-            'optionValueRef' => 'zone_id',
-            'optionLabelRef' => 'name',
+            'label' => __('Rental Commision'),
+            'name' => 'rental_commission',
+            'value' => $row->rental_commission
         ])
 
         <!-- building_id -->
@@ -86,18 +80,6 @@
             'value' => $row->unit,
         ])
 
-        <!-- property_type_id -->
-        @include('components.form.select', [
-            'group' => 'property',
-            'label' => __('Property Type'),
-            'name' => 'property_type_id',
-            'required' => true,
-            'value' => $row->property_type_id,
-            'options' => $propertyTypes,
-            'optionValueRef' => 'property_type_id',
-            'optionLabelRef' => 'name',
-        ])
-
         <!-- bedrooms -->
         @include('components.form.input', [
             'group' => 'property',
@@ -105,6 +87,14 @@
             'name' => 'bedrooms',
             'required' => true,
             'value' => $row->bedrooms
+        ])
+
+        <!-- pax -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Pax'),
+            'name' => 'pax',
+            'value' => $row->pax
         ])
 
         <!-- baths -->
@@ -124,7 +114,7 @@
             'value' => $row->floors
         ])
 
-        <!-- lot_size_sqft -->
+        <!-- lot_size -->
         @include('components.form.input', [
             'group' => 'property',
             'label' => __('Lot Size'),
@@ -132,7 +122,7 @@
             'value' => $row->lot_size
         ])
 
-        <!-- construction_size_sqft -->
+        <!-- construction_size -->
         @include('components.form.input', [
             'group' => 'property',
             'label' => __('Construction Size'),
@@ -140,56 +130,16 @@
             'value' => $row->construction_size
         ])
 
-        <!-- phone -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Phone'),
-            'name' => 'phone',
-            'value' => $row->phone
-        ])
+    </div>
+</div>
 
-        <!-- rental_commission -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Rental Commision'),
-            'name' => 'rental_commission',
-            'value' => $row->rental_commission
-        ])
+<!-- separator -->
+<div class="mb-4"></div>
+        
+<div class="card">
+    <div class="card-body">
 
-        <!-- pax -->
-        @include('components.form.input', [
-            'group' => 'property',
-            'label' => __('Pax'),
-            'name' => 'pax',
-            'value' => $row->pax
-        ])
-
-        <!-- has_parking -->
-        @include('components.form.checkbox', [
-            'group' => 'property',
-            'label' => __('Parking'),
-            'name' => 'has_parking',
-            'value' => 1,
-            'default' => $row->has_parking,
-        ])
-
-        <!-- is_featured -->
-        @include('components.form.checkbox', [
-            'group' => 'property',
-            'label' => __('Featured'),
-            'name' => 'is_featured',
-            'value' => 1,
-            'default' => $row->is_featured,
-        ])
-
-        <!-- is_enabled -->
-        @include('components.form.checkbox', [
-            'group' => 'property',
-            'label' => __('Enabled'),
-            'name' => 'is_enabled',
-            'value' => 1,
-            'default' => $row->is_enabled,
-        ])
+        <span class="badge badge-primary r-badge mb-4" style="text-transform: uppercase">{{ __('Amenities') }}</span>
 
         <!-- pet_friendly -->
         @include('components.form.checkbox', [
@@ -218,25 +168,14 @@
             'default' => $row->beachfront,
         ])
 
-        <!-- is_online -->
+        <!-- has_parking -->
         @include('components.form.checkbox', [
             'group' => 'property',
-            'label' => __('Online'),
-            'name' => 'is_online',
+            'label' => __('Parking'),
+            'name' => 'has_parking',
             'value' => 1,
-            'default' => $row->is_online,
+            'default' => $row->has_parking,
         ])
-
-        @if(isRole('super'))
-            <!-- is_special -->
-            @include('components.form.checkbox', [
-                'group' => 'property',
-                'label' => __('Special'),
-                'name' => 'is_special',
-                'value' => 1,
-                'default' => $row->is_special,
-            ])
-        @endif
 
         <!-- amenities -->
         @include('components.form.fast-select', [
@@ -253,8 +192,6 @@
             ]),
         ])
 
-        <hr>
-
         @foreach($beddingOptions as $k => $beddingOption)
             <!-- maid_fee -->
             @include('components.form.input', [
@@ -266,7 +203,26 @@
             ])
         @endforeach
 
-        <hr>
+    </div>
+</div>
+<!-- separator -->
+<div class="mb-4"></div>
+        
+<div class="card">
+    <div class="card-body">
+
+        <span class="badge badge-primary r-badge mb-4" style="text-transform: uppercase">{{ __('Property Management') }}</span>
+
+        <!-- users_id --->
+        @include('components.form.fast-select', [
+            'group' => 'property',
+            'label' => __('Owner'),
+            'multiple' => true,
+            'name' => 'users_ids',
+            'required' => true,
+            'options' => prepareSelectValuesFromRows($users, ['valueRef' => 'id', 'depthRef' => true, 'labelRef' => 'profile,full_name']),
+            'default' => prepareSelectDefaultValues($row->users, ['valueRef' => 'id'])
+        ])
 
          <!-- cleaning_option_id -->
          @include('components.form.select', [
@@ -313,7 +269,59 @@
             'default' => $row->cleaning_staff_ids,
         ])
 
-        <hr>
+    </div>
+</div>
+
+        <!-- separator -->
+<div class="mb-4"></div>
+        
+<div class="card">
+    <div class="card-body">
+
+        <span class="badge badge-primary r-badge mb-4" style="text-transform: uppercase">{{ __('Address') }}</span>
+
+        <!-- office_id -->
+            @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('Office'),
+            'name' => 'office_id',
+            'value' => $row->office_id,
+            'options' => $offices,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
+        ])
+
+        <!-- city_id -->
+        @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('City'),
+            'name' => 'city_id',
+            'required' => true,
+            'value' => $row->city_id,
+            'options' => $cities,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
+        ])
+
+        <!-- zone_id -->
+        @include('components.form.select', [
+            'group' => 'property',
+            'label' => __('Zone'),
+            'name' => 'zone_id',
+            'required' => true,
+            'value' => $row->zone_id,
+            'options' => $zones,
+            'optionValueRef' => 'zone_id',
+            'optionLabelRef' => 'name',
+        ])
+
+        <!-- phone -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Phone'),
+            'name' => 'phone',
+            'value' => $row->phone
+        ])
 
         <!-- country -->
         @include('components.form.input', [
@@ -323,12 +331,16 @@
             'value' => $row->country,
         ])
 
-        <!-- state -->
-        @include('components.form.input', [
+        <!-- state_id -->
+        @include('components.form.select', [
             'group' => 'property',
             'label' => __('State'),
-            'name' => 'state',
-            'value' => $row->state,
+            'name' => 'state_id',
+            'required' => true,
+            'value' => $row->state_id,
+            'options' => $states,
+            'optionValueRef' => 'id',
+            'optionLabelRef' => 'name',
         ])
 
         <!-- city -->
@@ -371,16 +383,17 @@
             'value' => $row->zip,
         ])
 
-        <?php /* cambiado campo de dirección único a separados
-            <!-- address -->
-            @include('components.form.textarea', [
-                'group' => 'property',
-                'label' => __('Address'),
-                'name' => 'address',
-                'required' => true,
-                'value' => $row->address,
-            ])
-        */ ?>
+
+    </div>
+</div>
+
+<!-- separator -->
+<div class="mb-4"></div>
+
+<div class="card">
+    <div class="card-body">
+
+        <span class="badge badge-primary r-badge mb-4" style="text-transform: uppercase">{{ __('Map') }}</span>
 
         <!-- google_map -->
         @include('components.form.map', [
@@ -397,3 +410,4 @@
 
 <!-- separator -->
 <div class="mb-4"></div>
+
