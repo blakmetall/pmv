@@ -30,6 +30,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByOnline = isset($config['filterOnline']) ? $config['filterOnline'] : false;
         $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
+        $shouldCleaningStaffId = isset($config['cleaningStaffId']) ? $config['cleaningStaffId'] : false;
         $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
         $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
         $shouldFilterByFeatured = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
@@ -46,8 +47,8 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
             $query->where(function ($query) use ($lang, $search) {
                 $query->where(function ($query) use ($lang, $search) {
-                    $query->where('name', 'like', '%'.$search.'%');
-                    $query->orWhere('description', 'like', '%'.$search.'%');
+                    $query->where('name', 'like', '%' . $search . '%');
+                    $query->orWhere('description', 'like', '%' . $search . '%');
                 });
 
                 $query->orWhereHas('property', function ($query) use ($search) {
@@ -73,7 +74,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function ($q) {
                 $table = (new Property())->_getTable();
-                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
+                $q->whereIn($table . '.city_id', WorkgroupHelper::getAllowedCities());
             });
         }
 
@@ -82,6 +83,12 @@ class PropertiesRepository implements PropertiesRepositoryInterface
                 $q->whereHas('users', function ($q) use ($config) {
                     $q->where('properties_has_users.user_id', $config['filterByUserId']);
                 });
+            })->where('language_id', $lang->id);
+        }
+
+        if ($shouldCleaningStaffId) {
+            $query->whereHas('property', function ($q) use ($shouldCleaningStaffId) {
+                $q->where('cleaning_staff_ids', 'like', "%\"{$shouldCleaningStaffId}\"%");
             })->where('language_id', $lang->id);
         }
 
@@ -145,7 +152,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $result = $query->limit(4)->get();
         } else {
             $query->orderBy('name', 'asc');
-            
+
             if ($shouldPaginate) {
                 $result = $query->paginate(config('constants.pagination.per-page'));
             } else {
@@ -215,7 +222,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $property->es->save();
 
         // bedding options
-        if($request->bedding_options) {
+        if ($request->bedding_options) {
             $property->bedding = $request->bedding_options;
             $property->save();
         }

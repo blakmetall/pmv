@@ -484,7 +484,6 @@
     "Who?": "Who?",
     "More Filters": "More Filters",
     "PetFriendly": "Pet Friendly",
-    "Adults": "Adults",
     "Adults Only": "Adults Only",
     "Beach / Water front": "Beach / Water front",
     "Check out date": "Check out date",
@@ -654,6 +653,7 @@
     "Client wishes": "If the client wishes to pay for the reservation at this time",
     "Click here": "click here",
     "Confirmation recipents": "A confirmation email has been sent to the following recipients:",
+    "Select Maid": "Select Maid",
 
     "King Bed": "King Bed",
     "Queen Bed": "Queen Bed",
