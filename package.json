@@ -27,14 +27,12 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "is-svg": ">=4.2.2",
         "mysql": "^2.18.1",
         "npm-git-install": "^0.3.0",
-        "object-path": ">=0.11.5",
         "prop-types": "^15.7.2",
         "react-bootstrap": "^1.0.0-beta.17",
         "ssri": ">=8.0.1",
-        "styled-components": "^5.0.1"
+        "styled-components": "^5.0.1",
         "is-svg": ">=4.2.2",
         "object-path": ">=0.11.5",
         "postcss": ">=8.2.10"
