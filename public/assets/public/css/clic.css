@@ -7,10 +7,6 @@
     background-position: center top !important;
 }
 
-body {
-    border-top: 30px solid #2d6c9c;
-}
-
 /* menu */
 #navbar {
     max-width: 100%;
@@ -313,9 +309,6 @@ li#fa-user.active {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         color: white;
         font-weight: bold;
-    }
-    body {
-        border-top: 13px solid #2d6c9c;
     }
 
     #block-search-breadcrumbs-search-breadcrumbs-block {
