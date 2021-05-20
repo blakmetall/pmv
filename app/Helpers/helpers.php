@@ -599,7 +599,7 @@ if (!function_exists('getFeaturedImage')) {
         $property = Property::find($id);
 
         if (count($property->images) > 0) {
-            $result = $property->images[0]->file_url;
+            $result = getUrlPath($property->images[0]->file_url, 'small-ls');
         } else {
             $result = null;
         }
