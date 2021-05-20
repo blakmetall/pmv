@@ -93,6 +93,7 @@ li#fa-home.active > a {
     padding: 8px 20px;
 
     .language-switcher-locale-url {
+        font-family: 'Open Sans';
         margin-left: auto;
         display: flex;
         justify-content: flex-end;
@@ -116,6 +117,18 @@ li#fa-home.active > a {
             }
         }
     }
+}
+
+#block-avail-search-avail-search-block, .pane-avail-search-avail-search-block {
+    background-color: #fff;
+}
+
+.footer-container {
+    background: #153044;
+}
+
+iframe#twitter-widget-0 {
+    border: 1px solid #676767 !important;
 }
 
 @media (max-width: 1155px) and (min-width: 768px) {

@@ -13,7 +13,7 @@ body {
 	color: #666; 
 	line-height:18px; 
 	font-weight:500; 
-	font: 14px/22px Arial, Helvetica, sans-serif;
+	font: 14px/22px 'Montserrat', sans-serif;
 }
 
 h1, 
@@ -336,7 +336,7 @@ li#fa-user > .active {
 }
 
 .prop { 
-	font:300 16px/24px 'Roboto Condensed', sans-serif; 
+	font:300 16px/24px 'Roboto', sans-serif; 
 	background-color: #EDEDED; 
 	padding: 71px 20px 18px;
 }
