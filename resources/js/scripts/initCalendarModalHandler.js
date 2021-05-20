@@ -18,6 +18,7 @@ export function initCalendarModalHandler() {
                 data:{"source": data}
             }).done(function(data) {
                 container.html(data.calendar);
+                $('.modal-name').html(data.name);
                 $('.modal-prev').attr("data-year", data.prev);
                 $('.modal-current').html(data.current);
                 $('.modal-next').attr("data-year", data.next);
@@ -27,6 +28,7 @@ export function initCalendarModalHandler() {
                             'id': e.currentTarget.attributes[1].value,
                             'year' : e.currentTarget.attributes[2].value,
                         };
+                        console.log(dataNew);
                         $.ajax({
                             url: url,
                             type: "GET",

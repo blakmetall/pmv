@@ -30,7 +30,6 @@ class CreateCleaningServicesTable extends Migration
             $table->tinyInteger('is_finished')->nullable()->default(0);
             $table->dateTime('audit_datetime')->nullable();
             $table->integer('audit_user_id')->nullable();
-            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -37,7 +37,7 @@ class PropertyController extends Controller
         $this->zonesRepository = $zonesRepository;
         $this->damagesDepositsRepository = $damagesDepositsRepository;
     }
-    
+
     public function availabilityResults(Request $request)
     {
         $rules = [];
@@ -51,7 +51,7 @@ class PropertyController extends Controller
         $messages['bedrooms.required'] = __('Required bedrooms');
         $messages['bedrooms.numeric']   = __('Required number');
 
-        if(!$request->property_name) {
+        if (!$request->property_name) {
             $validator = Validator::make($request->all(), $rules, $messages);
         }
 
@@ -89,14 +89,14 @@ class PropertyController extends Controller
         $prw['baths'] = $property->property->baths;
         $prw['beds'] = $property->property->bedrooms;
         $prw['pax'] = $property->property->pax;
-        $prw['route'] = 'property/'.$zone.'/'.$slug;
+        $prw['route'] = 'property/' . $zone . '/' . $slug;
         $prw['image'] = getFeaturedImage($property->property_id);
         $prw['rate'] = getLowerRate($property->property_id);
         $prw = json_encode($prw);
 
-        if($request->arrival_alt_sing && $request->departure_alt_sing){
+        if ($request->arrival_alt_sing && $request->departure_alt_sing) {
             $pax = $request->adults_sing + $request->children_sing;
-            if($pax > $property->property->pax){
+            if ($pax > $property->property->pax) {
                 $request->session()->flash('error', __('The number of people exceeds the maximum occupancy for the property'));
             }
             $arrivalDeparture = [
@@ -107,7 +107,7 @@ class PropertyController extends Controller
                 'departure' => $request->departure_alt_sing,
                 'departureTxt' => $request->departure_sing,
             ];
-        }else{
+        } else {
             $arrivalDeparture = [
                 'adults' => null,
                 'children' => null,
@@ -131,9 +131,10 @@ class PropertyController extends Controller
         return $zones;
     }
 
-    public function firstsAvailability(Request $request){
+    public function firstsAvailability(Request $request)
+    {
         $year = $request->source['year'];
-    
+
         $currYear = isset($year) ? $year : Carbon::now()->year;
 
         $calendar = generateCalendar($year, 3, $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]));
@@ -148,7 +149,9 @@ class PropertyController extends Controller
     public function availabilityModal(Request $request)
     {
         $year = $request->source['year'];
-    
+        $lang = LanguageHelper::current();
+        $property = PropertyTranslation::where("property_id", $request->source['id'])->where('language_id', $lang->id)->get()[0];
+
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $prevYear = Carbon::create($currYear)->subYear()->year;
         $nextYear = Carbon::create($currYear)->addYear()->year;
@@ -160,12 +163,14 @@ class PropertyController extends Controller
             'prev'     => $prevYear,
             'current'  => $currYear,
             'next'     => $nextYear,
+            'name'     => $property->name,
         ];
 
         return $data;
     }
 
-    public function reservations($id){
+    public function reservations($id)
+    {
         $captcha = rand(100000, 999999);
         $lang = LanguageHelper::current()->code;
         $slug = $this->propertiesRepository->find($id)->$lang->slug;
@@ -419,7 +424,8 @@ class PropertyController extends Controller
             ->with('damageDeposits', $damageDeposits);
     }
 
-    public function makeReservation(Request $request){
+    public function makeReservation(Request $request)
+    {
         $rules = [];
         $messages = [];
 
@@ -450,9 +456,9 @@ class PropertyController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($request->code_catpcha != $request->captcha_response){
+        if ($request->code_catpcha != $request->captcha_response) {
             $request->session()->flash('error', __('Code image wrong'));
-        }else{
+        } else {
             if (!$validator->fails()) {
                 $booking = new PropertyBooking;
                 if ($booking->damage_deposit_id) {
@@ -490,7 +496,7 @@ class PropertyController extends Controller
                 $booking->adults                  = $request->adults;
                 $booking->kids                    = $request->children;
                 $booking->register_by             = 'Client';
-                if($booking->save()){
+                if ($booking->save()) {
                     $emails = [
                         $request->email,
                         'vallarta@palmeravacations.com',
@@ -501,19 +507,19 @@ class PropertyController extends Controller
                         'info@palmeravacations.com',
                         'contabilidad@palmeravacations.com',
                     ];
-                    
-                    if(Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)){
+
+                    if (Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)) {
                         $emails[] = 'pmd@palmeravacations.com';
                     }
                     $this->email($booking, $emails);
                     return redirect(route('public.thank-you', $booking))->withInput();
-                }else{
+                } else {
                     $request->session()->flash('error', __('Something wrong happen'));
                 }
-            }else{
+            } else {
                 $errors = '';
-                foreach($validator->errors()->get('*') as $error){
-                $errors .= $error[0].'<br>';
+                foreach ($validator->errors()->get('*') as $error) {
+                    $errors .= $error[0] . '<br>';
                 }
                 $request->session()->flash('error', $errors);
             }
@@ -526,12 +532,12 @@ class PropertyController extends Controller
         $request->session()->flash('success', __('Reservation successful sended'));
         $booking = PropertyBooking::find($booking);
         return view('public.pages.properties.thank-you')
-                ->with('booking', $booking);
+            ->with('booking', $booking);
     }
 
     private function email($booking, $emails)
     {
-        foreach($emails as $email){
+        foreach ($emails as $email) {
             Notification::route('mail', $email)
                 ->notify(new DetailsBookingPublic($booking));
         }

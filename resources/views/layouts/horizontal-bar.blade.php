@@ -634,6 +634,7 @@ $_current_role = RoleHelper::current();
             <div class="modal-body">
                 <div class="card">
                     <div class="card-header">
+                        <div class="modal-name"></div>
                         <div class="btns-container">
                             <a href="#" data-source="" data-year="" data-target="#modal-availability-modal"
                                 class="modal-prev btn btn-dark">

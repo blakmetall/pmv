@@ -174,7 +174,7 @@ class CleaningServicesController extends Controller
 
         $currentMonth = Carbon::createFromDate($_GET['year'], $_GET['month'], 1, 'America/Mexico_City');
 
-        $properties = $this->propertiesRepository->all('', ['paginate' => false]);
+        $properties = $this->propertiesRepository->all('', ['paginate' => false, 'pm' => true]);
 
         return view('cleaning-services.monthly-batch')
             ->with('properties', $properties)

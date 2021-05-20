@@ -83,6 +83,10 @@
                         <td class="cleaning-td-property hover-action">
                             <div class="monthly-batch-iconography">
                                 <div class="square-clean" style="background-color:{{ $color }}"></div>
+                                <a href="#" data-toggle="modal" data-source="{{ $item->property_id }}" data-year="{{ $currentMonth->format('Y') }}"
+                                    data-target="#modal-availability-modal">
+                                    <i class="nav-icon i-Calendar-4 font-weight-bold"></i>&nbsp;&nbsp;&nbsp;
+                                </a>
                                 <div>{{ $item->name }}</div>
                             </div>
                         </td>
@@ -106,9 +110,18 @@
                                                 @endphp
                                                 @include('cleaning-services.partials.modal-edit', ['cleaning_service' => $cleaning_service->id])
                                                 @php
-                                                    $date   = $cleaning_service->date;
-                                                    $d      = new DateTime($date);
-                                                    $status = ($cleaning_service->is_finished)?'finished':'open';
+                                                    $date        = $cleaning_service->date;
+                                                    $d           = new DateTime($date);
+                                                    $currentDate = new DateTime();
+                                                    if($cleaning_service->is_finished){
+                                                        $status = 'finished';
+                                                    }else{
+                                                        if($d < $currentDate){
+                                                            $status = 'open';
+                                                        }else{
+                                                            $status = 'overdue';
+                                                        }
+                                                    }
                                                 @endphp
                                                 @if($d->format('d') == $i)
                                                     <a href="#" data-toggle="modal" data-property="{{ $item->property_id }}" data-maid-fee="{{ $item->property->maid_fee }}" data-load-fee="false" data-date="{{ $currentMonthFormat.'-'.$zero.$i }}" data-target="#{{$modalEditID }}" class="cleaning-td-service cleaning-td-service-<?=$status?>">

@@ -99,13 +99,13 @@
             ])
         @endif
 
-        <!-- notes -->
+        {{-- <!-- notes -->
         @include('components.form.textarea', [
             'group' => 'cleaning-service',
             'label' => __('Notes'),
             'name' => 'notes',
             'value' => $row->notes
-        ])
+        ]) --}}
 
     </div>
 </div>

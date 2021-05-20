@@ -25,6 +25,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $shouldFilterByPM = isset($config['pm']) ? $config['pm'] : false;
         $shouldFilterByName = isset($config['filterByName']) ? $config['filterByName'] : false;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
         $shouldFilterByOnline = isset($config['filterOnline']) ? $config['filterOnline'] : false;
@@ -46,8 +47,8 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query = PropertyTranslation::query();
             $query->where(function ($query) use ($lang, $search) {
                 $query->where(function ($query) use ($lang, $search) {
-                    $query->where('name', 'like', '%'.$search.'%');
-                    $query->orWhere('description', 'like', '%'.$search.'%');
+                    $query->where('name', 'like', '%' . $search . '%');
+                    $query->orWhere('description', 'like', '%' . $search . '%');
                 });
 
                 $query->orWhereHas('property', function ($query) use ($search) {
@@ -73,7 +74,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         if (!$shouldFilterByUserId && $shouldFilterByWorkgroup && WorkgroupHelper::shouldFilterByCity()) {
             $query->whereHas('property', function ($q) {
                 $table = (new Property())->_getTable();
-                $q->whereIn($table.'.city_id', WorkgroupHelper::getAllowedCities());
+                $q->whereIn($table . '.city_id', WorkgroupHelper::getAllowedCities());
             });
         }
 
@@ -141,11 +142,17 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             });
         }
 
+        if ($shouldFilterByPM) {
+            $query->whereHas('property', function ($q) use ($config) {
+                $q->whereHas('management');
+            })->where('language_id', $lang->id);
+        }
+
         if ($shouldFilterByFeatured) {
             $result = $query->limit(4)->get();
         } else {
             $query->orderBy('name', 'asc');
-            
+
             if ($shouldPaginate) {
                 $result = $query->paginate(config('constants.pagination.per-page'));
             } else {
@@ -215,7 +222,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $property->es->save();
 
         // bedding options
-        if($request->bedding_options) {
+        if ($request->bedding_options) {
             $property->bedding = $request->bedding_options;
             $property->save();
         }
