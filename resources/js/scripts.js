@@ -155,6 +155,12 @@ $(function() {
             .submit();
     });
 
+    $("#cleaning-option-batch-staff-select").change(function() {
+        $(this)
+            .closest("form")
+            .submit();
+    });
+
     const maidFee = $("#field_cleaning-service_maid_fee_").val();
     $("#field_property_status_ids_").change(function() {
         if ($.inArray("8", $(this).val()) != -1) {
