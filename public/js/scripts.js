@@ -223,9 +223,11 @@ $(function () {
   $("#cleaning-option-batch-year-select").change(function () {
     $(this).closest("form").submit();
   });
+
   $("#cleaning-option-batch-staff-select").change(function () {
     $(this).closest("form").submit();
   });
+
   var maidFee = $("#field_cleaning-service_maid_fee_").val();
   $("#field_property_status_ids_").change(function () {
     if ($.inArray("8", $(this).val()) != -1) {

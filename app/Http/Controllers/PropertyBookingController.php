@@ -157,7 +157,7 @@ class PropertyBookingController extends Controller
         });
         $query->whereHas('property', function ($qy) use ($search) {
             $qy->where('city_id', 'like', '%' . $search['location'] . '%');
-            if(isRole('owner')){
+            if (isRole('owner')) {
                 $qy->whereHas('users', function ($q) {
                     $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
                 });
@@ -177,7 +177,7 @@ class PropertyBookingController extends Controller
         });
         $query->whereHas('property', function ($qy) use ($search) {
             $qy->where('city_id', 'like', '%' . $search['location'] . '%');
-            if(isRole('owner')){
+            if (isRole('owner')) {
                 $qy->whereHas('users', function ($q) {
                     $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
                 });
@@ -526,18 +526,18 @@ class PropertyBookingController extends Controller
         $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
         $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
 
-        foreach ($days as $day){
-            if(in_array($day, $bookingDays)){
+        foreach ($days as $day) {
+            if (in_array($day, $bookingDays)) {
                 $bookingExist = true;
             }
         }
-        
+
         if ($bookingExist) {
             $request->session()->flash('error', __('A Booking actually have same date successfully'));
             return redirect()->back();
         } else {
             $booking = $this->repository->create($request);
-            $msg = __('Msg reservation') . ' #'.$booking->id.', '.__('Client wishes').' <a href="insertarlink">'.__('Click here').'</a> '.__('Confirmation recipents').'reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+            $msg = __('Msg reservation') . ' #' . $booking->id . ', ' . __('Client wishes') . ' <a href="' . route('public.vacation-services.make-payment-verify', [$booking->id]) . '">' . __('Click here') . '</a> ' . __('Confirmation recipents') . ' ' . $request->email . ', reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
             $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$booking->id]));
         }
@@ -601,7 +601,7 @@ class PropertyBookingController extends Controller
         $bookingDaysArr = [];
 
         foreach ($bookings as $booking) {
-            if($booking->id != $id){
+            if ($booking->id != $id) {
                 $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             }
         }
@@ -609,12 +609,12 @@ class PropertyBookingController extends Controller
         $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
         $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
 
-        foreach ($days as $day){
-            if(in_array($day, $bookingDays)){
+        foreach ($days as $day) {
+            if (in_array($day, $bookingDays)) {
                 $bookingExist = true;
             }
         }
-        
+
         if ($bookingExist) {
             $request->session()->flash('error', __('A Booking actually have same date successfully'));
             return redirect()->back();
@@ -628,15 +628,51 @@ class PropertyBookingController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($this->repository->canDelete($id)) {
-            $this->repository->delete($id);
+            $booking = $this->repository->find($id);
+            $contacts = $booking->property->contacts;
+            $concierge = false;
+            foreach ($contacts as $contact) {
+                if ($contact->contact_type == 'property-manager') {
+                    $concierge = $contact->email;
+                }
+            }
+            if ($request->guest) {
+                sendEmail($booking, $booking->email);
+            }
+
+            if ($request->office) {
+                sendEmail($booking, $booking->property->office->email);
+            }
+
+            if ($concierge) {
+                if ($request->concierge) {
+                    sendEmail($booking, $concierge);
+                }
+            }
+
+            if ($request->home_owner) {
+                $owners = $booking->property->users;
+                foreach ($owners as $owner) {
+                    sendEmail($booking, $owner->email);
+                }
+            }
+
+            sendEmail($booking, 'reservaciones@palmeravacations.com');
+            sendEmail($booking, 'info@palmeravacations.com');
+            sendEmail($booking, 'contabilidad@palmeravacations.com');
             $request->session()->flash('success', __('Record deleted successfully'));
 
-            return redirect()->back();
+            $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+            $request->session()->flash('success', $msg);
+
+            $this->repository->delete($id);
+
+            return redirect(route('property-bookings'));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
 
-        return redirect()->back();
+        return redirect(route('property-bookings'));
     }
 
     // get the partial section to select property; used to create new booking url
@@ -644,8 +680,10 @@ class PropertyBookingController extends Controller
     {
         $config = [
             'filterByWorkgroup' => true,
+            'filterByWorkgroup' => true,
             'filterByEnabled' => true,
             'filterByUserId' => isRole('owner') ? UserHelper::getCurrentUserID() : false,
+            'paginate' => false,
         ];
         $properties = $this->propertiesRepository->all('', $config);
 
@@ -680,11 +718,11 @@ class PropertyBookingController extends Controller
         $data['beds'] = $property->property->bedrooms;
         $data['baths'] = $property->property->baths;
         $data['pax'] = $property->property->pax;
-        $data['nightlyRate'] = priceFormat($nightlyRate). ' '.__('avg. night');
+        $data['nightlyRate'] = priceFormat($nightlyRate) . ' ' . __('avg. night');
         $data['nights'] = $nights;
         $data['total'] = priceFormat($total);
         $data['cleaning'] = $property->property->cleaningOption->getLabel();
-        $data['address'] = getCity($property->property->city_id).' / '.$property->property->zone->getLabel();
+        $data['address'] = getCity($property->property->city_id) . ' / ' . $property->property->zone->getLabel();
         $data['arrival'] = $arrival;
         $data['departure'] = $departure;
         $data['year'] = $year;

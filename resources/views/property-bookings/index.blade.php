@@ -22,7 +22,7 @@
                 @endif
             @endforeach
 
-            @if ($propertyUser || isRole('super') || isRole('admin'))
+            @if ($propertyUser || isRole('super') || isRole('admin') || isRole('rentals'))
                 @php
                     $actions = [
                         [
@@ -38,7 +38,7 @@
                 @endphp
             @endif
         @else
-            @if ($property->user->id || isRole('super') || isRole('admin'))
+            @if ($property->user->id || isRole('super') || isRole('admin') || isRole('rentals'))
                 @php
                     $actions = [
                         [
@@ -68,9 +68,9 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search-bookings', [
+    {{-- @include('components.search-bookings', [
         'url' => $url
-    ])
+    ]) --}}
 
 
 @endsection

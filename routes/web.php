@@ -119,7 +119,7 @@ Route::group(['middleware' => ['web']], function () {
                     });
 
                     // property: property contacts
-                    Route::group(['prefix' => 'contacts'], function () {
+                    Route::group(['prefix' => 'contacts', 'middleware' => 'role-permission:settings,contacts'], function () {
                         Route::get('', 'PropertyContactsController@index')->name('property-contacts');
                         Route::get('create', 'PropertyContactsController@create')->name('property-contacts.create');
                         Route::post('store', 'PropertyContactsController@store')->name('property-contacts.store');

@@ -43,11 +43,11 @@
     "translations": [
       {
         "language_id": 1,
-        "name": "Rentals"
+        "name": "External Rentals Agent"
       },
       {
         "language_id": 2,
-        "name": "Rentas"
+        "name": "Agente de Rentas Externo"
       }
     ]
   },
