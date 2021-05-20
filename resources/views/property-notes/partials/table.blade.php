@@ -33,7 +33,7 @@
                         </th>
 
                         <!-- description -->
-                        <td>{{ $row->description }}</td>
+                        <td>{!! $row->description !!}</td>
 
                         <!-- property -->
                         <td>

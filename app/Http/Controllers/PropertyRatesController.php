@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\{ PropertyRatesRepositoryInterface };
+use App\Repositories\{PropertyRatesRepositoryInterface};
 use Illuminate\Http\Request;
-use App\Models\{ Property, PropertyRate };
+use App\Models\{Property, PropertyRate};
 
 class PropertyRatesController extends Controller
 {
@@ -18,7 +18,7 @@ class PropertyRatesController extends Controller
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-        $rates = $this->repository->all($search);
+        $rates = $this->repository->all($search,  ['property_id' => $property->id]);
 
         return view('property-rates.index')
             ->with('rates', $rates)
@@ -38,7 +38,7 @@ class PropertyRatesController extends Controller
     {
         $rate = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        return redirect(route('property-rates.edit', [$property->id, $rate->id]));
+        return redirect(route('property-rates.create', [$property->id, $rate->id]));
     }
 
     public function show(Property $property, PropertyRate $rate)
@@ -63,12 +63,12 @@ class PropertyRatesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
-        return redirect( route('property-rates.edit', [$property->id, $id]) );
+        return redirect(route('property-rates.edit', [$property->id, $id]));
     }
 
     public function destroy(Request $request, Property $property, $id)
     {
-        if ( $this->repository->canDelete($id) ) {
+        if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
             return redirect(route('property-rates', [$property->id]));

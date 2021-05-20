@@ -186,7 +186,7 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
             $amount += $cleaningService->total_cost;
             $description .=
                 "#" . strval($cleaningService->id) . ' - ' .
-                $cleaningService->date . ' - ' .
+                Carbon::parse(strtotime($cleaningService->date))->format('d/M/Y') . ' - ' .
                 '$' . $cleaningService->total_cost . "\n";
         };
         $transaction->property_management_id = $pm;

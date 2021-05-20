@@ -25,6 +25,10 @@
 
             @if(count($rows))
                 @foreach($rows as $i => $row)
+                    @php
+                        $startDate = \Carbon\Carbon::parse(strtotime($row->start_date))->format('d/M/Y');
+                        $endDate = \Carbon\Carbon::parse(strtotime($row->end_date))->format('d/M/Y');
+                    @endphp
                     <tr>
                         <!-- index -->
                         <th scope="row">
@@ -37,10 +41,10 @@
                         </th>
 
                         <!-- start_date -->
-                        <td>{{ $row->start_date }}</td>
+                        <td>{{ $startDate }}</td>
 
                         <!-- end_date -->
-                        <td>{{ $row->end_date }}</td>
+                        <td>{{ $endDate }}</td>
 
                         <!-- nightly -->
                         <td>{{ priceFormat($row->nightly) }}</td>

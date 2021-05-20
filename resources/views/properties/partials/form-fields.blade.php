@@ -127,17 +127,17 @@
         <!-- lot_size_sqft -->
         @include('components.form.input', [
             'group' => 'property',
-            'label' => __('Lot Size (sqft)'),
-            'name' => 'lot_size_sqft',
-            'value' => $row->lot_size_sqft
+            'label' => __('Lot Size'),
+            'name' => 'lot_size',
+            'value' => $row->lot_size
         ])
 
         <!-- construction_size_sqft -->
         @include('components.form.input', [
             'group' => 'property',
-            'label' => __('Construction Size (sqft)'),
-            'name' => 'construction_size_sqft',
-            'value' => $row->construction_size_sqft
+            'label' => __('Construction Size'),
+            'name' => 'construction_size',
+            'value' => $row->construction_size
         ])
 
         <!-- phone -->

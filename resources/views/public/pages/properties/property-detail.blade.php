@@ -238,7 +238,7 @@
             <div class="row">
                 <div class="col-xs-6">
                     <h4 class="sub-section">{{ __('Bedrooms') }} / {{ __('Bathrooms') }}</h4>
-                    <p>{{ $property->property->bedrooms }} / {{ (int) $property->property->baths }}</p>
+                    <p>{{ $property->property->bedrooms }} / {{ $property->property->baths }}</p>
                 </div>
                 <div class="col-xs-6">
                     <h4 class="sub-section">{{ __('Maid Service') }}</h4>

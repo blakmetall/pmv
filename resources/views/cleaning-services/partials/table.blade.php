@@ -19,7 +19,7 @@
                     <th scope="col">{{ __('Booking') }}</th>
                 @endif
 
-                <th scope="col">{{ __('Audited By') }}</th>
+                <th scope="col">{{ __('Audited by') }}</th>
                 <th scope="col">{{ __('Finished') }}</th>
                 <th scope="col">&nbsp;</th>
             </tr>
