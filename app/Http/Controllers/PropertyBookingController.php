@@ -759,6 +759,7 @@ class PropertyBookingController extends Controller
         return view('property-bookings.rates-calculator')
             ->with('from_date', $request->from_date)
             ->with('to_date', $request->to_date)
+            ->with('propertyID', $request->property_id)
             ->with('propertyRate', $propertyRate)
             ->with('rates', $rates)
             ->with('properties', $properties);

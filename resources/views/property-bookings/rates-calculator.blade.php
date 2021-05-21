@@ -29,7 +29,10 @@
 
                 <select name="property_id" class="form-control">
                     @foreach($properties as $property)
-                        <option value="{{ $property->property_id }}">
+                        <option 
+                            value="{{ $property->property_id }}" 
+                            <?=($propertyID == $property->property_id) ? 'selected="selected"' : ''?>
+                            >
                             {{ $property->name }}
                         </option>
                     @endforeach
@@ -42,7 +45,7 @@
                 <label for="from_date">
                     {{ __('From') }}*
                 </label>
-                <input id="from_date" type="text" name="from_date" value="2021-06-01" 
+                <input id="from_date" type="text" name="from_date" value="{{ $from_date }}" 
                     data-max-days-limit-from-now="1460"
                     class="form-control app-input-datepicker" data-format="yyyy-mm-dd" required>
             </div>
@@ -52,7 +55,7 @@
                 <label for="to_date">
                     {{ __('To') }}*
                 </label>
-                <input id="to_date" type="text" name="to_date" value="2021-09-14" 
+                <input id="to_date" type="text" name="to_date" value="{{ $to_date }}" 
                     data-max-days-limit-from-now="1460"
                     class="form-control app-input-datepicker" data-format="yyyy-mm-dd" required>
             </div>
@@ -104,20 +107,24 @@
 
                 <tr>
                     <th>{{ __('Total') }}</th>
-                    <td>{{ number_format($propertyRate['total'], 2) }}</td>
+                    <td>${{ number_format($propertyRate['total'], 2) }}</td>
                 </tr>
 
                 <tr>
                     <th>{{ __('Nightly Current Rate') }}</th>
-                    <td>{{ $propertyRate['nightlyCurrentRate'] }}</td>
+                    <td>${{ number_format($propertyRate['nightlyCurrentRate'], 2) }}</td>
                 </tr>
 
                 <tr>
                     <th>{{ __('Nightly Applied Rate') }}</th>
-                    <td>{{ $propertyRate['nightlyAppliedRate'] }}</td>
+                    <td>${{ number_format($propertyRate['nightlyAppliedRate'], 2) }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    @php
+        echo '<pre>', print_r($propertyRate), '</pre>';
+    @endphp
 
 @endsection
