@@ -24,7 +24,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="views-field views-field-body">
-                                                        <div class="field-content">
+                                                        <div class="field-content testimonial-list-item">
                                                             <a
                                                                 href="{{ route('public.about.testimonial', [$testimonial->testimonial_id]) }}">
                                                                 {!! $testimonial->description !!}
