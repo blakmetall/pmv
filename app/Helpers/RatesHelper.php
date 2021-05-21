@@ -109,7 +109,7 @@ class RatesHelper
 
                 // attempt to apply rate
                 // if current request date is between loop rate
-                if($requestDate->between($rate_start_date, $rate_end_date)) {
+                if($requestDate->eq($rate_start_date) || $requestDate->between($rate_start_date, $rate_end_date)) {
                     // if has monthly rate
                     if($rate->monthly) {
                         // verify if current rate has more than one month ahead
@@ -184,9 +184,10 @@ class RatesHelper
                             $data['ratesPrices'][$rate->id]['nights'] = $nights;
                             $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
     
-                            // get next initial request date
-                            $requestDate = $requestDate->addDays($nights + 1);
                         }
+
+                        // get next initial request date
+                        $requestDate = $requestDate->addDays($nights + 1);
 
                         // sets the current nightly current rate
                         if(!$data['nightlyCurrentRate']) {
@@ -194,12 +195,12 @@ class RatesHelper
                         }
                     }
                 }
-
             }
         }
 
         // sum totals
         $subtotal = 0;
+        
         foreach($data['ratesPrices'] as $ratePrice) {
             if(isset($ratePrice['months'])) {
                 $subtotal += $ratePrice['months'] * $ratePrice['monthlyRate'];
