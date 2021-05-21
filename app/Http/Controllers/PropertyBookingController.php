@@ -12,6 +12,7 @@ use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
 use App\Repositories\CitiesRepositoryInterface;
+use App\Repositories\PropertyRatesRepositoryInterface;
 use App\Helpers\UserHelper;
 use App\Helpers\RatesHelper;
 use App\Models\PropertyManagementTransaction;
@@ -23,17 +24,20 @@ class PropertyBookingController extends Controller
     private $propertiesRepository;
     private $damagesDepositsRepository;
     private $citiesRepository;
+    private $ratesRepository;
 
     public function __construct(
         PropertyBookingsRepositoryInterface $repository,
         PropertiesRepositoryInterface $propertiesRepository,
         DamageDepositsRepositoryInterface $damagesDepositsRepository,
-        CitiesRepositoryInterface $citiesRepository
+        CitiesRepositoryInterface $citiesRepository,
+        PropertyRatesRepositoryInterface $ratesRepository
     ) {
         $this->repository = $repository;
         $this->propertiesRepository = $propertiesRepository;
         $this->damagesDepositsRepository = $damagesDepositsRepository;
         $this->citiesRepository = $citiesRepository;
+        $this->ratesRepository = $ratesRepository;
     }
 
     public function index(Request $request)
@@ -730,5 +734,33 @@ class PropertyBookingController extends Controller
         $data['route'] = route('property-bookings.create', [$property_id]);
 
         return $data;
+    }
+
+    public function ratesCalculator(Request $request) {
+        $rates = [];
+        $propertyRate = [
+            'totalDays' => '',
+            'total' => 0,
+            'nightlyCurrentRate' => '',
+            'nightlyAppliedRate' => '',
+        ];
+
+        $properties = $this->propertiesRepository->all('', [
+            'filterByEnabled' => true,
+            'paginate' => false,
+        ]);
+        
+        if($request->property_id) {
+            $property = $this->propertiesRepository->find($request->property_id);
+            $rates = $this->ratesRepository->all('',  ['property_id' => $request->property_id]);
+            $propertyRate = RatesHelper::getPropertyRate($property, $rates, $request->from_date, $request->to_date);
+        }
+
+        return view('property-bookings.rates-calculator')
+            ->with('from_date', $request->from_date)
+            ->with('to_date', $request->to_date)
+            ->with('propertyRate', $propertyRate)
+            ->with('rates', $rates)
+            ->with('properties', $properties);
     }
 }

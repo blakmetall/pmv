@@ -229,6 +229,16 @@ class RoleHelper
                     'administrative-assistant',
                     'concierge',
                 ]),
+                'rates-calculator' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'rentals',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'concierge',
+                ]),
             ],
             'properties' => [
                 '*' => self::transformSluggedRolesToIds([
@@ -626,6 +636,16 @@ class RoleHelper
                     'administrative-assistant' => ['view', 'edit'],
                 ],
                 'general-availability' => [
+                    'super' => ['view', 'edit'],
+                    'admin' => ['view', 'edit'],
+                    'property-management' => ['view', 'edit'],
+                    'rentals' => ['view', 'edit'],
+                    'operations-assistant' => ['view', 'edit'],
+                    'accounting' => ['view', 'edit'],
+                    'administrative-assistant' => ['view', 'edit'],
+                    'concierge' => ['view', 'edit'],
+                ],
+                'rates-calculator' => [
                     'super' => ['view', 'edit'],
                     'admin' => ['view', 'edit'],
                     'property-management' => ['view', 'edit'],

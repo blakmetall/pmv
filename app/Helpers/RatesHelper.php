@@ -67,4 +67,15 @@ class RatesHelper
         return $nightly;
     }
 
+    public static function getPropertyRate($property, $rates, $from_date, $to_date) {
+        $data = [
+            'totalDays' => 100,
+            'total' => 10000,
+            'nightlyCurrentRate' => 130,
+            'nightlyAppliedRate' => 100,
+        ];
+
+        return $data;
+    }
+
 }

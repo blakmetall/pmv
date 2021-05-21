@@ -219,6 +219,15 @@ $_current_role = RoleHelper::current();
                                                 </a>
                                             </li>
                                         @endif
+
+                                        @if ($_current_role->isAllowed('property-bookings', 'rates-calculator'))
+                                            <li class="nav-item">
+                                                <a class=""
+                                                    href="{{ route('property-bookings.rates-calculator') }}">
+                                                    <span class="item-name">{{ __('Rates Calculator') }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>

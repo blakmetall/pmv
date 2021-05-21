@@ -2131,6 +2131,15 @@ iframe#twitter-widget-0 {
     border: 1px solid #676767 !important;
 }
 
+#block-quick-search-quick-search-block {
+  box-shadow: none;
+  background-color: transparent;
+
+  .btn.form-submit {
+    border: 1px solid #c4c4c4;
+  }
+}
+
 @media (max-width: 1155px) and (min-width: 768px) {
     .navbar.navbar-default > .container-fluid {
         display: flex;
