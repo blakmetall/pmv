@@ -42,7 +42,6 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('arrivals-departures', 'PropertyBookingController@arrivalsDepartures')->name('property-bookings.arrivals-departures');
                 Route::get('general-availability', 'PropertyBookingController@generalAvailability')->name('property-bookings.general-availability');
                 Route::get('rates-calculator', 'PropertyBookingController@ratesCalculator')->name('property-bookings.rates-calculator');
-                Route::post('rates-calculator-calculate', 'PropertyBookingController@ratesCalculator')->name('property-bookings.rates-calculator-calculate');
                 Route::get('create/{property}', 'PropertyBookingController@create')->name('property-bookings.create');
                 Route::post('store', 'PropertyBookingController@store')->name('property-bookings.store');
                 Route::get('show/{id}', 'PropertyBookingController@show')->name('property-bookings.show');
