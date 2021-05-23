@@ -258,7 +258,15 @@
                         <p>
                             @foreach($property->property->bedding as $bedType => $beds)
                                 @if($beds > 0)
-                                    {{ $bedType }}: {{ $beds }} <br>
+                                    {{ $bedType }}: {{ $beds }} 
+
+                                    @if($property->property->bedding_notes[$bedType])
+                                        <span>
+                                            – {{ $property->property->bedding_notes[$bedType] }}
+                                        </span>
+                                    @endif
+
+                                    <br>
                                 @endif
                             @endforeach
                         </p>
