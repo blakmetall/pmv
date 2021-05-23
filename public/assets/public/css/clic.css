@@ -99,9 +99,6 @@ li#fa-user.active {
 }
 
 /* search form */
-#avail-search-form table tr:nth-child(2) {
-    display: none;
-}
 #avail-search-form table tr td {
     vertical-align: top;
 }

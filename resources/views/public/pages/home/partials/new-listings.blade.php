@@ -17,7 +17,7 @@
                 <div class="col-xs-6 first-row pl-0">
                     <div class="row">
                         <div class="col-xs-4 mb-4">
-                            <img src="{{ getFeaturedImage($propertyNews->property_id) }}" width="100%" height="250" />
+                            <img src="{{ getFeaturedImage($propertyNews->property_id, 'large') }}" width="100%" />
                         </div>
 
                         <div class="col-xs-8">
@@ -26,7 +26,7 @@
                             <p class="mb-5">{{ getSubString($propertyNews->description, 200) }}</p>
 
                             <a href="{{ route('public.property-detail', [$zone, $propertyNews->slug]) }}" class="btn btn-primary btn-xs" role="button">
-                                {{ __('Property Detail') }}
+                                {{ __('VIEW') }}
                             </a>
                         </div>
                     </div>

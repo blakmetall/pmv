@@ -179,7 +179,8 @@
 				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
 				
 				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
-
+ 
+				/*
 				var dataSearchForm = JSON.parse(JSON.stringify($('#navbar').data('all')));
 	
 				if(!breadcrumbs){
@@ -219,6 +220,7 @@
 					
 					localStorage.setItem('breadcrumbs', txt);
 				}
+				*/
 				
 				$('.search-params-breadcrumbs').html(localStorage.getItem('breadcrumbs'));
 			}, 500);
@@ -259,6 +261,7 @@
 		$('#block-recent-views-recent-views-block').addClass('hide-recent-views');
 	}
 
+	/*
 	var dataRecentView = JSON.parse(JSON.stringify($('#navbar').data('all')));
 
 	rw.reverse().map((data) => {
@@ -280,6 +283,7 @@
 			</div>`
 		);
 	});
+	*/
 
 	// First Months of Availability
 	if ( $(".first-calendar").length){

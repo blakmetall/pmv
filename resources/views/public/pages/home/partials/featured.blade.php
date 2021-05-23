@@ -21,7 +21,7 @@
                     </div>
                     <p>
                         <a href="{{ route('public.property-detail', [$zone, $propertyFeatured->slug]) }}" title="{{ __('READ MORE') }}">
-                            {{ __('READ MORE') }}
+                            {{ __('VIEW') }}
                         </a>
                     </p>
                 </div>

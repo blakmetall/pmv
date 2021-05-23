@@ -594,12 +594,16 @@ if (!function_exists('removeImage')) {
 }
 
 if (!function_exists('getFeaturedImage')) {
-    function getFeaturedImage($id)
+    function getFeaturedImage($id, $thumbnailType = '')
     {
         $property = Property::find($id);
 
         if (count($property->images) > 0) {
-            $result = getUrlPath($property->images[0]->file_url, 'small-ls');
+            if($thumbnailType) {
+                $result = getUrlPath($property->images[0]->file_url, $thumbnailType);
+            }else {
+                $result = getUrlPath($property->images[0]->file_url, 'small-ls');
+            }
         } else {
             $result = null;
         }
@@ -614,7 +618,7 @@ if (!function_exists('getOffices')) {
         return [
             [
                 'name' => 'Puerto Vallarta',
-                'address' => 'Libertad 349 <br>Puerto Vallarta, Jalisco, México 48300',
+                'address' => 'Libertad 349, Centro <br>Puerto Vallarta, Jalisco, México 48300',
                 'phone' => '+52 (322) 223-0101',
                 'email' => 'vallarta@palmeravacations.com',
                 'phone_us_can' => '(323) 250-7721',
