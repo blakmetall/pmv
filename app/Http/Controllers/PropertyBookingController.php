@@ -519,7 +519,7 @@ class PropertyBookingController extends Controller
 
     public function store(Request $request)
     {
-        $bookings = Property::find($request->property_id)->bookings;
+        $bookings = PropertyBooking::where('property_id', $request->property_id)->where('deleted_at', NULL)->get();
         $bookingExist = false;
         $bookingDaysArr = [];
 
@@ -600,7 +600,7 @@ class PropertyBookingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $bookings = Property::find($request->property_id)->bookings;
+        $bookings = PropertyBooking::where('property_id', $request->property_id)->where('deleted_at', NULL)->get();
         $bookingExist = false;
         $bookingDaysArr = [];
 
@@ -736,7 +736,8 @@ class PropertyBookingController extends Controller
         return $data;
     }
 
-    public function ratesCalculator(Request $request) {
+    public function ratesCalculator(Request $request)
+    {
         $rates = [];
         $propertyRate = [
             'totalDays' => '',
@@ -749,8 +750,8 @@ class PropertyBookingController extends Controller
             'filterByEnabled' => true,
             'paginate' => false,
         ]);
-        
-        if($request->property_id) {
+
+        if ($request->property_id) {
             $property = $this->propertiesRepository->find($request->property_id);
             $rates = $this->ratesRepository->all('',  ['property_id' => $request->property_id]);
             $propertyRate = RatesHelper::getPropertyRate($property, $rates, $request->from_date, $request->to_date);

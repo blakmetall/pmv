@@ -28,34 +28,31 @@
     <div class="card">
         <div class="card-body">
             <span class="badge badge-primary r-badge mb-4">{{ __('BALANCE') }}</span>
+            <!-- subtotal_damage_deposit -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Insurance / Deposit'),
+                'name' => 'subtotal_damage_deposit',
+                'required' => true,
+                'value' => $row->subtotal_damage_deposit
+            ])
+            <!-- subtotal_damage_deposit -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Total Stay'),
+                'name' => 'subtotal_nights',
+                'required' => true,
+                'value' => $row->subtotal_nights
+            ])
+            <!-- total -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Total Booking'),
+                'name' => 'total',
+                'required' => true,
+                'value' => $row->total
+            ])
 
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Insurance / Deposit') }}
-                </label>
-
-                <div class="col-sm-10">
-                    {{ priceFormat($row->subtotal_damage_deposit) }} USD
-                </div>
-            </div>
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Total Stay') }}
-                </label>
-
-                <div class="col-sm-10">
-                    {{ priceFormat($row->subtotal_nights) }} USD
-                </div>
-            </div>
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Total Booking') }}
-                </label>
-
-                <div class="col-sm-10">
-                    {{ priceFormat($row->total) }} USD
-                </div>
-            </div>
             <div class="form-group row" style="">
                 <label class="col-sm-2 col-form-label">
                     {{ __('Balance due') }}
@@ -65,6 +62,13 @@
                     {{ priceFormat($balance) }} USD
                 </div>
             </div>
+            <!-- custom_price -->
+            @include('components.form.checkbox', [
+                'group' => 'booking',
+                'label' => __('Custom Price'),
+                'name' => 'custom_price',
+                'value' => 1,
+            ])
         </div>
     </div>
 @endif

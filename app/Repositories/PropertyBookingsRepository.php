@@ -137,17 +137,32 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $property = Property::find($booking->property_id);
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
+
             if ($booking->damage_deposit_id) {
                 $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
                 $damageDeposit = $damage_deposit->price;
             } else {
                 $damageDeposit = 0;
             }
-
             $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
-            $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
 
+            $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
             $price_per_night = $subtotal_nights / $nights;
+
+            $booking->nights = $nights;
+            $booking->price_per_night = $price_per_night;
+            $booking->subtotal_damage_deposit = $damageDeposit;
+            $booking->total = $subtotal_nights;
+
+            if ($request->custom_price) {
+                $booking->subtotal_damage_deposit = $request->subtotal_damage_deposit;
+                $booking->subtotal_nights = $request->subtotal_nights;
+                $booking->total = $request->subtotal_nights;
+            } else {
+                $booking->subtotal_damage_deposit = $damageDeposit;
+                $booking->subtotal_nights = $subtotal_nights;
+                $booking->total = $subtotal_nights;
+            }
 
             // audit
             $hasPreviousAudit = $booking->audit_user_id;
@@ -174,12 +189,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $booking->audit_refund_user_id = null;
                 $booking->audit_refund_datetime = null;
             }
-
-            $booking->nights = $nights;
-            $booking->price_per_night = $price_per_night;
-            $booking->subtotal_nights = $subtotal_nights;
-            $booking->subtotal_damage_deposit = $damageDeposit;
-            $booking->total = $subtotal_nights;
 
             // $booking->total =  $subtotal_nights + $damage_deposit->price;
             // el deposito para daños creo no se debe poner en el total directamente por que el depósito se está manejando en dolares
