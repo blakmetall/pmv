@@ -42,12 +42,12 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-4 mb-3">
-                        <img src="{{ getFeaturedImage($property->property_id) }}" width="100%" height="380">
+                    <div class="col-xs-12 col-sm-5 mb-3">
+                        <img src="{{ getFeaturedImage($property->property_id) }}" width="100%">
                         <div class="rate-info">${{ getLowerRate($property->property_id) }} <span>/ {{ __('Night') }}</span></div>
                     </div>
 
-                    <div class="col-xs-8">
+                    <div class="col-xs-12 col-sm-7">
                         <div class="description">
                             {{ getSubstring($property->description, 200) }}
                         </div>

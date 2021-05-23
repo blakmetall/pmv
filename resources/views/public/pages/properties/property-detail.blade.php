@@ -222,11 +222,11 @@
         <div id="property-details-info">
             <h2 class="section-title">{{ __('Property Details') }}</h2>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Property Type') }}</h4>
                     <p>{{ $property->property->type->getLabel() }}</p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Location') }}</h4>
                     <p>{{ getCity($property->property->city_id) }} / {{ $property->property->zone->getLabel() }} /
                         @if ($property->property->building()->exists())
@@ -236,24 +236,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Bedrooms') }} / {{ __('Bathrooms') }}</h4>
                     <p>{{ $property->property->bedrooms }} / {{ $property->property->baths }}</p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Maid Service') }}</h4>
                     <p>{{ $property->property->cleaningOption->getLabel() }}</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Occupancy') }}</h4>
                     <p><span class="max-pax">{{ $property->property->pax }}</span>
                         {{ __('Guests max. (including children under 12 and babies)') }}</p>
                 </div>
 
                 @if(is_array($property->property->bedding))
-                    <div class="col-xs-6">
+                    <div class="col-xs-12 col-sm-6">
                         <h4 class="sub-section">{{ __('Bedding') }}</h4>
                         <p>
                             @foreach($property->property->bedding as $bedType => $beds)
