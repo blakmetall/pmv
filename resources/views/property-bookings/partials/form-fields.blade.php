@@ -72,6 +72,26 @@
                 'value' => $row->total + $row->subtotal_damage_deposit,
             ])
 
+            <!-- payments made -->
+            <span class="badge badge-primary r-badge mb-4">{{ __('Payments') }}</span>
+
+            @if($row->payments()->where('is_paid', 1)->count())
+                @foreach($row->payments()->where('is_paid', 1)->get() as $payment)
+                    @php
+                        $value = $payment->amount;
+                        $value .= ' -- ' . $payment->transactionSource->translate()->name;
+                    @endphp
+
+                    @include('components.form.input', [
+                        'group' => 'booking',
+                        'label' => $payment->post_date,
+                        'name' => '_payment',
+                        'value' => $value,
+                        'disabled' => true,
+                    ])        
+                @endforeach
+            @endif
+
             @include('components.form.input', [
                 'group' => 'booking',
                 'label' => __('Balance Due'),

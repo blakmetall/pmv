@@ -150,6 +150,8 @@ if (!function_exists('prepareSelectDefaultValues')) {
 if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
+        $price = (float) $price;
+        
         if ($price < 0) {
             return '-$' . number_format(abs($price), $decimals);
         }
