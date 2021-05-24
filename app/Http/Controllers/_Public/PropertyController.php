@@ -463,7 +463,7 @@ class PropertyController extends Controller
         } else {
             if (!$validator->fails()) {
                 $booking = new PropertyBooking;
-                if ($booking->damage_deposit_id) {
+                if ($request->damage_deposit_id) {
                     $damage_deposit = DamageDeposit::find($request->damage_deposit_id);
                     $damageDeposit = $damage_deposit->price;
                 } else {

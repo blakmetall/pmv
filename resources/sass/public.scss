@@ -2149,6 +2149,30 @@ iframe#twitter-widget-0 {
   font-family: 'Open Sans';
 }
 
+#availability-results {
+  .rate-info {
+    font-size: 17px !important;
+  }
+  .sub-title {
+    font-size: 12px;
+  }
+  .description {
+    font-size: 13px;
+  }
+  .savings-tag {
+    position: relative;
+    top: 17px;
+
+    &.top-0 {
+      top: 0;
+    }
+  }
+  .b-rate,
+  .b-savings{
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 1155px) {
   .navbar.navbar-default {
     height: auto;

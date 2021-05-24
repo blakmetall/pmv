@@ -45,6 +45,16 @@
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
     $latitude = $property->property->gmaps_lat;
     $longitude = $property->property->gmaps_lon;
+    
+    $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
+
+    // calculate saving
+    $saving = 0;
+    if($propertyRate['nightlyCurrentRate'] > $propertyRate['nightlyAppliedRate']) {
+        $savingDailyAmount = $propertyRate['nightlyCurrentRate'] - $propertyRate['nightlyAppliedRate'];
+        $saving = $propertyRate['totalDays'] * $savingDailyAmount;
+    }
+
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -117,22 +127,34 @@
                         )</strong>
                 </div>
                 <div class="row" id="availability-results">
-                    <div class="col-xs-4 text-center">
-                        <div class="b-rate ">${{ $nightlyRate }} USD</div>
+                    <div class="col-xs-4 col-sm-4 text-center">
+                        @if($propertyRate['nightlyCurrentRate'] > $propertyRate['nightlyAppliedRate'])    	
+                            <div class="b-rate b-strike">{{ priceFormat($propertyRate['nightlyCurrentRate']) }} USD</div>		
+                        @endif
+                        <div class="b-rate ">{{ priceFormat($propertyRate['nightlyAppliedRate']) }} USD</div>
                         <div class="b-caption">{{ __('Avg. night') }}</div>
                     </div>
-                    <div class="col-xs-5">
-                        <div class="text-right savings-tag"></div>
-                        <div class="total-stay text-right">{{ __('Total Stay') }}: <span>${{ number_format($total) }}
-                                USD</span><br>{{ $bothDates }} (
-                            {{ $nightsDate }} {{ __('Nights') }}
-                            )
+                    <div class="col-xs-5 col-sm-5">
+                        @if($saving > 0)
+                            <div class="text-right savings-tag top-0">
+                                <i class="glyphicon glyphicon-tags"></i> 
+                                {{ __('Save') }} <span>{{ priceFormat($saving) }} USD</span>
+                            </div>					
+                        @endif
+
+                        <div class="total-stay text-right">
+                            {{ __('Total Stay') }}: 
+                            <span>
+                                {{ priceFormat($propertyRate['total']) }}USD
+                            </span>
+                            <br>{{ $bothDates }} ({{ $nightsDate }} {{ __('Nights') }})
                         </div>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3 col-sm-3">
                         <div class="text-right">
                             <a href="{{ route('public.reservations', [$property->property_id]) }}"
-                                class="btn btn-warning">{{ __('Book it!') }}</a>
+                                class="btn btn-warning">{{ __('Book it!') }}
+                            </a>
                         </div>
                     </div>
                 </div>

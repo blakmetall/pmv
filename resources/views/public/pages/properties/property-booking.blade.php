@@ -31,6 +31,9 @@
     $latitude = $property->property->gmaps_lat;
     $longitude = $property->property->gmaps_lon;
     $featuredImage = getFeaturedImage($property->property_id);
+
+    $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
+    
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -50,9 +53,9 @@
             <input type="hidden" value="{{ $departure }}" name="departure_date">
             <input type="hidden" value="{{ $adults }}" name="adults">
             <input type="hidden" value="{{ $children }}" name="children">
-            <input type="hidden" value="{{ $nightlyRate }}" name="price_per_night">
-            <input type="hidden" value="{{ $nightsDate }}" name="nights">
-            <input type="hidden" value="{{ $subtotal }}" name="subtotal_nights">
+            <input type="hidden" value="{{ $propertyRate['nightlyAppliedRate'] }}" name="price_per_night">
+            <input type="hidden" value="{{ $propertyRate['totalDays'] }}" name="nights">
+            <input type="hidden" value="{{ $propertyRate['total'] }}" name="subtotal_nights">
             <div>
                 <div class="row">
                     <div class="col-xs-6">
