@@ -736,6 +736,13 @@ if (!function_exists('getMinStay')) {
     }
 }
 
+if (!function_exists('getPropertyRate')) {
+    function getPropertyRate($property, $rates, $from_date, $to_date)
+    {
+        return RatesHelper::getPropertyRate($property, $rates, $from_date, $to_date);
+    }
+}
+
 if (!function_exists('generateColumns')) {
     function generateColumns($array, $number)
     {

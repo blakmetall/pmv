@@ -23,9 +23,11 @@ h4,
 h5, 
 h6 { 
 	font-family: 'Roboto Condensed', sans-serif; 
-	color: #577f9f; 
+	/* color: #577f9f;  */
+	color: #30567c; 
 	font-weight: bold; 
 	text-transform: uppercase;
+	margin-bottom: 1.3em;
 }
 
 h1 { 

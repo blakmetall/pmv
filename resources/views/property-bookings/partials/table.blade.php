@@ -95,7 +95,7 @@
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => true
+                                    'skipDelete' => false
                                     ])
                                 @endif
                             @else
@@ -106,7 +106,7 @@
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => true
+                                    'skipDelete' => false
                                     ])
                                 @endif
                             @endif

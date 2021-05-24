@@ -1,3 +1,4 @@
+import { data } from "jquery";
 import { initDatepickerComponents } from "./initDatepickerComponents.js";
 
 export function initCheckAvailabilityProperty() {
@@ -14,7 +15,7 @@ export function initCheckAvailabilityProperty() {
                 initDatepickerComponents();
                 $("#form-check-availability").on('submit', function(e){
                     e.preventDefault();
-                    let action = $(this).attr("action");
+                    let action = $(this).attr("action") + '?arrival=' + data.arrival + '&departure=' + data.departure;
                     let req = $(this).serializeArray();
                     $.ajax({
                         headers: {
@@ -28,9 +29,9 @@ export function initCheckAvailabilityProperty() {
                         $("#modal-availability-modal .btns-container a").attr('data-source', data.id);
                         $("#modal-availability-modal .modal-title").html(data.name);
                         let datesAvailability = [];
-                        datesAvailability.push(data.arrival);
-                        datesAvailability.push(data.departure);
-                        localStorage.setItem('dates-availability', JSON.stringify(datesAvailability));
+                        // datesAvailability.push(data.arrival);
+                        // datesAvailability.push(data.departure);
+                        // localStorage.setItem('dates-availability', JSON.stringify(datesAvailability));
                         let dataHtml = `
                         <div class="table-responsive" style="margin-top: 20px">
                             <table class="table table-striped">
@@ -101,7 +102,7 @@ export function initCheckAvailabilityProperty() {
                                     </td>
                                 </tr>
                             </table>
-                            <a href="${data.route}" class="btn btn-primary m-1">
+                            <a href="${data.route}?arrival=${data.arrival}&departure=${data.departure}" class="btn btn-primary m-1">
                                 Book Property
                             </a>
                             <a href="#" data-toggle="modal" data-source="${data.id}" data-year="${data.year}"

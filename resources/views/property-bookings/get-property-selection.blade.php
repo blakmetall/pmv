@@ -42,5 +42,6 @@
             {{ __('Check Availability') }}
         </button>
     </form>
+    
     <div id="details-property"></div>
 </div>

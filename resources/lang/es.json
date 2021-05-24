@@ -1,5 +1,5 @@
 {
-    "A Booking actually have same date successfully": "Una reserva tiene la misma fecha correctamente",
+    "There is a booking dates conflict, review availability calendar": "Existe una reservación con conflicto de fechas, revisar calendario de disponibilidad",
     "A fresh verification link has been sent to your email address.": "Se ha enviado un nuevo enlace de verificación a su Email.",
     "Account": "Cuenta",
     "Account updated successfully": "Cuenta actualizada exitosamente",

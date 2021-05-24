@@ -16,7 +16,7 @@
 
 @if ($row->firstname)
     @php
-        $total = $row->total;
+        $total = $row->total + $row->subtotal_damage_deposit;
         $payments = $row->payments;
         $reduced = 0;
 
@@ -25,46 +25,60 @@
         }
         $balance = $total - $reduced;
     @endphp
+
     <div class="card">
         <div class="card-body">
             <span class="badge badge-primary r-badge mb-4">{{ __('BALANCE') }}</span>
 
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Insurance / Deposit') }}
-                </label>
+            <!-- total stay -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Total Stay'),
+                'name' => 'nights',
+                'value' => $row->nights,
+                'disabled' => true,
+            ])
 
-                <div class="col-sm-10">
-                    {{ priceFormat($row->subtotal_damage_deposit) }} USD
-                </div>
-            </div>
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Total Stay') }}
-                </label>
+            <!-- price_per_night -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Price per night'),
+                'name' => 'price_per_night',
+                'value' => $row->price_per_night,
+            ])
 
-                <div class="col-sm-10">
-                    {{ priceFormat($row->subtotal_nights) }} USD
-                </div>
-            </div>
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Total Booking') }}
-                </label>
+            <!-- damage_deposit -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Damage Deposit'),
+                'name' => '_damage_deposit',
+                'value' => $row->subtotal_damage_deposit,
+                'disabled' => true,
+            ])
 
-                <div class="col-sm-10">
-                    {{ priceFormat($row->total) }} USD
-                </div>
-            </div>
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">
-                    {{ __('Balance due') }}
-                </label>
+            <!-- subtotal nights -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Subtotal Nights'),
+                'name' => 'subtotal_nights',
+                'value' => $row->total,
+            ])
 
-                <div class="col-sm-10" style="color:red">
-                    {{ priceFormat($balance) }} USD
-                </div>
-            </div>
+            <!-- total -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Total'),
+                'name' => 'total',
+                'value' => $row->total + $row->subtotal_damage_deposit,
+            ])
+
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Balance Due'),
+                'name' => '_balance_due',
+                'value' => $balance,
+                'disabled' => true,
+            ])
         </div>
     </div>
 @endif
@@ -206,12 +220,12 @@
 
         <!-- arrival_date -->
         @include('components.form.datepicker', [
-        'group' => 'booking',
-        'label' => __('Arrival Date'),
-        'name' => 'arrival_date',
-        'required' => true,
-        'value' => $row->arrival_date,
-        'maxDaysLimitFromNow' => 4000,
+            'group' => 'booking',
+            'label' => __('Arrival Date'),
+            'name' => 'arrival_date',
+            'required' => true,
+            'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
+            'maxDaysLimitFromNow' => 4000,
         ])
 
         @if (!isRole('owner'))
@@ -278,7 +292,7 @@
         'label' => __('Departure Date'),
         'name' => 'departure_date',
         'required' => true,
-        'value' => $row->departure_date,
+        'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
         'maxDaysLimitFromNow' => 4000,
         ])
 

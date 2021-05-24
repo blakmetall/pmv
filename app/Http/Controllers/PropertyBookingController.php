@@ -537,7 +537,7 @@ class PropertyBookingController extends Controller
         }
 
         if ($bookingExist) {
-            $request->session()->flash('error', __('A Booking actually have same date successfully'));
+            $request->session()->flash('error', __('There is a booking dates conflict, review availability calendar'));
             return redirect()->back();
         } else {
             $booking = $this->repository->create($request);
@@ -573,7 +573,9 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        
         $transactions = [];
+
         if ($property->management()->count()) {
             foreach ($property->management as $pm) {
                 if (!$pm->is_finished) {
@@ -620,7 +622,7 @@ class PropertyBookingController extends Controller
         }
 
         if ($bookingExist) {
-            $request->session()->flash('error', __('A Booking actually have same date successfully'));
+            $request->session()->flash('error', __('There is a booking dates conflict, review availability calendar'));
             return redirect()->back();
         } else {
             $this->repository->update($request, $id);
@@ -635,39 +637,43 @@ class PropertyBookingController extends Controller
             $booking = $this->repository->find($id);
             $contacts = $booking->property->contacts;
             $concierge = false;
-            foreach ($contacts as $contact) {
-                if ($contact->contact_type == 'property-manager') {
-                    $concierge = $contact->email;
+            
+            if(isProduction()) {
+                foreach ($contacts as $contact) {
+                    if ($contact->contact_type == 'property-manager') {
+                        $concierge = $contact->email;
+                    }
                 }
-            }
-            if ($request->guest) {
-                sendEmail($booking, $booking->email);
-            }
-
-            if ($request->office) {
-                sendEmail($booking, $booking->property->office->email);
-            }
-
-            if ($concierge) {
-                if ($request->concierge) {
-                    sendEmail($booking, $concierge);
+    
+                if ($request->guest) {
+                    sendEmail($booking, $booking->email);
                 }
-            }
-
-            if ($request->home_owner) {
-                $owners = $booking->property->users;
-                foreach ($owners as $owner) {
-                    sendEmail($booking, $owner->email);
+    
+                if ($request->office) {
+                    sendEmail($booking, $booking->property->office->email);
                 }
+    
+                if ($concierge) {
+                    if ($request->concierge) {
+                        sendEmail($booking, $concierge);
+                    }
+                }
+    
+                if ($request->home_owner) {
+                    $owners = $booking->property->users;
+                    foreach ($owners as $owner) {
+                        sendEmail($booking, $owner->email);
+                    }
+                }
+    
+                sendEmail($booking, 'reservaciones@palmeravacations.com');
+                sendEmail($booking, 'info@palmeravacations.com');
+                sendEmail($booking, 'contabilidad@palmeravacations.com');
+                $request->session()->flash('success', __('Record deleted successfully'));
+    
+                $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+                $request->session()->flash('success', $msg);
             }
-
-            sendEmail($booking, 'reservaciones@palmeravacations.com');
-            sendEmail($booking, 'info@palmeravacations.com');
-            sendEmail($booking, 'contabilidad@palmeravacations.com');
-            $request->session()->flash('success', __('Record deleted successfully'));
-
-            $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
-            $request->session()->flash('success', $msg);
 
             $this->repository->delete($id);
 
@@ -706,14 +712,18 @@ class PropertyBookingController extends Controller
         $lang = LanguageHelper::current();
         $year = Carbon::parse(strtotime($request->arrival_date))->year;
         $arrival = $request->arrival_date;
+
         $departure = $request->departure_date;
         $property_id = $request->property_id;
+        
         $property = PropertyTranslation::where("property_id", $property_id)->where('language_id', $lang->id)->get()[0];
+        
         $minStay = getMinStay($property_id);
         $availabilityProperty = getAvailabilityProperty($property_id, $arrival, $departure);
-        $nightlyRate = RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
-        $nights = RatesHelper::getTotalBookingDays($arrival, $departure);
-        $total = RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
+        $propertyRate = RatesHelper::getPropertyRate($property->property, $property->rates, $arrival, $departure);
+        $nights = $propertyRate['totalDays'];
+        $total = $propertyRate['total'];
+        
         $data = [];
         $data['afirmation'] = $availabilityProperty;
         $data['name'] = $property->name;
@@ -722,7 +732,7 @@ class PropertyBookingController extends Controller
         $data['beds'] = $property->property->bedrooms;
         $data['baths'] = $property->property->baths;
         $data['pax'] = $property->property->pax;
-        $data['nightlyRate'] = priceFormat($nightlyRate) . ' ' . __('avg. night');
+        $data['nightlyRate'] = priceFormat($propertyRate['nightlyAppliedRate']) . ' ' . __('avg. night');
         $data['nights'] = $nights;
         $data['total'] = priceFormat($total);
         $data['cleaning'] = $property->property->cleaningOption->getLabel();
