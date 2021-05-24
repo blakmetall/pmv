@@ -384,6 +384,9 @@ class PropertyBookingController extends Controller
         $registers[] = [
             'name' => 'Admin',
         ];
+        $registers[] = [
+            'name' => 'Client',
+        ];
 
         return view('property-bookings.create')
             ->with('booking', $booking)
@@ -590,6 +593,9 @@ class PropertyBookingController extends Controller
         ];
         $registers[] = [
             'name' => 'Admin',
+        ];
+        $registers[] = [
+            'name' => 'Client',
         ];
 
         return view('property-bookings.edit')
