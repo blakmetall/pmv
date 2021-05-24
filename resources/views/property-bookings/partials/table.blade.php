@@ -18,6 +18,8 @@
                 <th scope="col">{{ __('Property') }}</th>
                 <th scope="col">{{ __('Travel Dates') }}</th>
                 <th scope="col">{{ __('Nightly Rate') }}</th>
+                <th scope="col">{{ __('Damage Deposit') }}</th>
+                <th scope="col">{{ __('Subtotal') }}</th>
                 <th scope="col">{{ __('Total') }}</th>
                 <th scope="col">{{ __('Register By') }}</th>
                 <th scope="col">{{ __('Created') }}</th>
@@ -58,8 +60,14 @@
                         <!-- nightly_rate -->
                         <td>{{ priceFormat($row->price_per_night) }}</td>
 
-                        <!-- total_stay -->
+                        <!-- damage_deposits -->
+                        <td>{{ priceFormat($row->subtotal_damage_deposit) }}</td>
+
+                        <!-- subtotal -->
                         <td>{{ priceFormat($row->total) }}</td>
+
+                        <!-- total_stay -->
+                        <td>{{ priceFormat($row->total + $row->subtotal_damage_deposit) }}</td>
 
                         <!-- register_by -->
                         <td>
