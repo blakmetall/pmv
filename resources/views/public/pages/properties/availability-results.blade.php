@@ -120,10 +120,9 @@
                                         <br>{{ $bothDates }} ( {{ $nightsDate }} {{ __('nights') }} )
                                     </div>			
                                     <div class="text-right">
-                                        <form id="bookit-971-form" action="reservations" method="post">
-                                            <input type="hidden" name="pid" value="971">
-                                            <input type="submit" name="submit" value="Book it!" title="Book this property" class="btn btn-warning">
-                                        </form>
+                                        <a href="{{ route('public.reservations', [$property->property_id]) }}"
+                                            class="btn btn-warning">{{ __('Book it!') }}
+                                        </a>
                                     </div>   				
                                 </div> 
                             </div>
