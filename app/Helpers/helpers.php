@@ -8,6 +8,7 @@ use App\Notifications\DetailsBooking;
 use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
+use App\Models\PropertyImage;
 use App\Models\PropertyTypeTranslation;
 
 if (!function_exists('prepareFormInputName')) {
@@ -151,7 +152,7 @@ if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
         $price = (float) $price;
-        
+
         if ($price < 0) {
             return '-$' . number_format(abs($price), $decimals);
         }
@@ -599,12 +600,13 @@ if (!function_exists('getFeaturedImage')) {
     function getFeaturedImage($id, $thumbnailType = '')
     {
         $property = Property::find($id);
+        $imageFeatured = PropertyImage::where('property_id', $id)->orderBy('order', 'asc')->first();
 
         if (count($property->images) > 0) {
-            if($thumbnailType) {
-                $result = getUrlPath($property->images[0]->file_url, $thumbnailType);
-            }else {
-                $result = getUrlPath($property->images[0]->file_url, 'small-ls');
+            if ($thumbnailType) {
+                $result = getUrlPath($imageFeatured->file_url, $thumbnailType);
+            } else {
+                $result = getUrlPath($imageFeatured->file_url, 'small-ls');
             }
         } else {
             $result = null;

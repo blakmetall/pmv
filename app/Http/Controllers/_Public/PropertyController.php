@@ -12,6 +12,7 @@ use App\Models\PropertyBooking;
 use App\Models\DamageDeposit;
 use App\Models\PropertyTranslation;
 use App\Repositories\PropertiesRepositoryInterface;
+use App\Repositories\PropertyImagesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
 use App\Repositories\ZonesRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
@@ -23,16 +24,19 @@ class PropertyController extends Controller
 
     private $propertiesRepository;
     private $propertiyBookingsRepository;
+    private $propertyImagesRepositoryInterface;
     private $zonesRepository;
     private $damagesDepositsRepository;
 
     public function __construct(
         PropertiesRepositoryInterface $propertiesRepository,
+        PropertyImagesRepositoryInterface $propertyImagesRepositoryInterface,
         PropertyBookingsRepositoryInterface $propertiyBookingsRepository,
         ZonesRepositoryInterface $zonesRepository,
         DamageDepositsRepositoryInterface $damagesDepositsRepository
     ) {
         $this->propertiesRepository = $propertiesRepository;
+        $this->propertyImagesRepositoryInterface = $propertyImagesRepositoryInterface;
         $this->propertiyBookingsRepository = $propertiyBookingsRepository;
         $this->zonesRepository = $zonesRepository;
         $this->damagesDepositsRepository = $damagesDepositsRepository;
@@ -118,8 +122,12 @@ class PropertyController extends Controller
             ];
         }
 
+        $config = ['property_id' => $property->property_id];
+        $images = $this->propertyImagesRepositoryInterface->all($config);
+
         return view('public.pages.properties.property-detail')
             ->with('property', $property)
+            ->with('images', $images)
             ->with('arrivalDeparture', $arrivalDeparture)
             ->with('prw', $prw);
     }
@@ -149,9 +157,9 @@ class PropertyController extends Controller
     public function availabilityModal(Request $request)
     {
         $year = $request->source['year'];
-      
+
         $lang = LanguageHelper::current();
-      
+
         $property = PropertyTranslation::where("property_id", $request->source['id'])->where('language_id', $lang->id)->get()[0];
 
         $currYear = isset($year) ? $year : Carbon::now()->year;
@@ -500,7 +508,7 @@ class PropertyController extends Controller
                 $booking->register_by             = 'Client';
                 if ($booking->save()) {
                     $owners = $booking->property->users;
-                  
+
                     $emails = [
                         $request->email,
                         'vallarta@palmeravacations.com',

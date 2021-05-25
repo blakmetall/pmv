@@ -74,9 +74,9 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li class="flex-active-slide">
-                            <img src="{{ getUrlPath($property->property->images[0]->file_url, 'large-ls') }}" draggable="false">
+                            <img src="{{ getUrlPath($images[0]->file_url, 'large-ls') }}" draggable="false">
                         </li>
-                        @foreach ($property->property->images as $index => $image)
+                        @foreach ($images as $index => $image)
                             @if ($index == 0)
                                 @php
                                     continue;
@@ -96,9 +96,9 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li class="flex-active-slide">
-                            <img src="{{ getUrlPath($property->property->images[0]->file_url, 'small-ls') }}" draggable="false">
+                            <img src="{{ getUrlPath($images[0]->file_url, 'small-ls') }}" draggable="false">
                         </li>
-                        @foreach ($property->property->images as $index => $image)
+                        @foreach ($images as $index => $image)
                             @if ($index == 0)
                                 @php
                                     continue;
