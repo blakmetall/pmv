@@ -52,20 +52,20 @@ export function initMapInputComponents() {
                     lat: dataLat || 20.666155,
                     lng: dataLng || -105.251954
                 };
-    
+
                 var map = new google.maps.Map(mapElem, {
                     center: position,
                     zoom: 12,
-                    disableDefaultUI: true,
-                    fullscreenControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false,    
                 });
-    
+
                 marker = new google.maps.Marker({
                     position: position,
                     map: map,
                     draggable: true,
                 });
-    
+                
                 if(!dataLat && !dataLng) {
                     marker.setMap(null);
                 }
@@ -84,6 +84,34 @@ export function initMapInputComponents() {
                         fillInputs(e, latitudeInput, longitudeInput);
                     });
                 }
+
+                // 
+                const geocoder = new google.maps.Geocoder();
+                var search = container.find('.app-search-map input');
+
+                function geocodeAddress(address, geocoder) {
+                    geocoder.geocode({ address: address }, (results, status) => {
+                        if (status === "OK") {
+                            placeMarker({latLng: results[0].geometry.location}, marker, map);
+                            fillInputs({latLng: results[0].geometry.location}, latitudeInput, longitudeInput);
+                        } else {
+                            console.log("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
+                }
+                    
+                var getCoderSearch = null;
+
+                search.on('keyup', function(e){
+                    if(e.keyCode == '13') {
+                        return false;
+                    }
+
+                    clearTimeout(getCoderSearch);
+                    getCoderSearch = setTimeout(function() {
+                        geocodeAddress(e.target.value, geocoder);
+                    }, 350)
+                });
             });
         }
     }

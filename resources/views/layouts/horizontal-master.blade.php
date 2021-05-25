@@ -103,12 +103,8 @@
     <script src="{{ asset('assets/js/sidebar-horizontal.script.js') }}"></script>
 
     {{-- scripts for goole map --}}
-    {{-- Desactivado por mientras por que da error por el dominio
-    --}}
-    @if (isProduction())
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer>
-        </script>
-    @endif
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-f1EwqXeVmncPaFsvn8LQDKt2G6tsMSU" async defer>
+    </script>
 
     {{-- app js --}}
     <script src="{{ asset('js/app.js') }}"></script>
