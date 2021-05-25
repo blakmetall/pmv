@@ -58,14 +58,5 @@
         <div class="icon-item">
             <div class="icon-desc"><b>SAL</b> - <?=__('Empty Clean')?></div>
         </div>
-        <div class="icon-item">
-            <div class="icon-desc"><b>P</b> - <?=__('Empty Clean')?></div>
-        </div>
-        <div class="icon-item">
-            <div class="icon-desc"><b>T</b> - <?=__('Empty Clean')?></div>
-        </div>
-        <div class="icon-item">
-            <div class="icon-desc"><b>R</b> - <?=__('Empty Clean')?></div>
-        </div>
     </div>
 </div>
