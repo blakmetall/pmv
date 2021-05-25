@@ -53,19 +53,10 @@
             <div class="icon-desc"><b>VS</b> - <?=__('Empty Dirty')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><b>O</b> - <?=__('Empty Clean')?></div>
+            <div class="icon-desc"><b>O</b> - <?=__('Ocuppied')?></div>
         </div>
         <div class="icon-item">
-            <div class="icon-desc"><b>SAL</b> - <?=__('Empty Clean')?></div>
-        </div>
-        <div class="icon-item">
-            <div class="icon-desc"><b>P</b> - <?=__('Empty Clean')?></div>
-        </div>
-        <div class="icon-item">
-            <div class="icon-desc"><b>T</b> - <?=__('Empty Clean')?></div>
-        </div>
-        <div class="icon-item">
-            <div class="icon-desc"><b>R</b> - <?=__('Empty Clean')?></div>
+            <div class="icon-desc"><b>SAL</b> - <?=__('Departure')?></div>
         </div>
     </div>
 </div>
