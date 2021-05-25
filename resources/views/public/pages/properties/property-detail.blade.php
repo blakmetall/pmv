@@ -45,6 +45,16 @@
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
     $latitude = $property->property->gmaps_lat;
     $longitude = $property->property->gmaps_lon;
+    
+    $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
+
+    // calculate saving
+    $saving = 0;
+    if($propertyRate['nightlyCurrentRate'] > $propertyRate['nightlyAppliedRate']) {
+        $savingDailyAmount = $propertyRate['nightlyCurrentRate'] - $propertyRate['nightlyAppliedRate'];
+        $saving = $propertyRate['totalDays'] * $savingDailyAmount;
+    }
+
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -64,9 +74,9 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li class="flex-active-slide">
-                            <img src="{{ getUrlPath($property->property->images[0]->file_url, 'large-ls') }}" draggable="false">
+                            <img src="{{ getUrlPath($images[0]->file_url, 'large-ls') }}" draggable="false">
                         </li>
-                        @foreach ($property->property->images as $index => $image)
+                        @foreach ($images as $index => $image)
                             @if ($index == 0)
                                 @php
                                     continue;
@@ -86,9 +96,9 @@
                     <ul class="slides"
                         style="width: 1600%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                         <li class="flex-active-slide">
-                            <img src="{{ getUrlPath($property->property->images[0]->file_url, 'small-ls') }}" draggable="false">
+                            <img src="{{ getUrlPath($images[0]->file_url, 'small-ls') }}" draggable="false">
                         </li>
-                        @foreach ($property->property->images as $index => $image)
+                        @foreach ($images as $index => $image)
                             @if ($index == 0)
                                 @php
                                     continue;
@@ -117,22 +127,34 @@
                         )</strong>
                 </div>
                 <div class="row" id="availability-results">
-                    <div class="col-xs-4 text-center">
-                        <div class="b-rate ">${{ $nightlyRate }} USD</div>
+                    <div class="col-xs-4 col-sm-4 text-center">
+                        @if($propertyRate['nightlyCurrentRate'] > $propertyRate['nightlyAppliedRate'])    	
+                            <div class="b-rate b-strike">{{ priceFormat($propertyRate['nightlyCurrentRate']) }} USD</div>		
+                        @endif
+                        <div class="b-rate ">{{ priceFormat($propertyRate['nightlyAppliedRate']) }} USD</div>
                         <div class="b-caption">{{ __('Avg. night') }}</div>
                     </div>
-                    <div class="col-xs-5">
-                        <div class="text-right savings-tag"></div>
-                        <div class="total-stay text-right">{{ __('Total Stay') }}: <span>${{ number_format($total) }}
-                                USD</span><br>{{ $bothDates }} (
-                            {{ $nightsDate }} {{ __('Nights') }}
-                            )
+                    <div class="col-xs-5 col-sm-5">
+                        @if($saving > 0)
+                            <div class="text-right savings-tag top-0">
+                                <i class="glyphicon glyphicon-tags"></i> 
+                                {{ __('Save') }} <span>{{ priceFormat($saving) }} USD</span>
+                            </div>					
+                        @endif
+
+                        <div class="total-stay text-right">
+                            {{ __('Total Stay') }}: 
+                            <span>
+                                {{ priceFormat($propertyRate['total']) }}USD
+                            </span>
+                            <br>{{ $bothDates }} ({{ $nightsDate }} {{ __('Nights') }})
                         </div>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3 col-sm-3">
                         <div class="text-right">
                             <a href="{{ route('public.reservations', [$property->property_id]) }}"
-                                class="btn btn-warning">{{ __('Book it!') }}</a>
+                                class="btn btn-warning">{{ __('Book it!') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -222,11 +244,11 @@
         <div id="property-details-info">
             <h2 class="section-title">{{ __('Property Details') }}</h2>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Property Type') }}</h4>
                     <p>{{ $property->property->type->getLabel() }}</p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Location') }}</h4>
                     <p>{{ getCity($property->property->city_id) }} / {{ $property->property->zone->getLabel() }} /
                         @if ($property->property->building()->exists())
@@ -236,29 +258,37 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Bedrooms') }} / {{ __('Bathrooms') }}</h4>
                     <p>{{ $property->property->bedrooms }} / {{ $property->property->baths }}</p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Maid Service') }}</h4>
                     <p>{{ $property->property->cleaningOption->getLabel() }}</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Occupancy') }}</h4>
                     <p><span class="max-pax">{{ $property->property->pax }}</span>
                         {{ __('Guests max. (including children under 12 and babies)') }}</p>
                 </div>
 
                 @if(is_array($property->property->bedding))
-                    <div class="col-xs-6">
+                    <div class="col-xs-12 col-sm-6">
                         <h4 class="sub-section">{{ __('Bedding') }}</h4>
                         <p>
                             @foreach($property->property->bedding as $bedType => $beds)
                                 @if($beds > 0)
-                                    {{ $bedType }}: {{ $beds }} <br>
+                                    {{ $bedType }}: {{ $beds }} 
+
+                                    @if($property->property->bedding_notes[$bedType])
+                                        <span>
+                                            – {{ $property->property->bedding_notes[$bedType] }}
+                                        </span>
+                                    @endif
+
+                                    <br>
                                 @endif
                             @endforeach
                         </p>

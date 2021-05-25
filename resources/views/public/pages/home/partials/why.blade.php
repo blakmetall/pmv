@@ -1,8 +1,8 @@
 <div class="panel-pane pane-custom pane-2">
-    <div class="pane-content">
+    <div class="pane-content pt-4">
         <div class="row text-center">
             <h2 class="prop-header">{{ __('Why book with us?') }}</h2>
-            <div class="col-xs-4 mb-5">
+            <div class="col-xs-12 col-sm-4 mb-5">
                 <div class="prop">
                     <div class="prop-container">
                         <div class="fa fa-trophy"></div>
@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4 mb-5">
+            <div class="col-xs-12 col-sm-4 mb-5">
                 <div class="prop pp1">
                     <div class="prop-container">
                         <div class="fa fa-book"></div>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-12 col-sm-4">
                 <div class="prop pp2">
                     <div class="prop-container">
                         <div class="fa fa-comments"></div>

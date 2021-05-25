@@ -52,11 +52,6 @@
                                         @include('public.pages.home.partials.welcome')
 
                                         <div class="clearfix"></div>
-                                        <div class="panel-separator mb-5"></div>
-
-                                        @include('public.pages.home.partials.why')
-
-                                        <div class="clearfix"></div>
                                         <div class="panel-separator"></div>
 
                                         @include('public.pages.home.partials.featured')
@@ -81,6 +76,13 @@
 
             </div>
         </div>
+
+        <div class="clearfix"></div>
+        <div class="panel-separator mb-5"></div>
+
+        @include('public.pages.home.partials.why')
+
+        <div class="panel-separator mb-5"></div>
 
         @include('public.pages.home.partials.testimonials')
 

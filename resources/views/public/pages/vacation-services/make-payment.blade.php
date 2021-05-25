@@ -5,10 +5,12 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = __('MAKE PAYMENT');
+        $title = __('MAKE PAYMENT');
     @endphp
 
     @include('public.pages.partials.main-content-start')
+
+    <div class="pt-4"></div>
 
     <form action="{{ route('public.vacation-services.find-booking') }}" method="post">
         @csrf

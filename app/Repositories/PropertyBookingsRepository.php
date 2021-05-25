@@ -132,11 +132,13 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $requestData = array_merge($data, $request->all());
 
         $booking->fill($requestData);
+
         if ($booking->save()) {
 
             $property = Property::find($booking->property_id);
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
+            
             if ($booking->damage_deposit_id) {
                 $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
                 $damageDeposit = $damage_deposit->price;
@@ -144,10 +146,11 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $damageDeposit = 0;
             }
 
-            $nights = RatesHelper::getTotalBookingDays($arrival_date, $departure_date);
-            $subtotal_nights = RatesHelper::getNightsSubtotalCost($property, $arrival_date, $departure_date);
+            $propertyRate = RatesHelper::getPropertyRate($property, $property->rates, $arrival_date, $departure_date);
+            $nights = $propertyRate['totalDays'];
 
-            $price_per_night = $subtotal_nights / $nights;
+            $price_per_night = $propertyRate['nightlyAppliedRate'];
+            $subtotal_nights = $propertyRate['total'];
 
             // audit
             $hasPreviousAudit = $booking->audit_user_id;
@@ -194,30 +197,33 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                         $concierge = $contact->email;
                     }
                 }
-                if ($request->guest) {
-                    sendEmail($booking, $booking->email);
-                }
 
-                if ($request->office) {
-                    sendEmail($booking, $booking->property->office->email);
-                }
-
-                if ($concierge) {
-                    if ($request->concierge) {
-                        sendEmail($booking, $concierge);
+                if(isProduction()) {
+                    if ($request->guest) {
+                        sendEmail($booking, $booking->email);
                     }
-                }
-
-                if ($request->home_owner) {
-                    $owners = $booking->property->users;
-                    foreach ($owners as $owner) {
-                        sendEmail($booking, $owner->email);
+    
+                    if ($request->office) {
+                        sendEmail($booking, $booking->property->office->email);
                     }
+    
+                    if ($concierge) {
+                        if ($request->concierge) {
+                            sendEmail($booking, $concierge);
+                        }
+                    }
+    
+                    if ($request->home_owner) {
+                        $owners = $booking->property->users;
+                        foreach ($owners as $owner) {
+                            sendEmail($booking, $owner->email);
+                        }
+                    }
+    
+                    sendEmail($booking, 'reservaciones@palmeravacations.com');
+                    sendEmail($booking, 'info@palmeravacations.com');
+                    sendEmail($booking, 'contabilidad@palmeravacations.com');
                 }
-
-                sendEmail($booking, 'reservaciones@palmeravacations.com');
-                sendEmail($booking, 'info@palmeravacations.com');
-                sendEmail($booking, 'contabilidad@palmeravacations.com');
             }
         }
 

@@ -18,7 +18,7 @@
                     <input type="checkbox" class="delete-selectable-checkbox" />
                     <a href="{{ route('property-images.destroy-all', [$property->id, '']) }}" 
                         data-tpl-route="{{ route('property-images.destroy-all', [$property->id, '']) }}"
-                        class="checkbox-table-delete delete-selectable-action">
+                        class="checkbox-table-delete delete-selectable-action btn btn-danger">
                         {{ __('Delete') }}
                     </a>
                 </th>

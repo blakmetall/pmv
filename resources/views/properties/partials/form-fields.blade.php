@@ -193,14 +193,29 @@
         ])
 
         @foreach($beddingOptions as $k => $beddingOption)
-            <!-- maid_fee -->
-            @include('components.form.input', [
-                'group' => 'property',
-                'type' => 'number',
-                'label' => __($beddingOption),
-                'name' => 'bedding_options[' . $beddingOption . ']',
-                'value' => isset($row->bedding[$beddingOption]) ? $row->bedding[$beddingOption] : '',
-            ])
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- bedding option -->
+                    @include('components.form.input', [
+                        'group' => 'property',
+                        'type' => 'text',
+                        'label' => __($beddingOption),
+                        'name' => 'bedding_options[' . $beddingOption . ']',
+                        'value' => isset($row->bedding[$beddingOption]) ? $row->bedding[$beddingOption] : '',
+                    ])
+                </div>
+
+                <div class="col-sm-6">
+                    <!-- bedding option note -->
+                    @include('components.form.input', [
+                        'group' => 'property',
+                        'type' => 'text',
+                        'label' => __('Note'),
+                        'name' => 'bedding_options_notes[' . $beddingOption . ']',
+                        'value' => isset($row->bedding_notes[$beddingOption]) ? $row->bedding_notes[$beddingOption] : '',
+                    ])
+                </div>
+            </div>
         @endforeach
 
     </div>

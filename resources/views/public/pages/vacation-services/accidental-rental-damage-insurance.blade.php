@@ -19,6 +19,7 @@
                     </div>
                 </div>
                 <div class="panel-separator"></div>
+                
                 <div class="panel-pane pane-custom pane-2">
                     <div class="pane-content">
                         <div id="prop" class="row text-center">
@@ -26,6 +27,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="panel-separator"></div>
                 <div class="panel-pane pane-custom pane-3">
                     <div class="pane-content">

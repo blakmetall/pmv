@@ -10,11 +10,10 @@
 
 /* layout */
 body { 
-	color: #666; 
+	color: #555; 
 	line-height:18px; 
 	font-weight:500; 
-	font: 14px/22px Arial, Helvetica, sans-serif;
-	border-top: 25px solid #2D6C9C;
+	font: 14px/22px 'Montserrat', sans-serif;
 }
 
 h1, 
@@ -24,9 +23,11 @@ h4,
 h5, 
 h6 { 
 	font-family: 'Roboto Condensed', sans-serif; 
-	color: #577f9f; 
+	/* color: #577f9f;  */
+	color: #30567c; 
 	font-weight: bold; 
 	text-transform: uppercase;
+	margin-bottom: 1.3em;
 }
 
 h1 { 
@@ -337,7 +338,7 @@ li#fa-user > .active {
 }
 
 .prop { 
-	font:300 16px/24px 'Roboto Condensed', sans-serif; 
+	font:300 16px/24px 'Roboto', sans-serif; 
 	background-color: #EDEDED; 
 	padding: 71px 20px 18px;
 }

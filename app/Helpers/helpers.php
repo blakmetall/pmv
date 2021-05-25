@@ -8,6 +8,7 @@ use App\Notifications\DetailsBooking;
 use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
+use App\Models\PropertyImage;
 use App\Models\PropertyTypeTranslation;
 
 if (!function_exists('prepareFormInputName')) {
@@ -150,6 +151,8 @@ if (!function_exists('prepareSelectDefaultValues')) {
 if (!function_exists('priceFormat')) {
     function priceFormat($price, $decimals = 2)
     {
+        $price = (float) $price;
+
         if ($price < 0) {
             return '-$' . number_format(abs($price), $decimals);
         }
@@ -594,12 +597,17 @@ if (!function_exists('removeImage')) {
 }
 
 if (!function_exists('getFeaturedImage')) {
-    function getFeaturedImage($id)
+    function getFeaturedImage($id, $thumbnailType = '')
     {
         $property = Property::find($id);
+        $imageFeatured = PropertyImage::where('property_id', $id)->orderBy('order', 'asc')->first();
 
         if (count($property->images) > 0) {
-            $result = $property->images[0]->file_url;
+            if ($thumbnailType) {
+                $result = getUrlPath($imageFeatured->file_url, $thumbnailType);
+            } else {
+                $result = getUrlPath($imageFeatured->file_url, 'small-ls');
+            }
         } else {
             $result = null;
         }
@@ -614,7 +622,7 @@ if (!function_exists('getOffices')) {
         return [
             [
                 'name' => 'Puerto Vallarta',
-                'address' => 'Libertad 349 <br>Puerto Vallarta, Jalisco, México 48300',
+                'address' => 'Libertad 349, Centro <br>Puerto Vallarta, Jalisco, México 48300',
                 'phone' => '+52 (322) 223-0101',
                 'email' => 'vallarta@palmeravacations.com',
                 'phone_us_can' => '(323) 250-7721',
@@ -729,6 +737,13 @@ if (!function_exists('getMinStay')) {
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('getPropertyRate')) {
+    function getPropertyRate($property, $rates, $from_date, $to_date)
+    {
+        return RatesHelper::getPropertyRate($property, $rates, $from_date, $to_date);
     }
 }
 
