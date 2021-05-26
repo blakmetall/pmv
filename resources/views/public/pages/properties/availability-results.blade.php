@@ -31,7 +31,6 @@
             @php
                 $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
                 $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
-                $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
                 $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
 
                 // calculate saving

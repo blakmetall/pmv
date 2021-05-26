@@ -13,7 +13,7 @@
     @php
     $title = $property->name;
     $datesProperty = explode(',', $_COOKIE['datesProperty']);
-    if (isset($_GET) && isset($_GET['arrival_alt_sing']) && isset($_GET['departure_alt_sing'])) {
+    if (isset($_GET['arrival_alt_sing']) && isset($_GET['departure_alt_sing'])) {
         $arrival = $_GET['arrival_alt_sing'];
         $arrivalTxt = $_GET['arrival_sing'];
         $departure = $_GET['departure_alt_sing'];
@@ -37,7 +37,6 @@
     }
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
     $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
-    // $nightlyRate = \RatesHelper::getNightlyRate($property->property, null, $arrival, $departure);
     $nightlyRate = getLowerRate($property->property_id);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
     $bothDates = $arrivalTxt . ' - ' . $departureTxt;

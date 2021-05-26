@@ -1,5 +1,7 @@
 <section id="block-quick-search-quick-search-block" class="block block-quick-search clearfix">
     <form action="{{ route('public.availability-results') }}" id="quick-search-form" accept-charset="UTF-8">
+        <input type="hidden" name="arrival" value="" class="quick-search-arrival"/>
+        <input type="hidden" name="departure" value="" class="quick-search-departure"/>
         <div>
             <div class="row-fluid">
                 <div class="col-xs-10">
