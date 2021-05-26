@@ -5,6 +5,7 @@
             @foreach ($propertiesFeatured as $propertyFeatured)
                 @php
                     $zone = getZone($propertyFeatured->property_id);
+                    $propertyRate = getPropertyRate($propertyFeatured->property, $propertyFeatured->property->rates);
                 @endphp
 
                 <div class="item mb-5">
@@ -14,7 +15,7 @@
                         <h4 class="title">{{ $propertyFeatured->name }}</h4>
                         <div class="description mb-2">{{ getSubString($propertyFeatured->description, 200) }}</div>
                         <div class="rate mb-4">
-                            {{ __('From') }} ${{ getLowerRate($propertyFeatured->property_id) }} USD
+                            {{ __('From') }} {{ priceFormat($propertyRate['nightlyAppliedRate']) }} USD
                             /
                             {{ __('Night') }}
                         </div>

@@ -72,7 +72,10 @@ class PropertyController extends Controller
             $request->session()->flash('error', __('Not Records Found'));
         }
 
-        $config = ['filterByNews' => true, 'paginate' => false];
+        $config = [
+            'filterOnline' => true,
+            'filterByNews' => true, 'paginate' => false
+        ];
         $propertiesNews = $this->propertiesRepository->all('', $config);
 
         return view('public.pages.properties.availability-results')

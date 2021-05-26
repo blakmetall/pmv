@@ -67,7 +67,7 @@ class RatesHelper
         return $nightly;
     }
 
-    public static function getPropertyRate($property, $rates, $from_date, $to_date) {
+    public static function getPropertyRate($property, $rates, $from_date = '', $to_date = '') {
         // prepare return data
         $data = [
             'totalDays' => 0,
@@ -80,7 +80,7 @@ class RatesHelper
         // prepare requested dates
         if(!$from_date || !$to_date) {
             $from_date = date('Y-m-d', strtotime('now'));
-            $to_date = date('Y-m-d', strtotime('+1 days'));
+            $to_date = date('Y-m-d', strtotime('+7 days'));
         }
 
         // echo $from_date . ' -- ' . $to_date . '<br><br>';

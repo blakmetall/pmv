@@ -4,19 +4,21 @@
         @foreach ($propertiesNews as $index => $propertyNews)
             @php
                 $zone = getZone($propertyNews->property_id);
+                $propertyRate = getPropertyRate($propertyNews->property, $propertyNews->property->rates);
             @endphp
+            
             @if ($index == 4)
                 @php
                     break;
                 @endphp
             @endif
-            <div class="col-xs-3"> 
-                <img src="{{ getFeaturedImage($propertyNews->property_id) }}" width="100%" height="350" />
+            <div class="col-xs-3 col-sm-3"> 
+                <img src="{{ getFeaturedImage($propertyNews->property_id) }}" width="100%" />
                 
                 <h4>{{ $propertyNews->name }}</h4>
 
                 <div class="rate-info">
-                    {{ getLowerRate($propertyNews->property_id) }} USD <span>/ {{ __('Night') }}</span>
+                   {{ priceFormat($propertyRate['nightlyAppliedRate']) }} USD <span>/ {{ __('Night') }}</span>
                 </div>
                 
                 <p>{{ getSubString($propertyNews->description, 100) }}</p>
