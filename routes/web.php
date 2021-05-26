@@ -525,10 +525,10 @@ Route::group(['middleware' => ['web']], function () {
     //********* PUBLIC ROUTES *********//
 
     // Home (Coming soon)
-    Route::get('', '_Public\HomeController@comingSoon')->name('public.coming-soon');
+    Route::get('', '_Public\HomeController@default')->name('public.coming-soon');
 
     // auth middleware
-    Route::group(['prefix' => ''], function () {
+    Route::group(['prefix' => '{locale?}'], function () {
         Route::get('', '_Public\HomeController@default')->name('public.home-default');
 
         // Properties
@@ -576,4 +576,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('contact', '_Public\ContactController@index')->name('public.contact');
         Route::post('contact/send-email', '_Public\ContactController@sendEmail')->name('public.contact.send-email');
     });
+
+    
 });

@@ -36,7 +36,7 @@
         <div class="auth-content">
 
             <div class="auth-about">
-                <a href="{{ route('public.home-default') }}">
+                <a href="{{ route('public.home-default', [App::getLocale()]) }}">
                     <img src="{{ asset('assets/images/logo-full.png') }}" alt="">
                 </a>
             </div>

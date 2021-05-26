@@ -28,7 +28,7 @@
                 <div class="panel-pane pane-contact">
                     <div class="pane-content">
                         <form class="user-info-from-cookie contact-form user-info-from-cookie-processed"
-                            action="{{ route('public.contact.send-email') }}" method="post" id="contact-site-form"
+                            action="{{ route('public.contact.send-email', [App::getLocale()]) }}" method="post" id="contact-site-form"
                             accept-charset="UTF-8">
                             <div>
                                 <div class="form-item form-item-name form-type-textfield form-group">

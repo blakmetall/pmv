@@ -11,7 +11,7 @@
                 
                 <br><br>
                 
-                <a href="{{ route('public.vacation-services') }}" class="btn btn-primary btn-xs" role="button">
+                <a href="{{ route('public.vacation-services', [App::getLocale()]) }}" class="btn btn-primary btn-xs" role="button">
                     {{ __('READ MORE') }}
                 </a>
             </div>
@@ -23,7 +23,7 @@
                 
                 <br><br>
                 
-                <a href="{{ route('public.property-management') }}" class="btn btn-primary btn-xs" role="button">
+                <a href="{{ route('public.property-management', [App::getLocale()]) }}" class="btn btn-primary btn-xs" role="button">
                     {{ __('READ MORE') }}
                 </a>
             </div>
@@ -35,7 +35,7 @@
                 
                 <br><br>
                 
-                <a href="{{ route('public.concierge-services') }}" class="btn btn-primary btn-xs" role="button">
+                <a href="{{ route('public.concierge-services', [App::getLocale()]) }}" class="btn btn-primary btn-xs" role="button">
                     {{ __('READ MORE') }}
                 </a>
             </div>

@@ -45,7 +45,7 @@
                 {{ $property->property->baths }} / {{ __('Pax') }}
                 {{ $property->property->pax }}</span>
         </div>
-        <form action="{{ route('public.make-reservation') }}" method="post" id="bookings-form" accept-charset="UTF-8">
+        <form action="{{ route('public.make-reservation', [App::getLocale()]) }}" method="post" id="bookings-form" accept-charset="UTF-8">
             @csrf
             <input type="hidden" value="{{ $property->property_id }}" name="property_id">
             <input type="hidden" value="{{ $arrival }}" name="arrival_date">
@@ -262,7 +262,7 @@
                     <div class="col-xs-12">
                         <div class="hr-tagline"><span>{{ __('Damage Deposit') }}</span></div>
                         <div class="alert alert-info">{{ __('We strongly suggest for you to purchase') }} <a
-                                href="{{ route('public.vacation-services.accidental-rental-damage-insurance') }}"
+                                href="{{ route('public.vacation-services.accidental-rental-damage-insurance', [App::getLocale()]) }}"
                                 title="{{ __('Accidental Rental Damage Insurance') }}"
                                 target="_blank">{{ __('Accidental Rental Damage Insurance') }}</a>,
                             {{ __('if you decide not to use Accidental Rental Damage Insurance, you will then be required to make a $500.00 USD damage deposit with your payment.') }}
@@ -293,13 +293,13 @@
                                     <input type="checkbox" name="agreement" id="agreement"
                                         {{ old('agreement') == 'on' ? 'checked' : '' }}
                                         class="form-checkbox">{{ __('Please read and agree to our') }} <a
-                                        href="{{ route('public.vacation-services.rental-agreement') }}"
+                                        href="{{ route('public.vacation-services.rental-agreement', [App::getLocale()]) }}"
                                         title="{{ __('Rental Agreement') }}"
                                         target="_blank">{{ __('Rental Agreement') }}</a>, {{ __('Our') }} <a
-                                        href="{{ route('public.about.privacy-policy') }}"
+                                        href="{{ route('public.about.privacy-policy', [App::getLocale()]) }}"
                                         title="{{ __('Privacy Policy') }}"
                                         target="_blank">{{ __('Privacy Policy') }}</a> {{ __('And our') }} <a
-                                        href="{{ route('public.about.terms-of-use') }}"
+                                        href="{{ route('public.about.terms-of-use', [App::getLocale()]) }}"
                                         title="{{ __('Terms of Use') }}" target="_blank">{{ __('Terms of Use') }}</a>
                                     {{ __('To complete your reservation request.') }}</label>
                             </div>

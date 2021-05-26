@@ -12,7 +12,7 @@
 
     <div class="pt-4"></div>
 
-    <form action="{{ route('public.vacation-services.find-booking') }}" method="post">
+    <form action="{{ route('public.vacation-services.find-booking', [App::getLocale()]) }}" method="post">
         @csrf
         <div>
             <div class="form-item form-item-bid form-type-textfield form-group">

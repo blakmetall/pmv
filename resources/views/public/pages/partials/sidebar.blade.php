@@ -19,31 +19,31 @@
             <h2 class="block-title">{{ __('Travel Resources') }}</h2>
             <ul class="menu nav">
                 <li class="first leaf">
-                    <a href="{{ route('public.about.puerto-vallarta-history') }}"
+                    <a href="{{ route('public.about.puerto-vallarta-history', [App::getLocale()]) }}"
                         title="{{ __('Puerto Vallarta') }}">{{ __('Puerto Vallarta') }}</a>
                 </li>
                 <li class="leaf">
-                    <a href="{{ route('public.about.nuevo-vallarta-history') }}"
+                    <a href="{{ route('public.about.nuevo-vallarta-history', [App::getLocale()]) }}"
                         title="{{ __('Nuevo Vallarta') }}">{{ __('Nuevo Vallarta') }}</a>
                 </li>
                 <li class="leaf">
-                    <a href="{{ route('public.about.mazatlan-history') }}"
+                    <a href="{{ route('public.about.mazatlan-history', [App::getLocale()]) }}"
                         title="{{ __('Mazatlán') }}">{{ __('Mazatlán') }}</a>
                 </li>
                 <li class="leaf">
-                    <a href="{{ route('public.concierge-services') }}"
+                    <a href="{{ route('public.concierge-services', [App::getLocale()]) }}"
                         title="{{ __('Concierge Services') }}">{{ __('Concierge Services') }}</a>
                 </li>
                 <li class="leaf">
-                    <a href="{{ route('public.concierge-services.helpful-information') }}"
+                    <a href="{{ route('public.concierge-services.helpful-information', [App::getLocale()]) }}"
                         title="{{ __('Helpful Information') }}">{{ __('Helpful Information') }}</a>
                 </li>
                 <li class="leaf">
-                    <a href="{{ route('public.vacation-services.accidental-rental-damage-insurance') }}"
+                    <a href="{{ route('public.vacation-services.accidental-rental-damage-insurance', [App::getLocale()]) }}"
                         title="{{ __('Damage Insurance (ARDI)') }}">{{ __('Damage Insurance (ARDI)') }}</a>
                 </li>
                 <li class="last leaf">
-                    <a href="{{ route('public.vacation-services.rental-agreement') }}"
+                    <a href="{{ route('public.vacation-services.rental-agreement', [App::getLocale()]) }}"
                         title="{{ __('Rental Agreement') }}">{{ __('Rental Agreement') }}</a>
                 </li>
             </ul>

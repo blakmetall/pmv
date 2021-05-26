@@ -5,10 +5,10 @@
                 {!! getSubstring(removeP($vsPage->translate()->description), 300) !!}
             </div>
             <div class="col-xs-12">
-                <a href="{{ route('public.about') }}" title="{{ __('Learn More') }}"
+                <a href="{{ route('public.about', [App::getLocale()]) }}" title="{{ __('Learn More') }}"
                     class="btn btn-warning mr-3">{{ __('Learn More') }}</a>
                 <a
-                    href="{{ route('public.contact') }}" title="{{ __('Leave Message') }}" class="btn btn-primary"
+                    href="{{ route('public.contact', [App::getLocale()]) }}" title="{{ __('Leave Message') }}" class="btn btn-primary"
                     >{{ __('Leave Message') }}</a>
             </div>
         </div>

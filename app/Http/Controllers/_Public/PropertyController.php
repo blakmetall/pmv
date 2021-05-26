@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_Public;
 
+use App;
 use Notification;
 use App\Notifications\DetailsBookingPublic;
 use App\Helpers\LanguageHelper;
@@ -92,7 +93,7 @@ class PropertyController extends Controller
     }
 
 
-    public function propertyDetail(Request $request, $zone, $slug)
+    public function propertyDetail(Request $request, $locale, $zone, $slug)
     {
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
@@ -141,7 +142,7 @@ class PropertyController extends Controller
             ->with('prw', $prw);
     }
 
-    public function zones($city)
+    public function zones($locale, $city)
     {
         $zones = $this->zonesRepository->all('', [], $city);
 
@@ -188,7 +189,7 @@ class PropertyController extends Controller
         return $data;
     }
 
-    public function reservations($id)
+    public function reservations($locale, $id)
     {
         $captcha = rand(100000, 999999);
         $lang = LanguageHelper::current()->code;
@@ -536,7 +537,7 @@ class PropertyController extends Controller
                         $emails[] = 'pmd@palmeravacations.com';
                     }
                     $this->email($booking, $emails);
-                    return redirect(route('public.thank-you', $booking))->withInput();
+                    return redirect(route('public.thank-you', [App::getLocale(), $booking]))->withInput();
                 } else {
                     $request->session()->flash('error', __('Something wrong happen'));
                 }
@@ -551,7 +552,7 @@ class PropertyController extends Controller
         return redirect()->back()->withInput();
     }
 
-    public function thankYou(Request $request, $booking)
+    public function thankYou(Request $request, $locale, $booking)
     {
         $request->session()->flash('success', __('Reservation successful sended'));
         $booking = PropertyBooking::find($booking);

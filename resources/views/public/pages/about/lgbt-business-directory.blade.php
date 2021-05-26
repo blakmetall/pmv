@@ -36,7 +36,7 @@
                                                     <div>
                                                         <span>
                                                             <a
-                                                                href="{{ route('public.about.lgbt-business-directory-detail', [$lgbt->lgbt_id]) }}">{{ __('READ MORE') }}
+                                                                href="{{ route('public.about.lgbt-business-directory-detail', [App::getLocale(), $lgbt->lgbt_id]) }}">{{ __('READ MORE') }}
                                                                 &gt;&gt;</a>
                                                         </span>
                                                     </div>

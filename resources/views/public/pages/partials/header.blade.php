@@ -68,62 +68,62 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="menu nav navbar-nav navbar-right">
                 <li class="first leaf active" id="fa-home">
-                    <a href="{{ route('public.home-default') }}" title="{{ __('Home') }}" class="active"><span
+                    <a href="{{ route('public.home-default', [App::getLocale()]) }}" title="{{ __('Home') }}" class="active"><span
                             class="fa fa-home"></span>{{ __('Home') }}</a>
                 </li>
                 <li class="expanded dropdown" id="fa-flag">
-                    <a href="{{ route('public.vacation-services') }}" title="{{ __('Vacation Services') }}"
+                    <a href="{{ route('public.vacation-services', [App::getLocale()]) }}" title="{{ __('Vacation Services') }}"
                         class="dropdown-toggle" data-toggle="dropdown"><span
                             class="fa fa-flag"></span>{{ __('Vacation Services') }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li class="first leaf">
-                            <a href="{{ route('public.vacation-services') }}"
+                            <a href="{{ route('public.vacation-services', [App::getLocale()]) }}"
                                 title="{{ __('Vacation Services') }}">{{ __('Vacation Services') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.vacation-services.make-payment') }}"
+                            <a href="{{ route('public.vacation-services.make-payment', [App::getLocale()]) }}"
                                 title="{{ __('Make Payment') }}">{{ __('Make Payment') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.vacation-services.payment-methods') }}"
+                            <a href="{{ route('public.vacation-services.payment-methods', [App::getLocale()]) }}"
                                 title="{{ __('Payment Methods') }}">{{ __('Payment Methods') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.vacation-services.rental-agreement') }}"
+                            <a href="{{ route('public.vacation-services.rental-agreement', [App::getLocale()]) }}"
                                 title="{{ __('Rental Agreement') }}">{{ __('Rental Agreement') }}</a>
                         </li>
                         <li class="last leaf">
-                            <a href="{{ route('public.vacation-services.accidental-rental-damage-insurance') }}"
+                            <a href="{{ route('public.vacation-services.accidental-rental-damage-insurance', [App::getLocale()]) }}"
                                 title="{{ __('Accidental Rental Damage Insurance (ARDI)') }}">{{ __('Accidental Rental Damage Insurance (ARDI)') }}</a>
                         </li>
                     </ul>
                 </li>
             
                 <li class="expanded dropdown" id="fa-star">
-                    <a href="{{ route('public.concierge-services') }}" title="{{ __('Concierge Services') }}"
+                    <a href="{{ route('public.concierge-services', [App::getLocale()]) }}" title="{{ __('Concierge Services') }}"
                         class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-star"></span>
                         {{ __('Concierge Services') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="first leaf">
-                            <a href="{{ route('public.concierge-services') }}"
+                            <a href="{{ route('public.concierge-services', [App::getLocale()]) }}"
                                 title="{{ __('Concierge Services') }}">{{ __('Concierge Services') }}</a>
                         </li>
                         <li class="last leaf">
-                            <a href="{{ route('public.concierge-services.helpful-information') }}"
+                            <a href="{{ route('public.concierge-services.helpful-information', [App::getLocale()]) }}"
                                 title="{{ __('Helpful Information') }}">{{ __('Helpful Information') }}</a>
                         </li>
                     </ul>
                 </li>
             
                 <li class="expanded dropdown" id="fa-bell">
-                    <a href="{{ route('public.property-management') }}" title="{{ __('Property Management') }}"
+                    <a href="{{ route('public.property-management', [App::getLocale()]) }}" title="{{ __('Property Management') }}"
                         class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-bell"></span>
                         {{ __('Property Management') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="first leaf">
-                            <a href="{{ route('public.property-management') }}"
+                            <a href="{{ route('public.property-management', [App::getLocale()]) }}"
                                 title="{{ __('Property Management') }}">{{ __('Property Management') }}</a>
                         </li>
                         <li class="last leaf">
@@ -135,51 +135,51 @@
                 </li>
             
                 <li class="expanded dropdown" id="fa-about">
-                    <a href="{{ route('public.about') }}" title="{{ __('About Palmera Vacations') }}" class="dropdown-toggle"
+                    <a href="{{ route('public.about', [App::getLocale()]) }}" title="{{ __('About Palmera Vacations') }}" class="dropdown-toggle"
                         data-toggle="dropdown"><span class="fa fa-heart"></span> {{ __('About') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="first leaf">
-                            <a href="{{ route('public.about') }}"
+                            <a href="{{ route('public.about', [App::getLocale()]) }}"
                                 title="{{ __('Palmera Vacations') }}">{{ __('Palmera Vacations') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.puerto-vallarta-history') }}"
+                            <a href="{{ route('public.about.puerto-vallarta-history', [App::getLocale()]) }}"
                                 title="{{ __('Puerto Vallarta History') }}">{{ __('Puerto Vallarta') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.nuevo-vallarta-history') }}"
+                            <a href="{{ route('public.about.nuevo-vallarta-history', [App::getLocale()]) }}"
                                 title="{{ __('Nuevo Vallarta History') }}">{{ __('Nuevo Vallarta') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.mazatlan-history') }}"
+                            <a href="{{ route('public.about.mazatlan-history', [App::getLocale()]) }}"
                                 title="{{ __('Mazatlán') }}">{{ __('Mazatlán') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.testimonials') }}"
+                            <a href="{{ route('public.about.testimonials', [App::getLocale()]) }}"
                                 title="{{ __('Testimonials') }}">{{ __('Testimonials') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.privacy-policy') }}"
+                            <a href="{{ route('public.about.privacy-policy', [App::getLocale()]) }}"
                                 title="{{ __('Privacy Policy') }}">{{ __('Privacy Policy') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.terms-of-use') }}"
+                            <a href="{{ route('public.about.terms-of-use', [App::getLocale()]) }}"
                                 title="{{ __('Terms of Use') }}">{{ __('Terms of Use') }}</a>
                         </li>
                         <li class="leaf">
-                            <a href="{{ route('public.about.real-estate-business-directory') }}"
+                            <a href="{{ route('public.about.real-estate-business-directory', [App::getLocale()]) }}"
                                 title="{{ __('Real Estate Business Directory') }}">{{ __('Real Estate Business Directory') }}</a>
                         </li>
                         <li class="last leaf">
-                            <a href="{{ route('public.about.lgbt-business-directory') }}"
+                            <a href="{{ route('public.about.lgbt-business-directory', [App::getLocale()]) }}"
                                 title="{{ __('LGBT Business Directory') }}">{{ __('LGBT Business Directory') }}</a>
                         </li>
                     </ul>
                 </li>
                 
                 <li class="last leaf" id="fa-user">
-                    <a href="{{ route('public.contact') }}" title="{{ __('Contact Us') }}"><span
+                    <a href="{{ route('public.contact', [App::getLocale()]) }}" title="{{ __('Contact Us') }}"><span
                             class="fa fa-user"></span>{{ __('Contact Us') }}</a>
                 </li>
             </ul>

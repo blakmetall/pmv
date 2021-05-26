@@ -36,7 +36,7 @@
                                                     <div>
                                                         <span>
                                                             <a
-                                                                href="{{ route('public.about.real-estate-business-directory-detail', [$agency->agency_id]) }}">{{ __('READ MORE') }}
+                                                                href="{{ route('public.about.real-estate-business-directory-detail', [App::getLocale(), $agency->agency_id]) }}">{{ __('READ MORE') }}
                                                                 &gt;&gt;</a>
                                                         </span>
                                                     </div>

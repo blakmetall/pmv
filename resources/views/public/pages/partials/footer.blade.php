@@ -147,9 +147,9 @@ $offices = getOffices();
                                 <div class="pane-content">
                                     <div class="copy text-center">
                                         <p>&copy; {{ __('Copy') }}</p>
-                                        <p><a href="{{ route('public.about.privacy-policy') }}"
+                                        <p><a href="{{ route('public.about.privacy-policy', [App::getLocale()]) }}"
                                                 title="{{ __('Privacy Policy') }}">{{ __('Privacy Policy') }}</a>
-                                            - <a href="{{ route('public.about.terms-of-use') }}"
+                                            - <a href="{{ route('public.about.terms-of-use', [App::getLocale()]) }}"
                                                 title="{{ __('Terms of Use') }}">{{ __('Terms of Use') }}</a></p>
                                     </div>
                                 </div>

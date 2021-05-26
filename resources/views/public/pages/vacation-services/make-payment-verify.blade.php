@@ -119,10 +119,10 @@
                         class="form-required" title="{{ __('This field is required.') }}">*</span></label>
             </div>
             <input type="hidden" name="currency_code" value="USD">
-            <input type="hidden" name="return" value="{{ route('public.vacation-services.thank-you') }}">
+            <input type="hidden" name="return" value="{{ route('public.vacation-services.thank-you', [App::getLocale()]) }}">
             <input type="hidden" name="rm" value="2">
-            <input type="hidden" name="notify_url" value="{{ route('public.vacation-services.thank-you') }}">
-            <input type="hidden" name="cancel_return" value="{{ route('public.vacation-services.make-payment-verify', [$booking->id]) }}">
+            <input type="hidden" name="notify_url" value="{{ route('public.vacation-services.thank-you', [App::getLocale()]) }}">
+            <input type="hidden" name="cancel_return" value="{{ route('public.vacation-services.make-payment-verify', [App::getLocale(), $booking->id]) }}">
             <input type="hidden" name="page_style" value="primary">
             <input type="hidden" name="lc" value="US">
             <input type="hidden" name="country" value="US">
@@ -130,13 +130,13 @@
             <input type="hidden" name="type" value="false">
             <button type="submit" id="edit-next" value="{{ __('Make Payment') }}"
                     class="btn btn-default form-submit">{{ __('Make Payment') }}</button>
-            <a href="{{ route('public.vacation-services.make-payment') }}" class="btn btn-default form-submit"
+            <a href="{{ route('public.vacation-services.make-payment', [App::getLocale()]) }}" class="btn btn-default form-submit"
                 role="button">
                 {{ __('Find Another Reservation') }}
             </a>
         </form>
     @else
-        <a href="{{ route('public.vacation-services.make-payment') }}" class="btn btn-default form-submit" role="button">
+        <a href="{{ route('public.vacation-services.make-payment', [App::getLocale()]) }}" class="btn btn-default form-submit" role="button">
             {{ __('Find Another Reservation') }}
         </a>
     @endif

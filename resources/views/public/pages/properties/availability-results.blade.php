@@ -86,7 +86,7 @@
                             <div class="col-xs-6 col-sm-6">   				
                                 <div class="details-link">
                                     <i class="glyphicon glyphicon-play"></i> 
-                                    <a href="{{ route('public.property-detail', [getZone($property->property_id), $property->slug]) }}" 
+                                    <a href="{{ route('public.property-detail', [App::getLocale(), getZone($property->property_id), $property->slug]) }}" 
                                         title="View FULL details" class="full-details">
                                         {{ __('View FULL details') }}
                                     </a>
@@ -119,7 +119,7 @@
                                         <br>{{ $bothDates }} ( {{ $nightsDate }} {{ __('nights') }} )
                                     </div>			
                                     <div class="text-right">
-                                        <a href="{{ route('public.reservations', [$property->property_id]) }}"
+                                        <a href="{{ route('public.reservations', [App::getLocale(), $property->property_id]) }}"
                                             class="btn btn-warning">{{ __('Book it!') }}
                                         </a>
                                     </div>   				

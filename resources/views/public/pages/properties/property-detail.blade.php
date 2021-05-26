@@ -151,7 +151,7 @@
                     </div>
                     <div class="col-xs-3 col-sm-3">
                         <div class="text-right">
-                            <a href="{{ route('public.reservations', [$property->property_id]) }}"
+                            <a href="{{ route('public.reservations', [App::getLocale(), $property->property_id]) }}"
                                 class="btn btn-warning">{{ __('Book it!') }}
                             </a>
                         </div>
@@ -182,7 +182,7 @@
                 </div>
         @endif
         <form
-            action="{{ route('public.property-detail', [getZone($property->property_id), $property->slug]) }}"
+            action="{{ route('public.property-detail', [App::getLocale(), getZone($property->property_id), $property->slug]) }}"
             id="property-details-form" accept-charset="UTF-8">
             <div>
                 <fieldset class="bg-success collapsible panel panel-default form-wrapper collapse-processed"
@@ -348,7 +348,7 @@
         </div>
         <div id="property-calendar-info">
             <h2 class="section-title">{{ __('Availability Calendar') }}</h2>
-            <div class="cal-month first-calendar" data-url="{{ route('public.first-availability') }}">
+            <div class="cal-month first-calendar" data-url="{{ route('public.first-availability', [App::getLocale()]) }}">
             </div>
             <div class="text-right cal-more-dates">
                 <a href="#" class="btn btn-warning btn-calendar" data-toggle="modal"

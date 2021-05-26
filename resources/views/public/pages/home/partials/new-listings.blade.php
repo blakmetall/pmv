@@ -25,7 +25,7 @@
                             
                             <p class="mb-5">{{ getSubString($propertyNews->description, 200) }}</p>
 
-                            <a href="{{ route('public.property-detail', [$zone, $propertyNews->slug]) }}" class="btn btn-primary btn-xs" role="button">
+                            <a href="{{ route('public.property-detail', [App::getLocale(), $zone, $propertyNews->slug]) }}" class="btn btn-primary btn-xs" role="button">
                                 {{ __('VIEW') }}
                             </a>
                         </div>

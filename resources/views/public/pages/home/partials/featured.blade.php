@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <p>
-                        <a href="{{ route('public.property-detail', [$zone, $propertyFeatured->slug]) }}" title="{{ __('READ MORE') }}">
+                        <a href="{{ route('public.property-detail', [App::getLocale(), $zone, $propertyFeatured->slug]) }}" title="{{ __('READ MORE') }}">
                             {{ __('VIEW') }}
                         </a>
                     </p>

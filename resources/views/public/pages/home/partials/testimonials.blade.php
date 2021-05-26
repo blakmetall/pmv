@@ -17,7 +17,7 @@
                                             <div class="views-field views-field-body">
                                                 <div class="field-content">
                                                     <a
-                                                        href="{{ route('public.about.testimonial', [$testimonial->testimonial_id]) }}">
+                                                        href="{{ route('public.about.testimonial', [App::getLocale(), $testimonial->testimonial_id]) }}">
                                                         {!! getSubstring($testimonial->description, 150) !!}
                                                     </a>
                                                 </div>

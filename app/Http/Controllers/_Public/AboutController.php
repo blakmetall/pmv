@@ -73,7 +73,7 @@ class AboutController extends Controller
             ->with('testimonials', $testimonials);
     }
 
-    public function testimonialDetail(Testimonial $id)
+    public function testimonialDetail($locale, Testimonial $id)
     {
         $testimonial = $this->testimonialsRepository->find($id);
         return view('public.pages.about.testimonial-detail')
@@ -104,7 +104,7 @@ class AboutController extends Controller
             ->with('agencies', $agencies);
     }
 
-    public function agencyDetail(Agency $id)
+    public function agencyDetail($locale, Agency $id)
     {
         $agency = $this->agenciesRepository->find($id);
         return view('public.pages.about.agency-detail')
@@ -121,7 +121,7 @@ class AboutController extends Controller
             ->with('lgbts', $lgbts);
     }
 
-    public function lgbtDetail(Lgbt $id)
+    public function lgbtDetail($locale, Lgbt $id)
     {
         $lgbt = $this->lgbtsRepository->find($id);
         return view('public.pages.about.lgbt-detail')

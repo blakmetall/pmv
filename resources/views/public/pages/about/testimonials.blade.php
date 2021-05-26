@@ -26,7 +26,7 @@
                                                     <div class="views-field views-field-body">
                                                         <div class="field-content testimonial-list-item">
                                                             <a
-                                                                href="{{ route('public.about.testimonial', [$testimonial->testimonial_id]) }}">
+                                                                href="{{ route('public.about.testimonial', [App::getLocale(), $testimonial->testimonial_id]) }}">
                                                                 {!! $testimonial->description !!}
                                                             </a>
                                                         </div>

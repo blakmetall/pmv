@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Models\PropertyBooking;
@@ -551,7 +552,7 @@ class PropertyBookingController extends Controller
             return redirect()->back();
         } else {
             $booking = $this->repository->create($request);
-            $msg = __('Msg reservation') . ' #' . $booking->id . ', ' . __('Client wishes') . ' <a href="' . route('public.vacation-services.make-payment-verify', [$booking->id]) . '">' . __('Click here') . '</a> ' . __('Confirmation recipents') . ' ' . $request->email . ', reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+            $msg = __('Msg reservation') . ' #' . $booking->id . ', ' . __('Client wishes') . ' <a href="' . route('public.vacation-services.make-payment-verify', [App::getLocale(), $booking->id]) . '">' . __('Click here') . '</a> ' . __('Confirmation recipents') . ' ' . $request->email . ', reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
             $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$booking->id]));
         }

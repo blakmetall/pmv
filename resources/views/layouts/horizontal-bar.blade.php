@@ -664,7 +664,7 @@ $_current_role = RoleHelper::current();
                     <div class="card-body">
                         <div class="calendar-container">
                             <div class="app-modal-calendar-container"
-                                data-url="{{ route('public.availability-modal') }}">
+                                data-url="{{ route('public.availability-modal', [App::getLocale()]) }}">
                                 ...
                             </div>
                         </div>

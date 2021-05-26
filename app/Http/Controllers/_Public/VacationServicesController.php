@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_Public;
 
+use App;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,12 +42,12 @@ class VacationServicesController extends Controller
         $booking = PropertyBooking::find($request->booking_id);
         if (!$booking) {
             $request->session()->flash('error', __('Not Bookings Found'));
-            return redirect(route('public.vacation-services.make-payment'));
+            return redirect(route('public.vacation-services.make-payment', [App::getLocale()]));
         }
-        return redirect(route('public.vacation-services.make-payment-verify', [$booking->id]));
+        return redirect(route('public.vacation-services.make-payment-verify', [App::getLocale(), $booking->id]));
     }
 
-    public function resultsBookings(Request $request, PropertyBooking $booking)
+    public function resultsBookings(Request $request, $locale, PropertyBooking $booking)
     {
         $total    = $booking->total;
         $payments = $booking->payments;

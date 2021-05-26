@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_Public;
 
+use App;
 use Notification;
 use App\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
@@ -98,7 +99,7 @@ class ContactController extends Controller
             }
         }
 
-        return redirect(route('public.contact'))->withInput();
+        return redirect(route('public.contact', [App::getLocale()]))->withInput();
     }
 
     private function email($data, $email)

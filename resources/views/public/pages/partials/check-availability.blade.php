@@ -14,7 +14,7 @@
     $datesInitial = getSearchDate(true, $arrival, $departure);
 @endphp
 
-<form action="{{ route('public.availability-results') }}" id="avail-search-form" accept-charset="UTF-8">
+<form action="{{ route('public.availability-results', [App::getLocale()]) }}" id="avail-search-form" accept-charset="UTF-8">
     <input type="hidden" value="{{ $isHome }}" name="is_home">
     <div>
         <table>

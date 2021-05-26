@@ -25,7 +25,7 @@
                 
                 <p class="mb-5">
                     <i class="glyphicon glyphicon-play"></i> <a
-                        href="{{ route('public.property-detail', [$zone, $propertyNews->slug]) }}"
+                        href="{{ route('public.property-detail', [App::getLocale(), $zone, $propertyNews->slug]) }}"
                         title="{{ __('READ MORE') }}" class="read-more-results">{{ __('READ MORE') }}</a>
                 </p>
             </div>
