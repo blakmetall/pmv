@@ -4,12 +4,14 @@ use Carbon\Carbon;
 use App\Helpers\RatesHelper;
 use App\Helpers\LanguageHelper;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 use App\Notifications\DetailsBooking;
 use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Models\PropertyTypeTranslation;
+
 
 if (!function_exists('prepareFormInputName')) {
     function prepareFormInputName($name, $parentName, $lang)
@@ -495,11 +497,7 @@ if (!function_exists('removeAccents')) {
 if (!function_exists('generateSlug')) {
     function generateSlug($string)
     {
-        $result = removeAccents($string);
-        $result = strtolower($result);
-        $result = str_replace(' ', '-', $result);
-
-        return $result;
+        return Str::slug($string);
     }
 }
 
