@@ -2,7 +2,15 @@
 
     <div class="row row-xs">
         <!-- from_date -->
-        <div class="col-md-3 select-filter">
+        <div class="col-md-1 select-filter">
+            <label for="reservation_id">
+                {{ __('ID') }}
+            </label>
+            <input id="reservation_id" type="text" name="reservation_id" value="" class="form-control">
+        </div>
+
+        <!-- from_date -->
+        <div class="col-md-2 select-filter">
             <label for="from_date">
                 {{ __('From Date') }}
             </label>
@@ -11,7 +19,7 @@
         </div>
 
         <!-- to_date -->
-        <div class="col-md-3 select-filter">
+        <div class="col-md-2 select-filter">
             <label for="to_date">
                 {{ __('To Date') }}
             </label>

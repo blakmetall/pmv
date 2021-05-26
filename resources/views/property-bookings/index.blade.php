@@ -68,9 +68,9 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    {{-- @include('components.search-bookings', [
+    @include('components.search-bookings', [
         'url' => $url
-    ]) --}}
+    ])
 
 
 @endsection

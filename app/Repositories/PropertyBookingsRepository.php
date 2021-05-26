@@ -34,56 +34,64 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $filterByOwner        = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
         $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
         $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
+        $filterById           = isset($config['reservation_id']) ? $config['reservation_id'] : '';
+        $orderByArrival           = isset($config['orderByArrival']) ? $config['orderByArrival'] : '';
 
         if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
             $query = PropertyBooking::query();
-            $query->where(function ($query) use ($search) {
-                if ($search['from_date'] != '' || $search['to_date'] != '') {
-                    $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
-                }
-                if ($search['register_by'] != '') {
-                    $query->where('register_by', $search['register_by']);
-                }
-            });
-            if ($search['location'] != '') {
-                $query->whereHas('property', function ($q) use ($search) {
-                    $q->where('city_id', 'like', '%' . $search['location'] . '%');
+
+            // if will be filtering only by booking id
+            if(!$filterById) {
+                $query->where(function ($query) use ($search) {
+                    if ($search['from_date'] != '' || $search['to_date'] != '') {
+                        $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
+                    }
+                    if ($search['register_by'] != '') {
+                        $query->where('register_by', $search['register_by']);
+                    }
                 });
+                if ($search['location'] != '') {
+                    $query->whereHas('property', function ($q) use ($search) {
+                        $q->where('city_id', 'like', '%' . $search['location'] . '%');
+                    });
+                }
             }
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
         }
 
-        if ($filterById) {
+        if($filterById) {
             $query->where('property_bookings.id', $filterById);
-        }
-
-        if ($filterByOwner) {
-            $query->whereHas('property', function ($q) {
-                $q->where('user_id', \Auth::id());
-            });
-        }
-
-        if ($hasPropertyID) {
-            $query->where('property_id', $hasPropertyID);
-            $query->orderBy('created_at', 'desc');
         } else {
-            $query->select('property_bookings.*');
-            $query->join('properties', 'property_bookings.property_id', '=', 'properties.id');
-            $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
-            $query->where('language_id', $lang->id);
-            $query->orderBy('name', 'asc');
+            if ($filterByOwner) {
+                $query->whereHas('property', function ($q) {
+                    $q->where('user_id', \Auth::id());
+                });
+            }
+    
+            if ($hasPropertyID) {
+                $query->where('property_id', $hasPropertyID);
+            } else {
+                $query->select('property_bookings.*');
+                $query->join('properties', 'property_bookings.property_id', '=', 'properties.id');
+                $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
+                $query->where('language_id', $lang->id);
+                $query->orderBy('name', 'asc');
+            }
+    
+            if ($currentYear) {
+                $query->whereYear('arrival_date', $currentYear);
+            }
+    
+            if ($filterByNotCancelled) {
+                $query->where('is_cancelled', 0);
+            }
         }
 
-        if ($currentYear) {
-            $query->whereYear('arrival_date', $currentYear);
+        if($orderByArrival) {
+            $query->orderBy('arrival_date', 'desc');
         }
-
-        if ($filterByNotCancelled) {
-            $query->where('is_cancelled', 0);
-        }
-
 
         if ($shouldPaginate) {
             $result = $query->paginate(9999);

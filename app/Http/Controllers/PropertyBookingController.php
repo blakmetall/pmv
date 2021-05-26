@@ -50,9 +50,13 @@ class PropertyBookingController extends Controller
         ];
 
         if (isRole('owner')) {
-            $config = ['filterByOwner' => true];
+            $config = [
+                'filterByOwner' => true, 
+                'reservation_id' => $request->reservation_id,
+                'orderByArrival' => true,
+            ];
         } else {
-            $config = [];
+            $config = ['reservation_id' => $request->reservation_id, 'orderByArrival' => true,];
         }
 
         $bookings = $this->repository->all($search, $config);
@@ -65,6 +69,9 @@ class PropertyBookingController extends Controller
         ];
         $registers[] = [
             'name' => 'Admin',
+        ];
+        $registers[] = [
+            'name' => 'Client',
         ];
 
         return view('property-bookings.index')
