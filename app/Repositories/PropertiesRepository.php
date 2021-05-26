@@ -37,6 +37,11 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByFeatured = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
         $shouldFilterByNews = isset($config['filterByNews']) ? $config['filterByNews'] : false;
         $shouldFilterBySlug = isset($config['filterBySlug']) ? $config['filterBySlug'] : false;
+        $shouldFilterByPropertyType = isset($config['filterByPropertyType']) ? $config['filterByPropertyType'] : false;
+        $shouldFilterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : false;
+        $shouldFilterByZone = isset($config['filterByZone']) ? $config['filterByZone'] : false;
+        $shouldFilterByOccupancy = isset($config['filterByOccupancy']) ? $config['filterByOccupancy'] : false;
+        $shouldFilterByBedrooms = isset($config['filterByBedrooms']) ? $config['filterByBedrooms'] : false;
 
         $filterPetFriendly = isset($config['pet_friendly']) && $config['pet_friendly'] ? true : false;
         $filterAdultsOnly = isset($config['adults_only']) && $config['adults_only'] ? true : false;
@@ -97,6 +102,36 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->whereHas('property', function ($q) use ($config) {
                 $q->where('slug', $config['filterBySlug']);
             })->where('language_id', $lang->id);
+        }
+
+        if ($shouldFilterByPropertyType) {
+            $query->whereHas('property', function ($q) use ($shouldFilterByPropertyType) {
+                $q->where('property_type_id', $shouldFilterByPropertyType);
+            });
+        }
+
+        if ($shouldFilterByCity) {
+            $query->whereHas('property', function ($q) use ($shouldFilterByCity) {
+                $q->where('city_id', $shouldFilterByCity);
+            });
+        }
+
+        if ($shouldFilterByZone) {
+            $query->whereHas('property', function ($q) use ($shouldFilterByZone) {
+                $q->where('zone_id', $shouldFilterByZone);
+            });
+        }
+
+        if ($shouldFilterByOccupancy) {
+            $query->whereHas('property', function ($q) use ($shouldFilterByOccupancy) {
+                $q->where('pax', '>=', $shouldFilterByOccupancy);
+            });
+        }
+
+        if ($shouldFilterByBedrooms) {
+            $query->whereHas('property', function ($q) use ($shouldFilterByBedrooms) {
+                $q->where('bedrooms', '>=', $shouldFilterByBedrooms);
+            });
         }
 
 

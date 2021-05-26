@@ -61,8 +61,14 @@ class PropertyController extends Controller
 
         $lang = LanguageHelper::current();
 
+        $occupancy = (int) $request->adults + (int) $request->children;
         $properties = $this->propertiesRepository->all($request->property_name, [
             'filterOnline' => true,
+            'filterByPropertyType' => $request->property_type,
+            'filterByCity' => $request->city,
+            'filterByZone' => $request->zone,
+            'filterByOccupancy' => $occupancy,
+            'filterByBedrooms' => $request->bedrooms,
             'pet_friendly' => $request->pet_friendly ? true : false,
             'adults_only' => $request->adults_only ? true : false,
             'beachfront' => $request->beach_front ? true : false,
