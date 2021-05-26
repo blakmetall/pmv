@@ -194,7 +194,7 @@
                                 <!-- property preview -->
                                 @if (!isRole('owner') && $row->property->is_online)
                                 <a role="button" 
-                                        href="{{ route('public.property-detail', [getZone($row->property->id), generateSlug($row->property->translate()->name)]) }}"
+                                        href="{{ route('public.property-detail', [getZone($row->property->id), $row->property->translate()->slug]) }}"
                                         class="text-primary app-icon-link"
                                         title="{{ __('Preview') }}"
                                         alt="{{ __('Preview') }}">

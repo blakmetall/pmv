@@ -86,7 +86,7 @@
                             <div class="col-xs-6 col-sm-6">   				
                                 <div class="details-link">
                                     <i class="glyphicon glyphicon-play"></i> 
-                                    <a href="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}" 
+                                    <a href="{{ route('public.property-detail', [getZone($property->property_id), $property->slug]) }}" 
                                         title="View FULL details" class="full-details">
                                         {{ __('View FULL details') }}
                                     </a>

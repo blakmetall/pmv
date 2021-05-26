@@ -106,7 +106,7 @@ $property = isset($property) ? $property : false;
 
                         <!-- property preview -->
                         @if (!isRole('owner') && $property->is_online)
-                            <a role="button" href="{{ route('public.property-detail', [getZone($property->id), generateSlug($property->translate()->name)]) }}"
+                            <a role="button" href="{{ route('public.property-detail', [getZone($property->id), $property->translate()->slug]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-md-0"
                                 title="{{ __('Preview') }}" alt="{{ __('Preview') }}">
                                 <i class="nav-icon i-Right font-weight-bold"></i>

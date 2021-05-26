@@ -182,7 +182,7 @@
                 </div>
         @endif
         <form
-            action="{{ route('public.property-detail', [getZone($property->property_id), generateSlug($property->name)]) }}"
+            action="{{ route('public.property-detail', [getZone($property->property_id), $property->slug]) }}"
             id="property-details-form" accept-charset="UTF-8">
             <div>
                 <fieldset class="bg-success collapsible panel panel-default form-wrapper collapse-processed"
