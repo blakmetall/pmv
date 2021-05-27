@@ -525,7 +525,7 @@ Route::group(['middleware' => ['web']], function () {
     //********* PUBLIC ROUTES *********//
 
     // Home (Coming soon)
-    Route::get('', '_Public\HomeController@default')->name('public.coming-soon');
+    Route::get('', '_Public\HomeController@init');
 
     // auth middleware
     Route::group(['prefix' => '{locale?}'], function () {
