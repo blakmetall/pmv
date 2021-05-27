@@ -24,9 +24,9 @@ class HomeController extends Controller
         $this->pagesPepository = $pagesPepository;
     }
 
-    public function comingSoon(Request $request)
+    public function init(Request $request)
     {
-        return view('public.pages.home.coming-soon');
+        return redirect('/' . \App::getLocale());
     }
 
     public function default(Request $request)

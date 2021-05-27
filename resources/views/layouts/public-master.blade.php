@@ -42,6 +42,8 @@
     {{-- page specific javascript --}}
     @yield('page-js')
 
+    <script src="/js/moment.min.js"></script>
+
     {{-- theme javascript --}}
     <script src="{{ asset('assets/public/js/public.js') }}"></script>
 

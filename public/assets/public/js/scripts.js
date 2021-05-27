@@ -120,11 +120,13 @@
 			
 				bedrooms = $("input[name='bedrooms']").val();
 				
-				arrival = $("input[name='arrival']").val();
+				// arrival = $("input[name='arrival']").val();
 				arrivalTxt = $('#edit-arrival').val();
+				arrival = moment(arrivalTxt).format('YYYY-MM-DD');
 
-				departure = $("input[name='departure']").val();
+				// departure = $("input[name='departure']").val();
 				departureTxt = $('#edit-departure').val();
+				departure = moment(departureTxt).format('YYYY-MM-DD');
 
 				adults = $("input[name='adults']").val();
 				children = $("input[name='children']").val();

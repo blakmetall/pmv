@@ -79,6 +79,8 @@ setTimeout(function(){
         }
     });
 
+    $("#edit-departure").trigger("click");
+
     $('#edit-arrival-sing').datepicker({
         dateFormat: 'D dd/M/yy',
         altFormat: 'yy-mm-dd',
@@ -103,8 +105,10 @@ setTimeout(function(){
         numberOfMonths: 2,
         minDate: '+2d',
         onClose: function( selectedDate ) {
-        $('#edit-arrival-sing').datepicker('option', 'maxDate', selectedDate );
+            $('#edit-arrival-sing').datepicker('option', 'maxDate', selectedDate );
         }
     });
+
+    $("#edit-departure-sing").trigger("click");
 
 })(jQuery);
