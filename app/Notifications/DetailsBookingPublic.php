@@ -102,6 +102,8 @@ class DetailsBookingPublic extends Notification
             ->line(new HtmlString('This reservation document is hereby confirmed as a RESERVATION REQUEST ONLY and the reservation is not guaranteed or secured until payment has been received. You may review the Rental Agreement at any time at the following address <a href="http://www.palmeravacations.mx/rental-agreement" target="_blank">http://www.palmeravacations.mx/rental-agreement.</a>'))
             ->line('------------------------------------------------')
             ->greeting(sprintf('Hola'))
+            ->line('')
+            ->line('')
             ->line('Esta es una copia de una reservación:')
             ->line(new HtmlString('CONFIRMACIÓN: <strong>' . $this->booking->id . '</strong>'))
             ->line(new HtmlString('ESTATUS: <strong>Booked<strong>'))

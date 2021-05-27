@@ -92,6 +92,8 @@ class DetailsBooking extends Notification
             ->line(new HtmlString('TOTAL DUE: <strong>' . priceFormat($balance) . ' USD</strong>'))
             ->line('------------------------------------------------')
             ->greeting(sprintf('Hola %s!', $this->booking->full_name))
+            ->line('')
+            ->line('')
             ->line('Esta es una copia de una reservación:')
             ->line(new HtmlString('CONFIRMACIÓN: <strong>' . $this->booking->id . '</strong>'))
             ->line(new HtmlString('ESTATUS: <strong>Booked<strong>'))
