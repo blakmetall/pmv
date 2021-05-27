@@ -104,8 +104,7 @@ class PropertyBookingPaymentsController extends Controller
 
     private function notification($booking, $content, $email)
     {
-        Notification::route('mail', $email)
-            ->notify(new DetailsPayment($content, $booking));
+        Notification::route('mail', $email)->notify(new DetailsPayment($content, $booking));
     }
 
     public function generateImagePayment(Request $request)

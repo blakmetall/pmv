@@ -240,8 +240,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
     public function email($booking, $email)
     {
-        Notification::route('mail', $email)
-            ->notify(new DetailsBooking($booking));
+        Notification::route('mail', $email)->notify(new DetailsBooking($booking));
     }
 
     public function find($id_or_obj)

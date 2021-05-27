@@ -104,7 +104,6 @@ class ContactController extends Controller
 
     private function email($data, $email)
     {
-        Notification::route('mail', $email)
-            ->notify(new DetailsContact((object) $data));
+        Notification::route('mail', $email)->notify(new DetailsContact((object) $data));
     }
 }

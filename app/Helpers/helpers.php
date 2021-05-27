@@ -192,8 +192,7 @@ if (!function_exists('getCurrentDateTime')) {
 if (!function_exists('sendEmail')) {
     function sendEmail($booking, $email)
     {
-        Notification::route('mail', $email)
-            ->notify(new DetailsBooking($booking));
+        Notification::route('mail', $email)->notify(new DetailsBooking($booking));
     }
 }
 
