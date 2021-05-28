@@ -331,32 +331,6 @@ if (!function_exists('arrayFlatten')) {
     }
 }
 
-if (!function_exists('getLowerRate')) {
-    function getLowerRate($id)
-    {
-        $property = Property::find($id);
-        $rates = [];
-
-        $nightly = 0;
-
-        foreach ($property->rates as $rate) {
-            $now = new Carbon(date('Y-m-d', strtotime('now')));
-            $start_date = new Carbon($rate->start_date);
-
-            if ($start_date->gte($now)) {
-                $nightly = $rate->nightly;
-                break;
-            } else {
-                continue;
-            }
-        }
-
-        return $nightly;
-
-        // return $result;
-    }
-}
-
 if (!function_exists('getCity')) {
     function getCity($id)
     {

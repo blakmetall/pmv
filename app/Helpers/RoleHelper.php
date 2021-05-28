@@ -111,10 +111,6 @@ class RoleHelper
     {
         $sections = [
             'dashboard' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -152,10 +148,6 @@ class RoleHelper
                 ]),
             ],
             'property-bookings' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -241,10 +233,6 @@ class RoleHelper
                 ]),
             ],
             'properties' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -279,10 +267,6 @@ class RoleHelper
                 ]),
             ],
             'property-management' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -346,10 +330,6 @@ class RoleHelper
                 ]),
             ],
             'cleaning-services' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -385,10 +365,6 @@ class RoleHelper
                 ]),
             ],
             'human-resources' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -422,10 +398,6 @@ class RoleHelper
                 ]),
             ],
             'pages' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
@@ -440,10 +412,6 @@ class RoleHelper
                 ]),
             ],
             'settings' => [
-                '*' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                ]),
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',

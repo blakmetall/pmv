@@ -5,7 +5,7 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = $lgbt->translate()->title;
+        $title = $lgbt->translate()->title;
     @endphp
 
     @include('public.pages.partials.main-content-start')

@@ -7,8 +7,9 @@
                     <div class="rate-night text-center"><sup>$</sup>{{ $propertyRate['nightlyAppliedRate'] }}</div>
                     <div class="price-txt text-center"><span>USD {{ __('Night') }}</span></div>
                     <div class="total-stay text-center">{{ priceFormat($propertyRate['total']) }}</div>
-                    <div class="total-stay-text text-center">USD {{ __('Total Stay') }} ({{ $nightsDate }}
-                        {{ __('Nights') }})</div>
+                    <div class="total-stay-text text-center">
+                        USD {{ __('Total Stay') }} ({{ $nightsDate }} {{ __('Nights') }})
+                    </div>
                 </div>
                 <div class="success"> <i class="far fa-calendar-alt"></i>
                     <div>{{ __('Arrival') }}</div>

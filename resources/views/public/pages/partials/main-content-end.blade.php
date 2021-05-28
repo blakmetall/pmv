@@ -1,8 +1,8 @@
                 </section>
-                </div>
-                </section>
+            </div>
+        </section>
 
-                @include('public.pages.partials.sidebar')
+        @include('public.pages.partials.sidebar')
 
-                </div>
-                </div>
+    </div>
+</div>

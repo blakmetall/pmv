@@ -36,7 +36,6 @@
         $searchAvailability = [];
     }
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
-    $nightlyRate = getLowerRate($property->property_id);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
     $bothDates = $arrivalTxt . ' - ' . $departureTxt;
     $searchAvailability = json_encode($searchAvailability);

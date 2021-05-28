@@ -38,6 +38,7 @@ class AboutController extends Controller
     {
         $id = getPage('about');
         $page = $this->repository->find($id);
+
         return view('public.pages.about.index')->with('page', $page);
     }
 
@@ -45,6 +46,7 @@ class AboutController extends Controller
     {
         $id = getPage('puerto-vallarta-history');
         $page = $this->repository->find($id);
+
         return view('public.pages.about.puerto-vallarta-history')->with('page', $page);
     }
 
@@ -52,6 +54,7 @@ class AboutController extends Controller
     {
         $id = getPage('nuevo-vallarta-history');
         $page = $this->repository->find($id);
+
         return view('public.pages.about.nuevo-vallarta-history')->with('page', $page);
     }
 
@@ -59,6 +62,7 @@ class AboutController extends Controller
     {
         $id = getPage('mazatlan-history');
         $page = $this->repository->find($id);
+
         return view('public.pages.about.mazatlan-history')->with('page', $page);
     }
 
@@ -66,8 +70,10 @@ class AboutController extends Controller
     {
         $id = getPage('testimonials');
         $page = $this->repository->find($id);
+
         $config = ['paginate' => true];
         $testimonials = $this->testimonialsRepository->all('', $config);
+
         return view('public.pages.about.testimonials')
             ->with('page', $page)
             ->with('testimonials', $testimonials);
@@ -76,6 +82,7 @@ class AboutController extends Controller
     public function testimonialDetail($locale, Testimonial $id)
     {
         $testimonial = $this->testimonialsRepository->find($id);
+
         return view('public.pages.about.testimonial-detail')
             ->with('testimonial', $testimonial);
     }
@@ -84,6 +91,7 @@ class AboutController extends Controller
     {
         $id = getPage('privacy-policy');
         $page = $this->repository->find($id);
+
         return view('public.pages.about.privacy-policy')->with('page', $page);
     }
 
@@ -91,6 +99,7 @@ class AboutController extends Controller
     {
         $id = getPage('terms-of-use');
         $page = $this->repository->find($id);
+
         return view('public.pages.about.terms-of-use')->with('page', $page);
     }
 
@@ -98,7 +107,9 @@ class AboutController extends Controller
     {
         $id = getPage('real-estate-business-directory');
         $page = $this->repository->find($id);
+
         $agencies = $this->agenciesRepository->all('', '');
+        
         return view('public.pages.about.real-estate-business-directory')
             ->with('page', $page)
             ->with('agencies', $agencies);
@@ -107,6 +118,7 @@ class AboutController extends Controller
     public function agencyDetail($locale, Agency $id)
     {
         $agency = $this->agenciesRepository->find($id);
+
         return view('public.pages.about.agency-detail')
             ->with('agency', $agency);
     }
@@ -115,7 +127,9 @@ class AboutController extends Controller
     {
         $id = getPage('lgbt-business-directory');
         $page = $this->repository->find($id);
+
         $lgbts = $this->lgbtsRepository->all('', '');
+
         return view('public.pages.about.lgbt-business-directory')
             ->with('page', $page)
             ->with('lgbts', $lgbts);
@@ -124,6 +138,7 @@ class AboutController extends Controller
     public function lgbtDetail($locale, Lgbt $id)
     {
         $lgbt = $this->lgbtsRepository->find($id);
+        
         return view('public.pages.about.lgbt-detail')
             ->with('lgbt', $lgbt);
     }

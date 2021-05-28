@@ -6,6 +6,7 @@ use App;
 use Notification;
 use App\Notifications\DetailsBookingPublic;
 use App\Helpers\LanguageHelper;
+use App\Helpers\RatesHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
@@ -76,7 +77,7 @@ class PropertyController extends Controller
         ]);
 
         if ($properties->total() == 0) {
-            $request->session()->flash('error', __('Not Records Found'));
+            $request->session()->flash('error', __('No Records Found'));
         }
 
         $config = [
@@ -97,6 +98,10 @@ class PropertyController extends Controller
     {
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
+
+        $propertyRate = 
+            RatesHelper::getPropertyRate($property->property, $property->rates, $request->arrival_alt_sing, $request->departure_alt_sing);
+        
         $prw = [];
         $prw['id'] = $property->property_id;
         $prw['name'] = $property->name;
@@ -105,7 +110,7 @@ class PropertyController extends Controller
         $prw['pax'] = $property->property->pax;
         $prw['route'] = 'property/' . $zone . '/' . $slug;
         $prw['image'] = getFeaturedImage($property->property_id);
-        $prw['rate'] = getLowerRate($property->property_id);
+        $prw['rate'] = $propertyRate['nightlyAppliedRate'];
         $prw = json_encode($prw);
 
         if ($request->arrival_alt_sing && $request->departure_alt_sing) {
@@ -194,9 +199,12 @@ class PropertyController extends Controller
         $captcha = rand(100000, 999999);
         $lang = LanguageHelper::current()->code;
         $slug = $this->propertiesRepository->find($id)->$lang->slug;
+
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
+
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        
         $countries = [
             "Afghanistan",
             "Albania",
@@ -437,6 +445,7 @@ class PropertyController extends Controller
             "Zambia",
             "Zimbabwe",
         ];
+
         return view('public.pages.properties.property-booking')
             ->with('captcha', $captcha)
             ->with('property', $property)
@@ -481,12 +490,14 @@ class PropertyController extends Controller
         } else {
             if (!$validator->fails()) {
                 $booking = new PropertyBooking;
+                
                 if ($request->damage_deposit_id) {
                     $damage_deposit = DamageDeposit::find($request->damage_deposit_id);
                     $damageDeposit = $damage_deposit->price;
                 } else {
                     $damageDeposit = 0;
                 }
+
                 $booking->property_id             = $request->property_id;
                 $booking->firstname               = $request->firstname;
                 $booking->lastname                = $request->lastname;
@@ -516,27 +527,36 @@ class PropertyController extends Controller
                 $booking->adults                  = $request->adults;
                 $booking->kids                    = $request->children;
                 $booking->register_by             = 'Client';
+                
                 if ($booking->save()) {
                     $owners = $booking->property->users;
 
-                    $emails = [
-                        $request->email,
-                        'vallarta@palmeravacations.com',
-                        'maidsupervisor@palmeramail.com',
-                        'reservations@palmeravacations.com',
-                        'concierge@palmeravacations.com',
-                        'info@palmeravacations.com',
-                        'contabilidad@palmeravacations.com',
-                    ];
+                    $emails = [];
+
+                    if(isProduction()) {
+                        $emails = [
+                            $request->email,
+                            'vallarta@palmeravacations.com',
+                            'maidsupervisor@palmeramail.com',
+                            'reservations@palmeravacations.com',
+                            'concierge@palmeravacations.com',
+                            'info@palmeravacations.com',
+                            'contabilidad@palmeravacations.com',
+                        ];
+                    }
 
                     foreach ($owners as $owner) {
                         $emails[] = $owner->email;
                     }
 
-                    if (Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)) {
-                        $emails[] = 'pmd@palmeravacations.com';
+                    if(isProduction()) {
+                        if (Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)) {
+                            $emails[] = 'pmd@palmeravacations.com';
+                        }
                     }
+
                     $this->email($booking, $emails);
+
                     return redirect(route('public.thank-you', [App::getLocale(), $booking]))->withInput();
                 } else {
                     $request->session()->flash('error', __('Something wrong happen'));
@@ -554,8 +574,9 @@ class PropertyController extends Controller
 
     public function thankYou(Request $request, $locale, $booking)
     {
-        $request->session()->flash('success', __('Reservation successful sended'));
+        $request->session()->flash('success', __('Reservation successful sent'));
         $booking = PropertyBooking::find($booking);
+
         return view('public.pages.properties.thank-you')
             ->with('booking', $booking);
     }

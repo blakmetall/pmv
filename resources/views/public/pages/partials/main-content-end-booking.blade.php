@@ -1,8 +1,7 @@
                 </section>
-                </div>
-                </section>
+            </div>
+        </section>
 
-                @include('public.pages.partials.sidebar-booking')
-
-                </div>
-                </div>
+        @include('public.pages.partials.sidebar-booking')
+    </div>
+</div>

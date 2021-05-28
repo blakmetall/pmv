@@ -23,6 +23,7 @@ class ConciergeServicesController extends Controller
     {
         $id = getPage('concierge-services');
         $page = $this->repository->find($id);
+
         return view('public.pages.concierge-services.index')->with('page', $page);
     }
 
@@ -30,6 +31,7 @@ class ConciergeServicesController extends Controller
     {
         $id = getPage('helpful-information');
         $page = $this->repository->find($id);
+        
         return view('public.pages.concierge-services.helpful-information')->with('page', $page);
     }
 }

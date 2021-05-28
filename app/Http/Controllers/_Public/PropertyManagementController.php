@@ -23,6 +23,7 @@ class PropertyManagementController extends Controller
     {
         $id = getPage('property-management');
         $page = $this->repository->find($id);
+        
         return view('public.pages.property-management.index')->with('page', $page);
     }
 
