@@ -34,7 +34,7 @@ class Language extends Model {
 
     public function properties() {
         return $this->belongsToMany('App\Models\Property', 'properties_translations')
-            ->withPivot('name', 'description', 'cancellation_policies');
+            ->withPivot('name', 'description');
     }
 
     public function transactionTypes() {

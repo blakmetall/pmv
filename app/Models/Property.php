@@ -64,7 +64,7 @@ class Property extends Model
     public function languages()
     {
         return $this->belongsToMany('App\Models\Language', 'properties_translations')
-            ->withPivot('name', 'description', 'cancellation_policies');
+            ->withPivot('name', 'description');
     }
 
     public function translations()

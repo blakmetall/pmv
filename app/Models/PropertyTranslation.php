@@ -15,7 +15,6 @@ class PropertyTranslation extends Model {
         'name',
         'slug',
         'description',
-        'cancellation_policies'
     ];
 
     public function language() {

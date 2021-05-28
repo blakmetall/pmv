@@ -37,16 +37,6 @@ $label = isset($label) ? $label : '';
         'required' => true,
         'value' => $row->{$lang}->description,
         ])
-
-        <!-- cancellation_policies -->
-        @include('components.form.textarea', [
-        'group' => 'property',
-        'label' => __('Cancellation Policies'),
-        'name' => 'cancellation_policies',
-        'lang' => $lang,
-        'required' => true,
-        'value' => $row->{$lang}->cancellation_policies,
-        ])
     </div>
 </div>
 
