@@ -82,11 +82,6 @@ class Property extends Model
         return $this->hasMany('App\Models\PropertyRate');
     }
 
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-
     public function users()
     {
         return $this->belongsToMany('App\Models\User', 'properties_has_users');

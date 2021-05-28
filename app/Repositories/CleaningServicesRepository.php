@@ -48,8 +48,10 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         }
 
         if ($shouldFilterByOwner && isRole('owner')) {
-            $query->whereHas('property', function ($query) {
-                $query->where('properties.user_id', UserHelper::getCurrentUserID());
+            $query->whereHas('property', function ($q) {
+                $q->whereHas('users', function($q2) {
+                    $q2->where('user_id', UserHelper::getCurrentUserID());
+                });
             });
         }
 

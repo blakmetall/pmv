@@ -50,8 +50,8 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
         if ($filterByOwner) {
             $query->whereHas('property', function ($q) {
-                $q->whereHas('users', function ($q) {
-                    $q->where('properties_has_users.user_id', \Auth::id());
+                $q->whereHas('users', function ($q2) {
+                    $q2->where('user_id', \Auth::id());
                 });
             })->where('language_id', $lang->id);
         }

@@ -64,12 +64,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         if($filterById) {
             $query->where('property_bookings.id', $filterById);
         } else {
-            if ($filterByOwner) {
-                $query->whereHas('property', function ($q) {
-                    $q->where('user_id', \Auth::id());
-                });
-            }
-    
             if ($hasPropertyID) {
                 $query->where('property_id', $hasPropertyID);
             } else {
@@ -78,6 +72,14 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
                 $query->where('language_id', $lang->id);
                 $query->orderBy('name', 'asc');
+            }
+
+            if ($filterByOwner) {
+                $query->whereHas('property', function ($q) {
+                    $q->whereHas('users', function($q2) {
+                        $q2->where('user_id', \Auth::id());
+                    });
+                });
             }
     
             if ($currentYear) {
