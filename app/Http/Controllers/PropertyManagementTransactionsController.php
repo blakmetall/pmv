@@ -341,7 +341,7 @@ class PropertyManagementTransactionsController extends Controller
     public function createBulk(Request $request)
     {
         $properties = $this->propertiesRepository->all('', [
-            'filterByWorkgroup' => true,
+            'pm' => true,
             'filterByEnabled' => true,
         ]);
 

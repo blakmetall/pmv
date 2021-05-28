@@ -71,6 +71,7 @@
                     </li>
                 @endforeach
             </ul>
+            
             <div id="table-print-transactions" class="table-responsive" style="display:none;">
                 <table class="table table-striped app-transaction-list" data-show-print="true">
                     <thead>
