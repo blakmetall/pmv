@@ -23,7 +23,6 @@ class PropertyContactsController extends Controller
             ->contacts()
             ->orderBy('firstname', 'asc')
             ->orderBy('lastname', 'asc')
-            ->where('contact_type', '!=', 'home-owner')
             ->paginate();
 
         $owners = $property->users;

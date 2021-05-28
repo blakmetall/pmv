@@ -7,10 +7,6 @@
         if (!isRole('owner')){
             $actions = array_merge($actions, [
                 [
-                    'label' => __('Create Contact'),
-                    'url' => route('contacts.create'),
-                ],
-                [
                     'label' => __('Assign Contacts'),
                     'url' => route('property-contacts.create', [$property->id]),
                     'icon' => 'i-Add-User',
