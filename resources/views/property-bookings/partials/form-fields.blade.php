@@ -30,6 +30,15 @@
         <div class="card-body">
             <span class="badge badge-primary r-badge mb-4">{{ __('BALANCE') }}</span>
 
+            <!-- created at -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Creation Date'),
+                'name' => '_creation_date',
+                'value' => $row->created_at,
+                'disabled' => true,
+            ])
+
             <!-- total stay -->
             @include('components.form.input', [
                 'group' => 'booking',
