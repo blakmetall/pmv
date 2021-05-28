@@ -20,6 +20,7 @@ use App\Repositories\ZonesRepositoryInterface;
 use App\Repositories\DamageDepositsRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class PropertyController extends Controller
 {
@@ -46,6 +47,10 @@ class PropertyController extends Controller
 
     public function availabilityResults(Request $request)
     {
+        SEOTools::setTitle(__('Palmera Vacations Property Finder'));
+        SEOTools::setDescription(__('Choose the most likable property for your vacations'));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         $rules = [];
         $messages = [];
 
@@ -98,6 +103,10 @@ class PropertyController extends Controller
     {
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
+
+        SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
+        SEOTools::setDescription(getSubstring(removeP($property->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         $propertyRate = 
             RatesHelper::getPropertyRate($property->property, $property->rates, $request->arrival_alt_sing, $request->departure_alt_sing);
