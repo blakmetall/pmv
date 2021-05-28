@@ -11,10 +11,8 @@ class PropertiesValidations extends Validation
         $this->setDefaultValidations([
             'en.name' => 'required',
             'en.description' => 'required',
-            'en.cancellation_policies' => 'required',
             'es.name' => 'required',
             'es.description' => 'required',
-            'es.cancellation_policies' => 'required',
 
             'users_ids' => 'required',
             'city_id' => 'required',
