@@ -27,6 +27,7 @@ class LanguageController extends Controller
             $request->session()->put('locale', $locale);
 
             $prevUrl = url()->previous();
+            
             if($locale == 'es') {
                 $newUrl = preg_replace('/.mx\/en/', ".mx/es", $prevUrl);
                 $newUrl = preg_replace('/.com\/en/', ".com/es", $prevUrl);

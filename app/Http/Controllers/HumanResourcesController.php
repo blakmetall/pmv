@@ -29,10 +29,6 @@ class HumanResourcesController extends Controller
 
         $config = ['filterByWorkgroup' => true];
         $human_resources = $this->repository->all($search, $config);        
-        
-        // if($request->shouldGenerateExcel) {
-        //     return (new HumanResourcesExport($human_resources))->download();
-        // }
 
         return view('human-resources.index')
             ->with('human_resources', $human_resources)

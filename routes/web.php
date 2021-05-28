@@ -288,11 +288,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('directory', 'HumanResourcesController@directory')->name('human-resources.directory');
         });
 
-        // reporting
-        Route::group(['prefix' => 'reporting', 'middleware' => 'role-permission:reporting,index'], function () {
-            Route::get('', 'ReportingController@index')->name('reporting');
-        });
-
         // pages
         Route::group(['prefix' => 'pages', 'middleware' => 'role-permission:pages,index'], function () {
             Route::get('', 'PagesController@index')->name('pages');
