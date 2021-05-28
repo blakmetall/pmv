@@ -6,7 +6,7 @@
     $registers = [];
 
     foreach($tmpRegisters as $tmpRegister) {
-        if(isRole('owner') && $tmpRegister['name'] == 'Admin') {
+        if(isRole('owner') && ($tmpRegister['name'] == 'Admin' || $tmpRegister['name'] == 'Client')) {
             continue;
         }
         $registers[] = $tmpRegister;
