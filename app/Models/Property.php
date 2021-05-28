@@ -77,6 +77,11 @@ class Property extends Model
         return $this->hasMany('App\Models\PropertyImage');
     }
 
+    public function cleaningStaff()
+    {
+        return $this->belongsToMany('App\Models\HumanResource', 'cleaning_services_has_cleaning_staff', 'cleaning_service_id', 'cleaning_staff_id');
+    }
+
     public function rates()
     {
         return $this->hasMany('App\Models\PropertyRate');

@@ -7,7 +7,9 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="text-left">
-                    <h4 class="mb-3">{{ __('Assigned cleaning staff') }}</h4>
+                    <h5 class="mb-3">{{ __('Assigned cleaning staff') }}</h5>
+
+                    <hr>
 
                     @foreach($cleaning_staff as $item)
                         <div>- {{ $item->firstname . ' ' . $item->lastname }}</div>

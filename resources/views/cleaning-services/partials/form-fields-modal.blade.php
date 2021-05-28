@@ -35,15 +35,6 @@
             ]),
         ])
 
-        {{-- <!-- hours -->
-        @include('components.form.timepicker', [
-            'group' => 'cleaning-service',
-            'label' => __('Hour'),
-            'name' => 'hour',
-            'value' => $row->hour,
-            'timeInterval' => 15,
-        ]) --}}
-
         <!-- description -->
         @include('components.form.textarea', [
             'group' => 'cleaning-service',
@@ -98,14 +89,6 @@
                 'disabled' => true,
             ])
         @endif
-
-        {{-- <!-- notes -->
-        @include('components.form.textarea', [
-            'group' => 'cleaning-service',
-            'label' => __('Notes'),
-            'name' => 'notes',
-            'value' => $row->notes
-        ]) --}}
 
     </div>
 </div>
