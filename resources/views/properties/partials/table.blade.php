@@ -162,13 +162,15 @@
                                 @endif
 
                                 <!-- property contacts -->
-                                <a
-                                    href="{{ route('property-contacts', [$row->property->id]) }}"
-                                    class="text-primary app-icon-link"
-                                    title="{{ __('Contacts') }}"
-                                    alt="{{ __('Contacts') }}">
-                                        <i class="nav-icon i-Administrator font-weight-bold"></i>
-                                </a>
+                                @if (!isRole('owner'))
+                                    <a
+                                        href="{{ route('property-contacts', [$row->property->id]) }}"
+                                        class="text-primary app-icon-link"
+                                        title="{{ __('Contacts') }}"
+                                        alt="{{ __('Contacts') }}">
+                                            <i class="nav-icon i-Administrator font-weight-bold"></i>
+                                    </a>
+                                @endif
 
                                 <!-- property notes -->
                                 @if (!isRole('owner'))
