@@ -29,7 +29,6 @@
             @include('public.pages.partials.modal')
 
             @php
-                $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
                 $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
                 $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
 

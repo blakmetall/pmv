@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
-use App\Helpers\AppHelper;
-use App\Models\City;
 use URL;
 use Validator;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
+use App\Helpers\AppHelper;
+use App\Models\City;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $cities = [];
 
         foreach ($getCities as $city) {
-            $slug = AppHelper::cleanString($city->name);
+            $slug = Str::slug($city->name);
             $cities[$slug] = $city->id;
         }
 

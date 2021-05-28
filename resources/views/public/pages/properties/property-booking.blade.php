@@ -23,7 +23,7 @@
         $adults = $datesProperty[4] ? $datesProperty[4] : 0;
         $children = $datesProperty[5] ? $datesProperty[5] : 0;
     }
-    $subtotal = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
+    
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);

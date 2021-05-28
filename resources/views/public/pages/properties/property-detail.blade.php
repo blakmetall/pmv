@@ -36,7 +36,6 @@
         $searchAvailability = [];
     }
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
-    $total = \RatesHelper::getNightsSubtotalCost($property->property, $arrival, $departure);
     $nightlyRate = getLowerRate($property->property_id);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
     $bothDates = $arrivalTxt . ' - ' . $departureTxt;
