@@ -146,6 +146,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         if ($booking->save()) {
 
             $property = Property::find($booking->property_id);
+
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
             
@@ -155,12 +156,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             } else {
                 $damageDeposit = 0;
             }
-
-            $propertyRate = RatesHelper::getPropertyRate($property, $property->rates, $arrival_date, $departure_date);
-            $nights = $propertyRate['totalDays'];
-
-            $price_per_night = $propertyRate['nightlyAppliedRate'];
-            $subtotal_nights = $propertyRate['total'];
 
             // audit
             $hasPreviousAudit = $booking->audit_user_id;
@@ -188,16 +183,22 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $booking->audit_refund_datetime = null;
             }
 
-            $booking->nights = $nights;
-            $booking->price_per_night = $price_per_night;
-            $booking->subtotal_nights = $subtotal_nights;
-            $booking->subtotal_damage_deposit = $damageDeposit;
-            $booking->total = $subtotal_nights;
+            $propertyRate = RatesHelper::getPropertyRate($property, $property->rates, $arrival_date, $departure_date);
+            $nights = $propertyRate['totalDays'];
 
-            // $booking->total =  $subtotal_nights + $damage_deposit->price;
-            // el deposito para daños creo no se debe poner en el total directamente por que el depósito se está manejando en dolares
-            // considero que debe tener su propio control de pago (unos campos más tal vez)
-            // -- -- no tengo propuestas de momento; pero por lo pronto unir el daño por depósito no funcionaría ;(
+            // allows to recalculate booking prices according to property rates
+            if($request->_booking_recalculate_rate_prices) {
+                $price_per_night = $propertyRate['nightlyAppliedRate'];
+                $subtotal_nights = $propertyRate['total'];
+
+                $booking->price_per_night = $price_per_night;
+                $booking->subtotal_nights = $subtotal_nights;
+                $booking->total = $subtotal_nights;
+            }
+            
+            $booking->nights = $nights;
+            $booking->subtotal_damage_deposit = $damageDeposit;
+
 
             if ($booking->save()) {
                 $contacts = $booking->property->contacts;

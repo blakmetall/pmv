@@ -81,6 +81,14 @@
                 'value' => $row->total + $row->subtotal_damage_deposit,
             ])
 
+            <!-- calculate rates again -->
+            @include('components.form.checkbox', [
+                'group' => 'booking',
+                'label' => __('Recalculate rate prices'),
+                'name' => '_booking_recalculate_rate_prices',
+                'value' => 1,
+            ])
+
             <!-- payments made -->
             <span class="badge badge-primary r-badge mb-4">{{ __('Payments') }}</span>
 
