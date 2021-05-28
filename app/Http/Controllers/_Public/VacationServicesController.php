@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Models\PropertyBooking;
 use App\Repositories\PagesRepositoryInterface;
 use App\Repositories\PaymentMethodsRepositoryInterface;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class VacationServicesController extends Controller
 {
@@ -30,11 +31,19 @@ class VacationServicesController extends Controller
         $id = getPage('vacation-services');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.vacation-services.index')->with('page', $page);
     }
 
     public function searchBooking()
     {
+        SEOTools::setTitle(__('Make Payment'));
+        SEOTools::setDescription('Make Payment');
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.vacation-services.make-payment');
     }
 
@@ -100,6 +109,10 @@ class VacationServicesController extends Controller
         $id = getPage('payment-methods');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         $config = ['paginate' => false];
         $paymentMethods = $this->paymentMethodsRepository->all('', $config);
         
@@ -113,6 +126,10 @@ class VacationServicesController extends Controller
         $id = getPage('rental-agreement');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.vacation-services.rental-agreement')->with('page', $page);
     }
 
@@ -120,6 +137,10 @@ class VacationServicesController extends Controller
     {
         $id = getPage('accidental-rental-damage-insurance');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
         
         return view('public.pages.vacation-services.accidental-rental-damage-insurance')->with('page', $page);
     }

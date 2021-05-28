@@ -495,6 +495,7 @@ if (!function_exists('getPage')) {
                 break;
             case 'helpful-information':
                 $id = 17;
+                break;
             case 'property-management':
                 $id = 18;
                 break;

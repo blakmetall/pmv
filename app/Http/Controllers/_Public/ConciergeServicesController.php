@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Repositories\PagesRepositoryInterface;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class ConciergeServicesController extends Controller
 {
@@ -24,6 +25,10 @@ class ConciergeServicesController extends Controller
         $id = getPage('concierge-services');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.concierge-services.index')->with('page', $page);
     }
 
@@ -31,6 +36,10 @@ class ConciergeServicesController extends Controller
     {
         $id = getPage('helpful-information');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
         
         return view('public.pages.concierge-services.helpful-information')->with('page', $page);
     }

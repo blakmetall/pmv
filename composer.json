@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "ext-gd": "*",
+        "artesaos/seotools": "^0.20.1",
         "doctrine/dbal": "^2.10",
         "felixkiss/uniquewith-validator": "^3.4",
         "fideloper/proxy": "^4.0",

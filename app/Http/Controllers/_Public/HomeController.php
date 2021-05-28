@@ -7,6 +7,7 @@ use App\Repositories\PagesRepositoryInterface;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\TestimonialsRepositoryInterface;
 use Illuminate\Http\Request;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class HomeController extends Controller
 {
@@ -42,6 +43,10 @@ class HomeController extends Controller
         $vsPage = $this->pagesPepository->find(getPage('vacation-services'));
         $pmPage = $this->pagesPepository->find(getPage('property-management'));
         $csPage = $this->pagesPepository->find(getPage('concierge-services'));
+
+        SEOTools::setTitle(__('Welcome to Palmera Vacations'));
+        SEOTools::setDescription(getSubstring(removeP($vsPage->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         return view('public.pages.home.default')
             ->with('propertiesFeatured', $propertiesFeatured)

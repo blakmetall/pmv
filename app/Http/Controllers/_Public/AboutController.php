@@ -13,6 +13,7 @@ use App\Repositories\PagesRepositoryInterface;
 use App\Repositories\TestimonialsRepositoryInterface;
 use App\Repositories\AgenciesRepositoryInterface;
 use App\Repositories\LgbtsRepositoryInterface;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class AboutController extends Controller
 {
@@ -39,6 +40,10 @@ class AboutController extends Controller
         $id = getPage('about');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.index')->with('page', $page);
     }
 
@@ -46,6 +51,10 @@ class AboutController extends Controller
     {
         $id = getPage('puerto-vallarta-history');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         return view('public.pages.about.puerto-vallarta-history')->with('page', $page);
     }
@@ -55,6 +64,10 @@ class AboutController extends Controller
         $id = getPage('nuevo-vallarta-history');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.nuevo-vallarta-history')->with('page', $page);
     }
 
@@ -63,6 +76,10 @@ class AboutController extends Controller
         $id = getPage('mazatlan-history');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.mazatlan-history')->with('page', $page);
     }
 
@@ -70,6 +87,10 @@ class AboutController extends Controller
     {
         $id = getPage('testimonials');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         $config = ['paginate' => true];
         $testimonials = $this->testimonialsRepository->all('', $config);
@@ -83,6 +104,10 @@ class AboutController extends Controller
     {
         $testimonial = $this->testimonialsRepository->find($id);
 
+        SEOTools::setTitle($testimonial->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($testimonial->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.testimonial-detail')
             ->with('testimonial', $testimonial);
     }
@@ -92,6 +117,10 @@ class AboutController extends Controller
         $id = getPage('privacy-policy');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.privacy-policy')->with('page', $page);
     }
 
@@ -100,6 +129,10 @@ class AboutController extends Controller
         $id = getPage('terms-of-use');
         $page = $this->repository->find($id);
 
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.terms-of-use')->with('page', $page);
     }
 
@@ -107,6 +140,10 @@ class AboutController extends Controller
     {
         $id = getPage('real-estate-business-directory');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         $agencies = $this->agenciesRepository->all('', '');
         
@@ -119,6 +156,10 @@ class AboutController extends Controller
     {
         $agency = $this->agenciesRepository->find($id);
 
+        SEOTools::setTitle($agency->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($agency->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+
         return view('public.pages.about.agency-detail')
             ->with('agency', $agency);
     }
@@ -127,6 +168,10 @@ class AboutController extends Controller
     {
         $id = getPage('lgbt-business-directory');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         $lgbts = $this->lgbtsRepository->all('', '');
 
@@ -138,6 +183,10 @@ class AboutController extends Controller
     public function lgbtDetail($locale, Lgbt $id)
     {
         $lgbt = $this->lgbtsRepository->find($id);
+
+        SEOTools::setTitle($lgbt->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($lgbt->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
         
         return view('public.pages.about.lgbt-detail')
             ->with('lgbt', $lgbt);

@@ -11,6 +11,7 @@ use App\Models\Page;
 use App\Notifications\DetailsContact;
 use App\Repositories\PagesRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class ContactController extends Controller
 {
@@ -27,6 +28,10 @@ class ContactController extends Controller
     {
         $id = getPage('contact');
         $page = $this->repository->find($id);
+
+        SEOTools::setTitle($page->translate()->title);
+        SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
 
         $captcha = rand(100000, 999999);
         $offices = getOffices();
