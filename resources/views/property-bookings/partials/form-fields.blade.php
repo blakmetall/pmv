@@ -79,6 +79,7 @@
                 'label' => __('Total'),
                 'name' => 'total',
                 'value' => $row->total + $row->subtotal_damage_deposit,
+                'disabled' => true,
             ])
 
             <!-- calculate rates again -->
