@@ -42,23 +42,23 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
-    font-size: 19px;
+    color: #333;
+    font-size: 17px;
     font-weight: bold;
     margin-top: 0;
     text-align: left;
 }
 
 h2 {
-    color: #3d4852;
-    font-size: 16px;
+    color: #333;
+    font-size: 15px;
     font-weight: bold;
     margin-top: 0;
     text-align: left;
 }
 
 h3 {
-    color: #3d4852;
+    color: #333;
     font-size: 14px;
     font-weight: bold;
     margin-top: 0;
@@ -66,12 +66,13 @@ h3 {
 }
 
 p {
-    color: #3d4852;
+    color: #333;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
     text-align: left;
     margin-bottom: 3px;
+    font-size: 13px;
 }
 
 p.sub {
@@ -108,7 +109,7 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
-    background: #2c3e4f;
+    background: #333;
     color: #fff;
 }
 
@@ -166,7 +167,7 @@ img {
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
 
-    background: #2c3e4f;
+    background: #333;
     color: #fff;
 }
 
@@ -227,11 +228,11 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #2c3e4f;
-    border-top: 10px solid #2c3e4f;
-    border-right: 18px solid #2c3e4f;
-    border-bottom: 10px solid #2c3e4f;
-    border-left: 18px solid #2c3e4f;
+    background-color: #333;
+    border-top: 10px solid #333;
+    border-right: 18px solid #333;
+    border-bottom: 10px solid #333;
+    border-left: 18px solid #333;
 }
 
 .button-green,
