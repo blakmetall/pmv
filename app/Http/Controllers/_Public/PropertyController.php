@@ -156,7 +156,7 @@ class PropertyController extends Controller
             ->with('prw', $prw);
     }
 
-    public function zones($locale, $city)
+    public function zones($city)
     {
         $zones = $this->zonesRepository->all('', [], $city);
 

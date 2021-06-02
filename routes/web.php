@@ -522,6 +522,8 @@ Route::group(['middleware' => ['web']], function () {
     // Home (Coming soon)
     Route::get('', '_Public\HomeController@init');
 
+    Route::get('property/zones/{city}', '_Public\PropertyController@zones');
+
     // auth middleware
     Route::group(['prefix' => '{locale?}'], function () {
         Route::get('', '_Public\HomeController@default')->name('public.home-default');
