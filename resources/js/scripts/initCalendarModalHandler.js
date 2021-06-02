@@ -12,6 +12,9 @@ export function initCalendarModalHandler() {
                 'id': $(e.relatedTarget).data("source"),
                 'year' : $(e.relatedTarget).data("year"),
             };
+
+            var propData = data;
+
             $.ajax({
                 url: url,
                 type: "GET",
@@ -25,22 +28,26 @@ export function initCalendarModalHandler() {
                 setTimeout(function(){
                     $('.modal-prev, .modal-next').on('click', function(e){
                         var dataNew = {
-                            'id': e.currentTarget.attributes[1].value,
+                            'id': propData.id,
                             'year' : e.currentTarget.attributes[2].value,
                         };
-                        console.log(dataNew);
+
+                        // console.log(dataNew);
+
                         $.ajax({
                             url: url,
                             type: "GET",
                             data:{"source": dataNew}
                         }).done(function(data) {
+                            $('.modal-prev').attr("data-source", propData.id);
                             $('.modal-prev').attr("data-year", data.prev);
                             $('.modal-current').html(data.current);
+                            $('.modal-next').attr("data-source", propData.id);
                             $('.modal-next').attr("data-year", data.next);
                             container.html(data.calendar);
                         });
                     });
-                }, 500);
+                }, 1500);
             });
         });
     });

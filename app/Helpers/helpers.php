@@ -743,7 +743,7 @@ if (!function_exists('generateColumns')) {
 }
 
 if (!function_exists('generateCalendar')) {
-    function generateCalendar($year, $cols = 12, $bookings)
+    function generateCalendar($year, $cols = 12, $bookings, $startingMonth = 0, $displayMonths = 0)
     {
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $count_cols = 0;
@@ -752,12 +752,14 @@ if (!function_exists('generateCalendar')) {
         $bookingDaysArr = [];
         $firstDays      = [];
         $endDays        = [];
+
         foreach ($bookings as $booking) {
             $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             $bookingDaysSE    = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             $firstDays[]      = reset($bookingDaysSE);
             $endDays[]        = end($bookingDaysSE);
         }
+
         $bookingDays = arrayFlatten($bookingDaysArr);
 
         $calendar  = '<table align="center" border="0" cellpadding="0" cellspacing="5">';
@@ -765,7 +767,10 @@ if (!function_exists('generateCalendar')) {
         $calendar .= '<td align="left" valign="top">';
         $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
 
-        for ($i = 0; $i < $cols; $i++) {
+        $limit = $displayMonths ? $cols - $displayMonths - 1 : $cols;
+        $initial = $startingMonth ? $startingMonth - 1 : 0;
+
+        for ($i = $initial; $i < $limit; $i++) {
             $count_cols++;
             $cm = mktime(0, 0, 0, 1 + $i, 1, $currYear); //get curr month time string
             $days_month = date("t", $cm); //calculate number of days in month

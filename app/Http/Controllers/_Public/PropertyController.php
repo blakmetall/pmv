@@ -168,8 +168,17 @@ class PropertyController extends Controller
         $year = $request->source['year'];
 
         $currYear = isset($year) ? $year : Carbon::now()->year;
+        $startingMonth = date('m', strtotime('now'));
+        $monthsCols = 12;
+        $displayMonths = 3;
 
-        $calendar = generateCalendar($year, 3, $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]));
+        $calendar = generateCalendar(
+            $year, 
+            $monthsCols, 
+            $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]), 
+            $startingMonth,
+            $displayMonths,
+        );
 
         $data = [
             'calendar' => $calendar,
