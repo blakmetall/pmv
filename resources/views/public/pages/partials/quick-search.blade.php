@@ -1,7 +1,12 @@
+@php
+    $today = date('Y-m-d', strtotime('now'));
+    $nextWeek = date('Y-m-d', strtotime('+7 days'));
+@endphp
+
 <section id="block-quick-search-quick-search-block" class="block block-quick-search clearfix">
     <form action="{{ route('public.availability-results', [App::getLocale()]) }}" id="quick-search-form" accept-charset="UTF-8">
-        <input type="hidden" name="arrival" value="" class="quick-search-arrival"/>
-        <input type="hidden" name="departure" value="" class="quick-search-departure"/>
+        <input type="hidden" name="arrival" value="{{ $today }}" class="quick-search-arrival"/>
+        <input type="hidden" name="departure" value="{{ $nextWeek }}" class="quick-search-departure"/>
         <div>
             <div class="row-fluid">
                 <div class="col-xs-10">
