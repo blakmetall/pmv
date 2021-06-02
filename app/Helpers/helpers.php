@@ -663,17 +663,21 @@ if (!function_exists('getAvailabilityProperty')) {
 
         $property = Property::find($id);
 
-        $bookings       = $property->bookings;
-        $bookingDaysArr = [];
-        foreach ($bookings as $booking) {
-            $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-        }
-        $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
         $days = getDatesFromRange($fromDate, $toDate, 'd-M-y');
         $daysOccupied = 0;
-        foreach ($days as $day) {
-            if (in_array($day, $bookingDays)) {
-                $daysOccupied++;
+        
+        // loop through bookings
+        $bookings = $property->bookings;
+        foreach ($bookings as $booking) {
+            $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
+            
+            foreach ($days as $day) {
+                // allow reservation departure date to be conflicted with arrival date for a different reservation
+                if($fromDate !== $booking->departure_date) {
+                    if (in_array($day, $bookingDays)) {
+                        $daysOccupied++;
+                    }
+                }
             }
         }
 

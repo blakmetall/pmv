@@ -532,20 +532,22 @@ class PropertyBookingController extends Controller
     {
         $bookings = Property::find($request->property_id)->bookings;
         $bookingExist = false;
-        $bookingDaysArr = [];
+        
+        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
 
         foreach ($bookings as $booking) {
-            $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-        }
+            $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
 
-        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
-        $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
-
-        foreach ($days as $day) {
-            if (in_array($day, $bookingDays)) {
-                $bookingExist = true;
+            foreach ($days as $day) {
+                // allow reservation departure date to be conflicted with arrival date for a different reservation
+                if($request->arrival_date !== $booking->departure_date) {
+                    if (in_array($day, $bookingDays)) {
+                        $bookingExist = true;
+                    }
+                }
             }
         }
+
 
         if ($bookingExist) {
             $request->session()->flash('error', __('There is a booking dates conflict, review availability calendar'));
@@ -618,20 +620,21 @@ class PropertyBookingController extends Controller
     {
         $bookings = Property::find($request->property_id)->bookings;
         $bookingExist = false;
-        $bookingDaysArr = [];
+
+        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
 
         foreach ($bookings as $booking) {
             if ($booking->id != $id) {
-                $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-            }
-        }
+                $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
 
-        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
-        $bookingDays = array_values(array_unique(arrayFlatten($bookingDaysArr)));
-
-        foreach ($days as $day) {
-            if (in_array($day, $bookingDays)) {
-                $bookingExist = true;
+                foreach ($days as $day) {
+                    // allow reservation departure date to be conflicted with arrival date for a different reservation
+                    if($request->arrival_date !== $booking->departure_date) {
+                        if (in_array($day, $bookingDays)) {
+                            $bookingExist = true;
+                        }
+                    }
+                }
             }
         }
 
