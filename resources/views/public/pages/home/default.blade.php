@@ -1,8 +1,14 @@
 @extends('layouts.public-master')
 
+@php
+    $slideNum = rand(1,8);
+    $slideClass = 'slide-' . $slideNum;
+
+@endphp
+
 @section('main-content')
     <div class="page-home">
-        <div class="content-top-container">
+        <div class="content-top-container {{ $slideClass }}">
             <section class="content-top container">
                 <div class="region region-content-top">
 

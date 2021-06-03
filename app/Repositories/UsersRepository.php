@@ -152,17 +152,18 @@ class UsersRepository implements UsersRepositoryInterface
                 $user->profile->user_id = $user->id;
                 $user->profile->config_role_id = $roles_to_assign[0]; // default active role on create
                 $user->profile->config_language = 'es'; // default language on create
+                
+                $checkboxesConfig = [
+                    'config_agent_is_enabled' => 0,
+                    'config_role_id' => $roles_to_assign[0],
+                ];
+    
+                $profileData = array_merge($checkboxesConfig, $request->profile);
+    
+                $user->profile->fill($profileData);
+                $user->profile->save();
             }
 
-            $checkboxesConfig = [
-                'config_agent_is_enabled' => 0,
-                'config_role_id' => $roles_to_assign[0],
-            ];
-
-            $profileData = array_merge($checkboxesConfig, $request->profile);
-
-            $user->profile->fill($profileData);
-            $user->profile->save();
         }
 
         return $user;
