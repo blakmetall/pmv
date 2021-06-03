@@ -29,13 +29,17 @@ class LanguageController extends Controller
             $prevUrl = url()->previous();
             
             if($locale == 'es') {
-                $newUrl = preg_replace('/.mx\/en/', ".mx/es", $prevUrl);
-                $newUrl = preg_replace('/.com\/en/', ".com/es", $prevUrl);
-                $newUrl = preg_replace('/:8000\/en/', ":8000/es", $prevUrl);
+                if(isProduction()){
+                    $newUrl = preg_replace('/.mx\/en/', ".mx/es", $prevUrl);
+                }else{
+                    $newUrl = preg_replace('/:8000\/en/', ":8000/es", $prevUrl);
+                }
             }else{
-                $newUrl = preg_replace('/.mx\/es/', ".mx/en", $prevUrl);
-                $newUrl = preg_replace('/.com\/es/', ".com/en", $prevUrl);
-                $newUrl = preg_replace('/:8000\/es/', ":8000/en", $prevUrl);
+                if(isProduction()){
+                    $newUrl = preg_replace('/.mx\/es/', ".mx/en", $prevUrl);
+                }else{
+                    $newUrl = preg_replace('/:8000\/es/', ":8000/en", $prevUrl);
+                }
             }
 
             return redirect($newUrl);
