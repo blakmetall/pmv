@@ -174,11 +174,7 @@ class CleaningServicesController extends Controller
             return redirect($redirectUrl);
         }
 
-        if ($request->maid != '') {
-            $properties = $this->propertiesRepository->all('', ['paginate' => false, 'cleaningStaffId' => $request->maid]);
-        } else {
-            $properties = $this->propertiesRepository->all('', ['paginate' => false]);
-        }
+        $properties = $this->propertiesRepository->all('', ['paginate' => false]);
 
         $currentMonth = Carbon::createFromDate($_GET['year'], $_GET['month'], 1, 'America/Mexico_City');
 
@@ -188,6 +184,7 @@ class CleaningServicesController extends Controller
 
         return view('cleaning-services.monthly-batch')
             ->with('properties', $properties)
+            ->with('cleaning_staff_id', $request->maid)
             ->with('maids', $maids)
             ->with('currentMonth', $currentMonth);
     }

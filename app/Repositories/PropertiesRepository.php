@@ -31,7 +31,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $shouldFilterByOnline = isset($config['filterOnline']) ? $config['filterOnline'] : false;
         $shouldFilterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : false;
         $shouldFilterByUserId = isset($config['filterByUserId']) ? $config['filterByUserId'] : false;
-        $shouldCleaningStaffId = isset($config['cleaningStaffId']) ? $config['cleaningStaffId'] : false;
         $shouldFilterByOffline = isset($config['filterByOffline']) ? $config['filterByOffline'] : false;
         $shouldFilterByDisabled = isset($config['filterByDisabled']) ? $config['filterByDisabled'] : false;
         $shouldFilterByFeatured = isset($config['filterByFeatured']) ? $config['filterByFeatured'] : false;
@@ -89,12 +88,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
                 $q->whereHas('users', function ($q) use ($config) {
                     $q->where('properties_has_users.user_id', $config['filterByUserId']);
                 });
-            })->where('language_id', $lang->id);
-        }
-
-        if ($shouldCleaningStaffId) {
-            $query->whereHas('property', function ($q) use ($shouldCleaningStaffId) {
-                $q->where('cleaning_staff_ids', 'like', "%\"{$shouldCleaningStaffId}\"%");
             })->where('language_id', $lang->id);
         }
 

@@ -39,6 +39,21 @@
             <tbody>
                 @foreach($properties as $item)
                     @php
+                        // filter by cleaning_staff_id
+                        if($cleaning_staff_id) {
+                            $staff_ids = $item->property->cleaning_staff_ids;
+
+                            if(!$staff_ids) {
+                                continue;
+                            }
+
+                            if( ! (is_array($staff_ids) && in_array($cleaning_staff_id, $staff_ids)) ) {
+                                continue;
+                            }
+                        }
+                    @endphp
+
+                    @php
                         $monthlyCleaningServices = $item->property->monthlyCleaningServices($currentMonth->format('m'), $currentMonth->format('Y'));
                         switch ($item->property->cleaning_option_id) {
                             case 1:
