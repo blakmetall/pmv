@@ -239,7 +239,7 @@
             </div>
         </form>
         <div id="property-details-info">
-            <h2 class="section-title">{{ __('Property Details') }}</h2>
+            <h2 class="section-title">{{ __('Details') }}</h2>
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <h4 class="sub-section">{{ __('Property Type') }}</h4>
@@ -298,7 +298,7 @@
             {!! nl2br($property->description) !!}
         </div>
         <div id="property-features-info">
-            <h2 class="section-title">{{ __('Features and Amenities') }}</h2>
+            <h2 class="section-title">{{ __('Services') }}</h2>
             <div class="row" style="display: block">
                 {!! generateColumns($property->property->amenities, 8) !!}
             </div>
@@ -345,7 +345,7 @@
             </div>
         </div>
         <div id="property-calendar-info">
-            <h2 class="section-title">{{ __('Availability Calendar') }}</h2>
+            <h2 class="section-title">{{ __('Calendar') }}</h2>
             <div class="cal-month first-calendar" data-url="{{ route('public.first-availability', [App::getLocale()]) }}">
             </div>
             <div class="text-right cal-more-dates">
@@ -357,7 +357,7 @@
             </div>
         </div>
         <div id="property-map-info" class="app-map-wrapper">
-            <h2 class="section-title">{{ __('Location Map') }}</h2>
+            <h2 class="section-title">{{ __('Location') }}</h2>
             <div id="{{ $property->property_id }}" class="app-google-map" data-lat="{{ $latitude }}"
                 data-lng="{{ $longitude }}" data-map-id="{{ $property->property_id }}"></div>
         </div>
