@@ -15,6 +15,8 @@
             <div class="inside">
                 <div class="panel-pane pane-custom pane-4">
                     <div class="pane-content">
+                        <img src="/assets/public/images/pm.jpg" alt="" class="img-100 mb-5"/>
+
                         {!! $page->translate()->description !!}
                     </div>
                 </div>

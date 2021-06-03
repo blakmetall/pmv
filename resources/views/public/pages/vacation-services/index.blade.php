@@ -5,7 +5,7 @@
     @include('public.pages.partials.content-top')
 
     @php
-    $title = $page->translate()->title;
+        $title = $page->translate()->title;
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -16,6 +16,8 @@
                 <div class="panel-pane pane-custom pane-1">
 
                     <div class="pane-content">
+                        <img src="/assets/public/images/vr.jpg" alt="" class="img-100 mb-5"/>
+
                         {!! $page->translate()->description !!}
                     </div>
                 </div>
