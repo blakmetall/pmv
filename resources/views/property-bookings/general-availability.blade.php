@@ -9,6 +9,7 @@
     $pax   = (isset($_GET['pax'])) ? $_GET['pax'] : '';
     $isManaged = isset($_GET['managed']) ? $_GET['managed'] : '';
     $searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
+    
     if($isManaged){
         if($_GET['managed'] == 1){
             $selectedManaged = 1;
@@ -18,6 +19,7 @@
     }else{
         $selectedManaged = '';
     }
+    
 @endphp
 
 @section('heading-content')

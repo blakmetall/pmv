@@ -530,26 +530,9 @@ class PropertyBookingController extends Controller
 
     public function store(Request $request)
     {
-        $bookings = Property::find($request->property_id)->bookings;
-        $bookingExist = false;
-        
-        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
+        $availability = getAvailabilityProperty($request->property_id, $request->arrival_date, $request->departure_date);
 
-        foreach ($bookings as $booking) {
-            $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-
-            foreach ($days as $day) {
-                // allow reservation departure date to be conflicted with arrival date for a different reservation
-                if($request->arrival_date !== $booking->departure_date) {
-                    if (in_array($day, $bookingDays)) {
-                        $bookingExist = true;
-                    }
-                }
-            }
-        }
-
-
-        if ($bookingExist) {
+        if ($availability === 'none' || $availability == 'some') {
             $request->session()->flash('error', __('There is a booking dates conflict, review availability calendar'));
             return redirect()->back();
         } else {
@@ -618,27 +601,9 @@ class PropertyBookingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $bookings = Property::find($request->property_id)->bookings;
-        $bookingExist = false;
+        $availability = getAvailabilityProperty($request->property_id, $request->arrival_date, $request->departure_date, $id);
 
-        $days = getDatesFromRange($request->arrival_date, $request->departure_date, 'd-M-y');
-
-        foreach ($bookings as $booking) {
-            if ($booking->id != $id) {
-                $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
-
-                foreach ($days as $day) {
-                    // allow reservation departure date to be conflicted with arrival date for a different reservation
-                    if($request->arrival_date !== $booking->departure_date) {
-                        if (in_array($day, $bookingDays)) {
-                            $bookingExist = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($bookingExist) {
+        if ($availability === 'none' || $availability == 'some') {
             $request->session()->flash('error', __('There is a booking dates conflict, review availability calendar'));
             return redirect()->back();
         } else {

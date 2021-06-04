@@ -654,7 +654,7 @@ if (!function_exists('getSearchDate')) {
 }
 
 if (!function_exists('getAvailabilityProperty')) {
-    function getAvailabilityProperty($id, $fromDate, $toDate)
+    function getAvailabilityProperty($id, $fromDate, $toDate, $bookingID = '')
     {
         if (!$fromDate || !$toDate) {
             $fromDate = date('Y-m-d', strtotime('now'));
@@ -663,25 +663,33 @@ if (!function_exists('getAvailabilityProperty')) {
 
         $property = Property::find($id);
 
-        $days = getDatesFromRange($fromDate, $toDate, 'd-M-y');
+        $days = getDatesFromRange($fromDate, $toDate, 'Y-m-d');
         $daysOccupied = 0;
         
         // loop through bookings
-        $bookings = $property->bookings;
+        $bookings = $property->bookings()->orderBy('arrival_date', 'asc')->get();
         foreach ($bookings as $booking) {
-            $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
+            // if is same booking compare, then skip
+            if($bookingID && $booking->id == $bookingID){
+                continue;
+            } 
+
+            $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'Y-m-d');
             
-            foreach ($days as $day) {
+            foreach ($days as $day) {        
                 // allow reservation departure date to be conflicted with arrival date for a different reservation
-                if($fromDate !== $booking->departure_date) {
-                    if (in_array($day, $bookingDays)) {
-                        $daysOccupied++;
-                    }
+                if(($day == $booking->arrival_date || $day == $booking->departure_date)){
+                    continue;
+                }
+
+                if (in_array($day, $bookingDays)) {
+                    // echo $booking->id;
+                    $daysOccupied++;
                 }
             }
         }
 
-        if ($daysOccupied > 0 && $daysOccupied < count($days)) {
+        if ($daysOccupied > 0) {
             $result = 'some';
         } else if ($daysOccupied == count($days)) {
             $result = 'none';
@@ -813,12 +821,16 @@ if (!function_exists('generateCalendar')) {
                 $formatYear = isset($year) ? $year : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
+                
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;
                 } else {
                     $occupied = false;
                 }
-                if (in_array($day, $firstDays)) {
+
+                if(in_array($day, $firstDays) && in_array($day, $endDays)){
+                    $classDay = 'arrival-departure-both';
+                }else if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
                 } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';
