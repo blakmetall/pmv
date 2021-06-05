@@ -14,7 +14,6 @@
         $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
         $datesProperty = getSearchDate(false, $arrival, $departure);
         $bothDates = $datesProperty['currentDate'] . ' - ' . $datesProperty['nextDate'];
-        $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999);
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -26,6 +25,10 @@
         </div>
 
         @foreach ($properties as $property)
+            @php
+                $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999999);
+            @endphp
+
             @include('public.pages.partials.modal')
 
             @php
