@@ -15,17 +15,6 @@
 @endphp
 
 @if ($row->firstname)
-    @php
-        $total = $row->total + $row->subtotal_damage_deposit;
-        $payments = $row->payments;
-        $reduced = 0;
-
-        foreach ($payments as $payment) {
-            $reduced += $payment->amount;
-        }
-        $balance = $total - $reduced;
-    @endphp
-
     <div class="card">
         <div class="card-body">
             <span class="badge badge-primary r-badge mb-4">{{ __('BALANCE') }}</span>
@@ -88,34 +77,6 @@
                 'label' => __('Recalculate rate prices'),
                 'name' => '_booking_recalculate_rate_prices',
                 'value' => 1,
-            ])
-
-            <!-- payments made -->
-            <span class="badge badge-primary r-badge mb-4">{{ __('Payments') }}</span>
-
-            @if($row->payments()->where('is_paid', 1)->count())
-                @foreach($row->payments()->where('is_paid', 1)->get() as $payment)
-                    @php
-                        $value = $payment->amount;
-                        $value .= ' -- ' . $payment->transactionSource->translate()->name;
-                    @endphp
-
-                    @include('components.form.input', [
-                        'group' => 'booking',
-                        'label' => $payment->post_date,
-                        'name' => '_payment',
-                        'value' => $value,
-                        'disabled' => true,
-                    ])        
-                @endforeach
-            @endif
-
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Balance Due'),
-                'name' => '_balance_due',
-                'value' => $balance,
-                'disabled' => true,
             ])
         </div>
     </div>

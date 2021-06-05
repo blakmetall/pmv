@@ -1246,7 +1246,17 @@
     left: 12px;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
 
+.bold {
+    font-weight: bold;
+}
+
+.text-app-color {
+    color: #247bb6 !important;
+}
 
 /**** end app styles *****/
 /*********+++++***********/

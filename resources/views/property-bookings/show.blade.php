@@ -33,14 +33,24 @@
 
 @section('main-content')
 
-    <div class="container app-container-sm">
-        <form action="" onsubmit="return false;" method="post">
-            @include('property-bookings.partials.form', [
-                'row' => $booking,
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="container app-container-sm">
+                <form action="" onsubmit="return false;" method="post">
+                    @include('property-bookings.partials.form', [
+                        'row' => $booking,
+                        'property' => $property,
+                        'disabled' => true
+                    ])        
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-5">
+            @include('property-bookings.partials.booking-payments', [
+                'booking' => $booking,
                 'property' => $property,
-                'disabled' => true
-            ])        
-        </form>
+            ])
+        </div>
     </div>
 
 @endsection

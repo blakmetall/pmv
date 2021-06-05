@@ -60,7 +60,7 @@ class PropertyBookingPaymentsController extends Controller
         if ($request->email_notification) {
             return redirect(route('property-booking-payments.email', [$payment->id]));
         } else {
-            return redirect(route('property-booking-payments.edit', [$payment->id]));
+            return redirect(route('property-bookings.edit', [$request->booking_id]));
         }
 
     }
@@ -86,19 +86,23 @@ class PropertyBookingPaymentsController extends Controller
     public function sendEmail(Request $request, PropertyBooking $booking)
     {
         $guests = explode(',', $request->guests_recipients);
-        $content = $request->guest_email_content;
-        if ($guests) {
+        $content = nl2br($request->guest_email_content);
+        if (count($guests)) {
             foreach ($guests as $guest) {
                 $this->notification($booking, $content, $guest);
             }
         }
 
         $owners = explode(',', $request->owners_recipients);
-        if ($owners) {
+        $content = nl2br($request->owners_email_content);
+        if (count($owners)) {
             foreach ($owners as $owner) {
                 $this->notification($booking, $content, $owner);
             }
         }
+
+        $request->session()->flash('success', __('Email sent successfully'));
+
         return redirect(route('property-bookings.edit', [$booking->id]));
     }
 
@@ -162,7 +166,7 @@ class PropertyBookingPaymentsController extends Controller
         if ($request->email_notification) {
             return redirect(route('property-booking-payments.email', [$id]));
         } else {
-            return redirect(route('property-booking-payments.edit', [$id]));
+            return redirect(route('property-bookings.edit', [$request->booking_id]));
         }
     }
 
