@@ -14,9 +14,9 @@
 
 <div class="d-block text-right">
     @if (!$skipShow)
-        <a href="{{ route($paymentsRoute, $params) }}" class="text-primary mr-2">
+        {{-- <a href="{{ route($paymentsRoute, $params) }}" class="text-primary mr-2">
             <i class="nav-icon i-Money-2 font-weight-bold"></i>
-        </a>
+        </a> --}}
     @endif
 
     @if (!$skipShow)

@@ -110,41 +110,14 @@
 
                         <!-- actions -->
                         <td>
-                            @if ($row->property->users->isNotEmpty())
-                                @php
-                                    $propertyUser = false;
-                                @endphp
-
-                                @foreach ($row->property->users as $user)
-                                    @if ($user->id == \UserHelper::getCurrentUserID())
-                                        @php
-                                            $propertyUser = true;
-                                        @endphp
-                                    @endif
-                                @endforeach
-
-                                @if ($propertyUser || isRole('super') || isRole('admin') || isRole('rentals'))
-                                    @include('components.table.actions-bookings', [
+                                @include('components.table.actions-bookings', [
                                     'params' => [$row->id],
                                     'paymentsRoute' => 'property-booking-payments',
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
                                     'skipDelete' => false
-                                    ])
-                                @endif
-                            @else
-                                @if ($row->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin') || isRole('rentals'))
-                                    @include('components.table.actions-bookings', [
-                                    'params' => [$row->id],
-                                    'paymentsRoute' => 'property-booking-payments',
-                                    'showRoute' => 'property-bookings.show',
-                                    'editRoute' => 'property-bookings.edit',
-                                    'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => false
-                                    ])
-                                @endif
-                            @endif
+                                ])
                         </td>
 
                     </tr>
