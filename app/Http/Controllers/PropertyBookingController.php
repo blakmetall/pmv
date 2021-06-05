@@ -321,7 +321,10 @@ class PropertyBookingController extends Controller
                 } else {
                     $occupied = false;
                 }
-                if (in_array($day, $firstDays)) {
+
+                if(in_array($day, $firstDays) && in_array($day, $endDays)){
+                    $classDay = 'arrival-departure-both';
+                }else if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
                 } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';
@@ -475,7 +478,10 @@ class PropertyBookingController extends Controller
                 } else {
                     $occupied = false;
                 }
-                if (in_array($day, $firstDays)) {
+                
+                if(in_array($day, $firstDays) && in_array($day, $endDays)){
+                    $classDay = 'arrival-departure-both';
+                }else if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
                 } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';

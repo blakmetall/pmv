@@ -683,15 +683,14 @@ if (!function_exists('getAvailabilityProperty')) {
                 }
 
                 if (in_array($day, $bookingDays)) {
-                    // echo $booking->id;
                     $daysOccupied++;
                 }
             }
         }
 
-        if ($daysOccupied > 0) {
+        if ($daysOccupied == count($days)) {
             $result = 'some';
-        } else if ($daysOccupied == count($days)) {
+        } else if ($daysOccupied > 0) {
             $result = 'none';
         } else {
             $result = 'all';

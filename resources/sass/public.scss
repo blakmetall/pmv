@@ -2173,39 +2173,99 @@ iframe#twitter-widget-0 {
   }
 }
 
-.content-top-container {
-  background-size: cover;
-
-  &.slide-1 {
-    background-image: url("../images/slide-1.jpg") !important;
+.app-modal-calendar-container {
+  .arrival-departure-both {
+    position: relative;
+    background-color: #C3D69B !important;
+  }
+  .arrival-departure-both::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 0 9px 8px;
+    border-color: transparent transparent transparent #D99694;
+    left: 2px;
   }
 
-  &.slide-2 {
-    background-image: url("../images/slide-2.jpg") !important;
+  .arrival-departure-both::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 8px 9px 0;
+    border-color: transparent #D99694 transparent transparent;
+    right: 2px;
+  }
+}
+
+.cal-month.first-calendar {
+  .arrival-only::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 15px 15px 0;
+    border-color: transparent #D99694 transparent transparent;
+    right: 2px;
+  }
+  .departure-only::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 15px;
+    border-color: transparent transparent transparent #D99694;
+    left: 2px;
   }
 
-  &.slide-3 {
-    background-image: url("../images/slide-3.jpg") !important;
+  .arrival-departure-both {
+    position: relative;
+    background-color: #C3D69B !important;
   }
 
-  &.slide-4 {
-    background-image: url("../images/slide-4.jpg") !important;
+  .arrival-departure-both::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 10px;
+    border-color: transparent transparent transparent #D99694;
+    left: 2px;
   }
 
-  &.slide-5 {
-    background-image: url("../images/slide-5.jpg") !important;
-  }
-
-  &.slide-6 {
-    background-image: url("../images/slide-6.jpg") !important;
-  }
-
-  &.slide-7 {
-    background-image: url("../images/slide-7.jpg") !important;
-  }
-   
-  &.slide-8 {
-    background-image: url("../images/slide-8.jpg") !important;
+  .arrival-departure-both::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 10px 15px 0;
+    border-color: transparent #D99694 transparent transparent;
+    right: 2px;
   }
 }
 

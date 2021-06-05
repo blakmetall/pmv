@@ -7,6 +7,34 @@
     background-position: center top !important;
 }
 
+.content-top-container {
+    background-size: cover;
+}
+.content-top-container.slide-1 {
+    background-image: url("../images/slide-1.jpg") !important;
+}
+.content-top-container.slide-2 {
+    background-image: url("../images/slide-2.jpg") !important;
+}
+.content-top-container.slide-3 {
+    background-image: url("../images/slide-3.jpg") !important;
+}
+.content-top-container.slide-4 {
+    background-image: url("../images/slide-4.jpg") !important;
+}
+.content-top-container.slide-5 {
+    background-image: url("../images/slide-5.jpg") !important;
+}
+.content-top-container.slide-6 {
+    background-image: url("../images/slide-6.jpg") !important;
+}
+.content-top-container.slide-7 {
+    background-image: url("../images/slide-7.jpg") !important;
+}
+.content-top-container.slide-8 {
+    background-image: url("../images/slide-8.jpg") !important;
+}
+
 /* menu */
 #navbar {
     max-width: 100%;

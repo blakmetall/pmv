@@ -109,6 +109,36 @@
     border-color: transparent #d99694 transparent transparent;
 }
 
+.calendar-container .arrival-departure-both::before,
+.arrival-departure-both::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 17px 0 14px 17px;
+    border-color: transparent transparent transparent #d99694;
+    left: 7px;
+}
+
+.calendar-container .arrival-departure-both::after,
+.arrival-departure-both::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 17px 14px 17px 0;
+    border-color: transparent #d99694 transparent transparent;
+    right: 5px;
+}
+
 .month-calendar {
     width: 100%;
     padding: 10px;

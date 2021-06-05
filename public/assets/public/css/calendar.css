@@ -70,6 +70,7 @@ table {
 }
 
 .calendar-container th, .calendar-container td {
+    position: relative;
     text-align: center;
     border: 2px solid #fff;
     font: 14px/22px Arial, Helvetica, sans-serif;
