@@ -38,17 +38,19 @@
                         {{-- paid --}}
                         <td>
                             @if($row->is_paid)
-                                {{ 'Yes' }}
+                                {{ __('Yes') }}
                             @else
                                 {{ 'No' }}
                             @endif
                         </td>
 
                         <td>
-                            <!-- email notification for property management transaction -->
-                            <a href="{{ route('property-booking-payments.email', [$row->id]) }}" class="text-primary">
-                                <img src="/images/email.svg" alt="" width="16px" style="width: 16px; position: relative; top: -4px;">
-                            </a>
+                            @if(!isRole('owner'))
+                                <!-- email notification for property management transaction -->
+                                <a href="{{ route('property-booking-payments.email', [$row->id]) }}" class="text-primary">
+                                    <img src="/images/email.svg" alt="" width="16px" style="width: 16px; position: relative; top: -4px;">
+                                </a>
+                            @endif
                         </td>
                         
                         <!-- actions -->
@@ -58,6 +60,8 @@
                                 'editRoute' => 'property-booking-payments.edit',
                                 'deleteRoute' => 'property-booking-payments.destroy',
                                 'skipShow' => true,
+                                'skipEdit' => isRole('owner') ? true : false,
+                                'skipDelete' => isRole('owner') ? true : false,
                             ])
                         </td>
 

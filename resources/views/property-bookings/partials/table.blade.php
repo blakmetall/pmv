@@ -100,7 +100,7 @@
 
                         <!-- register_by -->
                         <td>
-                            {{ $row->register_by }}
+                            {{ __($row->register_by) }}
                         </td>
 
                         <!-- created/updated cols -->
@@ -118,7 +118,8 @@
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => false
+                                    'skipDelete' => isRole('owner') ? true : false,
+                                    'skipEdit' => isRole('owner') ? true : false,
                                 ])
                         </td>
 
