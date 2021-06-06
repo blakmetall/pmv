@@ -214,28 +214,29 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                     }
                 }
 
+                
+                if ($request->guest) {
+                    sendEmail($booking, $booking->email);
+                }
+
+                if ($request->office) {
+                    sendEmail($booking, $booking->property->office->email);
+                }
+
+                if ($concierge) {
+                    if ($request->concierge) {
+                        sendEmail($booking, $concierge);
+                    }
+                }
+
+                if ($request->home_owner) {
+                    $owners = $booking->property->users;
+                    foreach ($owners as $owner) {
+                        sendEmail($booking, $owner->email);
+                    }
+                }
+    
                 if(isProduction()) {
-                    if ($request->guest) {
-                        sendEmail($booking, $booking->email);
-                    }
-    
-                    if ($request->office) {
-                        sendEmail($booking, $booking->property->office->email);
-                    }
-    
-                    if ($concierge) {
-                        if ($request->concierge) {
-                            sendEmail($booking, $concierge);
-                        }
-                    }
-    
-                    if ($request->home_owner) {
-                        $owners = $booking->property->users;
-                        foreach ($owners as $owner) {
-                            sendEmail($booking, $owner->email);
-                        }
-                    }
-    
                     sendEmail($booking, 'reservaciones@palmeravacations.com');
                     sendEmail($booking, 'info@palmeravacations.com');
                     sendEmail($booking, 'contabilidad@palmeravacations.com');

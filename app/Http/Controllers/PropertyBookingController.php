@@ -626,42 +626,43 @@ class PropertyBookingController extends Controller
             $contacts = $booking->property->contacts;
             $concierge = false;
             
-            if(isProduction()) {
-                foreach ($contacts as $contact) {
-                    if ($contact->contact_type == 'property-manager') {
-                        $concierge = $contact->email;
-                    }
+            foreach ($contacts as $contact) {
+                if ($contact->contact_type == 'property-manager') {
+                    $concierge = $contact->email;
                 }
-    
-                if ($request->guest) {
-                    sendEmail($booking, $booking->email);
+            }
+
+            if ($request->guest) {
+                sendEmail($booking, $booking->email);
+            }
+
+            if ($request->office) {
+                sendEmail($booking, $booking->property->office->email);
+            }
+
+            if ($concierge) {
+                if ($request->concierge) {
+                    sendEmail($booking, $concierge);
                 }
-    
-                if ($request->office) {
-                    sendEmail($booking, $booking->property->office->email);
+            }
+
+            if ($request->home_owner) {
+                $owners = $booking->property->users;
+                foreach ($owners as $owner) {
+                    sendEmail($booking, $owner->email);
                 }
-    
-                if ($concierge) {
-                    if ($request->concierge) {
-                        sendEmail($booking, $concierge);
-                    }
-                }
-    
-                if ($request->home_owner) {
-                    $owners = $booking->property->users;
-                    foreach ($owners as $owner) {
-                        sendEmail($booking, $owner->email);
-                    }
-                }
-    
+            }
+
+            if(isProduction()){
                 sendEmail($booking, 'reservaciones@palmeravacations.com');
                 sendEmail($booking, 'info@palmeravacations.com');
                 sendEmail($booking, 'contabilidad@palmeravacations.com');
-                $request->session()->flash('success', __('Record deleted successfully'));
-    
-                $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
-                $request->session()->flash('success', $msg);
             }
+            
+            $request->session()->flash('success', __('Record deleted successfully'));
+
+            $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+            $request->session()->flash('success', $msg);
 
             $this->repository->delete($id);
 

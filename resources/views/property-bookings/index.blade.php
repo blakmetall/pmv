@@ -72,6 +72,9 @@
         'url' => $url
     ])
 
+    <!-- separator -->
+    <div class="mb-4"></div>
+
 
 @endsection
 
