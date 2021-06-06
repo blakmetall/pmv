@@ -45,24 +45,18 @@ class DetailsBalance extends Notification
 
         return (new MailMessage())
             ->subject('Balance' . ' - ' . $this->data->property)
-            ->greeting(sprintf('Hello %s!', $notifiable->profile->full_name))
             ->line('')
             ->line('Here are the details of your current balance')
             ->line('Date' . ': ' . getCurrentDateTime())
             ->line(new HtmlString('Property' . ': ' . '<strong>' . $this->data->property . '</strong>'))
             ->line(new HtmlString('Balance' . ': ' . '<strong>' . priceFormat($this->data->balance) . ' MXN</strong>'))
-            ->line(new HtmlString('Extra notes: ' . $this->data->customMsg));
-            ->line('')
-            ->line('------------------------------------------------')
-            ->line('------------------------------------------------')
-            ->line('')
-            ->greeting(sprintf('Hola %s!', $notifiable->profile->full_name))
-            ->line('')
+            ->line(new HtmlString('Extra notes: ' . nl2br($this->data->customMsg)))
+            ->line('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -')
             ->line('Aquí están los detalles de su balance actual')
             ->line('Fecha' . ': ' . getCurrentDateTime())
             ->line(new HtmlString('Propiedad' . ': ' . '<strong>' . $this->data->property . '</strong>'))
             ->line(new HtmlString('Balance' . ': ' . '<strong>' . priceFormat($this->data->balance) . ' MXN</strong>'))
-            ->line(new HtmlString('Notas adicionales: ' . $this->data->customMsg))
+            ->line(new HtmlString('Notas adicionales: ' . nl2br($this->data->customMsg)))
             ->line('')
             ->line('');
     }

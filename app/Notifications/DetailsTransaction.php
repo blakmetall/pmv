@@ -43,21 +43,22 @@ class DetailsTransaction extends Notification
      */
     public function toMail($notifiable)
     {
-        $greeting = sprintf('Hello %s!', $notifiable->profile->full_name);
+        // $greeting = sprintf('Hello %s!', $notifiable->profile->full_name);
         $period = $this->transaction->period_start_date . ' - ' . $this->transaction->period_end_date;
         $operationType = $this->transaction->operation_type == config('constants.operation_types.charge') ? __('Charge') : __('Credit');
 
         return (new MailMessage())
             ->subject(__('Transaction') . ': ' . $this->transaction->id)
-            ->greeting($greeting)
             ->line('')
+            ->line(new HtmlString(__('Transaction ID') . ': ' . '<strong>' . $this->transaction->id . '</strong>'))
             ->line(new HtmlString(__('Property') . ': ' . '<strong>' . $this->transaction->propertyManagement->property->translate()->name . '</strong>'))
             ->line(new HtmlString(__('Post Date') . ': ' . '<strong>' . $this->transaction->post_date . '</strong>'))
-            ->line(new HtmlString(__('Description') . ': ' . $this->transaction->description))
+            ->line(new HtmlString(__('Description') . ': <strong>' . $this->transaction->description . '</strong>'))
             ->line(new HtmlString(__('Period') . ': ' . '<strong>' . $period . '</strong>'))
             ->line(new HtmlString(__('Operation') . ': ' . '<strong>' . $this->transaction->type->translate()->name . '</strong>'))
             ->line(new HtmlString(__('Operation Type') . ': ' . '<strong>' . $operationType . '</strong>'))
-            ->line(new HtmlString(__('Amount') . ': ' . '<strong>' . priceFormat($this->transaction->amount) . ' MXN</strong>'));
+            ->line(new HtmlString(__('Amount') . ': ' . '<strong>' . priceFormat($this->transaction->amount) . ' MXN</strong>'))
+            ->line('');
     }
 
     /**
