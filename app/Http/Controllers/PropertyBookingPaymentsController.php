@@ -85,6 +85,8 @@ class PropertyBookingPaymentsController extends Controller
 
     public function sendEmail(Request $request, PropertyBooking $booking)
     {
+        $request->session()->flash('success', __('Email sent successfully'));
+
         $guests = explode(',', $request->guests_recipients);
         $content = nl2br($request->guest_email_content);
         if (count($guests)) {
@@ -101,9 +103,7 @@ class PropertyBookingPaymentsController extends Controller
             }
         }
 
-        $request->session()->flash('success', __('Email sent successfully'));
-
-        return redirect(route('property-bookings.edit', [$booking->id]));
+        return redirect(route('property-bookings.edit', [$booking->id, 'emailSent' => 1]));
     }
 
     private function notification($booking, $content, $email)

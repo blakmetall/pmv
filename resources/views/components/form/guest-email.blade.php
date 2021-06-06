@@ -33,6 +33,23 @@ $damageDeposit = $booking->subtotal_damage_deposit ? $booking->subtotal_damage_d
 $getTotal = $booking->total ? $booking->total : 0;
 $total = priceFormat($damageDeposit + $getTotal);
 
+$payments = $booking->payments()->where('is_paid', 1)->get();
+$payments_str_en = '';
+$payments_str_es = '';
+$paid = 0;
+if(count($payments)){
+    foreach($payments as $payment){
+        $transactionSourceEn = $payment->transactionSource->translations()->where('language_id', 1)->first();
+        $transactionSourceEs = $payment->transactionSource->translations()->where('language_id', 2)->first();
+
+        $payments_str_en = $transactionSourceEn->name. ': ' . priceFormat($payment->amount) . "\n";
+        $payments_str_es = $transactionSourceEn->name . ': ' . priceFormat($payment->amount) . "\n";
+        
+        $paid += $payment->amount;
+    }
+}
+$balanceDue = $damageDeposit + $getTotal - $paid;
+
 @endphp
 
 <div class="form-group row" style="{{ $hiddenStyle }}">
@@ -45,7 +62,7 @@ $total = priceFormat($damageDeposit + $getTotal);
     </label>
     <div class="col-sm-10">
         <textarea name="{{ $inputName }}" class="form-control" rows="{{ $rows }}" id="{{ $id }}"
-            style="{{ $resizeStyle }}" {{ $disabledProp }}>Hello, {{ $booking->full_name }}&#13;&#10;&#13;&#10;This notification is to let you know we received a payment to guarantee your reservation, below is a reservation update confirming your payment.&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;TRAVEL DETAILS&#13;&#10;----------------------------------------&#13;&#10;PROPERTY: {{ $property->name }}&#13;&#10;RESERVATION NAME: {{ $booking->full_name }} &#13;&#10;OCCUPANTS: {{ $adults }} Adults | {{ $kids }} Child&#13;&#10;DATES: {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Night(s)&#13;&#10; RATE: Avg. Night {{ $pricePerNight }} USD | &#13;&#10;Total for the Stay {{ $totalStay }} USD&#13;&#10;DAMAGE INSURANCE: {{ $damageDeposit }} USD&#13;&#10;TOTAL: {{ $total }} USD&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;PAYMENTS AND BALANCE&#13;&#10;----------------------------------------&#13;&#10;BALANCE DUE: $0.00 USD&#13;&#10;&#13;&#10;If you have any questions please do not hesitate to contact us, thank you.&#13;&#10;&#13;&#10;**********************************************************************&#13;&#10;&#13;&#10;Hola, {{ $booking->full_name }}&#13;&#10;&#13;&#10;El presente es para confirmarle la recepción de su pago para garantizar su reservación, esta es una actualización de su reservación confirmando su pago.&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;DETALLES DE RESERVACIÓN&#13;&#10;----------------------------------------&#13;&#10;PROPIEDAD: {{ $property->name }}&#13;&#10;NOMBRE DE RESERVACIÓN: {{ $booking->full_name }}&#13;&#10; OCUPANTES: {{ $adults }} Adultos | {{ $kids }} Niños&#13;&#10;FECHAS DE VIAJE: {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Noche(s)&#13;&#10;TARIFA: Prom. Noche {{ $pricePerNight }} USD | Total de la Estancia {{ $totalStay }} USD&#13;&#10;SEGURO DE DAÑOS: {{ $damageDeposit }} USD&#13;&#10;TOTAL: {{ $total }} USD&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;PAGOS Y BALANCE&#13;&#10;----------------------------------------&#13;&#10;BALANCE: $0.00 USD&#13;&#10;&#13;&#10;Si tiene alguna pregunta no dude en comunicarse con nosotros, gracias.
+            style="{{ $resizeStyle }}" {{ $disabledProp }}>Hello, {{ $booking->full_name }}&#13;&#10;&#13;&#10;This notification is to let you know we received a payment to guarantee your reservation, below is a reservation update confirming your payment.&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;TRAVEL DETAILS&#13;&#10;----------------------------------------&#13;&#10;PROPERTY: {{ $property->name }}&#13;&#10;RESERVATION NAME: {{ $booking->full_name }} &#13;&#10;OCCUPANTS: {{ $adults }} Adults | {{ $kids }} Child&#13;&#10;DATES: {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Night(s)&#13;&#10; RATE: Avg. Night {{ $pricePerNight }} USD | Total for the Stay {{ $totalStay }} USD&#13;&#10;DAMAGE INSURANCE: ${{ $damageDeposit }} USD&#13;&#10;TOTAL: {{ $total }} USD&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;PAYMENTS AND BALANCE&#13;&#10;----------------------------------------&#13;&#10;{{ $payments_str_en }}BALANCE DUE: {{ priceFormat($balanceDue) }} USD&#13;&#10;&#13;&#10;If you have any questions please do not hesitate to contact us, thank you.&#13;&#10;&#13;&#10;**********************************************************************&#13;&#10;&#13;&#10;Hola, {{ $booking->full_name }}&#13;&#10;&#13;&#10;El presente es para confirmarle la recepción de su pago para garantizar su reservación, esta es una actualización de su reservación confirmando su pago.&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;DETALLES DE RESERVACIÓN&#13;&#10;----------------------------------------&#13;&#10;PROPIEDAD: {{ $property->name }}&#13;&#10;NOMBRE DE RESERVACIÓN: {{ $booking->full_name }}&#13;&#10; OCUPANTES: {{ $adults }} Adultos | {{ $kids }} Niños&#13;&#10;FECHAS DE VIAJE: {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} Noche(s)&#13;&#10;TARIFA: Prom. Noche {{ $pricePerNight }} USD | Total de la Estancia {{ $totalStay }} USD&#13;&#10;SEGURO DE DAÑOS: ${{ $damageDeposit }} USD&#13;&#10;TOTAL: {{ $total }} USD&#13;&#10;&#13;&#10;----------------------------------------&#13;&#10;PAGOS Y BALANCE&#13;&#10;----------------------------------------&#13;&#10;{{ $payments_str_es }}BALANCE: {{ priceFormat($balanceDue) }} USD&#13;&#10;&#13;&#10;Si tiene alguna pregunta no dude en comunicarse con nosotros, gracias.
         </textarea>
 
         @if ($instruction)

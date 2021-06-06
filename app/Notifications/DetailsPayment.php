@@ -46,7 +46,6 @@ class DetailsPayment extends Notification
     {
         return (new MailMessage())
             ->subject(__('Booking Payment Details') . ': ' . $this->booking->id)
-            ->greeting(__('Hello'))
             ->line(new HtmlString($this->content));
     }
 
