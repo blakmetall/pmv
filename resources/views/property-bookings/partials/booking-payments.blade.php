@@ -1,5 +1,4 @@
 
-
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -110,6 +109,18 @@
                 </td>
                 <td>
                     {{ priceFormat($balance) }}
+                </td>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+
+            <tr><td colspan="7"></td></tr>
+
+            <tr>
+                <td colspan="3" class="text-right">
+                    {{ __('Booking Status') }}
+                </td>
+                <td class="uppercase bold">
+                    {{ getBookingStatus($booking, App::getLocale()) }}
                 </td>
                 <td colspan="3">&nbsp;</td>
             </tr>

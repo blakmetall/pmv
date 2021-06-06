@@ -3,7 +3,7 @@
 @section('heading-content')
 
     @php
-    if ($booking->is_confirmed) {
+    if (!$booking->is_cancelled && !$booking->is_finished) {
         $actions = [
             [
                 'label' => __('Add Payment'),

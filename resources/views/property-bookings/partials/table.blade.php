@@ -23,9 +23,9 @@
                 <th scope="col">{{ __('Total') }}</th>
                 <th scope="col">{{ __('Paid') }}</th>
                 <th scope="col">{{ __('Balance due') }}</th>
+                <th scope="col">{{ __('Status') }}</th>
                 <th scope="col">{{ __('Register By') }}</th>
                 <th scope="col">{{ __('Created') }}</th>
-                <th scope="col">{{ __('Updated') }}</th>
                 <th scope="col">&nbsp;</th>
             </tr>
 
@@ -96,6 +96,8 @@
                             </span>
                         </td>
 
+                        <td class="uppercase bold">{{ getBookingStatus($row, App::getLocale()) }}</td>
+
                         <!-- register_by -->
                         <td>
                             {{ $row->register_by }}
@@ -104,7 +106,7 @@
                         <!-- created/updated cols -->
                         @include('components.table.created-updated', [
                         'created_at' => $row->created_at,
-                        'updated_at' => $row->updated_at,
+                        // 'updated_at' => $row->updated_at,
                         'trimTime' => true,
                         ])
 

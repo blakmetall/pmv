@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
 use App\Models\PropertyImage;
+use App\Models\PropertyBooking;
 use App\Models\PropertyTypeTranslation;
 
 
@@ -876,14 +877,29 @@ if (!function_exists('generateCalendar')) {
     }
 }
 
-// if (!function_exists('getNightsDate')) {
-//     function getNightsDate($fromDate, $toDate)
-//     {
-//         $arrival = new DateTime($fromDate);
-//         $departure = new DateTime($toDate);
-//         $interval = $arrival->diff($departure);
-//         $result = $interval->format('%a');
+if (!function_exists('getBookingStatus')) {
+    function getBookingStatus($booking = '', $lang = 'en')
+    {
+        $status = $lang == 'en' ? 'Pending' : 'Pendiente';
 
-//         return $result;
-//     }
-// }
+        if(!$booking) {
+            $booking = PropertyBooking::find($bookingId);
+        }
+
+        if($booking) {
+            if($booking->is_cancelled){
+                $status = $lang == 'en' ? 'Cancelled' : 'Cancelado';
+            }
+
+            if($booking->is_confirmed){
+                $status = $lang == 'en' ? 'Booked' : 'Reservado';
+            }
+            
+            if($booking->is_confirmed && $booking->is_finished) {
+                $status = $lang == 'en' ? 'Finished' : 'Finalizado';
+            }
+        }
+
+        return $status;
+    }
+}
