@@ -131,10 +131,11 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
         $data = [
             'user_id' => $user->id,
-            'is_confirmed' => 1,
+            'is_confirmed' => 0,
             'is_paid' => 0,
             'is_refundable' => 0,
             'is_cancelled' => 0,
+            'is_finished' => 0,
             'arrival_transportation' => 0,
             'departure_transportation' => 0,
         ];

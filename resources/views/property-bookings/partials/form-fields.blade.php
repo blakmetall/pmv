@@ -376,43 +376,50 @@
             'optionLabelRef' => 'description',
             ])
 
-            @if ($row->is_confirmed)
-                <!-- is_refundable -->
-                @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Refundable'),
-                'name' => 'is_refundable',
-                'value' => 1,
-                'default' => $row->is_refundable,
-                ])
+            <!-- is_confirmed -->
+            @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Confirmed'),
+            'name' => 'is_confirmed',
+            'value' => 1,
+            'default' => $row->is_confirmed,
+            ])
 
-                <!-- is_cancelled -->
-                @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Cancelled'),
-                'name' => 'is_cancelled',
-                'value' => 1,
-                'default' => $row->is_cancelled,
-                ])
+            <!-- is_cancelled -->
+            @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Cancelled'),
+            'name' => 'is_cancelled',
+            'value' => 1,
+            'default' => $row->is_cancelled,
+            ])
 
-                <!-- is_paid -->
-                @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Paid'),
-                'name' => 'is_paid',
-                'value' => 1,
-                'default' => $row->is_paid,
-                ])
+            <!-- is_refundable -->
+            @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Refundable'),
+            'name' => 'is_refundable',
+            'value' => 1,
+            'default' => $row->is_refundable,
+            ])
 
-                <!-- is_finished -->
-                @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Finished'),
-                'name' => 'is_finished',
-                'value' => 1,
-                'default' => $row->is_finished,
-                ])
-            @endif
+            <!-- is_paid -->
+            @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Paid'),
+            'name' => 'is_paid',
+            'value' => 1,
+            'default' => $row->is_paid,
+            ])
+
+            <!-- is_finished -->
+            @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Finished'),
+            'name' => 'is_finished',
+            'value' => 1,
+            'default' => $row->is_finished,
+            ])
         @endif
     </div>
 </div>
