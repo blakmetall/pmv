@@ -731,6 +731,13 @@ if (!function_exists('getPropertyRate')) {
     }
 }
 
+if (!function_exists('carbonCreate')) {
+    function carbonCreate($year, $month, $day)
+    {
+        return Carbon::create($year, $month, $day);
+    }
+}
+
 if (!function_exists('generateColumns')) {
     function generateColumns($array, $number)
     {

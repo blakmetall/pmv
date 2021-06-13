@@ -29,7 +29,12 @@
                     <th class="cleaning-th-property">{{ __('Property') }}</th>
                     <th>{{ __('Services') }}</th>
                     @for($i = 1; $i <= $daysInMonth; $i++)
-                        <th class="cleaning-th-days">{{ $i }}</th>
+                        @php
+                            $monthLoop = carbonCreate($currentMonth->year, $currentMonth->month, 0);
+                            $monthLoop = $monthLoop->addDays($i);
+                            $day = $monthLoop->format('l');
+                        @endphp
+                        <th class="cleaning-th-days">{{ $i }} ({{ __($day) }})</th>
                     @endfor
 
                     <th class="cleaning-th-transaction">{{ __('Monthly Transaction') }}</th>
