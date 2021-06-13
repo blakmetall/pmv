@@ -318,6 +318,7 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
                 ]),
                 'pending-audits' => self::transformSluggedRolesToIds([
                     'super',
