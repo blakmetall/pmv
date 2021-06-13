@@ -58,7 +58,7 @@ class RatesHelper
                 // if current request date is between loop rate
                 if($requestDate->eq($rate_start_date) || $requestDate->between($rate_start_date, $rate_end_date)) {
                     // if has monthly rate
-                    if($rate->monthly) {
+                    if($rate->monthly && $rate->monthly > 0) {
                         // verify if current rate has more than one month ahead
                         $rateAvailableMonths = $requestDate->diffInMonths($rate_end_date);
                         if ($rateAvailableMonths) {
@@ -85,7 +85,7 @@ class RatesHelper
                     }
 
                     // if has weekly rate
-                    if($rate->weekly) {
+                    if($rate->weekly && $rate->weekly > 0) {
                         $rateAvailableWeeks = $requestDate->diffInWeeks($rate_end_date);
                         if($rateAvailableWeeks) {
                             // verify if requested end date is between rate
@@ -111,7 +111,7 @@ class RatesHelper
                     }
 
                     // if has nightly rate
-                    if($rate->nightly) {
+                    if($rate->nightly && $rate->nightly > 0) {
                         $rateAvailableDays = $requestDate->diffInDays($rate_end_date);
                         if($rateAvailableDays) {
                             // verify if requested end date is between rate
