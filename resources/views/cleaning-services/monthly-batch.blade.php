@@ -154,7 +154,9 @@
                         @endfor
 
                         <td class="cleaning-td-days">
-                            <a href="{{ route('property-management.generate-pm-transaction-monthly', $item->property_id) }}" class="btn-create-transaction">{{ __('Create') }}&nbsp;&nbsp;<i class="i-Add"></i></a>
+                            <a href="{{ route('property-management.generate-pm-transaction-monthly', [$item->property_id, $_GET['year'], $_GET['month']]) }}" class="btn-create-transaction">
+                                {{ __('Create') }}&nbsp;&nbsp;<i class="i-Add"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

@@ -171,14 +171,16 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
         return $this->save($request);
     }
 
-    public function saveMonthly(Property $property, $pm)
+    public function saveMonthly(Property $property, $pm, $year, $month)
     {
         $transaction = $this->blueprint();
         $currentMonth = Carbon::now();
         $currentMonthFormat = $currentMonth->format('Y-m-d');
-        $cleaningServices = $property->monthlyCleaningServices($currentMonth->format('m'), $currentMonth->format('Y'));
+        $transactionMonth = Carbon::createFromDate($year, $month, 1);
+        $cleaningServices = $property->monthlyCleaningServices($transactionMonth->format('m'), $transactionMonth->format('Y'));
         $amount = 0;
         $description = '';
+
         foreach ($cleaningServices as $cleaningService) {
             if (!$cleaningService->is_finished) {
                 return false;
@@ -189,10 +191,11 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                 Carbon::parse(strtotime($cleaningService->date))->format('d/M/Y') . ' - ' .
                 '$' . $cleaningService->total_cost . "\n";
         };
+
         $transaction->property_management_id = $pm;
         $transaction->transaction_type_id = 46;
-        $transaction->period_start_date = $currentMonth->format('Y-m') . '-01';
-        $transaction->period_end_date = $currentMonth->lastOfMonth();
+        $transaction->period_start_date = $transactionMonth->format('Y-m') . '-01';
+        $transaction->period_end_date = $transactionMonth->lastOfMonth();
         $transaction->post_date = $currentMonthFormat;
         $transaction->amount = $amount;
         $transaction->operation_type = 2;

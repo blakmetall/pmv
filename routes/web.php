@@ -198,7 +198,7 @@ Route::group(['middleware' => ['web']], function () {
                 // property management transactions bulk events
                 Route::get('create-bulk', 'PropertyManagementTransactionsController@createBulk')->name('property-management-transactions.create-bulk');
                 Route::post('store-bulk', 'PropertyManagementTransactionsController@storeBulk')->name('property-management-transactions.store-bulk');
-                Route::get('generate-pm-transaction-monthly/{property?}', 'PropertyManagementTransactionsController@generatePMTransactionMonthly')->name('property-management.generate-pm-transaction-monthly');
+                Route::get('generate-pm-transaction-monthly/{property?}/{year}/{month}', 'PropertyManagementTransactionsController@generatePMTransactionMonthly')->name('property-management.generate-pm-transaction-monthly');
             });
 
             // audit transaction batch

@@ -256,19 +256,19 @@ class PropertyManagementTransactionsController extends Controller
     // generates the url and redirects to create new transaction for specific property management
     public function generatePMTransactionMonthly(Request $request, Property $property)
     {
-        if ($property->management()->count()) {
+        if ($property->management()->count() && $request->year && $request->month) {
             foreach ($property->management as $pm) {
                 if (!$pm->is_finished) {
-                    $transaction = $this->repository->saveMonthly($property, $pm->id);
+                    $transaction = $this->repository->saveMonthly($property, $pm->id, $request->year, $request->month);
 
                     if (!$transaction) {
                         $request->session()->flash('error', __('All Cleaning Services must be finished'));
 
                         return redirect()->back();
                     } else {
-                        $request->session()->flash('success', __('Record created successfully'));
+                        $request->session()->flash('success', __('Monthly cleaning service transaction created successfully with transaction ID #') . $transaction->id);
 
-                        return redirect(route('property-management-transactions.edit', [$pm->id, $transaction->id]));
+                        return redirect()->back();
                     }
                 }
             }
