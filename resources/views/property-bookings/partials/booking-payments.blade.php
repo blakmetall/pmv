@@ -84,12 +84,26 @@
                 $balance = $total - $reduced;
             @endphp
 
+            <tr>
+                <td colspan="7">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td colspan="3" class="text-right">
+                    {{ __('Insurance deposit') }} (USD)
+                </td>
+                <td class="bold">
+                    {{ priceFormat($booking->subtotal_damage_deposit) }}
+                </td>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+
             <!-- total row -->
             <tr>
                 <td colspan="3" class="text-right">
                     {{ __('Total Booking') }} (USD) 
                 </td>
-                <td>
+                <td class="bold">
                     {{ priceFormat($total) }}
                 </td>
                 <td colspan="3">&nbsp;</td>
@@ -100,7 +114,7 @@
                 <td colspan="3" class="text-right">
                     {{ __('Total Payments') }} (USD) 
                 </td>
-                <td>
+                <td class="bold">
                     {{ priceFormat($reduced) }}
                 </td>
                 <td colspan="3">&nbsp;</td>
@@ -111,7 +125,7 @@
                 <td colspan="3" class="text-right">
                     {{ __('Total Due') }} (USD) 
                 </td>
-                <td>
+                <td class="bold">
                     {{ priceFormat($balance) }}
                 </td>
                 <td colspan="3">&nbsp;</td>

@@ -43,7 +43,7 @@ if(count($payments)){
         $transactionSourceEs = $payment->transactionSource->translations()->where('language_id', 2)->first();
 
         $payments_str_en = $transactionSourceEn->name. ': ' . priceFormat($payment->amount) . "\n";
-        $payments_str_es = $transactionSourceEn->name . ': ' . priceFormat($payment->amount) . "\n";
+        $payments_str_es = $transactionSourceEs->name . ': ' . priceFormat($payment->amount) . "\n";
         
         $paid += $payment->amount;
     }
