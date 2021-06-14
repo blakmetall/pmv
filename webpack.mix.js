@@ -96,7 +96,7 @@ mix.combine(
         "public/assets/public/js/jquery.ui.core.min.js",
         "public/assets/public/js/jquery.ui.effect.min.js",
         "public/assets/public/js/jquery.ui.datepicker.min.js",
-        "public/assets/public/js/locale.datepicker.js",
+        // "public/assets/public/js/locale.datepicker.js",
         "public/assets/public/js/bootstrap.js",
         "public/assets/public/js/widgets.js",
         "public/assets/public/js/scripts.js",

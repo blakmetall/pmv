@@ -46,6 +46,10 @@
     {{-- theme javascript --}}
     <script src="{{ asset('assets/public/js/public.js') }}"></script>
 
+    @if(App::getLocale() == 'es')
+        <script src="/assets/public/js/locale.datepicker.js"></script>
+    @endif
+
     <!-- yield js bottom -->
     @yield('bottom-js')
 </body>

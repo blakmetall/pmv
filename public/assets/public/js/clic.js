@@ -60,7 +60,7 @@ setTimeout(function(){
         numberOfMonths: 2,
         minDate: '+1d',
         onClose: function( selectedDate ) {
-        $('#edit-departure').datepicker('option', 'minDate', selectedDate );
+            $('#edit-departure').datepicker('option', 'minDate', selectedDate );
         }
     });
 
@@ -75,7 +75,7 @@ setTimeout(function(){
         numberOfMonths: 2,
         minDate: '+2d',
         onClose: function( selectedDate ) {
-        $('#edit-arrival').datepicker('option', 'maxDate', selectedDate );
+            $('#edit-arrival').datepicker('option', 'maxDate', selectedDate );
         }
     });
 
@@ -90,7 +90,7 @@ setTimeout(function(){
         numberOfMonths: 2,
         minDate: '+1d',
         onClose: function( selectedDate ) {
-        $('#edit-departure-sing').datepicker('option', 'minDate', selectedDate );
+            $('#edit-departure-sing').datepicker('option', 'minDate', selectedDate );
         }
     });
 
