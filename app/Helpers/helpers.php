@@ -645,10 +645,30 @@ if (!function_exists('getSearchDate')) {
     function getSearchDate($format, $arrival, $depature)
     {
         $arrivalDate = ($arrival) ? $arrival : 'now';
-        $departureDate = ($depature) ? $depature : 'now + 7 days';
-        $result = [];
-        $result['currentDate'] = ($format) ? date('Y-m-d', strtotime($arrivalDate)) : date('l d/F/y', strtotime($arrivalDate));
-        $result['nextDate'] = ($format) ? date('Y-m-d', strtotime($departureDate)) : date('l d/F/y', strtotime($departureDate));
+        $departureDate = ($depature) ? $depature : 'now + 7days';
+        $result = [
+            'currentDate' => '',
+            'nextDate' => '',
+        ];
+        
+        if(App::getLocale() == 'es') {
+            setlocale(LC_ALL, "es_ES");
+        }
+
+        $arrivalDate2 = DateTime::createFromFormat("Y-m-d", $arrivalDate);
+        $departureDate2 = DateTime::createFromFormat("Y-m-d", $departureDate);
+
+        if($arrivalDate2 && $departureDate2){
+            if($format) {
+                $result['currentDate'] = strftime("%Y-%m-%d", $arrivalDate2->getTimestamp());
+                $result['nextDate'] = strftime("%Y-%m-%d", $departureDate2->getTimestamp());    
+            }else{ 
+                $result['currentDate'] = ucfirst(strftime("%A %d/%B/%y", $arrivalDate2->getTimestamp()));
+                $result['nextDate'] = ucfirst(strftime("%A %d/%B/%y", $departureDate2->getTimestamp()));
+            }
+        }
+        
+        setlocale(LC_ALL, "en_US");
 
         return $result;
     }

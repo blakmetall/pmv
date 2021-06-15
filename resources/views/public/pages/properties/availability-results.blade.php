@@ -118,7 +118,17 @@
                                 <div class="col-xs-8 col-sm-8">			
                                     <div class="total-stay text-right">
                                         {{ __('Total stay') }}: <span>{{ priceFormat($propertyRate['total']) }} USD</span>
-                                        <br>{{ $bothDates }} ( {{ $nightsDate }} {{ __('nights') }} )
+                                        <br>
+                                        {{ $bothDates }} 
+                                        ( 
+                                            {{ $nightsDate }} 
+                                        
+                                            @if($nightsDate > 1)
+                                                {{ __('nights') }} 
+                                            @else
+                                                {{ __('night') }}
+                                            @endif
+                                        )
                                     </div>			
                                     <div class="text-right">
                                         <a href="{{ route('public.reservations', [App::getLocale(), $property->property_id]) }}"

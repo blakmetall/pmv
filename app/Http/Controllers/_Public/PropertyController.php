@@ -541,7 +541,7 @@ class PropertyController extends Controller
                 $booking->subtotal_nights         = $request->subtotal_nights;
                 $booking->subtotal_damage_deposit = $damageDeposit;
                 $booking->damage_deposit_id       = $request->damage_deposit_id;
-                $booking->total                   = $request->subtotal_nights + $damageDeposit;
+                $booking->total                   = $request->subtotal_nights;
                 $booking->adults                  = $request->adults;
                 $booking->kids                    = $request->children;
                 $booking->register_by             = 'Client';
