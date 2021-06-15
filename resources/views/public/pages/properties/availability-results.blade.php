@@ -18,7 +18,16 @@
 
     @include('public.pages.partials.main-content-start')
 
+    <div id="search-breadcrumbs" class="row mb-3">  
+        <div class="col-xs-9">
+            <span class="">
+                {{ $city->name }} / {{ __('Travel dates') }}: {{ $bothDates }} / {{ __('Bedrooms') }}: {{ $bedrooms }} / {{ __('Adults') }}: {{ $adults }} / {{ __('Children') }}: {{ $children }}
+            </span>
+        </div>  
+    </div>
+
     <div id="availability-results">
+
         <div class="well well-sm text-right">
             {{ __('Showing') }} {{ $properties->firstItem() }} {{ __('To') }}
             {{ $properties->lastItem() }} {{ __('Of') }} {{ $properties->total() }} {{ __('Results') }}

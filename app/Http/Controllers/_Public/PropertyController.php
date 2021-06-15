@@ -13,6 +13,7 @@ use App\Models\Property;
 use App\Models\PropertyBooking;
 use App\Models\DamageDeposit;
 use App\Models\PropertyTranslation;
+use App\Models\City;
 use App\Repositories\PropertiesRepositoryInterface;
 use App\Repositories\PropertyImagesRepositoryInterface;
 use App\Repositories\PropertyBookingsRepositoryInterface;
@@ -91,7 +92,13 @@ class PropertyController extends Controller
         ];
         $propertiesNews = $this->propertiesRepository->all('', $config);
 
+        $city = City::find($request->city);
+
         return view('public.pages.properties.availability-results')
+            ->with('city', $city)
+            ->with('bedrooms', (int) $request->bedrooms)
+            ->with('adults', (int) $request->adults)
+            ->with('children', (int) $request->children)
             ->with('properties', $properties)
             ->with('propertiesNews', $propertiesNews)
             ->with('arrival', $request->arrival ? $request->arrival : date('Y-m-d', strtotime('now')))

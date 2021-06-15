@@ -36,7 +36,7 @@
                 <td class="col-xs-3">
                     <div class="form-item form-item-city form-type-select form-group">
                         <div class="field-title"><span>02.</span> {{ __('Where?') }}</div>
-                        <select class="form-control form-select" id="edit-city" name="city"
+                        <select class="form-control form-select" id="edit-city" name="city" required
                             data-txt-select="{{ __('Any Location') }}">
                             <option value="">{{ __('City') }}</option>
                             @foreach ($cities as $city)
@@ -54,7 +54,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            <input class="text-center form-control form-text" readonly="readonly"
+                            <input class="text-center form-control form-text" readonly="readonly" required
                                 placeholder="{{ __('Check in date') }}" type="text" id="edit-arrival"
                                 value="{{ $dates['currentDate'] }}" size="60" maxlength="128" />
                         </div>
@@ -65,7 +65,7 @@
                         <div class="field-title"><span>04.</span> {{ __('Who?') }}</div>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-male"></i></span>
-                            <input placeholder="{{ __('Adults') }}" title="{{ __('Adults') }}"
+                            <input placeholder="{{ __('Adults') }}" title="{{ __('Adults') }}" required
                                 class="form-control form-text" type="text" name="adults" size="60" maxlength="128"
                                 value="{{ $getAdults }}" />
                         </div>
@@ -77,7 +77,7 @@
                     <div class="form-item form-item-bedrooms form-type-textfield form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-bed"></i></span>
-                            <input placeholder="{{ __('Bedrooms') }}" title="{{ __('Bedrooms') }}"
+                            <input placeholder="{{ __('Bedrooms') }}" title="{{ __('Bedrooms') }}" required
                                 class="form-control form-text" type="text" name="bedrooms" size="60" maxlength="128"
                                 value="{{ $getBeds }}" />
                         </div>
@@ -94,7 +94,7 @@
                     <div class="form-item form-item-departure form-type-textfield form-group">
                         <div class="input-group"><span class="input-group-addon"><span
                                     class="glyphicon glyphicon-calendar"></span></span><input
-                                class="text-center form-control form-text" readonly="readonly"
+                                class="text-center form-control form-text" readonly="readonly" required
                                 placeholder="{{ __('Check out date') }}" type="text" id="edit-departure"
                                 value="{{ $dates['nextDate'] }}" size="60" maxlength="128" /></div>
                     </div>
