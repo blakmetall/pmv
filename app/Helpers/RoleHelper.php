@@ -126,7 +126,59 @@ class RoleHelper
                     $can = in_array($currentRole->id, $edit_properties);
                 }
                 break;
+
+            // property-images
+            case 'property-images':
+                if($action == 'view') {
+                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_properties);
+                }
                 
+                if($action == 'edit') {
+                    $edit_properties = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_properties);
+                }
+                break;
+            
+            // property-bookings
+            case 'property-bookings':
+                if($action == 'view') {
+                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_properties);
+                }
+                
+                if($action == 'edit') {
+                    $edit_properties = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_properties);
+                }
+                break;
+
+            // property-rates
+            case 'property-rates':
+                if($action == 'view') {
+                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_properties);
+                }
+                
+                if($action == 'edit') {
+                    $edit_properties = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_properties);
+                }
+                break;
+
+            // property-contacts
+            case 'property-contacts':
+                if($action == 'view') {
+                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_properties);
+                }
+                
+                if($action == 'edit') {
+                    $edit_properties = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_properties);
+                }
+                break;
+
             // property notes
             case 'property-notes':
                 if($action == 'view') {
@@ -137,6 +189,40 @@ class RoleHelper
                 if($action == 'edit') {
                     $edit_notes = [8,2,9,14,10,7,6,3,5,1];
                     $can = in_array($currentRole->id, $edit_notes);
+                }
+                break;
+
+            // property-calendar
+            case 'property-calendar':
+                if($action == 'view') {
+                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_properties);
+                }
+                
+                if($action == 'edit') {
+                    $edit_properties = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_properties);
+                }
+                break;
+
+            // property-preview
+            case 'property-preview':
+                if($action == 'view') {
+                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_properties);
+                }
+                
+                if($action == 'edit') {
+                    $edit_properties = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_properties);
+                }
+                break;
+
+            // property-management
+            case 'property-management':
+                if($action == 'edit') {
+                    $edit_properties = [8,2,9,6,1];
+                    $can = in_array($currentRole->id, $edit_properties);
                 }
                 break;
         }
@@ -225,6 +311,70 @@ class RoleHelper
                     'human-resources',
                 ]),
             ],
+            'property-management' => [
+                'heading-menu' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'owner',
+                ]),
+                'new-transaction' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'transaction-bulk' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+                'index' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                ]),
+                'balances' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'owner',
+                ]),
+                'transactions' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                    'cleanings',
+                ]),
+                'pending-audits' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'property-management',
+                    'operations-manager',
+                    'operations-assistant',
+                    'accounting',
+                    'administrative-assistant',
+                ]),
+            ],
             'property-bookings' => [
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
@@ -308,70 +458,6 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'concierge',
-                ]),
-            ],
-            'property-management' => [
-                'heading-menu' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'owner',
-                ]),
-                'new-transaction' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'transaction-bulk' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'index' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'accounting',
-                ]),
-                'balances' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'owner',
-                ]),
-                'transactions' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'cleanings',
-                ]),
-                'pending-audits' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'operations-manager',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
                 ]),
             ],
             'cleaning-services' => [
