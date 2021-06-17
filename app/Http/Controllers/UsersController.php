@@ -52,7 +52,7 @@ class UsersController extends Controller
         $user = $this->repository->blueprint();
         $user->profile = new Profile();
 
-        $rolesConfig = ['skipSuperAdmin' => true];
+        $rolesConfig = ['skipSuperAdmin' => true, 'skipRegularRole' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
@@ -71,7 +71,7 @@ class UsersController extends Controller
         $user = $this->repository->blueprint();
         $user->profile = new Profile();
 
-        $rolesConfig = ['skipSuperAdmin' => true];
+        $rolesConfig = ['skipSuperAdmin' => true, 'skipRegularRole' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
@@ -121,7 +121,7 @@ class UsersController extends Controller
     {
         $user = $this->repository->find($user);
 
-        $rolesConfig = ['skipSuperAdmin' => true];
+        $rolesConfig = ['skipSuperAdmin' => true, 'skipRegularRole' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);
@@ -144,7 +144,7 @@ class UsersController extends Controller
         }
 
         $user = $this->repository->find($user);
-        $rolesConfig = ['skipSuperAdmin' => true];
+        $rolesConfig = ['skipSuperAdmin' => true, 'skipRegularRole' => true];
         $roles = $this->rolesRepository->all('', $rolesConfig);
 
         $workgroups = $this->workgroupsRepository->all('', ['paginate' => false]);

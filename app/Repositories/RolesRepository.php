@@ -42,7 +42,7 @@ class RolesRepository implements RolesRepositoryInterface
             $query->where('role_id', '!=', config('constants.roles.rentals-agent'));
         }
 
-        if ($skipRentalsAgentRole) {
+        if ($skipRegularRole) {
             $query->where('role_id', '!=', config('constants.roles.regular'));
         }
         
