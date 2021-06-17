@@ -55,9 +55,14 @@ class RoleHelper
         }
 
         if ($user && $user->roles()->count()) {
+            $roles = [];
+
             foreach ($user->roles as $role) {
-                $roles[] = $role->translations()->where('language_id', $lang->id)->first();
+                $roleItem = $role->translations()->where('language_id', $lang->id)->first();
+                $roles[$roleItem->name] = $roleItem;
             }
+            
+            ksort($roles);
         }
 
         return $roles;
