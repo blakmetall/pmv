@@ -48,6 +48,12 @@ $_current_role = RoleHelper::current();
                                                 </li>
 
                                                 <li class="nav-item">
+                                                    <a class="" href="{{ route('properties') }}?filterOnline=1">
+                                                        <span class="item-name">{{ __('Properties Online') }}</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
                                                     <a class="" href="{{ route('properties') }}?filterOffline=1">
                                                         <span class="item-name">{{ __('Properties Offline') }}</span>
                                                     </a>

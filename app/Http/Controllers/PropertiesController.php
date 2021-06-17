@@ -66,6 +66,7 @@ class PropertiesController extends Controller
             $config['filterByUserId'] = UserHelper::getCurrentUserID();
         }
 
+        $config['filterOnline'] = (bool) $request->filterOnline;
         $config['filterByOffline'] = (bool) $request->filterOffline;
         $config['filterByDisabled'] = (bool) $request->filterDisabled;
 
