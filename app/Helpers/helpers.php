@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Helpers\RatesHelper;
+use App\Helpers\RoleHelper;
 use App\Helpers\LanguageHelper;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
@@ -748,6 +749,13 @@ if (!function_exists('getPropertyRate')) {
     function getPropertyRate($property, $rates, $from_date = '', $to_date = '')
     {
         return RatesHelper::getPropertyRate($property, $rates, $from_date, $to_date);
+    }
+}
+
+if (!function_exists('can')) {
+    function can($action = 'view', $sectionSlug)
+    {
+        return RoleHelper::can($action, $sectionSlug);
     }
 }
 

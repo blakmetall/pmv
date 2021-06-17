@@ -225,8 +225,8 @@
                                     'editRoute' => 'properties.edit',
                                     'deleteRoute' => 'properties.destroy',
                                     'skipShow' => true,
-                                    'skipEdit' => isRole('owner'),
-                                    'skipDelete' => isRole('owner')
+                                    'skipEdit' => isRole('owner') || !can('edit', 'properties'),
+                                    'skipDelete' => isRole('owner') || !can('edit', 'properties'),
                                 ])
                             </td>
 

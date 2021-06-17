@@ -4,7 +4,7 @@
 
     @php 
         $actions = [];
-        if(!isRole('owner')) {
+        if(!isRole('owner') && can('edit', 'properties')) {
             $actions = [
                 [
                     'label' => __('New'),

@@ -10,7 +10,7 @@
             ],
         ];
 
-        if(!isRole('owner')) {
+        if(!isRole('owner') && can('edit', 'properties')) {
             $actions = array_merge($actions, [
                 [
                     'label' => __('New'),

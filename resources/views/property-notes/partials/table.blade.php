@@ -61,8 +61,8 @@
                                 'showRoute' => 'property-notes.show',
                                 'editRoute' => 'property-notes.edit',
                                 'deleteRoute' => 'property-notes.destroy',
-                                'skipEdit' => isRole('owner'),
-                                'skipDelete' => isRole('owner'),
+                                'skipEdit' => isRole('owner') || !can('edit', 'property-notes'),
+                                'skipDelete' => isRole('owner') || !can('edit', 'property-notes'),
                             ])
                         </td>
 
