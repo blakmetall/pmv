@@ -19,8 +19,8 @@
     'cancel_route' => 'property-rates',
     'delete_route' => 'property-rates.destroy',
     'routeParams' => [$property->id],
-    'skipEdit' => isRole('owner'),
-    'skipDelete' => isRole('owner'),
+    'skipEdit' => isRole('owner') || !can('edit', 'property-rates'),
+    'skipDelete' => isRole('owner') || !can('edit', 'property-rates'),
 ])
 
 <div id="property-rates-info" style="margin-top: 50px">

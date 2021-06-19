@@ -2,6 +2,18 @@
 
 @section('heading-content')
 
+    @php
+        $btns = [];
+
+        if(can('edit', 'property-rates')){
+            $btns[] = [
+                'label' => __('New'),
+                'url' => route('property-rates.create', [$property->id]),
+                'icon' => 'i-Add',
+            ];
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('View'),
         'breadcrumbs' => [
@@ -10,13 +22,7 @@
                 'label' => __('Rates'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-rates.create', [$property->id]),
-                'icon' => 'i-Add',
-            ]
-        ]
+        'actions' => $btns,
     ])
 
     <!-- separator -->

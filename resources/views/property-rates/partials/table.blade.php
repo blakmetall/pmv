@@ -74,6 +74,8 @@
                                 'showRoute' => 'property-rates.show',
                                 'editRoute' => 'property-rates.edit',
                                 'deleteRoute' => 'property-rates.destroy',
+                                'skipEdit' => !can('edit', 'property-rates'),
+                                'skipDelete' => !can('edit', 'property-rates'),
                             ])
                         </td>
 

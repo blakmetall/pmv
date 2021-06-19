@@ -28,6 +28,12 @@ class PropertyRatesController extends Controller
 
     public function create(Property $property)
     {
+        // permission control
+        if(!can('edit', 'property-rates')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $rate = $this->repository->blueprint();
         return view('property-rates.create')
             ->with('rate', $rate)
@@ -36,6 +42,12 @@ class PropertyRatesController extends Controller
 
     public function store(Request $request, Property $property)
     {
+        // permission control
+        if(!can('edit', 'property-rates')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $rate = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('property-rates.create', [$property->id, $rate->id]));
@@ -52,6 +64,12 @@ class PropertyRatesController extends Controller
 
     public function edit(Property $property, PropertyRate $rate)
     {
+        // permission control
+        if(!can('edit', 'property-rates')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $rate = $this->repository->find($rate);
 
         return view('property-rates.edit')
@@ -61,6 +79,12 @@ class PropertyRatesController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
+        // permission control
+        if(!can('edit', 'property-rates')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
         return redirect(route('property-rates.edit', [$property->id, $id]));
@@ -68,6 +92,12 @@ class PropertyRatesController extends Controller
 
     public function destroy(Request $request, Property $property, $id)
     {
+        // permission control
+        if(!can('edit', 'property-rates')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+        
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
