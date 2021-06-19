@@ -2,16 +2,24 @@
 
 @section('heading-content')
 
-    @include('components.heading', [
-        'label' => __('Images'),
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-images.create', [$property->id]),
-                'icon' => 'i-Add',
-            ]
-        ]
-    ])
+    @php
+        $btns = [];
+
+        if(can('edit', 'property-images')){
+            $btns[] = [
+                'label' => __('Images'),
+                'actions' => [
+                    [
+                        'label' => __('New'),
+                        'url' => route('property-images.create', [$property->id]),
+                        'icon' => 'i-Add',
+                    ]
+                ]
+            ];
+        }
+    @endphp
+
+    @include('components.heading', $btns)
 
     <!-- separator -->
     <div class="mb-4"></div>

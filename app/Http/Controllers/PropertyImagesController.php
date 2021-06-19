@@ -27,6 +27,12 @@ class PropertyImagesController extends Controller
 
     public function create(Property $property)
     {
+        // permission control
+        if(!can('edit', 'property-images')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $image = $this->repository->blueprint();
         return view('property-images.create')
             ->with('image', $image)
@@ -35,6 +41,12 @@ class PropertyImagesController extends Controller
 
     public function store(Request $request, Property $property)
     {
+        // permission control
+        if(!can('edit', 'property-images')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         return redirect(route('property-images', [$property->id]));
@@ -51,6 +63,12 @@ class PropertyImagesController extends Controller
 
     public function edit(Property $property, PropertyImage $image)
     {
+        // permission control
+        if(!can('edit', 'property-images')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $image = $this->repository->find($image);
 
         return view('property-images.edit')
@@ -60,6 +78,12 @@ class PropertyImagesController extends Controller
 
     public function update(Request $request, Property $property, $id)
     {
+        // permission control
+        if(!can('edit', 'property-images')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $image = $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
         return redirect( route('property-images.edit', [$property->id, $image->id]) );
@@ -67,6 +91,12 @@ class PropertyImagesController extends Controller
 
     public function destroy(Request $request, Property $property, $id)
     {
+        // permission control
+        if(!can('edit', 'property-images')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         if ( $this->repository->canDelete($id) ) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
@@ -78,6 +108,12 @@ class PropertyImagesController extends Controller
     }
 
     public function destroyAll(Request $request) {
+        // permission control
+        if(!can('edit', 'property-images')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+        
         if($request->ids) {
             $imagesToDelete = explode('_', trim($request->ids, '_'));
             

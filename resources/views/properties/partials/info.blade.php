@@ -114,7 +114,7 @@ $property = isset($property) ? $property : false;
                         @endif
 
                         <!-- property management -->
-                        @if (!isRole('owner'))
+                        @if (!isRole('owner') && can('edit', 'property-management'))
                             <a role="button" href="{{ route('property-management', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Property Management') }}" alt="{{ __('Property Management') }}">

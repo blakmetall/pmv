@@ -15,12 +15,14 @@
                 <th scope="col">&nbsp;</th>
                 <th scope="col">&nbsp;</th>
                 <th scope="col">
-                    <input type="checkbox" class="delete-selectable-checkbox" />
-                    <a href="{{ route('property-images.destroy-all', [$property->id, '']) }}" 
-                        data-tpl-route="{{ route('property-images.destroy-all', [$property->id, '']) }}"
-                        class="checkbox-table-delete delete-selectable-action btn btn-danger">
-                        {{ __('Delete') }}
-                    </a>
+                    @if(can('edit', 'property-images'))
+                        <input type="checkbox" class="delete-selectable-checkbox" />
+                        <a href="{{ route('property-images.destroy-all', [$property->id, '']) }}" 
+                            data-tpl-route="{{ route('property-images.destroy-all', [$property->id, '']) }}"
+                            class="checkbox-table-delete delete-selectable-action btn btn-danger">
+                            {{ __('Delete') }}
+                        </a>
+                    @endif
                 </th>
             </tr>
 
@@ -67,12 +69,14 @@
 
                         <!-- property -->
                         <td>
-                            <a href="{{ route('property-images.order-up', [$row->property->id, $row->id]) }}">
-                                <i class="nav-icon i-Up font-weight-bold"></i>
-                            </a>
-                            <a href="{{ route('property-images.order-down', [$row->property->id, $row->id]) }}">
-                                <i class="nav-icon i-Down font-weight-bold"></i>
-                            </a>
+                            @if(can('edit', 'property-images'))
+                                <a href="{{ route('property-images.order-up', [$row->property->id, $row->id]) }}">
+                                    <i class="nav-icon i-Up font-weight-bold"></i>
+                                </a>
+                                <a href="{{ route('property-images.order-down', [$row->property->id, $row->id]) }}">
+                                    <i class="nav-icon i-Down font-weight-bold"></i>
+                                </a>
+                            @endif
                         </td>
 
                         <!-- actions -->
@@ -82,11 +86,15 @@
                                 'showRoute' => 'property-images.show',
                                 'editRoute' => 'property-images.edit',
                                 'deleteRoute' => 'property-images.destroy',
+                                'skipEdit' => !can('edit', 'property-images'),
+                                'skipDelete' => !can('edit', 'property-images'),
                             ])
                         </td>
 
                         <td>
-                            <input type="checkbox" value="{{ $row->id }}" class="delete-selectable-option" />
+                            @if(can('edit', 'property-images'))
+                                <input type="checkbox" value="{{ $row->id }}" class="delete-selectable-option" />
+                            @endif
                         </td>
 
                     </tr>

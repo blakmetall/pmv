@@ -205,7 +205,7 @@
                                 @endif
 
                                 <!-- property management -->
-                                @if (!isRole('owner'))
+                                @if (!isRole('owner') && can('edit', 'property-management'))
                                     <a
                                         href="{{ route('property-management', [$row->property->id]) }}"
                                         class="text-primary app-icon-link"

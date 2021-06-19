@@ -41,11 +41,13 @@ $_current_role = RoleHelper::current();
                                                     </a>
                                                 </li>
 
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('properties.create') }}">
-                                                        <span class="item-name">{{ __('New Listing') }}</span>
-                                                    </a>
-                                                </li>
+                                                @if(can('edit', 'properties'))
+                                                    <li class="nav-item">
+                                                        <a class="" href="{{ route('properties.create') }}">
+                                                            <span class="item-name">{{ __('New Listing') }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endif
 
                                                 <li class="nav-item">
                                                     <a class="" href="{{ route('properties') }}?filterOnline=1">

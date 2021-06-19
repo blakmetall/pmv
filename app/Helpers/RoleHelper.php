@@ -130,52 +130,52 @@ class RoleHelper
             // property-images
             case 'property-images':
                 if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
+                    $view_images = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_images);
                 }
                 
                 if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_images = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_images);
                 }
                 break;
             
             // property-bookings
             case 'property-bookings':
                 if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
+                    $view_bookings = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_bookings);
                 }
                 
                 if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_bookings = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_bookings);
                 }
                 break;
 
             // property-rates
             case 'property-rates':
                 if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
+                    $view_rates = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_rates);
                 }
                 
                 if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_rates = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_rates);
                 }
                 break;
 
             // property-contacts
             case 'property-contacts':
                 if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
+                    $view_contacts = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_contacts);
                 }
                 
                 if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_contacts = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_contacts);
                 }
                 break;
 
@@ -195,34 +195,34 @@ class RoleHelper
             // property-calendar
             case 'property-calendar':
                 if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
+                    $view_calendar = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_calendar);
                 }
                 
                 if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_calendar = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_calendar);
                 }
                 break;
 
             // property-preview
             case 'property-preview':
                 if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
+                    $view_preview = [8,2,9,14,10,13,7,6,3,5,1];
+                    $can = in_array($currentRole->id, $view_preview);
                 }
                 
                 if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_preview = [8,2,6,5,1];
+                    $can = in_array($currentRole->id, $edit_preview);
                 }
                 break;
 
             // property-management
             case 'property-management':
                 if($action == 'edit') {
-                    $edit_properties = [8,2,9,6,1];
-                    $can = in_array($currentRole->id, $edit_properties);
+                    $edit_property_management = [8,2,9,6,1];
+                    $can = in_array($currentRole->id, $edit_property_management);
                 }
                 break;
         }
@@ -314,65 +314,67 @@ class RoleHelper
             'property-management' => [
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
+                    'accounting',
                     'admin',
-                    'property-management',
+                    'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
                     'owner',
                 ]),
                 'new-transaction' => self::transformSluggedRolesToIds([
                     'super',
+                    'accounting',
                     'admin',
-                    'property-management',
+                    'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
+                    'owner',
                 ]),
                 'transaction-bulk' => self::transformSluggedRolesToIds([
                     'super',
+                    'accounting',
                     'admin',
-                    'property-management',
+                    'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
+                    'owner',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
-                    'admin',
                     'accounting',
+                    'admin',
+                    'administrative-assistant',
+                    'operations-manager',
+                    'operations-assistant',
+                    'owner',
                 ]),
                 'balances' => self::transformSluggedRolesToIds([
                     'super',
+                    'accounting',
                     'admin',
-                    'property-management',
+                    'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
                     'owner',
                 ]),
                 'transactions' => self::transformSluggedRolesToIds([
                     'super',
+                    'accounting',
                     'admin',
-                    'property-management',
+                    'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
+                    'owner',
                     'cleanings',
                 ]),
                 'pending-audits' => self::transformSluggedRolesToIds([
                     'super',
+                    'accounting',
                     'admin',
-                    'property-management',
+                    'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
+                    'owner',
                 ]),
             ],
             'property-bookings' => [

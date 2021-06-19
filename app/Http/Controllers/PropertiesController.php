@@ -83,6 +83,12 @@ class PropertiesController extends Controller
 
     public function create()
     {
+        // permission control
+        if(!can('edit', 'properties')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $property = $this->repository->blueprint();
 
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
@@ -129,6 +135,12 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
+        // permission control
+        if(!can('edit', 'properties')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $property = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
@@ -185,8 +197,14 @@ class PropertiesController extends Controller
         return response()->json($property->cleaning_sunday_bonus);
     }
 
-    public function edit(Property $property)
+    public function edit(Request $request, Property $property)
     {
+        // permission control
+        if(!can('edit', 'properties')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+        
         $property = $this->repository->find($property);
 
         $configUsers = ['paginate' => false, 'ownersOnly' => true];
@@ -233,6 +251,12 @@ class PropertiesController extends Controller
 
     public function update(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'properties')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
 
@@ -241,6 +265,12 @@ class PropertiesController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'properties')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
