@@ -285,7 +285,8 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'owner',
-                    'human-resources',
+                    'cleanings',
+                    'human-resources'
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -297,6 +298,7 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'owner',
+                    'cleanings',
                     'human-resources'
                 ]),
                 'general-availability' => self::transformSluggedRolesToIds([
@@ -308,7 +310,8 @@ class RoleHelper
                     'operations-assistant',
                     'accounting',
                     'administrative-assistant',
-                    'human-resources',
+                    'cleanings',
+                    'human-resources'
                 ]),
             ],
             'property-management' => [
@@ -548,8 +551,6 @@ class RoleHelper
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'accounting',
-                    'administrative-assistant',
                 ]),
                 'users' => self::transformSluggedRolesToIds([
                     'super',
@@ -594,8 +595,6 @@ class RoleHelper
                 'damage-deposits' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'accounting',
-                    'administrative-assistant',
                 ]),
                 'contacts' => self::transformSluggedRolesToIds([
                     'super',
@@ -603,6 +602,11 @@ class RoleHelper
                     'rentals',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
+                    'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
                 ]),
             ],
         ];
