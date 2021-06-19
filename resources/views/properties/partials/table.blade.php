@@ -199,6 +199,7 @@
                                         href="{{ route('public.property-detail', [App::getLocale(), getZone($row->property->id), $row->property->translate()->slug]) }}"
                                         class="text-primary app-icon-link"
                                         title="{{ __('Preview') }}"
+                                        target="_blank"
                                         alt="{{ __('Preview') }}">
                                             <i class="nav-icon i-Right font-weight-bold"></i>
                                     </a>

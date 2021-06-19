@@ -4,7 +4,7 @@
     @php
         $actions = [];
 
-        if (!isRole('owner')){
+        if (!isRole('owner') && can('edit', 'property-contacts')){
             $actions = array_merge($actions, [
                 [
                     'label' => __('Assign Contacts'),
