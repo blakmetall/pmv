@@ -786,11 +786,14 @@
 
             <!-- bulk bottom actions -->
             <div class="not-print pt-2 pb-5">
-                <a href="#" role="button" class="btn btn-secondary btn-sm mr-3 app-checkbox-actions-btn"
-                    data-confirm-label="{{ __('Confirm audit batch') }}"
-                    data-base-url="{{ route('property-management-transactions.audit-batch') }}">
-                    {{ __('Audit selected') }}
-                </a>
+                @if(can('audit', 'property-management'))
+                    <a href="#" role="button" class="btn btn-secondary btn-sm mr-3 app-checkbox-actions-btn"
+                        data-confirm-label="{{ __('Confirm audit batch') }}"
+                        data-base-url="{{ route('property-management-transactions.audit-batch') }}">
+                        {{ __('Audit selected') }}
+                    </a>
+                @endif
+
                 <a href="#" role="button" class="btn btn-secondary btn-sm app-checkbox-actions-btn"
                     data-confirm-label="{{ __('Confirm delete batch') }}"
                     data-base-url="{{ route('property-management-transactions.delete-batch') }}">

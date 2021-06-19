@@ -220,6 +220,11 @@ class RoleHelper
 
             // property-management
             case 'property-management':
+                if($action == 'audit') {
+                    $audit_property_management = [1,2];
+                    $can = in_array($currentRole->id, $audit_property_management);
+                }
+
                 if($action == 'edit') {
                     $edit_property_management = [8,2,9,6,1];
                     $can = in_array($currentRole->id, $edit_property_management);
