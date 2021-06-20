@@ -91,8 +91,8 @@
                                 'showRoute'   => 'cleaning-services.show',
                                 'editRoute'   => 'cleaning-services.edit',
                                 'deleteRoute' => 'cleaning-services.destroy',
-                                'skipEdit'    => isRole('owner'),
-                                'skipDelete'  => isRole('owner'),
+                                'skipEdit'    => isRole('owner') || !can('edit', 'cleaning-services'),
+                                'skipDelete'  => isRole('owner') || !can('edit', 'cleaning-services'),
                             ])
                         </td>
 

@@ -70,6 +70,12 @@ class CleaningServicesController extends Controller
 
     public function store(Request $request)
     {
+        // permission control
+        if(!can('edit', 'cleaning-services')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $cleaning_service = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
@@ -120,6 +126,12 @@ class CleaningServicesController extends Controller
 
     public function update(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'cleaning-services')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
 
@@ -133,6 +145,12 @@ class CleaningServicesController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'cleaning-services')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
@@ -147,6 +165,12 @@ class CleaningServicesController extends Controller
 
     public function destroyAjax(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'cleaning-services')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));

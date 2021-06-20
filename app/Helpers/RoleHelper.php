@@ -230,6 +230,20 @@ class RoleHelper
                     $can = in_array($currentRole->id, $edit_property_bookings);
                 }
                 break;
+
+            // cleaning-services
+            case 'cleaning-services':
+                if($action == 'view') {
+                    $view_property_bookings = [8,2,9,14,10,13,7,6,3,5,1,11];
+                    $can = in_array($currentRole->id, $view_property_bookings);
+                }
+
+                if($action == 'edit') {
+                    $edit_property_bookings = [8,2,9,14,6,1];
+                    $can = in_array($currentRole->id, $edit_property_bookings);
+                }
+                break;
+            
         }
 
         return $can;
@@ -472,35 +486,43 @@ class RoleHelper
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
-                    'cleanings',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
                     'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'operations-manager',
+                    'property-management',
+                    'rentals',
                     'owner',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
-                    'cleanings',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
                     'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'operations-manager',
+                    'property-management',
+                    'rentals',
                     'owner',
                 ]),
                 'monthly-batch' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'property-management',
-                    'operations-assistant',
-                    'cleanings',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
+                    'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'operations-manager',
+                    'property-management',
+                    'rentals',
                 ]),
             ],
             'human-resources' => [

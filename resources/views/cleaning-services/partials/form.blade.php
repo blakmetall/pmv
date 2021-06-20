@@ -16,8 +16,8 @@
 
 @php
     $skipCancel = isset($withModal) ? true : false;
-    $skipEdit   = isRole('owner') ? true : false;
-    $skipDelete = isset($withModal) || isRole('owner') ? true : false;
+    $skipEdit   = isRole('owner') || !can('edit', 'cleaning-services') ? true : false;
+    $skipDelete = isset($withModal) || isRole('owner') || !can('edit', 'cleaning-services') ? true : false;
 @endphp
 
 <!-- form actions -->

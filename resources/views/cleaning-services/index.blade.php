@@ -5,7 +5,7 @@
     @php 
         $actions = [];
 
-        if(!isRole('owner')) {
+        if(!isRole('owner') && can('edit', 'cleaning-services')) {
             $actions = array_merge($actions, [
                 [
                     'label' => __('New'),

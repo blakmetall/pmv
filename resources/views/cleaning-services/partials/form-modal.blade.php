@@ -15,9 +15,9 @@
 </fieldset>
 
 @php
-    $skipEdit   = isRole('owner') ? true : false;
+    $skipEdit   = isRole('owner') || !can('edit', 'cleaning-services') ? true : false;
     $skipCancel = isset($withModal) ? true : false;
-    $skipDelete = false;
+    $skipDelete = !can('edit', 'cleaning-services');
     $isModal = true;
 @endphp
 
