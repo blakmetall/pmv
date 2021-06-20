@@ -4,13 +4,16 @@
 
     @php
     if (!$booking->is_cancelled && !$booking->is_finished) {
-        $actions = [
-            [
-                'label' => __('Add Payment'),
-                'url' => route('property-booking-payments.create', [$booking->id]),
-                'icon' => 'i-Add',
-            ],
-        ];
+        
+        if(!isRole('owner') && can('edit', 'property-bookings')) {
+            $actions = [
+                [
+                    'label' => __('Add Payment'),
+                    'url' => route('property-booking-payments.create', [$booking->id]),
+                    'icon' => 'i-Add',
+                ],
+            ];
+        }
     } else {
         $actions = [];
     }

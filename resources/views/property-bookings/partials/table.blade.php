@@ -118,8 +118,8 @@
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => isRole('owner') || !can('edit', 'property-bookings'),
-                                    'skipEdit' => isRole('owner') || !can('edit', 'property-bookings'),
+                                    'skipDelete' => (isRole('owner') && $row->register_by != 'Owner') || !can('edit', 'property-bookings'),
+                                    'skipEdit' => (isRole('owner') && $row->register_by != 'Owner') || !can('edit', 'property-bookings'),
                                 ])
                         </td>
 

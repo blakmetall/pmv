@@ -239,6 +239,7 @@ class PropertyBookingController extends Controller
         $nextYear = Carbon::create($currYear)->addYear()->year;
         $bookings = $this->repository->all('', ['propertyID' => $property->id, 'currentYear' => $currYear]);
         $calendar = $this->generateCalendar($property, $request);
+
         return view('property-bookings.calendar')
             ->with('bookings', $bookings)
             ->with('property', $property)
@@ -536,6 +537,12 @@ class PropertyBookingController extends Controller
 
     public function store(Request $request)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $availability = getAvailabilityProperty($request->property_id, $request->arrival_date, $request->departure_date);
 
         if ($availability === 'none' || $availability == 'some') {
@@ -607,6 +614,12 @@ class PropertyBookingController extends Controller
 
     public function update(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $availability = getAvailabilityProperty($request->property_id, $request->arrival_date, $request->departure_date, $id);
 
         if ($availability === 'none' || $availability == 'some') {
@@ -621,6 +634,12 @@ class PropertyBookingController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+        
         if ($this->repository->canDelete($id)) {
             $booking = $this->repository->find($id);
             $contacts = $booking->property->contacts;

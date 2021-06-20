@@ -54,6 +54,12 @@ class PropertyBookingPaymentsController extends Controller
 
     public function store(Request $request)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $payment = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
         
@@ -67,6 +73,12 @@ class PropertyBookingPaymentsController extends Controller
 
     public function email($id)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $payment = $this->repository->find($id);
         $booking = $this->bookingsRepository->find($payment->booking_id);
         $property = $booking->property;
@@ -152,6 +164,14 @@ class PropertyBookingPaymentsController extends Controller
         $property = $booking->property;
         $transactionSources = $this->transactionSourcesRepository->all('');
 
+        // the owner can edit only reservations registered by him
+        if(isRole('owner')) {
+            if($booking->register_by != 'Owner') {
+                $request->session()->flash('error', __("You don't have access to this area"));
+                return redirect()->back();
+            }
+        }
+
         return view('property-booking-payments.edit')
             ->with('payment', $payment)
             ->with('booking', $booking)
@@ -161,6 +181,12 @@ class PropertyBookingPaymentsController extends Controller
 
     public function update(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $this->repository->update($request, $id);
 
         if ($request->email_notification) {
@@ -172,6 +198,12 @@ class PropertyBookingPaymentsController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+        
         if ($this->repository->canDelete($id)) {
 
             $this->repository->delete($id);

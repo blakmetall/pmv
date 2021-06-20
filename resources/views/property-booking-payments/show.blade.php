@@ -2,6 +2,18 @@
 
 @section('heading-content')
 
+    @php
+        $actions = [];
+
+        if(!isRole('owner') && can('edit', 'property-bookings')) {
+            $actions = [
+                'label' => __('Add Payment'),
+                'url' => route('property-booking-payments.create', [$booking->id]),
+                'icon' => 'i-Add',
+            ];
+        }
+    @endphp
+
     @include('components.heading', [
         'label' => __('View'),
         'breadcrumbs' => [
@@ -10,13 +22,7 @@
                 'label' => __('Payments'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('Add Payment'),
-                'url' => route('property-booking-payments.create', [$booking->id]),
-                'icon' => 'i-Add',
-            ]
-        ]
+        'actions' => $actions,
     ])
 
     <!-- separator -->

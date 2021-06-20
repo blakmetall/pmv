@@ -363,6 +363,7 @@
         'value' => $row->register_by,
         'options' => $registers,
         'optionValueRef' => 'name',
+        'disableDefaultOption' => true,
         ])
         @if (!isRole('owner'))
             <!-- damage_deposit_id -->
