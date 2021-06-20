@@ -139,19 +139,6 @@ class RoleHelper
                     $can = in_array($currentRole->id, $edit_images);
                 }
                 break;
-            
-            // property-bookings
-            case 'property-bookings':
-                if($action == 'view') {
-                    $view_bookings = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_bookings);
-                }
-                
-                if($action == 'edit') {
-                    $edit_bookings = [8,2,6,5,1];
-                    $can = in_array($currentRole->id, $edit_bookings);
-                }
-                break;
 
             // property-rates
             case 'property-rates':
@@ -228,6 +215,19 @@ class RoleHelper
                 if($action == 'edit') {
                     $edit_property_management = [8,2,9,6,1];
                     $can = in_array($currentRole->id, $edit_property_management);
+                }
+                break;
+            
+            // property-bookings
+            case 'property-bookings':
+                if($action == 'view') {
+                    $view_property_bookings = [8,2,9,14,10,13,7,6,3,5,1,11];
+                    $can = in_array($currentRole->id, $view_property_bookings);
+                }
+
+                if($action == 'edit') {
+                    $edit_property_bookings = [8,2,9,10,6,5,1,11];
+                    $can = in_array($currentRole->id, $edit_property_bookings);
                 }
                 break;
         }
@@ -389,35 +389,65 @@ class RoleHelper
                 'heading-menu' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
                     'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
+                    'rentals',
                     'owner',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
                     'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
+                    'rentals',
                     'owner',
                 ]),
                 'property' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
                     'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
+                    'rentals',
                     'owner',
+                ]),
+                'general-availability' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                    'cleanings',
+                    'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
+                    'rentals',
+                ]),
+                'rates-calculator' => self::transformSluggedRolesToIds([
+                    'super',
+                    'admin',
+                    'accounting',
+                    'administrative-assistant',
+                    'cleanings',
+                    'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
+                    'rentals',
                 ]),
                 'owner' => self::transformSluggedRolesToIds([
                     'owner',
@@ -425,49 +455,17 @@ class RoleHelper
                 'requests' => self::transformSluggedRolesToIds([
                     'super',
                     'admin',
-                    'rentals',
-                    'operations-assistant',
                     'accounting',
                     'administrative-assistant',
+                    'cleanings',
+                    'concierge',
+                    'human-resources',
+                    'operations-assistant',
+                    'property-management',
+                    'rentals',
                 ]),
                 'owner-requests' => self::transformSluggedRolesToIds([
                     'owner',
-                ]),
-                'agents' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'rentals',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'commissions' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'rentals',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                ]),
-                'general-availability' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'concierge',
-                ]),
-                'rates-calculator' => self::transformSluggedRolesToIds([
-                    'super',
-                    'admin',
-                    'property-management',
-                    'rentals',
-                    'operations-assistant',
-                    'accounting',
-                    'administrative-assistant',
-                    'concierge',
                 ]),
             ],
             'cleaning-services' => [

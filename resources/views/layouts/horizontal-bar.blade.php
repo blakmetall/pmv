@@ -186,35 +186,19 @@ $_current_role = RoleHelper::current();
                                                 </a>
                                             </li>
 
-                                            <li class="nav-item">
-                                                <a class="" href="#" data-toggle="modal"
-                                                    data-target="#app-property-bookings-selection-modal">
-                                                    <span class="item-name">{{ __('New Reservation') }}</span>
-                                                </a>
-                                            </li>
+                                            @if(can('edit', 'property-bookings'))
+                                                <li class="nav-item">
+                                                    <a class="" href="#" data-toggle="modal"
+                                                        data-target="#app-property-bookings-selection-modal">
+                                                        <span class="item-name">{{ __('New Reservation') }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
 
                                             <li class="nav-item">
                                                 <a class=""
                                                     href="{{ route('property-bookings.arrivals-departures') }}">
                                                     <span class="item-name">{{ __('Arrivals & Departures') }}</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        {{-- Posiblemente para remover 
-                                            @if ($_current_role->isAllowed('property-bookings', 'agents'))
-                                                <li class="nav-item">
-                                                    <a class="" href="{{ route('agents') }}">
-                                                        <span class="item-name">{{ __('Agents') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif 
-                                        --}}
-
-                                        @if ($_current_role->isAllowed('property-bookings', 'commisions'))
-                                            <li class="nav-item">
-                                                <a class="" href="#">
-                                                    <span class="item-name">{{ __('Commisions') }}</span>
                                                 </a>
                                             </li>
                                         @endif

@@ -118,8 +118,8 @@
                                     'showRoute' => 'property-bookings.show',
                                     'editRoute' => 'property-bookings.edit',
                                     'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => isRole('owner') ? true : false,
-                                    'skipEdit' => isRole('owner') ? true : false,
+                                    'skipDelete' => isRole('owner') || !can('edit', 'property-bookings'),
+                                    'skipEdit' => isRole('owner') || !can('edit', 'property-bookings'),
                                 ])
                         </td>
 

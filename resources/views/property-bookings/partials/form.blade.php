@@ -19,5 +19,6 @@
     'cancel_route' => 'property-bookings',
     'delete_route' => 'property-bookings.destroy',
     'routeParams' => [],
-    'skipDelete' => isRole('owner'),
+    'skipDelete' => isRole('owner') || !can('edit', 'property-bookings'),
+    'skipEdit' => !can('edit', 'property-bookings'),
 ])

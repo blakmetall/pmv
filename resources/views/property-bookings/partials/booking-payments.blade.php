@@ -45,7 +45,7 @@
                         </td>
 
                         <td>
-                            @if(!isRole('owner'))
+                            @if(!isRole('owner') && can('edit', 'property-bookings'))
                                 <!-- email notification for property management transaction -->
                                 <a href="{{ route('property-booking-payments.email', [$row->id]) }}" class="text-primary">
                                     <img src="/images/email.svg" alt="" width="16px" style="width: 16px; position: relative; top: -4px;">
@@ -60,8 +60,8 @@
                                 'editRoute' => 'property-booking-payments.edit',
                                 'deleteRoute' => 'property-booking-payments.destroy',
                                 'skipShow' => true,
-                                'skipEdit' => isRole('owner') ? true : false,
-                                'skipDelete' => isRole('owner') ? true : false,
+                                'skipEdit' => isRole('owner') || !can('edit', 'property-bookings'),
+                                'skipDelete' => isRole('owner') || !can('edit', 'property-bookings'),
                             ])
                         </td>
 

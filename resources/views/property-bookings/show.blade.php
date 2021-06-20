@@ -10,13 +10,6 @@
                 'label' => __('Bookings'),
             ],
         ],
-        'actions' => [
-            [
-                'label' => __('New'),
-                'url' => route('property-bookings.create', [$property->id]),
-                'icon' => 'i-Add',
-            ]
-        ]
     ])
 
     <!-- separator -->
