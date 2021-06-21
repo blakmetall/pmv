@@ -106,23 +106,27 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
         }
 
         if ($payment->save()) {
-            if ($property->management()->count()) {
-                foreach ($property->management as $pm) {
-                    if (!$pm->is_finished) {
-                        if ($request->credit_amount) {
-                            $transaction = new PropertyManagementTransaction();
-                            $transaction->property_management_id = $pm->id;
-                            $transaction->transaction_type_id = 18;
-                            $transaction->amount = $request->credit_amount;
-                            $transaction->post_date = $request->post_date;
-                            $transaction->operation_type = 2;
-                            $transaction->description = $request->credit_notes;
-                            $transaction->save();
+            // add pm transaction if applies
+            if($request->add_pm_transaction) {
+                if ($property->management()->count()) {
+                    foreach ($property->management as $pm) {
+                        if (!$pm->is_finished) {
+                            if ($request->credit_amount) {
+                                $transaction = new PropertyManagementTransaction();
+                                $transaction->property_management_id = $pm->id;
+                                $transaction->transaction_type_id = 18;
+                                $transaction->amount = $request->credit_amount;
+                                $transaction->post_date = $request->post_date;
+                                $transaction->operation_type = 2;
+                                $transaction->description = $request->credit_notes;
+                                $transaction->save();
+                            }
                         }
                     }
                 }
             }
         }
+
         $request->session()->flash('success', __('Record updated successfully'));
         return $payment;
     }

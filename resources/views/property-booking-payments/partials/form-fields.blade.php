@@ -133,6 +133,15 @@
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('PM Credit') }}</span>
 
+        <!-- checkbox to charge credit amount -->
+        @include('components.form.checkbox', [
+            'group' => 'credit',
+            'label' => __('Add property management transaction?'),
+            'name' => 'add_pm_transaction',
+            'value' => 1,
+            'default' => '',
+        ])
+
         <!-- credit_amount -->
         @include('components.form.input', [
             'id' => 'booking-payment-pm-amount',

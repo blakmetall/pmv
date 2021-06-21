@@ -9,7 +9,9 @@ export function reservationTransactionCalculator() {
         var exchangeRateVal = parseFloat(exchange_rate.val());
         var comissionVal = parseFloat(comission.val());
 
-        var pm_amountVal = (amountVal - comissionVal) * exchangeRateVal;
+        var comissionAmount = (comissionVal/100) * amountVal;
+
+        var pm_amountVal = (amountVal - comissionAmount) * exchangeRateVal;
         
         if(!Number.isNaN(pm_amountVal)) {
             pm_amount.val(pm_amountVal);
