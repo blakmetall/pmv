@@ -21,7 +21,14 @@
     <div id="search-breadcrumbs" class="row mb-3">  
         <div class="col-xs-9">
             <span class="">
-                {{ $city->name }} / {{ __('Travel dates') }}: {{ $bothDates }} / {{ __('Bedrooms') }}: {{ $bedrooms }} / {{ __('Adults') }}: {{ $adults }} / {{ __('Children') }}: {{ $children }}
+                @if($city)
+                    {{ $city->name }} / 
+                @endif
+                
+                {{ __('Travel dates') }}: {{ $bothDates }} / 
+                {{ __('Bedrooms') }}: {{ $bedrooms }} / 
+                {{ __('Adults') }}: {{ $adults }} / 
+                {{ __('Children') }}: {{ $children }}
             </span>
         </div>  
     </div>

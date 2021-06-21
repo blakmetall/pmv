@@ -124,7 +124,17 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $user = auth()->user();
 
         if ($is_new) {
+            $randomId = rand(1,999999);
+            $bookingTmp = $this->model->find($randomId);
+
+            // avoid id duplicates
+            while($bookingTmp) {
+                $randomId = rand(1,999999);
+                $bookingTmp = $this->model->find($randomId);
+            }
+
             $booking = $this->blueprint();
+            $booking->id = $randomId;
         } else {
             $booking = $this->find($id);
         }
