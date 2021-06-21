@@ -3,7 +3,7 @@
 <!-- pagination is loeaded here -->
 @include('partials.pagination', ['rows' => $rows])
 
-<div class="table-responsive">
+<div id="table-print-human-resources" class="table-responsive">
     <table class="table table-striped">
         <thead>
 
@@ -22,7 +22,14 @@
                 <th scope="col">{{ __('Antiqueness') }}</th>
                 <th scope="col">{{ __('Phone') }}</th>
                 <th scope="col">{{ __('Active') }}</th>
-                <th scope="col">&nbsp;</th>
+                <th scope="col">
+                    <a href="#" class="btn-print not-print" style="position: relative; top: 11px;"
+                        data-table="table-print-human-resources" data-title="{{ __('Human Resources') }}">
+                        <i class="nav-icon i-Billing"></i>
+                        {{ __('Print') }}
+                    </a>
+                    <div class="mb-3"></div>
+                </th>
             </tr>
 
         </thead>
@@ -86,7 +93,7 @@
 
                         <!-- is_active -->
                         <td>
-                            {!! getStatusIcon($row->is_active) !!}
+                            {{ $row->is_active ? __('Yes') : __('No') }}
                         </td>
                         <!-- actions -->
                         <td>

@@ -11,6 +11,7 @@
     $disableDefaultOption = isset($disableDefaultOption) ? (bool) $disableDefaultOption : false;
     $hidden = isset($hidden) ? (bool) $hidden : false;
     $instruction = isset($instruction) ? $instruction : false;
+    $hideLabel = isset($hideLabel) ? $hideLabel : false;
 
     $options = isset($options) && count($options) ? $options : [];
     $optionValueRef = isset($optionValueRef) ? $optionValueRef : '';
@@ -32,13 +33,16 @@
 @endphp
 
 <div class="form-group row" style="{{ $hiddenStyle }} ">
-    <label for="{{ $id }}" class="col-sm-2 col-form-label">
-        {{ $label }}
+    @if(!$hideLabel)
+        <label for="{{ $id }}" class="col-sm-2 col-form-label">
+            {{ $label }}
 
-        @if ($required)
-            <span>*</span>
-        @endif
-    </label>
+            @if ($required)
+                <span>*</span>
+            @endif
+        </label>
+    @endif
+
     <div class="col-sm-10">
 
         <select

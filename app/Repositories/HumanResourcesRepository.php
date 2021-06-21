@@ -24,6 +24,7 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $shouldFilterByWorkgroup = isset($config['filterByWorkgroup']) ? $config['filterByWorkgroup'] : false;
         $isCleaningStaffOnly = isset($config['cleaningStaffOnly']) ? $config['cleaningStaffOnly'] : false;
+        $shouldFilterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : false;
 
         if ($search) {
             $query = HumanResource::
@@ -44,6 +45,10 @@ class HumanResourcesRepository implements HumanResourcesRepositoryInterface
 
         if ($isCleaningStaffOnly) {
             $query->where('is_cleaning_staff', 1);
+        }
+
+        if($shouldFilterByCity) {
+            $query->where('city_id', $shouldFilterByCity);
         }
 
         if ($shouldPaginate) {

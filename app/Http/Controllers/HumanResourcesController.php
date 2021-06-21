@@ -27,10 +27,20 @@ class HumanResourcesController extends Controller
     {
         $search = trim($request->s);
 
-        $config = ['filterByWorkgroup' => true];
-        $human_resources = $this->repository->all($search, $config);        
+        $config = [
+            'filterByWorkgroup' => true, 
+            'filterByCity' => $request->city
+        ];
+        $human_resources = $this->repository->all($search, $config);   
+        
+        $citiesConfig = [
+            'paginate' => false,
+            'filterByWorkgroup' => true,
+        ];
+        $cities = $this->citiesRepository->all('', $citiesConfig);
 
         return view('human-resources.index')
+            ->with('cities', $cities)
             ->with('human_resources', $human_resources)
             ->with('search', $search);
     }

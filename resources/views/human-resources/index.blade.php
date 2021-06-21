@@ -16,7 +16,7 @@
     <!-- separator -->
     <div class="mb-4"></div>
 
-    @include('components.search', [
+    @include('human-resources.partials.search', [
         'url' => route('human-resources')
     ])
 
