@@ -97,11 +97,14 @@ class PropertyBookingPaymentsController extends Controller
 
     public function sendEmail(Request $request, PropertyBooking $booking)
     {
-        $request->session()->flash('success', __('Email sent successfully'));
+        if($request->send_payment_email || $request->send_pm_transaction_email){
+            $request->session()->flash('success', __('Email sent successfully'));
+        }
 
         $guests = explode(',', $request->guests_recipients);
         $content = nl2br($request->guest_email_content);
-        if (count($guests)) {
+
+        if ($request->send_payment_email && count($guests)) {
             foreach ($guests as $guest) {
                 $this->notification($booking, $content, $guest);
             }
@@ -109,7 +112,8 @@ class PropertyBookingPaymentsController extends Controller
 
         $owners = explode(',', $request->owners_recipients);
         $content = nl2br($request->owners_email_content);
-        if (count($owners)) {
+
+        if ($request->send_pm_transaction_email && count($owners)) {
             foreach ($owners as $owner) {
                 $this->notification($booking, $content, $owner);
             }

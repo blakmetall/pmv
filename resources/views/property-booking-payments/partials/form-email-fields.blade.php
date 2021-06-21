@@ -22,6 +22,15 @@
             'value' => $booking->id
         ])
 
+        <!-- checkbox to send payment email -->
+        @include('components.form.checkbox', [
+            'group' => 'cleaning-service',
+            'label' => __('Send reservation payment email'),
+            'name' => 'send_payment_email',
+            'value' => 1,
+            'default' => '',
+        ])
+
         <!-- guests_recipients -->
         @include('components.form.input', [
             'group' => 'notification',
@@ -41,6 +50,15 @@
         ])
 
         <span class="badge badge-primary r-badge mb-4">{{ __('OWNER') }}</span>
+
+        <!-- checkbox to send transaction email -->
+        @include('components.form.checkbox', [
+            'group' => 'cleaning-service',
+            'label' => __('Send property management transaction email'),
+            'name' => 'send_pm_transaction_email',
+            'value' => 1,
+            'default' => '',
+        ])
 
         <!-- owners_recipients -->
         @include('components.form.input', [

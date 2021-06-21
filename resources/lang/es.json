@@ -368,6 +368,8 @@
     "Send": "Enviar",
     "Send Email": "Enviar correo",
     "Send property management transaction email?": "¿Enviar correo de transacción de Property Management?",
+    "Send reservation payment email": "Enviar email del pago de reservación",
+    "Send property management transaction email": "Enviar email de transacción de property management",
     "Send reset password email": "Enviar correo de reestablecimiento de contraseña",
     "Send Password Reset Link": "Solicitar reestablecimiento de contraseña",
     "Separate email addresses with a comma.": "Separe las direcciones de Email con una coma.",
