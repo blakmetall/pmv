@@ -36,6 +36,7 @@
 
         <!-- amount -->
         @include('components.form.input', [
+            'id' => 'booking-payment-amount',
             'group' => 'payment',
             'label' => __('Amount'),
             'name' => 'amount',
@@ -46,6 +47,7 @@
 
         <!-- exchange_rate -->
         @include('components.form.input', [
+            'id' => 'booking-payment-exchange-rate',
             'group' => 'payment',
             'label' => __('Exchange Rate'),
             'name' => 'exchange_rate',
@@ -66,6 +68,7 @@
 
         <!-- comission -->
         @include('components.form.input', [
+            'id' => 'booking-payment-comission',
             'group' => 'payment',
             'label' => __('Comission'),
             'name' => 'comission',
@@ -132,6 +135,7 @@
 
         <!-- credit_amount -->
         @include('components.form.input', [
+            'id' => 'booking-payment-pm-amount',
             'group' => 'credit',
             'label' => __('Credit Amount'),
             'name' => 'credit_amount',

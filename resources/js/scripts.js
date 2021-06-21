@@ -18,6 +18,7 @@ import { initDeleteImageModalHandler } from "./scripts/initDeleteImageModalHandl
 import { initCalendarModalHandler } from "./scripts/initCalendarModalHandler.js";
 import { initTooltip } from "./scripts/initTooltip.js";
 import { initDeleteSelectableCheckbox } from "./scripts/deleteSelectableCheckbox.js";
+import { reservationTransactionCalculator } from "./scripts/reservationTransactionCalculator.js";
 
 $(function() {
     /////////////////////////////
@@ -58,6 +59,8 @@ $(function() {
         initBulkTransactionsHandler();
 
         initDeleteSelectableCheckbox();
+
+        reservationTransactionCalculator();
     }
 
     function printTable(table, title) {

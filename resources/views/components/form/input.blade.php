@@ -14,7 +14,9 @@
     $validTypes = ['text', 'email', 'password', 'date', 'time', 'hidden'];
     $type = isset($type) && in_array($type, $validTypes) ? $type : 'text';
 
-    $id = 'field_' . $group . '_' . $name . '_' . $lang;
+    if(!isset($id)) {
+        $id = 'field_' . $group . '_' . $name . '_' . $lang;
+    }
 
     $requestName = prepareFormRequestName($name, $parentName, $lang);
     $inputName = prepareFormInputName($name, $parentName, $lang);
