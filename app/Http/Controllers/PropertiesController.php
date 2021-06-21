@@ -115,6 +115,7 @@ class PropertiesController extends Controller
             'Double Bed',
             'Single Bed',
             'Pullout Bed',
+            'Sofa Bed',
             'Futon',
         ];
 
@@ -172,6 +173,7 @@ class PropertiesController extends Controller
             'Double Bed',
             'Single Bed',
             'Pullout Bed',
+            'Sofa Bed',
             'Futon',
         ];
 
@@ -231,6 +233,7 @@ class PropertiesController extends Controller
             'Double Bed',
             'Single Bed',
             'Pullout Bed',
+            'Sofa Bed',
             'Futon',
         ];
 
