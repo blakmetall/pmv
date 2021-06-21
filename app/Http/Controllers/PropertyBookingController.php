@@ -569,6 +569,9 @@ class PropertyBookingController extends Controller
         $registers[] = [
             'name' => 'Admin',
         ];
+        $registers[] = [
+            'name' => 'Client',
+        ];
 
         return view('property-bookings.show')
             ->with('booking', $booking)
@@ -579,6 +582,12 @@ class PropertyBookingController extends Controller
 
     public function edit(PropertyBooking $id)
     {
+        // permission control
+        if(!can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');

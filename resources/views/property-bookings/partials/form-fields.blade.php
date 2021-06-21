@@ -1,17 +1,6 @@
 @php
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
     $currentYear = (isset($_GET['year'])?$_GET['year']:'');
-
-    $tmpRegisters = $registers;
-    $registers = [];
-
-    foreach($tmpRegisters as $tmpRegister) {
-        if(isRole('owner') && ($tmpRegister['name'] == 'Admin' || $tmpRegister['name'] == 'Client')) {
-            continue;
-        }
-        $registers[] = $tmpRegister;
-    }
-
 @endphp
 
 @if ($row->firstname)
@@ -355,6 +344,7 @@
         'name' => 'kids',
         'value' => $row->kids,
         ])
+
         <!-- register_by -->
         @include('components.form.select-simple', [
         'group' => 'booking',
@@ -365,6 +355,7 @@
         'optionValueRef' => 'name',
         'disableDefaultOption' => true,
         ])
+        
         @if (!isRole('owner'))
             <!-- damage_deposit_id -->
             @include('components.form.select', [

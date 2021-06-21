@@ -49,7 +49,7 @@
                 @endphp
 
                 <option value="{{ $option['name'] }}" {{ $selected }}>
-                    {{ $option['name'] }}
+                    {{ __($option['name']) }}
                 </option>
             @endforeach
 
