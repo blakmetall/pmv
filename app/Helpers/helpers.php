@@ -675,7 +675,7 @@ if (!function_exists('getSearchDate')) {
     }
 }
 
-if (!function_exists('formatDate')) {
+if (!function_exists('getReadableDate')) {
     function getReadableDate($date, $locale = '')
     {
         if(!$locale) {
