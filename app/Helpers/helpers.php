@@ -766,6 +766,19 @@ if (!function_exists('carbonCreate')) {
     }
 }
 
+if (!function_exists('getAge')) {
+    function getAge($birthday)
+    {
+        $date = Carbon::create($birthday);
+        $now = Carbon::now();
+
+        $months = $date->diffInMonths($now);
+        $years = $months/12;
+
+        return number_format($years, 1);
+    }
+}
+
 if (!function_exists('generateColumns')) {
     function generateColumns($array, $number)
     {

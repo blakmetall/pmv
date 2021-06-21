@@ -32,6 +32,14 @@
             'value' => $row->lastname
         ])
 
+        <!-- scholarship -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Scholarship'),
+            'name' => 'scholarship',
+            'value' => $row->scholarship
+        ])
+
         <!-- address -->
         @include('components.form.textarea', [
             'group' => 'human-resource',
@@ -46,6 +54,14 @@
             'label' => __('Department'),
             'name' => 'department',
             'value' => $row->department
+        ])
+
+        <!-- position -->
+        @include('components.form.input', [
+            'group' => 'human-resource',
+            'label' => __('Position'),
+            'name' => 'position',
+            'value' => $row->position
         ])
 
         <!-- phone -->
@@ -80,6 +96,17 @@
             'value' => $row->birthday,
         ])
 
+        <!-- age -->
+        @if($row->birthday)
+            @include('components.form.input', [
+                'group' => 'human-resource',
+                'label' => __('Age'),
+                'name' => '_age',
+                'value' => getAge($row->birthday) . ' ' . __('years'),
+                'disabled' => true,
+            ])
+        @endif
+
         <!-- children -->
         @include('components.form.input', [
             'group' => 'human-resource',
@@ -87,6 +114,14 @@
             'label' => __('Children'),
             'name' => 'children',
             'value' => $row->children
+        ])
+
+        <!-- notes -->
+        @include('components.form.textarea', [
+            'group' => 'human-resource',
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'value' => $row->notes
         ])
 
         <hr>
@@ -98,6 +133,17 @@
             'name' => 'entry_at',
             'value' => $row->entry_at,
         ])
+
+        <!-- antiqueness -->
+        @if($row->entry_at)
+            @include('components.form.input', [
+                'group' => 'human-resource',
+                'label' => __('Antiqueness'),
+                'name' => '_antiqueness',
+                'value' => getAge($row->entry_at) . ' ' . __('years'),
+                'disabled' => true,
+            ])
+        @endif
 
         <!-- vacation_days -->
         {{-- @include('components.form.input', [

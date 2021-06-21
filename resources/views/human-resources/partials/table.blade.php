@@ -14,9 +14,13 @@
                 <th scope="col">{{ __('Lastname') }}</th>
                 <th scope="col">{{ __('City') }}</th>
                 <th scope="col">{{ __('Department') }}</th>
+                <th scope="col">{{ __('Position') }}</th>
                 <th scope="col">{{ __('Birthday') }}</th>
+                <th scope="col">{{ __('Age') }}</th>
+                <th scope="col">{{ __('Scholarship') }}</th>
+                <th scope="col">{{ __('Entry Date') }}</th>
+                <th scope="col">{{ __('Antiqueness') }}</th>
                 <th scope="col">{{ __('Phone') }}</th>
-                <th scope="col">{{ __('Vacations') }}</th>
                 <th scope="col">{{ __('Active') }}</th>
                 <th scope="col">&nbsp;</th>
             </tr>
@@ -49,21 +53,36 @@
                         <!-- department -->
                         <td>{{ $row->department }}</td>
 
+                        <!-- position -->
+                        <td>{{ $row->position }}</td>
+
                         <!-- birthday -->
-                        <td>{{ $row->birthday }}</td>
+                        <td>
+                            {{ $row->birthday }} 
+                        </td>
+
+                        <!-- age -->
+                        <td>
+                            {{ getAge($row->birthday) }} {{ __('years') }}
+                        </td>
+
+                        <!-- scholarship -->
+                        <td>
+                            {{ $row->scholarship }}
+                        </td>
+
+                        <!-- entry date -->
+                        <td>
+                            {{ $row->entry_at }}
+                        </td>
+
+                        <!-- antiqueness -->
+                        <td>
+                            {{ getAge($row->entry_at) }} {{ __('years') }}
+                        </td>
 
                         <!-- phone -->
                         <td>{{ $row->phone }}</td>
-
-                        <!-- vacations -->
-                        <td>
-                            @if( $row->vacation_start_date && $row->vacation_end_date )
-                                {{ $row->vacation_start_date }}
-                                -
-                                {{ $row->vacation_end_date }}
-                                ({{ $row->vacation_days }})
-                            @endif 
-                        </td>
 
                         <!-- is_active -->
                         <td>
