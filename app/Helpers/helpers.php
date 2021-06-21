@@ -675,6 +675,27 @@ if (!function_exists('getSearchDate')) {
     }
 }
 
+if (!function_exists('formatDate')) {
+    function getReadableDate($date, $locale = '')
+    {
+        if(!$locale) {
+            $locale = App::getLocale();
+        }
+        
+        if($locale == 'es') {
+            setlocale(LC_ALL, "es_ES");
+        }
+
+        $date = DateTime::createFromFormat("Y-m-d", $date);
+
+        $readableDate = strftime("%d/%b/%y", $date->getTimestamp());
+        
+        setlocale(LC_ALL, "en_US");
+
+        return $readableDate;
+    }
+}
+
 if (!function_exists('getAvailabilityProperty')) {
     function getAvailabilityProperty($id, $fromDate, $toDate, $bookingID = '')
     {
