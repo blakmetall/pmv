@@ -339,14 +339,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             if ($property->bookings()->count()) {
                 return false;
             }
-
-            if ($property->reservationRequests()->count()) {
-                return false;
-            }
-
-            if ($property->cleaningServices()->count()) {
-                return false;
-            }
         }
 
         return true;
