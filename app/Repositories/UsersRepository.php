@@ -162,6 +162,9 @@ class UsersRepository implements UsersRepositoryInterface
     
                 $user->profile->fill($profileData);
                 $user->profile->save();
+            }else{
+                $user->profile->fill($request->profile);
+                $user->profile->save();
             }
 
         }
