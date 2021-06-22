@@ -6,7 +6,7 @@
         $btns = [];
 
         if(can('edit', 'property-images')){
-            $btns[] = [
+            $btns = [
                 'label' => __('Images'),
                 'actions' => [
                     [
