@@ -438,6 +438,7 @@
             'label' => __('Office'),
             'name' => 'office',
             'value' => 1,
+            'default' => isRole('owner') ? 1 : '',
             ])
 
             <!-- concierge_notification -->
@@ -446,6 +447,7 @@
             'label' => __('Concierge'),
             'name' => 'concierge',
             'value' => 1,
+            'default' => isRole('owner') ? 1 : '',
             ])
 
             <!-- home_owner_notification -->
@@ -455,6 +457,16 @@
             'name' => 'home_owner',
             'value' => 1,
             ])
+
+            <!-- do not send any other notification -->
+            @if(!isRole('owner'))
+                @include('components.form.checkbox-horizontal', [
+                'group' => 'notification',
+                'label' => __('Do not send any other notification'),
+                'name' => 'disable_default_email',
+                'value' => 1,
+                ])
+            @endif
         </div>
 
     </div>

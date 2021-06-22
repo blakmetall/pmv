@@ -12,6 +12,7 @@ use App\Models\PropertyBooking;
 use App\Validations\PropertyBookingsValidations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 {
@@ -217,29 +218,27 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
 
             if ($booking->save()) {
+                // concierge emails
                 $contacts = $booking->property->contacts;
                 $concierge = false;
                 foreach ($contacts as $contact) {
                     if ($contact->contact_type == 'property-manager') {
                         $concierge = $contact->email;
-                    }
-                }
-
-                
-                if ($request->guest) {
-                    sendEmail($booking, $booking->email);
-                }
-
-                if ($request->office) {
-                    sendEmail($booking, $booking->property->office->email);
-                }
-
-                if ($concierge) {
-                    if ($request->concierge) {
                         sendEmail($booking, $concierge);
                     }
                 }
 
+                // guest email
+                if ($request->guest) {
+                    sendEmail($booking, $booking->email);
+                }
+
+                // office email
+                if ($request->office) {
+                    sendEmail($booking, $booking->property->office->email);
+                }
+
+                // home owners email
                 if ($request->home_owner) {
                     $owners = $booking->property->users;
                     foreach ($owners as $owner) {
@@ -247,10 +246,24 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                     }
                 }
     
-                if(isProduction()) {
+                // extra emails
+                if(isProduction() && !$request->disable_default_email) {
                     sendEmail($booking, 'reservaciones@palmeravacations.com');
+                    sendEmail($booking, 'concierge@palmeravacations.com');
+                    sendEmail($booking, 'vallarta@palmeravacations.com');
                     sendEmail($booking, 'info@palmeravacations.com');
-                    sendEmail($booking, 'contabilidad@palmeravacations.com');
+                }
+
+                // if booking inside next 24hrs send email to:
+                $arrival = Carbon::create($booking->arrival_date);
+                $now = Carbon::now();
+
+                // extra emails
+                if($arrival->diffInHours($now) <= 24) {
+                    if(isProduction() && !$request->disable_default_email) {
+                        sendEmail($booking, 'pmd@palmeravacations.com');
+                        sendEmail($booking, 'maidsupervisor@palmeramail.com');
+                    }
                 }
             }
         }
