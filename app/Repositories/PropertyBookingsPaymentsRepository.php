@@ -9,6 +9,8 @@ use App\Repositories\PropertyBookingsPaymentsRepositoryInterface;
 use App\Repositories\PropertyManagementTransactionsRepositoryInterface;
 use App\Models\{Property, PropertyBookingPayment, DamageDeposit, PropertyBooking, PropertyManagementTransaction};
 use App\Validations\PropertyBookingsPaymentsValidations;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\DetailsTransaction;
 
 class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepositoryInterface
 {
@@ -120,6 +122,15 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
                                 $transaction->operation_type = 2;
                                 $transaction->description = $request->credit_notes;
                                 $transaction->save();
+
+                                // send notification about transaction for a property booking payment
+                                if(isProduction()){
+                                    $email = 'accounting@palmeravacations.com';
+                                }else{
+                                    $email = 'blakmetall@gmail.com';
+                                }
+
+                                Notification::route('mail', $email)->notify(new DetailsTransaction($transaction));
                             }
                         }
                     }
