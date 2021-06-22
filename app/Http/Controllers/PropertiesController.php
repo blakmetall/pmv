@@ -81,7 +81,7 @@ class PropertiesController extends Controller
             ->with('search', $search);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         // permission control
         if(!can('edit', 'properties')){
@@ -98,10 +98,11 @@ class PropertiesController extends Controller
             'paginate' => false,
             'filterByWorkgroup' => true,
         ];
+
         $cities = $this->citiesRepository->all('', $citiesConfig);
         $states = $this->citiesRepository->states($cities);
         $config = ['paginate' => false];
-        $zones = [];
+        $zones = $this->zonesRepository->all('', $config, old('city_id'));
         $buildings = $this->buildingsRepository->all('', $config);
         $offices = $this->officesRepository->all('', $config);
         $hr = $this->humanResourcesRepository->all('', ['paginate' => false, 'cleaningStaffOnly' => true]);
