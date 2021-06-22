@@ -343,6 +343,7 @@ class PropertyManagementTransactionsController extends Controller
         $properties = $this->propertiesRepository->all('', [
             'pm' => true,
             'filterByEnabled' => true,
+            'paginateUnlimited' => true,
         ]);
 
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
