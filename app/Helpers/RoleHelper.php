@@ -318,7 +318,8 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                     'cleanings',
-                    'human-resources'
+                    'human-resources',
+                    'concierge',
                 ]),
                 'index' => self::transformSluggedRolesToIds([
                     'super',
@@ -331,7 +332,8 @@ class RoleHelper
                     'administrative-assistant',
                     'owner',
                     'cleanings',
-                    'human-resources'
+                    'human-resources',
+                    'concierge',
                 ]),
                 'general-availability' => self::transformSluggedRolesToIds([
                     'super',
@@ -343,7 +345,8 @@ class RoleHelper
                     'accounting',
                     'administrative-assistant',
                     'cleanings',
-                    'human-resources'
+                    'human-resources',
+                    'concierge',
                 ]),
             ],
             'property-management' => [
