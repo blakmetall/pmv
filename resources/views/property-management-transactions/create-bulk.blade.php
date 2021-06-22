@@ -296,7 +296,7 @@
 
 
                 <?php
-                    $maxBulk = count($properties);
+                    $maxBulk = (count($properties) < 50) ? 50 : count($properties);
                     $loopCount = array_fill(0, $maxBulk, null);
                 ?>
 
