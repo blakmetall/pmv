@@ -46,8 +46,6 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         $filterAdultsOnly = isset($config['adults_only']) && $config['adults_only'] ? true : false;
         $filterBeachFront = isset($config['beachfront']) && $config['beachfront'] ? true : false;
 
-        $paginateUnlimited = isset($config['paginateUnlimited']) ? true : false;
-
         $lang = LanguageHelper::current();
 
         if ($search) {
@@ -193,11 +191,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->orderBy('name', 'asc');
 
             if ($shouldPaginate) {
-                if($paginateUnlimited) {
-                    $result = $query->paginate(9999);
-                }else{
-                    $result = $query->paginate(config('constants.pagination.per-page'));
-                }
+                $result = $query->paginate(config('constants.pagination.per-page'));
             } else {
                 $result = $query->get();
             }
