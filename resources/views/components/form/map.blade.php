@@ -20,6 +20,7 @@ $readOnlyProp = ($readOnly) ? ' readonly ' : '';
 <div class="app-map-wrapper">
     <div class="app-search-map">
         @include('components.form.input', [
+            'id' => $id . '__search',
             'group' => 'property',
             'label' => __('Search Address...'),
             'name' => '_search_address',
@@ -40,6 +41,7 @@ $readOnlyProp = ($readOnly) ? ' readonly ' : '';
 
             <div class="latitude-wrapper">
                 @include('components.form.input', [
+                'id' => $id . '__latitude',
                 'group' => $group,
                 'label' => __('Latitude'),
                 'name' => $latitudeName,
@@ -52,6 +54,7 @@ $readOnlyProp = ($readOnly) ? ' readonly ' : '';
 
             <div class="longitude-wrapper">
                 @include('components.form.input', [
+                'id' => $id . '__longitude',
                 'group' => $group,
                 'label' => __('Longitude'),
                 'name' => $longitudeName,
