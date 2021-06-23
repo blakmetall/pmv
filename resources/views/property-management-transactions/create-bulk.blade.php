@@ -306,20 +306,20 @@
 
                         <!-- property -->
                         <td>
-                            <select name="bulk[{{ $loopIndex }}][property_management_id]" class="form-control form-control-sm app-bulk-input">
+                            <select name="bulk[{{ $loopIndex }}][property_translation_id]" class="form-control form-control-sm app-bulk-input">
                                 <option value="">{{ __('Select') }}</option>
 
                                 @foreach($properties as $propertyIndex => $propertyTranslation)
                                     @php
                                         $selected = $propertyIndex == $loopIndex ? ' selected' : '';
-                                        $activePM = $propertyTranslation->property->getActivePM();
+                                        // $activePM = $propertyTranslation->property->getActivePM();
                                     @endphp
 
-                                    @if($activePM)
-                                        <option value="{{ $activePM->id }}" {{ $selected }}>
+                                    {{-- @if($activePM) --}}
+                                        <option value="{{ $propertyTranslation->id }}" {{ $selected }}>
                                             {{ $propertyTranslation->name }}
                                         </option>
-                                    @endif
+                                    {{-- @endif --}}
                                 @endforeach
 
                             </select>

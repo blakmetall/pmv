@@ -6,6 +6,7 @@ use App\Helpers\ImagesHelper;
 use App\Helpers\PMHelper;
 use App\Helpers\PMTransactionHelper;
 use App\Models\Property;
+use App\Models\PropertyTranslation;
 use App\Models\PropertyManagement;
 use App\Models\PropertyManagementTransaction;
 use App\Models\User;
@@ -375,9 +376,12 @@ class PropertyManagementTransactionsController extends Controller
 
             foreach ($request->bulk as $index => $transactionData) {
                 if ($index !== 'default') {
-                    if (!$transactionData['property_management_id'] && !$transactionData['amount']) {
+                    if (!$transactionData['property_translation_id'] && !$transactionData['amount']) {
                         continue;
                     }
+
+                    $propertyTranslation = PropertyTranslation::where('id', $transactionData['property_translation_id'])->first();
+                    $transactionData['property_management_id'] = $propertyTranslation->property->getActivePM();
 
                     // fill default values
                     if (!$transactionData['transaction_type_id']) {
