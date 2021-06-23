@@ -384,23 +384,23 @@ class PropertyManagementTransactionsController extends Controller
                     $transactionData['property_management_id'] = $propertyTranslation->property->getActivePM();
 
                     // fill default values
-                    if (isset($transactionData['transaction_type_id'] && !$transactionData['transaction_type_id']) {
+                    if (isset($transactionData['transaction_type_id']) && !$transactionData['transaction_type_id']) {
                         $transactionData['transaction_type_id'] = $default['transaction_type_id'];
                     }
 
-                    if (isset($transactionData['operation_type'] && !$transactionData['operation_type']) {
+                    if (isset($transactionData['operation_type']) && !$transactionData['operation_type']) {
                         $transactionData['operation_type'] = $default['operation_type'];
                     }
 
-                    if (isset($transactionData['period_start_date'] && !$transactionData['period_start_date']) {
+                    if (isset($transactionData['period_start_date']) && !$transactionData['period_start_date']) {
                         $transactionData['period_start_date'] = $default['period_start_date'];
                     }
 
-                    if (isset($transactionData['period_end_date'] && !$transactionData['period_end_date']) {
+                    if (isset($transactionData['period_end_date']) && !$transactionData['period_end_date']) {
                         $transactionData['period_end_date'] = $default['period_end_date'];
                     }
 
-                    if (isset($transactionData['post_date'] && !$transactionData['post_date']) {
+                    if (isset($transactionData['post_date']) && !$transactionData['post_date']) {
                         $transactionData['post_date'] = $default['post_date'];
                     }
 
