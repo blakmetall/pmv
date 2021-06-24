@@ -144,6 +144,33 @@ class PropertyImagesController extends Controller
         return back();
     }
 
+    public function orderAll(Request $request)
+    {
+        $orderingStr = trim($request->ordering);
+
+        if($orderingStr) {
+            $items = explode('__', $orderingStr);
+
+            foreach($items as $item){
+                $photo = explode('-', $item);
+
+                if(isset($photo[0]) && isset($photo[1])){
+                    $imageId = $photo[0];
+                    $imageOrder = (int) $photo[1];
+
+                    $image = PropertyImage::where('id', $imageId)->first();
+                    
+                    if($image) {
+                        $image->order = $imageOrder;
+                        $image->save();
+                    }
+                }
+            }
+        }
+
+        return ['success' => true];
+    }
+
     public static function order($imageToMove, $direction = 'asc') {
         $imgToMoveOrder = $imageToMove->order;
 

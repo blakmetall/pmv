@@ -11,6 +11,7 @@
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
                 <th scope="col">&nbsp;</th>
+                <th scope="col">{{ __('Ordering') }}</th>
                 <th scope="col">{{ __('Property') }}</th>
                 <th scope="col">&nbsp;</th>
                 <th scope="col">&nbsp;</th>
@@ -56,6 +57,13 @@
                                 'imgUrl' => $row->file_url,
                                 'imgSize' => 'small-ls'
                             ])
+                        </th>
+
+                        <!-- featured -->
+                        <th>
+                            @if(can('edit', 'property-images'))
+                                <input type="text" value="{{ $i + 1 }}" data-image-id="{{ $row->id }}" class="app-ordering-input" />
+                            @endif
                         </th>
 
                         <!-- property -->

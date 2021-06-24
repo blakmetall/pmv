@@ -94,6 +94,10 @@ Route::group(['middleware' => ['web']], function () {
 
         // properties prefix
         Route::group(['prefix' => 'properties'], function () {
+
+            // order all images
+            Route::post('orderPropertyImages', 'PropertyImagesController@orderAll')->name('property-images.order-all');
+
             // properties
             Route::group(['middleware' => 'role-permission:properties,index'], function () {
                 Route::get('', 'PropertiesController@index')->name('properties');
