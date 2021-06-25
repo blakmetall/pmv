@@ -8,6 +8,10 @@
 
 <body>
     <style>
+        .mail-content {
+            padding-left: 15px;
+        }
+
         @media only screen and (max-width: 600px) {
             .inner-body {
                 width: 100% !important;
@@ -25,13 +29,15 @@
         }
     </style>
 
-    {{ $header ?? '' }}
-
-    {{ Illuminate\Mail\Markdown::parse($slot) }}
-
-    {{ $subcopy ?? '' }}
-
-    {{ $footer ?? '' }}
+    <div class="mail-content">
+        {{ $header ?? '' }}
+    
+        {{ Illuminate\Mail\Markdown::parse($slot) }}
+    
+        {{ $subcopy ?? '' }}
+    
+        {{ $footer ?? '' }}
+    </div>
 
 </body>
 
