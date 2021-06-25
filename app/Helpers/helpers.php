@@ -688,7 +688,11 @@ if (!function_exists('getReadableDate')) {
 
         $date = DateTime::createFromFormat("Y-m-d", $date);
 
-        $readableDate = strftime("%d/%b/%y", $date->getTimestamp());
+        $day = strftime("%d", $date->getTimestamp());
+        $month = ucfirst(strftime("%b", $date->getTimestamp()));
+        $year = strftime("%y", $date->getTimestamp());
+
+        $readableDate = $day . '/' . $month . '/' . $year;
         
         setlocale(LC_ALL, "en_US");
 

@@ -59,7 +59,7 @@
                         </td>
 
                         <!-- date -->
-                        <td>{{ $row->date }}</td>
+                        <td>{{ getReadableDate($row->date) }}</td>
 
                         <!-- total_cost -->
                         <td>{{ priceFormat($row->total_cost) }}</td>
