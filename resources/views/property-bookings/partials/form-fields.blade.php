@@ -123,6 +123,26 @@
 
 <div class="card">
     <div class="card-body">
+        <!-- arrival_date -->
+        @include('components.form.datepicker', [
+            'group' => 'booking',
+            'label' => __('Arrival Date'),
+            'name' => 'arrival_date',
+            'required' => true,
+            'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
+            'maxDaysLimitFromNow' => 4000,
+        ])
+        
+        <!-- departure_date -->
+        @include('components.form.datepicker', [
+            'group' => 'booking',
+            'label' => __('Departure Date'),
+            'name' => 'departure_date',
+            'required' => true,
+            'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
+            'maxDaysLimitFromNow' => 4000,
+        ])
+
         <!-- created at -->
         @if($row->created_at)
             @include('components.form.input', [
@@ -214,16 +234,6 @@
             ])
         @endif
 
-        <!-- arrival_date -->
-        @include('components.form.datepicker', [
-            'group' => 'booking',
-            'label' => __('Arrival Date'),
-            'name' => 'arrival_date',
-            'required' => true,
-            'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
-            'maxDaysLimitFromNow' => 4000,
-        ])
-
         @if (!isRole('owner'))
             <!-- arrival_flight_number -->
             @include('components.form.input', [
@@ -281,16 +291,6 @@
             'value' => $row->departure_airline
             ])
         @endif
-
-        <!-- departure_date -->
-        @include('components.form.datepicker', [
-        'group' => 'booking',
-        'label' => __('Departure Date'),
-        'name' => 'departure_date',
-        'required' => true,
-        'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
-        'maxDaysLimitFromNow' => 4000,
-        ])
 
         @if (!isRole('owner'))
             <!-- departure_flight_number -->
