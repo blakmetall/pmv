@@ -217,14 +217,9 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
 
             if ($booking->save()) {
-                // concierge emails
-                $contacts = $booking->property->contacts;
-                $concierge = false;
-                foreach ($contacts as $contact) {
-                    if ($contact->contact_type == 'property-manager') {
-                        $concierge = $contact->email;
-                        sendEmail($booking, $concierge);
-                    }
+                // concierge email
+                if ($request->guest) {
+                    sendEmail($booking, 'concierge@palmeravacations.com');
                 }
 
                 // guest email
@@ -248,7 +243,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 // extra emails
                 if(isProduction() && !$request->disable_default_email) {
                     sendEmail($booking, 'reservaciones@palmeravacations.com');
-                    sendEmail($booking, 'concierge@palmeravacations.com');
                     sendEmail($booking, 'vallarta@palmeravacations.com');
                     sendEmail($booking, 'info@palmeravacations.com');
                 }
