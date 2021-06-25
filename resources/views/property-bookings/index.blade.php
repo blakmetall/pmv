@@ -22,15 +22,11 @@
                 @endif
             @endforeach
         @endif
-    @else
-        @php
-            $actions = [];
-        @endphp
     @endif
 
     @include('components.heading', [
         'label' => __('Bookings'),
-        'actions' => $actions
+        'actions' => []
     ])
 
     <!-- separator -->

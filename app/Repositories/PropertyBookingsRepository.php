@@ -199,8 +199,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $nights = $propertyRate['totalDays'];
 
             // allows to recalculate booking prices according to property rates
-            if( ($is_new)
-                || (!$is_new && $request->_booking_recalculate_rate_prices )) {
+            if($request->_booking_recalculate_rate_prices) {
                 $price_per_night = $propertyRate['nightlyAppliedRate'];
                 $subtotal_nights = $propertyRate['total'];
 

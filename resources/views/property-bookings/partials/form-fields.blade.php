@@ -1,78 +1,12 @@
 @php
     $modalID = 'calendar-availability-' . strtotime('now') . rand(1,99999);
     $currentYear = (isset($_GET['year'])?$_GET['year']:'');
+
+    $arrival = isset($_GET['arrival']) ? $_GET['arrival'] : '';
+    $departure = isset($_GET['departure']) ? $_GET['departure'] : '';
+    
+    $propertyRate = \RatesHelper::getPropertyRate($property, $property->rates, $arrival, $departure);
 @endphp
-
-@if ($row->firstname)
-    <div class="card">
-        <div class="card-body">
-            <span class="badge badge-primary r-badge mb-4">{{ __('BALANCE') }}</span>
-
-            <!-- created at -->
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Creation Date'),
-                'name' => '_creation_date',
-                'value' => $row->created_at,
-                'disabled' => true,
-            ])
-
-            <!-- total stay -->
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Total Stay'),
-                'name' => 'nights',
-                'value' => $row->nights,
-                'disabled' => true,
-            ])
-
-            <!-- price_per_night -->
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Price per night'),
-                'name' => 'price_per_night',
-                'value' => $row->price_per_night,
-            ])
-
-            <!-- damage_deposit -->
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Damage Deposit'),
-                'name' => '_damage_deposit',
-                'value' => $row->subtotal_damage_deposit,
-                'disabled' => true,
-            ])
-
-            <!-- subtotal nights -->
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Subtotal Nights'),
-                'name' => 'subtotal_nights',
-                'value' => $row->total,
-            ])
-
-            <!-- total -->
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Total'),
-                'name' => 'total',
-                'value' => $row->total + $row->subtotal_damage_deposit,
-                'disabled' => true,
-            ])
-
-            <!-- calculate rates again -->
-            @include('components.form.checkbox', [
-                'group' => 'booking',
-                'label' => __('Recalculate rate prices'),
-                'name' => '_booking_recalculate_rate_prices',
-                'value' => 1,
-            ])
-        </div>
-    </div>
-@endif
-
-<!-- separator -->
-<div class="mb-4"></div>
 
 <!-- fields form -->
 <div class="card">
@@ -181,6 +115,80 @@
             ])
         @endif
 
+    </div>
+</div>
+
+<!-- separator -->
+<div class="mb-4"></div>
+
+<div class="card">
+    <div class="card-body">
+        <!-- created at -->
+        @if($row->created_at)
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Creation Date'),
+                'name' => '_creation_date',
+                'value' => $row->created_at,
+                'disabled' => true,
+            ])
+        @endif
+
+        <!-- total stay -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Total Stay'),
+            'name' => 'nights',
+            'value' => $row->nights ? $row->nights : $propertyRate['totalDays'],
+            'disabled' => true,
+        ])
+
+        <!-- price_per_night -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Price per night'),
+            'name' => 'price_per_night',
+            'value' => $row->price_per_night ? $row->price_per_night : $propertyRate['nightlyAppliedRate'],
+        ])
+
+        <!-- subtotal nights -->
+        @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Subtotal Nights'),
+            'name' => 'subtotal_nights',
+            'value' => $row->total ? $row->total : $propertyRate['total'],
+        ])
+
+        @if($row->subtotal_damage_deposit)
+            <!-- damage_deposit -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Damage Deposit'),
+                'name' => '_damage_deposit',
+                'value' => $row->subtotal_damage_deposit,
+                'disabled' => true,
+            ])
+        @endif
+
+        @if($row->total)
+            <!-- total -->
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Total'),
+                'name' => 'total',
+                'value' => $row->total + $row->subtotal_damage_deposit,
+                'disabled' => true,
+            ])
+        @endif
+
+        
+        <!-- calculate rates again -->
+        @include('components.form.checkbox', [
+            'group' => 'booking',
+            'label' => __('Utilize rate prices'),
+            'name' => '_booking_recalculate_rate_prices',
+            'value' => 1,
+        ])
     </div>
 </div>
 
@@ -359,13 +367,13 @@
         @if (!isRole('owner'))
             <!-- damage_deposit_id -->
             @include('components.form.select', [
-            'group' => 'booking',
-            'label' => __('Damage Deposit'),
-            'name' => 'damage_deposit_id',
-            'value' => $row->damage_deposit_id,
-            'options' => $damageDeposits,
-            'optionValueRef' => 'damage_deposit_id',
-            'optionLabelRef' => 'description',
+                'group' => 'booking',
+                'label' => __('Damage Deposit'),
+                'name' => 'damage_deposit_id',
+                'value' => $row->damage_deposit_id,
+                'options' => $damageDeposits,
+                'optionValueRef' => 'damage_deposit_id',
+                'optionLabelRef' => 'description',
             ])
 
             <!-- is_confirmed -->

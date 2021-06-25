@@ -538,7 +538,7 @@ class PropertyBookingController extends Controller
     public function store(Request $request)
     {
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if(!isRole('owner') && !can('edit', 'property-bookings')){
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
@@ -580,17 +580,17 @@ class PropertyBookingController extends Controller
             ->with('damageDeposits', $damageDeposits);
     }
 
-    public function edit(PropertyBooking $id)
+    public function edit(Request $request, PropertyBooking $id)
     {
-        // permission control
-        if(!can('edit', 'property-bookings')){
-            $request->session()->flash('error', __("You don't have access to this area"));
-            return redirect()->back();
-        }
-
         $booking = $this->repository->find($id);
         $property = $this->propertiesRepository->find($booking->property_id);
         $damageDeposits = $this->damagesDepositsRepository->all('');
+
+        // permission control
+        if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
         
         $transactions = [];
 
@@ -623,8 +623,10 @@ class PropertyBookingController extends Controller
 
     public function update(Request $request, $id)
     {
+        $booking = $this->repository->find($id);
+
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
@@ -643,8 +645,10 @@ class PropertyBookingController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        $booking = $this->repository->find($id);
+
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }

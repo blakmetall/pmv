@@ -186,7 +186,7 @@ $_current_role = RoleHelper::current();
                                                 </a>
                                             </li>
 
-                                            @if(can('edit', 'property-bookings'))
+                                            @if(isRole('owner') || can('edit', 'property-bookings'))
                                                 <li class="nav-item">
                                                     <a class="" href="#" data-toggle="modal"
                                                         data-target="#app-property-bookings-selection-modal">

@@ -11,6 +11,17 @@
 
 </fieldset>
 
+@php
+    $skipEdit = $row->id ? true : false;
+    $skipDelete = $row->id ? false : true;
+    
+    if($row->id){
+        $skipEdit = isRole('owner') && $row->register_by != 'Owner' && !can('edit', 'property-bookings');
+        $skipDelete = isRole('owner') && $row->register_by != 'Owner' && !can('edit', 'property-bookings');
+    }
+    
+@endphp
+
 <!-- form actions -->
 @include('components.form.actions', [
     'id' => $row->id,
@@ -19,6 +30,6 @@
     'cancel_route' => 'property-bookings',
     'delete_route' => 'property-bookings.destroy',
     'routeParams' => [],
-    'skipDelete' => isRole('owner') || !can('edit', 'property-bookings'),
-    'skipEdit' => isRole('owner') || !can('edit', 'property-bookings'),
+    'skipDelete' => $skipDelete,
+    'skipEdit' => $skipEdit,
 ])
