@@ -267,6 +267,14 @@
             'value' => 1,
             'default' => $row->arrival_transportation,
             ])
+
+            <!-- arrival_notes -->
+            @include('components.form.textarea', [
+            'group' => 'booking',
+            'label' => __('Arrival notes'),
+            'name' => 'arrival_notes',
+            'value' => $row->arrival_notes,
+            ])
         @endif
     </div>
 </div>
@@ -324,6 +332,14 @@
             'name' => 'departure_transportation',
             'value' => 1,
             'default' => $row->departure_transportation,
+            ])
+
+            <!-- departure_notes -->
+            @include('components.form.textarea', [
+            'group' => 'booking',
+            'label' => __('Departure notes'),
+            'name' => 'departure_notes',
+            'value' => $row->departure_notes,
             ])
         @endif
     </div>
@@ -419,6 +435,14 @@
             'name' => 'is_finished',
             'value' => 1,
             'default' => $row->is_finished,
+            ])
+
+            <!-- departure_notes -->
+            @include('components.form.textarea', [
+            'group' => 'booking',
+            'label' => __('Concierge notes'),
+            'name' => 'concierge_notes',
+            'value' => $row->concierge_notes,
             ])
         @endif
     </div>
