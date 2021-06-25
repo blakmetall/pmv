@@ -361,7 +361,7 @@
         'value' => $row->register_by,
         'options' => $registers,
         'optionValueRef' => 'name',
-        'disableDefaultOption' => true,
+        'required' => true,
         ])
         
         @if (!isRole('owner'))

@@ -218,6 +218,7 @@ return [
         'zip' => __('Zip'),
         'zone_id' => __('Zone'),
         'weekly' => __('Weekly'),
+        'register_by' => __('Register by'),
     ],
 
 ];

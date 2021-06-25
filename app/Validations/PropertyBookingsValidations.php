@@ -16,6 +16,7 @@ class PropertyBookingsValidations extends Validation
             'arrival_date'      => 'required',
             'departure_date'    => 'required',
             'adults'            => 'required',
+            'register_by'       => 'required',
         ]);
     }
 
