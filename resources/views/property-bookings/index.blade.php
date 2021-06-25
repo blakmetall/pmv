@@ -21,38 +21,6 @@
                     @endphp
                 @endif
             @endforeach
-
-            @if ($propertyUser || isRole('super') || isRole('admin') || isRole('rentals'))
-                @php
-                    $actions = [
-                        [
-                            'label' => __('Add Booking'),
-                            'url' => route('property-bookings.create', $property->id),
-                            'icon' => 'i-Add',
-                        ],
-                    ];
-                @endphp
-            @else
-                @php
-                    $actions = [];
-                @endphp
-            @endif
-        @else
-            @if ($property->user->id || isRole('super') || isRole('admin') || isRole('rentals'))
-                @php
-                    $actions = [
-                        [
-                            'label' => __('Add Booking'),
-                            'url' => route('property-bookings.create', $property->id),
-                            'icon' => 'i-Add',
-                        ],
-                    ];
-                @endphp
-            @else
-                @php
-                    $actions = [];
-                @endphp
-            @endif
         @endif
     @else
         @php
