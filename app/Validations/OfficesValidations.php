@@ -10,6 +10,9 @@ class OfficesValidations extends Validation
         $this->setDefaultValidations([
             'state_id' => 'required',
             'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'address' => 'required',
         ]);
     }
 
