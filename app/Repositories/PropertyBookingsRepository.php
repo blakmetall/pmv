@@ -223,7 +223,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 }
 
                 // concierge email
-                if ($request->guest) {
+                if ($request->concierge) {
                     sendEmail($booking, 'concierge@palmeravacations.com');
                 }
 

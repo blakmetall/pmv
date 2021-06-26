@@ -671,35 +671,6 @@ class PropertyBookingController extends Controller
         
         if ($this->repository->canDelete($id)) {
             $booking = $this->repository->find($id);
-            $contacts = $booking->property->contacts;
-            $concierge = false;
-            
-            foreach ($contacts as $contact) {
-                if ($contact->contact_type == 'property-manager') {
-                    $concierge = $contact->email;
-                }
-            }
-
-            if ($request->guest) {
-                sendEmail($booking, $booking->email);
-            }
-
-            if ($request->office) {
-                sendEmail($booking, $booking->property->office->email);
-            }
-
-            if ($concierge) {
-                if ($request->concierge) {
-                    sendEmail($booking, $concierge);
-                }
-            }
-
-            if ($request->home_owner) {
-                $owners = $booking->property->users;
-                foreach ($owners as $owner) {
-                    sendEmail($booking, $owner->email);
-                }
-            }
 
             if(isProduction()){
                 sendEmail($booking, 'reservaciones@palmeravacations.com');
@@ -820,7 +791,7 @@ class PropertyBookingController extends Controller
             $emails = $booking->email . ',';
         }
 
-        if ($request->guest) {
+        if ($request->concierge) {
             $emails .= 'concierge@palmeravacations.com,';
         }
 
