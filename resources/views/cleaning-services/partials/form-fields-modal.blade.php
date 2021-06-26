@@ -35,15 +35,6 @@
             ]),
         ])
 
-        <!-- description -->
-        @include('components.form.textarea', [
-            'group' => 'cleaning-service',
-            'label' => __('Description'),
-            'name' => 'description',
-            'required' => true,
-            'value' => $row->description
-        ])
-
         <!-- maid_fee -->
         @include('components.form.number', [
             'group' => 'cleaning-service',
@@ -68,6 +59,15 @@
             'name' => 'sunday_bonus',
             'required' => true,
             'value' => $row->sunday_bonus
+        ])
+
+        <!-- description -->
+        @include('components.form.textarea', [
+            'group' => 'cleaning-service',
+            'label' => __('Description'),
+            'name' => 'description',
+            'required' => true,
+            'value' => $row->description
         ])
 
         <!-- is_finished -->

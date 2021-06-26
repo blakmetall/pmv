@@ -17,7 +17,7 @@
                 @endif
                 
                 <th scope="col">{{ __('Date') }}</th>
-                <th scope="col">{{ __('Maid Fee') }}</th>
+                <th scope="col">{{ __('Transaction') }}</th>
                 
                 @if(!isRole('owner'))
                     <th scope="col">{{ __('Audited by') }}</th>
