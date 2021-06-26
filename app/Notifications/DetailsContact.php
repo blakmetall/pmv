@@ -52,7 +52,7 @@ class DetailsContact extends Notification
             ->line('CATEGORY: <strong>' . $this->data->category . '</strong>')
             ->line('MESSAGE:' . $this->data->message)
             ->line('')
-            ->line('------------------------------------------------')
+            ->line(new HtmlString('– – – – – – – – – – – – – – – – – – – – – – –'))
             ->line('')
             ->line('Mensaje de Contacto desde palmeravacations')
             ->line('')

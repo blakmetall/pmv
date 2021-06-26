@@ -550,7 +550,15 @@ class PropertyBookingController extends Controller
             return redirect()->back();
         } else {
             $booking = $this->repository->create($request);
-            $msg = __('Msg reservation') . ' #' . $booking->id . ', ' . __('Client wishes') . ' <a href="' . route('public.vacation-services.make-payment-verify', [App::getLocale(), $booking->id]) . '">' . __('Click here') . '</a> ' . __('Confirmation recipents') . ' ' . $request->email . ', reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+
+            $msg = __('Reservation created with ID') . ' #' . $booking->id;
+            
+            $confirmationRecipients = $this->getNotificationEmails($request, $booking);
+            if($confirmationRecipients){
+                $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
+            } 
+                
+
             $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$booking->id]));
         }
@@ -638,7 +646,15 @@ class PropertyBookingController extends Controller
             return redirect()->back();
         } else {
             $this->repository->update($request, $id);
-            $request->session()->flash('success', __('Record updated successfully'));
+
+            $msg = __('Reservation updated with ID') . ' #' . $booking->id;
+            
+            $confirmationRecipients = $this->getNotificationEmails($request, $booking);
+            if($confirmationRecipients){
+                $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
+            }
+
+            $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$id]));
         }
     }
@@ -794,5 +810,51 @@ class PropertyBookingController extends Controller
             ->with('propertyRate', $propertyRate)
             ->with('rates', $rates)
             ->with('properties', $properties);
+    }
+
+    private function getNotificationEmails($request, $booking) {
+        $emails = '';
+
+        // guest email
+        if ($request->guest) {
+            $emails = $booking->email . ',';
+        }
+
+        if ($request->guest) {
+            $emails .= 'concierge@palmeravacations.com,';
+        }
+
+        // office email
+        if ($request->office && $booking->property->office->email) {
+            $emails .= $booking->property->office->email . ',';
+        }
+
+        // home owners email
+        if ($request->home_owner) {
+            $owners = $booking->property->users;
+            foreach ($owners as $owner) {
+                $emails .= $owner->email . ',';
+            }
+        }
+
+        // extra emails
+        if(isProduction() && !$request->disable_default_email) {
+            $emails .= 'reservaciones@palmeravacations.com,';
+            $emails .= 'info@palmeravacations.com,';
+        }
+
+        // if booking inside next 24hrs send email to:
+        $arrival = Carbon::create($booking->arrival_date);
+        $now = Carbon::now();
+
+        // extra emails
+        if($arrival->diffInHours($now) <= 24) {
+            if(isProduction() && !$request->disable_default_email) {
+                $emails .= 'pmd@palmeravacations.com,';
+                $emails .= 'maidsupervisor@palmeramail.com,';
+            }
+        }
+
+        return trim($emails, ',');
     }
 }
