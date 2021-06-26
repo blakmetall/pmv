@@ -179,6 +179,20 @@
             'value' => $row->total ? $row->total : $propertyRate['total'],
         ])
 
+        @if(!isRole('owner'))
+            <!-- damage_deposit_id -->
+            @include('components.form.select', [
+                'group' => 'booking',
+                'label' => __('Damage Deposit'),
+                'name' => 'damage_deposit_id',
+                'value' => $row->damage_deposit_id,
+                'options' => $damageDeposits,
+                'optionValueRef' => 'damage_deposit_id',
+                'optionLabelRef' => 'description',
+            ])
+        @endif
+
+        <?php /*
         @if($row->subtotal_damage_deposit)
             <!-- damage_deposit -->
             @include('components.form.input', [
@@ -189,6 +203,7 @@
                 'disabled' => true,
             ])
         @endif
+        */ ?>
 
         @if($row->total)
             <!-- total -->
@@ -380,18 +395,7 @@
         'required' => true,
         ])
         
-        @if (!isRole('owner'))
-            <!-- damage_deposit_id -->
-            @include('components.form.select', [
-                'group' => 'booking',
-                'label' => __('Damage Deposit'),
-                'name' => 'damage_deposit_id',
-                'value' => $row->damage_deposit_id,
-                'options' => $damageDeposits,
-                'optionValueRef' => 'damage_deposit_id',
-                'optionLabelRef' => 'description',
-            ])
-
+        @if (!isRole('owner'))  
             <!-- is_confirmed -->
             @include('components.form.checkbox', [
             'group' => 'booking',
