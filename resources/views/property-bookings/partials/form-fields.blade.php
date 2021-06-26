@@ -123,6 +123,17 @@
 
 <div class="card">
     <div class="card-body">
+        <!-- created at -->
+        @if($row->created_at)
+            @include('components.form.input', [
+                'group' => 'booking',
+                'label' => __('Creation Date'),
+                'name' => '_creation_date',
+                'value' => $row->created_at,
+                'disabled' => true,
+            ])
+        @endif
+        
         <!-- arrival_date -->
         @include('components.form.datepicker', [
             'group' => 'booking',
@@ -142,17 +153,6 @@
             'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
             'maxDaysLimitFromNow' => 4000,
         ])
-
-        <!-- created at -->
-        @if($row->created_at)
-            @include('components.form.input', [
-                'group' => 'booking',
-                'label' => __('Creation Date'),
-                'name' => '_creation_date',
-                'value' => $row->created_at,
-                'disabled' => true,
-            ])
-        @endif
 
         <!-- total stay -->
         @include('components.form.input', [
