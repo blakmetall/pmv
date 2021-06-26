@@ -312,7 +312,7 @@ $(function() {
     function changeProperty() {
         $("#field_cleaning-service_property_id_").change(function() {
             let date = new Date($("input[name='date_submit']").val()).getDay();
-            getBonus($(this).val(), date);
+            // getBonus($(this).val(), date);
         });
     }
     changeProperty();

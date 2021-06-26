@@ -26,19 +26,20 @@ export function initCleaningServicesModalHandler() {
                         initDatepickerComponents();
                         initFastSelectComponents();
                         setTimeout(function() {
-                            getBonus(propertyID, date);
+                            // getBonus(propertyID, date);
                             $("#field_property_status_ids_").change(function() {
                                 if ($.inArray("8", $(this).val()) != -1) {
                                     $("#field_cleaning-service_maid_fee_").val(
                                         0
                                     );
-                                    $("#field_property_sunday_bonus_").val(0);
+                                    // $("#field_property_sunday_bonus_").val(0);
                                 } else {
                                     $("#field_cleaning-service_maid_fee_").val(
                                         maidFee
                                     );
-                                    getBonus(propertyID, date);
+                                    // getBonus(propertyID, date);
                                 }
+
                                 setTimeout(function() {
                                     $(".fstChoiceRemove").each(function() {
                                         $(this).on("click", function() {
@@ -49,7 +50,7 @@ export function initCleaningServicesModalHandler() {
                                                 $(
                                                     "#field_cleaning-service_maid_fee_"
                                                 ).val(maidFee);
-                                                getBonus(propertyID, date);
+                                                // getBonus(propertyID, date);
                                             }
                                         });
                                     });

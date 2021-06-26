@@ -21,7 +21,7 @@ export function initDatepickerComponents() {
                 let date = new Date(context.select * 1000).getDay();
                 let propertyID =
                     $("#field_cleaning-service_property_id_").val() || false;
-                getBonus(propertyID, date);
+                // getBonus(propertyID, date);
             }
         });
     });
