@@ -11,11 +11,19 @@
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
                 <th scope="col">{{ __('Property') }}</th>
-                <th scope="col">{{ __('Staff') }}</th>
+                
+                @if(!isRole('owner'))
+                    <th scope="col">{{ __('Staff') }}</th>
+                @endif
+                
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Maid Fee') }}</th>
-                <th scope="col">{{ __('Audited by') }}</th>
-                <th scope="col">{{ __('Finished') }}</th>
+                
+                @if(!isRole('owner'))
+                    <th scope="col">{{ __('Audited by') }}</th>
+                    <th scope="col">{{ __('Finished') }}</th>
+                @endif
+
                 <th scope="col">&nbsp;</th>
             </tr>
 
@@ -45,13 +53,15 @@
                         </td>
 
                         <!-- staff -->
-                        <td>
-                            @if ($row->cleaningStaff()->count())
-                                @foreach ($row->cleaningStaff as $staff)
-                                    {{ $staff->full_name }} <br>
-                                @endforeach
-                            @endif
-                        </td>
+                        @if(!isRole('owner'))
+                            <td>
+                                @if ($row->cleaningStaff()->count())
+                                    @foreach ($row->cleaningStaff as $staff)
+                                        {{ $staff->full_name }} <br>
+                                    @endforeach
+                                @endif
+                            </td>
+                        @endif
 
                         <!-- date -->
                         <td>{{ getReadableDate($row->date) }}</td>
@@ -59,20 +69,22 @@
                         <!-- total_cost -->
                         <td>{{ priceFormat($row->total_cost) }}</td>
 
-                        <!-- audit_user_id -->
-                        <td>
-                            
-                            @if($row->audit_user_id)
-                                <a href="{{ route('users.edit', $row->audit_user_id) }}">
-                                    {{ $row->auditedBy->profile->firstname }}
-                                </a>
-                            @endif
-                        </td>
+                        @if(!isRole('owner'))
+                            <!-- audit_user_id -->
+                            <td>
+                                
+                                @if($row->audit_user_id)
+                                    <a href="{{ route('users.edit', $row->audit_user_id) }}">
+                                        {{ $row->auditedBy->profile->firstname }}
+                                    </a>
+                                @endif
+                            </td>
 
-                        <!-- is_finished -->
-                        <td>
-                            {!! getStatusIcon($row->is_finished) !!}
-                        </td>
+                            <!-- is_finished -->
+                            <td>
+                                {!! getStatusIcon($row->is_finished) !!}
+                            </td>
+                        @endif
                         
                         <!-- actions -->
                         <td>
