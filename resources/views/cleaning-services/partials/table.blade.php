@@ -14,11 +14,6 @@
                 <th scope="col">{{ __('Staff') }}</th>
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Maid Fee') }}</th>
-
-                @if(!isProduction())
-                    <th scope="col">{{ __('Booking') }}</th>
-                @endif
-
                 <th scope="col">{{ __('Audited by') }}</th>
                 <th scope="col">{{ __('Finished') }}</th>
                 <th scope="col">&nbsp;</th>
@@ -63,11 +58,6 @@
 
                         <!-- total_cost -->
                         <td>{{ priceFormat($row->total_cost) }}</td>
-
-                        @if(!isProduction())
-                            <!-- booking_id -->
-                            <td>{{ $row->booking_id }}</td>
-                        @endif
 
                         <!-- audit_user_id -->
                         <td>

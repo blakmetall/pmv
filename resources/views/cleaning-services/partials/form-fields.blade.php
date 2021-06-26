@@ -62,7 +62,7 @@
         @include('components.form.number-bonus', [
             'group' => 'property',
             'type' => 'number',
-            'label' => __('Sunday Bonus'),
+            'label' => __('Extra cost'),
             'name' => 'sunday_bonus',
             'required' => true,
             'value' => $row->sunday_bonus
