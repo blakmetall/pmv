@@ -42,8 +42,8 @@ if(count($payments)){
         $transactionSourceEn = $payment->transactionSource->translations()->where('language_id', 1)->first();
         $transactionSourceEs = $payment->transactionSource->translations()->where('language_id', 2)->first();
 
-        $payments_str_en = 'PAYMENT: ' . getReadableDate($payment->post_date, 'en') . ' | ' . priceFormat($payment->amount) . ' USD | ' . $transactionSourceEn->name . "\n";
-        $payments_str_es = 'PAGO: ' . getReadableDate($payment->post_date, 'es') . ' | ' . priceFormat($payment->amount) . ' USD | ' . $transactionSourceEs->name . "\n";
+        $payments_str_en .= 'PAYMENT: ' . getReadableDate($payment->post_date, 'en') . ' | ' . priceFormat($payment->amount) . ' USD | ' . $transactionSourceEn->name . "\n";
+        $payments_str_es .= 'PAGO: ' . getReadableDate($payment->post_date, 'es') . ' | ' . priceFormat($payment->amount) . ' USD | ' . $transactionSourceEs->name . "\n";
         
         $paid += $payment->amount;
     }
