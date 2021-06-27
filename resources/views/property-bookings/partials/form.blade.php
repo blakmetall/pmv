@@ -12,12 +12,19 @@
 </fieldset>
 
 @php
-    $skipEdit = $row->id ? true : false;
-    $skipDelete = $row->id ? false : true;
-    
-    if($row->id){
-        $skipEdit = isRole('owner') && $row->register_by != 'Owner' && !can('edit', 'property-bookings');
-        $skipDelete = isRole('owner') && $row->register_by != 'Owner' && !can('edit', 'property-bookings');
+    $skipDelete = false;
+    $skipEdit = false;
+
+    if(isRole('owner')) {
+        if($row->register_by != 'Owner'){
+            $skipDelete = true;
+            $skipEdit = true;
+        }
+    }else{
+        if(!can('edit', 'property-bookings')) {
+            $skipDelete = true;
+            $skipEdit = true;
+        }
     }
     
 @endphp

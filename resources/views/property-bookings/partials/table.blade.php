@@ -112,15 +112,32 @@
 
                         <!-- actions -->
                         <td>
-                                @include('components.table.actions-bookings', [
-                                    'params' => [$row->id],
-                                    'paymentsRoute' => 'property-booking-payments',
-                                    'showRoute' => 'property-bookings.show',
-                                    'editRoute' => 'property-bookings.edit',
-                                    'deleteRoute' => 'property-bookings.destroy',
-                                    'skipDelete' => (isRole('owner') && $row->register_by != 'Owner') && !can('edit', 'property-bookings'),
-                                    'skipEdit' => (isRole('owner') && $row->register_by != 'Owner') && !can('edit', 'property-bookings'),
-                                ])
+                            @php
+                                $skipDelete = false;
+                                $skipEdit = false;
+
+                                if(isRole('owner')) {
+                                    if($row->register_by != 'Owner'){
+                                        $skipDelete = true;
+                                        $skipEdit = true;
+                                    }
+                                }else{
+                                    if(!can('edit', 'property-bookings')) {
+                                        $skipDelete = true;
+                                        $skipEdit = true;
+                                    }
+                                }
+                            @endphp
+
+                            @include('components.table.actions-bookings', [
+                                'params' => [$row->id],
+                                'paymentsRoute' => 'property-booking-payments',
+                                'showRoute' => 'property-bookings.show',
+                                'editRoute' => 'property-bookings.edit',
+                                'deleteRoute' => 'property-bookings.destroy',
+                                'skipDelete' => $skipDelete,
+                                'skipEdit' => $skipEdit,
+                            ])
                         </td>
 
                     </tr>

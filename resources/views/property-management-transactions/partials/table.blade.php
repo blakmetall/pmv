@@ -218,7 +218,7 @@
                                 <!-- edit and file -->
                                 <td style="padding: 0.1rem;">
                                     <div class="not-print">
-                                        @if (!isRole('owner'))
+                                        @if (!isRole('owner') && can('edit', 'property-management'))
                                             <!-- email notification for property management transaction -->
                                             <a href="#" data-toggle="modal" data-source="{{ $row->id }}"
                                                 data-target="#{{ $modalID }}"
@@ -245,7 +245,7 @@
 
                                         <!-- Delete image -->
 
-                                        @if (!isRole('owner'))
+                                        @if (!isRole('owner') && can('edit', 'property-management'))
                                             @include('property-management-transactions.partials.modal-edit', ['pm' => $row->propertyManagement, 'transaction' => $row])
 
                                             @if (!$usePendingAuditPresentation)
