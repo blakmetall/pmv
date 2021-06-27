@@ -83,6 +83,11 @@ export function initMapInputComponents() {
                         placeMarker(e, marker, map);
                         fillInputs(e, latitudeInput, longitudeInput);
                     });
+
+                    google.maps.event.addListener(marker, 'dragend', function(e) {
+                        placeMarker(e, marker, map);
+                        fillInputs(e, latitudeInput, longitudeInput);
+                    });
                 }
 
                 // 
