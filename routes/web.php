@@ -221,7 +221,7 @@ Route::group(['middleware' => ['web']], function () {
 
             // single property management
             Route::get('confirm-email', 'PropertyManagementTransactionsController@confirmEmail')->name('property-management-transactions.confirm-email');
-            Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:properties,index'], function () {
+            Route::group(['prefix' => '{pm}', 'middleware' => 'role-permission:property-management,index'], function () {
                 // single property management transactions
                 Route::group(['prefix' => 'transactions'], function () {
                     Route::get('', 'PropertyManagementTransactionsController@index')->name('property-management-transactions');
