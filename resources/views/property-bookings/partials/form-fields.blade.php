@@ -49,6 +49,14 @@
         'value' => $row->email,
         ])
 
+        <!-- alternate email -->
+        @include('components.form.input', [
+        'group' => 'booking',
+        'label' => __('Alternate email'),
+        'name' => 'alternate_email',
+        'value' => $row->alternate_email,
+        ])
+
         @if (!isRole('owner'))
             <!-- country -->
             @include('components.form.input', [

@@ -13,6 +13,7 @@ class PropertyBookingsValidations extends Validation
             'firstname'         => 'required',
             'lastname'          => 'required',
             'email'             => 'required|email',
+            'alternate_email'   => 'nullable|email',
             'arrival_date'      => 'required',
             'departure_date'    => 'required',
             'adults'            => 'required',

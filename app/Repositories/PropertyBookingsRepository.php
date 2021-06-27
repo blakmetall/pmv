@@ -220,6 +220,10 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 // guest email
                 if ($request->guest) {
                     sendEmail($booking, $booking->email);
+
+                    if($booking->alternate_email) {
+                        sendEmail($booking, $booking->alternate_email);
+                    }
                 }
 
                 // concierge email

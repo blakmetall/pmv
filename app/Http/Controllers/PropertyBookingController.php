@@ -556,8 +556,7 @@ class PropertyBookingController extends Controller
             $confirmationRecipients = $this->getNotificationEmails($request, $booking);
             if($confirmationRecipients){
                 $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
-            } 
-                
+            }        
 
             $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$booking->id]));
@@ -789,6 +788,10 @@ class PropertyBookingController extends Controller
         // guest email
         if ($request->guest) {
             $emails = $booking->email . ',';
+
+            if($booking->alternate_email) {
+                $emails .= $booking->alternate_email . ',';
+            }
         }
 
         if ($request->concierge) {

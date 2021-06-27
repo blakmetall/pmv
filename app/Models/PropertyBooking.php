@@ -22,6 +22,7 @@ class PropertyBooking extends Model
         'firstname',
         'lastname',
         'email',
+        'alternate_email',
         'country',
         'state',
         'city',
