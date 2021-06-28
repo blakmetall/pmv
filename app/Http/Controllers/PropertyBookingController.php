@@ -672,15 +672,15 @@ class PropertyBookingController extends Controller
             $booking = $this->repository->find($id);
 
             if(isProduction()){
-                sendEmail($booking, 'reservaciones@palmeravacations.com');
-                sendEmail($booking, 'info@palmeravacations.com');
-                sendEmail($booking, 'contabilidad@palmeravacations.com');
-            }
-            
-            $request->session()->flash('success', __('Record deleted successfully'));
+                sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com');
+                sendBookingDetailsEmail($booking, 'info@palmeravacations.com');
+                sendBookingDetailsEmail($booking, 'contabilidad@palmeravacations.com');
 
-            $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
-            $request->session()->flash('success', $msg);
+                $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
+                $request->session()->flash('success', $msg);
+            }else{
+                $request->session()->flash('success', __('Record deleted successfully'));
+            }
 
             $this->repository->delete($id);
 

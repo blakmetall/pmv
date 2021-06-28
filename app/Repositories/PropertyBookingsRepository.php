@@ -219,35 +219,35 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             if ($booking->save()) {
                 // guest email
                 if ($request->guest) {
-                    sendEmail($booking, $booking->email);
+                    sendClientBookingDetailsEmail($booking, $booking->email);
 
                     if($booking->alternate_email) {
-                        sendEmail($booking, $booking->alternate_email);
+                        sendClientBookingDetailsEmail($booking, $booking->alternate_email);
                     }
                 }
 
                 // concierge email
                 if ($request->concierge) {
-                    sendEmail($booking, 'concierge@palmeravacations.com');
+                    sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com');
                 }
 
                 // office email
                 if ($request->office && $booking->property->office->email) {
-                    sendEmail($booking, $booking->property->office->email);
+                    sendBookingDetailsEmail($booking, $booking->property->office->email);
                 }
 
                 // home owners email
                 if ($request->home_owner) {
                     $owners = $booking->property->users;
                     foreach ($owners as $owner) {
-                        sendEmail($booking, $owner->email);
+                        sendBookingDetailsEmail($booking, $owner->email);
                     }
                 }
     
                 // extra emails
                 if(isProduction() && !$request->disable_default_email) {
-                    sendEmail($booking, 'reservaciones@palmeravacations.com');
-                    sendEmail($booking, 'info@palmeravacations.com');
+                    sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com');
+                    sendBookingDetailsEmail($booking, 'info@palmeravacations.com');
                 }
 
                 // if booking inside next 24hrs send email to:
@@ -257,8 +257,8 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 // extra emails
                 if($arrival->diffInHours($now) <= 24) {
                     if(isProduction() && !$request->disable_default_email) {
-                        sendEmail($booking, 'pmd@palmeravacations.com');
-                        sendEmail($booking, 'maidsupervisor@palmeramail.com');
+                        sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com');
+                        sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com');
                     }
                 }
             }

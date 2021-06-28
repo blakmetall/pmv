@@ -6,7 +6,8 @@ use App\Helpers\RoleHelper;
 use App\Helpers\LanguageHelper;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
-use App\Notifications\DetailsBooking;
+use App\Notifications\BookingDetails;
+use App\Notifications\ClientBookingDetails;
 use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
@@ -191,10 +192,17 @@ if (!function_exists('getCurrentDateTime')) {
 }
 
 
-if (!function_exists('sendEmail')) {
-    function sendEmail($booking, $email)
+if (!function_exists('sendBookingDetailsEmail')) {
+    function sendBookingDetailsEmail($booking, $email)
     {
-        Notification::route('mail', $email)->notify(new DetailsBooking($booking));
+        Notification::route('mail', $email)->notify(new BookingDetails($booking));
+    }
+}
+
+if (!function_exists('sendClientBookingDetailsEmail')) {
+    function sendClientBookingDetailsEmail($booking, $email)
+    {
+        Notification::route('mail', $email)->notify(new ClientBookingDetails($booking));
     }
 }
 

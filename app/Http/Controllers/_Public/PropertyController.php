@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\_Public;
 
 use App;
-use Notification;
-use App\Notifications\DetailsBookingPublic;
 use App\Helpers\LanguageHelper;
 use App\Helpers\RatesHelper;
 use Illuminate\Http\Request;
@@ -554,33 +552,35 @@ class PropertyController extends Controller
                 $booking->register_by             = 'Client';
                 
                 if ($booking->save()) {
+                    // guest email
+                    sendClientBookingDetails($booking, $request->email);
+                    
                     $owners = $booking->property->users;
+                    // owner notification emails
+                    // foreach ($owners as $owner) {
+                    //     sendBookingDetailsEmail($booking, $owner->email);
+                    // }
 
-                    $emails = [];
-
+                    // default emails
                     if(isProduction()) {
-                        $emails = [
-                            $request->email,
-                            'vallarta@palmeravacations.com',
-                            'maidsupervisor@palmeramail.com',
-                            'reservations@palmeravacations.com',
-                            'concierge@palmeravacations.com',
-                            'info@palmeravacations.com',
-                            'contabilidad@palmeravacations.com',
-                        ];
-                    }
-
-                    foreach ($owners as $owner) {
-                        $emails[] = $owner->email;
+                        sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com');
+                        sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com');
+                        sendBookingDetailsEmail($booking, 'info@palmeravacations.com');
                     }
 
                     if(isProduction()) {
-                        if (Carbon::parse($request->arrival_date) <= Carbon::now()->addDays(1)) {
-                            $emails[] = 'pmd@palmeravacations.com';
+                        // if booking inside next 24hrs send email to:
+                        $arrival = Carbon::create($request->arrival_date);
+                        $now = Carbon::now();
+
+                        // extra emails
+                        if($arrival->diffInHours($now) <= 24) {
+                            if(isProduction() && !$request->disable_default_email) {
+                                sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com');
+                                sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com');
+                            }
                         }
                     }
-
-                    $this->email($booking, $emails);
 
                     return redirect(route('public.thank-you', [App::getLocale(), $booking]))->withInput();
                 } else {
@@ -604,13 +604,5 @@ class PropertyController extends Controller
 
         return view('public.pages.properties.thank-you')
             ->with('booking', $booking);
-    }
-
-    private function email($booking, $emails)
-    {
-        foreach ($emails as $email) {
-            Notification::route('mail', $email)
-                ->notify(new DetailsBookingPublic($booking));
-        }
     }
 }
