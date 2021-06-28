@@ -550,22 +550,24 @@ class PropertyController extends Controller
                 $booking->adults                  = $request->adults;
                 $booking->kids                    = $request->children;
                 $booking->register_by             = 'Client';
+
+                $isNew = true;
                 
                 if ($booking->save()) {
                     // guest email
-                    sendClientBookingDetails($booking, $request->email);
+                    sendClientBookingDetails($booking, $request->email, $isNew);
                     
-                    $owners = $booking->property->users;
                     // owner notification emails
-                    // foreach ($owners as $owner) {
-                    //     sendBookingDetailsEmail($booking, $owner->email);
-                    // }
+                    $owners = $booking->property->users;
+                    foreach ($owners as $owner) {
+                        sendBookingDetailsEmail($booking, $owner->email, $isNew);
+                    }
 
                     // default emails
                     if(isProduction()) {
-                        sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com');
-                        sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com');
-                        sendBookingDetailsEmail($booking, 'info@palmeravacations.com');
+                        sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $isNew);
+                        sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com', $isNew);
+                        sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $isNew);
                     }
 
                     if(isProduction()) {
@@ -576,8 +578,8 @@ class PropertyController extends Controller
                         // extra emails
                         if($arrival->diffInHours($now) <= 24) {
                             if(isProduction() && !$request->disable_default_email) {
-                                sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com');
-                                sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com');
+                                sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com', $isNew);
+                                sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com', $isNew);
                             }
                         }
                     }

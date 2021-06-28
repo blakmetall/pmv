@@ -17,9 +17,10 @@ class ClientBookingDetails extends Notification
      *
      * @return void
      */
-    public function __construct(PropertyBooking $booking)
+    public function __construct(PropertyBooking $booking, $isNew = false)
     {
         $this->booking = $booking;
+        $this->isNew = $isNew;
     }
 
     /**

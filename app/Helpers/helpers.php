@@ -193,16 +193,16 @@ if (!function_exists('getCurrentDateTime')) {
 
 
 if (!function_exists('sendBookingDetailsEmail')) {
-    function sendBookingDetailsEmail($booking, $email)
+    function sendBookingDetailsEmail($booking, $email, $isNew = false, $isTeam = false)
     {
-        Notification::route('mail', $email)->notify(new BookingDetails($booking));
+        Notification::route('mail', $email)->notify(new BookingDetails($booking, $isNew, $isTeam));
     }
 }
 
 if (!function_exists('sendClientBookingDetailsEmail')) {
-    function sendClientBookingDetailsEmail($booking, $email)
+    function sendClientBookingDetailsEmail($booking, $email, $isNew = false)
     {
-        Notification::route('mail', $email)->notify(new ClientBookingDetails($booking));
+        Notification::route('mail', $email)->notify(new ClientBookingDetails($booking, $isNew));
     }
 }
 
@@ -979,6 +979,37 @@ if (!function_exists('getBookingStatus')) {
             if($booking->is_confirmed && $booking->is_finished) {
                 $status = $lang == 'en' ? 'Finished' : 'Finalizado';
             }
+        }
+
+        return $status;
+    }
+}
+
+if (!function_exists('getSubjectBookingStatus')) {
+    function getSubjectBookingStatus($booking = '', $lang = 'en', $isNew)
+    {
+        $status = $lang == 'en' ? 'Pending Booking' : 'Reservación Pendiente';
+
+        if(!$booking) {
+            $booking = PropertyBooking::find($bookingId);
+        }
+
+        if($booking) {
+            if($booking->is_cancelled){
+                $status = $lang == 'en' ? 'Reservation Cancelled' : 'Reservación Cancelada';
+            }
+
+            if($booking->is_confirmed){
+                $status = $lang == 'en' ? 'Booking Confirmed' : 'Reservación Confirmada';
+            }
+            
+            if($booking->is_confirmed && $booking->is_finished) {
+                $status = $lang == 'en' ? 'Booking Finished' : 'Reservación Finalizada';
+            }
+        }
+
+        if($isNew) {
+            $status = $lang == 'en' ? 'New Reservation' : 'Nueva Reservación';
         }
 
         return $status;
