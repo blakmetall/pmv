@@ -32,7 +32,7 @@ class LangMiddleware
 
         // change language for public area according to url segment
         $langSegments = request()->segments();
-        if(is_array($langSegments) && ($langSegments[0] == 'en' || $langSegments[0] == 'es')) {
+        if(count($langSegments) && ($langSegments[0] == 'en' || $langSegments[0] == 'es')) {
             LanguageHelper::setLocale($langSegments[0]);
         }
 

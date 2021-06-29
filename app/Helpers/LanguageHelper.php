@@ -24,7 +24,7 @@ class LanguageHelper
 
         // current locale for public área
         $langSegments = request()->segments();
-        if(is_array($langSegments) && ($langSegments[0] == 'en' || $langSegments[0] == 'es')) {
+        if(count($langSegments) && ($langSegments[0] == 'en' || $langSegments[0] == 'es')) {
             $locale = $langSegments[0];
         }
 
