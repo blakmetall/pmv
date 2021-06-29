@@ -154,6 +154,11 @@ class PropertyController extends Controller
         $config = ['property_id' => $property->property_id];
         $images = $this->propertyImagesRepositoryInterface->all($config);
 
+        // if dates for booking not saved in cookies redirect to search results
+        if(!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+            return redirect()->route('public.availability-results', [App::getLocale()]);
+        }
+
         return view('public.pages.properties.property-detail')
             ->with('property', $property)
             ->with('images', $images)
@@ -468,6 +473,11 @@ class PropertyController extends Controller
             "Zambia",
             "Zimbabwe",
         ];
+
+        // if dates for booking not saved in cookies redirect to search results
+        if(!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+            return redirect()->route('public.availability-results');
+        }
 
         return view('public.pages.properties.property-booking')
             ->with('captcha', $captcha)
