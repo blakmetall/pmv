@@ -671,6 +671,10 @@ class PropertyBookingController extends Controller
         if ($this->repository->canDelete($id)) {
             $booking = $this->repository->find($id);
 
+            // cancel first and then delete
+            $booking->is_cancelled = true;
+            $booking->save();
+
             if(isProduction()){
                 sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com');
                 sendBookingDetailsEmail($booking, 'info@palmeravacations.com');
@@ -679,6 +683,7 @@ class PropertyBookingController extends Controller
                 $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
                 $request->session()->flash('success', $msg);
             }else{
+                sendBookingDetailsEmail($booking, 'blakmetall@gmail.com');
                 $request->session()->flash('success', __('Record deleted successfully'));
             }
 
