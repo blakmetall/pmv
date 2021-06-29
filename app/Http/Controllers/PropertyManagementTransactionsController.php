@@ -387,7 +387,12 @@ class PropertyManagementTransactionsController extends Controller
                     }
 
                     $propertyTranslation = PropertyTranslation::where('id', $transactionData['property_translation_id'])->first();
-                    $transactionData['property_management_id'] = $propertyTranslation->property->getActivePM();
+                    
+                    $activePM = $propertyTranslation->property->getActivePM();
+
+                    if(!$activePM) { continue; }
+
+                    $transactionData['property_management_id'] = $activePM->id;
 
                     // fill default values
                     if (isset($transactionData['transaction_type_id']) && !$transactionData['transaction_type_id']) {
