@@ -7,7 +7,6 @@ use App\Helpers\LanguageHelper;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use App\Notifications\BookingDetails;
-use App\Notifications\ClientBookingDetails;
 use App\Models\City;
 use App\Models\Office;
 use App\Models\Property;
@@ -193,16 +192,9 @@ if (!function_exists('getCurrentDateTime')) {
 
 
 if (!function_exists('sendBookingDetailsEmail')) {
-    function sendBookingDetailsEmail($booking, $email, $isNew = false, $isTeam = false)
+    function sendBookingDetailsEmail($booking, $email, $isNew = false, $isTeam = true)
     {
         Notification::route('mail', $email)->notify(new BookingDetails($booking, $isNew, $isTeam));
-    }
-}
-
-if (!function_exists('sendClientBookingDetailsEmail')) {
-    function sendClientBookingDetailsEmail($booking, $email, $isNew = false)
-    {
-        Notification::route('mail', $email)->notify(new ClientBookingDetails($booking, $isNew));
     }
 }
 
@@ -698,7 +690,7 @@ if (!function_exists('getReadableDate')) {
 
         $day = strftime("%d", $date->getTimestamp());
         $month = ucfirst(strftime("%b", $date->getTimestamp()));
-        $year = strftime("%y", $date->getTimestamp());
+        $year = strftime("%Y", $date->getTimestamp());
 
         $readableDate = $day . '/' . $month . '/' . $year;
         

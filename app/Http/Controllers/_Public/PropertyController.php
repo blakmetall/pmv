@@ -555,7 +555,8 @@ class PropertyController extends Controller
                 
                 if ($booking->save()) {
                     // guest email
-                    sendClientBookingDetails($booking, $request->email, $isNew);
+                    $isTeam = false;
+                    sendBookingDetailsEmail($booking, $request->email, $isNew, $isTeam);
                     
                     // owner notification emails
                     $owners = $booking->property->users;
