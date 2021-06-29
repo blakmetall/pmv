@@ -218,6 +218,14 @@ class RoleHelper
                 }
                 break;
             
+            // property-management-transactions
+            case 'property-management-transactions':
+                if($action == 'view') {
+                    $view_property_management = [8,2,9,7,6,1,11];
+                    $can = in_array($currentRole->id, $view_property_management);
+                }
+                break;
+
             // property-bookings
             case 'property-bookings':
                 if($action == 'view') {
@@ -399,8 +407,8 @@ class RoleHelper
                     'administrative-assistant',
                     'operations-manager',
                     'operations-assistant',
-                    'owner',
                     'cleanings',
+                    'owner',
                 ]),
                 'pending-audits' => self::transformSluggedRolesToIds([
                     'super',

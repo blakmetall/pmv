@@ -44,6 +44,12 @@ class PropertyManagementTransactionsController extends Controller
 
     public function index(Request $request, PropertyManagement $pm)
     {
+        // permission control
+        if(!can('view', 'property-management-transactions')){
+            $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
         Session::flash('backUrl', $request->fullUrl());
         if (!$request->year && !$request->month) { // prepare year and month for first call
             $urlParams = [
