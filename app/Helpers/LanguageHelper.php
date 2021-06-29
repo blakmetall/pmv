@@ -22,6 +22,12 @@ class LanguageHelper
             }
         }
 
+        // current locale for public área
+        $langSegments = request()->segments();
+        if($langSegments[0] == 'en' || $langSegments[0] == 'es'){
+            $locale = $langSegments[0];
+        }
+
         return Language::where('code', $locale)->first();
     }
 
