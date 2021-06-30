@@ -62,10 +62,11 @@
                     <li>
                         <div class="row">
                             <!-- property name -->
+                            <div class="col-1">#{{ $transaction->id }}</div>
                             <div class="col-3">{{ $transaction->propertyManagement->property->translate()->name }}</div>
                             <div class="col-3">{{ $transaction->type->translate()->name }}</div>
                             <div class="col-2">{{ getOperationTypeById($transaction->operation_type) }}</div>
-                            <div class="col-2">{{ priceFormat($transaction->amount) }}</div>
+                            <div class="col-1">{{ priceFormat($transaction->amount) }}</div>
                             <div class="col-2">{{ $transaction->post_date }}</div>
                         </div>
                     </li>
@@ -76,6 +77,7 @@
                 <table class="table table-striped app-transaction-list" data-show-print="true">
                     <thead>
                         <tr>
+                            <th scope="col" class="transaction-col-id">#</th>
                             <th scope="col" class="transaction-col-property">{{ __('Property') }}</th>
                             <th scope="col" class="transaction-col-transaction-name">{{ __('Transaction') }}</th>
                             <th scope="col" class="transaction-col-period">{{ __('Type') }}</th>
@@ -107,6 +109,11 @@
                             ?>
 
                             <tr>
+                                <!-- id -->
+                                <td>
+                                    {{ $transaction->id }}
+                                </td>
+
                                 <!-- property -->
                                 <td>
                                     {{ $transaction->propertyManagement->property->translate()->name }}

@@ -359,17 +359,32 @@ $(function() {
 
         $("#bulk-transaction-from-date").on('change', function() {
             var value = $(this).val();
-            $(".bulk-transaction-from-date").val(value);
+
+            // $(".bulk-transaction-from-date").val(value);
+            $(".bulk-transaction-from-date").each(function(){
+                var picker = $(this).pickadate('picker');
+                picker.set('select', value);
+            });
         });
 
         $("#bulk-transaction-to-date").on('change', function() {
             var value = $(this).val();
-            $(".bulk-transaction-to-date").val(value);
+
+            // $(".bulk-transaction-to-date").val(value);
+            $(".bulk-transaction-to-date").each(function(){
+                var picker = $(this).pickadate('picker');
+                picker.set('select', value);
+            });
         });
 
         $("#bulk-transaction-post-date").on('change', function() {
             var value = $(this).val();
-            $(".bulk-transaction-post-date").val(value);
+
+            // $(".bulk-transaction-post-date").val(value);
+            $(".bulk-transaction-post-date").each(function(){
+                var picker = $(this).pickadate('picker');
+                picker.set('select', value);
+            });
         });
     }
 

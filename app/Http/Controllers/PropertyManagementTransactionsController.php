@@ -380,8 +380,10 @@ class PropertyManagementTransactionsController extends Controller
 
             $successfullTransactionsIds = [];
 
+            // echo '<pre>',print_r($request->bulk), '</pre>'; exit;
+
             foreach ($request->bulk as $index => $transactionData) {
-                if ($index !== 'default') {
+                if ($index != 'default') {
                     if (!$transactionData['property_translation_id'] && !$transactionData['amount']) {
                         continue;
                     }
