@@ -183,6 +183,6 @@ class Property extends Model
 
     public function getActivePM()
     {
-        return $this->management()->whereNotNull('is_finished')->first();
+        return $this->management()->where('is_finished', '!=', 1)->first();
     }
 }
