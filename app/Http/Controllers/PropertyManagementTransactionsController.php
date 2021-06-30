@@ -376,14 +376,15 @@ class PropertyManagementTransactionsController extends Controller
 
         if ($shouldProcess) {
             $folder = 'transactions';
-            $default = $request->bulk['default'];
+            $default = $request->bulk[0];
 
             $successfullTransactionsIds = [];
 
             // echo '<pre>',print_r($request->bulk), '</pre>'; exit;
 
             foreach ($request->bulk as $index => $transactionData) {
-                if ($index != 'default') {
+                // skip default values
+                if ($index != 0) {
                     if (!$transactionData['property_translation_id'] && !$transactionData['amount']) {
                         continue;
                     }
