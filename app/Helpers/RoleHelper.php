@@ -108,7 +108,7 @@ class RoleHelper
         return false;
     }
 
-    public static function can($action = 'view',  $sectionSlug) {
+    public static function can($action = '',  $sectionSlug) {
         $currentRole = self::current();
 
         $can = false;
@@ -116,11 +116,6 @@ class RoleHelper
         switch($sectionSlug){
             // properties
             case 'properties':
-                if($action == 'view') {
-                    $view_properties = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_properties);
-                }
-                
                 if($action == 'edit') {
                     $edit_properties = [8,2,6,5,1];
                     $can = in_array($currentRole->id, $edit_properties);
@@ -129,11 +124,6 @@ class RoleHelper
 
             // property-images
             case 'property-images':
-                if($action == 'view') {
-                    $view_images = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_images);
-                }
-                
                 if($action == 'edit') {
                     $edit_images = [8,2,6,5,1];
                     $can = in_array($currentRole->id, $edit_images);
@@ -142,11 +132,6 @@ class RoleHelper
 
             // property-rates
             case 'property-rates':
-                if($action == 'view') {
-                    $view_rates = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_rates);
-                }
-                
                 if($action == 'edit') {
                     $edit_rates = [8,2,6,5,1];
                     $can = in_array($currentRole->id, $edit_rates);
@@ -155,11 +140,6 @@ class RoleHelper
 
             // property-contacts
             case 'property-contacts':
-                if($action == 'view') {
-                    $view_contacts = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_contacts);
-                }
-                
                 if($action == 'edit') {
                     $edit_contacts = [8,2,6,5,1];
                     $can = in_array($currentRole->id, $edit_contacts);
@@ -168,11 +148,6 @@ class RoleHelper
 
             // property notes
             case 'property-notes':
-                if($action == 'view') {
-                    $view_notes = [8,2,9,14,10,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_notes);
-                }
-                
                 if($action == 'edit') {
                     $edit_notes = [8,2,9,14,10,7,6,3,5,1];
                     $can = in_array($currentRole->id, $edit_notes);
@@ -181,11 +156,6 @@ class RoleHelper
 
             // property-calendar
             case 'property-calendar':
-                if($action == 'view') {
-                    $view_calendar = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_calendar);
-                }
-                
                 if($action == 'edit') {
                     $edit_calendar = [8,2,6,5,1];
                     $can = in_array($currentRole->id, $edit_calendar);
@@ -194,11 +164,6 @@ class RoleHelper
 
             // property-preview
             case 'property-preview':
-                if($action == 'view') {
-                    $view_preview = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_preview);
-                }
-                
                 if($action == 'edit') {
                     $edit_preview = [8,2,6,5,1];
                     $can = in_array($currentRole->id, $edit_preview);
@@ -228,11 +193,6 @@ class RoleHelper
 
             // property-bookings
             case 'property-bookings':
-                if($action == 'view') {
-                    $view_property_bookings = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_property_bookings);
-                }
-
                 if($action == 'edit') {
                     $edit_property_bookings = [8,2,9,10,6,5,1];
                     $can = in_array($currentRole->id, $edit_property_bookings);
@@ -241,11 +201,6 @@ class RoleHelper
 
             // cleaning-services
             case 'cleaning-services':
-                if($action == 'view') {
-                    $view_property_bookings = [8,2,9,14,10,13,7,6,3,5,1,11];
-                    $can = in_array($currentRole->id, $view_property_bookings);
-                }
-
                 if($action == 'edit') {
                     $edit_property_bookings = [8,2,9,14,6,1];
                     $can = in_array($currentRole->id, $edit_property_bookings);
@@ -254,11 +209,6 @@ class RoleHelper
 
             // human-resources
             case 'human-resources':
-                if($action == 'view') {
-                    $view_property_bookings = [8,2,9,14,10,13,7,6,3,5,1];
-                    $can = in_array($currentRole->id, $view_property_bookings);
-                }
-
                 if($action == 'edit') {
                     $edit_property_bookings = [8,2,9,13,6,1];
                     $can = in_array($currentRole->id, $edit_property_bookings);
