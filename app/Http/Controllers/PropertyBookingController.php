@@ -65,15 +65,9 @@ class PropertyBookingController extends Controller
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';
 
         $registers = [];
-        $registers[] = [
-            'name' => 'Owner',
-        ];
-        $registers[] = [
-            'name' => 'Admin',
-        ];
-        $registers[] = [
-            'name' => 'Client',
-        ];
+        $registers[] = ['name' => 'Owner'];
+        $registers[] = ['name' => 'Admin'];
+        $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.index')
             ->with('bookings', $bookings)
@@ -215,12 +209,8 @@ class PropertyBookingController extends Controller
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';
 
         $registers = [];
-        $registers[] = [
-            'name' => 'Owner',
-        ];
-        $registers[] = [
-            'name' => 'Admin',
-        ];
+        $registers[] = ['name' => 'Owner'];
+        $registers[] = ['name' => 'Admin'];
 
         return view('property-bookings.index')
             ->with('bookings', $bookings)
@@ -259,12 +249,14 @@ class PropertyBookingController extends Controller
         $bookingDaysArr = [];
         $firstDays      = [];
         $endDays        = [];
+
         foreach ($bookings as $booking) {
             $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             $bookingDaysSE    = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             $firstDays[]      = reset($bookingDaysSE);
             $endDays[]        = end($bookingDaysSE);
         }
+
         $bookingDays = arrayFlatten($bookingDaysArr);
 
         $calendar  = '<table align="center" border="0" cellpadding="0" cellspacing="5">';
@@ -287,6 +279,7 @@ class PropertyBookingController extends Controller
             $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
             $last_weekday = date('w', $last_weekday_unix);
             $monthLabel = Carbon::parse($cm);
+
             if (LanguageHelper::getLocale() == 'en') {
                 setlocale(LC_ALL, 'en_EN');
                 $month = $monthLabel->format('F');
@@ -307,16 +300,20 @@ class PropertyBookingController extends Controller
                 <th>' . __('Fr') . '</th>
                 <th>' . __('Sa') . '</th>
             </tr>';
+
             $calendar .= '<tr>';
+
             if ($first_weekday != 0) {
                 $calendar .= '<td colspan="' . $first_weekday . '">&nbsp;</td>';
             }
+
             $count_fields = $first_weekday;
             for ($d = 1; $d <= $days_month; $d++) {
                 $addzero = ($d < 10) ? '0' . $d : $d;
                 $formatYear = isset($request->year) ? $request->year : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
+
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;
                 } else {
@@ -353,8 +350,10 @@ class PropertyBookingController extends Controller
                     $calendar .= '</tr>';
                 }
             }
+            
             $calendar .= '</table>';
             $calendar .= '</td>';
+
             if ($count_cols != 12) {
                 if (($count_cols % $cols_needed) == 0) {
                     $calendar .= '</tr><tr>';
@@ -389,16 +388,11 @@ class PropertyBookingController extends Controller
     {
         $booking = $this->repository->blueprint();
         $damageDeposits = $this->damagesDepositsRepository->all('');
+        
         $registers = [];
-        $registers[] = [
-            'name' => 'Owner',
-        ];
-        $registers[] = [
-            'name' => 'Admin',
-        ];
-        $registers[] = [
-            'name' => 'Client',
-        ];
+        $registers[] = ['name' => 'Owner'];
+        $registers[] = ['name' => 'Admin'];
+        $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.create')
             ->with('booking', $booking)
@@ -422,12 +416,14 @@ class PropertyBookingController extends Controller
         $bookingDaysArr = [];
         $firstDays      = [];
         $endDays        = [];
+
         foreach ($bookings as $booking) {
             $bookingDaysArr[] = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             $bookingDaysSE    = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'd-M-y');
             $firstDays[]      = reset($bookingDaysSE);
             $endDays[]        = end($bookingDaysSE);
         }
+
         $bookingDays = arrayFlatten($bookingDaysArr);
 
         $calendar  = '<table align="center" border="0" cellpadding="0" cellspacing="5">';
@@ -444,6 +440,7 @@ class PropertyBookingController extends Controller
             $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
             $last_weekday = date('w', $last_weekday_unix);
             $monthLabel = Carbon::parse($cm);
+
             if (LanguageHelper::getLocale() == 'en') {
                 setlocale(LC_ALL, 'en_EN');
                 $month = $monthLabel->format('F');
@@ -464,16 +461,21 @@ class PropertyBookingController extends Controller
                 <th>Fr</th>
                 <th>Sa</th>
             </tr>';
+
             $calendar .= '<tr>';
+            
             if ($first_weekday != 0) {
                 $calendar .= '<td colspan="' . $first_weekday . '">&nbsp;</td>';
             }
+
             $count_fields = $first_weekday;
+
             for ($d = 1; $d <= $days_month; $d++) {
                 $addzero = ($d < 10) ? '0' . $d : $d;
                 $formatYear = isset($year) ? $year : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
+                
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;
                 } else {
@@ -510,8 +512,10 @@ class PropertyBookingController extends Controller
                     $calendar .= '</tr>';
                 }
             }
+
             $calendar .= '</table>';
             $calendar .= '</td>';
+
             if ($count_cols != 12) {
                 if (($count_cols % $cols_needed) == 0) {
                     $calendar .= '</tr><tr>';
@@ -523,6 +527,7 @@ class PropertyBookingController extends Controller
                 $calendar .= '</tr>';
             }
         }
+        
         $calendar .= '</table>';
 
         $data = [
@@ -570,15 +575,9 @@ class PropertyBookingController extends Controller
         $damageDeposits = $this->damagesDepositsRepository->all('');
 
         $registers = [];
-        $registers[] = [
-            'name' => 'Owner',
-        ];
-        $registers[] = [
-            'name' => 'Admin',
-        ];
-        $registers[] = [
-            'name' => 'Client',
-        ];
+        $registers[] = ['name' => 'Owner'];
+        $registers[] = ['name' => 'Admin'];
+        $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.show')
             ->with('booking', $booking)
@@ -610,15 +609,9 @@ class PropertyBookingController extends Controller
         }
 
         $registers = [];
-        $registers[] = [
-            'name' => 'Owner',
-        ];
-        $registers[] = [
-            'name' => 'Admin',
-        ];
-        $registers[] = [
-            'name' => 'Client',
-        ];
+        $registers[] = ['name' => 'Owner'];
+        $registers[] = ['name' => 'Admin'];
+        $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.edit')
             ->with('booking', $booking)
@@ -707,6 +700,7 @@ class PropertyBookingController extends Controller
             'filterByUserId' => isRole('owner') ? UserHelper::getCurrentUserID() : false,
             'paginate' => false,
         ];
+
         $properties = $this->propertiesRepository->all('', $config);
 
         return view('property-bookings.get-property-selection')->with('properties', $properties);
@@ -788,38 +782,38 @@ class PropertyBookingController extends Controller
     }
 
     private function getNotificationEmails($request, $booking) {
-        $emails = '';
+        $emails = [];
 
         // guest email
         if ($request->guest) {
-            $emails = $booking->email . ',';
+            $emails[] = $booking->email;
 
             if($booking->alternate_email) {
-                $emails .= $booking->alternate_email . ',';
+                $emails[] = $booking->alternate_email;
             }
         }
 
         if ($request->concierge) {
-            $emails .= 'concierge@palmeravacations.com,';
+            $emails[] = 'concierge@palmeravacations.com';
         }
 
         // office email
         if ($request->office && $booking->property->office->email) {
-            $emails .= $booking->property->office->email . ',';
+            $emails[] = $booking->property->office->email;
         }
 
         // home owners email
         if ($request->home_owner) {
             $owners = $booking->property->users;
             foreach ($owners as $owner) {
-                $emails .= $owner->email . ',';
+                $emails[] = $owner->email ;
             }
         }
 
         // extra emails
         if(isProduction() && !$request->disable_default_email) {
-            $emails .= 'reservaciones@palmeravacations.com,';
-            $emails .= 'info@palmeravacations.com,';
+            $emails[] = 'reservaciones@palmeravacations.com';
+            $emails[] = 'info@palmeravacations.com';
         }
 
         // if booking inside next 24hrs send email to:
@@ -829,11 +823,13 @@ class PropertyBookingController extends Controller
         // extra emails
         if($arrival->diffInHours($now) <= 24) {
             if(isProduction() && !$request->disable_default_email) {
-                $emails .= 'pmd@palmeravacations.com,';
-                $emails .= 'maidsupervisor@palmeramail.com,';
+                $emails[] = 'pmd@palmeravacations.com';
+                $emails[] = 'maidsupervisor@palmeramail.com';
             }
         }
 
-        return trim($emails, ',');
+        $emails = array_unique($emails);
+
+        return implode(',', $emails);
     }
 }

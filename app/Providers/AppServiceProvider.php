@@ -39,9 +39,9 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
+        // configure cities for constants
         $getCities = City::orderBy('name', 'asc')->get();
         $cities = [];
-
         foreach ($getCities as $city) {
             $slug = Str::slug($city->name);
             $cities[$slug] = $city->id;

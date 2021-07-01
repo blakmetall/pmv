@@ -43,7 +43,6 @@ class DetailsTransaction extends Notification
      */
     public function toMail($notifiable)
     {
-        // $greeting = sprintf('Hello %s!', $notifiable->profile->full_name);
         $period = $this->transaction->period_start_date . ' - ' . $this->transaction->period_end_date;
         $operationType = $this->transaction->operation_type == config('constants.operation_types.charge') ? __('Charge') : __('Credit');
 

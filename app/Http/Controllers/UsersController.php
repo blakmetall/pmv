@@ -36,6 +36,7 @@ class UsersController extends Controller
         $allRoles = Role::all();
         $lang = LanguageHelper::current();
         $roles = [];
+
         foreach ($allRoles as $index => $role) {
             $roles[$index]['id'] = $role->translations()->where('language_id', $lang->id)->first()->role_id;
             $roles[$index]['name'] = $role->translations()->where('language_id', $lang->id)->first()->name;

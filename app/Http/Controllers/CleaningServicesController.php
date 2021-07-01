@@ -40,6 +40,7 @@ class CleaningServicesController extends Controller
         } else {
             $config = ['filterByWorkgroup' => true];
         }
+        
         $cleaning_services = $this->repository->all($search, $config);
 
         return view('cleaning-services.index')

@@ -58,11 +58,7 @@ class UsersRepository implements UsersRepositoryInterface
             });
         }
 
-        //Aqui TERMINAN los filtros de los contactos
-
-        $query
-            ->with('profile')
-            ->orderBy('email', 'asc');
+        $query->with('profile')->orderBy('email', 'asc');
 
         if ($shouldPaginate) {
             $result = $query->paginate(config('constants.pagination.per-page'));
@@ -95,7 +91,6 @@ class UsersRepository implements UsersRepositoryInterface
         } else {
             $user = $this->find($id);
         }
-
 
         $checkboxesConfig = ['is_enabled' => 0];
         $requestData = array_merge($checkboxesConfig, $request->all());

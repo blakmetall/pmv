@@ -90,6 +90,7 @@ class ContactsRepository implements ContactsRepositoryInterface
         } else {
             $userID = null;
         }
+        
         $owner = ['owner_id' => $userID];
         $requestData = array_merge($checkboxesConfig, $owner, $request->all());
 

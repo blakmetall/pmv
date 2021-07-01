@@ -42,24 +42,28 @@ class DetailsContact extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())
-            ->subject(__('Contact') . ' - ' . $this->data->subject)
-            ->line('')
-            ->line('Message for Contact form palmeravacations')
-            ->line('')
-            ->line('NAME: <strong>' . $this->data->name . '</strong>')
-            ->line('EMAIL: <strong>' . $this->data->mail . '</strong>')
-            ->line('CATEGORY: <strong>' . $this->data->category . '</strong>')
-            ->line('MESSAGE:' . $this->data->message)
-            ->line('')
-            ->line(new HtmlString('– – – – – – – – – – – – – – – – – – – – – – –'))
-            ->line('')
-            ->line('Mensaje de Contacto desde palmeravacations')
-            ->line('')
-            ->line('NOMBRE: <strong>' . $this->data->name . '</strong>')
-            ->line('EMAIL: <strong>' . $this->data->mail . '</strong>')
-            ->line('CATEGORÍA: <strong>' . $this->data->category . '</strong>')
-            ->line('MENSAJE:' . $this->data->message);
+        $subject = __('Contact') . ' - ' . $this->data->subject;
+
+        $mailMsg = new MailMessage();
+        $mailMsg->subject($subject);
+
+        if(\App::getLocale() == 'en') {
+            $mailMsg->line('Message from contact form from website');
+            $mailMsg->line(new HtmlString('<br>'));
+            $mailMsg->line('Name: ' . $this->data->name);
+            $mailMsg->line('Email: ' . $this->data->mail);
+            $mailMsg->line('Category: <strong>' . $this->data->category);
+            $mailMsg->line('Message:' . $this->data->message);
+        }else{
+            $mailMsg->line('Mensaje del formulario de contacto del sitio web');
+            $mailMsg->line(new HtmlString('<br>'));
+            $mailMsg->line('Nombre: ' . $this->data->name);
+            $mailMsg->line('Email: ' . $this->data->mail);
+            $mailMsg->line('Categoría: ' . $this->data->category);
+            $mailMsg->line('Mensaje:' . $this->data->message);
+        }
+
+        return $mailMsg;
     }
 
 

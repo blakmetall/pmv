@@ -99,6 +99,7 @@ class PropertyManagementController extends Controller
     public function create(Property $property)
     {
         $pm = $this->repository->blueprint();
+
         return view('property-management.create')
             ->with('pm', $pm)
             ->with('property', $property);
@@ -119,6 +120,7 @@ class PropertyManagementController extends Controller
     public function show(Property $property, PropertyManagement $pm)
     {
         $pm = $this->repository->find($pm);
+
         return view('property-management.show')
             ->with('pm', $pm)
             ->with('property', $property);
@@ -138,9 +140,11 @@ class PropertyManagementController extends Controller
         if ($this->canCreatePM($request, $property, $id)) {
             $this->repository->update($request, $id);
             $request->session()->flash('success', __('Record updated successfully'));
+
             return redirect(route('property-management.edit', [$property->id, $id]));
         } else {
             $request->session()->flash('error', __('You can only have one unfinished property management.'));
+            
             return redirect()->back()->withInput();
         }
     }
@@ -150,6 +154,7 @@ class PropertyManagementController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+            
             return redirect(route('property-management', [$property->id]));
         }
 

@@ -20,9 +20,11 @@ class PropertyNotesController extends Controller
         $search = trim($request->s);
 
         $config = [];
+
         if (isRole('owner')) {
             $config = ['auditedOnly' => true];
         }
+
         $config = ['property_id' => $property->id];
 
         $notes = $this->repository->all($search, $config);
@@ -36,6 +38,7 @@ class PropertyNotesController extends Controller
     public function create(Property $property)
     {
         $note = $this->repository->blueprint();
+
         return view('property-notes.create')
             ->with('note', $note)
             ->with('property', $property);
@@ -45,6 +48,7 @@ class PropertyNotesController extends Controller
     {
         $note = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
+
         return redirect(route('property-notes.edit', [$property->id, $note->id]));
     }
 
@@ -70,6 +74,7 @@ class PropertyNotesController extends Controller
     {
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
+
         return redirect(route('property-notes.edit', [$property->id, $id]));
     }
 
@@ -78,10 +83,12 @@ class PropertyNotesController extends Controller
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
+
             return redirect(route('property-notes', [$property->id]));
         }
 
         $request->session()->flash('error', __("This record can't be deleted"));
+        
         return redirect()->back();
     }
 }

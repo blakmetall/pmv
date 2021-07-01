@@ -388,15 +388,6 @@ $(function() {
         });
     }
 
-    // get dates availability
-    // let getDateAvailability = JSON.parse(localStorage.getItem('dates-availability')) || [];
-    // let arrivalDateAvailability = (getDateAvailability.length !== 0)?getDateAvailability[0]:'';
-    // let departureDateAvailability = (getDateAvailability.length !== 0)?getDateAvailability[1]:'';
-    // $('input[name="arrival_date"]').val(arrivalDateAvailability);
-    // $('input[name="arrival_date_submit"]').val(arrivalDateAvailability);
-    // $('input[name="departure_date"]').val(departureDateAvailability);
-    // $('input[name="departure_date_submit"]').val(departureDateAvailability);
-
     // submit form balance property management transactions when year change
     $('.select-year').on('change', function(){
         $('#search-balance').submit();
@@ -407,17 +398,12 @@ $(function() {
     const svgx = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
     const firstText = nl2br($('#field_notification_owners_email_content_').val());
+    
     $("#text-canvas").append(firstText);
-    // $("#text-canvas").css({
-    //     'height': calcHeight($("#text-canvas").val()) + "px"
-    // });
     $('#field_notification_owners_email_content_').on('change', function(){
         $("#text-canvas").empty();
         $("#text-canvas").append(oldText);
         $("#text-canvas").append(nl2br($(this).val()));
-        // $("#text-canvas").css({
-        //     'height': calcHeight($("#text-canvas").val()) + "px"
-        // });
     });
 
     // email generate image

@@ -8,7 +8,6 @@ use App\Repositories\{
     CitiesRepositoryInterface
 };
 use App\Models\HumanResource;
-// use App\Exports\HumanResourcesExport;
 
 class HumanResourcesController extends Controller
 {

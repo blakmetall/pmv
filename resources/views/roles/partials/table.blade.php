@@ -10,7 +10,7 @@
             <tr>
                 <th scope="col">{{ __('Role') }}</th>
                 <th scope="col">{{ __('Users') }}</th>
-                <th scope="col">{{ __('Permissions') }}</th>
+                {{-- <th scope="col">{{ __('Permissions') }}</th> --}}
             </tr>
 
         </thead>
@@ -31,7 +31,7 @@
                         </td>
 
                         <!-- roles permissions -->
-                        <td>
+                        <?php /*<td>
                             @if(isset($rolesAllowedSections[$row->role->id]))
                                 @foreach($rolesAllowedSections[$row->role->id] as $roleSection)
                                     {{ $roleSection }} <br>
@@ -39,7 +39,7 @@
                             @else
                                 --
                             @endif
-                        </td>
+                        </td>*/ ?>
                     </tr>
                 @endforeach
             @endif

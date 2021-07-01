@@ -33,12 +33,9 @@ class ZonesRepository implements ZonesRepositoryInterface
                 ->with('zone')
                 ->orderBy('zones_translations.name', 'asc');
         } else if ($city) {
-            $query = ZoneTranslation::whereHas(
-                'zone',
-                function ($q) use ($city) {
+            $query = ZoneTranslation::whereHas('zone',function ($q) use ($city) {
                     $q->where('zones.city_id', $city);
-                }
-            )
+            })
                 ->where('language_id', $lang->id)
                 ->orderBy('zones_translations.name', 'asc');
         } else {

@@ -89,6 +89,7 @@ class PropertyManagementBalancesController extends Controller
         $data['pendingAudit'] = $balance['pendingAudit'];
         $data['estimatedBalance'] = $balance['estimatedBalance'];
         $getUser = false;
+
         if ($pm->property->users->isNotEmpty()) {
             foreach ($pm->property->users as $getUser) {
                 $getUser = User::find($getUser->id);
@@ -96,6 +97,7 @@ class PropertyManagementBalancesController extends Controller
         }
 
         $msg  = '';
+
         if ($getUser) {
             $msg .= 'Hello ' . $getUser->profile->full_name . '<br><br>';
             $msg .= 'Here are the details of your current balance<br>';
@@ -117,6 +119,7 @@ class PropertyManagementBalancesController extends Controller
     {
         $balance = PMHelper::getBalance($pm->id);
         $property = $pm->property->translate()->name;
+        
         $data = [];
         $data['property'] = $property;
         $data['balance'] = $balance['balance'];

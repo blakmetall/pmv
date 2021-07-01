@@ -112,7 +112,6 @@ class CleaningServicesRepository implements CleaningServicesRepositoryInterface
         // status assignation
         $cleaning_service->cleaningServicesStatus()->sync($request->status_ids);
 
-        // $property = Property::find($request->property_id)->first();
         $property = $cleaning_service->property;
         if ($property) {
             $cleaning_staff_ids = [];

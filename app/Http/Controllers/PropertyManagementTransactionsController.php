@@ -122,8 +122,10 @@ class PropertyManagementTransactionsController extends Controller
             'filterByOffice' => $request->office,
             'filterByImage' => $request->withImage,
         ];
+        
         $pendingTransactions = $this->repository->all($search, $config);
         $transationTypesOptionsIds = false;
+
         if ($pendingTransactions) {
             $transationTypesOptionsIds = [];
             foreach ($pendingTransactions as $pt) {
@@ -156,6 +158,7 @@ class PropertyManagementTransactionsController extends Controller
         if (Session::has('backUrl')) {
             Session::keep('backUrl');
         }
+
         $transaction = $this->repository->blueprint();
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
@@ -172,6 +175,7 @@ class PropertyManagementTransactionsController extends Controller
         if (Session::has('backUrl')) {
             Session::keep('backUrl');
         }
+
         $transaction = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
 
@@ -196,6 +200,7 @@ class PropertyManagementTransactionsController extends Controller
         if (Session::has('backUrl')) {
             Session::keep('backUrl');
         }
+
         $transaction = $this->repository->find($transaction);
         $transactionTypes = $this->transactionTypesRepository->all('', ['paginate' => false]);
         $paymentTypes = PMTransactionHelper::getTypes();
@@ -226,6 +231,7 @@ class PropertyManagementTransactionsController extends Controller
         if (Session::has('backUrl')) {
             Session::keep('backUrl');
         }
+
         $this->repository->update($request, $id);
         $request->session()->flash('success', __('Record updated successfully'));
 
@@ -235,8 +241,6 @@ class PropertyManagementTransactionsController extends Controller
         }
 
         return ($url = Session::get('backUrl')) ? redirect($url) : redirect(route('property-management-transactions', [$pm->id]));
-
-        // return redirect(route('property-management-transactions.edit', [$pm->id, $id]));
     }
 
     public function destroy(Request $request, PropertyManagement $pm, $id)
@@ -244,6 +248,7 @@ class PropertyManagementTransactionsController extends Controller
         if (Session::has('backUrl')) {
             Session::keep('backUrl');
         }
+
         if ($this->repository->canDelete($id)) {
             $this->repository->delete($id);
             $request->session()->flash('success', __('Record deleted successfully'));
@@ -380,8 +385,6 @@ class PropertyManagementTransactionsController extends Controller
 
             $successfullTransactionsIds = [];
 
-            // echo '<pre>',print_r($request->bulk), '</pre>'; exit;
-
             foreach ($request->bulk as $index => $transactionData) {
                 // skip default values
                 if ($index != 0) {
@@ -466,6 +469,7 @@ class PropertyManagementTransactionsController extends Controller
     {
         $transaction = PropertyManagementTransaction::find($request->source);
         $pm = $transaction->propertyManagement;
+
         if ($pm->property->users->isNotEmpty()) {
             foreach ($pm->property->users as $getUser) {
                 $getUser = User::find($getUser->id);
@@ -476,6 +480,7 @@ class PropertyManagementTransactionsController extends Controller
         $operationType = $transaction->operation_type == config('constants.operation_types.charge') ? __('Charge') : __('Credit');
 
         $msg  = '';
+
         if ($getUser) {
             $msg .= 'Hello ' . $getUser->profile->full_name . '<br><br>';
             $msg .= 'Transaction' . ': ' . $transaction->id . '<br>';
@@ -519,12 +524,14 @@ class PropertyManagementTransactionsController extends Controller
 
     public function deleteImage($transaction){
         $transaction = PropertyManagementTransaction::find($transaction);
+        
         if($transaction){
             $deleteFile = ImagesHelper::deleteFile($transaction->file_path);
             ImagesHelper::deleteThumbnails($transaction->file_path);
         }else{
             $deleteFile = false;
         }
+
         if($deleteFile){
             $transaction->file_slug = null;
             $transaction->file_extension = null;
@@ -534,6 +541,7 @@ class PropertyManagementTransactionsController extends Controller
             $transaction->file_url = null;
             $transaction->save();
         }
+        
         return redirect()->back();
     }
 }

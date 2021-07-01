@@ -30,8 +30,6 @@ class RatesHelper
             $to_date = date('Y-m-d', strtotime('+7 days'));
         }
 
-        // echo $from_date . ' -- ' . $to_date . '<br><br>';
-
         // carbonize dates
         $from_date = Carbon::createFromFormat('Y-m-d', $from_date);
         $to_date = Carbon::createFromFormat('Y-m-d', $to_date);
