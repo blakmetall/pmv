@@ -180,7 +180,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
         if ($shouldFilterByPM) {
             $query->whereHas('property', function ($q) use ($config) {
                 $q->whereHas('management', function($q2) {
-                    $q2->where('is_finished', 0);
+                    $q2->where('is_finished', '!=' , 1);
                 });
             })->where('language_id', $lang->id);
         }

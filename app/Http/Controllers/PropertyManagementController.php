@@ -33,7 +33,7 @@ class PropertyManagementController extends Controller
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-        $config = ['propertyID' => $property->id, 'paginate' => false];
+        $config = ['pm' => true, 'propertyID' => $property->id, 'paginate' => false];
         $pm_items = $this->repository->all($search, $config);
         $cities = $this->citiesRepository->all('', $config);
         $active = 0;
