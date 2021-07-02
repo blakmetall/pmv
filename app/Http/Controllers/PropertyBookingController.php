@@ -656,7 +656,11 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
 
         // permission control
-        if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
+        // if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
+        //     $request->session()->flash('error', __("You don't have access to this area"));
+        //     return redirect()->back();
+        // }
+        if(!can('delete', 'property-bookings')){
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }

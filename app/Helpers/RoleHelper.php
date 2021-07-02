@@ -197,6 +197,11 @@ class RoleHelper
                     $edit_property_bookings = [8,2,9,10,6,5,1];
                     $can = in_array($currentRole->id, $edit_property_bookings);
                 }
+
+                if($action == 'delete') {
+                    $delete_property_bookings = [1,2];
+                    $can = in_array($currentRole->id, $delete_property_bookings);
+                }
                 break;
 
             // cleaning-services

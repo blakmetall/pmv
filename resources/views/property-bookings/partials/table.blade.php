@@ -117,15 +117,15 @@
                                 $skipEdit = false;
 
                                 if(isRole('owner')) {
-                                    if($row->register_by != 'Owner'){
-                                        $skipDelete = true;
+                                    if($row->register_by != 'Owner') {
                                         $skipEdit = true;
                                     }
-                                }else{
-                                    if(!can('edit', 'property-bookings')) {
-                                        $skipDelete = true;
-                                        $skipEdit = true;
-                                    }
+                                }else if(!can('edit', 'property-bookings')) {
+                                    $skipEdit = true;
+                                }
+
+                                if(!can('delete', 'property-bookings')) {
+                                    $skipDelete = true;
                                 }
                             @endphp
 
