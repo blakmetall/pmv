@@ -24,7 +24,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">ID</th>
+                <th scope="col">PM ID</th>
                 <th scope="col">&nbsp;</th>
                 <th scope="col">{{ __('Property') }}</th>
                 <th scope="col">{{ __('Avg. Month') }}</th>

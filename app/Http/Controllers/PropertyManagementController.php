@@ -33,7 +33,7 @@ class PropertyManagementController extends Controller
     public function index(Request $request, Property $property)
     {
         $search = trim($request->s);
-        $config = ['pm' => true, 'propertyID' => $property->id, 'paginate' => false];
+        $config = ['propertyID' => $property->id, 'paginate' => false];
         $pm_items = $this->repository->all($search, $config);
         $cities = $this->citiesRepository->all('', $config);
         $active = 0;
@@ -65,29 +65,37 @@ class PropertyManagementController extends Controller
     {
         $search = trim($request->s);
 
-        // $config = ['unfinishedOnly' => true];
         $config = ['paginate' => false];
         $config = [
+            'unfinishedOnly' => true,
             'filterByCity' => $request->city
         ];
         $pm_items = $this->repository->all($search, $config);
+
+        $config = [
+            'finishedOnly' => true,
+            'filterByCity' => $request->city
+        ];
+        $pm_items_finished = $this->repository->all($search, $config);
+
         $cities = $this->citiesRepository->all('', '');
+
         $active = 0;
-        $finished = 0;
-        $total = 0;
+        $finished = $pm_items_finished->count();
+        $total = $pm_items->count() + $pm_items_finished->count();
 
         if ($pm_items->count()) {
-            $total = $pm_items->count();
             foreach ($pm_items as $pm_item) {
                 if ($pm_item->is_finished) {
-                    $finished ++;
+                    $finished++;
                 }else{
-                    $active ++;
+                    $active++;
                 }
             }
         }
 
         return view('property-management.general')
+            ->with('pm_items_finished', $pm_items_finished)
             ->with('pm_items', $pm_items)
             ->with('cities', $cities)
             ->with('active', $active)

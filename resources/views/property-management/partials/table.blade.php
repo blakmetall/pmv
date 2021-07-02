@@ -25,6 +25,8 @@
         <thead>
 
             <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">{{ __('PM ID') }}</th>
                 <th scope="col">{{ __('Property ID') }}</th>
                 <th scope="col">{{ __('Property') }}</th>
                 <th scope="col">{{ __('Start Date') }}</th>
@@ -39,7 +41,7 @@
         <tbody>
 
             @if (count($rows))
-                @foreach ($rows as $row)
+                @foreach ($rows as $i => $row)
 
                     <!-- show only non finished -->
                     @php
@@ -60,10 +62,15 @@
                     @endphp
 
                     <tr>
-                        <!-- id -->
-                        {{-- <th scope="row">
+                        <!-- counter -->
+                        <th scope="row">
+                            {{ $i + 1 }}
+                        </th>
+
+                        <!-- PM ID -->
+                        <th>
                             {{ $row->id }}
-                        </th> --}}
+                        </th>
 
                         <!-- Property id -->
                         <th scope="row">
@@ -114,22 +121,7 @@
     </table>
 </div>
 
-
-
-@php
-
-$hasFinishedPropertyManagements = false;
-foreach ($rows as $row) {
-    if ($row->is_finished) {
-        $hasFinishedPropertyManagements = true;
-        break;
-    }
-}
-
-@endphp
-
-
-@if ($hasFinishedPropertyManagements)
+@if ($pm_items_finished->count())
     <!-- finished table -->
     <div class="mb-5"></div>
     
@@ -151,9 +143,12 @@ foreach ($rows as $row) {
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">{{ __('PM ID') }}</th>
                     <th scope="col">{{ __('Property ID') }}</th>
                     <th scope="col">{{ __('Property') }}</th>
                     <th scope="col">{{ __('Start Date') }}</th>
+                    <th scope="col">{{ __('End Date') }}</th>
                     <th scope="col">{{ __('Fee') }}</th>
 
                     @if (!isRole('owner'))
@@ -163,76 +158,75 @@ foreach ($rows as $row) {
             </thead>
 
             <tbody>
-                @if (count($rows))
-                    @foreach ($rows as $row)
+                @foreach ($pm_items_finished as $i => $row)
 
-                        <!-- show only finished filter -->
-                        @php
-                            if (!$row->is_finished) {
-                                continue;
-                            }
-                        @endphp
+                    <!-- show only finished filter -->
+                    @php
+                        if (!$row->is_finished) {
+                            continue;
+                        }
+                    @endphp
 
-                        <!-- skip repeated control -->
-                        @if (in_array($row->id, $repeatedIDS))
-                            @php continue; @endphp
-                        @endif
-                        @php
-                            if (!in_array($row->id, $repeatedIDS)) {
-                                $repeatedIDS[] = $row->id;
-                            }
-                        @endphp
+                    <!-- skip repeated control -->
+                    @if (in_array($row->id, $repeatedIDS))
+                        @php continue; @endphp
+                    @endif
 
-                        <tr>
-                            <!-- id -->
-                            {{-- <th scope="row">
-                                {{ $row->id }}
-                            </th> --}}
+                    @php
+                        if (!in_array($row->id, $repeatedIDS)) {
+                            $repeatedIDS[] = $row->id;
+                        }
+                    @endphp
 
-                            <!-- property id -->
-                            <th scope="row">
-                                {{ $row->property->id }}
-                            </th>
+                    <tr>
+                        <!-- counter -->
+                        <th scope="row">
+                            {{ $i + 1 }}
+                        </th>
 
-                            <!-- property -->
-                            <td>
-                                @if ($row->property->hasTranslation())
-                                    <a href="{{ route('properties.show', [$row->property->id]) }}"
-                                        class="underline">
-                                        {{ $row->property->translate()->name }}
-                                    </a>
-                                @endif
-                            </td>
+                        <!-- PM ID -->
+                        <th>
+                            {{ $row->id }}
+                        </th>
 
-                            <!-- start_date -->
-                            <td>{{ $row->start_date }}</td>
+                        <!-- property id -->
+                        <th scope="row">
+                            {{ $row->property->id }}
+                        </th>
 
-                            <!-- management_fee -->
-                            <td>{{ priceFormat($row->management_fee) }} USD</td>
-
-                            {{-- <td>
-                                <a href="{{ route('property-management-transactions', [$row->id]) }}" 
-                                    alt="{{ __('Transactions') }}"
-                                    class="text-primary mr-2">
-                                    <i class="nav-icon i-Receipt-3 font-weight-bold"></i>
+                        <!-- property -->
+                        <td>
+                            @if ($row->property->hasTranslation())
+                                <a href="{{ route('properties.show', [$row->property->id]) }}"
+                                    class="underline">
+                                    {{ $row->property->translate()->name }}
                                 </a>
-                            </td> --}}
-
-                            <!-- actions -->
-                            @if (!isRole('owner'))
-                                <td>
-                                    @include('components.table.actions', [
-                                    'params' => [$row->property->id, $row->id],
-                                    'showRoute' => 'property-management.show',
-                                    'editRoute' => 'property-management.edit',
-                                    'deleteRoute' => 'property-management.destroy',
-                                    'skipDelete' => true,
-                                    ])
-                                </td>
                             @endif
-                        </tr>
-                    @endforeach
-                @endif
+                        </td>
+
+                        <!-- start_date -->
+                        <td>{{ $row->start_date }}</td>
+
+                        <!-- end_date -->
+                        <td>{{ $row->end_date }}</td>
+
+                        <!-- management_fee -->
+                        <td>{{ priceFormat($row->management_fee) }} USD</td>
+
+                        <!-- actions -->
+                        @if (!isRole('owner'))
+                            <td>
+                                @include('components.table.actions', [
+                                'params' => [$row->property->id, $row->id],
+                                'showRoute' => 'property-management.show',
+                                'editRoute' => 'property-management.edit',
+                                'deleteRoute' => 'property-management.destroy',
+                                'skipDelete' => true,
+                                ])
+                            </td>
+                        @endif
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

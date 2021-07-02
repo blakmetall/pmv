@@ -25,6 +25,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
 
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
         $unfinishedOnly = isset($config['unfinishedOnly']) ? $config['unfinishedOnly'] : false;
+        $finishedOnly = isset($config['finishedOnly']) ? $config['finishedOnly'] : false;
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
@@ -73,7 +74,11 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         }
 
         if ($unfinishedOnly) {
-            $query->where('is_finished', 0);
+            $query->where('is_finished', '!=', 1);
+        }
+
+        if ($finishedOnly) {
+            $query->where('is_finished', 1);
         }
 
         if ($shouldPaginate) {
