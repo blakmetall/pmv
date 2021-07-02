@@ -27,6 +27,16 @@
         }
     }
     
+    $skipDelete = false;
+    $skipEdit = false;
+
+    if(!can('edit', 'property-bookings')) {
+        $skipEdit = true;
+    }
+
+    if(!can('delete', 'property-bookings')) {
+        $skipDelete = true;
+    }
 @endphp
 
 <!-- form actions -->

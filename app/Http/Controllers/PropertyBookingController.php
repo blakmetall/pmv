@@ -66,7 +66,6 @@ class PropertyBookingController extends Controller
 
         $registers = [];
         $registers[] = ['name' => 'Owner'];
-        $registers[] = ['name' => 'Admin'];
         $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.index')
@@ -210,7 +209,7 @@ class PropertyBookingController extends Controller
 
         $registers = [];
         $registers[] = ['name' => 'Owner'];
-        $registers[] = ['name' => 'Admin'];
+        $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.index')
             ->with('bookings', $bookings)
@@ -391,8 +390,10 @@ class PropertyBookingController extends Controller
         
         $registers = [];
         $registers[] = ['name' => 'Owner'];
-        $registers[] = ['name' => 'Admin'];
-        $registers[] = ['name' => 'Client'];
+
+        if(!isRole('owner')){
+            $registers[] = ['name' => 'Client'];
+        }
 
         return view('property-bookings.create')
             ->with('booking', $booking)
@@ -576,7 +577,6 @@ class PropertyBookingController extends Controller
 
         $registers = [];
         $registers[] = ['name' => 'Owner'];
-        $registers[] = ['name' => 'Admin'];
         $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.show')
@@ -610,8 +610,10 @@ class PropertyBookingController extends Controller
 
         $registers = [];
         $registers[] = ['name' => 'Owner'];
-        $registers[] = ['name' => 'Admin'];
-        $registers[] = ['name' => 'Client'];
+
+        if(!isRole('owner')){
+            $registers[] = ['name' => 'Client'];
+        }
 
         return view('property-bookings.edit')
             ->with('booking', $booking)
@@ -822,6 +824,10 @@ class PropertyBookingController extends Controller
         if(isProduction() && !$request->disable_default_email) {
             $emails[] = 'reservaciones@palmeravacations.com';
             $emails[] = 'info@palmeravacations.com';
+
+            if($booking->register_by == 'Client') {
+                $emails[] = 'accounting@palmeravacations.com';
+            }
         }
 
         // if booking inside next 24hrs send email to:

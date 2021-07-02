@@ -194,7 +194,7 @@ class RoleHelper
             // property-bookings
             case 'property-bookings':
                 if($action == 'edit') {
-                    $edit_property_bookings = [8,2,9,10,6,5,1];
+                    $edit_property_bookings = [8,2,9,10,6,5,1,11];
                     $can = in_array($currentRole->id, $edit_property_bookings);
                 }
 

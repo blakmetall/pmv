@@ -248,8 +248,11 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 // extra emails
                 if(isProduction() && !$request->disable_default_email) {
                     sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $is_new);
-                    // enviar accounting si la reservación es como cliente (área pública)
                     sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $is_new);
+                    
+                    if($booking->register_by == 'Client') {
+                        sendBookingDetailsEmail($booking, 'accounting@palmeravacations.com', $is_new);
+                    }
                 }
 
                 // if booking inside next 24hrs send email to:
