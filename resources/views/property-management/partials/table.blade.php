@@ -121,7 +121,7 @@
     </table>
 </div>
 
-@if ($pm_items_finished->count())
+@if (isset($pm_items_finished) && $pm_items_finished->count())
     <!-- finished table -->
     <div class="mb-5"></div>
     

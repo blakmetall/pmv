@@ -38,8 +38,8 @@ class PropertyManagementBalancesController extends Controller
             'filterByYear' => $request->year,
             'filterByMonth' => $request->month,
         ];
-
         $pm_items = $this->propertyManagementRepository->all($search, $config);
+
         $cities = $this->citiesRepository->all('', '');
 
         $totalBalances = [

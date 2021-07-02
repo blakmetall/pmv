@@ -182,7 +182,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
                 $q->whereHas('management', function($q2) {
                     $q2->where('is_finished', '!=' , 1);
                 });
-            })->where('language_id', $lang->id);
+            });
         }
 
         if ($shouldFilterByFeatured) {

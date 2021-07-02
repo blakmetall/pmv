@@ -29,6 +29,7 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         $hasPropertyID = isset($config['propertyID']) ? $config['propertyID'] : '';
         $filterByCity = isset($config['filterByCity']) ? $config['filterByCity'] : '';
         $filterByOwner = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
+        // $filterByEnabled = isset($config['filterByEnabled']) ? $config['filterByEnabled'] : '';
         $shouldFilterByYear = isset($config['filterByYear']) ? $config['filterByYear'] : '';
         $shouldFilterByMonth = isset($config['filterByMonth']) ? $config['filterByMonth'] : '';
 
@@ -80,6 +81,10 @@ class PropertyManagementRepository implements PropertyManagementRepositoryInterf
         if ($finishedOnly) {
             $query->where('is_finished', 1);
         }
+
+        // if($filterByEnabled) {
+        //     $query->where('is_enabled', 1);
+        // }
 
         if ($shouldPaginate) {
             $result = $query->paginate(9999);
