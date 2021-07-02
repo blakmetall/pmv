@@ -38,8 +38,9 @@
                                 <option value="">{{ __('Select') }}</option>
 
                                 @php
-
-                                    $selected = isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties' ? 'selected'
+                                    // pre-select properties from filter list
+                                    $selected = (isset($_GET['topFilter']) && $_GET['topFilter'] == 'properties')
+                                        || (!isset($_GET['topFilter'])) ? 'selected'
                                     : '';
                                 @endphp
                                 <option value="properties" {{ $selected }}>{{ __('Properties') }}</option>
