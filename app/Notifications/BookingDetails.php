@@ -17,11 +17,12 @@ class BookingDetails extends Notification
      *
      * @return void
      */
-    public function __construct(PropertyBooking $booking, $isNew, $isTeam)
+    public function __construct(PropertyBooking $booking, $isNew, $isTeam, $isDeleted)
     {
         $this->booking = $booking;
         $this->isNew = $isNew;
         $this->isTeam = $isTeam;
+        $this->isDeleted = $isDeleted;
     }
 
     /**
@@ -67,9 +68,15 @@ class BookingDetails extends Notification
     
         // subject
         if($this->isNew) {
-            $subject = __('Palmera Vacations New Reservation') . ' #' . $this->booking->id;
+            $subject = __('Palmera Vacations NEW RESERVATION') . ' #' . $this->booking->id;
         }else{
-            $subject = __('Palmera Vacations') . ' ' . getSubjectBookingStatus($this->booking, \App::getLocale(), $this->isNew) . ' #' . $this->booking->id;
+            if($this->isDeleted) {
+                $subject = __('Palmera Vacations') . ' ' . 'RESERVATION DELETED' . ' #' . $this->booking->id;
+            }else if($this->booking->is_cancelled) {
+                $subject = __('Palmera Vacations') . ' ' . 'RESERVATION CANCELLED' . ' #' . $this->booking->id;
+            }else{
+                $subject = __('Palmera Vacations') . ' ' . 'RESERVATION UPDATE' . ' #' . $this->booking->id;
+            }
         }
 
         $mailMsg = new MailMessage();
@@ -96,15 +103,24 @@ class BookingDetails extends Notification
             
             // booking status
             $mailMsg->line(new HtmlString('<br>'));
-            $mailMsg->line(new HtmlString('CONFIRMATION: ' . $this->booking->id));
-            $mailMsg->line(new HtmlString('STATUS: ' . getBookingStatus($this->booking, 'en')));
+
+            if($this->isDeleted) {
+                $mailMsg->line(new HtmlString('RESERVATION DELETED'));
+            }else if($this->booking->is_cancelled) {
+                $mailMsg->line(new HtmlString('RESERVATION CANCELLED'));
+            }else if(!$this->isNew){
+                $mailMsg->line(new HtmlString('RESERVATION UPDATE'));
+            }
+
             $mailMsg->line(new HtmlString('BOOKING DATE: ' . getReadableDate($createdAt[0], 'en') . ' ' . $createdAt[1]));
+            $mailMsg->line(new HtmlString('STATUS: ' . getBookingStatus($this->booking, 'en')));
             
             // travel details
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('TRAVEL DETAILS'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
+            $mailMsg->line(new HtmlString('CONFIRMATION: ' . $this->booking->id));
             $mailMsg->line(new HtmlString('RESERVATION NAME: ' . $this->booking->full_name));
             $mailMsg->line(new HtmlString('DATES: ' . getReadableDate($this->booking->arrival_date, 'en') . ' - ' . getReadableDate($this->booking->departure_date)));
             $mailMsg->line(new HtmlString('RATE: Avg. Night ' . priceFormat($this->booking->price_per_night) . ' USD | Total stay ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
@@ -276,15 +292,24 @@ class BookingDetails extends Notification
             
             // booking status
             $mailMsg->line(new HtmlString('<br>'));
-            $mailMsg->line(new HtmlString('CONFIRMACIÓN: ' . $this->booking->id));
-            $mailMsg->line(new HtmlString('ESTATUS: ' . getBookingStatus($this->booking, 'es')));
+
+            if($this->isDeleted) {
+                $mailMsg->line(new HtmlStrin('RESERVACIÓN ELIMINADA'));
+            }else if($this->booking->is_cancelled) {
+                $mailMsg->line(new HtmlStrin('RESERVACIÓN CANCELADA'));
+            }else if(!$this->isNew){
+                $mailMsg->line(new HtmlStrin('RESERVACIÓN ACTUALIZADA'));
+            }
+
             $mailMsg->line(new HtmlString('FECHA DE RESERVACIÓN: ' . getReadableDate($createdAt[0], 'es') . ' ' . $createdAt[1]));
+            $mailMsg->line(new HtmlString('ESTATUS: ' . getBookingStatus($this->booking, 'es')));
             
             // travel details
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('DETALLES DEL VIAJE'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
+            $mailMsg->line(new HtmlString('CONFIRMACIÓN: ' . $this->booking->id));
             $mailMsg->line(new HtmlString('NOMBRE DE LA RESERVACIÓN: ' . $this->booking->full_name));
             $mailMsg->line(new HtmlString('FECHAS: ' . getReadableDate($this->booking->arrival_date, 'en') . ' - ' . getReadableDate($this->booking->departure_date)));
             $mailMsg->line(new HtmlString('TARIFA: Prom. noche ' . priceFormat($this->booking->price_per_night) . ' USD | Total estancia ' . priceFormat($this->booking->subtotal_nights) . 'USD'));

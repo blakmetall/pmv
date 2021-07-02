@@ -668,15 +668,19 @@ class PropertyBookingController extends Controller
             $booking->is_cancelled = true;
             $booking->save();
 
+            $isNew = false;
+            $isTeam = true;
+            $isDeleted = true;
+
             if(isProduction()){
-                sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com');
-                sendBookingDetailsEmail($booking, 'info@palmeravacations.com');
-                sendBookingDetailsEmail($booking, 'contabilidad@palmeravacations.com');
+                sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $isNew, $isTeam, $isDeleted);
+                sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $isNew, $isTeam, $isDeleted);
+                sendBookingDetailsEmail($booking, 'contabilidad@palmeravacations.com', $isNew, $isTeam, $isDeleted);
 
                 $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
                 $request->session()->flash('success', $msg);
             }else{
-                sendBookingDetailsEmail($booking, 'blakmetall@gmail.com');
+                sendBookingDetailsEmail($booking, 'blakmetall@gmail.com', $isNew, $isTeam, $isDeleted);
                 $request->session()->flash('success', __('Record deleted successfully'));
             }
 

@@ -192,9 +192,9 @@ if (!function_exists('getCurrentDateTime')) {
 
 
 if (!function_exists('sendBookingDetailsEmail')) {
-    function sendBookingDetailsEmail($booking, $email, $isNew = false, $isTeam = true)
+    function sendBookingDetailsEmail($booking, $email, $isNew = false, $isTeam = true, $isDeleted = false)
     {
-        Notification::route('mail', $email)->notify(new BookingDetails($booking, $isNew, $isTeam));
+        Notification::route('mail', $email)->notify(new BookingDetails($booking, $isNew, $isTeam, $isDeleted));
     }
 }
 
@@ -953,7 +953,7 @@ if (!function_exists('generateCalendar')) {
 if (!function_exists('getBookingStatus')) {
     function getBookingStatus($booking = '', $lang = 'en')
     {
-        $status = $lang == 'en' ? 'Pending' : 'Pendiente';
+        $status = $lang == 'en' ? 'Booked' : 'Reservado';
 
         if(!$booking) {
             $booking = PropertyBooking::find($bookingId);
@@ -963,45 +963,6 @@ if (!function_exists('getBookingStatus')) {
             if($booking->is_cancelled){
                 $status = $lang == 'en' ? 'Cancelled' : 'Cancelado';
             }
-
-            if($booking->is_confirmed){
-                $status = $lang == 'en' ? 'Booked' : 'Reservado';
-            }
-            
-            if($booking->is_confirmed && $booking->is_finished) {
-                $status = $lang == 'en' ? 'Finished' : 'Finalizado';
-            }
-        }
-
-        return $status;
-    }
-}
-
-if (!function_exists('getSubjectBookingStatus')) {
-    function getSubjectBookingStatus($booking = '', $lang = 'en', $isNew)
-    {
-        $status = $lang == 'en' ? 'Pending Booking' : 'Reservación Pendiente';
-
-        if(!$booking) {
-            $booking = PropertyBooking::find($bookingId);
-        }
-
-        if($booking) {
-            if($booking->is_cancelled){
-                $status = $lang == 'en' ? 'Reservation Cancelled' : 'Reservación Cancelada';
-            }
-
-            if($booking->is_confirmed){
-                $status = $lang == 'en' ? 'Booking Confirmed' : 'Reservación Confirmada';
-            }
-            
-            if($booking->is_confirmed && $booking->is_finished) {
-                $status = $lang == 'en' ? 'Booking Finished' : 'Reservación Finalizada';
-            }
-        }
-
-        if($isNew) {
-            $status = $lang == 'en' ? 'New Reservation' : 'Nueva Reservación';
         }
 
         return $status;

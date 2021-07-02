@@ -62,10 +62,8 @@ class PropertyBooking extends Model
         'audit_refund_datetime',
         'audit_refund_user_id',
         'register_by',
-        'is_confirmed',
         'is_cancelled',
         'is_paid',
-        'is_finished',
     ];
 
     public function property()

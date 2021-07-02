@@ -404,15 +404,6 @@
         ])
         
         @if (!isRole('owner'))  
-            <!-- is_confirmed -->
-            @include('components.form.checkbox', [
-            'group' => 'booking',
-            'label' => __('Confirmed'),
-            'name' => 'is_confirmed',
-            'value' => 1,
-            'default' => $row->is_confirmed,
-            ])
-
             <!-- is_cancelled -->
             @include('components.form.checkbox', [
             'group' => 'booking',
@@ -439,15 +430,7 @@
             'value' => 1,
             'default' => $row->is_paid,
             ])
-
-            <!-- is_finished -->
-            @include('components.form.checkbox', [
-            'group' => 'booking',
-            'label' => __('Finished'),
-            'name' => 'is_finished',
-            'value' => 1,
-            'default' => $row->is_finished,
-            ])
+            
 
             <!-- departure_notes -->
             @include('components.form.textarea', [
