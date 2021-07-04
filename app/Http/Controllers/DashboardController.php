@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\{PropertiesRepositoryInterface, PropertyManagementTransactionsRepositoryInterface, PropertyBookingsRepositoryInterface};
+use App\Helpers\RoleHelper;
 
 class DashboardController extends Controller
 {
@@ -29,8 +30,10 @@ class DashboardController extends Controller
     public function generalSearch(Request $request)
     {
         $search = trim($request->topSearch);
-
+        
         $topFilter = $request->topFilter;
+
+        $_current_role = RoleHelper::current();
 
         // properties
         $properties = [];
@@ -38,7 +41,8 @@ class DashboardController extends Controller
         if ($topFilter != '' && $topFilter != 'properties') {
             $showProperties = false;
         }
-        if ($showProperties) {
+
+        if ($showProperties && $_current_role->isAllowed('properties', 'index')) {
             $config = [
                 'filterByWorkgroup' => true,
             ];
@@ -51,8 +55,12 @@ class DashboardController extends Controller
         if ($topFilter != '' && $topFilter != 'transactions') {
             $showTransactions = false;
         }
-        if ($showTransactions) {
-            $config = [];
+
+        if ($showTransactions && $_current_role->isAllowed('property-management', 'index')) {
+            $config = [
+                'orderBy' => 'date',
+                'orderDirection' => 'up',
+            ];
             $transactions = $this->pmTransactionsRepository->all($search, $config);
         }
 
@@ -62,7 +70,8 @@ class DashboardController extends Controller
         if ($topFilter != '' && $topFilter != 'bookings') {
             $showBookings = false;
         }
-        if ($showBookings) {
+
+        if ($showBookings && $_current_role->isAllowed('property-bookings', 'index')) {
             $config = [
                 'filterById' => $search
             ];
@@ -70,6 +79,7 @@ class DashboardController extends Controller
         }
 
         return view('dashboard.general-search')
+            ->with('_current_role', $_current_role)
             ->with('properties', $properties)
             ->with('showProperties', $showProperties)
             ->with('transactions', $transactions)

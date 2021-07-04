@@ -153,7 +153,12 @@ class PropertyManagementTransactionsRepository implements PropertyManagementTran
                 $query->orderBy('post_date', 'asc');
             }
         } else {
-            $query->orderBy('post_date', 'asc');
+            if ($orderByFilter == 'date') { // order by date
+                $direction = $orderByDirectionFilter == 'down' ? 'asc' : 'desc';
+                $query->orderBy('post_date', $direction);
+            }else {
+                $query->orderBy('post_date', 'asc');
+            }
         }
 
         if ($shouldPaginate) {

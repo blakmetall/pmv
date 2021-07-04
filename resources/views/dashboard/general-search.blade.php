@@ -34,18 +34,23 @@
 
 @section('main-content')
 
-    @if($showProperties)
+    @if($showProperties && $_current_role->isAllowed('properties', 'index'))
+        <h5>{{ __('Properties') }}</h5>
+
         <!-- properties table content -->
         @include('properties.partials.table', [
             'label' => __('Properties'),
             'rows' => $properties
         ])
 
-        <div class="pt-4"></div>
+        <div class="pt-2"></div>
         <hr>
+        <div class="pt-4"></div>
     @endif
 
-    @if($showTransactions)
+    @if($showTransactions && $_current_role->isAllowed('property-management', 'index'))
+        <h5>{{ __('Transactions') }}</h5>
+
         <!-- properties table content -->
         @include('property-management-transactions.partials.table', [
             'label' => __('Transactions'),
@@ -53,11 +58,14 @@
             'useGeneralSearchPresentation' => true,
         ])
 
-        <div class="pt-4"></div>
+        <div class="pt-2"></div>
         <hr>
+        <div class="pt-4"></div>
     @endif
 
-    @if($showBookings)
+    @if($showBookings && $_current_role->isAllowed('property-bookings', 'index'))
+        <h5>{{ __('Bookings') }}</h5>
+
         <!-- properties table content -->
         @include('property-bookings.partials.table', [
             'label' => __('Bookings'),

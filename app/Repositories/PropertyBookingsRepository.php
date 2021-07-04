@@ -60,6 +60,10 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         } else {
             $query = PropertyBooking::query();
             $query->with('property');
+
+            if($search) {
+                $query->where('property_bookings.id', $search);
+            }
         }
 
         if($filterById) {
