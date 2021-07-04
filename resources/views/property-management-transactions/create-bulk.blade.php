@@ -2,6 +2,8 @@
 
 @section('main-content')
 
+<!-- {{ ini_get('max_input_vars') }}  ddddd -->
+
 <!-- heading -->
 <div class="container app-container">
     <div class="card">
