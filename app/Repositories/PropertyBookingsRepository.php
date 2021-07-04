@@ -217,6 +217,8 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
 
             if ($booking->save()) {
+                $sendDefaultEmails = (isProduction() && $request->send_pmv_notification);
+
                 // guest email
                 if ($request->guest) {
                     $isTeam = false;
@@ -246,7 +248,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 }
     
                 // extra emails
-                if(isProduction() && !$request->disable_default_email) {
+                if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                     sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $is_new);
                     sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $is_new);
                     
@@ -261,7 +263,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
                 // extra emails
                 if($arrival->diffInHours($now) <= 24) {
-                    if(isProduction() && !$request->disable_default_email) {
+                    if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                         sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com', $is_new);
                         sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com', $is_new);
                     }

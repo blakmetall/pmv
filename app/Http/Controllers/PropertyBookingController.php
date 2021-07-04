@@ -793,6 +793,7 @@ class PropertyBookingController extends Controller
 
     private function getNotificationEmails($request, $booking) {
         $emails = [];
+        $sendDefaultEmails = (isProduction() && $request->send_pmv_notification);
 
         // guest email
         if ($request->guest) {
@@ -803,6 +804,7 @@ class PropertyBookingController extends Controller
             }
         }
 
+        // concierge
         if ($request->concierge) {
             $emails[] = 'concierge@palmeravacations.com';
         }
@@ -821,7 +823,7 @@ class PropertyBookingController extends Controller
         }
 
         // extra emails
-        if(isProduction() && !$request->disable_default_email) {
+        if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
             $emails[] = 'reservaciones@palmeravacations.com';
             $emails[] = 'info@palmeravacations.com';
 
@@ -836,7 +838,7 @@ class PropertyBookingController extends Controller
 
         // extra emails
         if($arrival->diffInHours($now) <= 24) {
-            if(isProduction() && !$request->disable_default_email) {
+            if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                 $emails[] = 'pmd@palmeravacations.com';
                 $emails[] = 'maidsupervisor@palmeramail.com';
             }

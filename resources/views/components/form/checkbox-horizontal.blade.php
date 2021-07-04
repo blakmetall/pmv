@@ -22,7 +22,7 @@ $hiddenStyle = ($hidden) ? 'display: none;' : '';
 @endphp
 
 <!-- name -->
-<div class="form-group" style="display: flex">
+<div class="form-group" style="display: flex; {{ $hiddenStyle }} ">
     <label for="{{ $id }}" style="margin-right: 10px">
         {{ $label }}
     </label>

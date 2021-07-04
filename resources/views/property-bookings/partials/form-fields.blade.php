@@ -451,38 +451,56 @@
             'value' => 1,
             ])
 
-            <!-- office_notification -->
-            @include('components.form.checkbox-horizontal', [
-            'group' => 'notification',
-            'label' => __('Office'),
-            'name' => 'office',
-            'value' => 1,
-            'default' => isRole('owner') ? 1 : '',
-            ])
-
-            <!-- concierge_notification -->
-            @include('components.form.checkbox-horizontal', [
-            'group' => 'notification',
-            'label' => __('Concierge'),
-            'name' => 'concierge',
-            'value' => 1,
-            'default' => isRole('owner') ? 1 : '',
-            ])
-
-            <!-- home_owner_notification -->
-            @include('components.form.checkbox-horizontal', [
-            'group' => 'notification',
-            'label' => __('Home Owner'),
-            'name' => 'home_owner',
-            'value' => 1,
-            ])
-
-            <!-- do not send any other notification -->
             @if(!isRole('owner'))
+                <!-- office_notification -->
+                @include('components.form.checkbox-horizontal', [
+                'group' => 'notification',
+                'label' => __('Office'),
+                'name' => 'office',
+                'value' => 1,
+                'default' => isRole('owner') ? 1 : '',
+                ])
+
+                <!-- concierge_notification -->
+                @include('components.form.checkbox-horizontal', [
+                'group' => 'notification',
+                'label' => __('Concierge'),
+                'name' => 'concierge',
+                'value' => 1,
+                'default' => isRole('owner') ? 1 : '',
+                ])
+
+                <!-- home_owner_notification -->
+                @include('components.form.checkbox-horizontal', [
+                'group' => 'notification',
+                'label' => __('Home Owner'),
+                'name' => 'home_owner',
+                'value' => 1,
+                ])
+
                 @include('components.form.checkbox-horizontal', [
                 'group' => 'notification',
                 'label' => __('Do not send any other notification'),
                 'name' => 'disable_default_email',
+                'value' => 1,
+                ])
+            @endif
+
+            <!-- send notification to if role is owner -->
+            @if(isRole('owner'))
+                @include('components.form.checkbox-horizontal', [
+                'group' => 'notification',
+                'label' => __('Do not send any other notification'),
+                'name' => 'disable_default_email',
+                'value' => 1,
+                'default' => 1,
+                'hidden' => true,
+                ])
+
+                @include('components.form.checkbox-horizontal', [
+                'group' => 'notification',
+                'label' => __('Send notification to Palmera Vacations team'),
+                'name' => 'send_pmv_notification',
                 'value' => 1,
                 ])
             @endif
