@@ -52,12 +52,17 @@ class PropertyBookingController extends Controller
 
         if (isRole('owner')) {
             $config = [
+                'paginate' => true,
                 'filterByOwner' => true, 
                 'reservation_id' => $request->reservation_id,
                 'orderByArrival' => true,
             ];
         } else {
-            $config = ['reservation_id' => $request->reservation_id, 'orderByArrival' => true,];
+            $config = [
+                'paginate' => true, 
+                'reservation_id' => $request->reservation_id, 
+                'orderByArrival' => true,
+            ];
         }
 
         $bookings = $this->repository->all($search, $config);

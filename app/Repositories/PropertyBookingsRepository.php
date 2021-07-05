@@ -61,7 +61,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $query = PropertyBooking::query();
             $query->with('property');
 
-            if($search) {
+            if($search && is_string($search)) {
                 $query->where('property_bookings.id', $search);
             }
         }
@@ -101,7 +101,8 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         }
 
         if ($shouldPaginate) {
-            $result = $query->paginate(9999);
+            // $result = $query->paginate(9999);
+            $result = $query->paginate(config('constants.pagination.per-page'));
         } else {
             $result = $query->get();
         }
