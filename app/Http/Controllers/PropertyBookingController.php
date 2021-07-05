@@ -214,6 +214,7 @@ class PropertyBookingController extends Controller
             'location' => $request->location,
             'register_by' => $request->register_by,
         ];
+        
         $bookings = $this->repository->all($search, ['propertyID' => $property->id]);
         $locations = $this->citiesRepository->all('');
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';

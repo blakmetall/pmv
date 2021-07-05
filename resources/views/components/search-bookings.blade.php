@@ -9,23 +9,25 @@
             <input id="reservation_id" type="text" name="reservation_id" value="" class="form-control">
         </div>
 
-        <div class="col-md-2 select-filter">
-            <label for="reservation_id">
-                {{ __('Property') }}
-            </label>
+        @if(isset($properties))
+            <div class="col-md-2 select-filter">
+                <label for="reservation_id">
+                    {{ __('Property') }}
+                </label>
 
-            <!-- property_id -->
-            @include('components.form.select', [
-                'group' => 'booking-search',
-                'label' => '',
-                'name' => 'property_id',
-                'value' => isset($_GET['property_id']) ? $_GET['property_id'] : '',
-                'options' => $properties,
-                'optionValueRef' => 'property_id',
-                'optionLabelRef' => 'name',
-                'hideLabel' => true,
-            ])
-        </div>
+                <!-- property_id -->
+                @include('components.form.select', [
+                    'group' => 'booking-search',
+                    'label' => '',
+                    'name' => 'property_id',
+                    'value' => isset($_GET['property_id']) ? $_GET['property_id'] : '',
+                    'options' => $properties,
+                    'optionValueRef' => 'property_id',
+                    'optionLabelRef' => 'name',
+                    'hideLabel' => true,
+                ])
+            </div>
+        @endif
 
         <!-- from_date -->
         <div class="col-md-2 select-filter">
