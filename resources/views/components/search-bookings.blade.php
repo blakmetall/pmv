@@ -1,12 +1,30 @@
 <form action="{{ $url }}" action="get">
 
     <div class="row row-xs">
-        <!-- from_date -->
+        <!-- id -->
         <div class="col-md-1 select-filter">
             <label for="reservation_id">
                 {{ __('ID') }}
             </label>
             <input id="reservation_id" type="text" name="reservation_id" value="" class="form-control">
+        </div>
+
+        <div class="col-md-2 select-filter">
+            <label for="reservation_id">
+                {{ __('Property') }}
+            </label>
+
+            <!-- property_id -->
+            @include('components.form.select', [
+                'group' => 'booking-search',
+                'label' => '',
+                'name' => 'property_id',
+                'value' => isset($_GET['property_id']) ? $_GET['property_id'] : '',
+                'options' => $properties,
+                'optionValueRef' => 'property_id',
+                'optionLabelRef' => 'name',
+                'hideLabel' => true,
+            ])
         </div>
 
         <!-- from_date -->
@@ -27,7 +45,7 @@
         </div>
 
         <!-- location -->
-        <div class="col-md-2 select-filter">
+        <div class="col-md-1 select-filter">
             <label for="location">
                 {{ __('Location') }}
             </label>

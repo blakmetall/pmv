@@ -62,6 +62,7 @@ class PropertyBookingController extends Controller
                 'paginate' => true, 
                 'reservation_id' => $request->reservation_id, 
                 'orderByArrival' => true,
+                'propertyID' => $request->property_id
             ];
         }
 
@@ -69,11 +70,16 @@ class PropertyBookingController extends Controller
         $locations = $this->citiesRepository->all('');
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';
 
+        $properties = $this->propertiesRepository->all('', [
+            'filterByEnabled' => true,
+        ]);
+
         $registers = [];
         $registers[] = ['name' => 'Owner'];
         $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.index')
+            ->with('properties', $properties)
             ->with('bookings', $bookings)
             ->with('locations', $locations)
             ->with('registers', $registers)
