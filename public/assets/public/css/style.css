@@ -137,6 +137,7 @@ ul.list li {
 
 .new-listings .first-row {
 	margin-bottom: 40px;	
+	min-height: 530px;
 }
 
 .new-listings a {
