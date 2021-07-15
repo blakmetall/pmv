@@ -15,7 +15,6 @@
     @include('roles.partials.table', [
         'label' => __('Roles'),
         'rows' => $roles,
-        'rolesAllowedSections' => $rolesAllowedSections,
     ])
 
 @endsection
