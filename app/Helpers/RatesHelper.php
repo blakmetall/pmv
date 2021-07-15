@@ -42,6 +42,8 @@ class RatesHelper
         // get property rates
         if($property->rates) {
             $rates = $property->rates()->orderBy('start_date', 'asc')->get();
+            
+            $rateApplied = false;
 
             foreach($rates as $k => $rate) {
                 $nights = 0;
@@ -52,11 +54,14 @@ class RatesHelper
                 $rate_start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
                 $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
 
-                // echo $requestDate . ' -- ' . $rate_start_date . '<br>';
+                if($rateApplied) { 
+                    $rate_start_date->subDays(1);
+                }
 
-                // attempt to apply rate
-                // if current request date is between loop rate
-                if($requestDate->eq($rate_start_date) || $requestDate->eq($rate_end_date) || $requestDate->between($rate_start_date, $rate_end_date)) {
+                if(
+                    $requestDate->eq($rate_start_date) ||
+                    $requestDate->eq($rate_end_date) || 
+                    $requestDate->between($rate_start_date, $rate_end_date)) {
                     $rateApplied = false;
 
                     // if has monthly rate
@@ -80,6 +85,7 @@ class RatesHelper
 
                             $data['ratesPrices'][$rate->id]['months'] = $months;
                             $data['ratesPrices'][$rate->id]['monthlyRate'] = $rate->monthly;
+                            $rateApplied = $months > 0;
 
                             // get next initial request date
                             $requestDate = $requestDate->addMonths($months);
@@ -106,15 +112,17 @@ class RatesHelper
 
                             $data['ratesPrices'][$rate->id]['weeks'] = $weeks;
                             $data['ratesPrices'][$rate->id]['weeklyRate'] = $rate->weekly;
+                            $rateApplied = $weeks > 0;
 
                             // get next initial request date
-                            $requestDate = $requestDate->addWeeks($weeks);
+                            $requestDate->addWeeks($weeks);
                         }
                     }
 
                     // if has nightly rate
                     if($rate->nightly && $rate->nightly > 0) {
                         $rateAvailableDays = $requestDate->diffInDays($rate_end_date);
+                        
                         if($rateAvailableDays) {
                             // verify if requested end date is between rate
                             $finalCompareDate = $requestEndDate;
@@ -130,15 +138,12 @@ class RatesHelper
                                 $nights = $rateAvailableDays;
                             }
 
-                            // fix nights
-                            $nights = $nights == 0 ? 1 : $nights;
-
                             $data['ratesPrices'][$rate->id]['nights'] = $nights;
                             $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
-                            $rateApplied = true;
+                            $rateApplied = $nights > 0;
     
                             // get next initial request date
-                            $requestDate = $requestDate->addDays($nights);
+                            $requestDate->addDays($nights);
                         }
 
 
@@ -148,9 +153,9 @@ class RatesHelper
                         }
                     }
 
-                    if($rateApplied) {
-                        $requestDate = $requestDate->addDays(1);
-                    }
+                    // if($rateApplied) {
+                    //     //$requestDate->addDays(1);
+                    // }
                 }
             }
         }
