@@ -83,9 +83,12 @@ class RatesHelper
                                 $months = $rateAvailableMonths;
                             }
 
-                            $data['ratesPrices'][$rate->id]['months'] = $months;
-                            $data['ratesPrices'][$rate->id]['monthlyRate'] = $rate->monthly;
                             $rateApplied = $months > 0;
+
+                            if($rateApplied) {
+                                $data['ratesPrices'][$rate->id]['months'] = $months;
+                                $data['ratesPrices'][$rate->id]['monthlyRate'] = $rate->monthly;
+                            }
 
                             // get next initial request date
                             $requestDate = $requestDate->addMonths($months);
@@ -110,9 +113,12 @@ class RatesHelper
                                 $weeks = $rateAvailableWeeks;
                             }
 
-                            $data['ratesPrices'][$rate->id]['weeks'] = $weeks;
-                            $data['ratesPrices'][$rate->id]['weeklyRate'] = $rate->weekly;
                             $rateApplied = $weeks > 0;
+
+                            if($rateApplied) {
+                                $data['ratesPrices'][$rate->id]['weeks'] = $weeks;
+                                $data['ratesPrices'][$rate->id]['weeklyRate'] = $rate->weekly;
+                            }
 
                             // get next initial request date
                             $requestDate->addWeeks($weeks);
@@ -138,9 +144,12 @@ class RatesHelper
                                 $nights = $rateAvailableDays;
                             }
 
-                            $data['ratesPrices'][$rate->id]['nights'] = $nights;
-                            $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
                             $rateApplied = $nights > 0;
+
+                            if($rateApplied) {
+                                $data['ratesPrices'][$rate->id]['nights'] = $nights;
+                                $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
+                            }
     
                             // get next initial request date
                             $requestDate->addDays($nights);
