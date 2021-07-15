@@ -180,7 +180,7 @@ class PropertyController extends Controller
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $startingMonth = date('m', strtotime('now'));
         $monthsCols = 12;
-        $displayMonths = 3;
+        $displayMonths = 2;
 
         $calendar = generateCalendar(
             $year, 
