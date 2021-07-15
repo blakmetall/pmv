@@ -52,9 +52,13 @@ class RatesHelper
                 $rate_start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
                 $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
 
+                // echo $requestDate . ' -- ' . $rate_start_date . '<br>';
+
                 // attempt to apply rate
                 // if current request date is between loop rate
-                if($requestDate->eq($rate_start_date) || $requestDate->between($rate_start_date, $rate_end_date)) {
+                if($requestDate->eq($rate_start_date) || $requestDate->eq($rate_end_date) || $requestDate->between($rate_start_date, $rate_end_date)) {
+                    $rateApplied = false;
+
                     // if has monthly rate
                     if($rate->monthly && $rate->monthly > 0) {
                         // verify if current rate has more than one month ahead
@@ -126,18 +130,26 @@ class RatesHelper
                                 $nights = $rateAvailableDays;
                             }
 
+                            // fix nights
+                            $nights = $nights == 0 ? 1 : $nights;
+
                             $data['ratesPrices'][$rate->id]['nights'] = $nights;
                             $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
+                            $rateApplied = true;
     
+                            // get next initial request date
+                            $requestDate = $requestDate->addDays($nights);
                         }
 
-                        // get next initial request date
-                        $requestDate = $requestDate->addDays($nights + 1);
 
                         // sets the current nightly current rate
                         if(!$data['nightlyCurrentRate']) {
                             $data['nightlyCurrentRate'] = $rate->nightly;
                         }
+                    }
+
+                    if($rateApplied) {
+                        $requestDate = $requestDate->addDays(1);
                     }
                 }
             }

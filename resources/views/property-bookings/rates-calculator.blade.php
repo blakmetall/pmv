@@ -101,7 +101,7 @@
                 </tr>
 
                 <tr>
-                    <th>{{ __('Total Days') }}</th>
+                    <th>{{ __('Total Nights') }}</th>
                     <td>{{ $propertyRate['totalDays'] }}</td>
                 </tr>
 
