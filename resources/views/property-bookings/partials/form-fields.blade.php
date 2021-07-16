@@ -113,14 +113,6 @@
             'name' => 'mobile',
             'value' => $row->mobile
             ])
-
-            <!-- comments -->
-            @include('components.form.textarea', [
-            'group' => 'booking',
-            'label' => __('Comments'),
-            'name' => 'comments',
-            'value' => $row->comments
-            ])
         @endif
 
     </div>
@@ -430,6 +422,16 @@
             'label' => __('Concierge notes'),
             'name' => 'concierge_notes',
             'value' => $row->concierge_notes,
+            ])
+        @endif
+
+        @if(($row->id && isRole('owner') && $row->register_by == 'Owner') || !isRole('owner'))
+            <!-- comments -->
+            @include('components.form.textarea', [
+            'group' => 'booking',
+            'label' => __('Comments'),
+            'name' => 'comments',
+            'value' => $row->comments
             ])
         @endif
     </div>
