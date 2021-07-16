@@ -56,11 +56,11 @@ class RatesHelper
                 $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
                 
                 if($rateApplied) { 
-                    $rate_one_day_before->subDays(1);
+                    // $rate_one_day_before->subDays(1);
                 }
 
                 if(
-                    $requestDate->eq($rate_one_day_before) ||
+                    // $requestDate->eq($rate_one_day_before) ||
                     $requestDate->eq($rate_start_date) ||
                     $requestDate->eq($rate_end_date) || 
                     $requestDate->between($rate_start_date, $rate_end_date)) {
@@ -145,6 +145,7 @@ class RatesHelper
                             $finalCompareDate = $requestEndDate;
                             if(!$requestEndDate->between($rate_start_date, $rate_end_date)) {
                                 $finalCompareDate = $rate_end_date;
+                                $finalCompareDate->addDays(1);
                             }
 
                             $requestDays = $requestDate->diffInDays($finalCompareDate);
@@ -198,7 +199,7 @@ class RatesHelper
         }
 
         $data['total'] = round($subtotal, 2);
-        $data['nightlyAppliedRate'] = round($subtotal / $data['totalDays'], 2);
+        $data['nightlyAppliedRate'] = $data['totalDays'] > 0 ? round($subtotal / $data['totalDays'], 2) : 0;
 
         return $data;
     }
