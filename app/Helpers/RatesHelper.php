@@ -52,21 +52,27 @@ class RatesHelper
 
                 // prepare rate carbonized dates
                 $rate_start_date = Carbon::createFromFormat('Y-m-d', $rate->start_date);
+                $rate_one_day_before = Carbon::createFromFormat('Y-m-d', $rate->start_date);
                 $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
-
+                
                 if($rateApplied) { 
-                    $rate_start_date->subDays(1);
+                    $rate_one_day_before->subDays(1);
                 }
 
                 if(
+                    $requestDate->eq($rate_one_day_before) ||
                     $requestDate->eq($rate_start_date) ||
                     $requestDate->eq($rate_end_date) || 
                     $requestDate->between($rate_start_date, $rate_end_date)) {
                     $rateApplied = false;
 
+                    // echo 'loop <br>';
+
                     // if has monthly rate
                     if($rate->monthly && $rate->monthly > 0) {
                         // verify if current rate has more than one month ahead
+                        // echo $requestDate . ' -- ' . $rate_end_date . ' months<br>';
+
                         $rateAvailableMonths = $requestDate->diffInMonths($rate_end_date);
                         if ($rateAvailableMonths) {
                             // verify if requested end date is between rate
@@ -91,18 +97,22 @@ class RatesHelper
                             }
 
                             // get next initial request date
-                            $requestDate = $requestDate->addMonths($months);
+                            $requestDate->addMonths($months);
                         }
                     }
 
                     // if has weekly rate
                     if($rate->weekly && $rate->weekly > 0) {
+                        // echo $requestDate . ' -- ' . $rate_end_date . ' weeks<br>';
                         $rateAvailableWeeks = $requestDate->diffInWeeks($rate_end_date);
+                        
+
                         if($rateAvailableWeeks) {
                             // verify if requested end date is between rate
                             $finalCompareDate = $requestEndDate;
                             if(!$requestEndDate->between($rate_start_date, $rate_end_date)) {
                                 $finalCompareDate = $rate_end_date;
+                                $finalCompareDate->addDays(1);
                             }
 
                             $requestWeeks = $requestDate->diffInWeeks($finalCompareDate);
@@ -127,6 +137,7 @@ class RatesHelper
 
                     // if has nightly rate
                     if($rate->nightly && $rate->nightly > 0) {
+                        // echo $requestDate . ' -- ' . $rate_end_date . ' nights<br>';
                         $rateAvailableDays = $requestDate->diffInDays($rate_end_date);
                         
                         if($rateAvailableDays) {
