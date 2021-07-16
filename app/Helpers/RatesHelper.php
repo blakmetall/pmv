@@ -19,7 +19,7 @@ class RatesHelper
         $data = [
             'totalDays' => 0,
             'total' => 0,
-            'nightlyCurrentRate' => 0,
+            'nightlyAvgRate' => 0,
             'nightlyAppliedRate' => 0,
             'ratesPrices' => [],
         ];
@@ -35,6 +35,10 @@ class RatesHelper
         $to_date = Carbon::createFromFormat('Y-m-d', $to_date);
         $requestDate = $from_date;
         $requestEndDate = $to_date;
+
+        // regular average nightly
+        $nightlyAmount = 0;
+        $nightlyRates = 0;
 
         // set totalDays
         $data['totalDays'] = $from_date->diffInDays($to_date);
@@ -55,9 +59,9 @@ class RatesHelper
                 $rate_one_day_before = Carbon::createFromFormat('Y-m-d', $rate->start_date);
                 $rate_end_date = Carbon::createFromFormat('Y-m-d', $rate->end_date);
                 
-                if($rateApplied) { 
-                    // $rate_one_day_before->subDays(1);
-                }
+                // if($rateApplied) { 
+                //      $rate_one_day_before->subDays(1);
+                // }
 
                 if(
                     // $requestDate->eq($rate_one_day_before) ||
@@ -166,19 +170,18 @@ class RatesHelper
                             // get next initial request date
                             $requestDate->addDays($nights);
                         }
-
-
-                        // sets the current nightly current rate
-                        if(!$data['nightlyCurrentRate']) {
-                            $data['nightlyCurrentRate'] = $rate->nightly;
-                        }
                     }
 
-                    // if($rateApplied) {
-                    //     //$requestDate->addDays(1);
-                    // }
+                    // to help set the nightly average rate
+                    if($rateApplied) {
+                        $nightlyAmount += $rate->nightly;
+                        $nightlyRates++;
+                    }
                 }
             }
+
+            // sets the current nightly current rate
+            $data['nightlyAvgRate'] = $nightlyRates > 0 ? $nightlyAmount / $nightlyRates : 0;
         }
 
         // sum totals

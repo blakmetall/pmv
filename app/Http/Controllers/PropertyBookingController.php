@@ -779,7 +779,7 @@ class PropertyBookingController extends Controller
         $propertyRate = [
             'totalDays' => '',
             'total' => 0,
-            'nightlyCurrentRate' => '',
+            'nightlyAvgRate' => '',
             'nightlyAppliedRate' => '',
         ];
 

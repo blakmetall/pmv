@@ -53,8 +53,8 @@
 
                 // calculate saving
                 $saving = 0;
-                if($propertyRate['nightlyCurrentRate'] > $propertyRate['nightlyAppliedRate']) {
-                    $savingDailyAmount = $propertyRate['nightlyCurrentRate'] - $propertyRate['nightlyAppliedRate'];
+                if($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate']) {
+                    $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
                     $saving = $propertyRate['totalDays'] * $savingDailyAmount;
                 }
             @endphp
@@ -124,8 +124,8 @@
                         @if ($availabilityProperty == 'all')
                             <div class="row">		
                                 <div class="col-xs-4 col-sm-4 text-center">   
-                                    @if($propertyRate['nightlyCurrentRate'] > $propertyRate['nightlyAppliedRate'])    	
-                                        <div class="b-rate b-strike">{{ priceFormat($propertyRate['nightlyCurrentRate']) }} USD</div>		
+                                    @if($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate'])    	
+                                        <div class="b-rate b-strike">{{ priceFormat($propertyRate['nightlyAvgRate']) }} USD</div>		
                                     @endif
                                     <div class="b-savings">{{ priceFormat($propertyRate['nightlyAppliedRate']) }} USD</div> 			
                                     <div class="b-caption">{{ __('avg. night') }}</div>   				

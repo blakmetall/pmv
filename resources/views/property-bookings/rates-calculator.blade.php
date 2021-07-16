@@ -112,7 +112,7 @@
 
                 <tr>
                     <th>{{ __('Nightly Current Rate') }}</th>
-                    <td>${{ $propertyRate['nightlyCurrentRate'] }}</td>
+                    <td>${{ $propertyRate['nightlyAvgRate'] }}</td>
                 </tr>
 
                 <tr>
