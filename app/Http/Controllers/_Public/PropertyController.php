@@ -105,7 +105,7 @@ class PropertyController extends Controller
                 $saving = $propertyRate['totalDays'] * $savingDailyAmount;
             }
             $property->propertyRate = $propertyRate;
-            $property->saving = $saving;
+            $property->saving = round($saving);
             $property->availabilityProperty = $availabilityProperty;
             $getProperties[] = $property;
         }
@@ -128,8 +128,7 @@ class PropertyController extends Controller
             }
         }
 
-        // $properties = (new Collection($getProperties))->paginate(config('constants.pagination.per-page'));
-        $properties = collect($getProperties)->paginate(10);
+        $properties = collect($getProperties)->paginate(config('constants.pagination.per-page'));
 
         return view('public.pages.properties.availability-results')
             ->with('city', $city)
