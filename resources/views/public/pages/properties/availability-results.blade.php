@@ -48,15 +48,15 @@
             @include('public.pages.partials.modal')
 
             @php
-                $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
-                $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
+                // $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
+                // $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
 
-                // calculate saving
-                $saving = 0;
-                if($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate']) {
-                    $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
-                    $saving = $propertyRate['totalDays'] * $savingDailyAmount;
-                }
+                // // calculate saving
+                // $saving = 0;
+                // if($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate']) {
+                //     $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
+                //     $saving = $propertyRate['totalDays'] * $savingDailyAmount;
+                // }
             @endphp
 
             <div class="result-row">
@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 mb-3">
                         <img src="{{ getFeaturedImage($property->property_id) }}" width="100%">
-                        <div class="rate-info">{{ priceFormat($propertyRate['nightlyAppliedRate']) }} <span>/ {{ __('Night') }}</span></div>
+                        <div class="rate-info">{{ priceFormat($property->propertyRate['nightlyAppliedRate']) }} <span>/ {{ __('Night') }}</span></div>
                     </div>
 
                     <div class="col-xs-12 col-sm-8 pl-5">
@@ -111,29 +111,29 @@
                                 </div>				
                             </div>	
                             
-                            @if($saving > 0)
+                            @if($property->saving > 0)
                                 <div class="col-xs-6 col-sm-6">   				
                                     <div class="text-right savings-tag">
                                         <i class="glyphicon glyphicon-tags"></i> 
-                                        {{ __('Save') }} <span>{{ priceFormat($saving) }} USD</span>
+                                        {{ __('Save') }} <span>{{ priceFormat($property->saving) }} USD</span>
                                     </div>				
                                 </div>    		
                             @endif
                         </div>
 
-                        @if ($availabilityProperty == 'all')
+                        @if ($property->availabilityProperty == 'all')
                             <div class="row">		
                                 <div class="col-xs-4 col-sm-4 text-center">   
-                                    @if($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate'])    	
-                                        <div class="b-rate b-strike">{{ priceFormat($propertyRate['nightlyAvgRate']) }} USD</div>		
+                                    @if($property->propertyRate['nightlyAvgRate'] > $property->propertyRate['nightlyAppliedRate'])    	
+                                        <div class="b-rate b-strike">{{ priceFormat($property->propertyRate['nightlyAvgRate']) }} USD</div>		
                                     @endif
-                                    <div class="b-savings">{{ priceFormat($propertyRate['nightlyAppliedRate']) }} USD</div> 			
+                                    <div class="b-savings">{{ priceFormat($property->propertyRate['nightlyAppliedRate']) }} USD</div> 			
                                     <div class="b-caption">{{ __('avg. night') }}</div>   				
                                 </div>		
                                 
                                 <div class="col-xs-8 col-sm-8">			
                                     <div class="total-stay text-right">
-                                        {{ __('Total stay') }}: <span>{{ priceFormat($propertyRate['total']) }} USD</span>
+                                        {{ __('Total stay') }}: <span>{{ priceFormat($property->propertyRate['total']) }} USD</span>
                                         <br>
                                         {{ $bothDates }} 
                                         ( 
@@ -153,7 +153,7 @@
                                     </div>   				
                                 </div> 
                             </div>
-                        @elseif($availabilityProperty == 'some')
+                        @elseif($property->availabilityProperty == 'some')
                             <div class="alert alert-warning text-center">
                                 {{ __('One or more nights are not available for dates') }}
                                 <strong>{{ $bothDates }}</strong>, <br>
@@ -167,7 +167,7 @@
                                 
                                 {{ __('And edit your search.') }}
                             </div>
-                        @elseif($availabilityProperty == 'none')
+                        @elseif($property->availabilityProperty == 'none')
                             <div class="alert alert-danger text-center"> 
                                 {{ __('Not available for dates:') }}
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\_Public;
 
 use App;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Helpers\LanguageHelper;
 use App\Helpers\RatesHelper;
 use Illuminate\Http\Request;
@@ -68,7 +69,7 @@ class PropertyController extends Controller
         $lang = LanguageHelper::current();
 
         $occupancy = (int) $request->adults + (int) $request->children;
-        $properties = $this->propertiesRepository->all($request->property_name, [
+        $propertiesArray = $this->propertiesRepository->all($request->property_name, [
             'filterOnline' => true,
             'filterByPropertyType' => $request->property_type,
             'filterByCity' => $request->city,
@@ -78,19 +79,57 @@ class PropertyController extends Controller
             'pet_friendly' => $request->pet_friendly ? true : false,
             'adults_only' => $request->adults_only ? true : false,
             'beachfront' => $request->beach_front ? true : false,
+            'paginate' => false,
         ]);
 
-        if ($properties->total() == 0) {
+        if (count($propertiesArray) == 0) {
             $request->session()->flash('error', __('No Records Found'));
         }
 
         $config = [
             'filterOnline' => true,
-            'filterByNews' => true, 'paginate' => false
+            'filterByNews' => true,
+            'paginate' => false,
         ];
         $propertiesNews = $this->propertiesRepository->all('', $config);
-
         $city = City::find($request->city);
+
+        $getProperties = [];
+        foreach ($propertiesArray as $property) {
+            $availabilityProperty = getAvailabilityProperty($property->property_id, $request->arrival, $request->departure);
+            $propertyRate = RatesHelper::getPropertyRate($property->property, $property->property->rates, $request->arrival, $request->departure);
+
+            $saving = 0;
+            if ($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate']) {
+                $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
+                $saving = $propertyRate['totalDays'] * $savingDailyAmount;
+            }
+            $property->propertyRate = $propertyRate;
+            $property->saving = $saving;
+            $property->availabilityProperty = $availabilityProperty;
+            $getProperties[] = $property;
+        }
+
+        usort($getProperties, function ($a, $b) {
+            return $a['propertyRate']['total'] <=> $b['propertyRate']['total'];
+        });
+
+        foreach ($getProperties as $index => $property) {
+            if ($property->availabilityProperty == 'some') {
+                unset($getProperties[$index]);
+                $getProperties[] = $property;
+            }
+        }
+
+        foreach ($getProperties as $index => $property) {
+            if ($property->availabilityProperty == 'none') {
+                unset($getProperties[$index]);
+                $getProperties[] = $property;
+            }
+        }
+
+        // $properties = (new Collection($getProperties))->paginate(config('constants.pagination.per-page'));
+        $properties = collect($getProperties)->paginate(10);
 
         return view('public.pages.properties.availability-results')
             ->with('city', $city)
@@ -113,9 +152,9 @@ class PropertyController extends Controller
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
         SEOTools::opengraph()->setUrl(url()->full());
 
-        $propertyRate = 
+        $propertyRate =
             RatesHelper::getPropertyRate($property->property, $property->rates, $request->arrival_alt_sing, $request->departure_alt_sing);
-        
+
         $prw = [];
         $prw['id'] = $property->property_id;
         $prw['name'] = $property->name;
@@ -155,7 +194,7 @@ class PropertyController extends Controller
         $images = $this->propertyImagesRepositoryInterface->all($config);
 
         // if dates for booking not saved in cookies redirect to search results
-        if(!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+        if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
             return redirect()->route('public.availability-results', [App::getLocale()]);
         }
 
@@ -183,9 +222,9 @@ class PropertyController extends Controller
         $displayMonths = 2;
 
         $calendar = generateCalendar(
-            $year, 
-            $monthsCols, 
-            $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]), 
+            $year,
+            $monthsCols,
+            $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]),
             $startingMonth,
             $displayMonths,
         );
@@ -232,7 +271,7 @@ class PropertyController extends Controller
         $property = $this->propertiesRepository->all('', $config)[0];
 
         $damageDeposits = $this->damagesDepositsRepository->all('');
-        
+
         $countries = [
             "Afghanistan",
             "Albania",
@@ -475,7 +514,7 @@ class PropertyController extends Controller
         ];
 
         // if dates for booking not saved in cookies redirect to search results
-        if(!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+        if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
             return redirect()->route('public.availability-results');
         }
 
@@ -523,7 +562,7 @@ class PropertyController extends Controller
         } else {
             if (!$validator->fails()) {
                 $booking = new PropertyBooking;
-                
+
                 if ($request->damage_deposit_id) {
                     $damage_deposit = DamageDeposit::find($request->damage_deposit_id);
                     $damageDeposit = $damage_deposit->price;
@@ -562,12 +601,12 @@ class PropertyController extends Controller
                 $booking->register_by             = 'Client';
 
                 $isNew = true;
-                
+
                 if ($booking->save()) {
                     // guest email
                     $isTeam = false;
                     sendBookingDetailsEmail($booking, $request->email, $isNew, $isTeam);
-                    
+
                     // owner notification emails
                     $owners = $booking->property->users;
                     foreach ($owners as $owner) {
@@ -575,20 +614,20 @@ class PropertyController extends Controller
                     }
 
                     // default emails
-                    if(isProduction()) {
+                    if (isProduction()) {
                         sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $isNew);
                         sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com', $isNew);
                         sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $isNew);
                     }
 
-                    if(isProduction()) {
+                    if (isProduction()) {
                         // if booking inside next 24hrs send email to:
                         $arrival = Carbon::create($request->arrival_date);
                         $now = Carbon::now();
 
                         // extra emails
-                        if($arrival->diffInHours($now) <= 24) {
-                            if(isProduction() && !$request->disable_default_email) {
+                        if ($arrival->diffInHours($now) <= 24) {
+                            if (isProduction() && !$request->disable_default_email) {
                                 sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com', $isNew);
                                 sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com', $isNew);
                             }

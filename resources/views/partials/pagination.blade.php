@@ -6,9 +6,5 @@
  -->
 
 @if (isset($rows))
-    @if (count($_GET))
-        {{ $rows->appends($_GET)->render() }}
-    @else
-        {{ $rows->links() }}
-    @endif
+    {{ $rows->appends($_GET)->links() }}
 @endif

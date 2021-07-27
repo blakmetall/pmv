@@ -246,7 +246,7 @@ return [
         'ReportExcelHelper' => App\Helpers\ReportExcelHelper::class,
         'UserHelper' => App\Helpers\UserHelper::class,
         'WorkgroupHelper' => App\Helpers\WorkgroupHelper::class,
-        
+
     ],
 
 ];

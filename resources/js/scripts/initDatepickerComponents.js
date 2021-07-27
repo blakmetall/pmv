@@ -25,4 +25,14 @@ export function initDatepickerComponents() {
             }
         });
     });
+
+    // Select min departure date from arrival date
+    $("input[name='arrival_date']").on('change', function() {
+        var arrival_date = $(this).val();
+
+        $("input[name='departure_date']").each(function(){
+            var picker_departure = $(this).pickadate('picker');
+            picker_departure.set('select', arrival_date);
+        });
+    });
 }

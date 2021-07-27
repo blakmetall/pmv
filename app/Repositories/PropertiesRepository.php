@@ -53,7 +53,7 @@ class PropertiesRepository implements PropertiesRepositoryInterface
             $query->where(function ($query) use ($lang, $search) {
                 $query->where(function ($query) use ($lang, $search) {
                     $query->where('name', 'like', '%' . $search . '%');
-                    $query->orWhere('description', 'like', '%' . $search . '%');
+                    // $query->orWhere('description', 'like', '%' . $search . '%');
                 });
 
                 $query->orWhereHas('property', function ($query) use ($search) {
@@ -179,8 +179,8 @@ class PropertiesRepository implements PropertiesRepositoryInterface
 
         if ($shouldFilterByPM) {
             $query->whereHas('property', function ($q) use ($config) {
-                $q->whereHas('management', function($q2) {
-                    $q2->where('is_finished', '!=' , 1);
+                $q->whereHas('management', function ($q2) {
+                    $q2->where('is_finished', '!=', 1);
                 });
             });
         }

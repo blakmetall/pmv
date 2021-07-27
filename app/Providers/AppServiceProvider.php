@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use URL;
 use Validator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -25,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         // https force
         if (isProduction()) {
             URL::forceScheme('https');
-        }else {
+        } else {
             //if local register your services you require for development
             $this->app->register('Barryvdh\Debugbar\ServiceProvider');
         }
@@ -48,6 +50,16 @@ class AppServiceProvider extends ServiceProvider
         }
 
         config(['constants.cities' => $cities]);
+
+        // custom pagination
+        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
+            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
+
+            return new LengthAwarePaginator($this->forPage($page, $perPage), $total ?: $this->count(), $perPage, $page, [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+                'pageName' => $pageName,
+            ]);
+        });
     }
 
     /**
