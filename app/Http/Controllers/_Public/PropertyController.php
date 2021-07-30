@@ -166,11 +166,12 @@ class PropertyController extends Controller
         $prw['image'] = getFeaturedImage($property->property_id);
         $prw['rate'] = $propertyRate['nightlyAppliedRate'];
         $prw = json_encode($prw);
-
+        $paxExceeded = false;
         if ($request->arrival_alt_sing && $request->departure_alt_sing) {
             $pax = $request->adults_sing + $request->children_sing;
             if ($pax > $property->property->pax) {
                 $request->session()->flash('error', __('The number of people exceeds the maximum occupancy for the property'));
+                $paxExceeded = true;
             }
             $arrivalDeparture = [
                 'adults' => $request->adults_sing,
@@ -203,6 +204,7 @@ class PropertyController extends Controller
             ->with('property', $property)
             ->with('images', $images)
             ->with('arrivalDeparture', $arrivalDeparture)
+            ->with('paxExceeded', $paxExceeded)
             ->with('prw', $prw);
     }
 

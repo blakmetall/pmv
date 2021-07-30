@@ -149,9 +149,11 @@
                     </div>
                     <div class="col-xs-3 col-sm-3">
                         <div class="text-right">
-                            <a href="{{ route('public.reservations', [App::getLocale(), $property->property_id]) }}"
-                                class="btn btn-warning">{{ __('Book it!') }}
-                            </a>
+                            @if (!$paxExceeded)
+                                <a href="{{ route('public.reservations', [App::getLocale(), $property->property_id]) }}"
+                                    class="btn btn-warning">{{ __('Book it!') }}
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
