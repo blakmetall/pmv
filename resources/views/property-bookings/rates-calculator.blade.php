@@ -87,44 +87,95 @@
 
     <h4>{{ __('Rate') }}</h4>
 
-    <div class="col-12 col-md-6 pl-0 mb-5">
+    @if(isset($propertyRate['prices']))
+        <div class="col-12 col-md-6 pl-0 mb-5">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>{{ __('From') }}</th>
+                        <td>{{ $from_date }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('To') }}</th>
+                        <td>{{ $to_date }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('Total Nights') }}</th>
+                        <td>{{ $propertyRate['totalDays'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('Total') }}</th>
+                        <td><b>${{ number_format($propertyRate['total'], 2) }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('Nightly Current Rate') }}</th>
+                        <td>${{ number_format($propertyRate['nightlyAvgRate'], 2) }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('Nightly Applied Rate') }}</th>
+                        <td>${{ number_format($propertyRate['nightlyAppliedRate'], 2) }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('Has valid rate') }}</th>
+                        <td>{{ $propertyRate['hasValidRate'] ? __('Yes') : __('No') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    @endif
+
+    <h4>{{ __('Applied Rates') }}</h4>
+
+    <div>
         <table class="table">
+            <thead>
+                <th>#</th>
+                <th>{{ __('Date') }}</th>
+                <th>{{ __('Price') }}</th>
+                <th>{{ __('Discount') }}</th>
+            </thead>
+
             <tbody>
-                <tr>
-                    <th>{{ __('From') }}</th>
-                    <td>{{ $from_date }}</td>
-                </tr>
+                @if(isset($propertyRate['prices']) && count($propertyRate['prices']))
+                    @php 
+                        $total = 0;
+                        $count = 0;
+                    @endphp
 
-                <tr>
-                    <th>{{ __('To') }}</th>
-                    <td>{{ $to_date }}</td>
-                </tr>
+                    @foreach($propertyRate['prices'] as $date => $nightlyRate)
+                        @php $total += $nightlyRate['nightly'] @endphp
+                        @php $count++ @endphp
 
-                <tr>
-                    <th>{{ __('Total Nights') }}</th>
-                    <td>{{ $propertyRate['totalDays'] }}</td>
-                </tr>
+                        <tr>
+                            <th>{{ $count }}</th>
+                            <td>{{ $date }}</td>
+                            <td>
+                                ${{ number_format($nightlyRate['nightly'], 2) }}
+                            </td>
+                            <td>
+                                ${{ number_format($nightlyRate['savings'], 2) }}
+                            </td>
+                        </tr>
+                    @endforeach
 
-                <tr>
-                    <th>{{ __('Total') }}</th>
-                    <td><b>${{ number_format($propertyRate['total'], 2) }}</b></td>
-                </tr>
-
-                <tr>
-                    <th>{{ __('Nightly Current Rate') }}</th>
-                    <td>${{ $propertyRate['nightlyAvgRate'] }}</td>
-                </tr>
-
-                <tr>
-                    <th>{{ __('Nightly Applied Rate') }}</th>
-                    <td>${{ $propertyRate['nightlyAppliedRate'] }}</td>
-                </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>${{ number_format($total, 2) }}</b></td>
+                        <td></td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>
 
-    <h4>{{ __('Applied Rates') }}</h4>
-
+    <?php /*
     <div>
         <table class="table">
             <thead>
@@ -193,5 +244,6 @@
             </tbody>
         </table>
     </div>
+    */ ?>
 
 @endsection

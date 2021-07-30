@@ -104,6 +104,8 @@ class PropertyController extends Controller
                 $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
                 $saving = $propertyRate['totalDays'] * $savingDailyAmount;
             }
+
+            $property->hasValidRate = $propertyRate['hasValidRate'];
             $property->propertyRate = $propertyRate;
             $property->saving = round($saving);
             $property->availabilityProperty = $availabilityProperty;

@@ -41,23 +41,15 @@
         </div>
 
         @foreach ($properties as $property)
+            @if(!$property->hasValidRate)
+                @php continue; @endphp
+            @endif
+
             @php
                 $modalID = 'calendar-availability-' . strtotime('now') . rand(1, 99999999);
             @endphp
 
             @include('public.pages.partials.modal')
-
-            @php
-                // $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
-                // $propertyRate = \RatesHelper::getPropertyRate($property->property, $property->property->rates, $arrival, $departure);
-
-                // // calculate saving
-                // $saving = 0;
-                // if($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate']) {
-                //     $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
-                //     $saving = $propertyRate['totalDays'] * $savingDailyAmount;
-                // }
-            @endphp
 
             <div class="result-row">
                 <h5>{{ $property->name }}</h5>
@@ -111,7 +103,7 @@
                                 </div>				
                             </div>	
                             
-                            @if($property->saving > 0)
+                            @if($property->saving > 0 && $property->availabilityProperty == 'all')
                                 <div class="col-xs-6 col-sm-6">   				
                                     <div class="text-right savings-tag">
                                         <i class="glyphicon glyphicon-tags"></i> 
