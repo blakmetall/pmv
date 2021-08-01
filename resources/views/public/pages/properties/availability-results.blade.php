@@ -41,7 +41,7 @@
         </div>
 
         @foreach ($properties as $property)
-            @if(!$property->hasValidRate)
+            @if($property->propertyRate['total'] <= 0)
                 @php continue; @endphp
             @endif
 

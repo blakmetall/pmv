@@ -132,7 +132,7 @@
 
     <h4>{{ __('Applied Rates') }}</h4>
 
-    <div>
+    {{-- <div>
         <table class="table">
             <thead>
                 <th>#</th>
@@ -173,9 +173,7 @@
                 @endif
             </tbody>
         </table>
-    </div>
-
-    <?php /*
+    </div> --}}
     <div>
         <table class="table">
             <thead>
@@ -244,6 +242,5 @@
             </tbody>
         </table>
     </div>
-    */ ?>
 
 @endsection
