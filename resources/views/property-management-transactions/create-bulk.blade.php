@@ -289,7 +289,7 @@
 
                     <!-- notes -->
                     <td>
-                        <!--<textarea rows="1" class="form-control form-control-sm app-bulk-input" name="bulk[0][description]"></textarea>-->
+                        <textarea rows="1" class="form-control form-control-sm app-bulk-input" name="bulk[0][description]" id="bulk-transaction-notes"></textarea>
                     </td>
 
                     <!-- file -->
@@ -381,7 +381,7 @@
 
                         <!-- notes -->
                         <td>
-                            <textarea rows="1" class="form-control form-control-sm app-bulk-input" name="bulk[{{ $loopIndex + 1 }}][description]"></textarea>
+                            <textarea rows="1" class="form-control form-control-sm app-bulk-input bulk-transaction-notes" name="bulk[{{ $loopIndex + 1 }}][description]"></textarea>
                         </td>
 
                         <!-- file -->

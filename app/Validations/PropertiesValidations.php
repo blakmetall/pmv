@@ -28,6 +28,7 @@ class PropertiesValidations extends Validation
             'floors' => 'nullable|integer',
             'lot_size' => 'nullable',
             'construction_size' => 'nullable',
+            'url_video' => 'nullable',
         ]);
     }
 

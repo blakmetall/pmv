@@ -386,6 +386,11 @@ $(function() {
                 picker.set('select', value);
             });
         });
+
+        $("#bulk-transaction-notes").on('change', function() {
+            var value = $(this).val();
+            $(".bulk-transaction-notes").val(value);
+        });
     }
 
     // submit form balance property management transactions when year change

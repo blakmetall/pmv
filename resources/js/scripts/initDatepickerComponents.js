@@ -35,4 +35,14 @@ export function initDatepickerComponents() {
             picker_departure.set('select', arrival_date);
         });
     });
+
+    // Select min calculator rate
+    $("input[name='from_date']").on('change', function() {
+        var from_date = $(this).val();
+
+        $("input[name='to_date']").each(function(){
+            var picker_to_date = $(this).pickadate('picker');
+            picker_to_date.set('select', from_date);
+        });
+    });
 }

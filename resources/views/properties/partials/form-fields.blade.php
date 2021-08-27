@@ -130,6 +130,14 @@
             'value' => $row->construction_size
         ])
 
+        <!-- url_video -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Url Video'),
+            'name' => 'url_video',
+            'value' => $row->url_video
+        ])
+
     </div>
 </div>
 

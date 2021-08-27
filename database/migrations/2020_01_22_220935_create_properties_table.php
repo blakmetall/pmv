@@ -40,6 +40,7 @@ class CreatePropertiesTable extends Migration
             $table->tinyInteger('has_parking')->nullable();
             $table->string('lot_size')->nullable();
             $table->string('construction_size')->nullable();
+            $table->string('url_video')->nullable();
             $table->string('phone', 30)->nullable();
             $table->text('address')->nullable();
             $table->string('gmaps_lat', 30)->nullable();

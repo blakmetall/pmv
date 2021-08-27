@@ -2595,12 +2595,6 @@ iframe#twitter-widget-0 {
   width: 100%;
 }
 
-.btn-send-query{
-  color: #18bc9c !important;
-  background-color: #fff;
-  padding: 3px 10px;
-}
-
 @media (max-width: 1155px) {
   .navbar.navbar-default {
     height: auto;

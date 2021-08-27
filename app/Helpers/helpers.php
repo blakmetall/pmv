@@ -651,24 +651,24 @@ if (!function_exists('getSearchDate')) {
             'currentDate' => '',
             'nextDate' => '',
         ];
-        
-        if(App::getLocale() == 'es') {
+
+        if (App::getLocale() == 'es') {
             setlocale(LC_ALL, "es_ES");
         }
 
         $arrivalDate2 = DateTime::createFromFormat("Y-m-d", $arrivalDate);
         $departureDate2 = DateTime::createFromFormat("Y-m-d", $departureDate);
 
-        if($arrivalDate2 && $departureDate2){
-            if($format) {
+        if ($arrivalDate2 && $departureDate2) {
+            if ($format) {
                 $result['currentDate'] = strftime("%Y-%m-%d", $arrivalDate2->getTimestamp());
-                $result['nextDate'] = strftime("%Y-%m-%d", $departureDate2->getTimestamp());    
-            }else{ 
+                $result['nextDate'] = strftime("%Y-%m-%d", $departureDate2->getTimestamp());
+            } else {
                 $result['currentDate'] = ucfirst(strftime("%A %d/%B/%y", $arrivalDate2->getTimestamp()));
                 $result['nextDate'] = ucfirst(strftime("%A %d/%B/%y", $departureDate2->getTimestamp()));
             }
         }
-        
+
         setlocale(LC_ALL, "en_US");
 
         return $result;
@@ -678,11 +678,11 @@ if (!function_exists('getSearchDate')) {
 if (!function_exists('getReadableDate')) {
     function getReadableDate($date, $locale = '')
     {
-        if(!$locale) {
+        if (!$locale) {
             $locale = App::getLocale();
         }
-        
-        if($locale == 'es') {
+
+        if ($locale == 'es') {
             setlocale(LC_ALL, "es_ES");
         }
 
@@ -693,7 +693,7 @@ if (!function_exists('getReadableDate')) {
         $year = strftime("%Y", $date->getTimestamp());
 
         $readableDate = $day . '/' . $month . '/' . $year;
-        
+
         setlocale(LC_ALL, "en_US");
 
         return $readableDate;
@@ -712,20 +712,20 @@ if (!function_exists('getAvailabilityProperty')) {
 
         $days = getDatesFromRange($fromDate, $toDate, 'Y-m-d');
         $daysOccupied = 0;
-        
+
         // loop through bookings
         $bookings = $property->bookings()->orderBy('arrival_date', 'asc')->get();
         foreach ($bookings as $booking) {
             // if is same booking compare, then skip
-            if($bookingID && $booking->id == $bookingID){
+            if ($bookingID && $booking->id == $bookingID) {
                 continue;
-            } 
+            }
 
             $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'Y-m-d');
-            
-            foreach ($days as $day) {        
+
+            foreach ($days as $day) {
                 // allow reservation departure date to be conflicted with arrival date for a different reservation
-                if(($day == $booking->arrival_date || $day == $booking->departure_date)){
+                if (($day == $booking->arrival_date || $day == $booking->departure_date)) {
                     continue;
                 }
 
@@ -798,7 +798,7 @@ if (!function_exists('getAge')) {
         $now = Carbon::now();
 
         $months = $date->diffInMonths($now);
-        $years = $months/12;
+        $years = $months / 12;
 
         return number_format($years, 1);
     }
@@ -894,16 +894,16 @@ if (!function_exists('generateCalendar')) {
                 $formatYear = isset($year) ? $year : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
-                
+
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;
                 } else {
                     $occupied = false;
                 }
 
-                if(in_array($day, $firstDays) && in_array($day, $endDays)){
+                if (in_array($day, $firstDays) && in_array($day, $endDays)) {
                     $classDay = 'arrival-departure-both';
-                }else if (in_array($day, $firstDays)) {
+                } else if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
                 } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';
@@ -955,12 +955,12 @@ if (!function_exists('getBookingStatus')) {
     {
         $status = $lang == 'en' ? 'Booked' : 'Reservado';
 
-        if(!$booking) {
+        if (!$booking) {
             $booking = PropertyBooking::find($bookingId);
         }
 
-        if($booking) {
-            if($booking->is_cancelled){
+        if ($booking) {
+            if ($booking->is_cancelled) {
                 $status = $lang == 'en' ? 'Cancelled' : 'Cancelado';
             }
         }

@@ -38,6 +38,7 @@ class Property extends Model
         'has_parking',
         'lot_size',
         'construction_size',
+        'url_video',
         'phone',
         'country',
         'state',

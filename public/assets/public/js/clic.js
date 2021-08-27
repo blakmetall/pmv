@@ -60,6 +60,7 @@ setTimeout(function(){
         numberOfMonths: 2,
         minDate: '+1d',
         onClose: function( selectedDate ) {
+            $('#edit-departure').val(selectedDate);
             $('#edit-departure').datepicker('option', 'minDate', selectedDate );
         }
     });
@@ -90,6 +91,7 @@ setTimeout(function(){
         numberOfMonths: 2,
         minDate: '+1d',
         onClose: function( selectedDate ) {
+            $('#edit-departure-sing').val(selectedDate);
             $('#edit-departure-sing').datepicker('option', 'minDate', selectedDate );
         }
     });
