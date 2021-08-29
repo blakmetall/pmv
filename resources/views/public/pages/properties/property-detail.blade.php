@@ -321,13 +321,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($property->property->rates as $i => $rate)
+                    @foreach ($property->property->rates->sortBy('end_date') as $i => $rate)
                         @php
                             $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
                             $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
                         @endphp
                         <tr class="{{ $i > 4 ? 'toggle-table-rates' : '' }}">
-                            <td>{{ $startDate }} to {{ $endDate }}</td>
+                            <td>{{ $startDate }} - {{ $endDate }}</td>
                             <td>{{ priceFormat($rate->nightly) }}</td>
                             <td>{{ priceFormat($rate->weekly) }}</td>
                             <td>{{ priceFormat($rate->monthly) }}</td>

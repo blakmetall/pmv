@@ -53,18 +53,19 @@ class PropertyBookingController extends Controller
         if (isRole('owner')) {
             $config = [
                 'paginate' => true,
-                'filterByOwner' => true, 
+                'filterByOwner' => true,
                 'reservation_id' => $request->reservation_id,
-                'orderByArrival' => true,
+                'orderByArrival' => false,
             ];
         } else {
             $config = [
-                'paginate' => true, 
-                'reservation_id' => $request->reservation_id, 
-                'orderByArrival' => true,
+                'paginate' => true,
+                'reservation_id' => $request->reservation_id,
+                'orderByArrival' => false,
                 'propertyID' => $request->property_id
             ];
         }
+
 
         $bookings = $this->repository->all($search, $config);
         $locations = $this->citiesRepository->all('');
@@ -214,7 +215,7 @@ class PropertyBookingController extends Controller
             'location' => $request->location,
             'register_by' => $request->register_by,
         ];
-        
+
         $bookings = $this->repository->all($search, ['propertyID' => $property->id]);
         $locations = $this->citiesRepository->all('');
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';
@@ -331,9 +332,9 @@ class PropertyBookingController extends Controller
                     $occupied = false;
                 }
 
-                if(in_array($day, $firstDays) && in_array($day, $endDays)){
+                if (in_array($day, $firstDays) && in_array($day, $endDays)) {
                     $classDay = 'arrival-departure-both';
-                }else if (in_array($day, $firstDays)) {
+                } else if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
                 } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';
@@ -361,7 +362,7 @@ class PropertyBookingController extends Controller
                     $calendar .= '</tr>';
                 }
             }
-            
+
             $calendar .= '</table>';
             $calendar .= '</td>';
 
@@ -399,11 +400,11 @@ class PropertyBookingController extends Controller
     {
         $booking = $this->repository->blueprint();
         $damageDeposits = $this->damagesDepositsRepository->all('');
-        
+
         $registers = [];
         $registers[] = ['name' => 'Owner'];
 
-        if(!isRole('owner')){
+        if (!isRole('owner')) {
             $registers[] = ['name' => 'Client'];
         }
 
@@ -476,7 +477,7 @@ class PropertyBookingController extends Controller
             </tr>';
 
             $calendar .= '<tr>';
-            
+
             if ($first_weekday != 0) {
                 $calendar .= '<td colspan="' . $first_weekday . '">&nbsp;</td>';
             }
@@ -488,16 +489,16 @@ class PropertyBookingController extends Controller
                 $formatYear = isset($year) ? $year : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
-                
+
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;
                 } else {
                     $occupied = false;
                 }
-                
-                if(in_array($day, $firstDays) && in_array($day, $endDays)){
+
+                if (in_array($day, $firstDays) && in_array($day, $endDays)) {
                     $classDay = 'arrival-departure-both';
-                }else if (in_array($day, $firstDays)) {
+                } else if (in_array($day, $firstDays)) {
                     $classDay = 'arrival-only';
                 } elseif (in_array($day, $endDays)) {
                     $classDay = 'departure-only';
@@ -540,7 +541,7 @@ class PropertyBookingController extends Controller
                 $calendar .= '</tr>';
             }
         }
-        
+
         $calendar .= '</table>';
 
         $data = [
@@ -556,7 +557,7 @@ class PropertyBookingController extends Controller
     public function store(Request $request)
     {
         // permission control
-        if(!isRole('owner') && !can('edit', 'property-bookings')){
+        if (!isRole('owner') && !can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
@@ -570,11 +571,11 @@ class PropertyBookingController extends Controller
             $booking = $this->repository->create($request);
 
             $msg = __('Reservation created with ID') . ' #' . $booking->id;
-            
+
             $confirmationRecipients = $this->getNotificationEmails($request, $booking);
-            if($confirmationRecipients){
+            if ($confirmationRecipients) {
                 $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
-            }        
+            }
 
             $request->session()->flash('success', $msg);
             return redirect(route('property-bookings.edit', [$booking->id]));
@@ -605,11 +606,11 @@ class PropertyBookingController extends Controller
         $damageDeposits = $this->damagesDepositsRepository->all('');
 
         // permission control
-        if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
+        if ((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
-        
+
         $transactions = [];
 
         if ($property->management()->count()) {
@@ -623,7 +624,7 @@ class PropertyBookingController extends Controller
         $registers = [];
         $registers[] = ['name' => 'Owner'];
 
-        if(!isRole('owner')){
+        if (!isRole('owner')) {
             $registers[] = ['name' => 'Client'];
         }
 
@@ -640,7 +641,7 @@ class PropertyBookingController extends Controller
         $booking = $this->repository->find($id);
 
         // permission control
-        if((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')){
+        if ((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
@@ -654,9 +655,9 @@ class PropertyBookingController extends Controller
             $this->repository->update($request, $id);
 
             $msg = __('Reservation updated with ID') . ' #' . $booking->id;
-            
+
             $confirmationRecipients = $this->getNotificationEmails($request, $booking);
-            if($confirmationRecipients){
+            if ($confirmationRecipients) {
                 $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
             }
 
@@ -674,11 +675,11 @@ class PropertyBookingController extends Controller
         //     $request->session()->flash('error', __("You don't have access to this area"));
         //     return redirect()->back();
         // }
-        if(!can('delete', 'property-bookings')){
+        if (!can('delete', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
-        
+
         if ($this->repository->canDelete($id)) {
             $booking = $this->repository->find($id);
 
@@ -690,14 +691,14 @@ class PropertyBookingController extends Controller
             $isTeam = true;
             $isDeleted = true;
 
-            if(isProduction()){
+            if (isProduction()) {
                 sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $isNew, $isTeam, $isDeleted);
                 sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $isNew, $isTeam, $isDeleted);
                 sendBookingDetailsEmail($booking, 'contabilidad@palmeravacations.com', $isNew, $isTeam, $isDeleted);
 
                 $msg = __('Confirmation recipents delete') . ' reservaciones@palmeravacations.com, info@palmeravacations.com, contabilidad@palmeravacations.com';
                 $request->session()->flash('success', $msg);
-            }else{
+            } else {
                 sendBookingDetailsEmail($booking, 'blakmetall@gmail.com', $isNew, $isTeam, $isDeleted);
                 $request->session()->flash('success', __('Record deleted successfully'));
             }
@@ -743,15 +744,15 @@ class PropertyBookingController extends Controller
 
         $departure = $request->departure_date;
         $property_id = $request->property_id;
-        
+
         $property = PropertyTranslation::where("property_id", $property_id)->where('language_id', $lang->id)->get()[0];
-        
+
         $minStay = getMinStay($property_id);
         $availabilityProperty = getAvailabilityProperty($property_id, $arrival, $departure);
         $propertyRate = RatesHelper::getPropertyRate($property->property, $property->rates, $arrival, $departure);
         $nights = $propertyRate['totalDays'];
         $total = $propertyRate['total'];
-        
+
         $data = [];
         $data['afirmation'] = $availabilityProperty;
         $data['name'] = $property->name;
@@ -774,7 +775,8 @@ class PropertyBookingController extends Controller
         return $data;
     }
 
-    public function ratesCalculator(Request $request) {
+    public function ratesCalculator(Request $request)
+    {
         $rates = [];
         $propertyRate = [
             'totalDays' => '',
@@ -787,8 +789,8 @@ class PropertyBookingController extends Controller
             'filterByEnabled' => true,
             'paginate' => false,
         ]);
-        
-        if($request->property_id) {
+
+        if ($request->property_id) {
             $property = $this->propertiesRepository->find($request->property_id);
             $rates = $this->ratesRepository->all('',  ['property_id' => $request->property_id]);
             $propertyRate = RatesHelper::getPropertyRate($property, $rates, $request->from_date, $request->to_date);
@@ -803,7 +805,8 @@ class PropertyBookingController extends Controller
             ->with('properties', $properties);
     }
 
-    private function getNotificationEmails($request, $booking) {
+    private function getNotificationEmails($request, $booking)
+    {
         $emails = [];
         $sendDefaultEmails = (isProduction() && $request->send_pmv_notification);
 
@@ -811,7 +814,7 @@ class PropertyBookingController extends Controller
         if ($request->guest) {
             $emails[] = $booking->email;
 
-            if($booking->alternate_email) {
+            if ($booking->alternate_email) {
                 $emails[] = $booking->alternate_email;
             }
         }
@@ -830,16 +833,16 @@ class PropertyBookingController extends Controller
         if ($request->home_owner) {
             $owners = $booking->property->users;
             foreach ($owners as $owner) {
-                $emails[] = $owner->email ;
+                $emails[] = $owner->email;
             }
         }
 
         // extra emails
-        if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
+        if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
             $emails[] = 'reservaciones@palmeravacations.com';
             $emails[] = 'info@palmeravacations.com';
 
-            if($booking->register_by == 'Client') {
+            if ($booking->register_by == 'Client') {
                 $emails[] = 'accounting@palmeravacations.com';
             }
         }
@@ -849,8 +852,8 @@ class PropertyBookingController extends Controller
         $now = Carbon::now();
 
         // extra emails
-        if($arrival->diffInHours($now) <= 24) {
-            if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
+        if ($arrival->diffInHours($now) <= 24) {
+            if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                 $emails[] = 'pmd@palmeravacations.com';
                 $emails[] = 'maidsupervisor@palmeramail.com';
             }

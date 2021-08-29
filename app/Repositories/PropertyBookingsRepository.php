@@ -36,13 +36,13 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
         $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
         $filterById           = isset($config['reservation_id']) ? $config['reservation_id'] : '';
-        $orderByArrival           = isset($config['orderByArrival']) ? $config['orderByArrival'] : '';
+        $orderByArrival       = isset($config['orderByArrival']) ? $config['orderByArrival'] : '';
 
         if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
             $query = PropertyBooking::query();
 
             // if will be filtering only by booking id
-            if(!$filterById) {
+            if (!$filterById) {
                 $query->where(function ($query) use ($search) {
                     if ($search['from_date'] != '' || $search['to_date'] != '') {
                         $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
@@ -61,12 +61,12 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $query = PropertyBooking::query();
             $query->with('property');
 
-            if($search && is_string($search)) {
+            if ($search && is_string($search)) {
                 $query->where('property_bookings.id', $search);
             }
         }
 
-        if($filterById) {
+        if ($filterById) {
             $query->where('property_bookings.id', $filterById);
         } else {
             if ($hasPropertyID) {
@@ -81,23 +81,25 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
             if ($filterByOwner) {
                 $query->whereHas('property', function ($q) {
-                    $q->whereHas('users', function($q2) {
+                    $q->whereHas('users', function ($q2) {
                         $q2->where('user_id', \Auth::id());
                     });
                 });
             }
-    
+
             if ($currentYear) {
                 $query->whereYear('arrival_date', $currentYear);
             }
-    
+
             if ($filterByNotCancelled) {
                 $query->where('is_cancelled', 0);
             }
         }
 
-        if($orderByArrival) {
+        if ($orderByArrival) {
             $query->orderBy('arrival_date', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
         }
 
         if ($shouldPaginate) {
@@ -130,12 +132,12 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $user = auth()->user();
 
         if ($is_new) {
-            $randomId = rand(1,99999999);
+            $randomId = rand(1, 99999999);
             $bookingTmp = $this->model->find($randomId);
 
             // avoid id duplicates
-            while($bookingTmp) {
-                $randomId = rand(1,99999999);
+            while ($bookingTmp) {
+                $randomId = rand(1, 99999999);
                 $bookingTmp = $this->model->find($randomId);
             }
 
@@ -166,7 +168,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
             $arrival_date = $booking->arrival_date;
             $departure_date = $booking->departure_date;
-            
+
             if ($booking->damage_deposit_id) {
                 $damage_deposit = DamageDeposit::find($booking->damage_deposit_id);
                 $damageDeposit = $damage_deposit->price;
@@ -204,19 +206,19 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             $nights = $propertyRate['totalDays'];
 
             // allows to recalculate booking prices according to property rates
-            if($request->_booking_recalculate_rate_prices) {
+            if ($request->_booking_recalculate_rate_prices) {
                 $price_per_night = $propertyRate['nightlyAppliedRate'];
                 $subtotal_nights = $propertyRate['total'];
 
                 $booking->price_per_night = $price_per_night;
                 $booking->subtotal_nights = $subtotal_nights;
                 $booking->total = $subtotal_nights;
-            }else{
+            } else {
                 $booking->price_per_night = $request->price_per_night;
                 $booking->subtotal_nights = $request->subtotal_nights;
                 $booking->total = $request->subtotal_nights;
             }
-            
+
             $booking->nights = $nights;
             $booking->subtotal_damage_deposit = $damageDeposit;
 
@@ -229,7 +231,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                     $isTeam = false;
                     sendBookingDetailsEmail($booking, $booking->email, $is_new, $isTeam);
 
-                    if($booking->alternate_email) {
+                    if ($booking->alternate_email) {
                         sendBookingDetailsEmail($booking, $booking->alternate_email, $is_new, $isTeam);
                     }
                 }
@@ -251,13 +253,13 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                         sendBookingDetailsEmail($booking, $owner->email, $is_new);
                     }
                 }
-    
+
                 // extra emails
-                if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
+                if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                     sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $is_new);
                     sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $is_new);
-                    
-                    if($booking->register_by == 'Client') {
+
+                    if ($booking->register_by == 'Client') {
                         sendBookingDetailsEmail($booking, 'accounting@palmeravacations.com', $is_new);
                     }
                 }
@@ -267,8 +269,8 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $now = Carbon::now();
 
                 // extra emails
-                if($arrival->diffInHours($now) <= 24) {
-                    if(isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
+                if ($arrival->diffInHours($now) <= 24) {
+                    if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                         sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com', $is_new);
                         sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com', $is_new);
                     }

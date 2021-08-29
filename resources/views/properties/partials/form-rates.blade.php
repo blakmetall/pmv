@@ -1,6 +1,6 @@
 @php
     $label = isset($label) ? $label : '';
-    $rates = $row->rates;
+    $rates = $row->rates->sortBy('end_date');
 @endphp
 @if(count($rates))
 <div class="card">
