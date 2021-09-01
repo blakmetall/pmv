@@ -65,8 +65,8 @@
 
                                 <!-- travel_dates -->
                                 <td>
-                                    {{ $booking->arrival_date }} -
-                                    {{ $booking->departure_date }}
+                                    {{ getReadableDate($booking->arrival_date) }} -
+                                    {{ getReadableDate($booking->departure_date) }}
                                     <br />
                                     {{ $booking->nights }} {{ __('Nights') }}
                                 </td>
@@ -84,8 +84,8 @@
 
                                 <!-- created/updated cols -->
                                 @include('components.table.created-updated', [
-                                    'created_at' => $booking->created_at,
-                                    'updated_at' => $booking->updated_at,
+                                    'created_at' => getReadableDate($booking->created_at, '', true),
+                                    'updated_at' => getReadableDate($booking->updated_at, '', true),
                                     'trimTime' => true,
                                 ])
 

@@ -676,7 +676,7 @@ if (!function_exists('getSearchDate')) {
 }
 
 if (!function_exists('getReadableDate')) {
-    function getReadableDate($date, $locale = '')
+    function getReadableDate($date, $locale = '', $already = false)
     {
         if (!$locale) {
             $locale = App::getLocale();
@@ -688,11 +688,15 @@ if (!function_exists('getReadableDate')) {
 
         $date = DateTime::createFromFormat("Y-m-d", $date);
 
-        $day = strftime("%d", $date->getTimestamp());
-        $month = ucfirst(strftime("%b", $date->getTimestamp()));
-        $year = strftime("%Y", $date->getTimestamp());
+        if ($already) {
+            $readableDate = Carbon::parse(strtotime($date))->format('d/M/Y');
+        } else {
+            $day = strftime("%d", $date->getTimestamp());
+            $month = ucfirst(strftime("%b", $date->getTimestamp()));
+            $year = strftime("%Y", $date->getTimestamp());
 
-        $readableDate = $day . '/' . $month . '/' . $year;
+            $readableDate = $day . '/' . $month . '/' . $year;
+        }
 
         setlocale(LC_ALL, "en_US");
 

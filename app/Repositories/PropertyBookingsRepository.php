@@ -37,6 +37,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
         $filterById           = isset($config['reservation_id']) ? $config['reservation_id'] : '';
         $orderByArrival       = isset($config['orderByArrival']) ? $config['orderByArrival'] : '';
+        $orderByDeparture     = isset($config['orderByDeparture']) ? $config['orderByDeparture'] : '';
 
         if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
             $query = PropertyBooking::query();
@@ -76,7 +77,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                 $query->join('properties', 'property_bookings.property_id', '=', 'properties.id');
                 $query->join('properties_translations', 'properties.id', '=', 'properties_translations.property_id');
                 $query->where('language_id', $lang->id);
-                $query->orderBy('name', 'asc');
             }
 
             if ($filterByOwner) {
@@ -97,7 +97,9 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         }
 
         if ($orderByArrival) {
-            $query->orderBy('arrival_date', 'desc');
+            $query->orderBy('arrival_date', 'asc');
+        } else if ($orderByDeparture) {
+            $query->orderBy('departure_date', 'asc');
         } else {
             $query->orderBy('created_at', 'desc');
         }

@@ -105,7 +105,7 @@
 
                         <!-- created/updated cols -->
                         @include('components.table.created-updated', [
-                        'created_at' => $row->created_at,
+                        'created_at' => getReadableDate($row->created_at, '', true),
                         // 'updated_at' => $row->updated_at,
                         'trimTime' => true,
                         ])

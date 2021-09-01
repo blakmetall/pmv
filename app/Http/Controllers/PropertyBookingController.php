@@ -56,12 +56,14 @@ class PropertyBookingController extends Controller
                 'filterByOwner' => true,
                 'reservation_id' => $request->reservation_id,
                 'orderByArrival' => false,
+                'orderByDeparture' => false,
             ];
         } else {
             $config = [
                 'paginate' => true,
                 'reservation_id' => $request->reservation_id,
                 'orderByArrival' => false,
+                'orderByDeparture' => false,
                 'propertyID' => $request->property_id
             ];
         }
@@ -239,7 +241,12 @@ class PropertyBookingController extends Controller
         $currYear = isset($request->year) ? $request->year : Carbon::now()->year;
         $prevYear = Carbon::create($currYear)->subYear()->year;
         $nextYear = Carbon::create($currYear)->addYear()->year;
-        $bookings = $this->repository->all('', ['propertyID' => $property->id, 'currentYear' => $currYear]);
+        $config = [
+            'currentYear' => $currYear,
+            'orderByDeparture' => true,
+            'propertyID' => $property->id
+        ];
+        $bookings = $this->repository->all('', $config);
         $calendar = $this->generateCalendar($property, $request);
 
         return view('property-bookings.calendar')
