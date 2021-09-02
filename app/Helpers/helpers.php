@@ -686,11 +686,11 @@ if (!function_exists('getReadableDate')) {
             setlocale(LC_ALL, "es_ES");
         }
 
-        $date = DateTime::createFromFormat("Y-m-d", $date);
 
         if ($already) {
             $readableDate = Carbon::parse(strtotime($date))->format('d/M/Y');
         } else {
+            $date = DateTime::createFromFormat("Y-m-d", $date);
             $day = strftime("%d", $date->getTimestamp());
             $month = ucfirst(strftime("%b", $date->getTimestamp()));
             $year = strftime("%Y", $date->getTimestamp());
@@ -835,6 +835,7 @@ if (!function_exists('generateCalendar')) {
     function generateCalendar($year, $cols = 12, $bookings, $startingMonth = 0, $displayMonths = 0)
     {
         $currYear = isset($year) ? $year : Carbon::now()->year;
+        $nextYear = $currYear + 1;
         $count_cols = 0;
         $cols_needed = 3;
 
@@ -856,12 +857,16 @@ if (!function_exists('generateCalendar')) {
         $calendar .= '<td align="left" valign="top">';
         $calendar .= '<table border="0" cellpadding="0" cellspacing="2">';
 
-        $limit = $displayMonths ? $cols - $displayMonths - 1 : $cols;
+        $limit = $displayMonths ? $startingMonth + $displayMonths - 1 : $cols;
         $initial = $startingMonth ? $startingMonth - 1 : 0;
-
         for ($i = $initial; $i < $limit; $i++) {
             $count_cols++;
-            $cm = mktime(0, 0, 0, 1 + $i, 1, $currYear); //get curr month time string
+            if ($i >= 12) {
+                $getYear = $nextYear;
+            } else {
+                $getYear = $currYear;
+            }
+            $cm = mktime(0, 0, 0, 1 + $i, 1, $getYear); //get curr month time string
             $days_month = date("t", $cm); //calculate number of days in month
             $first_weekday_unix = mktime(0, 0, 0, date('n', $cm), 1, date('Y', $cm));
             $first_weekday = date('w', $first_weekday_unix);
@@ -877,7 +882,7 @@ if (!function_exists('generateCalendar')) {
             }
 
             $calendar .= '<tr>';
-            $calendar .= '<th colspan="7" align="center" valign="top">' . ucfirst($month) . ' ' . $currYear . '</th>';
+            $calendar .= '<th colspan="7" align="center" valign="top">' . ucfirst($month) . ' ' . $getYear . '</th>';
             $calendar .= '</tr>';
             $calendar .= '<tr>
                 <th>Su</th>

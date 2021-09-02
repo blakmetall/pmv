@@ -222,7 +222,7 @@ class PropertyController extends Controller
 
         $currYear = isset($year) ? $year : Carbon::now()->year;
         $startingMonth = date('m', strtotime('now'));
-        $monthsCols = 14;
+        $monthsCols = 12;
         $displayMonths = 3;
 
         $calendar = generateCalendar(
