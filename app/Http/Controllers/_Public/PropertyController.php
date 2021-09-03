@@ -267,13 +267,18 @@ class PropertyController extends Controller
 
     public function reservations($locale, $id)
     {
+        
         $captcha = rand(100000, 999999);
         $lang = LanguageHelper::current()->code;
         $slug = $this->propertiesRepository->find($id)->$lang->slug;
-
+        
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
-
+        
+        SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
+        SEOTools::setDescription(getSubstring(removeP($property->description), 120));
+        SEOTools::opengraph()->setUrl(url()->full());
+        
         $damageDeposits = $this->damagesDepositsRepository->all('');
 
         $countries = [
