@@ -903,7 +903,6 @@ if (!function_exists('generateCalendar')) {
                 $formatYear = isset($year) ? $year : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
-
                 if (in_array($day, $bookingDays)) {
                     $occupied = true;
                 } else {

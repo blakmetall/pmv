@@ -252,7 +252,11 @@ class PropertyController extends Controller
         $prevYear = Carbon::create($currYear)->subYear()->year;
         $nextYear = Carbon::create($currYear)->addYear()->year;
 
-        $calendar = generateCalendar($year, 12, $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]));
+        $calendar = generateCalendar(
+            $year,
+            12,
+            $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'filterByNotCancelled' => 1])
+        );
 
         $data = [
             'calendar' => $calendar,

@@ -16,6 +16,7 @@ class RatesHelper
 
     public static function getPropertyRate($property, $notUserates, $from_date = '', $to_date = '')
     {
+
         // prepare return data
         $data = [
             'totalDays' => 0,
@@ -48,9 +49,7 @@ class RatesHelper
             $rates = $property->rates()->orderBy('start_date', 'asc')->get();
 
             $rateApplied = false;
-
             foreach ($rates as $k => $rate) {
-
                 $nights = 0;
                 $weeks = 0;
                 $months = 0;
@@ -73,11 +72,11 @@ class RatesHelper
                     $requestDate->eq($rate_end_date) ||
                     $requestDate->between($rate_start_date, $rate_end_date)
                 ) {
-                    $rateApplied = false;
+                    $rateAppliedMonths = false;
+                    $rateAppliedWeeks = false;
+                    $rateAppliedNights = false;
 
                     // echo 'loop <br>';
-
-
 
                     // if has monthly rate
                     if ($rate->monthly && $rate->monthly > 0) {
@@ -101,9 +100,9 @@ class RatesHelper
                                 $months = $rateAvailableMonths;
                             }
 
-                            $rateApplied = $months > 0;
+                            $rateAppliedMonths = $months > 0;
 
-                            if ($rateApplied) {
+                            if ($rateAppliedMonths) {
                                 $nightlyMonthlyTotal = $rate->nightly * $requestDaysMonths;
 
                                 $data['ratesPrices'][$rate->id]['months'] = $months;
@@ -115,6 +114,7 @@ class RatesHelper
                             $requestDate->addMonths($months);
                         }
                     }
+
 
                     // if has weekly rate
                     if ($rate->weekly && $rate->weekly > 0) {
@@ -138,10 +138,10 @@ class RatesHelper
                                 $weeks = $rateAvailableWeeks;
                             }
 
-                            $rateApplied = $weeks > 0;
+                            $rateAppliedWeeks = $weeks > 0;
 
 
-                            if ($rateApplied) {
+                            if ($rateAppliedWeeks) {
                                 $nightlyWeeklyTotal = $rate->nightly * $requestDaysWeeks;
 
 
@@ -181,9 +181,9 @@ class RatesHelper
 
                             // echo $nights;
 
-                            $rateApplied = $nights > 0;
+                            $rateAppliedNights = $nights > 0;
 
-                            if ($rateApplied) {
+                            if ($rateAppliedNights) {
                                 $nightlyDayTotal = $rate->nightly * $nights;
 
                                 $data['ratesPrices'][$rate->id]['nights'] = $nights;

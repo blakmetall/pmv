@@ -337,11 +337,11 @@
                             'year' : e.currentTarget.attributes[2].value,
                         };
                         $.ajax({
-                            url: url,
+							url: url,
                             type: "GET",
                             data:{"source": dataNew}
                         }).done(function(data) {
-                            $('.modal-prev').attr("data-year", data.prev);
+							$('.modal-prev').attr("data-year", data.prev);
                             $('.modal-current').html(data.current);
                             $('.modal-next').attr("data-year", data.next);
                             container.html(data.calendar);
