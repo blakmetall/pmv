@@ -444,7 +444,7 @@
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('EMAIL NOTIFICATIONS') }}</span>
 
-        <div style="display: flex">
+        <div style="display: flex; flex-wrap: wrap;">
             <!-- guest_notification -->
             @include('components.form.checkbox-horizontal', [
             'group' => 'notification',

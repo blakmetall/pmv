@@ -13,10 +13,9 @@ class RatesHelper
 
         return $arrival_date->diffInDays($departure_date);
     }
-    // TODO FAVIAN
+
     public static function getPropertyRate($property, $notUserates, $from_date = '', $to_date = '')
     {
-
         // prepare return data
         $data = [
             'totalDays' => 0,

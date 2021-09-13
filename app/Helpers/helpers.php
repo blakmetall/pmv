@@ -719,9 +719,10 @@ if (!function_exists('getAvailabilityProperty')) {
 
         // loop through bookings
         $bookings = $property->bookings()->orderBy('arrival_date', 'asc')->get();
+        $daysOc = [];
         foreach ($bookings as $booking) {
             // if is same booking compare, then skip
-            if ($bookingID && $booking->id == $bookingID) {
+            if ($bookingID && $booking->id == $bookingID || $booking->is_cancelled) {
                 continue;
             }
 
@@ -734,6 +735,7 @@ if (!function_exists('getAvailabilityProperty')) {
                 }
 
                 if (in_array($day, $bookingDays)) {
+                    $daysOc[] = $day;
                     $daysOccupied++;
                 }
             }

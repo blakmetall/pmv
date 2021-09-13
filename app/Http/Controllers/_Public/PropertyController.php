@@ -21,6 +21,7 @@ use App\Repositories\DamageDepositsRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Artesaos\SEOTools\Facades\SEOMeta;
 
 class PropertyController extends Controller
 {
@@ -150,9 +151,14 @@ class PropertyController extends Controller
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
 
+        SEOMeta::setTitle($property->name . ' - ' . 'Palmera Vacations');
+        SEOMeta::setDescription(getSubstring(removeP($property->description), 120));
+
         SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
         SEOTools::opengraph()->setUrl(url()->full());
+        SEOTools::opengraph()->addImage(getFeaturedImage($property->property_id));
+        SEOTools::opengraph()->addProperty('type', 'properties');
 
         $propertyRate =
             RatesHelper::getPropertyRate($property->property, $property->rates, $request->arrival_alt_sing, $request->departure_alt_sing);

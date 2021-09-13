@@ -9,7 +9,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-4">
                     <div class="breadcrumb app-breadcrumb">
                         @if ($label)
                             <h1>{{ $label }}</h1>
@@ -36,7 +36,7 @@
                 </div>
 
                 @if (is_array($actions) && count($actions) )
-                    <div class="col-sm-12 col-md-4 text-md-right app-heading-buttons">
+                    <div class="col-sm-12 col-md-8 text-md-right app-heading-buttons">
                         @foreach($actions as $action)
                             
                             @php
