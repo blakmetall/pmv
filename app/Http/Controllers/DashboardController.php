@@ -30,7 +30,7 @@ class DashboardController extends Controller
     public function generalSearch(Request $request)
     {
         $search = trim($request->topSearch);
-        
+
         $topFilter = $request->topFilter;
 
         $_current_role = RoleHelper::current();
@@ -73,7 +73,7 @@ class DashboardController extends Controller
 
         if ($showBookings && $_current_role->isAllowed('property-bookings', 'index')) {
             $config = [
-                'filterById' => $search
+                'reservation_id' => $search
             ];
             $bookings = $this->propertiesBookingsRepository->all($search, $config);
         }

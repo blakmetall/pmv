@@ -31,7 +31,6 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
         $shouldPaginate       = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyID        = isset($config['propertyID']) ? $config['propertyID'] : '';
-        $filterById           = isset($config['filterById']) ? $config['filterById'] : false;
         $filterByOwner        = isset($config['filterByOwner']) ? $config['filterByOwner'] : '';
         $currentYear          = isset($config['currentYear']) ? $config['currentYear'] : '';
         $filterByNotCancelled = isset($config['filterByNotCancelled']) ? $config['filterByNotCancelled'] : '';
@@ -68,7 +67,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
         }
 
         if ($filterById) {
-            $query->where('property_bookings.id', $filterById);
+            $query->where('property_bookings.id', $filterById)->orWhere('property_bookings.firstname', 'like', '%' . $filterById . '%')->orWhere('property_bookings.lastname', 'like', '%' . $filterById . '%');
         } else {
             if ($hasPropertyID) {
                 $query->where('property_id', $hasPropertyID);
