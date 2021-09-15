@@ -5,65 +5,6 @@
     $toDate = isset($_GET['to_date']) ? $_GET['to_date'] : '';
     $searchedLocation = isset($_GET['location']) ? $_GET['location'] : '';
     $url = isset($propertyId) ? route('property-bookings.by-property', [$propertyId]) : route('property-bookings');
-    $actions = [];
-    if (!isRole('owner')){
-        $actions[] = 
-            [
-                'url' => route('properties.show', [$property->id]),
-                'icon' => 'i-Eye font-weight-bold',
-            ];
-        
-        $actions[] = 
-            [
-                'url' => route('property-images', [$property->id]),
-                'icon' => 'i-Old-Camera font-weight-bold',
-            ];
-
-        $actions[] = 
-            [
-                'url' => route('property-bookings.by-property', [$property->id]),
-                'icon' => 'i-Calendar-2 font-weight-bold',
-            ];
-
-        $actions[] = 
-            [
-                'url' => route('property-rates', [$property->id]),
-                'icon' => 'i-Money-2 font-weight-bold',
-            ];
-
-        $actions[] = 
-            [
-                'url' => route('property-contacts', [$property->id]),
-                'icon' => 'i-Administrator font-weight-bold',
-            ];
-
-        $actions[] = 
-            [
-                'url' => route('property-notes', [$property->id]),
-                'icon' => 'i-Notepad font-weight-bold',
-            ];
-    }
-
-    if (!isRole('owner') && $property->is_online){
-        $actions[] = 
-            [
-                'url' => route('public.property-detail', [App::getLocale(), getZone($property->id), $property->translate()->slug]),
-                'icon' => 'i-Right font-weight-bold',
-            ];
-    }
-
-    if (!isRole('owner') && can('edit', 'property-management')){
-        $actions[] = 
-            [
-                'url' => route('property-management', [$property->id]),
-                'icon' => 'i-Building font-weight-bold',
-            ];
-    }
-    $actions[] = 
-        [
-            'url' => route('property-calendar', [$property->id]),
-            'icon' => 'i-Calendar-4 font-weight-bold',
-        ];
 @endphp
 
 @section('heading-content')
@@ -85,11 +26,21 @@
 
     @include('components.heading', [
         'label' => __('Bookings'),
-        'actions' => $actions
+        'actions' => []
     ])
 
     <!-- separator -->
     <div class="mb-4"></div>
+    
+    @if (isset($property))
+        @include('properties.partials.info', [
+            'propertyID' => $property->id,
+            'property' => $property
+        ])
+        
+        <!-- separator -->
+        <div class="mb-4"></div>
+    @endif
 
     @include('components.search-bookings', [
         'url' => $url

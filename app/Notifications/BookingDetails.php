@@ -54,27 +54,27 @@ class BookingDetails extends Notification
         $address = $this->booking->property->address;
         $total    = $this->booking->total;
         $payments = $this->booking->payments;
-        
+
         $reduced  = 0;
-        
+
         foreach ($payments as $payment) {
-            if($payment->is_paid){
+            if ($payment->is_paid) {
                 $reduced += $payment->amount;
             }
         }
 
         $damageDeposit = ($this->booking->subtotal_damage_deposit) ? $this->booking->subtotal_damage_deposit : 0;
         $balance = $total - $reduced + $damageDeposit;
-    
+
         // subject
-        if($this->isNew) {
+        if ($this->isNew) {
             $subject = __('Palmera Vacations NEW RESERVATION') . ' #' . $this->booking->id;
-        }else{
-            if($this->isDeleted) {
+        } else {
+            if ($this->isDeleted) {
                 $subject = __('Palmera Vacations') . ' ' . 'RESERVATION DELETED' . ' #' . $this->booking->id;
-            }else if($this->booking->is_cancelled) {
+            } else if ($this->booking->is_cancelled) {
                 $subject = __('Palmera Vacations') . ' ' . 'RESERVATION CANCELLED' . ' #' . $this->booking->id;
-            }else{
+            } else {
                 $subject = __('Palmera Vacations') . ' ' . 'RESERVATION UPDATE' . ' #' . $this->booking->id;
             }
         }
@@ -82,39 +82,39 @@ class BookingDetails extends Notification
         $mailMsg = new MailMessage();
         $mailMsg->subject($subject);
 
-        if(\App::getLocale() == 'en') {
+        if (\App::getLocale() == 'en') {
             // introduction
-            if($this->isTeam) {
+            if ($this->isTeam) {
                 $mailMsg->line(new HtmlString('Hello Team,'));
-            }else{
+            } else {
                 $guestName = $this->booking->firstname . ' ' . $this->booking->lastname;
                 $mailMsg->line(new HtmlString('Hello ' . $guestName));
             }
-            
+
             $mailMsg->line(new HtmlString('<br>'));
 
-            if($this->isTeam){
+            if ($this->isTeam) {
                 $mailMsg->line(new HtmlString('This is a copy of the booking'));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('Below are the details of your reservation'));
             }
 
             $createdAt = explode(' ', $this->booking->created_at);
-            
+
             // booking status
             $mailMsg->line(new HtmlString('<br>'));
 
-            if($this->isDeleted) {
+            if ($this->isDeleted) {
                 $mailMsg->line(new HtmlString('RESERVATION DELETED'));
-            }else if($this->booking->is_cancelled) {
+            } else if ($this->booking->is_cancelled) {
                 $mailMsg->line(new HtmlString('RESERVATION CANCELLED'));
-            }else if(!$this->isNew){
+            } else if (!$this->isNew) {
                 $mailMsg->line(new HtmlString('RESERVATION UPDATE'));
             }
 
             $mailMsg->line(new HtmlString('BOOKING DATE: ' . getReadableDate($createdAt[0], 'en') . ' ' . $createdAt[1]));
             $mailMsg->line(new HtmlString('STATUS: ' . getBookingStatus($this->booking, 'en')));
-            
+
             // travel details
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -124,7 +124,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('RESERVATION NAME: ' . $this->booking->full_name));
             $mailMsg->line(new HtmlString('DATES: ' . getReadableDate($this->booking->arrival_date, 'en') . ' - ' . getReadableDate($this->booking->departure_date)));
             $mailMsg->line(new HtmlString('RATE: Avg. Night ' . priceFormat($this->booking->price_per_night) . ' USD | Total stay ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
-            
+
             // property details
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -133,7 +133,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('PROPERTY: ' . $property->name . ' / ' . $propertyType->name . ' / ' . $bedrooms . ' Bedrooms / ' . $baths . ' Bathrooms'));
             $mailMsg->line(new HtmlString('LOCATION: ' . $location->name));
             $mailMsg->line(new HtmlString('ADDRESS: ' . $address));
-            
+
             // flight information
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -141,7 +141,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
 
             // arrival info
-            if($this->booking->arrival_airline) {
+            if ($this->booking->arrival_airline) {
                 $mailMsg->line(new HtmlString('Arrival airline: ' . $this->booking->arrival_airline));
                 $mailMsg->line(new HtmlString('Flight number: ' . $this->booking->arrival_flight_number));
                 $mailMsg->line(new HtmlString('Arrival date: ' . getReadableDate($this->booking->arrival_date)));
@@ -150,12 +150,12 @@ class BookingDetails extends Notification
                 $mailMsg->line(new HtmlString('Requires transportation: ' . ($this->booking->arrival_transportation ? 'Yes' : 'No')));
                 $mailMsg->line(new HtmlString('Arrival notes: ' . $this->booking->arrival_notes));
                 $mailMsg->line(new HtmlString('<br>'));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('Arrival: N/A'));
             }
 
             // departure info
-            if($this->booking->departure_airline) {
+            if ($this->booking->departure_airline) {
                 $mailMsg->line(new HtmlString('Departure airline: ' . $this->booking->departure_airline));
                 $mailMsg->line(new HtmlString('Flight number: ' . $this->booking->departure_flight_number));
                 $mailMsg->line(new HtmlString('Departure date: ' . getReadableDate($this->booking->departure_date)));
@@ -163,19 +163,19 @@ class BookingDetails extends Notification
                 $mailMsg->line(new HtmlString('Check out: ' . $this->booking->check_out));
                 $mailMsg->line(new HtmlString('Requires transportation: ' . ($this->booking->arrival_transportation ? 'Yes' : 'No')));
                 $mailMsg->line(new HtmlString('Departure notes: ' . $this->booking->arrival_notes));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('Departure: N/A'));
             }
-            
+
             // security deposit info
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('SECURITY DEPOSIT / ACCIDENTAL DAMAGE INSURANCE'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
 
-            if($this->booking->damageDeposit) {
+            if ($this->booking->damageDeposit) {
                 $mailMsg->line(new HtmlString($this->booking->damageDeposit->translate()->description));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('$0.00'));
             }
 
@@ -190,9 +190,9 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('PAYMENTS: ' . priceFormat($reduced) . ' USD'));
 
             // payments list
-            if(count($payments)){
-                foreach($payments as $payment){
-                    if($payment->is_paid) {
+            if (count($payments)) {
+                foreach ($payments as $payment) {
+                    if ($payment->is_paid) {
                         $transactionSource = $payment->transactionSource->translations()->where('language_id', 1)->first();
                         $mailMsg->line(new HtmlString('* ' . getReadableDate($payment->post_date, 'en') . ' | ' . priceFormat($payment->amount) . ' USD | ' . $transactionSource->name));
                     }
@@ -203,7 +203,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('TOTAL DUE: ' . priceFormat($balance) . ' USD'));
 
             // if not for the pmv team send extra instructions
-            if(!$this->isTeam) {  
+            if (!$this->isTeam) {
                 $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
                 $mailMsg->line(new HtmlString('Thank you for your reservation, we will verify availability and confirm to'));
@@ -236,7 +236,7 @@ class BookingDetails extends Notification
             }
 
             // if not for the pmv team, send addresses information
-            if(!$this->isTeam) {
+            if (!$this->isTeam) {
                 // pv address
                 $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('<br>'));
@@ -271,39 +271,39 @@ class BookingDetails extends Notification
 
             return $mailMsg; // end english msg
 
-        }else {
+        } else {
             // introduction
-            if($this->isTeam) {
+            if ($this->isTeam) {
                 $mailMsg->line(new HtmlString('Hola equipo,'));
-            }else{
+            } else {
                 $guestName = $this->booking->firstname . ' ' . $this->booking->lastname;
                 $mailMsg->line(new HtmlString('Hola ' . $guestName));
             }
-            
+
             $mailMsg->line(new HtmlString('<br>'));
-            
-            if($this->isTeam) {
+
+            if ($this->isTeam) {
                 $mailMsg->line(new HtmlString('Esta es una copia de la reservación'));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('A continuación se muestran los detalles de su reservación:'));
             }
 
             $createdAt = explode(' ', $this->booking->created_at);
-            
+
             // booking status
             $mailMsg->line(new HtmlString('<br>'));
 
-            if($this->isDeleted) {
-                $mailMsg->line(new HtmlStrin('RESERVACIÓN ELIMINADA'));
-            }else if($this->booking->is_cancelled) {
-                $mailMsg->line(new HtmlStrin('RESERVACIÓN CANCELADA'));
-            }else if(!$this->isNew){
-                $mailMsg->line(new HtmlStrin('RESERVACIÓN ACTUALIZADA'));
+            if ($this->isDeleted) {
+                $mailMsg->line(new HtmlString('RESERVACIÓN ELIMINADA'));
+            } else if ($this->booking->is_cancelled) {
+                $mailMsg->line(new HtmlString('RESERVACIÓN CANCELADA'));
+            } else if (!$this->isNew) {
+                $mailMsg->line(new HtmlString('RESERVACIÓN ACTUALIZADA'));
             }
 
             $mailMsg->line(new HtmlString('FECHA DE RESERVACIÓN: ' . getReadableDate($createdAt[0], 'es') . ' ' . $createdAt[1]));
             $mailMsg->line(new HtmlString('ESTATUS: ' . getBookingStatus($this->booking, 'es')));
-            
+
             // travel details
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -313,7 +313,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('NOMBRE DE LA RESERVACIÓN: ' . $this->booking->full_name));
             $mailMsg->line(new HtmlString('FECHAS: ' . getReadableDate($this->booking->arrival_date, 'en') . ' - ' . getReadableDate($this->booking->departure_date)));
             $mailMsg->line(new HtmlString('TARIFA: Prom. noche ' . priceFormat($this->booking->price_per_night) . ' USD | Total estancia ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
-            
+
             // property details
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -322,7 +322,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('PROPIEDAD: ' . $property->name . ' / ' . $propertyType->name . ' / ' . $bedrooms . ' Recámaras / ' . $baths . ' Baños'));
             $mailMsg->line(new HtmlString('UBICACIÓN: ' . $location->name));
             $mailMsg->line(new HtmlString('DIRECCIÓN: ' . $address));
-            
+
             // flight information
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -330,7 +330,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
 
             // arrival info
-            if($this->booking->arrival_airline) {
+            if ($this->booking->arrival_airline) {
                 $mailMsg->line(new HtmlString('Aerolínea de llegada: ' . $this->booking->arrival_airline));
                 $mailMsg->line(new HtmlString('Número de vuelo: ' . $this->booking->arrival_flight_number));
                 $mailMsg->line(new HtmlString('Fecha de llegada: ' . getReadableDate($this->booking->arrival_date)));
@@ -339,13 +339,12 @@ class BookingDetails extends Notification
                 $mailMsg->line(new HtmlString('Requiere transportación: ' . ($this->booking->arrival_transportation ? 'Yes' : 'No')));
                 $mailMsg->line(new HtmlString('Notas de llegada: ' . $this->booking->arrival_notes));
                 $mailMsg->line(new HtmlString('<br>'));
-
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('Llegada: N/A'));
             }
 
             // departure info
-            if($this->booking->departure_airline) {
+            if ($this->booking->departure_airline) {
                 $mailMsg->line(new HtmlString('Aerolínea de salida: ' . $this->booking->departure_airline));
                 $mailMsg->line(new HtmlString('Número de vuelo: ' . $this->booking->departure_flight_number));
                 $mailMsg->line(new HtmlString('Fecha de salida: ' . getReadableDate($this->booking->departure_date)));
@@ -353,19 +352,19 @@ class BookingDetails extends Notification
                 $mailMsg->line(new HtmlString('Salida: ' . $this->booking->check_out));
                 $mailMsg->line(new HtmlString('Requiere transportación: ' . ($this->booking->arrival_transportation ? 'Yes' : 'No')));
                 $mailMsg->line(new HtmlString('Notas de salida: ' . $this->booking->arrival_notes));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('Salida: N/A'));
             }
-            
+
             // security deposit info
             $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('DEPÓSITO DE SEGURIDAD / SEGURO DE DAÑOS ACCIDENTALES'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
 
-            if($this->booking->damageDeposit) {
+            if ($this->booking->damageDeposit) {
                 $mailMsg->line(new HtmlString($this->booking->damageDeposit->translate()->description));
-            }else{
+            } else {
                 $mailMsg->line(new HtmlString('$0.00'));
             }
 
@@ -380,9 +379,9 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('PAGOS: ' . priceFormat($reduced) . ' USD'));
 
             // payments list
-            if(count($payments)){
-                foreach($payments as $payment){
-                    if($payment->is_paid) {
+            if (count($payments)) {
+                foreach ($payments as $payment) {
+                    if ($payment->is_paid) {
                         $transactionSource = $payment->transactionSource->translations()->where('language_id', 2)->first();
                         $mailMsg->line(new HtmlString('* ' . getReadableDate($payment->post_date, 'es') . ' | ' . priceFormat($payment->amount) . ' USD | ' . $transactionSource->name));
                     }
@@ -392,7 +391,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('TOTAL POR PAGAR: ' . priceFormat($balance) . ' USD'));
 
             // if not for the pmv team send extra instructions
-            if(!$this->isTeam) {
+            if (!$this->isTeam) {
                 $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
                 $mailMsg->line(new HtmlString('Gracias por su reservación, verificaremos la disponibilidad y le'));
@@ -428,7 +427,7 @@ class BookingDetails extends Notification
             }
 
             // if not for the pmv team, send addresses information
-            if(!$this->isTeam) {
+            if (!$this->isTeam) {
                 // pv address
                 $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('<br>'));

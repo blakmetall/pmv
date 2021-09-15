@@ -33,6 +33,7 @@
                         <th scope="col">{{ __('Nightly Rate') }}</th>
                         <th scope="col">{{ __('Total') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col">{{ __('Register By') }}</th>
                         <th scope="col">{{ __('Created') }}</th>
                         <th scope="col">{{ __('Updated') }}</th>
                         <th scope="col">&nbsp;</th>
@@ -80,6 +81,11 @@
                                 <!-- is_cancelled -->
                                 <td>
                                     {!! getStatusIcon(!$booking->is_cancelled) !!}
+                                </td>
+
+                                <!-- register_by -->
+                                <td>
+                                    {{ __($booking->register_by) }}
                                 </td>
 
                                 <!-- created/updated cols -->
