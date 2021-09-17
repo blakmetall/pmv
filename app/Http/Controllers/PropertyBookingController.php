@@ -75,6 +75,7 @@ class PropertyBookingController extends Controller
 
         $properties = $this->propertiesRepository->all('', [
             'filterByEnabled' => true,
+            'filterByUserId' => \Auth::id(),
         ]);
 
         $registers = [];
@@ -99,11 +100,17 @@ class PropertyBookingController extends Controller
         $toDate = (isset($request->to_date)) ? $request->to_date : $tomorrowDate;
         $getLocation = 1;
         $searchedLocation = isset($request->location) ? $request->location : $getLocation;
+        $propertyId = isset($request->property_id) ? $request->property_id : false;
         $search = [
             'from_date' => $fromDate,
             'to_date' => $toDate,
             'location' => $searchedLocation,
+            'property_id' => $propertyId,
         ];
+        $properties = $this->propertiesRepository->all('', [
+            'filterByEnabled' => true,
+            'filterByUserId' => \Auth::id(),
+        ]);
         $arrivals = $this->getArrivals($search);
         $departures = $this->getDepartures($search);
         $locations = $this->citiesRepository->all('');
@@ -112,6 +119,7 @@ class PropertyBookingController extends Controller
             ->with('arrivals', $arrivals)
             ->with('departures', $departures)
             ->with('locations', $locations)
+            ->with('properties', $properties)
             ->with('search', $search);
     }
 
@@ -180,6 +188,9 @@ class PropertyBookingController extends Controller
                 $qy->whereHas('users', function ($q) {
                     $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
                 });
+                if (isset($search['property_id']) && $search['property_id']) {
+                    $qy->where('property_id', $search['property_id']);
+                }
             }
         });
 
@@ -200,6 +211,9 @@ class PropertyBookingController extends Controller
                 $qy->whereHas('users', function ($q) {
                     $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
                 });
+                if (isset($search['property_id']) && $search['property_id']) {
+                    $qy->where('property_id', $search['property_id']);
+                }
             }
         });
 

@@ -14,7 +14,6 @@
 @php
     $skipDelete = false;
     $skipEdit = false;
-
     if(isRole('owner')) {
         if($row->register_by != 'Owner'){
             $skipDelete = true;

@@ -2,7 +2,7 @@
 
     <div class="row row-xs">
         <!-- from_date -->
-        <div class="col-md-4 select-filter">
+        <div class="col-md-3 select-filter">
             <label for="from_date">
                 {{ __('From Date') }}*
             </label>
@@ -10,7 +10,7 @@
         </div>
 
         <!-- to_date -->
-        <div class="col-md-4 select-filter">
+        <div class="col-md-3 select-filter">
             <label for="to_date">
                 {{ __('To Date') }}*
             </label>
@@ -38,6 +38,27 @@
                 @endif
             </select>
         </div>
+        @if(isRole('owner'))
+            @if(isset($properties))
+                <div class="col-md-2 select-filter">
+                    <label for="reservation_id">
+                        {{ __('Property') }}
+                    </label>
+
+                    <!-- property_id -->
+                    @include('components.form.select', [
+                        'group' => 'booking-search',
+                        'label' => '',
+                        'name' => 'property_id',
+                        'value' => isset($_GET['property_id']) ? $_GET['property_id'] : '',
+                        'options' => $properties,
+                        'optionValueRef' => 'property_id',
+                        'optionLabelRef' => 'name',
+                        'hideLabel' => true,
+                    ])
+                </div>
+            @endif
+        @endif
         <div class="col-md-2 app-search-buttons">
             <div style="display: block; margin-bottom: 7px">
                 &nbsp;

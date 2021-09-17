@@ -43,6 +43,15 @@
                 <tbody>
                     @if (count($bookings))
                         @foreach ($bookings as $i => $booking)
+                            @php
+                                if($booking->register_by == 'Client' || $booking->register_by == 'Cliente'){
+                                    $skipEdit = true;
+                                    $skipDestroy = true;
+                                }else{
+                                    $skipEdit = false;
+                                    $skipDestroy = false;
+                                }
+                            @endphp
                             <tr>
                                 <!-- index -->
                                 <th scope="row">
@@ -117,6 +126,8 @@
                                                 'showRoute' => 'property-bookings.show',
                                                 'editRoute' => 'property-bookings.edit',
                                                 'deleteRoute' => 'property-bookings.destroy',
+                                                'skipEdit' => $skipEdit,
+                                                'skipDelete' => $skipDestroy,
                                             ])
                                         @endif
                                     @else
@@ -127,6 +138,8 @@
                                                 'showRoute' => 'property-bookings.show',
                                                 'editRoute' => 'property-bookings.edit',
                                                 'deleteRoute' => 'property-bookings.destroy',
+                                                'skipEdit' => $skipEdit,
+                                                'skipDelete' => $skipDestroy,
                                             ])
                                         @endif
                                     @endif

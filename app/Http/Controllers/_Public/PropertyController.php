@@ -207,6 +207,8 @@ class PropertyController extends Controller
             return redirect()->route('public.availability-results', [App::getLocale()]);
         }
 
+        // $amenities = $this->amenitiesRepository->all('', $config);
+
         return view('public.pages.properties.property-detail')
             ->with('property', $property)
             ->with('images', $images)

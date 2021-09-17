@@ -39,23 +39,24 @@
         'required' => true,
         'value' => $row->lastname,
         ])
+        @if($row->register_by !== 'Client' && $row->register_by !== 'Cliente')
+            <!-- email -->
+            @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Email'),
+            'name' => 'email',
+            'required' => true,
+            'value' => $row->email,
+            ])
 
-        <!-- email -->
-        @include('components.form.input', [
-        'group' => 'booking',
-        'label' => __('Email'),
-        'name' => 'email',
-        'required' => true,
-        'value' => $row->email,
-        ])
-
-        <!-- alternate email -->
-        @include('components.form.input', [
-        'group' => 'booking',
-        'label' => __('Alternate email'),
-        'name' => 'alternate_email',
-        'value' => $row->alternate_email,
-        ])
+            <!-- alternate email -->
+            @include('components.form.input', [
+            'group' => 'booking',
+            'label' => __('Alternate email'),
+            'name' => 'alternate_email',
+            'value' => $row->alternate_email,
+            ])
+        @endif
 
         @if (!isRole('owner'))
             <!-- country -->
@@ -120,112 +121,113 @@
 
 <!-- separator -->
 <div class="mb-4"></div>
+@if($row->register_by !== 'Client' && $row->register_by !== 'Cliente')
+    <div class="card">
+        <div class="card-body">
+            <!-- created at -->
+            @if($row->created_at)
+                @include('components.form.input', [
+                    'group' => 'booking',
+                    'label' => __('Creation Date'),
+                    'name' => '_creation_date',
+                    'value' => $row->created_at,
+                    'disabled' => true,
+                ])
+            @endif
+            
+            <!-- arrival_date -->
+            @include('components.form.datepicker', [
+                'group' => 'booking',
+                'label' => __('Arrival Date'),
+                'name' => 'arrival_date',
+                'required' => true,
+                'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
+                'maxDaysLimitFromNow' => 4000,
+            ])
+            
+            <!-- departure_date -->
+            @include('components.form.datepicker', [
+                'group' => 'booking',
+                'label' => __('Departure Date'),
+                'name' => 'departure_date',
+                'required' => true,
+                'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
+                'maxDaysLimitFromNow' => 4000,
+            ])
 
-<div class="card">
-    <div class="card-body">
-        <!-- created at -->
-        @if($row->created_at)
+            <!-- total stay -->
             @include('components.form.input', [
                 'group' => 'booking',
-                'label' => __('Creation Date'),
-                'name' => '_creation_date',
-                'value' => $row->created_at,
+                'label' => __('Total Stay'),
+                'name' => 'nights',
+                'value' => $row->nights ? $row->nights : $propertyRate['totalDays'],
                 'disabled' => true,
             ])
-        @endif
-        
-        <!-- arrival_date -->
-        @include('components.form.datepicker', [
-            'group' => 'booking',
-            'label' => __('Arrival Date'),
-            'name' => 'arrival_date',
-            'required' => true,
-            'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
-            'maxDaysLimitFromNow' => 4000,
-        ])
-        
-        <!-- departure_date -->
-        @include('components.form.datepicker', [
-            'group' => 'booking',
-            'label' => __('Departure Date'),
-            'name' => 'departure_date',
-            'required' => true,
-            'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
-            'maxDaysLimitFromNow' => 4000,
-        ])
 
-        <!-- total stay -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Total Stay'),
-            'name' => 'nights',
-            'value' => $row->nights ? $row->nights : $propertyRate['totalDays'],
-            'disabled' => true,
-        ])
-
-        <!-- price_per_night -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Price per night'),
-            'name' => 'price_per_night',
-            'value' => $row->price_per_night ? $row->price_per_night : $propertyRate['nightlyAppliedRate'],
-        ])
-
-        <!-- subtotal nights -->
-        @include('components.form.input', [
-            'group' => 'booking',
-            'label' => __('Subtotal Nights'),
-            'name' => 'subtotal_nights',
-            'value' => $row->total ? $row->total : $propertyRate['total'],
-        ])
-
-        @if(!isRole('owner'))
-            <!-- damage_deposit_id -->
-            @include('components.form.select', [
-                'group' => 'booking',
-                'label' => __('Damage Deposit'),
-                'name' => 'damage_deposit_id',
-                'value' => $row->damage_deposit_id,
-                'options' => $damageDeposits,
-                'optionValueRef' => 'damage_deposit_id',
-                'optionLabelRef' => 'description',
-            ])
-        @endif
-
-        <?php /*
-        @if($row->subtotal_damage_deposit)
-            <!-- damage_deposit -->
+            <!-- price_per_night -->
             @include('components.form.input', [
                 'group' => 'booking',
-                'label' => __('Damage Deposit'),
-                'name' => '_damage_deposit',
-                'value' => $row->subtotal_damage_deposit,
-                'disabled' => true,
+                'label' => __('Price per night'),
+                'name' => 'price_per_night',
+                'value' => $row->price_per_night ? $row->price_per_night : $propertyRate['nightlyAppliedRate'],
             ])
-        @endif
-        */ ?>
 
-        @if($row->total)
-            <!-- total -->
+            <!-- subtotal nights -->
             @include('components.form.input', [
                 'group' => 'booking',
-                'label' => __('Total'),
-                'name' => 'total',
-                'value' => $row->total + $row->subtotal_damage_deposit,
-                'disabled' => true,
+                'label' => __('Subtotal Nights'),
+                'name' => 'subtotal_nights',
+                'value' => $row->total ? $row->total : $propertyRate['total'],
             ])
-        @endif
 
-        
-        <!-- calculate rates again -->
-        @include('components.form.checkbox', [
-            'group' => 'booking',
-            'label' => __('Utilize rate prices'),
-            'name' => '_booking_recalculate_rate_prices',
-            'value' => 1,
-        ])
+            @if(!isRole('owner'))
+                <!-- damage_deposit_id -->
+                @include('components.form.select', [
+                    'group' => 'booking',
+                    'label' => __('Damage Deposit'),
+                    'name' => 'damage_deposit_id',
+                    'value' => $row->damage_deposit_id,
+                    'options' => $damageDeposits,
+                    'optionValueRef' => 'damage_deposit_id',
+                    'optionLabelRef' => 'description',
+                ])
+            @endif
+
+            <?php /*
+            @if($row->subtotal_damage_deposit)
+                <!-- damage_deposit -->
+                @include('components.form.input', [
+                    'group' => 'booking',
+                    'label' => __('Damage Deposit'),
+                    'name' => '_damage_deposit',
+                    'value' => $row->subtotal_damage_deposit,
+                    'disabled' => true,
+                ])
+            @endif
+            */ ?>
+
+            @if($row->total)
+                <!-- total -->
+                @include('components.form.input', [
+                    'group' => 'booking',
+                    'label' => __('Total'),
+                    'name' => 'total',
+                    'value' => $row->total + $row->subtotal_damage_deposit,
+                    'disabled' => true,
+                ])
+            @endif
+
+            
+            <!-- calculate rates again -->
+            @include('components.form.checkbox', [
+                'group' => 'booking',
+                'label' => __('Utilize rate prices'),
+                'name' => '_booking_recalculate_rate_prices',
+                'value' => 1,
+            ])
+        </div>
     </div>
-</div>
+
 
 <!-- separator -->
 <div class="mb-4"></div>
@@ -354,7 +356,7 @@
 
 <!-- separator -->
 <div class="mb-4"></div>
-
+@endif
 <div class="card">
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('BOOKING') }}</span>
@@ -440,6 +442,7 @@
 <!-- separator -->
 <div class="mb-4"></div>
 
+@if($row->register_by !== 'Client' && $row->register_by !== 'Cliente')
 <div class="card">
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('EMAIL NOTIFICATIONS') }}</span>
@@ -510,6 +513,6 @@
 
     </div>
 </div>
-
+@endif
 <!-- separator -->
 <div class="mb-4"></div>

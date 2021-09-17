@@ -29,7 +29,9 @@
                 <th scope="col">{{ __('Check-in') }}</th>
                 <th scope="col">{{ __('Flight') }}</th>
                 <th scope="col">{{ __('Booked') }}</th>
-                <th scope="col">{{ __('Notes') }}</th>
+                @if(!isRole('owner'))
+                    <th scope="col">{{ __('Notes') }}</th>
+                @endif
             </tr>
 
         </thead>
@@ -104,10 +106,12 @@
                             {{ $owner }}
                         </td>
 
-                        <!-- comments -->
-                        <td>
-                            {!! $arrival->comments !!}
-                        </td>
+                        @if(!isRole('owner'))
+                            <!-- comments -->
+                            <td>
+                                {!! $arrival->comments !!}
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             @endif
@@ -131,7 +135,9 @@
                 <th scope="col">{{ __('Check-out') }}</th>
                 <th scope="col">{{ __('Flight') }}</th>
                 <th scope="col">{{ __('Booked') }}</th>
-                <th scope="col">{{ __('Notes') }}</th>
+                @if(!isRole('owner'))
+                    <th scope="col">{{ __('Notes') }}</th>
+                @endif
             </tr>
 
         </thead>
@@ -204,10 +210,12 @@
                             {{ $owner }}
                         </td>
 
-                        <!-- comments -->
-                        <td>
-                            {!! $departure->comments !!}
-                        </td>
+                        @if(!isRole('owner'))
+                            <!-- comments -->
+                            <td>
+                                {!! $departure->comments !!}
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             @endif
