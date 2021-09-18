@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
-use App\Models\{ Agency, AgencyTranslation };
+use App\Models\{Agency, AgencyTranslation};
 use App\Repositories\AgenciesRepositoryInterface;
 use App\Validations\AgenciesValidations;
 use App\Helpers\ImagesHelper;
@@ -28,9 +28,9 @@ class AgenciesRepository implements AgenciesRepositoryInterface
         $lang = LanguageHelper::current();
 
         if ($search) {
-            $query = 
-                AgencyTranslation::where('title', 'like', "%".$search."%")
-                    ->orWhere('agency_id', $search);
+            $query =
+                AgencyTranslation::where('title', 'like', "%" . $search . "%")
+                ->orWhere('agency_id', $search);
         } else {
             $query = AgencyTranslation::query();
         }
@@ -40,12 +40,12 @@ class AgenciesRepository implements AgenciesRepositoryInterface
             ->with('agency')
             ->orderBy('id', 'asc');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -65,29 +65,29 @@ class AgenciesRepository implements AgenciesRepositoryInterface
     {
         $folder = 'agencies';
         $hasUploadedFile = $request->hasFile('photo');
-        $is_new = ! $id;
+        $is_new = !$id;
 
         if ($is_new) {
             $agency = $this->blueprint();
-            if($hasUploadedFile){
+            if ($hasUploadedFile) {
                 $imgData = ImagesHelper::saveFile($request->photo, $folder);
                 $agency->file_slug = $imgData['file_slug'];
                 $agency->file_extension = $imgData['file_extension'];
                 $agency->file_original_name = $imgData['file_original_name'];
                 $agency->file_name = $imgData['file_name'];
                 $agency->file_path = $imgData['file_path'];
-                $agency->file_url = $imgData['file_url']; 
+                $agency->file_url = $imgData['file_url'];
             }
             $agency->save();
-            
+
             $agency->en->language_id = LanguageHelper::getId('en');
             $agency->en->agency_id = $agency->id;
-            
+
             $agency->es->language_id = LanguageHelper::getId('es');
             $agency->es->agency_id = $agency->id;
-        }else{
+        } else {
             $agency = $this->find($id);
-            if($hasUploadedFile){
+            if ($hasUploadedFile) {
                 ImagesHelper::deleteFile($agency->file_path);
                 ImagesHelper::deleteThumbnails($agency->file_path);
 
@@ -97,17 +97,17 @@ class AgenciesRepository implements AgenciesRepositoryInterface
                 $agency->file_original_name = $imgData['file_original_name'];
                 $agency->file_name = $imgData['file_name'];
                 $agency->file_path = $imgData['file_path'];
-                $agency->file_url = $imgData['file_url']; 
+                $agency->file_url = $imgData['file_url'];
             }
             $agency->save();
         }
 
         $agency->en->fill($request->en);
         $agency->en->save();
-        
+
         $agency->es->fill($request->es);
         $agency->es->save();
-        
+
         return $agency;
     }
 
@@ -115,34 +115,33 @@ class AgenciesRepository implements AgenciesRepositoryInterface
     {
         $is_obj = is_object($id_or_obj);
         $agency = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
-        
-        if ($agency) { 
 
-            $agency->en = 
+        if ($agency) {
+
+            $agency->en =
                 $agency
-                    ->translations()
-                    ->where('language_id', LanguageHelper::getId('en'))
-                    ->first();
-    
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('en'))
+                ->first();
+
             $agency->es =
-                 $agency
-                    ->translations()
-                    ->where('language_id', LanguageHelper::getId('es'))
-                    ->first();
-                          
+                $agency
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('es'))
+                ->first();
         }
 
-        if (!$agency) { 
+        if (!$agency) {
             throw new ModelNotFoundException("Page not found");
         }
 
         return $agency;
     }
-    
+
     public function delete($id)
     {
         $agency = $this->model->find($id);
-        
+
         if ($agency) {
 
             $agency->translations()->where('language_id', LanguageHelper::getId('en'))->delete();
@@ -151,7 +150,7 @@ class AgenciesRepository implements AgenciesRepositoryInterface
             $agency->delete();
         }
 
-        return $agency; 
+        return $agency;
     }
 
     public function canDelete($id)

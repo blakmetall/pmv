@@ -819,7 +819,7 @@ if (!function_exists('generateColumns')) {
             if ($count % $number == 1) {
                 $html .= "<div class='col-xs-3' style='width: 25%'><ul class='list'>";
             }
-            $html .= "<li>" . $item->getLabel() . "</li>";
+            $html .= "<li>" . $item->name . "</li>";
             if ($count % $number == 0) {
                 $html .= "</div></ul>";
             }

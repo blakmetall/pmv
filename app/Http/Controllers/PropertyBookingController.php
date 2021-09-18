@@ -73,9 +73,15 @@ class PropertyBookingController extends Controller
         $locations = $this->citiesRepository->all('');
         $searchedRegister = isset($request->register_by) ? $request->register_by : '';
 
+        if (isRole('owner')) {
+            $isOwner = \Auth::id();
+        } else {
+            $isOwner = false;
+        }
+
         $properties = $this->propertiesRepository->all('', [
             'filterByEnabled' => true,
-            'filterByUserId' => \Auth::id(),
+            'filterByUserId' => $isOwner,
         ]);
 
         $registers = [];
@@ -193,6 +199,7 @@ class PropertyBookingController extends Controller
                 }
             }
         });
+        $query->where('is_cancelled', 0);
 
         $result = $query->get();
 
@@ -216,6 +223,8 @@ class PropertyBookingController extends Controller
                 }
             }
         });
+
+        $query->where('is_cancelled', 0);
 
         $result = $query->get();
 

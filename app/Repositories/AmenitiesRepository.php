@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Helpers\LanguageHelper;
-use App\Models\{ Amenity, AmenityTranslation };
+use App\Models\{Amenity, AmenityTranslation};
 use App\Repositories\AmenitiesRepositoryInterface;
 use App\Validations\AmenitiesValidations;
 
@@ -23,28 +23,38 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $hasPropertyID = isset($config['property_id']) ? $config['property_id'] : false;
 
         $lang = LanguageHelper::current();
 
         if ($search) {
-            $query = 
-                AmenityTranslation::where('name', 'like', "%".$search."%")
-                    ->orWhere('amenity_id', $search);
+            $query =
+                AmenityTranslation::where('name', 'like', "%" . $search . "%")
+                ->orWhere('amenity_id', $search);
         } else {
             $query = AmenityTranslation::query();
         }
 
         $query
             ->where('language_id', $lang->id)
-            ->with('amenity')
-            ->orderBy('name', 'asc');
+            ->with('amenity');
 
-        if($shouldPaginate) {
-            $result = $query->paginate( config('constants.pagination.per-page') );
-        }else{
+        if ($hasPropertyID) {
+            $query->whereHas('amenity', function ($q) use ($hasPropertyID) {
+                $q->whereHas('properties', function ($q) use ($hasPropertyID) {
+                    $q->where('properties_has_amenities.property_id', $hasPropertyID);
+                });
+            });
+        }
+
+        $query->orderBy('name', 'asc');
+
+        if ($shouldPaginate) {
+            $result = $query->paginate(config('constants.pagination.per-page'));
+        } else {
             $result = $query->get();
         }
-        
+
         return $result;
     }
 
@@ -62,27 +72,27 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
 
     public function save(Request $request, $id = '')
     {
-        $is_new = ! $id;
+        $is_new = !$id;
 
         if ($is_new) {
             $amenity = $this->blueprint();
             $amenity->save();
-            
+
             $amenity->en->language_id = LanguageHelper::getId('en');
             $amenity->en->amenity_id = $amenity->id;
-            
+
             $amenity->es->language_id = LanguageHelper::getId('es');
             $amenity->es->amenity_id = $amenity->id;
-        }else{
+        } else {
             $amenity = $this->find($id);
         }
 
         $amenity->en->fill($request->en);
         $amenity->en->save();
-        
+
         $amenity->es->fill($request->es);
         $amenity->es->save();
-        
+
         return $amenity;
     }
 
@@ -90,34 +100,33 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
     {
         $is_obj = is_object($id_or_obj);
         $amenity = ($is_obj) ? $id_or_obj : $this->model->find($id_or_obj);
-        
-        if ($amenity) { 
 
-            $amenity->en = 
+        if ($amenity) {
+
+            $amenity->en =
                 $amenity
-                    ->translations()
-                    ->where('language_id', LanguageHelper::getId('en'))
-                    ->first();
-    
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('en'))
+                ->first();
+
             $amenity->es =
-                 $amenity
-                    ->translations()
-                    ->where('language_id', LanguageHelper::getId('es'))
-                    ->first();
-                          
+                $amenity
+                ->translations()
+                ->where('language_id', LanguageHelper::getId('es'))
+                ->first();
         }
 
-        if (!$amenity) { 
+        if (!$amenity) {
             throw new ModelNotFoundException("Amenity not found");
         }
 
         return $amenity;
     }
-    
+
     public function delete($id)
     {
         $amenity = $this->model->find($id);
-        
+
         if ($amenity && $this->canDelete($id)) {
             $amenity->properties()->sync([]);
 
@@ -127,7 +136,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
             $amenity->delete();
         }
 
-        return $amenity; 
+        return $amenity;
     }
 
     public function canDelete($id)

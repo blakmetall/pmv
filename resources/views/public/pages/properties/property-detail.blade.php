@@ -305,7 +305,7 @@
         <div id="property-features-info">
             <h2 class="section-title">{{ __('Services') }}</h2>
             <div class="row" style="display: block">
-                {!! generateColumns($property->property->amenities, 8) !!}
+                {!! generateColumns($amenities, 8) !!}
             </div>
         </div>
         <div id="property-rates-info">

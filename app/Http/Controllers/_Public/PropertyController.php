@@ -9,6 +9,7 @@ use App\Helpers\RatesHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Repositories\AmenitiesRepositoryInterface;
 use App\Models\PropertyBooking;
 use App\Models\DamageDeposit;
 use App\Models\PropertyTranslation;
@@ -30,6 +31,7 @@ class PropertyController extends Controller
     private $propertiyBookingsRepository;
     private $propertyImagesRepositoryInterface;
     private $zonesRepository;
+    private $amenitiesRepository;
     private $damagesDepositsRepository;
 
     public function __construct(
@@ -37,12 +39,14 @@ class PropertyController extends Controller
         PropertyImagesRepositoryInterface $propertyImagesRepositoryInterface,
         PropertyBookingsRepositoryInterface $propertiyBookingsRepository,
         ZonesRepositoryInterface $zonesRepository,
+        AmenitiesRepositoryInterface $amenitiesRepository,
         DamageDepositsRepositoryInterface $damagesDepositsRepository
     ) {
         $this->propertiesRepository = $propertiesRepository;
         $this->propertyImagesRepositoryInterface = $propertyImagesRepositoryInterface;
         $this->propertiyBookingsRepository = $propertiyBookingsRepository;
         $this->zonesRepository = $zonesRepository;
+        $this->amenitiesRepository = $amenitiesRepository;
         $this->damagesDepositsRepository = $damagesDepositsRepository;
     }
 
@@ -207,13 +211,14 @@ class PropertyController extends Controller
             return redirect()->route('public.availability-results', [App::getLocale()]);
         }
 
-        // $amenities = $this->amenitiesRepository->all('', $config);
+        $amenities = $this->amenitiesRepository->all('', $config);
 
         return view('public.pages.properties.property-detail')
             ->with('property', $property)
             ->with('images', $images)
             ->with('arrivalDeparture', $arrivalDeparture)
             ->with('paxExceeded', $paxExceeded)
+            ->with('amenities', $amenities)
             ->with('prw', $prw);
     }
 

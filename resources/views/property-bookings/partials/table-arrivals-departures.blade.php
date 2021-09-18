@@ -16,21 +16,22 @@
     <table class="table table-striped mb-5">
         <thead>
             <tr>
-                <th colspan="8" class="title-th">
+                <th colspan="12" class="title-th">
                     {{ $label_arrivals . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $currentLocation->name }}
                 </th>
             </tr>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">{{ __('Guest') }}</th>
-                <th scope="col">{{ __('Property') }}</th>
-                <th scope="col">{{ __('Arrival') }}</th>
-                <th scope="col">{{ __('Check-in') }}</th>
-                <th scope="col">{{ __('Flight') }}</th>
-                <th scope="col">{{ __('Booked') }}</th>
+                <th scope="col" colspan="1">#</th>
+                <th scope="col" colspan="1">ID</th>
+                <th scope="col" colspan="1">{{ __('Guest') }}</th>
+                <th scope="col" colspan="1">{{ __('Property') }}</th>
+                <th scope="col" colspan="1">{{ __('Arrival') }}</th>
+                <th scope="col" colspan="1">{{ __('Check-in') }}</th>
+                <th scope="col" colspan="1">{{ __('Flight') }}</th>
+                <th scope="col" colspan="1">{{ __('Booked') }}</th>
+                <th scope="col" colspan="1">{{ __('Register By') }}</th>
                 @if(!isRole('owner'))
-                    <th scope="col">{{ __('Notes') }}</th>
+                    <th scope="col" colspan="1">{{ __('Notes') }}</th>
                 @endif
             </tr>
 
@@ -86,8 +87,8 @@
 
                         <!-- arrival -->
                         <td>
-                            <strong>{{ $arrival->arrival_date }}</strong> -
-                            {{ $arrival->departure_date }}<br />
+                            <strong>{{ getReadableDate($arrival->arrival_date) }}</strong> -
+                            {{ getReadableDate($arrival->departure_date) }}<br />
                             {{ $arrival->nights }} {{ __('Nights') }}
                         </td>
 
@@ -106,6 +107,11 @@
                             {{ $owner }}
                         </td>
 
+                        <!-- register_by -->
+                        <td>
+                            {{ $arrival->register_by }}
+                        </td>
+
                         @if(!isRole('owner'))
                             <!-- comments -->
                             <td>
@@ -122,21 +128,22 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th colspan="8" class="title-th">
+                <th colspan="12" class="title-th">
                     {{ $label_departures . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $currentLocation->name }}
                 </th>
             </tr>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">{{ __('Guest') }}</th>
-                <th scope="col">{{ __('Property') }}</th>
-                <th scope="col">{{ __('Departure') }}</th>
-                <th scope="col">{{ __('Check-out') }}</th>
-                <th scope="col">{{ __('Flight') }}</th>
-                <th scope="col">{{ __('Booked') }}</th>
+                <th scope="col" colspan="1">#</th>
+                <th scope="col" colspan="1">ID</th>
+                <th scope="col" colspan="1">{{ __('Guest') }}</th>
+                <th scope="col" colspan="1">{{ __('Property') }}</th>
+                <th scope="col" colspan="1">{{ __('Departure Arrival') }}</th>
+                <th scope="col" colspan="1">{{ __('Check-out') }}</th>
+                <th scope="col" colspan="1">{{ __('Flight') }}</th>
+                <th scope="col" colspan="1">{{ __('Booked') }}</th>
+                <th scope="col" colspan="1">{{ __('Register By') }}</th>
                 @if(!isRole('owner'))
-                    <th scope="col">{{ __('Notes') }}</th>
+                    <th scope="col" colspan="1">{{ __('Notes') }}</th>
                 @endif
             </tr>
 
@@ -189,8 +196,8 @@
                         <!-- departure -->
                         <td>
 
-                            {{ $departure->arrival_date }} -
-                            <strong>{{ $departure->departure_date }}</strong>
+                            {{ getReadableDate($departure->arrival_date) }} -
+                            <strong>{{ getReadableDate($departure->departure_date) }}</strong>
                             <br />
                             {{ $departure->nights }} {{ __('Nights') }}
                         </td>
@@ -208,6 +215,11 @@
                         <td>
                             {{ $booked }}<br />
                             {{ $owner }}
+                        </td>
+
+                        <!-- register_by -->
+                        <td>
+                            {{ $arrival->register_by }}
                         </td>
 
                         @if(!isRole('owner'))
