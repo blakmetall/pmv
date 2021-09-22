@@ -36,7 +36,7 @@ class PropertyContactsController extends Controller
 
     public function create(Property $property)
     {
-        $config = ['activeOnly' => true];
+        $config = ['activeOnly' => true, 'paginate' => false];
         $contacts = $this->contactsRepository->all('', $config);
 
         return view('property-contacts.create')

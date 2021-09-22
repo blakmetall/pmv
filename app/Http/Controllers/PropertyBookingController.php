@@ -57,6 +57,7 @@ class PropertyBookingController extends Controller
                 'reservation_id' => $request->reservation_id,
                 'orderByArrival' => false,
                 'orderByDeparture' => false,
+                'propertyID' => $request->property_id
             ];
         } else {
             $config = [

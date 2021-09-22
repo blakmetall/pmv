@@ -10,7 +10,7 @@
             'hidden' => 'true',
             'value' => $row->id
         ])
-
+        
         <!-- contacts_id -->
         @include('components.form.fast-select', [
             'group' => 'property-contact',
