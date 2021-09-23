@@ -155,14 +155,11 @@ class PropertyController extends Controller
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
 
-        SEOMeta::setTitle($property->name . ' - ' . 'Palmera Vacations');
-        SEOMeta::setDescription(getSubstring(removeP($property->description), 120));
-        SEOMeta::setCanonical(url()->full());
-
         SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
         SEOTools::opengraph()->setUrl(url()->full());
-        SEOTools::opengraph()->addImage(asset(getFeaturedImage($property->property_id)), ['height' => 300, 'width' => 300]);
+        SEOTools::setCanonical(url()->full());
+        SEOTools::opengraph()->addImage(asset(getFeaturedImage($property->property_id)));
         SEOTools::opengraph()->addProperty('type', 'properties');
 
         $propertyRate =
