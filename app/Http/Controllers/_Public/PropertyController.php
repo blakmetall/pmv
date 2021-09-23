@@ -214,9 +214,21 @@ class PropertyController extends Controller
 
         // if dates for booking not saved in cookies redirect to search results
         // ESTO GENERABA ERROR EN EL REDIRECT
-        // if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
-        //     return redirect()->route('public.availability-results', [App::getLocale()]);
-        // }
+        $datesProperty = [];
+        if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+            $currentDateArrival = date('Y-m-d');
+            $currentDateArrivalText = date('D d/M/Y');
+            $currentDateDeparture = date('Y-m-d', strtotime($currentDateArrival . " + 7 day"));
+            $currentDateDepartureText = date('D d/M/Y', strtotime($currentDateArrival . " + 7 day"));
+            $datesProperty[0] = $currentDateArrival;
+            $datesProperty[1] = $currentDateArrivalText;
+            $datesProperty[2] = $currentDateDeparture;
+            $datesProperty[3] = $currentDateDepartureText;
+            $datesProperty[4] = 1;
+            // return redirect()->route('public.availability-results', [App::getLocale()]);
+        } else {
+            $datesProperty = explode(',', $_COOKIE['datesProperty']);
+        }
 
         $amenities = $this->amenitiesRepository->all('', $config);
 
@@ -226,6 +238,7 @@ class PropertyController extends Controller
             ->with('arrivalDeparture', $arrivalDeparture)
             ->with('paxExceeded', $paxExceeded)
             ->with('amenities', $amenities)
+            ->with('datesProperty', $datesProperty)
             ->with('prw', $prw);
     }
 
