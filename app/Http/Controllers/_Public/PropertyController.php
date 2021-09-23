@@ -154,13 +154,23 @@ class PropertyController extends Controller
     {
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
+        if (\App::getLocale() == 'en') {
+            $locale = 'en_US';
+            $alternate = 'es_ES';
+        } else {
+            $locale = 'es_ES';
+            $alternate = 'en_US';
+        }
+        $image = asset(getFeaturedImage($property->property_id, 'large'));
 
         SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
         SEOTools::opengraph()->setUrl(url()->full());
         SEOTools::setCanonical(url()->full());
-        SEOTools::opengraph()->addImage(asset(getFeaturedImage($property->property_id)));
+        SEOTools::opengraph()->addImage($image, ['height' => 500, 'width' => 500]);
         SEOTools::opengraph()->addProperty('type', 'properties');
+        SEOTools::opengraph()->addProperty('locale', $locale);
+        SEOTools::opengraph()->addProperty('locale:alternate', [$alternate]);
 
         $propertyRate =
             RatesHelper::getPropertyRate($property->property, $property->rates, $request->arrival_alt_sing, $request->departure_alt_sing);
