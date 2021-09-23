@@ -157,10 +157,11 @@ class PropertyController extends Controller
 
         SEOMeta::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOMeta::setDescription(getSubstring(removeP($property->description), 120));
+        SEOMeta::setCanonical(url()->full());
 
         SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
-        SEOTools::opengraph()->setUrl(url('/'));
+        SEOTools::opengraph()->setUrl(url()->full());
         SEOTools::opengraph()->addImage(asset(getFeaturedImage($property->property_id)), ['height' => 300, 'width' => 300]);
         SEOTools::opengraph()->addProperty('type', 'properties');
 
