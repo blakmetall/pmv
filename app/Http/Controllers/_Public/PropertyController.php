@@ -168,7 +168,7 @@ class PropertyController extends Controller
         SEOTools::opengraph()->setUrl(url()->full());
         SEOTools::setCanonical(url()->full());
         SEOTools::opengraph()->addImage($image, ['height' => 500, 'width' => 500]);
-        SEOTools::opengraph()->addProperty('type', 'properties');
+        SEOTools::opengraph()->addProperty('type', 'website');
         SEOTools::opengraph()->addProperty('locale', $locale);
         SEOTools::opengraph()->addProperty('locale:alternate', [$alternate]);
 
