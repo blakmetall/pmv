@@ -160,8 +160,8 @@ class PropertyController extends Controller
 
         SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
-        SEOTools::opengraph()->setUrl(url()->full());
-        SEOTools::opengraph()->addImage(getFeaturedImage($property->property_id));
+        SEOTools::opengraph()->setUrl(url('/'));
+        SEOTools::opengraph()->addImage(asset(getFeaturedImage($property->property_id)), ['height' => 300, 'width' => 300]);
         SEOTools::opengraph()->addProperty('type', 'properties');
 
         $propertyRate =
