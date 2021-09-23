@@ -12,7 +12,9 @@
 
     @php
     $title = $property->name;
-    $datesProperty = explode(',', $_COOKIE['datesProperty']);
+    if(!isset($_COOKIE['datesProperty'])){
+        $datesProperty = explode(',', $_COOKIE['datesProperty']);
+    }
     if (isset($_GET['arrival_alt_sing']) && isset($_GET['departure_alt_sing'])) {
         $arrival = $_GET['arrival_alt_sing'];
         $arrivalTxt = $_GET['arrival_sing'];

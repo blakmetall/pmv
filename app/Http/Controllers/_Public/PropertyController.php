@@ -169,8 +169,6 @@ class PropertyController extends Controller
         SEOTools::setCanonical(url()->full());
         SEOTools::opengraph()->addImage($image, ['height' => 500, 'width' => 500]);
         SEOTools::opengraph()->addProperty('type', 'website');
-        SEOTools::opengraph()->addProperty('locale', $locale);
-        SEOTools::opengraph()->addProperty('locale:alternate', [$alternate]);
 
         $propertyRate =
             RatesHelper::getPropertyRate($property->property, $property->rates, $request->arrival_alt_sing, $request->departure_alt_sing);
