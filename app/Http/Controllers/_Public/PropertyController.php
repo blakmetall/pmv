@@ -215,9 +215,10 @@ class PropertyController extends Controller
         $images = $this->propertyImagesRepositoryInterface->all($config);
 
         // if dates for booking not saved in cookies redirect to search results
-        if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
-            return redirect()->route('public.availability-results', [App::getLocale()]);
-        }
+        // ESTO GENERABA ERROR EN EL REDIRECT
+        // if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+        //     return redirect()->route('public.availability-results', [App::getLocale()]);
+        // }
 
         $amenities = $this->amenitiesRepository->all('', $config);
 
