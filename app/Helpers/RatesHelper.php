@@ -208,6 +208,10 @@ class RatesHelper
                             if ($rateApplied) {
                                 $nightlyDayTotal = $rate->nightly * $nights;
 
+                                if (count($rates) > 1 && $to_date->format('Y-m-d') > $finalCompareDate->format('Y-m-d')) {
+                                    $nights += 1;
+                                }
+
                                 $data['ratesPrices'][$rate->id]['nights'] = $nights;
                                 $data['ratesPrices'][$rate->id]['nightsRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
                                 $data['ratesPrices'][$rate->id]['nightsRequestDate'] = $requestDate->format('Y-m-d');
@@ -220,7 +224,7 @@ class RatesHelper
                             $requestDate->addDays($nights);
                         }
                     }
-                    $requestDate->addDays(1);
+                    // $requestDate->addDays(1);
                 }
             }
         }
@@ -237,9 +241,9 @@ class RatesHelper
             if ($ratePrice['weeksRequestDate'] >= $to_date->format('Y-m-d')) {
                 unset($data['ratesPrices'][$index]);
             }
-            // if ($ratePrice['nightsRequestDate'] >= $to_date->format('Y-m-d')) {
-            //     unset($data['ratesPrices'][$index]);
-            // }
+            if ($ratePrice['nightsRequestDate'] >= $to_date->format('Y-m-d')) {
+                unset($data['ratesPrices'][$index]);
+            }
         }
 
         foreach ($data['ratesPrices'] as $ratePrice) {
