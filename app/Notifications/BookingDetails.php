@@ -91,8 +91,6 @@ class BookingDetails extends Notification
                 $mailMsg->line(new HtmlString('Hello ' . $guestName));
             }
 
-            $mailMsg->line(new HtmlString('<br>'));
-
             if ($this->isTeam) {
                 $mailMsg->line(new HtmlString('This is a copy of the booking'));
             } else {
@@ -102,8 +100,6 @@ class BookingDetails extends Notification
             $createdAt = explode(' ', $this->booking->created_at);
 
             // booking status
-            $mailMsg->line(new HtmlString('<br>'));
-
             if ($this->isDeleted) {
                 $mailMsg->line(new HtmlString('RESERVATION DELETED'));
             } else if ($this->booking->is_cancelled) {
@@ -116,7 +112,6 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('STATUS: ' . getBookingStatus($this->booking, 'en')));
 
             // travel details
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('TRAVEL DETAILS'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -126,7 +121,6 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('RATE: Avg. Night ' . priceFormat($this->booking->price_per_night) . ' USD | Total stay ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
 
             // property details
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('PROPERTY DETAILS'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -135,7 +129,6 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('ADDRESS: ' . $address));
 
             // flight information
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('FLIGHT INFORMATION'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -168,7 +161,6 @@ class BookingDetails extends Notification
             }
 
             // security deposit info
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('SECURITY DEPOSIT / ACCIDENTAL DAMAGE INSURANCE'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -180,7 +172,6 @@ class BookingDetails extends Notification
             }
 
             // payments section
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('PAYMENTS'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -204,32 +195,25 @@ class BookingDetails extends Notification
 
             // if not for the pmv team send extra instructions
             if (!$this->isTeam) {
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
                 $mailMsg->line(new HtmlString('Thank you for your reservation, we will verify availability and confirm to'));
                 $mailMsg->line(new HtmlString('you within 1 business day, after the reservation has been confirmed we'));
                 $mailMsg->line(new HtmlString('require payment to guarantee the reservation.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Initial Deposit: The initial deposit is due within 5 business days from the'));
                 $mailMsg->line(new HtmlString('date of the booking accordingly to the following conditions.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('   * 50% deposit is due at time of booking if your reservation arrival date'));
                 $mailMsg->line(new HtmlString('     is more than 30 days from the booking date.'));
                 $mailMsg->line(new HtmlString('   * 100% payment is due at time of booking if your reservation arrival'));
                 $mailMsg->line(new HtmlString('     date is within 30 days from the booking date.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Final Payment'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('   * Final payment is due 30 days before the arrival of your reservation'));
                 $mailMsg->line(new HtmlString('     arrival date is between January 4th. and November 19th.'));
                 $mailMsg->line(new HtmlString('   * Final payment is due 60 days before the arrival of your reservation'));
                 $mailMsg->line(new HtmlString('     arrival date is between November 20th. and January 3rd.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Some properties have their own reservation and/or cancellation policies and'));
                 $mailMsg->line(new HtmlString('this information is included in the "Property Policy" section of the reservation document.'));
                 $mailMsg->line(new HtmlString('Whenever this is the case the policies stated in the "Property Policy" will take precedent over'));
                 $mailMsg->line(new HtmlString('the above policy.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('This reservation document is hereby confirmed as a RESERVATION REQUEST ONLY and '));
                 $mailMsg->line(new HtmlString('the reservation is not guaranteed or secured until payment has been received.'));
                 $mailMsg->line(new HtmlString('You may review the Rental Agreement at any time at the following address <a href="https://www.palmeravacations.mx/en/rental-agreement" target="_blank">https://palmeravacations.mx/en/rental-agreement.</a>'));
@@ -238,18 +222,14 @@ class BookingDetails extends Notification
             // if not for the pmv team, send addresses information
             if (!$this->isTeam) {
                 // pv address
-                $mailMsg->line(new HtmlString('<br>'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
                 $mailMsg->line(new HtmlString('Palmera Vacations'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Puerto Vallarta'));
                 $mailMsg->line(new HtmlString('<a href="mailto:vallarta@palmeravacations.com">vallarta@palmeravacations.com</a>'));
                 $mailMsg->line(new HtmlString('Tel: +52 (322) 223-0101'));
                 $mailMsg->line(new HtmlString('US/Canada: (323) 250-7721'));
                 $mailMsg->line(new HtmlString('Libertad 349, Centro'));
                 $mailMsg->line(new HtmlString('Puerto Vallarta, Jalisco, México 48380'));
-                $mailMsg->line(new HtmlString('<br>'));
 
                 // mz address
                 $mailMsg->line(new HtmlString('Mazatlan'));
@@ -262,9 +242,6 @@ class BookingDetails extends Notification
             // end of message block
             $date = getReadableDate(date('Y-m-d', strtotime('now')));
             $time = date('H:i:s', strtotime('now'));
-
-            $mailMsg->line(new HtmlString('<br>'));
-            $mailMsg->line(new HtmlString('<br>'));
 
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('Date: ' . $date . ' ' . $time . ' - End of message.'));
@@ -279,8 +256,6 @@ class BookingDetails extends Notification
                 $guestName = $this->booking->firstname . ' ' . $this->booking->lastname;
                 $mailMsg->line(new HtmlString('Hola ' . $guestName));
             }
-
-            $mailMsg->line(new HtmlString('<br>'));
 
             if ($this->isTeam) {
                 $mailMsg->line(new HtmlString('Esta es una copia de la reservación'));
@@ -305,7 +280,6 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('ESTATUS: ' . getBookingStatus($this->booking, 'es')));
 
             // travel details
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('DETALLES DEL VIAJE'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -315,7 +289,6 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('TARIFA: Prom. noche ' . priceFormat($this->booking->price_per_night) . ' USD | Total estancia ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
 
             // property details
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('DETALLES DE LA PROPIEDAD'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -324,7 +297,6 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('DIRECCIÓN: ' . $address));
 
             // flight information
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('INFORMACIÓN DEL VUELO'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -338,7 +310,6 @@ class BookingDetails extends Notification
                 $mailMsg->line(new HtmlString('Entrada: ' . $this->booking->check_in));
                 $mailMsg->line(new HtmlString('Requiere transportación: ' . ($this->booking->arrival_transportation ? 'Yes' : 'No')));
                 $mailMsg->line(new HtmlString('Notas de llegada: ' . $this->booking->arrival_notes));
-                $mailMsg->line(new HtmlString('<br>'));
             } else {
                 $mailMsg->line(new HtmlString('Llegada: N/A'));
             }
@@ -357,7 +328,6 @@ class BookingDetails extends Notification
             }
 
             // security deposit info
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('DEPÓSITO DE SEGURIDAD / SEGURO DE DAÑOS ACCIDENTALES'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -369,7 +339,6 @@ class BookingDetails extends Notification
             }
 
             // payments section
-            $mailMsg->line(new HtmlString('<br>'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('PAGOS'));
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -392,34 +361,27 @@ class BookingDetails extends Notification
 
             // if not for the pmv team send extra instructions
             if (!$this->isTeam) {
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
                 $mailMsg->line(new HtmlString('Gracias por su reservación, verificaremos la disponibilidad y le'));
                 $mailMsg->line(new HtmlString('confirmaremos en un plazo de 1 día hábil, una vez que la reservación haya'));
                 $mailMsg->line(new HtmlString('sido confirmada, requerimos el pago para garantizarla.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Depósito inicial: El depósito inicial se debe realizar dentro de 5 días'));
                 $mailMsg->line(new HtmlString('hábiles a partir de la fecha de confirmación de la reservación según las'));
                 $mailMsg->line(new HtmlString('siguientes condiciones.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('   * 50% el depósito se debe al momento de reservar si la fecha de llegada'));
                 $mailMsg->line(new HtmlString('     de la reservación es en más de 30 días a partir de la fecha que se hizo la reservación'));
                 $mailMsg->line(new HtmlString('   * 100% el pago se debe realizar en el momento de reservar si la fecha de'));
                 $mailMsg->line(new HtmlString('     llegada de la reservación es dentro de los 30 días posteriores a la fecha que se hizo la reservación.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Pago final'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('   * El pago final se debe realizar 30 días antes de la llegada si la'));
                 $mailMsg->line(new HtmlString('     fecha de llegada de su reservación es entre el 4 de Enero y el 19 de Noviembre.'));
                 $mailMsg->line(new HtmlString('   * El pago final se debe 60 días antes de la llegada si la fecha de'));
                 $mailMsg->line(new HtmlString('     llegada de su reservación es entre el 20 de Noviembre y 3 de Enero.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Algunas propiedades tienen sus propias políticas de reservación y/o'));
                 $mailMsg->line(new HtmlString('cancelación y esta información se incluye en la sección "Política de'));
                 $mailMsg->line(new HtmlString('propiedad" del documento de confirmación. Siempre que éste sea el caso, las'));
                 $mailMsg->line(new HtmlString('políticas establecidas en la "Política de propiedad" tendrán prioridad'));
                 $mailMsg->line(new HtmlString('sobre la política anterior.'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Este documento de reservación se confirma como SOLICITUD DE RESERVACIÓN'));
                 $mailMsg->line(new HtmlString('SOLAMENTE y la reservación no está garantizada hasta que se haya recibido'));
                 $mailMsg->line(new HtmlString('el pago. Puede revisar el Contrato de Renta en cualquier momento en la'));
@@ -429,18 +391,14 @@ class BookingDetails extends Notification
             // if not for the pmv team, send addresses information
             if (!$this->isTeam) {
                 // pv address
-                $mailMsg->line(new HtmlString('<br>'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
                 $mailMsg->line(new HtmlString('Palmera Vacations'));
-                $mailMsg->line(new HtmlString('<br>'));
                 $mailMsg->line(new HtmlString('Puerto Vallarta'));
                 $mailMsg->line(new HtmlString('<a href="mailto:vallarta@palmeravacations.com">vallarta@palmeravacations.com</a>'));
                 $mailMsg->line(new HtmlString('Tel: +52 (322) 223-0101'));
                 $mailMsg->line(new HtmlString('US/Canada: (323) 250-7721'));
                 $mailMsg->line(new HtmlString('Libertad 349, Centro'));
                 $mailMsg->line(new HtmlString('Puerto Vallarta, Jalisco, México 48380'));
-                $mailMsg->line(new HtmlString('<br>'));
 
                 // mz address
                 $mailMsg->line(new HtmlString('Mazatlan'));
@@ -454,9 +412,6 @@ class BookingDetails extends Notification
             // end of message block
             $date = getReadableDate(date('Y-m-d', strtotime('now')));
             $time = date('H:i:s', strtotime('now'));
-
-            $mailMsg->line(new HtmlString('<br>'));
-            $mailMsg->line(new HtmlString('<br>'));
 
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
             $mailMsg->line(new HtmlString('Fecha: ' . $date . ' ' . $time . ' - Fin del mensaje.'));
