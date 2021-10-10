@@ -201,6 +201,7 @@ class PropertyBookingController extends Controller
             }
         });
         $query->where('is_cancelled', 0);
+        $query->orderBy('arrival_date');
 
         $result = $query->get();
 
@@ -226,6 +227,7 @@ class PropertyBookingController extends Controller
         });
 
         $query->where('is_cancelled', 0);
+        $query->orderBy('departure_date');
 
         $result = $query->get();
 

@@ -6,6 +6,16 @@
     $departure = isset($_GET['departure']) ? $_GET['departure'] : '';
     
     $propertyRate = \RatesHelper::getPropertyRate($property, $property->rates, $arrival, $departure);
+
+    if($row->is_confirmed){
+        $status = __('Confirmed');
+    }else if($row->is_cancelled){
+        $status = __('Cancelled');
+    }else if($row->is_finished){
+        $status = __('Finished');
+    }else{
+        $status = __('Booked');
+    }
 @endphp
 
 <!-- fields form -->
@@ -20,6 +30,24 @@
         'name' => 'property_id',
         'hidden' => 'true',
         'value' => $property->id
+        ])
+
+        <!-- confirmation_number -->
+        @include('components.form.input', [
+        'group' => 'booking',
+        'label' => __('Confirmation'),
+        'name' => 'confirmation_number',
+        'disabled' => true,
+        'value' => $row->id
+        ])
+
+        <!-- status -->
+        @include('components.form.input', [
+        'group' => 'booking',
+        'label' => __('Status'),
+        'name' => 'status',
+        'disabled' => true,
+        'value' => $status
         ])
 
         <!-- firstname -->
@@ -75,7 +103,7 @@
             ])
         @endif
 
-        @if (!isRole('owner'))
+        {{-- @if (!isRole('owner')) --}}
             <!-- country -->
             @include('components.form.input', [
             'group' => 'booking',
@@ -131,7 +159,7 @@
             'name' => 'mobile',
             'value' => $row->mobile
             ])
-        @endif
+        {{-- @endif --}}
 
     </div>
 </div>
@@ -159,6 +187,7 @@
             'required' => true,
             'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
             'maxDaysLimitFromNow' => 4000,
+            'disabled' => (isRole('owner')) ? true : false,
         ])
         
         <!-- departure_date -->
@@ -169,6 +198,7 @@
             'required' => true,
             'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
             'maxDaysLimitFromNow' => 4000,
+            'disabled' => (isRole('owner')) ? true : false,
         ])
 
         <!-- total stay -->

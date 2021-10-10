@@ -42,8 +42,13 @@
             @if (count($arrivals))
                 @foreach ($arrivals as $i => $arrival)
                     @php
+                        if(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant')){
+                            if($arrival->register_by !== 'Client' && $arrival->register_by !== 'Cliente'){
+                                continue;
+                            }
+                        }
                         $occupants = __('Occupants:') . ' ' . $arrival->adults . ' ' . __('Adults') . ' - ' . ceil($arrival->kids) . ' ' . __('Children');
-                        $managed = $arrival->property->management ? __('MANAGED') : '';
+                        $managed = !$arrival->property->management->isEmpty() ? __('MANAGED') : '';
                         $flight = $arrival->arrival_airline . ' ' . $arrival->arrival_flight_number;
                         $arrival_transportation = $arrival->arrival_transportation ? __('YES') : __('NO');
                         $transportation = __('Transportation') . '? ' . $arrival_transportation;
@@ -154,8 +159,13 @@
             @if (count($departures))
                 @foreach ($departures as $i => $departure)
                     @php
+                        if(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant')){
+                            if($departure->register_by !== 'Client' && $departure->register_by !== 'Cliente'){
+                                continue;
+                            }
+                        }
                         $occupants = __('Occupants:') . ' ' . $departure->adults . ' ' . __('Adults') . ' - ' . ceil($departure->kids) . ' ' . __('Children');
-                        $managed = $departure->property->management ? __('MANAGED') : '';
+                        $managed = !$departure->property->management->isEmpty() ? __('MANAGED') : '';
                         $flight = $departure->departure_airline . ' ' . $departure->departure_flight_number;
                         $departure_transportation = $departure->departure_transportation ? __('YES') : __('NO');
                         $transportation = __('Transportation') . '? ' . $departure_transportation;
@@ -219,7 +229,7 @@
 
                         <!-- register_by -->
                         <td>
-                            {{ $arrival->register_by }}
+                            {{ $departure->register_by }}
                         </td>
 
                         @if(!isRole('owner'))

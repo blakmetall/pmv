@@ -55,26 +55,25 @@ class PropertyBookingPaymentsController extends Controller
     public function store(Request $request)
     {
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if (!can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
 
         $payment = $this->repository->create($request);
         $request->session()->flash('success', __('Record created successfully'));
-        
+
         if ($request->email_notification) {
             return redirect(route('property-booking-payments.email', [$payment->id]));
         } else {
             return redirect(route('property-bookings.edit', [$request->booking_id]));
         }
-
     }
 
     public function email($id)
     {
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if (!can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
@@ -97,7 +96,7 @@ class PropertyBookingPaymentsController extends Controller
 
     public function sendEmail(Request $request, PropertyBooking $booking)
     {
-        if($request->send_payment_email || $request->send_pm_transaction_email){
+        if ($request->send_payment_email || $request->send_pm_transaction_email) {
             $request->session()->flash('success', __('Email sent successfully'));
         }
 
@@ -132,8 +131,8 @@ class PropertyBookingPaymentsController extends Controller
         $folder = 'payments';
         $id = $request->source['id'];
         $img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->source['image']));
-        $slug      = \Illuminate\Support\Str::slug('payment'.$id, '-');
-        $timedFileName = $slug . '-' . strtotime('now') ;
+        $slug      = \Illuminate\Support\Str::slug('payment' . $id, '-');
+        $timedFileName = $slug . '-' . strtotime('now');
         $fileName = $timedFileName . '.' . 'png';
         $getFilePath = $folder . '/' . $fileName;
         Storage::disk('public')->makeDirectory($folder);
@@ -142,7 +141,7 @@ class PropertyBookingPaymentsController extends Controller
 
         $payment = PropertyBookingPayment::find($id);
         $payment->file_url = Storage::url($getFilePath);
-        $payment->save(); 
+        $payment->save();
 
         return;
     }
@@ -169,8 +168,8 @@ class PropertyBookingPaymentsController extends Controller
         $transactionSources = $this->transactionSourcesRepository->all('');
 
         // the owner can edit only reservations registered by him
-        if(isRole('owner')) {
-            if($booking->register_by != 'Owner') {
+        if (isRole('owner')) {
+            if ($booking->register_by != 'Owner') {
                 $request->session()->flash('error', __("You don't have access to this area"));
                 return redirect()->back();
             }
@@ -186,7 +185,7 @@ class PropertyBookingPaymentsController extends Controller
     public function update(Request $request, $id)
     {
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if (!can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
@@ -203,11 +202,11 @@ class PropertyBookingPaymentsController extends Controller
     public function destroy(Request $request, $id)
     {
         // permission control
-        if(!can('edit', 'property-bookings')){
+        if (!can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
             return redirect()->back();
         }
-        
+
         if ($this->repository->canDelete($id)) {
 
             $this->repository->delete($id);
