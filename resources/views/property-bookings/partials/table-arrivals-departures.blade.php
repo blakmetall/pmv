@@ -43,7 +43,7 @@
                 @foreach ($arrivals as $i => $arrival)
                     @php
                         if(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant')){
-                            if($arrival->register_by !== 'Client' && $arrival->register_by !== 'Cliente'){
+                            if($arrival->register_by !== 'Client' && $arrival->register_by !== 'Cliente' && $arrival->property->management->isEmpty()){
                                 continue;
                             }
                         }
@@ -160,7 +160,7 @@
                 @foreach ($departures as $i => $departure)
                     @php
                         if(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant')){
-                            if($departure->register_by !== 'Client' && $departure->register_by !== 'Cliente'){
+                            if($departure->register_by !== 'Client' && $departure->register_by !== 'Cliente' && $departure->property->management->isEmpty()){
                                 continue;
                             }
                         }
