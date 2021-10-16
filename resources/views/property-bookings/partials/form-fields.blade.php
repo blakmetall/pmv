@@ -84,7 +84,7 @@
             'name' => 'alternate_email',
             'value' => $row->alternate_email,
             ])
-        @elseif(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant'))
+        @elseif(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant') || isRole('concierge'))
             <!-- email -->
             @include('components.form.input', [
                 'group' => 'booking',
@@ -399,7 +399,7 @@
         </div>
     </div>
 
-@elseif(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant') )
+@elseif(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant') || isRole('concierge'))
     <!-- separator -->
     <div class="mb-4"></div>
 
@@ -682,7 +682,7 @@
 
         </div>
     </div>
-@elseif(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant'))
+@elseif(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant') || isRole('concierge'))
     <div class="card">
         <div class="card-body">
             <span class="badge badge-primary r-badge mb-4">{{ __('EMAIL NOTIFICATIONS') }}</span>
