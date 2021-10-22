@@ -2,23 +2,25 @@
 
 namespace App\Validations;
 
+use Auth;
 use Illuminate\Http\Request;
 
 class PropertyBookingsValidations extends Validation
 {
     public function __construct()
     {
-        $this->setDefaultValidations([
+        $validations = [
             'property_id'       => 'required',
             'firstname'         => 'required',
             'lastname'          => 'required',
             'email'             => 'required|email',
             'alternate_email'   => 'nullable|email',
-            'arrival_date'      => 'required',
-            'departure_date'    => 'required',
+            'adults'            => 'required',
             'adults'            => 'required',
             'register_by'       => 'required',
-        ]);
+        ];
+
+        $this->setDefaultValidations($validations);
     }
 
     public function validate($validateEvent = '', Request $request, $id = '')
@@ -34,6 +36,11 @@ class PropertyBookingsValidations extends Validation
         }
 
         $validations = array_merge($this->getDefaultValidations(), $eventValidations);
+
+        if (!isRole('owner')) {
+            $validations['arrival_date'] = 'required';
+            $validations['departure_date'] = 'required';
+        }
 
         $this->runValidations($request->all(), $validations, $customValidationMessages);
     }
