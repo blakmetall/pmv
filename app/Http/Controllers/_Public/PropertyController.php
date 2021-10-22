@@ -102,14 +102,14 @@ class PropertyController extends Controller
         $getProperties = [];
         foreach ($propertiesArray as $property) {
             $availabilityProperty = getAvailabilityProperty($property->property_id, $request->arrival, $request->departure);
-            $propertyRate = RatesHelper::getPropertyRate($property->property, $property->property->rates, $request->arrival, $request->departure);
+            $propertyRate = RatesHelper::getPropertyRate($property->property, false, $request->arrival, $request->departure);
+
 
             $saving = 0;
             if ($propertyRate['nightlyAvgRate'] > $propertyRate['nightlyAppliedRate']) {
                 $savingDailyAmount = $propertyRate['nightlyAvgRate'] - $propertyRate['nightlyAppliedRate'];
                 $saving = $propertyRate['totalDays'] * $savingDailyAmount;
             }
-
 
             // $property->hasValidRate = $propertyRate['hasValidRate'];
             $property->propertyRate = $propertyRate;

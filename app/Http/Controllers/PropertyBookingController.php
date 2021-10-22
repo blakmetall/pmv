@@ -826,8 +826,9 @@ class PropertyBookingController extends Controller
         if ($request->property_id) {
             $property = $this->propertiesRepository->find($request->property_id);
             $rates = $this->ratesRepository->all('',  ['property_id' => $request->property_id]);
-            $propertyRate = RatesHelper::getPropertyRate($property, $rates, $request->from_date, $request->to_date);
+            $propertyRate = RatesHelper::getPropertyRate($property, false, $request->from_date, $request->to_date);
         }
+
 
         return view('property-bookings.rates-calculator')
             ->with('from_date', $request->from_date)

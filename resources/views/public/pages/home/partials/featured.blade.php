@@ -5,7 +5,7 @@
             @foreach ($propertiesFeatured as $propertyFeatured)
                 @php
                     $zone = getZone($propertyFeatured->property_id);
-                    $propertyRate = getPropertyRate($propertyFeatured->property, '',);
+                    $propertyRate = getPropertyRate($propertyFeatured->property, '');
                 @endphp
 
                 <div class="item mb-5">

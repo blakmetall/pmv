@@ -87,7 +87,7 @@
 
     <h4>{{ __('Rate') }}</h4>
 
-    @if(isset($propertyRate['prices']))
+    @if(isset($propertyRate['totalDays']))
         <div class="col-12 col-md-6 pl-0 mb-5">
             <table class="table">
                 <tbody>
@@ -121,10 +121,10 @@
                         <td>${{ number_format($propertyRate['nightlyAppliedRate'], 2) }}</td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th>{{ __('Has valid rate') }}</th>
                         <td>{{ $propertyRate['hasValidRate'] ? __('Yes') : __('No') }}</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>
@@ -185,41 +185,42 @@
             </thead>
 
             <tbody>
-                @if(isset($propertyRate['ratesPrices']) && count($propertyRate['ratesPrices']))
+                @if(isset($propertyRate['ranges']) && count($propertyRate['ranges']))
                     @php $total = 0; @endphp
+                    
 
-                    @foreach($propertyRate['ratesPrices'] as $rateId => $rate)
+                    @foreach($propertyRate['ranges'] as $rateId => $rate)
                         <tr>
                             <td><b>#{{ $rateId }}</b></td>
                             <td>
-                                @if(isset($rate['nights']))
-                                    {{ $rate['nights'] }} * {{ $rate['nightlyRate'] }}
+                                @if(isset($rate['daysQty']) && $rate['daysQty'] > 0)
+                                    {{ $rate['daysQty'] }} * {{ $rate['daysRate'] }}
                                 @endif
                             </td>
                             <td>
-                                @if(isset($rate['weeks']))
-                                    {{ $rate['weeks'] }} * {{ $rate['weeklyRate'] }}
+                                @if(isset($rate['weeksQty']) && $rate['weeksQty'] > 0)
+                                    {{ $rate['weeksQty'] }} * {{ $rate['weeksRate'] }}
                                 @endif
                             </td>
                             <td>    
-                                @if(isset($rate['months']))
-                                    {{ $rate['months'] }} * {{ $rate['monthlyRate'] }}
+                                @if(isset($rate['monthsQty']) && $rate['monthsQty'] > 0)
+                                    {{ $rate['monthsQty'] }} * {{ $rate['monthsRate'] }}
                                 @endif
                             </td>
                             <td class="text-right">
                                 @php
                                     $subtotal = 0;
                                     
-                                    if(isset($rate['nights'])){
-                                        $subtotal = $rate['nights'] * $rate['nightlyRate'];
+                                    if(isset($rate['daysQty']) && $rate['daysQty'] > 0){
+                                        $subtotal = $rate['daysQty'] * $rate['daysRate'];
                                     }
 
-                                    if(isset($rate['weeks'])){
-                                        $subtotal += $rate['weeks'] * $rate['weeklyRate'];
+                                    if(isset($rate['weeksQty']) && $rate['weeksQty'] > 0){
+                                        $subtotal += $rate['weeksQty'] * $rate['weeksRate'];
                                     }
 
-                                    if(isset($rate['months'])){
-                                        $subtotal += $rate['months'] * $rate['monthlyRate'];
+                                    if(isset($rate['monthsQty']) && $rate['monthsQty'] > 0){
+                                        $subtotal += $rate['monthsQty'] * $rate['monthsRate'];
                                     }
 
                                     $total += $subtotal;

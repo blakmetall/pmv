@@ -16,14 +16,9 @@ class RatesHelper
 
     public static function getPropertyRate($property, $notUserates, $from_date = '', $to_date = '')
     {
-        // prepare return data
-        $data = [
-            'totalDays' => 0,
-            'total' => 0,
-            'nightlyAvgRate' => 0,
-            'nightlyAppliedRate' => 0,
-            'ratesPrices' => [],
-        ];
+        $rates = $property->rates()->orderBy('start_date', 'asc')->get();
+        $ranges = [];
+
 
         // prepare requested dates
         if (!$from_date || !$to_date) {
@@ -31,247 +26,360 @@ class RatesHelper
             $to_date = date('Y-m-d', strtotime('+7 days'));
         }
 
-        // carbonize dates
-        $from_date = Carbon::createFromFormat('!Y-m-d', $from_date);
-        $to_date = Carbon::createFromFormat('!Y-m-d', $to_date);
-        $requestDate = $from_date;
-        $requestEndDate = $to_date;
+        foreach ($rates as $index => $rate) {
+            $ranges[$index]["id"]        = $rate->id;
+            $ranges[$index]["startDate"] = new \DateTimeImmutable($rate->start_date);
+            $ranges[$index]["endDate"]   = new \DateTimeImmutable($rate->end_date);
+            $ranges[$index]["monthRate"] = $rate->monthly;
+            $ranges[$index]["weekRate"]  = $rate->weekly;
+            $ranges[$index]["dayRate"]   = $rate->nightly;
+        }
 
-        // regular average nightly
-        $nightlyAmount = 0;
 
-        // set totalDays
-        $data['totalDays'] = $from_date->diffInDays($to_date);
 
-        // get property rates
-        if ($property->rates) {
-            $rates = $property->rates()->orderBy('start_date', 'asc')->get();
-            $rateApplied = false;
-            // $rateAppliedMonths = false;
-            // $rateAppliedWeeks = false;
-            // $rateAppliedNights = false;
-            foreach ($rates as $k => $rate) {
-                $nights = 0;
-                $weeks = 0;
-                $months = 0;
+        $customerStartDate = new \DateTimeImmutable($from_date);
+        $customerEndDate = new \DateTimeImmutable($to_date);
 
-                // prepare rate carbonized dates
-                $rate_start_date = Carbon::createFromFormat('!Y-m-d', $rate->start_date);
-                $rate_one_day_before = Carbon::createFromFormat('!Y-m-d', $rate->start_date);
-                $rate_end_date = Carbon::createFromFormat('!Y-m-d', $rate->end_date);
+        $totalResult = [
+            "total" => 0,
+            "totalRateWithoutDiscount" => 0,
+            "totalDays" => 0,
+            "nightlyAppliedRate" => 0,
+            "nightlyAvgRate" => 0,
+        ];
 
-                // if ($rateAppliedMonths && $rateAppliedWeeks && $rateAppliedNights) {
-                //     $rate_one_day_before->subDays(1);
-                // }
+        if ($customerStartDate >= $customerEndDate) {
+            return $totalResult;
+        }
 
-                // if ($rateApplied) {
-                //     $rate_one_day_before->subDays(1);
-                // }
+        if ($customerStartDate < $ranges[0]["startDate"] ||  $customerEndDate > $ranges[count($ranges) - 1]["endDate"]->add(new \DateInterval("P1D"))) {
+            return $totalResult;
+        }
 
-                if (
-                    $requestDate->eq($rate_start_date) ||
-                    $requestDate->eq($rate_end_date) ||
-                    $requestDate->between($rate_start_date, $rate_end_date)
-                ) {
-                    $data['ratesPrices'][$rate->id]['monthlyDiscount']   = 0;
-                    $data['ratesPrices'][$rate->id]['monthsRateOneDayBefore'] = 0;
-                    $data['ratesPrices'][$rate->id]['monthsRequestDate'] = 0;
-                    $data['ratesPrices'][$rate->id]['monthsCompareDate'] = 0;
-                    $data['ratesPrices'][$rate->id]['monthlyDiscount']   = 0;
-                    $data['ratesPrices'][$rate->id]['monthlyTotal']      = 0;
-                    $data['ratesPrices'][$rate->id]['weeklyDiscount']    = 0;
-                    $data['ratesPrices'][$rate->id]['weeksRateOneDayBefore'] = 0;
-                    $data['ratesPrices'][$rate->id]['weeksRequestDate']  = 0;
-                    $data['ratesPrices'][$rate->id]['weeksCompareDate']  = 0;
-                    $data['ratesPrices'][$rate->id]['weeklyTotal']       = 0;
-                    $data['ratesPrices'][$rate->id]['nightlyDiscount']   = 0;
-                    $data['ratesPrices'][$rate->id]['nightsRateOneDayBefore'] = 0;
-                    $data['ratesPrices'][$rate->id]['nightsRequestDate'] = 0;
-                    $data['ratesPrices'][$rate->id]['nightsCompareDate'] = 0;
-                    $data['ratesPrices'][$rate->id]['nightlyTotal']      = 0;
 
-                    // if has monthly rate
-                    if ($rate->monthly && $rate->monthly > 0) {
-                        // verify if current rate has more than one month ahead
-                        $rateAvailableMonths = $requestDate->diffInMonths($rate_end_date);
-                        if ($rateAvailableMonths) {
+        $nextRangeStartDate = $ranges[0]["startDate"];
 
-                            // verify if requested end date is between rate
-                            $finalCompareDate = $requestEndDate;
-                            if (!$requestEndDate->between($rate_start_date, $rate_end_date)) {
-                                $finalCompareDate = $rate_end_date;
-                            }
-
-                            $requestMonths = $requestDate->diffInMonths($finalCompareDate);
-                            //ESTO LO PUSE LA ULTIMA VEZ
-                            $requestDaysMonths = $requestDate->diffInDays($finalCompareDate);
-
-                            if ($requestMonths <= $rateAvailableMonths) {
-                                $months = $requestMonths;
-                            } else {
-                                $months = $rateAvailableMonths;
-                            }
-
-                            //$rateAppliedMonths = $months > 0;
-                            $rateApplied = $months > 0;
-
-                            //$rateAppliedMonths
-                            if ($rateApplied) {
-                                //ESTO LO PUSE LA ULTIMA VEZ
-                                $nightlyMonthlyTotal = $rate->nightly * $requestDaysMonths;
-
-                                $data['ratesPrices'][$rate->id]['months'] = $months;
-                                $data['ratesPrices'][$rate->id]['monthsRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['monthsRequestDate'] = $requestDate->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['monthsCompareDate'] = $finalCompareDate->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['monthlyRate'] = $rate->monthly;
-                                $data['ratesPrices'][$rate->id]['monthlyTotal'] = $rate->monthly * $months;
-                                $data['ratesPrices'][$rate->id]['monthlyDiscount'] = $nightlyMonthlyTotal;
-                            }
-
-                            // get next initial request date
-                            $requestDate->addMonths($months);
-                        }
-                    }
-
-                    // if has weekly rate
-                    if ($rate->weekly && $rate->weekly > 0) {
-
-                        $rateAvailableWeeks = $requestDate->diffInWeeks($rate_end_date);
-
-                        if ($rateAvailableWeeks) {
-                            // verify if requested end date is between rate
-                            $finalCompareDate = $requestEndDate;
-                            // if ($property->id == 27) {
-                            //     dd($finalCompareDate);
-                            // }
-                            if (!$requestEndDate->between($rate_start_date, $rate_end_date)) {
-                                $finalCompareDate = $rate_end_date;
-                                // $finalCompareDate->addDays(1);
-                            }
-
-                            $requestWeeks = $requestDate->diffInWeeks($finalCompareDate);
-                            $requestDaysWeeks = $requestDate->diffInDays($finalCompareDate);
-
-                            if ($requestWeeks <= $rateAvailableWeeks) {
-                                $weeks = $requestWeeks;
-                            } else {
-                                $weeks = $rateAvailableWeeks;
-                            }
-
-                            // $rateAppliedWeeks = $weeks > 0;
-                            $rateApplied = $weeks > 0;
-
-                            //$rateAppliedWeeks
-                            if ($rateApplied) {
-                                $nightlyWeeklyTotal = $rate->nightly * $requestDaysWeeks;
-
-                                $data['ratesPrices'][$rate->id]['weeks'] = $weeks;
-                                $data['ratesPrices'][$rate->id]['weeksRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['weeksRequestDate'] = $requestDate->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['weeksCompareDate'] = $finalCompareDate->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['weeklyRate'] = $rate->weekly;
-                                $data['ratesPrices'][$rate->id]['weeklyTotal'] = $rate->weekly * $weeks;
-                                $data['ratesPrices'][$rate->id]['weeklyDiscount'] = $nightlyWeeklyTotal;
-                            }
-
-                            // get next initial request date
-                            $requestDate->addWeeks($weeks);
-                        }
-                    }
-                    // if has nightly rate
-                    if ($rate->nightly && $rate->nightly > 0) {
-                        $rateAvailableDays = $requestDate->diffInDays($rate_end_date);
-
-                        if ($rateAvailableDays || $requestDate->eq($rate_end_date)) {
-                            // verify if requested end date is between rate
-                            $finalCompareDate = $requestEndDate;
-                            if (!$requestEndDate->between($rate_start_date, $rate_end_date)) {
-                                $finalCompareDate = $rate_end_date;
-                            }
-
-                            $requestDays = $requestDate->diffInDays($finalCompareDate);
-
-                            if ($requestDays <= $rateAvailableDays) {
-                                $nights = $requestDays;
-                            } else {
-                                $nights = $rateAvailableDays;
-                            }
-
-                            if ($nights == 0 && $finalCompareDate->eq($requestEndDate)) {
-                                $nights += 1;
-                            }
-
-                            $rateApplied = $nights > 0;
-
-                            //$rateAppliedNights
-                            if ($rateApplied) {
-                                $nightlyDayTotal = $rate->nightly * $nights;
-
-                                if (count($rates) > 1 && $to_date->format('Y-m-d') > $finalCompareDate->format('Y-m-d')) {
-                                    $nights += 1;
-                                }
-
-                                $data['ratesPrices'][$rate->id]['nights'] = $nights;
-                                $data['ratesPrices'][$rate->id]['nightsRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['nightsRequestDate'] = $requestDate->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['nightsCompareDate'] = $finalCompareDate->format('Y-m-d');
-                                $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
-                                $data['ratesPrices'][$rate->id]['nightlyTotal'] = $rate->nightly * $nights;
-                                $data['ratesPrices'][$rate->id]['nightlyDiscount'] = $nightlyDayTotal;
-                            }
-                            // get next initial request date
-                            $requestDate->addDays($nights);
-                        }
-                    }
-                    // $requestDate->addDays(1);
+        foreach ($ranges as $index => $range) {
+            if ($nextRangeStartDate != $range["startDate"]) {
+                $range["startDate"] = $nextRangeStartDate;
+            }
+            $nextRangeStartDate = $range["endDate"]->add(new \DateInterval("P1D"));
+            if ($customerStartDate > $range["endDate"]) {
+                continue;
+            } else if ($customerStartDate >= $range["startDate"] && $customerStartDate <= $range["endDate"]) {
+                if ($customerEndDate <= $range["endDate"]) {
+                    $dateDiff = $customerStartDate->diff($customerEndDate);
+                } else {
+                    $dateDiff = $customerStartDate->diff($range["endDate"]->add(new \DateInterval("P1D")));
                 }
+            } else if ($customerEndDate > $range["startDate"]) {
+                if ($customerEndDate <= $range["endDate"]) {
+                    $dateDiff = $range["startDate"]->diff($customerEndDate);
+                } else {
+                    $dateDiff = $range["startDate"]->diff($range["endDate"]->add(new \DateInterval("P1D")));
+                }
+            } else {
+                break;
             }
+
+            $rangeResult = self::getRangeDetails($dateDiff, $range);
+
+            $totalResult["ranges"][$range['id']] = $rangeResult;
+            $totalResult["total"] += $rangeResult["totalCostWithDiscount"];
+            $totalResult["totalRateWithoutDiscount"] += $rangeResult["totalCostWithoutDiscount"];
+            $totalResult["totalDays"] += $rangeResult["totalDays"];
         }
-
-        // sum totals
-        $subtotal = 0;
-
-        // ESTO LO USABA PARA QUITAR LOS SETEADOS EN 0 PERO YA NO SE NECESITA PUSE LOS INDEX DENTRO DEL FOREACH ENTONCES LOS 0 NO SE CONSTRUYEN
-        // dd($data['ratesPrices']);
-        foreach ($data['ratesPrices'] as $index => $ratePrice) {
-            if ($ratePrice['monthsRequestDate'] >= $to_date->format('Y-m-d')) {
-                unset($data['ratesPrices'][$index]);
-            }
-            if ($ratePrice['weeksRequestDate'] >= $to_date->format('Y-m-d')) {
-                unset($data['ratesPrices'][$index]);
-            }
-            if ($ratePrice['nightsRequestDate'] >= $to_date->format('Y-m-d')) {
-                unset($data['ratesPrices'][$index]);
-            }
-        }
-
-        foreach ($data['ratesPrices'] as $ratePrice) {
-            if (isset($ratePrice['months'])) {
-                $subtotal += $ratePrice['monthlyTotal'];
-                $nightlyAmount += $ratePrice['monthlyDiscount'];
-            }
-
-            if (isset($ratePrice['weeks'])) {
-                $subtotal += $ratePrice['weeklyTotal'];
-                $nightlyAmount += $ratePrice['weeklyDiscount'];
-            }
-
-            if (isset($ratePrice['nights'])) {
-                $subtotal += $ratePrice['nightlyTotal'];
-                $nightlyAmount += $ratePrice['nightlyDiscount'];
-            }
-        }
-
-        $data['total'] = round($subtotal, 2);
-        $data['nightlyAmount'] = round($nightlyAmount, 2);
-        $data['nightlyAppliedRate'] = $data['totalDays'] > 0 ? round($subtotal / $data['totalDays'], 2) : 0;
-        // sets the current nightly current rate
-        $data['nightlyAvgRate'] = round($nightlyAmount /  $data['totalDays'], 2);
-
-        // if ($property->id == 149) {
-        //     dd($data);
-        // }
-        return $data;
+        $totalResult["nightlyAppliedRate"] = round($totalResult["total"] / $totalResult["totalDays"], 2);
+        $totalResult["nightlyAvgRate"] = round($totalResult["totalRateWithoutDiscount"] / $totalResult["totalDays"], 2);
+        return $totalResult;
     }
+
+    public static function getRangeDetails($dateDiff, $range)
+    {
+        $months = $dateDiff->m;
+        if ($dateDiff->y > 0) {
+            $months += ($dateDiff->y * 12);
+        }
+        $weeks = intval($dateDiff->d / 7);
+        $days = $dateDiff->d % 7;
+        $totalDays = $dateDiff->format("%a");
+
+        $result = [
+            "monthsQty" => $months,
+            "monthsCost" => $months * $range["monthRate"],
+            "monthsRate" => $range["monthRate"],
+            "weeksQty" => $weeks,
+            "weeksCost" => $weeks * $range["weekRate"],
+            "weeksRate" => $range["weekRate"],
+            "daysQty" => $days,
+            "daysCost" => $days * $range["dayRate"],
+            "daysRate" => $range["dayRate"],
+            "totalDays" => $totalDays,
+            "totalCostWithoutDiscount" => $totalDays * $range["dayRate"]
+        ];
+        $result["totalCostWithDiscount"] = $result["monthsCost"] + $result["weeksCost"] + $result["daysCost"];
+
+        return $result;
+    }
+
+    // public static function backup_getPropertyRate($property, $notUserates, $from_date = '', $to_date = '')
+    // {
+    //     // prepare return data
+    //     $data = [
+    //         'totalDays' => 0,
+    //         'total' => 0,
+    //         'nightlyAvgRate' => 0,
+    //         'nightlyAppliedRate' => 0,
+    //         'ratesPrices' => [],
+    //     ];
+
+    //     // prepare requested dates
+    //     if (!$from_date || !$to_date) {
+    //         $from_date = date('Y-m-d', strtotime('now'));
+    //         $to_date = date('Y-m-d', strtotime('+7 days'));
+    //     }
+
+    //     // carbonize dates
+    //     $from_date = Carbon::createFromFormat('!Y-m-d', $from_date);
+    //     $to_date = Carbon::createFromFormat('!Y-m-d', $to_date);
+    //     $requestDate = $from_date;
+    //     $requestEndDate = $to_date;
+
+    //     // regular average nightly
+    //     $nightlyAmount = 0;
+
+    //     // set totalDays
+    //     $data['totalDays'] = $from_date->diffInDays($to_date);
+
+    //     // get property rates
+    //     if ($property->rates) {
+    //         $rates = $property->rates()->orderBy('start_date', 'asc')->get();
+    //         $rateApplied = false;
+    //         // $rateAppliedMonths = false;
+    //         // $rateAppliedWeeks = false;
+    //         // $rateAppliedNights = false;
+    //         foreach ($rates as $k => $rate) {
+    //             $nights = 0;
+    //             $weeks = 0;
+    //             $months = 0;
+
+    //             // prepare rate carbonized dates
+    //             $rate_start_date = Carbon::createFromFormat('!Y-m-d', $rate->start_date);
+    //             $rate_one_day_before = Carbon::createFromFormat('!Y-m-d', $rate->start_date);
+    //             $rate_end_date = Carbon::createFromFormat('!Y-m-d', $rate->end_date);
+
+    //             // if ($rateAppliedMonths && $rateAppliedWeeks && $rateAppliedNights) {
+    //             //     $rate_one_day_before->subDays(1);
+    //             // }
+
+    //             // if ($rateApplied) {
+    //             //     $rate_one_day_before->subDays(1);
+    //             // }
+
+    //             if (
+    //                 $requestDate->eq($rate_start_date) ||
+    //                 $requestDate->eq($rate_end_date) ||
+    //                 $requestDate->between($rate_start_date, $rate_end_date)
+    //             ) {
+    //                 $data['ratesPrices'][$rate->id]['monthlyDiscount']   = 0;
+    //                 $data['ratesPrices'][$rate->id]['monthsRateOneDayBefore'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['monthsRequestDate'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['monthsCompareDate'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['monthlyDiscount']   = 0;
+    //                 $data['ratesPrices'][$rate->id]['monthlyTotal']      = 0;
+    //                 $data['ratesPrices'][$rate->id]['weeklyDiscount']    = 0;
+    //                 $data['ratesPrices'][$rate->id]['weeksRateOneDayBefore'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['weeksRequestDate']  = 0;
+    //                 $data['ratesPrices'][$rate->id]['weeksCompareDate']  = 0;
+    //                 $data['ratesPrices'][$rate->id]['weeklyTotal']       = 0;
+    //                 $data['ratesPrices'][$rate->id]['nightlyDiscount']   = 0;
+    //                 $data['ratesPrices'][$rate->id]['nightsRateOneDayBefore'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['nightsRequestDate'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['nightsCompareDate'] = 0;
+    //                 $data['ratesPrices'][$rate->id]['nightlyTotal']      = 0;
+
+    //                 // if has monthly rate
+    //                 if ($rate->monthly && $rate->monthly > 0) {
+    //                     // verify if current rate has more than one month ahead
+    //                     $rateAvailableMonths = $requestDate->diffInMonths($rate_end_date);
+    //                     if ($rateAvailableMonths) {
+
+    //                         // verify if requested end date is between rate
+    //                         $finalCompareDate = $requestEndDate;
+    //                         if (!$requestEndDate->between($rate_start_date, $rate_end_date)) {
+    //                             $finalCompareDate = $rate_end_date;
+    //                         }
+
+    //                         $requestMonths = $requestDate->diffInMonths($finalCompareDate);
+    //                         //ESTO LO PUSE LA ULTIMA VEZ
+    //                         $requestDaysMonths = $requestDate->diffInDays($finalCompareDate);
+
+    //                         if ($requestMonths <= $rateAvailableMonths) {
+    //                             $months = $requestMonths;
+    //                         } else {
+    //                             $months = $rateAvailableMonths;
+    //                         }
+
+    //                         //$rateAppliedMonths = $months > 0;
+    //                         $rateApplied = $months > 0;
+
+    //                         //$rateAppliedMonths
+    //                         if ($rateApplied) {
+    //                             //ESTO LO PUSE LA ULTIMA VEZ
+    //                             $nightlyMonthlyTotal = $rate->nightly * $requestDaysMonths;
+
+    //                             $data['ratesPrices'][$rate->id]['months'] = $months;
+    //                             $data['ratesPrices'][$rate->id]['monthsRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['monthsRequestDate'] = $requestDate->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['monthsCompareDate'] = $finalCompareDate->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['monthlyRate'] = $rate->monthly;
+    //                             $data['ratesPrices'][$rate->id]['monthlyTotal'] = $rate->monthly * $months;
+    //                             $data['ratesPrices'][$rate->id]['monthlyDiscount'] = $nightlyMonthlyTotal;
+    //                         }
+
+    //                         // get next initial request date
+    //                         $requestDate->addMonths($months);
+    //                     }
+    //                 }
+
+    //                 // if has weekly rate
+    //                 if ($rate->weekly && $rate->weekly > 0) {
+
+    //                     $rateAvailableWeeks = $requestDate->diffInWeeks($rate_end_date);
+
+    //                     if ($rateAvailableWeeks) {
+    //                         // verify if requested end date is between rate
+    //                         $finalCompareDate = $requestEndDate;
+    //                         // if ($property->id == 27) {
+    //                         //     dd($finalCompareDate);
+    //                         // }
+    //                         if (!$requestEndDate->between($rate_start_date, $rate_end_date)) {
+    //                             $finalCompareDate = $rate_end_date;
+    //                             // $finalCompareDate->addDays(1);
+    //                         }
+
+    //                         $requestWeeks = $requestDate->diffInWeeks($finalCompareDate);
+    //                         $requestDaysWeeks = $requestDate->diffInDays($finalCompareDate);
+
+    //                         if ($requestWeeks <= $rateAvailableWeeks) {
+    //                             $weeks = $requestWeeks;
+    //                         } else {
+    //                             $weeks = $rateAvailableWeeks;
+    //                         }
+
+    //                         // $rateAppliedWeeks = $weeks > 0;
+    //                         $rateApplied = $weeks > 0;
+
+    //                         //$rateAppliedWeeks
+    //                         if ($rateApplied) {
+    //                             $nightlyWeeklyTotal = $rate->nightly * $requestDaysWeeks;
+
+    //                             $data['ratesPrices'][$rate->id]['weeks'] = $weeks;
+    //                             $data['ratesPrices'][$rate->id]['weeksRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['weeksRequestDate'] = $requestDate->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['weeksCompareDate'] = $finalCompareDate->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['weeklyRate'] = $rate->weekly;
+    //                             $data['ratesPrices'][$rate->id]['weeklyTotal'] = $rate->weekly * $weeks;
+    //                             $data['ratesPrices'][$rate->id]['weeklyDiscount'] = $nightlyWeeklyTotal;
+    //                         }
+
+    //                         // get next initial request date
+    //                         $requestDate->addWeeks($weeks);
+    //                     }
+    //                 }
+    //                 // if has nightly rate
+    //                 if ($rate->nightly && $rate->nightly > 0) {
+    //                     $rateAvailableDays = $requestDate->diffInDays($rate_end_date);
+
+    //                     if ($rateAvailableDays || $requestDate->eq($rate_end_date)) {
+    //                         // verify if requested end date is between rate
+    //                         $finalCompareDate = $requestEndDate;
+    //                         if (!$requestEndDate->between($rate_start_date, $rate_end_date)) {
+    //                             $finalCompareDate = $rate_end_date;
+    //                         }
+
+    //                         $requestDays = $requestDate->diffInDays($finalCompareDate);
+
+    //                         if ($requestDays <= $rateAvailableDays) {
+    //                             $nights = $requestDays;
+    //                         } else {
+    //                             $nights = $rateAvailableDays;
+    //                         }
+
+    //                         if ($nights == 0 && $finalCompareDate->eq($requestEndDate)) {
+    //                             $nights += 1;
+    //                         }
+
+    //                         $rateApplied = $nights > 0;
+
+    //                         //$rateAppliedNights
+    //                         if ($rateApplied) {
+    //                             $nightlyDayTotal = $rate->nightly * $nights;
+
+    //                             if (count($rates) > 1 && $to_date->format('Y-m-d') > $finalCompareDate->format('Y-m-d')) {
+    //                                 $nights += 1;
+    //                             }
+
+    //                             $data['ratesPrices'][$rate->id]['nights'] = $nights;
+    //                             $data['ratesPrices'][$rate->id]['nightsRateOneDayBefore'] = $rate_one_day_before->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['nightsRequestDate'] = $requestDate->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['nightsCompareDate'] = $finalCompareDate->format('Y-m-d');
+    //                             $data['ratesPrices'][$rate->id]['nightlyRate'] = $rate->nightly;
+    //                             $data['ratesPrices'][$rate->id]['nightlyTotal'] = $rate->nightly * $nights;
+    //                             $data['ratesPrices'][$rate->id]['nightlyDiscount'] = $nightlyDayTotal;
+    //                         }
+    //                         // get next initial request date
+    //                         $requestDate->addDays($nights);
+    //                     }
+    //                 }
+    //                 // $requestDate->addDays(1);
+    //             }
+    //         }
+    //     }
+
+    //     // sum totals
+    //     $subtotal = 0;
+
+    //     // ESTO LO USABA PARA QUITAR LOS SETEADOS EN 0 PERO YA NO SE NECESITA PUSE LOS INDEX DENTRO DEL FOREACH ENTONCES LOS 0 NO SE CONSTRUYEN
+    //     // dd($data['ratesPrices']);
+    //     foreach ($data['ratesPrices'] as $index => $ratePrice) {
+    //         if ($ratePrice['monthsRequestDate'] >= $to_date->format('Y-m-d')) {
+    //             unset($data['ratesPrices'][$index]);
+    //         }
+    //         if ($ratePrice['weeksRequestDate'] >= $to_date->format('Y-m-d')) {
+    //             unset($data['ratesPrices'][$index]);
+    //         }
+    //         if ($ratePrice['nightsRequestDate'] >= $to_date->format('Y-m-d')) {
+    //             unset($data['ratesPrices'][$index]);
+    //         }
+    //     }
+
+    //     foreach ($data['ratesPrices'] as $ratePrice) {
+    //         if (isset($ratePrice['months'])) {
+    //             $subtotal += $ratePrice['monthlyTotal'];
+    //             $nightlyAmount += $ratePrice['monthlyDiscount'];
+    //         }
+
+    //         if (isset($ratePrice['weeks'])) {
+    //             $subtotal += $ratePrice['weeklyTotal'];
+    //             $nightlyAmount += $ratePrice['weeklyDiscount'];
+    //         }
+
+    //         if (isset($ratePrice['nights'])) {
+    //             $subtotal += $ratePrice['nightlyTotal'];
+    //             $nightlyAmount += $ratePrice['nightlyDiscount'];
+    //         }
+    //     }
+
+    //     $data['total'] = round($subtotal, 2);
+    //     $data['nightlyAmount'] = round($nightlyAmount, 2);
+    //     $data['nightlyAppliedRate'] = $data['totalDays'] > 0 ? round($subtotal / $data['totalDays'], 2) : 0;
+    //     // sets the current nightly current rate
+    //     $data['nightlyAvgRate'] = round($nightlyAmount /  $data['totalDays'], 2);
+
+    //     // if ($property->id == 149) {
+    //     //     dd($data);
+    //     // }
+    //     return $data;
+    // }
 }
