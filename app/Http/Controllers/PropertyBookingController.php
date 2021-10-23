@@ -679,7 +679,7 @@ class PropertyBookingController extends Controller
             return redirect()->back();
         }
 
-        $availability = getAvailabilityProperty($request->property_id, $request->arrival_date, $request->departure_date, $id);
+        $availability = getAvailabilitySimpleProperty($request->property_id, $request->arrival_date, $request->departure_date, $id);
 
         if ($availability === 'none' || $availability == 'some') {
             $request->session()->flash('error', __('There is a booking dates conflict, review availability calendar'));

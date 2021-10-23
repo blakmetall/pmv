@@ -719,10 +719,11 @@ if (!function_exists('getAvailabilityProperty')) {
 
         // loop through bookings
         $bookings = $property->bookings()->orderBy('arrival_date', 'asc')->get();
+
         $daysOc = [];
         foreach ($bookings as $booking) {
             // if is same booking compare, then skip
-            if ($bookingID && $booking->id == $bookingID || $booking->is_cancelled) {
+            if (($bookingID != '' && $booking->id == $bookingID) || $booking->is_cancelled) {
                 continue;
             }
 
@@ -747,6 +748,64 @@ if (!function_exists('getAvailabilityProperty')) {
             $result = 'none';
         } else {
             $result = 'all';
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('getAvailabilitySimpleProperty')) {
+    function getAvailabilitySimpleProperty($id, $fromDate, $toDate, $bookingID = '')
+    {
+        if (!$fromDate || !$toDate) {
+            $fromDate = date('Y-m-d', strtotime('now'));
+            $toDate = date('Y-m-d', strtotime('+7 days'));
+        }
+
+        $property = Property::find($id);
+
+        $days = getDatesFromRange($fromDate, $toDate, 'Y-m-d');
+        $daysOccupied = 0;
+
+        // loop through bookings
+        $bookings = $property->bookings()->orderBy('arrival_date', 'asc')->get();
+
+        $daysOc = [];
+        $isFree = false;
+        foreach ($bookings as $booking) {
+            // if is same booking compare, then skip
+            if (($bookingID != '' && $booking->id == $bookingID) || $booking->is_cancelled) {
+                $isFree = true;
+                continue;
+            }
+
+            $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'Y-m-d');
+
+            foreach ($days as $day) {
+                // allow reservation departure date to be conflicted with arrival date for a different reservation
+                if (($day == $booking->arrival_date || $day == $booking->departure_date)) {
+                    continue;
+                }
+
+                if (in_array($day, $bookingDays)) {
+                    $daysOc[] = $day;
+                    $daysOccupied++;
+                }
+            }
+        }
+
+        if ($daysOccupied == count($days)) {
+            $result = 'some';
+        } else if ($daysOccupied > 0) {
+            $result = 'none';
+        } else {
+            $result = 'all';
+        }
+
+        if ($isFree) {
+            $result = 'all';
+        } else {
+            $result = $result;
         }
 
         return $result;
