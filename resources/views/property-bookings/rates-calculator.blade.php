@@ -108,17 +108,17 @@
 
                     <tr>
                         <th>{{ __('Total') }}</th>
-                        <td><b>${{ number_format($propertyRate['total'], 2) }}</b></td>
+                        <td><b>${{ $propertyRate['total'] }}</b></td>
                     </tr>
 
                     <tr>
                         <th>{{ __('Nightly Current Rate') }}</th>
-                        <td>${{ number_format($propertyRate['nightlyAvgRate'], 2) }}</td>
+                        <td>${{ $propertyRate['nightlyAvgRate'] }}</td>
                     </tr>
 
                     <tr>
                         <th>{{ __('Nightly Applied Rate') }}</th>
-                        <td>${{ number_format($propertyRate['nightlyAppliedRate'], 2) }}</td>
+                        <td>${{ $propertyRate['nightlyAppliedRate'] }}</td>
                     </tr>
 
                     {{-- <tr>
