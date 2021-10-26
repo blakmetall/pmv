@@ -56,8 +56,10 @@
 
                         <!-- travel_dates -->
                         <td>
-                            {{ getReadableDate($row->arrival_date) }} <br> 
-                            {{ getReadableDate($row->departure_date) }} <br>
+                            {{ $row->arrival_date }}<br>
+                            {{ $row->departure_date }}<br>
+                            {{-- {{ getReadableDate($row->arrival_date) }} <br> 
+                            {{ getReadableDate($row->departure_date) }} <br> --}}
                             {{ $row->nights }} {{ __('Nights') }}
                         </td>
 
