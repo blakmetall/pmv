@@ -623,18 +623,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function initDatepickerComponents() {
   $(".app-input-datepicker").each(function () {
-    var _$$pickadate;
-
     var dateFormat = $(this).data("format");
     var maxDaysLimitFromNow = $(this).data("max-days-limit-from-now");
     var maxSelectionDate = new Date();
     maxSelectionDate.setDate(maxSelectionDate.getDate() + parseInt(maxDaysLimitFromNow));
-    $(this).pickadate((_$$pickadate = {
-      selectYears: true
-    }, _defineProperty(_$$pickadate, "selectYears", 70), _defineProperty(_$$pickadate, "selectMonths", true), _defineProperty(_$$pickadate, "format", dateFormat), _defineProperty(_$$pickadate, "formatSubmit", dateFormat), _defineProperty(_$$pickadate, "max", maxSelectionDate), _defineProperty(_$$pickadate, "onSet", function onSet(context) {
-      var date = new Date(context.select * 1000).getDay();
-      var propertyID = $("#field_cleaning-service_property_id_").val() || false; // getBonus(propertyID, date);
-    }), _$$pickadate));
+
+    if (!$(this).attr('readonly')) {
+      var _$$pickadate;
+
+      $(this).pickadate((_$$pickadate = {
+        selectYears: true
+      }, _defineProperty(_$$pickadate, "selectYears", 70), _defineProperty(_$$pickadate, "selectMonths", true), _defineProperty(_$$pickadate, "format", dateFormat), _defineProperty(_$$pickadate, "formatSubmit", dateFormat), _defineProperty(_$$pickadate, "max", maxSelectionDate), _defineProperty(_$$pickadate, "onSet", function onSet(context) {
+        var date = new Date(context.select * 1000).getDay();
+        var propertyID = $("#field_cleaning-service_property_id_").val() || false; // getBonus(propertyID, date);
+      }), _$$pickadate));
+    }
   }); // Select min departure date from arrival date
 
   $("input[name='arrival_date']").on('change', function () {

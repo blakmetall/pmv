@@ -10,20 +10,23 @@ export function initDatepickerComponents() {
             maxSelectionDate.getDate() + parseInt(maxDaysLimitFromNow)
         );
 
-        $(this).pickadate({
-            selectYears: true,
-            selectYears: 70,
-            selectMonths: true,
-            format: dateFormat,
-            formatSubmit: dateFormat,
-            max: maxSelectionDate,
-            onSet: function(context) {
-                let date = new Date(context.select * 1000).getDay();
-                let propertyID =
-                    $("#field_cleaning-service_property_id_").val() || false;
-                // getBonus(propertyID, date);
-            }
-        });
+        if(!$(this).attr('readonly')){
+            $(this).pickadate({
+                selectYears: true,
+                selectYears: 70,
+                selectMonths: true,
+                format: dateFormat,
+                formatSubmit: dateFormat,
+                max: maxSelectionDate,
+                onSet: function(context) {
+                    let date = new Date(context.select * 1000).getDay();
+                    let propertyID =
+                        $("#field_cleaning-service_property_id_").val() || false;
+                    // getBonus(propertyID, date);
+                }
+            });
+        }
+
     });
 
     // Select min departure date from arrival date
