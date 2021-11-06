@@ -261,7 +261,7 @@ class PropertyController extends Controller
         $calendar = generateCalendar(
             $year,
             $monthsCols,
-            $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'currentYear' => $currYear, 'filterByNotCancelled' => 1]),
+            $this->propertiyBookingsRepository->all('', ['propertyID' => $request->source['id'], 'filterByNotCancelled' => 1]),
             $startingMonth,
             $displayMonths,
         );

@@ -961,7 +961,7 @@ if (!function_exists('generateCalendar')) {
             $count_fields = $first_weekday;
             for ($d = 1; $d <= $days_month; $d++) {
                 $addzero = ($d < 10) ? '0' . $d : $d;
-                $formatYear = isset($year) ? $year : Carbon::now()->year;
+                $formatYear = isset($getYear) ? $getYear : Carbon::now()->year;
                 $formatYear = substr($formatYear, 2);
                 $day = $addzero . '-' . date('M', $cm) . '-' . $formatYear;
                 if (in_array($day, $bookingDays)) {
