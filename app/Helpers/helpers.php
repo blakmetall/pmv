@@ -924,14 +924,16 @@ if (!function_exists('generateCalendar')) {
             $count_cols++;
             if ($i >= 12) {
                 $getYear = $nextYear;
+                $restYear = 1;
             } else {
                 $getYear = $currYear;
+                $restYear = 0;
             }
             $cm = mktime(0, 0, 0, 1 + $i, 1, $getYear); //get curr month time string
             $days_month = date("t", $cm); //calculate number of days in month
-            $first_weekday_unix = mktime(0, 0, 0, date('n', $cm), 1, date('Y', $cm));
+            $first_weekday_unix = mktime(0, 0, 0, date('n', $cm), 1, date('Y', $cm) - $restYear);
             $first_weekday = date('w', $first_weekday_unix);
-            $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm));
+            $last_weekday_unix = mktime(0, 0, 0, date('n', $cm), $days_month, date('Y', $cm) - $restYear);
             $last_weekday = date('w', $last_weekday_unix);
             $monthLabel = Carbon::parse($cm);
             if (LanguageHelper::getLocale() == 'en') {
