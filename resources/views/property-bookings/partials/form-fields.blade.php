@@ -103,7 +103,7 @@
             ])
         @endif
 
-        {{-- @if (!isRole('owner')) --}}
+        @if(isRole('owner') && $row->register_by !== 'Client' && $row->register_by !== 'Cliente')
             <!-- country -->
             @include('components.form.input', [
             'group' => 'booking',
@@ -159,7 +159,7 @@
             'name' => 'mobile',
             'value' => $row->mobile
             ])
-        {{-- @endif --}}
+        @endif
 
     </div>
 </div>
