@@ -103,7 +103,7 @@
             ])
         @endif
 
-        @if(isRole('owner') && $row->register_by !== 'Client' && $row->register_by !== 'Cliente')
+        @if(isRole('admin') || isRole('super') || isRole('property-management') || isRole('rentals') || isRole('operations-manager') || isRole('operations-assistant') || isRole('administrative-assistant') || isRole('concierge') || (isRole('owner') && $row->register_by !== 'Client' && $row->register_by !== 'Cliente'))
             <!-- country -->
             @include('components.form.input', [
             'group' => 'booking',
