@@ -113,8 +113,10 @@ if (!function_exists('prepareSelectValuesFromRows')) {
             $labelRef = isset($config['labelRef']) ? $config['labelRef'] : 'name'; // default name
             $depthRef = isset($config['depthRef']) ? $config['depthRef'] : false; // default name
 
+
             if ($depthRef) {
                 $optionLabelDepth = explode(',', $labelRef);
+                dd($optionLabelDepth);
             }
 
             foreach ($items as $item) {
