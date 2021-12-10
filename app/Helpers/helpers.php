@@ -120,7 +120,7 @@ if (!function_exists('prepareSelectValuesFromRows')) {
 
             foreach ($items as $item) {
                 if ($depthRef) {
-                    dd($item->{$optionLabelDepth[0]});
+                    dd($item->{$optionLabelDepth[0]}->{$optionLabelDepth[1]});
                     $label = $item->{$optionLabelDepth[0]}->{$optionLabelDepth[1]};
                 } else {
                     $label = $item->{$labelRef};
