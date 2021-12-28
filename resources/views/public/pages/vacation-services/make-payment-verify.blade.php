@@ -89,7 +89,7 @@
                     <label style="font-size: 12px;color: #5e7180;margin-bottom: 4px;">
                         {{ __('Total') }}
                     </label><br>
-                    {{ priceFormat($total) }} USD
+                    {{ priceFormat($rest) }} USD
                 </td>
             </tr>
         </tbody>
@@ -111,7 +111,7 @@
             <input type="hidden" name="item_name" value="{{ $property->name }} {{ $booking->arrival_date }} - {{ $booking->departure_date }} | {{ $booking->nights }} {{ __('Nights') }}">
             <div class="form-item form-item-amount form-type-select form-group">
                 <select class="form-control form-select required" id="edit-amount" name="amount">
-                    <option value="{{ $total }}">{{ priceFormat($total) }} USD
+                    <option value="{{ $rest }}">{{ priceFormat($rest) }} USD
                         ({{ __('FULL PAYMENT') }})</option>
                     <option value="{{ $mid }}">{{ priceFormat($mid) }} USD (50%)</option>
                 </select>

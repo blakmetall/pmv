@@ -50,7 +50,7 @@ class VacationServicesController extends Controller
     public function findBooking(Request $request)
     {
         $booking = PropertyBooking::find($request->booking_id);
-        
+
         if (!$booking) {
             $request->session()->flash('error', __('No Bookings Found'));
             return redirect(route('public.vacation-services.make-payment', [App::getLocale()]));
@@ -65,9 +65,9 @@ class VacationServicesController extends Controller
         $payments = $booking->payments;
 
         $reduced  = 0;
-        if($payments){
+        if ($payments) {
             foreach ($payments as $pay) {
-                if($pay->is_paid) {
+                if ($pay->is_paid) {
                     $reduced += $pay->amount;
                 }
             }
@@ -82,21 +82,23 @@ class VacationServicesController extends Controller
             $paid = true;
         } else if ($balance > 0) {
             $paid = false;
-        }else if ($balance < 0) {
+        } else if ($balance < 0) {
             $request->session()->flash('success', __('Your reservations has credit'));
             $paid = true;
         }
 
         $property = $booking->property->translations()->where('language_id', LanguageHelper::current()->id)->first();
         $total = $booking->total + $secure;
-        $mid = $total / 2;
+        $rest = $total - $reduced;
+        $mid = $rest / 2;
 
         return view('public.pages.vacation-services.make-payment-verify')
             ->with('booking', $booking)
             ->with('property', $property)
             ->with('total', $total)
             ->with('mid', $mid)
-            ->with('paid', $paid);
+            ->with('paid', $paid)
+            ->with('rest', $rest);
     }
 
     public function thankYou()
@@ -115,7 +117,7 @@ class VacationServicesController extends Controller
 
         $config = ['paginate' => false];
         $paymentMethods = $this->paymentMethodsRepository->all('', $config);
-        
+
         return view('public.pages.vacation-services.payment-methods')
             ->with('page', $page)
             ->with('paymentMethods', $paymentMethods);
@@ -141,7 +143,7 @@ class VacationServicesController extends Controller
         SEOTools::setTitle($page->translate()->title);
         SEOTools::setDescription(getSubstring(removeP($page->translate()->description), 120));
         SEOTools::opengraph()->setUrl(url()->full());
-        
+
         return view('public.pages.vacation-services.accidental-rental-damage-insurance')->with('page', $page);
     }
 }
