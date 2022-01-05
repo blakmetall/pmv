@@ -85,12 +85,19 @@ class PropertyBookingController extends Controller
             'filterByUserId' => $isOwner,
         ]);
 
+        $propertiesSearch = $this->propertiesRepository->all('', [
+            'filterByEnabled' => true,
+            'filterByUserId' => $isOwner,
+            'paginate' => false,
+        ]);
+
         $registers = [];
         $registers[] = ['name' => 'Owner'];
         $registers[] = ['name' => 'Client'];
 
         return view('property-bookings.index')
             ->with('properties', $properties)
+            ->with('propertiesSearch', $propertiesSearch)
             ->with('bookings', $bookings)
             ->with('locations', $locations)
             ->with('registers', $registers)
@@ -118,6 +125,12 @@ class PropertyBookingController extends Controller
             'filterByEnabled' => true,
             'filterByUserId' => \Auth::id(),
         ]);
+
+        $propertiesSearch = $this->propertiesRepository->all('', [
+            'filterByEnabled' => true,
+            'filterByUserId' => \Auth::id(),
+            'paginate' => false,
+        ]);
         $arrivals = $this->getArrivals($search);
         $departures = $this->getDepartures($search);
         $locations = $this->citiesRepository->all('');
@@ -127,6 +140,7 @@ class PropertyBookingController extends Controller
             ->with('departures', $departures)
             ->with('locations', $locations)
             ->with('properties', $properties)
+            ->with('propertiesSearch', $propertiesSearch)
             ->with('search', $search);
     }
 

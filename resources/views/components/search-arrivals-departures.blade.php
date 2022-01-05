@@ -39,7 +39,7 @@
             </select>
         </div>
         @if(isRole('owner'))
-            @if(isset($properties))
+            @if(isset($propertiesSearch))
                 <div class="col-md-2 select-filter">
                     <label for="reservation_id">
                         {{ __('Property') }}
@@ -51,7 +51,7 @@
                         'label' => '',
                         'name' => 'property_id',
                         'value' => isset($_GET['property_id']) ? $_GET['property_id'] : '',
-                        'options' => $properties,
+                        'options' => $propertiesSearch,
                         'optionValueRef' => 'property_id',
                         'optionLabelRef' => 'name',
                         'hideLabel' => true,
