@@ -22,15 +22,14 @@
             <label for="location">
                 {{ __('Location') }}*
             </label>
-
             <select name="location" class="form-control" required>
                 <option value="">{{ __('Select') }}</option>
+                <option value="all" {{ $selectedLocation }}>{{ __('All Cities') }}</option>
                 @if ($locations)
                     @foreach ($locations as $location)
                         @php
                             $selected = $searchedLocation == $location->id ? 'selected' : '';
                         @endphp
-
                         <option value="{{ $location->id }}" {{ $selected }}>
                             {{ $location->name }}
                         </option>

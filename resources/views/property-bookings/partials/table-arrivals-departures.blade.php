@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th colspan="12" class="title-th">
-                    {{ $label_arrivals . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $currentLocation->name }}
+                    {{ $label_arrivals . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $nameLocation }}
                 </th>
             </tr>
             <tr>
@@ -139,7 +139,7 @@
         <thead>
             <tr>
                 <th colspan="12" class="title-th">
-                    {{ $label_departures . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $currentLocation->name }}
+                    {{ $label_departures . ' ' . __('Between') . ' ' . $fromDate . ' ' . __('And') . ' ' . $toDate . ' ' . __('At') . ' ' . $nameLocation }}
                 </th>
             </tr>
             <tr>

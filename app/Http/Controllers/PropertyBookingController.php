@@ -112,7 +112,7 @@ class PropertyBookingController extends Controller
         $tomorrowDate = date('Y-m-d', strtotime('now + 1 day'));
         $fromDate = (isset($request->from_date)) ? $request->from_date : $currentDate;
         $toDate = (isset($request->to_date)) ? $request->to_date : $tomorrowDate;
-        $getLocation = 1;
+        $getLocation = 'all';
         $searchedLocation = isset($request->location) ? $request->location : $getLocation;
         $propertyId = isset($request->property_id) ? $request->property_id : false;
         $search = [
@@ -149,7 +149,7 @@ class PropertyBookingController extends Controller
         $currentDate = date('Y-m-d', strtotime('now'));
         $fromDate = (isset($request->from_date)) ? $request->from_date : $currentDate;
         $endDate = date('Y-m-d', strtotime($fromDate . '+ 13 days'));
-        $getLocation = 1;
+        $getLocation = 'all';
         $searchedLocation = isset($request->location) ? $request->location : $getLocation;
         $search = [
             'from_date' => $fromDate,
@@ -204,7 +204,9 @@ class PropertyBookingController extends Controller
             $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
         });
         $query->whereHas('property', function ($qy) use ($search) {
-            $qy->where('city_id', 'like', '%' . $search['location'] . '%');
+            if($search['location'] != 'all'){
+                $qy->where('city_id', 'like', '%' . $search['location'] . '%');
+            }
             if (isRole('owner')) {
                 $qy->whereHas('users', function ($q) {
                     $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());
@@ -229,7 +231,9 @@ class PropertyBookingController extends Controller
             $query->whereBetween('departure_date', [$search['from_date'], $search['to_date']]);
         });
         $query->whereHas('property', function ($qy) use ($search) {
-            $qy->where('city_id', 'like', '%' . $search['location'] . '%');
+            if($search['location'] != 'all'){
+                $qy->where('city_id', 'like', '%' . $search['location'] . '%');
+            }
             if (isRole('owner')) {
                 $qy->whereHas('users', function ($q) {
                     $q->where('properties_has_users.user_id', UserHelper::getCurrentUserID());

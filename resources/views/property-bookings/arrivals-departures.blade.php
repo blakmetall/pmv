@@ -6,8 +6,14 @@
     $tomorrowDate = date('Y-m-d', strtotime('now + 1 day'));
     $fromDate = (isset($_GET['from_date'])) ? $_GET['from_date'] : $currentDate;
     $toDate = (isset($_GET['to_date'])) ? $_GET['to_date'] : $tomorrowDate;
-    $searchedLocation = isset($_GET['location']) ? $_GET['location'] : 1;
-    $currentLocation = \App\Models\City::find($searchedLocation);
+    $searchedLocation = isset($_GET['location']) ? $_GET['location'] : 'all';
+    if($searchedLocation == 'all'){
+        $nameLocation = __('All Cities');
+    }else{
+        $currentLocation = \App\Models\City::find($searchedLocation);
+        $nameLocation = $currentLocation->name;
+    }
+    $selectedLocation = ($searchedLocation == 'all')?'selected':'';
 @endphp
 
 @section('heading-content')
