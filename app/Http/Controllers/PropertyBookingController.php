@@ -706,11 +706,9 @@ class PropertyBookingController extends Controller
             $this->repository->update($request, $id);
 
             $msg = __('Reservation updated with ID') . ' #' . $booking->id;
-            if(empty($request->arrival_airline) && empty($request->arrival_flight_number) && empty($request->arrival_time) && empty($request->check_in) && empty($request->arrival_notes) && empty($request->departure_airline) && empty($request->departure_flight_number) && empty($request->departure_time) && empty($request->check_out) && empty($request->departure_notes)){
-                $confirmationRecipients = $this->getNotificationEmails($request, $booking);
-                if ($confirmationRecipients) {
-                    $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
-                }
+            $confirmationRecipients = $this->getNotificationEmails($request, $booking);
+            if ($confirmationRecipients) {
+                $msg .= '. ' . __('Email recipients notified:') . ' ' . $confirmationRecipients;
             }
 
             $request->session()->flash('success', $msg);
