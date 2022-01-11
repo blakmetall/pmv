@@ -227,53 +227,55 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             if ($booking->save()) {
                 $sendDefaultEmails = (isProduction() && $request->send_pmv_notification);
 
-                // guest email
-                if ($request->guest) {
-                    $isTeam = false;
-                    sendBookingDetailsEmail($booking, $booking->email, $is_new, $isTeam);
-
-                    if ($booking->alternate_email) {
-                        sendBookingDetailsEmail($booking, $booking->alternate_email, $is_new, $isTeam);
+                if(!$is_new && empty($booking->arrival_airline) && empty($booking->arrival_flight_number) && empty($booking->arrival_time) && empty($booking->check_in) && empty($booking->arrival_notes) && empty($booking->departure_airline) && empty($booking->departure_flight_number) && empty($booking->departure_time) && empty($booking->check_out) && empty($booking->departure_notes)){
+                    // guest email
+                    if ($request->guest) {
+                        $isTeam = false;
+                        sendBookingDetailsEmail($booking, $booking->email, $is_new, $isTeam);
+    
+                        if ($booking->alternate_email) {
+                            sendBookingDetailsEmail($booking, $booking->alternate_email, $is_new, $isTeam);
+                        }
                     }
-                }
-
-                // concierge email
-                if ($request->concierge) {
-                    sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com', $is_new);
-                }
-
-                // office email
-                if ($request->office && $booking->property->office->email) {
-                    sendBookingDetailsEmail($booking, $booking->property->office->email, $is_new);
-                }
-
-                // home owners email
-                if ($request->home_owner) {
-                    $owners = $booking->property->users;
-                    foreach ($owners as $owner) {
-                        sendBookingDetailsEmail($booking, $owner->email, $is_new);
+    
+                    // concierge email
+                    if ($request->concierge) {
+                        sendBookingDetailsEmail($booking, 'concierge@palmeravacations.com', $is_new);
                     }
-                }
-
-                // extra emails
-                if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
-                    sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $is_new);
-                    sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $is_new);
-
-                    if ($booking->register_by == 'Client') {
-                        sendBookingDetailsEmail($booking, 'accounting@palmeravacations.com', $is_new);
+    
+                    // office email
+                    if ($request->office && $booking->property->office->email) {
+                        sendBookingDetailsEmail($booking, $booking->property->office->email, $is_new);
                     }
-                }
-
-                // if booking inside next 24hrs send email to:
-                $arrival = Carbon::create($booking->arrival_date);
-                $now = Carbon::now();
-
-                // extra emails
-                if ($arrival->diffInHours($now) <= 24) {
+    
+                    // home owners email
+                    if ($request->home_owner) {
+                        $owners = $booking->property->users;
+                        foreach ($owners as $owner) {
+                            sendBookingDetailsEmail($booking, $owner->email, $is_new);
+                        }
+                    }
+    
+                    // extra emails
                     if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
-                        sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com', $is_new);
-                        sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com', $is_new);
+                        sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $is_new);
+                        sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $is_new);
+    
+                        if ($booking->register_by == 'Client') {
+                            sendBookingDetailsEmail($booking, 'accounting@palmeravacations.com', $is_new);
+                        }
+                    }
+    
+                    // if booking inside next 24hrs send email to:
+                    $arrival = Carbon::create($booking->arrival_date);
+                    $now = Carbon::now();
+    
+                    // extra emails
+                    if ($arrival->diffInHours($now) <= 24) {
+                        if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
+                            sendBookingDetailsEmail($booking, 'pmd@palmeravacations.com', $is_new);
+                            sendBookingDetailsEmail($booking, 'maidsupervisor@palmeramail.com', $is_new);
+                        }
                     }
                 }
             }

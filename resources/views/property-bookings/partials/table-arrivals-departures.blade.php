@@ -32,6 +32,7 @@
                 <th scope="col" colspan="1">{{ __('Register By') }}</th>
                 @if(!isRole('owner'))
                     <th scope="col" colspan="1">{{ __('Notes') }}</th>
+                    <th scope="col" colspan="1">{{ __('Comments') }}</th>
                 @endif
             </tr>
 
@@ -118,6 +119,10 @@
                         </td>
 
                         @if(!isRole('owner'))
+                            <!-- notes -->
+                            <td>
+                                {!! $arrival->arrival_notes !!}
+                            </td>
                             <!-- comments -->
                             <td>
                                 {!! $arrival->comments !!}
@@ -149,6 +154,7 @@
                 <th scope="col" colspan="1">{{ __('Register By') }}</th>
                 @if(!isRole('owner'))
                     <th scope="col" colspan="1">{{ __('Notes') }}</th>
+                    <th scope="col" colspan="1">{{ __('Comments') }}</th>
                 @endif
             </tr>
 
@@ -233,6 +239,10 @@
                         </td>
 
                         @if(!isRole('owner'))
+                            <!-- notes -->
+                            <td>
+                                {!! $departure->departure_notes !!}
+                            </td>
                             <!-- comments -->
                             <td>
                                 {!! $departure->comments !!}
