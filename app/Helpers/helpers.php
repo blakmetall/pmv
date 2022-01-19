@@ -772,29 +772,30 @@ if (!function_exists('getAvailabilitySimpleProperty')) {
         $bookings = $property->bookings()->orderBy('arrival_date', 'asc')->get();
 
         $daysOc = [];
-        $isFree = false;
         foreach ($bookings as $booking) {
+            $isFree = false;
             // if is same booking compare, then skip
             if (($bookingID != '' && $booking->id == $bookingID) || $booking->is_cancelled) {
                 $isFree = true;
                 continue;
             }
-
+            
             $bookingDays = getDatesFromRange($booking->arrival_date, $booking->departure_date, 'Y-m-d');
 
+            
             foreach ($days as $day) {
                 // allow reservation departure date to be conflicted with arrival date for a different reservation
                 if (($day == $booking->arrival_date || $day == $booking->departure_date)) {
                     continue;
                 }
-
+                
                 if (in_array($day, $bookingDays)) {
                     $daysOc[] = $day;
                     $daysOccupied++;
                 }
             }
         }
-
+        
         if ($daysOccupied == count($days)) {
             $result = 'some';
         } else if ($daysOccupied > 0) {
@@ -802,7 +803,7 @@ if (!function_exists('getAvailabilitySimpleProperty')) {
         } else {
             $result = 'all';
         }
-
+        
         if ($isFree) {
             $result = 'all';
         } else {
