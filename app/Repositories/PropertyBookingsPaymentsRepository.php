@@ -125,7 +125,7 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
 
                                 // send notification about transaction for a property booking payment
                                 if(isProduction()){
-                                    $email = 'cloudzeroxyz@gmail.com';
+                                    $email = 'accounting@palmeravacations.com';
                                 }else{
                                     $email = 'blakmetall@gmail.com';
                                 }
