@@ -58,6 +58,7 @@
 
         <!-- damage_insurance -->
         @include('components.form.input', [
+            'id' => 'booking-payment-damage-insurance',
             'group' => 'payment',
             'label' => __('Damage Insurance'),
             'name' => 'damage_insurance',

@@ -119,13 +119,13 @@ class PropertyBookingsPaymentsRepository implements PropertyBookingsPaymentsRepo
                                 $transaction->transaction_type_id = 18;
                                 $transaction->amount = $request->credit_amount;
                                 $transaction->post_date = $request->post_date;
-                                $transaction->operation_type = 2;
+                                $transaction->operation_type = 1;
                                 $transaction->description = $request->credit_notes;
                                 $transaction->save();
 
                                 // send notification about transaction for a property booking payment
                                 if(isProduction()){
-                                    $email = 'accounting@palmeravacations.com';
+                                    $email = 'cloudzeroxyz@gmail.com';
                                 }else{
                                     $email = 'blakmetall@gmail.com';
                                 }
