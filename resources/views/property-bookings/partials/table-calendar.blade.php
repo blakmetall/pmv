@@ -47,6 +47,9 @@
                                 if($booking->register_by == 'Client' || $booking->register_by == 'Cliente'){
                                     $skipEdit = true;
                                     $skipDestroy = true;
+                                }else if(isRole('operations-assistant') || isRole('concierge') || isRole('rentals')){
+                                    $skipEdit = false;
+                                    $skipDestroy = true;
                                 }else{
                                     $skipEdit = false;
                                     $skipDestroy = false;
@@ -119,7 +122,7 @@
                                             @endif
                                         @endforeach
 
-                                        @if ($propertyUser || isRole('super') || isRole('admin'))
+                                        @if ($propertyUser || isRole('super') || isRole('admin') || isRole('operations-assistant') || isRole('concierge') || isRole('rentals'))
                                             @include('components.table.actions-bookings', [
                                                 'params' => [$booking->id],
                                                 'paymentsRoute' => 'property-booking-payments',
@@ -131,7 +134,7 @@
                                             ])
                                         @endif
                                     @else
-                                        @if ($booking->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin'))
+                                        @if ($booking->property->user->id == \UserHelper::getCurrentUserID() || isRole('super') || isRole('admin') || isRole('operations-assistant') || isRole('concierge') || isRole('rentals'))
                                             @include('components.table.actions-bookings', [
                                                 'params' => [$booking->id],
                                                 'paymentsRoute' => 'property-booking-payments',
