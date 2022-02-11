@@ -80,6 +80,7 @@
 
         <!-- bank_fees -->
         @include('components.form.input', [
+            'id' => 'booking-payment-bank-fees',
             'group' => 'payment',
             'label' => __('Bank Fees'),
             'name' => 'bank_fees',
@@ -90,6 +91,7 @@
 
         <!-- net_comission -->
         @include('components.form.input', [
+            'id' => 'booking-payment-net-comission',
             'group' => 'payment',
             'label' => __('Net Comission'),
             'name' => 'net_comission',
