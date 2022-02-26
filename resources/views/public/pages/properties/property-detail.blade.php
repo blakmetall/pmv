@@ -58,9 +58,6 @@
     @include('public.pages.partials.modal')
 
     <div id="property-details">
-        @if ($property->property->url_video)
-            <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{ $property->property->url_video }}?controls=0" frameborder="0" rel="1" title="YouTube video player" modestbranding="0" allowfullscreen></iframe>
-        @endif
         @if ($property->property->images()->exists())
             <div id="property-gallery-info">
                 <div class="cssload-thecube">
@@ -117,6 +114,9 @@
                     </ul>
                 </div>
             </div>
+        @endif
+        @if ($property->property->url_video)
+            <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{ $property->property->url_video }}?controls=0" frameborder="0" rel="1" title="YouTube video player" modestbranding="0" allowfullscreen></iframe>
         @endif
         @if ($availabilityProperty == 'all')
             <div id="property-rate-info">
