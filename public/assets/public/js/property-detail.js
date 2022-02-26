@@ -116,8 +116,5 @@
             var singleSearchForm = [];
             document.cookie = `singleProperty=${singleSearchForm};path=/`;
         }
-    }else{
-        var singleSearchForm = [];
-        document.cookie = `singleProperty=${singleSearchForm};path=/`;
     }
 })(jQuery)

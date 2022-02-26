@@ -7,8 +7,12 @@
     @php
     $title = __('Reservations');
     $datesProperty = explode(',', $_COOKIE['datesProperty']);
-    $singleProperty = explode(',', $_COOKIE['singleProperty']);
-    if (!empty($singleProperty[0])) {
+    if(isset($_COOKIE['singleProperty'])){
+        $singleProperty = explode(',', $_COOKIE['singleProperty']);
+    }else{
+        $singleProperty = [];
+    }
+    if (isset($_COOKIE['singleProperty']) && !empty($singleProperty[0])) {
         $arrival = $singleProperty[0];
         $arrivalTxt = $singleProperty[1];
         $departure = $singleProperty[2];
