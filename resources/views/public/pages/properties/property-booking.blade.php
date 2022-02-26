@@ -9,7 +9,7 @@
     if(isset($_COOKIE['datesProperty'])){
         $datesProperty = explode(',', $_COOKIE['datesProperty']);
     }else{
-        $currentDay = date('Y-m-d');
+        $currentDay = date('Y-m-d', strtotime('+1 days'));
         $departureDay = date('Y-m-d', strtotime('+7 days'));
         $datesProperty = [$currentDay, $departureDay];
     }
