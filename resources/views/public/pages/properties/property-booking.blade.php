@@ -6,7 +6,13 @@
 
     @php
     $title = __('Reservations');
-    $datesProperty = explode(',', $_COOKIE['datesProperty']);
+    if(isset($_COOKIE['datesProperty'])){
+        $datesProperty = explode(',', $_COOKIE['datesProperty']);
+    }else{
+        $currentDay = date('Y-m-d');
+        $departureDay = date('Y-m-d', strtotime('+7 days'));
+        $datesProperty = [$currentDay, $departureDay];
+    }
     if(isset($_COOKIE['singleProperty'])){
         $singleProperty = explode(',', $_COOKIE['singleProperty']);
     }else{
