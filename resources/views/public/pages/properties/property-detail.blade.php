@@ -51,6 +51,8 @@
         $saving = $propertyRate['totalDays'] * $savingDailyAmount;
     }
 
+    $rates = $property->property->rates->sortBy('end_date');
+    $currentDate = \Carbon\Carbon::now();
     @endphp
 
     @include('public.pages.partials.main-content-start')
@@ -320,10 +322,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($property->property->rates->sortBy('end_date') as $i => $rate)
+                    @foreach ($rates as $i => $rate)
                         @php
+                            $rateStart = \Carbon\Carbon::parse(strtotime($rate->start_date));
+                            $rateEnd = \Carbon\Carbon::parse(strtotime($rate->end_date));
+                            $resultStart = $rateStart->gt($currentDate);
+                            $resultEnd = $rateEnd->gt($currentDate);
                             $startDate = \Carbon\Carbon::parse(strtotime($rate->start_date))->format('d/M/Y');
                             $endDate = \Carbon\Carbon::parse(strtotime($rate->end_date))->format('d/M/Y');
+                            if(!$resultStart && !$resultEnd){
+                                continue;
+                            }
                         @endphp
                         <tr class="{{ $i > 4 ? 'toggle-table-rates' : '' }}">
                             <td>{{ $startDate }} - {{ $endDate }}</td>
