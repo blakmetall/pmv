@@ -29,6 +29,7 @@ class PropertiesValidations extends Validation
             'lot_size' => 'nullable',
             'construction_size' => 'nullable',
             'url_video' => 'nullable',
+            'property_manager' => 'nullable',
         ]);
     }
 

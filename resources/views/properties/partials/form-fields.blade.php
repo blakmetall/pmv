@@ -292,6 +292,14 @@
             'default' => $row->cleaning_staff_ids,
         ])
 
+        <!-- property_manager -->
+        @include('components.form.input', [
+            'group' => 'property',
+            'label' => __('Property Manager'),
+            'name' => 'property_manager',
+            'value' => $row->property_manager
+        ])
+
     </div>
 </div>
 

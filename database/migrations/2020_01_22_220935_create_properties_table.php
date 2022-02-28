@@ -47,6 +47,7 @@ class CreatePropertiesTable extends Migration
             $table->string('gmaps_lon', 30)->nullable();
             $table->tinyInteger('register_completed')->nullable();
             $table->text('cleaning_staff_ids')->nullable();
+            $table->string('property_manager')->nullable();
             $table->timestamps();
         });
     }

@@ -30,6 +30,7 @@ class Property extends Model
         'rental_commission',
         'maid_fee',
         'cleaning_staff_ids',
+        'property_manager',
         'bedrooms',
         'bedding_JSON',
         'baths',
