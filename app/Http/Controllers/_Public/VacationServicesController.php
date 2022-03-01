@@ -74,7 +74,7 @@ class VacationServicesController extends Controller
         }
 
         $balance = $total - $reduced;
-        $secure = 45;
+        $secure = $booking->subtotal_damage_deposit;
         $total = 0;
 
         if ($balance == 0) {

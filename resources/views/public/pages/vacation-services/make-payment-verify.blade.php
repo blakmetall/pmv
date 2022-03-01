@@ -62,7 +62,7 @@
                         <div class="row" style="">
                             <label class="col-sm-12 col-form-label"
                                 style="font-size: 12px;color: #5e7180;margin-bottom: 4px;">
-                                {{ __('$45.00 USD per property plan (Covers up to: $1,500.00 USD)') }}
+                                {{ $booking->damageDeposit->translate()->description }}
                             </label>
                         </div>
                     @endif
