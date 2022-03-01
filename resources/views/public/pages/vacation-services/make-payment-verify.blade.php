@@ -79,7 +79,7 @@
                     <br>
                     <br>
                     @if (!$paid)
-                        {{ priceFormat(45) }} USD
+                        {{ priceFormat($booking->subtotal_damage_deposit) }} USD
                     @endif
                 </td>
             </tr>
