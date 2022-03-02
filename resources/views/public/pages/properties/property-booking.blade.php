@@ -8,10 +8,12 @@
     $title = __('Reservations');
     if(isset($_COOKIE['datesProperty'])){
         $datesProperty = explode(',', $_COOKIE['datesProperty']);
-    }else{
+    }else if($dataProperty){
         $currentDay = date('Y-m-d', strtotime('+1 days'));
+        $currentDayTxt = \Carbon\Carbon::parse(strtotime($currentDay))->format('d/M/Y');
         $departureDay = date('Y-m-d', strtotime('+7 days'));
-        $datesProperty = [$currentDay, $departureDay];
+        $departureDayTxt = \Carbon\Carbon::parse(strtotime($departureDay))->format('d/M/Y');
+        $datesProperty = [$currentDay, $currentDayTxt, $departureDay, $departureDayTxt, 0, 0];
     }
     if(isset($_COOKIE['singleProperty'])){
         $singleProperty = explode(',', $_COOKIE['singleProperty']);
@@ -23,14 +25,14 @@
         $arrivalTxt = $singleProperty[1];
         $departure = $singleProperty[2];
         $departureTxt = $singleProperty[3];
-        $adults = $singleProperty[4] ? $singleProperty[4] : 0;
+        $adults = $singleProperty[4] ? $singleProperty[4] : 1;
         $children = $singleProperty[5] ? $singleProperty[5] : 0;
     } else {
         $arrival = $datesProperty[0];
         $arrivalTxt = $datesProperty[1];
         $departure = $datesProperty[2];
         $departureTxt = $datesProperty[3];
-        $adults = $datesProperty[4] ? $datesProperty[4] : 0;
+        $adults = $datesProperty[4] ? $datesProperty[4] : 1;
         $children = $datesProperty[5] ? $datesProperty[5] : 0;
     }
     

@@ -167,6 +167,22 @@
 				$("#avail-search-form").submit();
 			});
 
+			$("#property-details-form").submit(function(e){
+				arrivalTxt = $('#edit-arrival-sing').val();
+				arrival = new Date(arrivalTxt);
+				arrival = arrival.getFullYear() + "-" + ('0' + (arrival.getMonth()+1)).slice(-2) + "-" + ('0' + arrival.getDate()).slice(-2);
+
+				departureTxt = $('#edit-departure-sing').val();
+				departure = new Date(departureTxt);
+				departure = departure.getFullYear() + "-" + ('0' + (departure.getMonth()+1)).slice(-2) + "-" + ('0' + departure.getDate()).slice(-2);
+
+				adults = $("input[name='adults_sing']").val();
+				children = $("input[name='children_sing']").val();
+
+				// Save session for use in property details
+				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
+			});
+
 			setTimeout(function(){
 				var type = $("select[name='property_type']").val();
 				var type_txt = $("select[name='property_type'] option:selected").text();
@@ -188,7 +204,7 @@
 				var adults = $("input[name='adults']").val();
 				var children = $("input[name='children']").val();
 
-				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
+				/* setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children); */
 				
 				var breadcrumbs = localStorage.getItem('breadcrumbs') || '';
  

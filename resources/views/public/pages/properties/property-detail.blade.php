@@ -19,6 +19,7 @@
         $departureTxt = $_GET['departure_sing'];
         $adults = $_GET['adults_sing'];
         $children = $_GET['children_sing'];
+        $isInnerSearch = true;
         $searchAvailability = [
             'arrival' => $arrival,
             'arrivalTxt' => $arrivalTxt,
@@ -33,6 +34,7 @@
         $departure = $datesProperty[2];
         $departureTxt = $datesProperty[3];
         $searchAvailability = [];
+        $isInnerSearch = false;
     }
     $availabilityProperty = getAvailabilityProperty($property->property_id, $arrival, $departure);
     $nightsDate = \RatesHelper::getTotalBookingDays($arrival, $departure);
