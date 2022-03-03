@@ -139,6 +139,11 @@ class Property extends Model
         return $this->hasMany('App\Models\PropertyManagement');
     }
 
+    public function checkList()
+    {
+        return $this->hasMany('App\Models\PropertyCheckList');
+    }
+
     public function notes()
     {
         return $this->hasMany('App\Models\PropertyNote');

@@ -171,6 +171,17 @@ Route::group(['middleware' => ['web']], function () {
                         Route::post('update/{id}', 'PropertyManagementController@update')->name('property-management.update');
                         Route::get('destroy/{id}', 'PropertyManagementController@destroy')->name('property-management.destroy');
                     });
+
+                    // property: property check list
+                    Route::group(['prefix' => 'property-check-list'], function () {
+                        Route::get('', 'PropertyCheckListController@index')->name('property-check-list');
+                        Route::get('create', 'PropertyCheckListController@create')->name('property-check-list.create');
+                        Route::post('store', 'PropertyCheckListController@store')->name('property-check-list.store');
+                        Route::get('show/{pm}', 'PropertyCheckListController@show')->name('property-check-list.show');
+                        Route::get('edit/{pm}', 'PropertyCheckListController@edit')->name('property-check-list.edit');
+                        Route::post('update/{id}', 'PropertyCheckListController@update')->name('property-check-list.update');
+                        Route::get('destroy/{id}', 'PropertyCheckListController@destroy')->name('property-check-list.destroy');
+                    });
                 });
             });
         });

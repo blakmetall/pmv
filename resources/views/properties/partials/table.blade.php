@@ -216,6 +216,15 @@
                                     </a>
                                 @endif
 
+                                <!-- property check list -->
+                                <a
+                                    href="{{ route('property-check-list', [$row->property->id]) }}"
+                                    class="text-primary app-icon-link"
+                                    title="{{ __('Property Management') }}"
+                                    alt="{{ __('Property Management') }}">
+                                        <i class="nav-icon i-Note font-weight-bold"></i>
+                                </a>
+
                             </td>
 
                             <!-- actions -->
