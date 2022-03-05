@@ -177,8 +177,8 @@ Route::group(['middleware' => ['web']], function () {
                         Route::get('', 'PropertyCheckListController@index')->name('property-check-list');
                         Route::get('create', 'PropertyCheckListController@create')->name('property-check-list.create');
                         Route::post('store', 'PropertyCheckListController@store')->name('property-check-list.store');
-                        Route::get('show/{pm}', 'PropertyCheckListController@show')->name('property-check-list.show');
-                        Route::get('edit/{pm}', 'PropertyCheckListController@edit')->name('property-check-list.edit');
+                        Route::get('show/{checkList}', 'PropertyCheckListController@show')->name('property-check-list.show');
+                        Route::get('edit/{checkList}', 'PropertyCheckListController@edit')->name('property-check-list.edit');
                         Route::post('update/{id}', 'PropertyCheckListController@update')->name('property-check-list.update');
                         Route::get('destroy/{id}', 'PropertyCheckListController@destroy')->name('property-check-list.destroy');
                     });
@@ -588,6 +588,4 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('contact', '_Public\ContactController@index')->name('public.contact');
         Route::post('contact/send-email', '_Public\ContactController@sendEmail')->name('public.contact.send-email');
     });
-
-    
 });

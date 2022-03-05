@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Property');
     }
 
+    public function checkList()
+    {
+        return $this->hasMany('App\Models\PropertyCheckList');
+    }
+
     public function bookings()
     {
         return $this->hasMany('App\Models\PropertyBooking');

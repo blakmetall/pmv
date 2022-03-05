@@ -122,6 +122,15 @@ $property = isset($property) ? $property : false;
                             </a>
                         @endif
 
+                        <!-- property check list -->
+                        @if (!isRole('owner') && can('edit', 'property-check-list'))
+                            <a role="button" href="{{ route('property-check-list', [$property->id]) }}"
+                                class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
+                                title="{{ __('Property Check List') }}" alt="{{ __('Property Check List') }}">
+                                <i class="nav-icon i-Note font-weight-bold"></i>
+                            </a>
+                        @endif
+
                     </div>
                 </div>
 

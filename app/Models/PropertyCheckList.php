@@ -3,20 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\AppModel;
 
 class PropertyCheckList extends Model
 {
 
     use AppModel;
-    use SoftDeletes;
 
     protected $table = 'property_check_list';
     public $timestamps = true;
 
     protected $fillable = [
         'property_id',
+        'user_id',
         'entrance_locks_entry',
         'door_entry',
         'walls_and_trim_entry',
@@ -46,6 +45,7 @@ class PropertyCheckList extends Model
         'lighting_fixtures_dinning_room',
         'windows_dinning_room',
         'electrical_outlets_dinning_room',
+        'comments_dinning_room',
         'ceiling_kitchen',
         'walls_and_trim_kitchen',
         'floor_kitchen',
@@ -101,5 +101,10 @@ class PropertyCheckList extends Model
     public function property()
     {
         return $this->belongsTo('App\Models\Property');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
     }
 }

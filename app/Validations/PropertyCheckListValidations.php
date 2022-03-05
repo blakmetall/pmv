@@ -10,7 +10,7 @@ class PropertyCheckListValidations extends Validation
     public function __construct()
     {
         $validations = [
-            'property_id'       => 'required',
+            'property_id' => 'required',
         ];
 
         $this->setDefaultValidations($validations);
@@ -29,11 +29,6 @@ class PropertyCheckListValidations extends Validation
         }
 
         $validations = array_merge($this->getDefaultValidations(), $eventValidations);
-
-        if (!isRole('owner')) {
-            $validations['arrival_date'] = 'required';
-            $validations['departure_date'] = 'required';
-        }
 
         $this->runValidations($request->all(), $validations, $customValidationMessages);
     }

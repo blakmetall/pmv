@@ -61,7 +61,7 @@ class RoleHelper
                 $roleItem = $role->translations()->where('language_id', $lang->id)->first();
                 $roles[$roleItem->name] = $roleItem;
             }
-            
+
             ksort($roles);
         }
 
@@ -108,118 +108,126 @@ class RoleHelper
         return false;
     }
 
-    public static function can($action = '',  $sectionSlug) {
+    public static function can($action = '',  $sectionSlug)
+    {
         $currentRole = self::current();
 
         $can = false;
-        
-        switch($sectionSlug){
-            // properties
+
+        switch ($sectionSlug) {
+                // properties
             case 'properties':
-                if($action == 'edit') {
-                    $edit_properties = [8,2,6,5,1];
+                if ($action == 'edit') {
+                    $edit_properties = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_properties);
                 }
                 break;
 
-            // property-images
+                // property-images
             case 'property-images':
-                if($action == 'edit') {
-                    $edit_images = [8,2,6,5,1];
+                if ($action == 'edit') {
+                    $edit_images = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_images);
                 }
                 break;
 
-            // property-rates
+                // property-rates
             case 'property-rates':
-                if($action == 'edit') {
-                    $edit_rates = [8,2,6,5,1];
+                if ($action == 'edit') {
+                    $edit_rates = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_rates);
                 }
                 break;
 
-            // property-contacts
+                // property-contacts
             case 'property-contacts':
-                if($action == 'edit') {
-                    $edit_contacts = [8,2,6,5,1];
+                if ($action == 'edit') {
+                    $edit_contacts = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_contacts);
                 }
                 break;
 
-            // property notes
+                // property notes
             case 'property-notes':
-                if($action == 'edit') {
-                    $edit_notes = [8,2,9,14,10,7,6,3,5,1];
+                if ($action == 'edit') {
+                    $edit_notes = [8, 2, 9, 14, 10, 7, 6, 3, 5, 1];
                     $can = in_array($currentRole->id, $edit_notes);
                 }
                 break;
 
-            // property-calendar
+                // property-calendar
             case 'property-calendar':
-                if($action == 'edit') {
-                    $edit_calendar = [8,2,6,5,1];
+                if ($action == 'edit') {
+                    $edit_calendar = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_calendar);
                 }
                 break;
 
-            // property-preview
+                // property-preview
             case 'property-preview':
-                if($action == 'edit') {
-                    $edit_preview = [8,2,6,5,1];
+                if ($action == 'edit') {
+                    $edit_preview = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_preview);
                 }
                 break;
 
-            // property-management
+                // property-management
             case 'property-management':
-                if($action == 'audit') {
-                    $audit_property_management = [1,2];
+                if ($action == 'audit') {
+                    $audit_property_management = [1, 2];
                     $can = in_array($currentRole->id, $audit_property_management);
                 }
 
-                if($action == 'edit') {
-                    $edit_property_management = [8,2,9,6,1];
+                if ($action == 'edit') {
+                    $edit_property_management = [8, 2, 9, 6, 1];
                     $can = in_array($currentRole->id, $edit_property_management);
                 }
                 break;
-            
-            // property-management-transactions
+
+                // property-management-transactions
             case 'property-management-transactions':
-                if($action == 'view') {
-                    $view_property_management = [8,2,9,7,6,1,11];
+                if ($action == 'view') {
+                    $view_property_management = [8, 2, 9, 7, 6, 1, 11];
                     $can = in_array($currentRole->id, $view_property_management);
                 }
                 break;
 
-            // property-bookings
+                // property-bookings
             case 'property-bookings':
-                if($action == 'edit') {
-                    $edit_property_bookings = [8,2,9,10,6,5,1,11];
+                if ($action == 'edit') {
+                    $edit_property_bookings = [8, 2, 9, 10, 6, 5, 1, 11];
                     $can = in_array($currentRole->id, $edit_property_bookings);
                 }
 
-                if($action == 'delete') {
-                    $delete_property_bookings = [1,2];
+                if ($action == 'delete') {
+                    $delete_property_bookings = [1, 2];
                     $can = in_array($currentRole->id, $delete_property_bookings);
                 }
                 break;
 
-            // cleaning-services
+                // property-chec-list
+            case 'property-check-list':
+                if ($action == 'edit') {
+                    $edit_property_check_list = [8, 2, 6, 5, 1];
+                    $can = in_array($currentRole->id, $edit_property_check_list);
+                }
+                break;
+
+                // cleaning-services
             case 'cleaning-services':
-                if($action == 'edit') {
-                    $edit_property_bookings = [8,2,9,14,6,1];
+                if ($action == 'edit') {
+                    $edit_property_bookings = [8, 2, 9, 14, 6, 1];
                     $can = in_array($currentRole->id, $edit_property_bookings);
                 }
                 break;
 
-            // human-resources
+                // human-resources
             case 'human-resources':
-                if($action == 'edit') {
-                    $edit_property_bookings = [8,2,9,13,6,1];
+                if ($action == 'edit') {
+                    $edit_property_bookings = [8, 2, 9, 13, 6, 1];
                     $can = in_array($currentRole->id, $edit_property_bookings);
                 }
                 break;
-            
         }
 
         return $can;

@@ -3,12 +3,13 @@
 namespace App\Repositories;
 
 use App\Helpers\LanguageHelper;
+use App\Models\User;
 use App\Models\PropertyCheckList;
 use App\Validations\PropertyCheckListValidations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
+class PropertyCheckListRepository implements PropertyCheckListRepositoryInterface
 {
     protected $model;
     protected $validation;
@@ -21,33 +22,39 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
     public function all($search = '', $config = [])
     {
-        $lang = LanguageHelper::current();
-
         $shouldPaginate  = isset($config['paginate']) ? $config['paginate'] : true;
         $hasPropertyID   = isset($config['propertyID']) ? $config['propertyID'] : '';
-        $currentYear     = isset($config['currentYear']) ? $config['currentYear'] : '';
+        $filterById      = isset($search['property_id']) ? $search['property_id'] : '';
 
-        if (isset($search['from_date']) && $search['from_date'] != '' || isset($search['to_date']) && $search['to_date'] != '' || isset($search['location']) && $search['location'] != '' || isset($search['register_by']) && $search['register_by']) {
-            $query = PropertyCheckList::query();
-        } else {
-            $query = PropertyCheckList::query();
-            $query->with('property');
+        $query = PropertyCheckList::query();
 
-            if ($search && is_string($search)) {
-                $query->where('property_check_list.id', $search);
-            }
+        if (isset($search['register_by']) && $search['register_by'] != '') {
+            $query->whereHas('user', function ($query) use ($search) {
+                $query->whereHas('profile', function ($query) use ($search) {
+                    $query
+                        ->where('profiles.firstname', 'like', '%' . $search['register_by'] . '%')
+                        ->orWhere('profiles.lastname', 'like', '%' . $search['register_by'] . '%');
+                });
+            });
+        }
+
+        if (isset($search['from_date']) && $search['from_date'] != '') {
+            $query->where(function ($query) use ($search) {
+                if ($search['from_date'] != '') {
+                    $query->whereDate('created_at', $search['from_date']);
+                }
+            });
+        }
+
+        if ($filterById) {
+            $query->where('id', $filterById);
         }
 
         $query->where('property_id', $hasPropertyID);
 
-        if ($currentYear) {
-            $query->whereYear('arrival_date', $currentYear);
-        }
-
         $query->orderBy('created_at', 'desc');
 
         if ($shouldPaginate) {
-            // $result = $query->paginate(9999);
             $result = $query->paginate(config('constants.pagination.per-page'));
         } else {
             $result = $query->get();
@@ -87,20 +94,15 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
 
             $chekList = $this->blueprint();
             $chekList->id = $randomId;
+            $data = [
+                'user_id' => $user->id
+            ];
         } else {
             $chekList = $this->find($id);
+            $data = [];
         }
 
-        $data = [
-            'user_id' => $user->id,
-            'is_confirmed' => 0,
-            'is_paid' => 0,
-            'is_refundable' => 0,
-            'is_cancelled' => 0,
-            'is_finished' => 0,
-            'arrival_transportation' => 0,
-            'departure_transportation' => 0,
-        ];
+
 
         $requestData = array_merge($data, $request->all());
 

@@ -226,6 +226,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            \App\Repositories\PropertyCheckListRepositoryInterface::class,
+            \App\Repositories\PropertyCheckListRepository::class
+        );
+
+        $this->app->bind(
             \App\Repositories\PagesRepositoryInterface::class,
             \App\Repositories\PagesRepository::class
         );
