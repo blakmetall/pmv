@@ -527,13 +527,13 @@
             'default' => $row->lighting_fixtures_kitchen, 
         ])
 
-        <!-- lighting_fixtures_kitchen -->
+        <!-- electrical_outlets_kitchen -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
             'label' => __('Electrical outlets'),
-            'name' => 'lighting_fixtures_kitchen',
+            'name' => 'electrical_outlets_kitchen',
             'values' => $values,
-            'default' => $row->lighting_fixtures_kitchen, 
+            'default' => $row->electrical_outlets_kitchen, 
         ])
 
         <!-- appliances_kitchen -->
