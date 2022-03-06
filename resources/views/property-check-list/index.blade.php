@@ -52,7 +52,7 @@
 
     <!-- here the data is loaded -->
     @include('property-check-list.partials.table', [
-        'label' => __('Notes'),
+        'label' => __('Check List'),
         'rows' => $checkLists
     ])
 

@@ -3,6 +3,26 @@
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('ENTRY') }}</span>
 
+        @if($row->updated_at)
+            <!-- id -->
+            @include('components.form.input', [
+                'group' => 'property-check-list',
+                'label' => __('ID'),
+                'name' => 'check_list_id',
+                'disabled' => true,
+                'value' => $row->id
+            ])
+
+            <!-- date -->
+            @include('components.form.input', [
+                'group' => 'property-check-list',
+                'label' => __('Date'),
+                'name' => 'check_list_id',
+                'disabled' => true,
+                'value' => $row->updated_at->format('d/M/Y H:i:s')
+            ])
+        @endif
+
         <!-- property_id -->
         @include('components.form.input', [
             'group' => 'property-check-list',
@@ -543,6 +563,488 @@
 <div class="card">
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('BEDROOMS') }}</span>
+
+        <div class="container-bedrooms">
+            @if(isset($row->bedrooms) && $row->bedrooms)
+                @php
+                    $bedrooms = json_decode($row->bedrooms, true);
+                @endphp
+                @foreach ($bedrooms as $index => $bedroom)
+                    <div class="container-bedroom card-body">
+                        <span class="badge badge-primary r-badge mb-4">{{ __('labelBedroom') }}</span>
+                        @if(!$disabled)
+                            <div>{!! __('labelLegend') !!}</div>
+                            <br/>
+                        @endif
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelType') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <select name="bedroomsList[{{ $index+1 }}][type_bedroom]" class="form-control">
+                                        <option value="Bedding area" {{ ($bedroom['type_bedroom'] == 'Bedding area')?'selected':'' }}>
+                                            {{ __('labelBedding') }}
+                                        </option>
+                                        <option value="Master bedroom" {{ ($bedroom['type_bedroom'] == 'Master bedroom')?'selected':'' }}>
+                                            {{ __('labelMaster') }}
+                                        </option>
+                                        <option value="Guest bedroom" {{ ($bedroom['type_bedroom'] == 'Guest bedroom')?'selected':'' }}>
+                                            {{ __('labelGuest') }}
+                                        </option>
+                                        <option value="Two bed bedroom" {{ ($bedroom['type_bedroom'] == 'Two bed bedroom')?'selected':'' }}>
+                                            {{ __('labelTwoBed') }}
+                                        </option>
+                                        <option value="Bunk bed bedroom" {{ ($bedroom['type_bedroom'] == 'Bunk bed bedroom')?'selected':'' }}>
+                                            {{ __('labelBunkBed') }}
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelDoor') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][door_bedroom]" {{ (isset($bedroom['door_bedroom']) && $bedroom['door_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][door_bedroom]" {{ (isset($bedroom['door_bedroom']) && $bedroom['door_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][door_bedroom]" {{ (isset($bedroom['door_bedroom']) && $bedroom['door_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelCeiling') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][ceiling_bedroom]" {{ (isset($bedroom['ceiling_bedroom']) && $bedroom['ceiling_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][ceiling_bedroom]" {{ (isset($bedroom['ceiling_bedroom']) && $bedroom['ceiling_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][ceiling_bedroom]" {{ (isset($bedroom['ceiling_bedroom']) && $bedroom['ceiling_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelWalls') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][walls_bedroom]" {{ (isset($bedroom['walls_bedroom']) && $bedroom['walls_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][walls_bedroom]" {{ (isset($bedroom['walls_bedroom']) && $bedroom['walls_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][walls_bedroom]" {{ (isset($bedroom['walls_bedroom']) && $bedroom['walls_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelFloor') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][floor_bedroom]" {{ (isset($bedroom['floor_bedroom']) && $bedroom['floor_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][floor_bedroom]" {{ (isset($bedroom['floor_bedroom']) && $bedroom['floor_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][floor_bedroom]" {{ (isset($bedroom['floor_bedroom']) && $bedroom['floor_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelLighting') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][lighting_bedroom]" {{ (isset($bedroom['lighting_bedroom']) && $bedroom['lighting_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][lighting_bedroom]" {{ (isset($bedroom['lighting_bedroom']) && $bedroom['lighting_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][lighting_bedroom]" {{ (isset($bedroom['lighting_bedroom']) && $bedroom['lighting_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelWindows') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][windows_bedroom]" {{ (isset($bedroom['windows_bedroom']) && $bedroom['windows_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][windows_bedroom]" {{ (isset($bedroom['windows_bedroom']) && $bedroom['windows_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][windows_bedroom]" {{ (isset($bedroom['windows_bedroom']) && $bedroom['windows_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelBed') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][bed_bedroom]" {{ (isset($bedroom['bed_bedroom']) && $bedroom['bed_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][bed_bedroom]" {{ (isset($bedroom['bed_bedroom']) && $bedroom['bed_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][bed_bedroom]" {{ (isset($bedroom['bed_bedroom']) && $bedroom['bed_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelSheets') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][sheets_bedroom]" {{ (isset($bedroom['sheets_bedroom']) && $bedroom['sheets_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][sheets_bedroom]" {{ (isset($bedroom['sheets_bedroom']) && $bedroom['sheets_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][sheets_bedroom]" {{ (isset($bedroom['sheets_bedroom']) && $bedroom['sheets_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelComforters') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][comforters_bedroom]" {{ (isset($bedroom['comforters_bedroom']) && $bedroom['comforters_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][comforters_bedroom]" {{ (isset($bedroom['comforters_bedroom']) && $bedroom['comforters_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][comforters_bedroom]" {{ (isset($bedroom['comforters_bedroom']) && $bedroom['comforters_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelPillows') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][pillows_bedroom]" {{ (isset($bedroom['pillows_bedroom']) && $bedroom['pillows_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][pillows_bedroom]" {{ (isset($bedroom['pillows_bedroom']) && $bedroom['pillows_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][pillows_bedroom]" {{ (isset($bedroom['pillows_bedroom']) && $bedroom['pillows_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelElectronics') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][electronics_bedroom]" {{ (isset($bedroom['electronics_bedroom']) && $bedroom['electronics_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][electronics_bedroom]" {{ (isset($bedroom['electronics_bedroom']) && $bedroom['electronics_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][electronics_bedroom]" {{ (isset($bedroom['electronics_bedroom']) && $bedroom['electronics_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelFurniture') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][furniture_bedroom]" {{ (isset($bedroom['furniture_bedroom']) && $bedroom['furniture_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][furniture_bedroom]" {{ (isset($bedroom['furniture_bedroom']) && $bedroom['furniture_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][furniture_bedroom]" {{ (isset($bedroom['furniture_bedroom']) && $bedroom['furniture_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelElectrical') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][electrical_bedroom]" {{ (isset($bedroom['electrical_bedroom']) && $bedroom['electrical_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][electrical_bedroom]" {{ (isset($bedroom['electrical_bedroom']) && $bedroom['electrical_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][electrical_bedroom]" {{ (isset($bedroom['electrical_bedroom']) && $bedroom['electrical_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelAir') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][air_bedroom]" {{ (isset($bedroom['air_bedroom']) && $bedroom['air_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][air_bedroom]" {{ (isset($bedroom['air_bedroom']) && $bedroom['air_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][air_bedroom]" {{ (isset($bedroom['air_bedroom']) && $bedroom['air_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelRemote') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][remote_bedroom]" {{ (isset($bedroom['remote_bedroom']) && $bedroom['remote_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][remote_bedroom]" {{ (isset($bedroom['remote_bedroom']) && $bedroom['remote_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][remote_bedroom]" {{ (isset($bedroom['remote_bedroom']) && $bedroom['remote_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelComments') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <textarea name="bedroomsList[{{ $index+1 }}][comments_bedroom]" class="form-control ckeditor" rows="3" style="resize: none;">{{ $bedroom['comments_bedroom'] }}</textarea>
+                            </div>
+                        </div>
+                        @if(!$disabled)
+                            <a href="#" class="btn-remove-bedroom btn  btn-secondary m-1">
+                                {{ __('labelRemove') }}
+                            </a>
+                        @endif
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        @if(!$disabled)
+            <a href="#" id="btn-add-bedroom" class="btn  btn-primary m-1">
+                {{ __('Add another bedroom') }}
+            </a>
+        @endif
     </div>
 </div>
 
@@ -553,6 +1055,517 @@
 <div class="card">
     <div class="card-body">
         <span class="badge badge-primary r-badge mb-4">{{ __('BATHROOMS') }}</span>
+
+
+        <div class="container-bathrooms">
+            @if(isset($row->bathrooms) && $row->bathrooms)
+                @php
+                    $bathrooms = json_decode($row->bathrooms, true);
+                @endphp
+                @foreach ($bathrooms as $index => $bathroom)
+                    <div class="container-bathroom card-body">
+                        <span class="badge badge-primary r-badge mb-4">{{ __('labelBathroom') }}</span>
+                        @if(!$disabled)
+                            <div>{!! __('labelLegend') !!}</div>
+                            <br/>
+                        @endif
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelType') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <select name="bathroomsList[{{ $index+1 }}][type_bathroom]" class="form-control">
+                                        <option value="Main bathroom" {{ ($bathroom['type_bathroom'] == 'Main bathroom')?'selected':'' }}>
+                                            {{ __('labelMainBath') }}
+                                        </option>
+                                        <option value="Master bedroom bathroom" {{ ($bathroom['type_bathroom'] == 'Master bedroom bathroom')?'selected':'' }}>
+                                            {{ __('labelMasterBath') }}
+                                        </option>
+                                        <option value="Guest bedroom bathroom" {{ ($bathroom['type_bathroom'] == 'Guest bedroom bathroom')?'selected':'' }}>
+                                            {{ __('labelGuestBath') }}
+                                        </option>
+                                        <option value="Two bed bedroom bathroom" {{ ($bathroom['type_bathroom'] == 'Two bed bedroom bathroom')?'selected':'' }}>
+                                            {{ __('labelTwoBedBath') }}
+                                        </option>
+                                        <option value="Bunk bed bedroom bathroom" {{ ($bathroom['type_bathroom'] == 'Bunk bed bedroom bathroom')?'selected':'' }}>
+                                            {{ __('labelBunkBedBath') }}
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelDoor') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][door_bathroom]" {{ (isset($bathroom['door_bathroom']) && $bathroom['door_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][door_bathroom]" {{ (isset($bathroom['door_bathroom']) && $bathroom['door_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][door_bathroom]" {{ (isset($bathroom['door_bathroom']) && $bathroom['door_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelCeiling') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][ceiling_bathroom]" {{ (isset($bathroom['ceiling_bathroom']) && $bathroom['ceiling_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][ceiling_bathroom]" {{ (isset($bathroom['ceiling_bathroom']) && $bathroom['ceiling_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][ceiling_bathroom]" {{ (isset($bathroom['ceiling_bathroom']) && $bathroom['ceiling_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelWalls') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][walls_bathroom]" {{ (isset($bathroom['walls_bathroom']) && $bathroom['walls_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][walls_bathroom]" {{ (isset($bathroom['walls_bathroom']) && $bathroom['walls_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][walls_bathroom]" {{ (isset($bathroom['walls_bathroom']) && $bathroom['walls_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelFloor') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][floor_bathroom]" {{ (isset($bathroom['floor_bathroom']) && $bathroom['floor_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][floor_bathroom]" {{ (isset($bathroom['floor_bathroom']) && $bathroom['floor_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][floor_bathroom]" {{ (isset($bathroom['floor_bathroom']) && $bathroom['floor_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelCabinet') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][cabinet_bathroom]" {{ (isset($bathroom['cabinet_bathroom']) && $bathroom['cabinet_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][cabinet_bathroom]" {{ (isset($bathroom['cabinet_bathroom']) && $bathroom['cabinet_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][cabinet_bathroom]" {{ (isset($bathroom['cabinet_bathroom']) && $bathroom['cabinet_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelClosets') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][closets_bathroom]" {{ (isset($bathroom['closets_bathroom']) && $bathroom['closets_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][closets_bathroom]" {{ (isset($bathroom['closets_bathroom']) && $bathroom['closets_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][closets_bathroom]" {{ (isset($bathroom['closets_bathroom']) && $bathroom['closets_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelSafety') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][safety_bathroom]" {{ (isset($bathroom['safety_bathroom']) && $bathroom['safety_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][safety_bathroom]" {{ (isset($bathroom['safety_bathroom']) && $bathroom['safety_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][safety_bathroom]" {{ (isset($bathroom['safety_bathroom']) && $bathroom['safety_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelTub') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][tub_bathroom]" {{ (isset($bathroom['tub_bathroom']) && $bathroom['tub_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][tub_bathroom]" {{ (isset($bathroom['tub_bathroom']) && $bathroom['tub_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][tub_bathroom]" {{ (isset($bathroom['tub_bathroom']) && $bathroom['tub_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelLighting') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][lighting_bathroom]" {{ (isset($bathroom['lighting_bathroom']) && $bathroom['lighting_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][lighting_bathroom]" {{ (isset($bathroom['lighting_bathroom']) && $bathroom['lighting_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][lighting_bathroom]" {{ (isset($bathroom['lighting_bathroom']) && $bathroom['lighting_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelWindows') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][windows_bathroom]" {{ (isset($bathroom['windows_bathroom']) && $bathroom['windows_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][windows_bathroom]" {{ (isset($bathroom['windows_bathroom']) && $bathroom['windows_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][windows_bathroom]" {{ (isset($bathroom['windows_bathroom']) && $bathroom['windows_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelSink') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][sink_bathroom]" {{ (isset($bathroom['sink_bathroom']) && $bathroom['sink_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][sink_bathroom]" {{ (isset($bathroom['sink_bathroom']) && $bathroom['sink_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][sink_bathroom]" {{ (isset($bathroom['sink_bathroom']) && $bathroom['sink_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelStock') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][stock_bathroom]" {{ (isset($bathroom['stock_bathroom']) && $bathroom['stock_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][stock_bathroom]" {{ (isset($bathroom['stock_bathroom']) && $bathroom['stock_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][stock_bathroom]" {{ (isset($bathroom['stock_bathroom']) && $bathroom['stock_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelHotTub') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][hottub_bathroom]" {{ (isset($bathroom['hottub_bathroom']) && $bathroom['hottub_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][hottub_bathroom]" {{ (isset($bathroom['hottub_bathroom']) && $bathroom['hottub_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][hottub_bathroom]" {{ (isset($bathroom['hottub_bathroom']) && $bathroom['hottub_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelElectrical') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][electrical_bathroom]" {{ (isset($bathroom['electrical_bathroom']) && $bathroom['electrical_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][electrical_bathroom]" {{ (isset($bathroom['electrical_bathroom']) && $bathroom['electrical_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][electrical_bathroom]" {{ (isset($bathroom['electrical_bathroom']) && $bathroom['electrical_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelShower') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][shower_bathroom]" {{ (isset($bathroom['shower_bathroom']) && $bathroom['shower_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][shower_bathroom]" {{ (isset($bathroom['shower_bathroom']) && $bathroom['shower_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][shower_bathroom]" {{ (isset($bathroom['shower_bathroom']) && $bathroom['shower_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelCarpets') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bathroomsList[{{ $index+1 }}][carpets_bathroom]" {{ (isset($bathroom['carpets_bathroom']) && $bathroom['carpets_bathroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bathroomsList[{{ $index+1 }}][carpets_bathroom]" {{ (isset($bathroom['carpets_bathroom']) && $bathroom['carpets_bathroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bathroomsList[{{ $index+1 }}][carpets_bathroom]" {{ (isset($bathroom['carpets_bathroom']) && $bathroom['carpets_bathroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelComments') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <textarea name="bathroomsList[{{ $index+1 }}][comments_bathroom]" class="form-control ckeditor" rows="3" style="resize: none;">{{ $bathroom['comments_bathroom'] }}</textarea>
+                            </div>
+                        </div>
+                        @if(!$disabled)
+                            <a href="#" class="btn-remove-bathroom btn  btn-secondary m-1">
+                                {{ __('labelRemove') }}
+                            </a>
+                        @endif
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        @if(!$disabled)
+            <a href="#" id="btn-add-bathroom" class="btn  btn-primary m-1">
+                {{ __('Add another bathroom') }}
+            </a>
+        @endif
     </div>
 </div>
 
@@ -798,3 +1811,6 @@
         ])
     </div>
 </div>
+
+<!-- separator -->
+<div class="mb-4"></div>

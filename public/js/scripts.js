@@ -12554,6 +12554,1085 @@ $(function () {
     var breakTag = is_xhtml || typeof is_xhtml === 'undefined' ? '<br/>' : '<br>';
     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
   }
+
+  if($('html')[0].lang == 'en'){
+	var labelLegend      = "Select the bedroom accordingly to what the property has.<br/>* Use 'Main bathroom' for Studios.<br/>* Use 'Master bedroom bathroom' and 'Guest bedroom bathroom' for properties with two bedrooms.";
+	var labelBedroom     = "BEDROOM";
+	var labelBathroom    = "BATHROOM";
+	var labelBedding     = "Bedding area";
+	var labelMaster      = "Master bedroom";
+	var labelGuest       = "Guest bedroom";
+	var labelTwoBed      = "Two bed bedroom";
+	var labelBunkBed     = "Bunk bed bedroom";
+	var labelType        = "Type";
+	var labelMainBath    = "Main bathroom";
+	var labelMasterBath  = "Master bedroom bathroom";
+	var labelGuestBath   = "Guest bedroom bathroom";
+	var labelTwoBedBath  = "Two bed bedroom bathroom";
+	var labelBunkBedBath = "Bunk bed bedroom bathroom";
+	var labelDoor        = "Door";
+	var labelCeiling     = "Ceiling";
+	var labelWalls       = "Walls and trim";
+	var labelFloor       = "Floor";
+	var labelCabinet     = "Cabinets and mirrors";
+	var labelClosets     = "Closet(s)";
+	var labelSafety      = "Safety box (in good condition/working/batteries)";
+	var labelTub         = "Tub, shower, taps, stopper";
+	var labelLighting    = "Lighting fixtures, ceiling fans and light bulbs";
+	var labelWindows     = "Windows, coverings and screens";
+	var labelSink        = "Sink, stopper, taps";
+	var labelStock       = "Stock: Toilet paper, hand soap, shower soap";
+	var labelHotTub      = "Bañera de hidromasaje";
+	var labelBed         = "Bed mattresses/headboards (in good condition/no stains)";
+	var labelSheets      = "Sheets/pillowcases (in good condition and appropriate quantity)";
+	var labelComforters  = "Comforters/blankets (in good condition and appropriate quantity)";
+	var labelPillows     = "Pillows (in good shape and appropriate quantity)";
+	var labelElectronics = "Electronics (TV, alarm clock, etc.)";
+	var labelFurniture   = "Furniture (in good condition)";
+	var labelElectrical  = "Electrical outlets";
+	var labelShower      = "Shower door, floor and walls";
+	var labelCarpets     = "Carpets, mats";
+	var labelAir         = "Air conditioner/cover";
+	var labelRemote      = "All remote controls/batteries";
+	var labelComments    = "Comments";
+	var labelAttention   = "Attention";
+	var labelRemove      = "Remove";
+}else{
+	var labelLegend      = "Seleccione el dormitorio de acuerdo con lo que tiene la propiedad.<br/>* Use 'Área de ropa de cama' para estudios.<br/>* Use 'Dormitorio principal' y 'Habitación de invitados' para propiedades con dos dormitorios.";
+	var labelBedroom     = "HABITACIÓN";
+	var labelBathroom    = "BAÑO";
+	var labelType        = "Tipo";
+	var labelBedding     = "Área de ropa de cama";
+	var labelMaster      = "Recamara principal";
+	var labelGuest       = "Cuarto de huéspedes";
+	var labelTwoBed      = "Dormitorio de dos camas";
+	var labelBunkBed     = "Dormitorio con litera";
+	var labelMainBath    = "Baño principal";
+	var labelMasterBath  = "Baño del dormitorio principal";
+	var labelGuestBath   = "Baño de la habitación de invitados";
+	var labelTwoBedBath  = "Baño de dos dormitorios";
+	var labelBunkBedBath = "Cuarto de baño del dormitorio con literas";
+	var labelDoor        = "Puerta";
+	var labelCeiling     = "Techo";
+	var labelWalls       = "Paredes y molduras";
+	var labelFloor       = "Piso";
+	var labelCabinet     = "Armarios y espejos";
+	var labelClosets     = "Armario(s)";
+	var labelSafety      = "Caja de seguridad (en buen estado/funcionando/baterías)";
+	var labelTub         = "Bañera, ducha, grifería, tapón";
+	var labelLighting    = "Accesorios de iluminación, ventiladores de techo y bombillas";
+	var labelWindows     = "Ventanas, revestimientos y mamparas";
+	var labelSink        = "Fregadero, tapón, grifos";
+	var labelStock       = "Stock: Papel higiénico, jabón de manos, jabón de ducha";
+	var labelHotTub      = "Hot tub";
+	var labelBed         = "Colchones/cabeceros de cama (en buen estado/sin manchas)";
+	var labelSheets      = "Sábanas/fundas de almohada (en buen estado y cantidad adecuada)";
+	var labelComforters  = "Edredones/cobijas (en buen estado y cantidad adecuada)";
+	var labelPillows     = "Almohadas (en buen estado y cantidad adecuada)";
+	var labelElectronics = "Electrónica (TV, despertador, etc.)";
+	var labelFurniture   = "Mobiliario (en buen estado)";
+	var labelElectrical  = "Enchufes electricos";
+	var labelShower      = "Mampara, suelo y paredes de la ducha";
+	var labelCarpets     = "Alfombras, esteras";
+	var labelAir         = "Aire acondicionado/cubierta";
+	var labelRemote      = "Todos los controles remotos/baterías";
+	var labelComments    = "Comentarios";
+	var labelAttention   = "Atención";
+	var labelRemove      = "Remover";
+}
+
+  function addBedroom(container, current){
+	var newItem = $(`<div class="container-bedroom card-body">
+		<span class="badge badge-primary r-badge mb-4">${labelBedroom}</span>
+		<div>${labelLegend}</div>
+		<br/>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelType}
+			</label>
+
+			<div class="col-sm-10">
+				<select name="bedroomsList[${current}][type_bedroom]" class="form-control">
+						<option value="Bedding area">
+							${labelBedding}
+						</option>
+						<option value="Master bedroom">
+							${labelMaster}
+						</option>
+						<option value="Guest bedroom">
+							${labelGuest}
+						</option>
+						<option value="Two bed bedroom">
+							${labelTwoBed}
+						</option>
+						<option value="Bunk bed bedroom">
+							${labelBunkBed}
+						</option>
+				</select>
+            </div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelDoor}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][door_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][door_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][door_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelCeiling}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][ceiling_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][ceiling_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][ceiling_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelWalls}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][walls_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][walls_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][walls_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelFloor}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][floor_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][floor_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][floor_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelLighting}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][lighting_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][lighting_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][lighting_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelWindows}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][windows_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][windows_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][windows_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelBed}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][bed_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][bed_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][bed_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelSheets}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][sheets_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][sheets_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][sheets_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelComforters}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][comforters_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][comforters_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][comforters_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelPillows}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][pillows_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][pillows_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][pillows_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelElectronics}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][electronics_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][electronics_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][electronics_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelFurniture}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][furniture_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][furniture_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][furniture_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelElectrical}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][electrical_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][electrical_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][electrical_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelAir}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][air_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][air_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][air_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelRemote}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][remote_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][remote_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][remote_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">
+				${labelComments}
+			</label>
+
+			<div class="col-sm-10">
+				<textarea name="bedroomsList[${current}][comments_bedroom]" class="form-control ckeditor" rows="3" style="resize: none;"></textarea>
+			</div>
+		</div>
+		<a href="#" class="btn-remove-bedroom btn  btn-secondary m-1">
+            ${labelRemove}
+        </a>
+	</div>`);
+	$(container).append(newItem);
+  }
+
+  $('#btn-add-bedroom').on('click', function(e){
+	e.preventDefault();
+	if($('.container-bedrooms .card-body')){
+		  var currentBedrooms = $('.container-bedrooms .card-body').length;
+		var currentBedroom = currentBedrooms+1;
+	}else{
+		var currentBedroom = 1;
+	}
+	  addBedroom('.container-bedrooms', currentBedroom);
+  });
+
+  $('.btn-remove-bedroom').on('click', function(e){
+	e.preventDefault();
+	$(this).closest('.container-bedroom').remove();
+  });
+
+
+  function addBathroom(container, current){
+	var newItem = $(`<div class="container-bathroom card-body">
+		<span class="badge badge-primary r-badge mb-4">${labelBathroom}</span>
+		<div>${labelLegend}</div>
+		<br/>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelType}
+			</label>
+
+			<div class="col-sm-10">
+				<select name="bathroomsList[${current}][type_bathroom]" class="form-control">
+						<option value="Main bathroom">
+							${labelMainBath}
+						</option>
+						<option value="Master bedroom bathroom">
+							${labelMasterBath}
+						</option>
+						<option value="Guest bedroom bathroom">
+							${labelGuestBath}
+						</option>
+						<option value="Two bed bedroom bathroom">
+							${labelTwoBedBath}
+						</option>
+						<option value="Bunk bed bedroom bathroom">
+							${labelBunkBedBath}
+						</option>
+				</select>
+            </div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelDoor}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][door_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][door_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][door_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelCeiling}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][ceiling_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][ceiling_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][ceiling_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelWalls}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][walls_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][walls_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][walls_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelFloor}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][floor_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][floor_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][floor_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelCabinet}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][cabinet_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][cabinet_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][cabinet_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelClosets}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][closets_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][closets_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][closets_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelSafety}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][safety_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][safety_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][safety_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelTub}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][tub_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][tub_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][tub_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelLighting}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][lighting_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][lighting_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][lighting_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelWindows}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][windows_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][windows_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][windows_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelSink}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][sink_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][sink_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][sink_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelStock}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][stock_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][stock_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][stock_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelHotTub}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][hottub_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][hottub_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][hottub_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelElectrical}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][electrical_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][electrical_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][electrical_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelShower}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][shower_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][shower_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][shower_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelCarpets}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bathroomsList[${current}][carpets_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bathroomsList[${current}][carpets_bathroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bathroomsList[${current}][carpets_bathroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">
+				${labelComments}
+			</label>
+
+			<div class="col-sm-10">
+				<textarea name="bathroomsList[${current}][comments_bathroom]" class="form-control ckeditor" rows="3" style="resize: none;"></textarea>
+			</div>
+		</div>
+		<a href="#" class="btn-remove-bathroom btn  btn-secondary m-1">
+            ${labelRemove}
+        </a>
+	</div>`);
+	$(container).append(newItem);
+  }
+
+    $('#btn-add-bathroom').on('click', function(e){
+		e.preventDefault();
+		if($('.container-bathrooms .card-body')){
+			var currentBathrooms = $('.container-bathrooms .card-body').length;
+			var currentBathroom = currentBathrooms+1;
+		}else{
+			var currentBathroom = 1;
+		}
+		addBathroom('.container-bathrooms', currentBathroom);
+	});
+
+	$('.btn-remove-bathroom').on('click', function(e){
+		e.preventDefault();
+		$(this).closest('.container-bathroom').remove();
+	});
 });
 })();
 

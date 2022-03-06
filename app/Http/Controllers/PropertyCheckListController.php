@@ -78,7 +78,7 @@ class PropertyCheckListController extends Controller
 
         $values = [];
         $values[] = ['label' => 'OK', 'value' => 1];
-        $values[] = ['label' => 'Attention', 'value' => 2];
+        $values[] = ['label' => __('Attention'), 'value' => 2];
         $values[] = ['label' => 'N/A', 'value' => 3];
 
         return view('property-check-list.edit')

@@ -127,7 +127,7 @@ $property = isset($property) ? $property : false;
                             <a role="button" href="{{ route('property-check-list', [$property->id]) }}"
                                 class="btn btn-sm btn-secondary app-icon-link mb-1 mb-sm-0"
                                 title="{{ __('Property Check List') }}" alt="{{ __('Property Check List') }}">
-                                <i class="nav-icon i-Note font-weight-bold"></i>
+                                <i class="nav-icon i-Check font-weight-bold"></i>
                             </a>
                         @endif
 

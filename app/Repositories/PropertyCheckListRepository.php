@@ -82,6 +82,8 @@ class PropertyCheckListRepository implements PropertyCheckListRepositoryInterfac
         $is_new = !$id;
         $user = auth()->user();
 
+        $data = [];
+
         if ($is_new) {
             $randomId = rand(1, 99999999);
             $chekListTmp = $this->model->find($randomId);
@@ -94,15 +96,18 @@ class PropertyCheckListRepository implements PropertyCheckListRepositoryInterfac
 
             $chekList = $this->blueprint();
             $chekList->id = $randomId;
-            $data = [
-                'user_id' => $user->id
-            ];
+            $data['user_id'] = $user->id;
         } else {
             $chekList = $this->find($id);
-            $data = [];
         }
 
+        if ($request->bedroomsList) {
+            $data['bedrooms'] = json_encode($request->bedroomsList);
+        }
 
+        if ($request->bathroomsList) {
+            $data['bathrooms'] = json_encode($request->bathroomsList);
+        }
 
         $requestData = array_merge($data, $request->all());
 
