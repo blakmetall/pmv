@@ -336,7 +336,8 @@
                                 continue;
                             }
                         @endphp
-                        <tr class="{{ $i > 4 ? 'toggle-table-rates' : '' }}">
+                        {{-- <tr class="{{ $i > 4 ? 'toggle-table-rates' : '' }}"> --}}
+                        <tr>
                             <td>{{ $startDate }} - {{ $endDate }}</td>
                             <td>{{ priceFormat($rate->nightly) }}</td>
                             <td>{{ priceFormat($rate->weekly) }}</td>
@@ -348,7 +349,7 @@
             </table>
             <div class="row rates-footer">
                 <div class="col-xs-9"><small><i>* {{ __('All rates in USD tax included.') }}</i></small></div>
-                @if (count($property->property->rates) > 5)
+                {{-- @if (count($property->property->rates) > 5)
                     <div class="col-xs-3 text-right">
                         <small>
                             <a href="# " id="toggle-rates" title="{{ __('More rates') }}"
@@ -356,7 +357,7 @@
                                 class="show-rates">{{ __('More rates') }}</a>
                         </small>
                     </div>
-                @endif
+                @endif --}}
             </div>
         </div>
         <div id="property-calendar-info">
