@@ -120,7 +120,7 @@
             </div>
         @endif
         @if ($property->property->url_video)
-            <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{ $property->property->url_video }}?controls=0" frameborder="0" rel="1" title="YouTube video player" modestbranding="0" allowfullscreen></iframe>
+            <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{ $property->property->url_video }}?controls=0" frameborder="0" rel="1" title="YouTube video player" modestbranding="0" allowfullscreen style="margin-top: 20px"></iframe>
         @endif
         @if ($availabilityProperty == 'all')
             <div id="property-rate-info">
