@@ -16,7 +16,6 @@
         <tbody>
             @if (count($rows))
             @foreach ($rows as $row)
-                    {{ dd($row->city) }}
                     <tr>
 
                         <!-- name -->
