@@ -14,9 +14,9 @@
         </thead>
 
         <tbody>
-            {{ dd($rows) }}
             @if (count($rows))
-                @foreach ($rows as $row)
+            @foreach ($rows as $row)
+                    {{ dd($row->city) }}
                     <tr>
 
                         <!-- name -->
