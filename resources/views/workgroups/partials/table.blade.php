@@ -14,7 +14,7 @@
         </thead>
 
         <tbody>
-
+            {{ dd($rows) }}
             @if (count($rows))
                 @foreach ($rows as $row)
                     <tr>
