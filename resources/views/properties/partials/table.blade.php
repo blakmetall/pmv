@@ -220,8 +220,8 @@
                                 <a
                                     href="{{ route('property-check-list', [$row->property->id]) }}"
                                     class="text-primary app-icon-link"
-                                    title="{{ __('Property Check List') }}"
-                                    alt="{{ __('Property Check List') }}">
+                                    title="{{ __('PM Check List') }}"
+                                    alt="{{ __('PM Check List') }}">
                                         <i class="nav-icon i-Check font-weight-bold"></i>
                                 </a>
 

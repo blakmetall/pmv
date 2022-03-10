@@ -16,6 +16,7 @@
                 @foreach($rows as $row)
                     @php
                         $user = \App\Models\User::find($row->user_id)->profile->full_name;
+                        $skipDelete = isRole('owner') || !can('delete', 'property-check-list') ? true : false;
                     @endphp
                     <tr>
                         <!-- id -->
@@ -29,19 +30,19 @@
                         </td>
 
                         <!-- created -->
-                        <td>{{ $row->created_at }}</td>
+                        <td>{{ $row->created_at->format('d/M/Y H:i:s') }}</td>
 
                         <!-- actions -->
-                        @if (!isRole('owner'))
-                            <td>
-                                @include('components.table.actions', [
-                                'params' => [$row->property->id, $row->id],
-                                'showRoute' => 'property-check-list.show',
-                                'editRoute' => 'property-check-list.edit',
-                                'deleteRoute' => 'property-check-list.destroy',
-                                ])
-                            </td>
-                        @endif
+                        <td>
+                            @include('components.table.actions', [
+                            'params' => [$row->property->id, $row->id],
+                            'showRoute' => 'property-check-list.show',
+                            'editRoute' => 'property-check-list.edit',
+                            'deleteRoute' => 'property-check-list.destroy',
+                            'skipEdit' => isRole('owner'),
+                            'skipDelete' => $skipDelete,
+                            ])
+                        </td>
                     </tr>
                 @endforeach
             @endif

@@ -211,6 +211,10 @@ class RoleHelper
                     $edit_property_check_list = [8, 2, 6, 5, 1];
                     $can = in_array($currentRole->id, $edit_property_check_list);
                 }
+                if ($action == 'delete') {
+                    $delete_property_check_list = [1, 2];
+                    $can = in_array($currentRole->id, $delete_property_check_list);
+                }
                 break;
 
                 // cleaning-services

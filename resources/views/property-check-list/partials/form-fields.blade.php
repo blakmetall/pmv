@@ -377,7 +377,7 @@
         <!-- dish_towels_kitchen -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
-            'label' => __('Dish towels/paper towels'),
+            'label' => __('Stock: Dish towels, paper towels, dish soap, dishwasher soap'),
             'name' => 'dish_towels_kitchen',
             'values' => $values,
             'default' => $row->dish_towels_kitchen, 
@@ -476,7 +476,7 @@
         <!-- door_exterior_kitchen -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
-            'label' => __('Door (exterior)'),
+            'label' => __('Fridge Door (exterior)'),
             'name' => 'door_exterior_kitchen',
             'values' => $values,
             'default' => $row->door_exterior_kitchen, 
@@ -706,6 +706,34 @@
                                 </label>
                                 <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
                                     <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][floor_bedroom]" {{ (isset($bedroom['floor_bedroom']) && $bedroom['floor_bedroom'] == '3')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        N/A
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-2 col-form-label">
+                                {{ __('labelClosets') }}
+                            </label>
+                
+                            <div class="col-sm-10">
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="1" name="bedroomsList[{{ $index+1 }}][closets_bedroom]" {{ (isset($bedroom['closets_bedroom']) && $bedroom['closets_bedroom'] == '1')?'checked':'checked' }}>
+                                    <span class="checkmark app-checkmark"></span>
+                                    <div class="app-form-checkbox-label">
+                                        OK
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="2" name="bedroomsList[{{ $index+1 }}][closets_bedroom]" {{ (isset($bedroom['closets_bedroom']) && $bedroom['closets_bedroom'] == '2')?'checked':'' }}>
+                                    <span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+                                        {{ __('labelAttention') }}
+                                    </div>
+                                </label>
+                                <label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+                                    <input type="radio" value="3" name="bedroomsList[{{ $index+1 }}][closets_bedroom]" {{ (isset($bedroom['closets_bedroom']) && $bedroom['closets_bedroom'] == '3')?'checked':'' }}>
                                     <span class="checkmark app-checkmark"></span>
                                     <div class="app-form-checkbox-label">
                                         N/A

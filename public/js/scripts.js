@@ -12581,8 +12581,8 @@ $(function () {
 	var labelLighting    = "Lighting fixtures, ceiling fans and light bulbs";
 	var labelWindows     = "Windows, coverings and screens";
 	var labelSink        = "Sink, stopper, taps";
-	var labelStock       = "Stock: Toilet paper, hand soap, shower soap";
-	var labelHotTub      = "Bañera de hidromasaje";
+	var labelStock       = "Stock: Toilet paper, hand soap, tissue, odor spray";
+	var labelHotTub      = "Hot tub";
 	var labelBed         = "Bed mattresses/headboards (in good condition/no stains)";
 	var labelSheets      = "Sheets/pillowcases (in good condition and appropriate quantity)";
 	var labelComforters  = "Comforters/blankets (in good condition and appropriate quantity)";
@@ -12623,8 +12623,8 @@ $(function () {
 	var labelLighting    = "Accesorios de iluminación, ventiladores de techo y bombillas";
 	var labelWindows     = "Ventanas, revestimientos y mamparas";
 	var labelSink        = "Fregadero, tapón, grifos";
-	var labelStock       = "Stock: Papel higiénico, jabón de manos, jabón de ducha";
-	var labelHotTub      = "Hot tub";
+	var labelStock       = "Existencias: Papel higiénico, jabón de manos, pañuelos desechables, spray antiolor";
+	var labelHotTub      = "Bañera de hidromasaje";
 	var labelBed         = "Colchones/cabeceros de cama (en buen estado/sin manchas)";
 	var labelSheets      = "Sábanas/fundas de almohada (en buen estado y cantidad adecuada)";
 	var labelComforters  = "Edredones/cobijas (en buen estado y cantidad adecuada)";
@@ -12776,6 +12776,34 @@ $(function () {
 				</label>
 				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
 					<input type="radio" value="3" name="bedroomsList[${current}][floor_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						N/A
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="form-group row mb-3">
+			<label class="col-sm-2 col-form-label">
+				${labelClosets}
+			</label>
+
+			<div class="col-sm-10">
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="1" name="bedroomsList[${current}][closets_bedroom]">
+					<span class="checkmark app-checkmark"></span>
+					<div class="app-form-checkbox-label">
+						OK
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="2" name="bedroomsList[${current}][closets_bedroom]">
+					<span class="checkmark app-checkmark"></span><div class="app-form-checkbox-label">
+						${labelAttention}
+					</div>
+				</label>
+				<label class="checkbox checkbox-primary mb-2" style="display: inline-block; margin-right: 10px">
+					<input type="radio" value="3" name="bedroomsList[${current}][closets_bedroom]">
 					<span class="checkmark app-checkmark"></span>
 					<div class="app-form-checkbox-label">
 						N/A

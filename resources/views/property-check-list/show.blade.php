@@ -21,7 +21,7 @@
         'breadcrumbs' => [
             [
                 'url' => route('property-check-list', [$property->id]),
-                'label' => __('Check List'),
+                'label' => __('PM Check List'),
             ],
         ],
         'actions' => $actions

@@ -19,4 +19,5 @@
     'cancel_route' => 'property-check-list',
     'routeParams' => [$property->id],
     'skipDelete' => isRole('owner'),
+    'skipEdit' => isRole('owner'),
 ])

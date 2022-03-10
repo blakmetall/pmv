@@ -24,7 +24,7 @@
     @endphp
 
     @include('components.heading', [
-        'label' => __('Check List'),
+        'label' => __('PM Check List'),
         'actions' => $actions
     ])
 
@@ -52,7 +52,7 @@
 
     <!-- here the data is loaded -->
     @include('property-check-list.partials.table', [
-        'label' => __('Check List'),
+        'label' => __('PM Check List'),
         'rows' => $checkLists
     ])
 
