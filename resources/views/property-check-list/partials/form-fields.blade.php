@@ -1806,7 +1806,7 @@
         <!-- plants_other -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
-            'label' => __('Plants to be watered and maintenance'),
+            'label' => __('Water plants and check basics (hot water, air conditioners, internet, tv’s cable or streaming apps and safe)'),
             'name' => 'plants_other',
             'values' => $values,
             'default' => $row->plants_other, 
