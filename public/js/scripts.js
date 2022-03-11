@@ -12633,7 +12633,7 @@ $(function () {
 	var labelFurniture   = "Mobiliario (en buen estado)";
 	var labelElectrical  = "Enchufes electricos";
 	var labelShower      = "Mampara, suelo y paredes de la ducha";
-	var labelCarpets     = "Alfombras, esteras";
+	var labelCarpets     = "Alfombras, tapetes";
 	var labelAir         = "Aire acondicionado/cubierta";
 	var labelRemote      = "Todos los controles remotos/baterías";
 	var labelComments    = "Comentarios";

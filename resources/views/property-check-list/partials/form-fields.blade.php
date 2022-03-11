@@ -53,7 +53,7 @@
         <!-- walls_and_trim_entry -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
-            'label' => __('Walls and Trim'),
+            'label' => __('Walls and trim'),
             'name' => 'walls_and_trim_entry',
             'values' => $values,
             'default' => $row->walls_and_trim_entry, 
@@ -134,7 +134,7 @@
         <!-- walls_and_trim_living_room -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
-            'label' => __('Walls and Trim'),
+            'label' => __('Walls and trim'),
             'name' => 'walls_and_trim_living_room',
             'values' => $values,
             'default' => $row->walls_and_trim_living_room, 
@@ -1788,7 +1788,7 @@
         <!-- interior_exterior_plants_other -->
         @include('components.form.radio', [
             'group' => 'property-check-list',
-            'label' => __('Interior/Exterior plants (trimmed, dead leaves removed)'),
+            'label' => __('Interior/Exterior plants (trimmed, dead leaves removed, plague free)'),
             'name' => 'interior_exterior_plants_other',
             'values' => $values,
             'default' => $row->interior_exterior_plants_other, 
