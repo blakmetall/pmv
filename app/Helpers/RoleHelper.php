@@ -208,7 +208,7 @@ class RoleHelper
                 // property-chec-list
             case 'property-check-list':
                 if ($action == 'edit') {
-                    $edit_property_check_list = [8, 2, 6, 5, 1];
+                    $edit_property_check_list = [8, 2, 6, 5, 1, 3];
                     $can = in_array($currentRole->id, $edit_property_check_list);
                 }
                 if ($action == 'delete') {
