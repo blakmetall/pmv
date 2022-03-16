@@ -30,6 +30,7 @@
                         <form class="user-info-from-cookie contact-form user-info-from-cookie-processed"
                             action="{{ route('public.contact.send-email', [App::getLocale()]) }}" method="post" id="contact-site-form"
                             accept-charset="UTF-8">
+                            @csrf
                             <div>
                                 <div class="form-item form-item-name form-type-textfield form-group">
                                     <label class="control-label" for="edit-name">{{ __('Your name') }} <span
