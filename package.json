@@ -17,7 +17,7 @@
         "jquery": "^3.5",
         "laravel-mix": "^6.0.19",
         "lodash": "^4.17.13",
-        "minimist": "^1.2.5",
+        "minimist": "^1.2.6",
         "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
