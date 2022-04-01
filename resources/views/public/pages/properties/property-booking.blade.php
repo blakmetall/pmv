@@ -8,7 +8,7 @@
     $title = __('Reservations');
     if(isset($_COOKIE['datesProperty'])){
         $datesProperty = explode(',', $_COOKIE['datesProperty']);
-    }else if($dataProperty){
+    }else{
         $currentDay = date('Y-m-d', strtotime('+1 days'));
         $currentDayTxt = \Carbon\Carbon::parse(strtotime($currentDay))->format('d/M/Y');
         $departureDay = date('Y-m-d', strtotime('+7 days'));

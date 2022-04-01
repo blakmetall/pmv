@@ -560,9 +560,9 @@ class PropertyController extends Controller
         ];
 
         // if dates for booking not saved in cookies redirect to search results
-        if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
-            return redirect()->route('public.availability-results');
-        }
+        // if (!isset($_COOKIE['datesProperty']) && !isset($_COOKIE['singleProperty'])) {
+        //     return redirect()->route('public.availability-results');
+        // }
 
         return view('public.pages.properties.property-booking')
             ->with('captcha', $captcha)
