@@ -138,6 +138,11 @@ class PropertyController extends Controller
 
         $properties = collect($getProperties)->paginate(config('constants.pagination.per-page'));
 
+        if (isset($_COOKIE['singleProperty'])) {
+            unset($_COOKIE['singleProperty']);
+            setcookie('singleProperty', null, -1, '/');
+        }
+
         return view('public.pages.properties.availability-results')
             ->with('city', $city)
             ->with('bedrooms', (int) $request->bedrooms)
