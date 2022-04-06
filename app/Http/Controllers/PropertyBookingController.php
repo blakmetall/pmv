@@ -204,7 +204,7 @@ class PropertyBookingController extends Controller
             $query->whereBetween('arrival_date', [$search['from_date'], $search['to_date']]);
         });
         $query->whereHas('property', function ($qy) use ($search) {
-            if($search['location'] != 'all'){
+            if ($search['location'] != 'all') {
                 $qy->where('city_id', 'like', '%' . $search['location'] . '%');
             }
             if (isRole('owner')) {
@@ -231,7 +231,7 @@ class PropertyBookingController extends Controller
             $query->whereBetween('departure_date', [$search['from_date'], $search['to_date']]);
         });
         $query->whereHas('property', function ($qy) use ($search) {
-            if($search['location'] != 'all'){
+            if ($search['location'] != 'all') {
                 $qy->where('city_id', 'like', '%' . $search['location'] . '%');
             }
             if (isRole('owner')) {
@@ -886,6 +886,16 @@ class PropertyBookingController extends Controller
             foreach ($owners as $owner) {
                 $emails[] = $owner->email;
             }
+        }
+
+        // concierge
+        if ($request->reservations) {
+            $emails[] = 'reservations@palmeravacations.com';
+        }
+
+        // maid supervisor
+        if ($request->maid_supervisor) {
+            $emails[] = 'maidsupervisor@palmeravacations.com';
         }
 
         // extra emails

@@ -652,6 +652,22 @@
                     'value' => 1,
                     ])
 
+                    <!-- reservations_notification -->
+                    @include('components.form.checkbox-horizontal', [
+                    'group' => 'notification',
+                    'label' => __('Reservations'),
+                    'name' => 'reservations',
+                    'value' => 1,
+                    ])
+
+                    <!-- maid_supervisor_notification -->
+                    @include('components.form.checkbox-horizontal', [
+                    'group' => 'notification',
+                    'label' => __('Maid Supervisor'),
+                    'name' => 'maid_supervisor',
+                    'value' => 1,
+                    ])
+
                     @include('components.form.checkbox-horizontal', [
                     'group' => 'notification',
                     'label' => __('Do not send any other notification'),
@@ -720,6 +736,22 @@
                     'group' => 'notification',
                     'label' => __('Home Owner'),
                     'name' => 'home_owner',
+                    'value' => 1,
+                    ])
+
+                    <!-- reservations_notification -->
+                    @include('components.form.checkbox-horizontal', [
+                    'group' => 'notification',
+                    'label' => __('Reservations'),
+                    'name' => 'reservations',
+                    'value' => 1,
+                    ])
+
+                    <!-- maid_supervisor_notification -->
+                    @include('components.form.checkbox-horizontal', [
+                    'group' => 'notification',
+                    'label' => __('Maid Sup'),
+                    'name' => 'maid_supervisor',
                     'value' => 1,
                     ])
 

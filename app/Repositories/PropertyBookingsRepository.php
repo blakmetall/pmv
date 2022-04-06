@@ -227,7 +227,7 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
             if ($booking->save()) {
                 $sendDefaultEmails = (isProduction() && $request->send_pmv_notification);
 
-                
+
                 // guest email
                 if ($request->guest) {
                     $isTeam = false;
@@ -255,23 +255,23 @@ class PropertyBookingsRepository implements PropertyBookingsRepositoryInterface
                         sendBookingDetailsEmail($booking, $owner->email, $is_new);
                     }
                 }
-                
 
-                if(empty($booking->arrival_airline) && empty($booking->arrival_flight_number) && empty($booking->arrival_time) && empty($booking->check_in) && empty($booking->arrival_notes) && empty($booking->departure_airline) && empty($booking->departure_flight_number) && empty($booking->departure_time) && empty($booking->check_out) && empty($booking->departure_notes)){
+
+                if (empty($booking->arrival_airline) && empty($booking->arrival_flight_number) && empty($booking->arrival_time) && empty($booking->check_in) && empty($booking->arrival_notes) && empty($booking->departure_airline) && empty($booking->departure_flight_number) && empty($booking->departure_time) && empty($booking->check_out) && empty($booking->departure_notes)) {
                     // extra emails
                     if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
                         sendBookingDetailsEmail($booking, 'reservaciones@palmeravacations.com', $is_new);
                         sendBookingDetailsEmail($booking, 'info@palmeravacations.com', $is_new);
-    
+
                         if ($booking->register_by == 'Client') {
                             sendBookingDetailsEmail($booking, 'accounting@palmeravacations.com', $is_new);
                         }
                     }
-    
+
                     // if booking inside next 24hrs send email to:
                     $arrival = Carbon::create($booking->arrival_date);
                     $now = Carbon::now();
-    
+
                     // extra emails
                     if ($arrival->diffInHours($now) <= 24) {
                         if (isProduction() && (!$request->disable_default_email || $sendDefaultEmails)) {
