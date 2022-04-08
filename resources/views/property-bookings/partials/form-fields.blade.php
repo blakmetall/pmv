@@ -186,7 +186,7 @@
             'name' => 'arrival_date',
             'required' => true,
             'value' => isset($_GET['arrival']) ? $_GET['arrival'] : $row->arrival_date,
-            'maxDaysLimitFromNow' => 4000,
+            'maxDaysLimitFromNow' => 3600,
             'readOnly' => (isRole('owner')) ? true : false,
         ])
         
@@ -197,7 +197,7 @@
             'name' => 'departure_date',
             'required' => true,
             'value' => isset($_GET['departure']) ? $_GET['departure'] : $row->departure_date,
-            'maxDaysLimitFromNow' => 4000,
+            'maxDaysLimitFromNow' => 3600,
             'readOnly' => (isRole('owner')) ? true : false,
         ])
 

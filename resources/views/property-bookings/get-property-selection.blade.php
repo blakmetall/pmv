@@ -15,7 +15,7 @@
             'label' => __('Arrival Date'),
             'name' => 'arrival_date',
             'required' => true,
-            'maxDaysLimitFromNow' => 4000,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         <!-- departure_date -->
@@ -24,7 +24,7 @@
             'label' => __('Departure Date'),
             'name' => 'departure_date',
             'required' => true,
-            'maxDaysLimitFromNow' => 4000,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         @include('components.form.select', [

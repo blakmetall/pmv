@@ -625,6 +625,7 @@ function initDatepickerComponents() {
   $(".app-input-datepicker").each(function () {
     var dateFormat = $(this).data("format");
     var maxDaysLimitFromNow = $(this).data("max-days-limit-from-now");
+	var minDate = new Date(parseInt('2000'),parseInt('1'),parseInt('01'));
     var maxSelectionDate = new Date();
     maxSelectionDate.setDate(maxSelectionDate.getDate() + parseInt(maxDaysLimitFromNow));
 
@@ -633,7 +634,7 @@ function initDatepickerComponents() {
 
       $(this).pickadate((_$$pickadate = {
         selectYears: true
-      }, _defineProperty(_$$pickadate, "selectYears", 70), _defineProperty(_$$pickadate, "selectMonths", true), _defineProperty(_$$pickadate, "format", dateFormat), _defineProperty(_$$pickadate, "formatSubmit", dateFormat), _defineProperty(_$$pickadate, "max", maxSelectionDate), _defineProperty(_$$pickadate, "onSet", function onSet(context) {
+      }, _defineProperty(_$$pickadate, "selectYears", 70), _defineProperty(_$$pickadate, "selectMonths", true), _defineProperty(_$$pickadate, "format", dateFormat), _defineProperty(_$$pickadate, "formatSubmit", dateFormat), _defineProperty(_$$pickadate, "min", minDate), _defineProperty(_$$pickadate, "max", maxSelectionDate), _defineProperty(_$$pickadate, "onSet", function onSet(context) {
         var date = new Date(context.select * 1000).getDay();
         var propertyID = $("#field_cleaning-service_property_id_").val() || false; // getBonus(propertyID, date);
       }), _$$pickadate));

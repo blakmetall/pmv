@@ -21,7 +21,7 @@
             'name' => 'date',
             'required' => true,
             'value' => $row->date,
-            'maxDaysLimitFromNow' => 365,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         <!-- status -->

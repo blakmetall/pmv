@@ -23,7 +23,7 @@
             'name' => 'start_date',
             'value' => $row->start_date,
             'required' => true,
-            'maxDaysLimitFromNow' => 1000,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         <!-- end_date -->
@@ -32,7 +32,7 @@
             'label' => __('End Date'),
             'name' => 'end_date',
             'value' => $row->end_date,
-            'maxDaysLimitFromNow' => 4000,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         <!-- management_fee -->

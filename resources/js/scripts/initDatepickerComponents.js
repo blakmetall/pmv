@@ -4,6 +4,7 @@ export function initDatepickerComponents() {
     $(".app-input-datepicker").each(function() {
         var dateFormat = $(this).data("format");
         var maxDaysLimitFromNow = $(this).data("max-days-limit-from-now");
+        var minDate = new Date(2000,1,01);
 
         var maxSelectionDate = new Date();
         maxSelectionDate.setDate(
@@ -17,6 +18,7 @@ export function initDatepickerComponents() {
                 selectMonths: true,
                 format: dateFormat,
                 formatSubmit: dateFormat,
+                min: minDate,
                 max: maxSelectionDate,
                 onSet: function(context) {
                     let date = new Date(context.select * 1000).getDay();

@@ -66,7 +66,7 @@
             'label' => __('Date'),
             'name' => 'post_date',
             'value' => $row->post_date,
-            'maxDaysLimitFromNow' => 360,
+            'maxDaysLimitFromNow' => 3600,
             'required' => true,
         ])
 
@@ -76,7 +76,7 @@
             'label' => __('Period Start Date'),
             'name' => 'period_start_date',
             'value' => $row->period_start_date,
-            'maxDaysLimitFromNow' => 360,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         <!-- period_end_date -->
@@ -85,7 +85,7 @@
             'label' => __('Period End Date'),
             'name' => 'period_end_date',
             'value' => $row->period_end_date,
-            'maxDaysLimitFromNow' => 730,
+            'maxDaysLimitFromNow' => 3600,
         ])
 
         <!-- description -->
