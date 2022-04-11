@@ -231,8 +231,18 @@ class PropertyController extends Controller
             $datesProperty[3] = $currentDateDepartureText;
             $datesProperty[4] = 1;
             // return redirect()->route('public.availability-results', [App::getLocale()]);
-        } else {
+        } else if (isset($_COOKIE['datesProperty'])) {
             $datesProperty = explode(',', $_COOKIE['datesProperty']);
+        } else {
+            $currentDateArrival = date('Y-m-d');
+            $currentDateArrivalText = date('D d/M/Y');
+            $currentDateDeparture = date('Y-m-d', strtotime($currentDateArrival . " + 7 day"));
+            $currentDateDepartureText = date('D d/M/Y', strtotime($currentDateArrival . " + 7 day"));
+            $datesProperty[0] = $currentDateArrival;
+            $datesProperty[1] = $currentDateArrivalText;
+            $datesProperty[2] = $currentDateDeparture;
+            $datesProperty[3] = $currentDateDepartureText;
+            $datesProperty[4] = 1;
         }
 
         $amenities = $this->amenitiesRepository->all('', $config);
