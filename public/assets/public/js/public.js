@@ -2617,6 +2617,13 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 					getZones(txtCity, $("select[name='city'] option:selected"));
 				}
 			}
+
+      function convertDate(d){
+        var newD = d.substring(d.indexOf(" ") + 1);
+        var parts = newD.split("/");
+        var months = {Jan: "01",Feb: "02",Mar: "03",Apr: "04",May: "05",Jun: "06",Jul: "07",Aug: "08",Sep: "09",Oct: "10",Nov: "11",Dec: "12",Ene: "01",Abr: "04",Ago: "08",Dic: "12"};
+        return parts[2]+"-"+months[parts[1]]+"-"+parts[0];
+      }
 			
 			$("#avail-search-form").submit(function(e){
 				var petFriendly = ($("input[name='pet_friendly']").is(":checked"))?true:false;
@@ -2645,16 +2652,12 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 				// departureTxt = $('#edit-departure').val();
 				// departure = moment(departureTxt).format('YYYY-MM-DD');
 
+        
 				arrivalTxt = $('#edit-arrival').val();
-				console.log(arrivalTxt);
-				arrival = new Date(arrivalTxt);
-				console.log(arrival);
-				arrival = arrival.getFullYear() + "-" + ('0' + (arrival.getMonth()+1)).slice(-2) + "-" + ('0' + arrival.getDate()).slice(-2);
-				console.log(arrival);
+				arrival = convertDate(arrivalTxt);
 
 				departureTxt = $('#edit-departure').val();
-				departure = new Date(departureTxt);
-				departure = departure.getFullYear() + "-" + ('0' + (departure.getMonth()+1)).slice(-2) + "-" + ('0' + departure.getDate()).slice(-2);
+				departure = convertDate(departureTxt);
 
 				adults = $("input[name='adults']").val();
 				children = $("input[name='children']").val();
@@ -2686,13 +2689,11 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			});
 
       $("#property-details-form").submit(function(e){
-				arrivalTxt = $('#edit-arrival-sing').val();
-				arrival = new Date(arrivalTxt);
-				arrival = arrival.getFullYear() + "-" + ('0' + (arrival.getMonth()+1)).slice(-2) + "-" + ('0' + arrival.getDate()).slice(-2);
+				arrivalTxt = $('#edit-arrival').val();
+				arrival = convertDate(arrivalTxt);
 
-				departureTxt = $('#edit-departure-sing').val();
-				departure = new Date(departureTxt);
-				departure = departure.getFullYear() + "-" + ('0' + (departure.getMonth()+1)).slice(-2) + "-" + ('0' + departure.getDate()).slice(-2);
+				departureTxt = $('#edit-departure').val();
+				departure = convertDate(departureTxt);
 
 				adults = $("input[name='adults_sing']").val();
 				children = $("input[name='children_sing']").val();
