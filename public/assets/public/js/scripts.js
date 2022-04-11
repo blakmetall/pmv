@@ -133,7 +133,9 @@
 				arrivalTxt = $('#edit-arrival').val();
 				console.log(arrivalTxt);
 				arrival = new Date(arrivalTxt);
+				console.log(arrival);
 				arrival = arrival.getFullYear() + "-" + ('0' + (arrival.getMonth()+1)).slice(-2) + "-" + ('0' + arrival.getDate()).slice(-2);
+				console.log(arrival);
 
 				departureTxt = $('#edit-departure').val();
 				departure = new Date(departureTxt);
