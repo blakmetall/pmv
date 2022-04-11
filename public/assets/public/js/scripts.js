@@ -120,23 +120,23 @@
 			
 				bedrooms = $("input[name='bedrooms']").val();
 				
-				// arrival = $("input[name='arrival']").val();
-
-				// arrivalTxt = $('#edit-arrival').val();
-				// arrival = moment(arrivalTxt).format('YYYY-MM-DD');
-
-				// departure = $("input[name='departure']").val();
-
-				// departureTxt = $('#edit-departure').val();
-				// departure = moment(departureTxt).format('YYYY-MM-DD');
+				arrival = $("input[name='arrival']").val();
 
 				arrivalTxt = $('#edit-arrival').val();
-				arrival = new Date(arrivalTxt);
-				arrival = arrival.getFullYear() + "-" + ('0' + (arrival.getMonth()+1)).slice(-2) + "-" + ('0' + arrival.getDate()).slice(-2);
+				arrival = moment(arrivalTxt).format('YYYY-MM-DD');
+
+				departure = $("input[name='departure']").val();
 
 				departureTxt = $('#edit-departure').val();
-				departure = new Date(departureTxt);
-				departure = departure.getFullYear() + "-" + ('0' + (departure.getMonth()+1)).slice(-2) + "-" + ('0' + departure.getDate()).slice(-2);
+				departure = moment(departureTxt).format('YYYY-MM-DD');
+
+				// arrivalTxt = $('#edit-arrival').val();
+				// arrival = new Date(arrivalTxt);
+				// arrival = arrival.getFullYear() + "-" + ('0' + (arrival.getMonth()+1)).slice(-2) + "-" + ('0' + arrival.getDate()).slice(-2);
+
+				// departureTxt = $('#edit-departure').val();
+				// departure = new Date(departureTxt);
+				// departure = departure.getFullYear() + "-" + ('0' + (departure.getMonth()+1)).slice(-2) + "-" + ('0' + departure.getDate()).slice(-2);
 
 				adults = $("input[name='adults']").val();
 				children = $("input[name='children']").val();
@@ -156,6 +156,9 @@
 					adultsOnly: adultsOnly,
 					beachFront: beachFront,
 				};
+
+				console.log(arrival);
+				console.log(arrivalTxt);
 
 				// Save session for use in property details
 				setDatesProperty(arrival, arrivalTxt, departure, departureTxt, adults, children);
