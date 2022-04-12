@@ -13,7 +13,7 @@ use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Models\PropertyBooking;
 use App\Models\PropertyTypeTranslation;
-
+use Mockery\Undefined;
 
 if (!function_exists('prepareFormInputName')) {
     function prepareFormInputName($name, $parentName, $lang)
@@ -300,6 +300,14 @@ if (!function_exists('getDatesFromRange')) {
         // Variable that store the date interval 
         // of period 1 day 
         $interval = new DateInterval('P1D');
+
+        if(!$end || $end == '') {
+            $end = Carbon::now();
+        }
+
+        if(!$start || $start == ''){
+            $start = Carbon::now();
+        }
 
         $realEnd = new DateTime($end);
         $realEnd->add($interval);

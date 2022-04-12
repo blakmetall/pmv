@@ -2689,10 +2689,10 @@ Function&&Function.prototype&&Function.prototype.bind&&(/(MSIE ([6789]|10|11))|T
 			});
 
       $("#property-details-form").submit(function(e){
-				arrivalTxt = $('#edit-arrival').val();
+				arrivalTxt = $('#edit-arrival-sing').val();
 				arrival = convertDate(arrivalTxt);
 
-				departureTxt = $('#edit-departure').val();
+				departureTxt = $('#edit-departure-sing').val();
 				departure = convertDate(departureTxt);
 
 				adults = $("input[name='adults_sing']").val();
