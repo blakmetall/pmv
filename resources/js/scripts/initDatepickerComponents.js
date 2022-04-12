@@ -3,8 +3,13 @@ import { getBonus } from "./getBonus.js";
 export function initDatepickerComponents() {
     $(".app-input-datepicker").each(function() {
         var dateFormat = $(this).data("format");
+        var nameInput = $(this).attr("name");
         var maxDaysLimitFromNow = $(this).data("max-days-limit-from-now");
-        var minDate = new Date(2000,1,01);
+        if(nameInput  == 'birthday'){
+            var minDate = new Date(1900,1,01);
+        }else{
+            var minDate = new Date(2000,1,01);
+        }
 
         var maxSelectionDate = new Date();
         maxSelectionDate.setDate(

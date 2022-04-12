@@ -624,8 +624,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function initDatepickerComponents() {
   $(".app-input-datepicker").each(function () {
     var dateFormat = $(this).data("format");
+	var nameInput = $(this).attr("name");
     var maxDaysLimitFromNow = $(this).data("max-days-limit-from-now");
-	var minDate = new Date(parseInt('2000'),parseInt('1'),parseInt('01'));
+	if(nameInput  == 'birthday'){
+		var minDate = new Date(parseInt('1900'),parseInt('1'),parseInt('01'));
+	}else{
+		var minDate = new Date(parseInt('2000'),parseInt('1'),parseInt('01'));
+	}
     var maxSelectionDate = new Date();
     maxSelectionDate.setDate(maxSelectionDate.getDate() + parseInt(maxDaysLimitFromNow));
 
