@@ -23,6 +23,7 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
     public function all($search = '', $config = [])
     {
         $shouldPaginate = isset($config['paginate']) ? $config['paginate'] : true;
+        $disableNone      = isset($config['disableNone']) ? $config['disableNone'] : false;
 
         $lang = LanguageHelper::current();
         
@@ -35,12 +36,15 @@ class DamageDepositsRepository implements DamageDepositsRepositoryInterface
         $query
             ->where('language_id', $lang->id)
             ->with('damageDeposit')
-            ->orderBy('id', 'asc');
+            ->orderBy('order_damage', 'asc');
 
         if($shouldPaginate) {
             $result = $query->paginate( config('constants.pagination.per-page') );
         }else{
             $result = $query->get();
+        }
+        if($disableNone){
+            $result->shift();
         }
         
         return $result;

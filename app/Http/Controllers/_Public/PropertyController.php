@@ -326,12 +326,13 @@ class PropertyController extends Controller
 
         $config = ['filterBySlug' => $slug, 'paginate' => false];
         $property = $this->propertiesRepository->all('', $config)[0];
+        $configDamage = ['disableNone' => true];
 
         SEOTools::setTitle($property->name . ' - ' . 'Palmera Vacations');
         SEOTools::setDescription(getSubstring(removeP($property->description), 120));
         SEOTools::opengraph()->setUrl(url()->full());
 
-        $damageDeposits = $this->damagesDepositsRepository->all('');
+        $damageDeposits = $this->damagesDepositsRepository->all('', $configDamage);
 
         $countries = [
             "Afghanistan",
