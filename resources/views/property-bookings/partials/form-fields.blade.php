@@ -236,6 +236,7 @@
                 'options' => $damageDeposits,
                 'optionValueRef' => 'damage_deposit_id',
                 'optionLabelRef' => 'description',
+                'required' => true,
             ])
         @endif
 
