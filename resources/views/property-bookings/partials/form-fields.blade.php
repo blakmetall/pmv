@@ -237,6 +237,7 @@
                 'optionValueRef' => 'damage_deposit_id',
                 'optionLabelRef' => 'description',
                 'required' => true,
+                'disableDefaultOption' => true,
             ])
         @endif
 
