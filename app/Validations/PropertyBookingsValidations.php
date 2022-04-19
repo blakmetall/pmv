@@ -18,7 +18,6 @@ class PropertyBookingsValidations extends Validation
             'adults'            => 'required',
             'adults'            => 'required',
             'register_by'       => 'required',
-            'damage_deposit_id' => 'required',
         ];
 
         $this->setDefaultValidations($validations);
