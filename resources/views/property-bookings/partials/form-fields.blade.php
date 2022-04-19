@@ -236,7 +236,6 @@
                 'options' => $damageDeposits,
                 'optionValueRef' => 'damage_deposit_id',
                 'optionLabelRef' => 'description',
-                'required' => true,
                 'disableDefaultOption' => true,
             ])
         @endif
@@ -558,6 +557,7 @@
         'options' => $registers,
         'optionValueRef' => 'name',
         'required' => true,
+        'disableDefaultOption' => true,
         ])
         
         @if (!isRole('owner'))  
