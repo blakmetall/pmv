@@ -51,8 +51,9 @@
                         $occupants = __('Occupants:') . ' ' . $arrival->adults . ' ' . __('Adults') . ' - ' . ceil($arrival->kids) . ' ' . __('Children');
                         $managed = !$arrival->property->management->isEmpty() ? __('MANAGED') : '';
                         $flight = $arrival->arrival_airline . ' ' . $arrival->arrival_flight_number;
+                        $arrival_time = $arrival->arrival_time;
                         $arrival_transportation = $arrival->arrival_transportation ? __('YES') : __('NO');
-                        $transportation = __('Transportation') . '? ' . $arrival_transportation;
+                        $transportation = $arrival_transportation;
                         $booked = $arrival->created_at;
                         if ($arrival->user()->exists()) {
                             $owner = $arrival->user->profile->full_name;
@@ -104,6 +105,7 @@
                         <!-- flight -->
                         <td>
                             {{ $flight }}<br />
+                            {{ $arrival_time }}<br />
                             {{ $transportation }}
                         </td>
 
@@ -173,8 +175,9 @@
                         $occupants = __('Occupants:') . ' ' . $departure->adults . ' ' . __('Adults') . ' - ' . ceil($departure->kids) . ' ' . __('Children');
                         $managed = !$departure->property->management->isEmpty() ? __('MANAGED') : '';
                         $flight = $departure->departure_airline . ' ' . $departure->departure_flight_number;
+                        $departure_time = $departure->departure_time;
                         $departure_transportation = $departure->departure_transportation ? __('YES') : __('NO');
-                        $transportation = __('Transportation') . '? ' . $departure_transportation;
+                        $transportation = $departure_transportation;
                         $booked = $departure->created_at;
                         $owner = $departure->user->profile->full_name;
                     @endphp
@@ -224,6 +227,7 @@
                         <!-- flight -->
                         <td>
                             {{ $flight }}<br />
+                            {{ $departure_time }}<br />
                             {{ $transportation }}
                         </td>
 
