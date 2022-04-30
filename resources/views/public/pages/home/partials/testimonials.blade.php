@@ -18,7 +18,7 @@
                                                 <div class="field-content">
                                                     <a
                                                         href="{{ route('public.about.testimonial', [App::getLocale(), $testimonial->testimonial_id]) }}">
-                                                        {!! getSubstring($testimonial->description, 150) !!}
+                                                        {!! getSubstring(strip_tags(html_entity_decode($testimonial->description)), 150) !!}
                                                     </a>
                                                 </div>
                                             </div>

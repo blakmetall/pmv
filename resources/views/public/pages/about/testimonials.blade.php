@@ -27,7 +27,7 @@
                                                         <div class="field-content testimonial-list-item">
                                                             <a
                                                                 href="{{ route('public.about.testimonial', [App::getLocale(), $testimonial->testimonial_id]) }}">
-                                                                {!! $testimonial->description !!}
+                                                                {!! strip_tags(html_entity_decode($testimonial->description)) !!}
                                                             </a>
                                                         </div>
                                                     </div>
