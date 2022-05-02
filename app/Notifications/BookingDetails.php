@@ -119,6 +119,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('RESERVATION NAME: ' . $this->booking->full_name));
             $mailMsg->line(new HtmlString('DATES: ' . getReadableDate($this->booking->arrival_date, 'en') . ' - ' . getReadableDate($this->booking->departure_date, 'en')));
             $mailMsg->line(new HtmlString('RATE: Avg. Night ' . priceFormat($this->booking->price_per_night) . ' USD | Total stay ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
+            $mailMsg->line(new HtmlString('OCCUPANTS: ' . $this->booking->adults . ' Adult(s) | ' . $this->booking->kids . ' Child(s)'));
 
             // property details
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
@@ -287,6 +288,7 @@ class BookingDetails extends Notification
             $mailMsg->line(new HtmlString('NOMBRE DE LA RESERVACIÓN: ' . $this->booking->full_name));
             $mailMsg->line(new HtmlString('FECHAS: ' . getReadableDate($this->booking->arrival_date, 'es') . ' - ' . getReadableDate($this->booking->departure_date, 'es')));
             $mailMsg->line(new HtmlString('TARIFA: Prom. noche ' . priceFormat($this->booking->price_per_night) . ' USD | Total estancia ' . priceFormat($this->booking->subtotal_nights) . 'USD'));
+            $mailMsg->line(new HtmlString('OCUPANTES: ' . $this->booking->adults . ' Adulto(s) | ' . $this->booking->kids . ' Niño(s)'));
 
             // property details
             $mailMsg->line(new HtmlString('––––––––––––––––––––––––––––––––––––––––'));
