@@ -191,6 +191,13 @@ class PropertyController extends Controller
         $paxExceeded = false;
         if ($request->arrival_alt_sing && $request->departure_alt_sing) {
             $pax = $request->adults_sing + $request->children_sing;
+            if ($request->arrival_alt_sing == $request->departure_alt_sing) {
+                $request->session()->flash('error', __("The departure date cannot be the same as the arrival date"));
+            }
+
+            if ($request->departure_alt_sing < $request->arrival_alt_sing) {
+                $request->session()->flash('error', __("The departure date cannot be less than the departure date"));
+            }
             if ($pax > $property->property->pax) {
                 $request->session()->flash('error', __('The number of people exceeds the maximum occupancy for the property'));
                 $paxExceeded = true;

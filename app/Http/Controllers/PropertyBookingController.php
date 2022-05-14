@@ -613,6 +613,16 @@ class PropertyBookingController extends Controller
             return redirect()->back();
         }
 
+        if ($request->arrival_date == $request->departure_date) {
+            $request->session()->flash('error', __("The departure date cannot be the same as the arrival date"));
+            return redirect()->back();
+        }
+
+        if ($request->departure_date < $request->arrival_date) {
+            $request->session()->flash('error', __("The departure date cannot be less than the departure date"));
+            return redirect()->back();
+        }
+
         $availability = getAvailabilityProperty($request->property_id, $request->arrival_date, $request->departure_date);
 
         if ($availability === 'none' || $availability == 'some') {
@@ -694,6 +704,16 @@ class PropertyBookingController extends Controller
         // permission control
         if ((isRole('owner') && $booking->register_by != 'Owner') && !can('edit', 'property-bookings')) {
             $request->session()->flash('error', __("You don't have access to this area"));
+            return redirect()->back();
+        }
+
+        if ($request->arrival_date == $request->departure_date) {
+            $request->session()->flash('error', __("The departure date cannot be the same as the arrival date"));
+            return redirect()->back();
+        }
+
+        if ($request->departure_date < $request->arrival_date) {
+            $request->session()->flash('error', __("The departure date cannot be less than the departure date"));
             return redirect()->back();
         }
 

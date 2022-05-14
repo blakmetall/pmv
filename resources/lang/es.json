@@ -425,6 +425,8 @@
     "This record can't be deleted": "Este registro no se puede eliminar",
     "This user already belongs to the current Workgroup.": "Este usuario ya se encuentra registrado en este grupo de trabajo.",
     "Three times a week": "Trisemanal",
+    "The departure date cannot be the same as the arrival date": "La fecha de salida no puede ser la misma que la fecha de llegada",
+    "The departure date cannot be less than the departure date": "La fecha de salida no puede ser menor que la fecha de salida",
     "To": "a",
     "To Date": "Fecha final",
     "Total": "Total",

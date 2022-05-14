@@ -377,6 +377,8 @@
     "This record can't be deleted": "This record can't be deleted",
     "This user already belongs to the current Workgroup.": "This user already belongs to the current Workgroup.",
     "Three times a week": "Three times a week",
+    "The departure date cannot be the same as the arrival date": "The departure date cannot be the same as the arrival date",
+    "The departure date cannot be less than the departure date": "The departure date cannot be less than the departure date",
     "To": "to",
     "To Date": "To Date",
     "Total": "Total",
