@@ -108,13 +108,7 @@
                                         @endif
                                     @endforeach
                                 @else
-                                    @if (!isRole('owner'))
-                                        <a href="{{ route('users.show', [$row->property->user->id]) }}">
-                                            {{ $row->property->user->profile->full_name }}<br>
-                                        </a>
-                                    @else
-                                        {{ $row->property->user->profile->full_name }}<br>
-                                    @endif
+                                    ¡NO HAY PROPIETARIO!
                                 @endif
                             </td>
 
