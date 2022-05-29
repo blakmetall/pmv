@@ -179,7 +179,11 @@
                         $departure_transportation = $departure->departure_transportation ? __('YES') : __('NO');
                         $transportation = $departure_transportation;
                         $booked = $departure->created_at;
-                        $owner = $departure->user->profile->full_name;
+                        if ($departure->user()->exists()) {
+                            $owner = $departure->user->profile->full_name;
+                        } else {
+                            $owner = 'Verify';
+                        }
                     @endphp
                     <tr>
                         <!-- index -->
